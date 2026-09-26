@@ -1,0 +1,10 @@
+[project]
+name = "pubmed-search-builder-next"
+version = "0.1.0"
+description = "Agent skill for building high-sensitivity PubMed search strategies"
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["scripts", "tests"]
