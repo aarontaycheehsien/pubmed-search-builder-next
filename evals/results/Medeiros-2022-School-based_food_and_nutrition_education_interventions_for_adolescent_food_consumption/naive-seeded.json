@@ -1,0 +1,22 @@
+{
+  "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+  "source": "naive",
+  "condition": "seeded",
+  "strategy": "(\"nutrition education\"[tiab] OR \"food education\"[tiab] OR \"dietary education\"[tiab]) AND (school[tiab] OR \"school-based\"[tiab])",
+  "scored": "20260926T201252Z",
+  "as_of": "2017-12-14",
+  "count": 767,
+  "gold_scored": 6,
+  "gold_reachable": 6,
+  "retrieved": 1,
+  "recall_percent": 16.7,
+  "missed": [
+    "17411463",
+    "17535489",
+    "23451237",
+    "25797051",
+    "29228946"
+  ],
+  "nnr": 767.0,
+  "translation_issues": []
+}

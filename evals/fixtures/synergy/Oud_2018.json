@@ -1,0 +1,35 @@
+{
+  "id": "Oud_2018",
+  "suite": "synergy",
+  "question": "Specialized psychotherapies for adults with borderline personality disorder",
+  "eligibility": [],
+  "as_of": "2015-03-27",
+  "as_of_source": "day after the latest Entrez date among gold records (a lower bound on the review's search date)",
+  "seeds": [
+    "7977884",
+    "20435966",
+    "25806661"
+  ],
+  "gold_pmids": [
+    "25806661",
+    "24562087",
+    "23712109",
+    "22897123",
+    "22964561",
+    "22574799",
+    "20435966",
+    "20113305",
+    "19755574",
+    "19833787",
+    "19698939",
+    "19176222",
+    "16818865",
+    "16754838",
+    "16005708",
+    "7977884",
+    "1845222"
+  ],
+  "source": "SYNERGY dataset Oud_2018 (asreview/synergy-dataset); gold = included records with DOIs from the source systematic review. Discipline: psychology / psychiatry.",
+  "naive_blocks": null,
+  "notes": "Converted from the protocol-first branch. naive_blocks come from protocols written by the fixture author, some tightened while looking at the gold set, so the naive floor may be optimistic."
+}

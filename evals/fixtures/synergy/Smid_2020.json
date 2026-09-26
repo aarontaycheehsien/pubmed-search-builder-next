@@ -1,0 +1,76 @@
+{
+  "id": "Smid_2020",
+  "suite": "synergy",
+  "question": "In structural equation models estimated with small samples, how does Bayesian estimation compare with frequentist (maximum likelihood) estimation in terms of performance, accuracy, and bias?",
+  "eligibility": [
+    "The study concerns a structural equation model or a model in the SEM/latent-variable family (CFA, latent growth/class, multilevel, mediation).",
+    "The study investigates Bayesian estimation (with prior distributions / MCMC) of such a model.",
+    "Performance of Bayesian estimation is compared against frequentist / maximum-likelihood (or alternative) estimation.",
+    "The estimation problem is set in a small-sample (or few-cluster) context.",
+    "Estimator performance is evaluated via a Monte Carlo / simulation study (optionally alongside an empirical example).",
+    "A peer-reviewed methodological paper in the field of the social/behavioural sciences."
+  ],
+  "as_of": "2017-11-29",
+  "as_of_source": "day after the latest Entrez date among gold records (a lower bound on the review's search date)",
+  "seeds": [
+    "25361865",
+    "27594086",
+    "28342072"
+  ],
+  "gold_pmids": [
+    "23148476",
+    "19001592",
+    "26579002",
+    "23527607",
+    "24550881",
+    "19968395",
+    "26745462",
+    "25361865",
+    "29172613",
+    "25765534",
+    "27269278",
+    "28342072",
+    "24731180",
+    "27594086"
+  ],
+  "source": "SYNERGY dataset (asreview/synergy-dataset) Smid_2020; social-science methodology review 'Bayesian Versus Frequentist Estimation for Structural Equation Models in Small Sample Contexts' (Struct Equ Modeling 2020, doi:10.1080/10705511.2019.1577140); gold = label_included==1 rows with DOI, resolved via [AID]",
+  "naive_blocks": [
+    {
+      "id": "sem-model-family",
+      "name": "Structural equation / latent-variable model family",
+      "terms": [
+        "structural equation modeling",
+        "structural equation model",
+        "SEM",
+        "latent variable model",
+        "latent variable",
+        "latent class",
+        "latent growth",
+        "confirmatory factor analysis",
+        "factor analysis",
+        "mediation analysis",
+        "mediated effect",
+        "indirect effect",
+        "multilevel model",
+        "growth mixture model",
+        "mixture model"
+      ]
+    },
+    {
+      "id": "bayesian-estimation",
+      "name": "Bayesian estimation",
+      "terms": [
+        "Bayesian estimation",
+        "Bayesian",
+        "Bayes",
+        "prior distribution",
+        "informative prior",
+        "MCMC",
+        "Markov chain Monte Carlo",
+        "Gibbs sampling",
+        "posterior distribution"
+      ]
+    }
+  ],
+  "notes": "Converted from the protocol-first branch. naive_blocks come from protocols written by the fixture author, some tightened while looking at the gold set, so the naive floor may be optimistic."
+}

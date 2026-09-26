@@ -1,0 +1,59 @@
+{
+  "id": "Muthu_2022",
+  "suite": "synergy",
+  "question": "In patients with rotator cuff tears, is cellular therapy (e.g. mesenchymal stem cells, bone marrow aspirate, platelet-rich plasma) beneficial compared with controls for healing and clinical outcomes?",
+  "eligibility": [
+    "Patients with a rotator cuff tear (partial- or full-thickness) or undergoing rotator cuff repair.",
+    "The intervention delivers a cellular therapy (MSCs, bone marrow aspirate concentrate, PRP, adipose- or tendon-derived cells) as biologic augmentation.",
+    "Comparison against a control or standard repair without cellular augmentation.",
+    "Reports a healing/retear, pain, or functional outcome.",
+    "A randomized or otherwise comparative clinical study in humans."
+  ],
+  "as_of": "2020-05-15",
+  "as_of_source": "day after the latest Entrez date among gold records (a lower bound on the review's search date)",
+  "seeds": [],
+  "gold_pmids": [
+    "24913770",
+    "28448728",
+    "31262366",
+    "32399045",
+    "32238172",
+    "28105983"
+  ],
+  "source": "SYNERGY dataset Muthu_2022; 'Is cellular therapy beneficial in management of rotator cuff tears?' (World J Meta-Anal 2022, doi:10.13105/wjma.v10.i3.162); gold = label_included==1 rows with DOI via [AID]",
+  "naive_blocks": [
+    {
+      "id": "rotator-cuff",
+      "name": "Rotator cuff tear/repair",
+      "terms": [
+        "rotator cuff",
+        "rotator-cuff",
+        "rotator cuff tear",
+        "rotator cuff repair",
+        "supraspinatus",
+        "rotator cuff injury"
+      ]
+    },
+    {
+      "id": "cellular-therapy",
+      "name": "Cellular therapy / biologic augmentation",
+      "terms": [
+        "stem cells",
+        "mesenchymal stem cells",
+        "mesenchymal",
+        "MSC",
+        "bone marrow",
+        "bone marrow aspirate",
+        "bone marrow aspirate concentrate",
+        "cellular therapy",
+        "cell therapy",
+        "platelet-rich plasma",
+        "PRP",
+        "adipose-derived",
+        "tendon-derived",
+        "biologic augmentation"
+      ]
+    }
+  ],
+  "notes": "Converted from the protocol-first branch. naive_blocks come from protocols written by the fixture author, some tightened while looking at the gold set, so the naive floor may be optimistic."
+}

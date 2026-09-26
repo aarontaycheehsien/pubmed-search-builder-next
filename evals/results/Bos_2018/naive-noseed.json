@@ -1,0 +1,20 @@
+{
+  "topic": "Bos_2018",
+  "source": "naive",
+  "condition": "noseed",
+  "strategy": "(\"small vessel disease\"[tiab] OR \"cerebral small vessel disease\"[tiab] OR \"white matter hyperintensity\"[tiab] OR \"white matter hyperintensities\"[tiab] OR \"white matter lesion\"[tiab] OR leukoaraiosis[tiab] OR \"lacunar infarct\"[tiab] OR lacune[tiab] OR \"silent brain infarct\"[tiab] OR \"silent infarct\"[tiab] OR \"cerebral microbleed\"[tiab] OR microbleed[tiab] OR \"vascular brain injury\"[tiab] OR \"brain infarct\"[tiab] OR \"MRI marker\"[tiab]) AND (dementia[tiab] OR \"Alzheimer disease\"[tiab] OR Alzheimer[tiab] OR \"cognitive decline\"[tiab] OR \"cognitive impairment\"[tiab] OR \"cognitive function\"[tiab] OR \"cognitive dysfunction\"[tiab])",
+  "scored": "20260926T201313Z",
+  "as_of": "2017-05-06",
+  "count": 2339,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 6,
+  "recall_percent": 66.7,
+  "missed": [
+    "12660385",
+    "18501994",
+    "28468844"
+  ],
+  "nnr": 389.8,
+  "translation_issues": []
+}

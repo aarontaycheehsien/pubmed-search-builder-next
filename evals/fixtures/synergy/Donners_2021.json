@@ -1,0 +1,53 @@
+{
+  "id": "Donners_2021",
+  "suite": "synergy",
+  "question": "In humans, what are the pharmacokinetics of emicizumab and their association with efficacy in haemophilia A?",
+  "eligibility": [
+    "The study concerns emicizumab (or its development names ACE910 / factor VIII-mimetic bispecific antibody).",
+    "Conducted in humans (persons with haemophilia A, including healthy-volunteer bridging studies).",
+    "Reports pharmacokinetics/exposure and/or associated efficacy (bleeding-rate) data.",
+    "A clinical trial, pharmacokinetic, or pharmacometric study."
+  ],
+  "as_of": "2020-10-22",
+  "as_of_source": "day after the latest Entrez date among gold records (a lower bound on the review's search date)",
+  "seeds": [
+    "29214439",
+    "31697801",
+    "32433829"
+  ],
+  "gold_pmids": [
+    "32656767",
+    "32297683",
+    "30230257",
+    "32433829",
+    "30157389",
+    "28691557",
+    "31003963",
+    "32504271",
+    "33086400",
+    "27223146",
+    "29296836",
+    "31515851",
+    "26626991",
+    "29214439",
+    "31697801"
+  ],
+  "source": "SYNERGY dataset Donners_2021; 'Pharmacokinetics and Associated Efficacy of Emicizumab in Humans' (Clin Pharmacokinet 2021, doi:10.1007/s40262-021-01042-w); gold = label_included==1 rows with DOI via [AID]",
+  "naive_blocks": [
+    {
+      "id": "emicizumab",
+      "name": "Emicizumab",
+      "terms": [
+        "emicizumab",
+        "ACE910",
+        "ACE-910",
+        "factor VIII-mimetic",
+        "factor VIII mimetic",
+        "FVIII-mimetic",
+        "bispecific antibody",
+        "Hemlibra"
+      ]
+    }
+  ],
+  "notes": "Converted from the protocol-first branch. naive_blocks come from protocols written by the fixture author, some tightened while looking at the gold set, so the naive floor may be optimistic."
+}

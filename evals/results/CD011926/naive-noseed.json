@@ -1,0 +1,28 @@
+{
+  "topic": "CD011926",
+  "source": "naive",
+  "condition": "noseed",
+  "strategy": "(\"neonatal sepsis\"[tiab] OR \"newborn sepsis\"[tiab] OR \"neonatal bloodstream infection\"[tiab] OR \"neonatal septicemia\"[tiab]) AND (\"molecular assay\"[tiab] OR \"nucleic acid amplification\"[tiab] OR \"polymerase chain reaction\"[tiab] OR PCR[tiab])",
+  "scored": "20260926T201308Z",
+  "as_of": "2014-08-09",
+  "count": 117,
+  "gold_scored": 29,
+  "gold_reachable": 29,
+  "retrieved": 18,
+  "recall_percent": 62.1,
+  "missed": [
+    "10878046",
+    "12673260",
+    "16145149",
+    "16982493",
+    "19152691",
+    "19273654",
+    "19279393",
+    "19407210",
+    "19531943",
+    "22192484",
+    "25047415"
+  ],
+  "nnr": 6.5,
+  "translation_issues": []
+}

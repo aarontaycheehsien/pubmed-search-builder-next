@@ -1,0 +1,67 @@
+{
+  "id": "Bos_2018",
+  "suite": "synergy",
+  "question": "In population-based cohorts, is cerebral small vessel disease (and its MRI markers) associated with the risk of incident dementia and cognitive decline?",
+  "eligibility": [
+    "A population-based or longitudinal cohort of community-dwelling participants.",
+    "Exposure is cerebral small vessel disease or an MRI marker of it (white matter hyperintensity, lacunar/silent infarct, cerebral microbleed, vascular brain injury).",
+    "Outcome is incident dementia, Alzheimer disease, or cognitive decline/impairment.",
+    "A prospective cohort / longitudinal observational study with follow-up."
+  ],
+  "as_of": "2017-05-06",
+  "as_of_source": "day after the latest Entrez date among gold records (a lower bound on the review's search date)",
+  "seeds": [
+    "18501994",
+    "27271785",
+    "27659853"
+  ],
+  "gold_pmids": [
+    "23920020",
+    "22945686",
+    "12660385",
+    "28143923",
+    "27659853",
+    "18501994",
+    "28468844",
+    "20167919",
+    "27271785"
+  ],
+  "source": "SYNERGY dataset Bos_2018; 'Cerebral small vessel disease and the risk of dementia' (Alzheimers Dement 2018, doi:10.1016/j.jalz.2018.04.007); gold = label_included==1 rows with DOI via [AID]",
+  "naive_blocks": [
+    {
+      "id": "cerebral-svd",
+      "name": "Cerebral small vessel disease / MRI markers",
+      "terms": [
+        "small vessel disease",
+        "cerebral small vessel disease",
+        "white matter hyperintensity",
+        "white matter hyperintensities",
+        "white matter lesion",
+        "leukoaraiosis",
+        "lacunar infarct",
+        "lacune",
+        "silent brain infarct",
+        "silent infarct",
+        "cerebral microbleed",
+        "microbleed",
+        "vascular brain injury",
+        "brain infarct",
+        "MRI marker"
+      ]
+    },
+    {
+      "id": "dementia-cognition",
+      "name": "Dementia / cognitive decline",
+      "terms": [
+        "dementia",
+        "Alzheimer disease",
+        "Alzheimer",
+        "cognitive decline",
+        "cognitive impairment",
+        "cognitive function",
+        "cognitive dysfunction"
+      ]
+    }
+  ],
+  "notes": "Converted from the protocol-first branch. naive_blocks come from protocols written by the fixture author, some tightened while looking at the gold set, so the naive floor may be optimistic."
+}

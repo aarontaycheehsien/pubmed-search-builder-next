@@ -1,0 +1,20 @@
+{
+  "topic": "CD010657",
+  "source": "naive",
+  "condition": "noseed",
+  "strategy": "(\"vesicoureteral reflux\"[tiab] OR VUR[tiab]) AND (DMSA[tiab] OR \"dimercaptosuccinic acid\"[tiab] OR \"renal ultrasound\"[tiab] OR ultrasonography[tiab])",
+  "scored": "20260926T201259Z",
+  "as_of": "2013-01-30",
+  "count": 644,
+  "gold_scored": 35,
+  "gold_reachable": 35,
+  "retrieved": 32,
+  "recall_percent": 91.4,
+  "missed": [
+    "1327798",
+    "12650294",
+    "19397555"
+  ],
+  "nnr": 20.1,
+  "translation_issues": []
+}

@@ -1,0 +1,22 @@
+{
+  "topic": "CD011431",
+  "source": "naive",
+  "condition": "seeded",
+  "strategy": "(malaria[tiab] OR Plasmodium[tiab]) AND (\"rapid diagnostic test\"[tiab] OR \"rapid test\"[tiab] OR RDT[tiab] OR \"immunochromatographic test\"[tiab])",
+  "scored": "20260926T201305Z",
+  "as_of": "2013-06-09",
+  "count": 502,
+  "gold_scored": 23,
+  "gold_reachable": 23,
+  "retrieved": 18,
+  "recall_percent": 78.3,
+  "missed": [
+    "11693975",
+    "12932092",
+    "17172395",
+    "18256418",
+    "18981501"
+  ],
+  "nnr": 27.9,
+  "translation_issues": []
+}

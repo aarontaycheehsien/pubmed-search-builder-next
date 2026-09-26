@@ -252,6 +252,25 @@ class PubMed:
             records.extend(parse_article(node) for node in root.findall("./PubmedArticle"))
         return records
 
+    def summaries(self, pmids: Iterable[str]) -> dict[str, dict]:
+        """Brief records keyed by PMID, including the Entrez date (when the record entered PubMed)."""
+        found: dict[str, dict] = {}
+        for chunk in chunks([str(p) for p in pmids], FETCH_CHUNK):
+            data = self._json("esummary.fcgi", {"db": "pubmed", "id": ",".join(chunk), "retmode": "json"},
+                              method="POST" if len(chunk) > 50 else "GET")
+            result = data.get("result", {})
+            for uid in result.get("uids", []):
+                item = result.get(uid) or {}
+                entrez = next((h.get("date", "") for h in item.get("history", []) if h.get("pubstatus") == "entrez"), "")
+                found[str(uid)] = {
+                    "pmid": str(uid),
+                    "title": item.get("title", ""),
+                    "pubdate": item.get("pubdate", ""),
+                    "entrez_date": entrez[:10].replace("/", "-"),
+                    "pubtypes": item.get("pubtype", []),
+                }
+        return found
+
     def links(self, pmid: str, link: str) -> list[dict]:
         """Neighbours of one PMID. ``link`` is similar, citedin, or refs."""
         linkname = LINKNAMES[link]

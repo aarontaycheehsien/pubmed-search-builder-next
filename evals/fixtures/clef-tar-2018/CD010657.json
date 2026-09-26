@@ -1,0 +1,77 @@
+{
+  "id": "CD010657",
+  "suite": "clef-tar-2018",
+  "question": "Dimercaptosuccinic acid (DMSA) scan or ultrasound in screening for vesicoureteral reflux among children with urinary tract infections (a diagnostic-test-accuracy review: in children with urinary tract infection, what is the accuracy of DMSA renal scan or ultrasound for detecting vesicoureteral reflux?)",
+  "eligibility": [
+    "Addresses detection of vesicoureteral reflux.",
+    "Evaluates DMSA renal scan or renal/urinary ultrasound.",
+    "Children with urinary tract infection.",
+    "Reports eligible diagnostic evaluation."
+  ],
+  "as_of": "2013-01-30",
+  "as_of_source": "day after the latest Entrez date among gold records (a lower bound on the review's search date)",
+  "seeds": [
+    "12023172",
+    "19593590",
+    "22089774"
+  ],
+  "gold_pmids": [
+    "1327798",
+    "1343562",
+    "3523415",
+    "8935409",
+    "9028852",
+    "9924638",
+    "10353409",
+    "10835062",
+    "11793131",
+    "12023172",
+    "12172762",
+    "12529459",
+    "12650294",
+    "12883980",
+    "14758509",
+    "15378148",
+    "15379054",
+    "16082551",
+    "16205610",
+    "17188624",
+    "17273861",
+    "17626605",
+    "17665222",
+    "17875650",
+    "18035134",
+    "19397555",
+    "19593590",
+    "19798584",
+    "20708748",
+    "22040289",
+    "22048628",
+    "22089774",
+    "22374404",
+    "23203209",
+    "23354031"
+  ],
+  "source": "CLEF TAR 2018 Task 2 (Testing), content-level qrels — finally-included studies of Cochrane review CD010657.",
+  "naive_blocks": [
+    {
+      "id": "vesicoureteral_reflux",
+      "name": "Vesicoureteral reflux",
+      "terms": [
+        "vesicoureteral reflux",
+        "VUR"
+      ]
+    },
+    {
+      "id": "renal_imaging",
+      "name": "DMSA scan or ultrasound",
+      "terms": [
+        "DMSA",
+        "dimercaptosuccinic acid",
+        "renal ultrasound",
+        "ultrasonography"
+      ]
+    }
+  ],
+  "notes": "Converted from the protocol-first branch. naive_blocks come from protocols written by the fixture author, some tightened while looking at the gold set, so the naive floor may be optimistic."
+}

@@ -1,0 +1,20 @@
+{
+  "topic": "gao-2026-Immune checkpoint inhibitors",
+  "source": "naive",
+  "condition": "noseed",
+  "strategy": "(\"triple negative breast cancer\"[tiab] OR TNBC[tiab]) AND (\"immune checkpoint inhibitor\"[tiab] OR \"PD-1\"[tiab] OR \"PD-L1\"[tiab] OR pembrolizumab[tiab])",
+  "scored": "20260926T201256Z",
+  "as_of": "2025-01-31",
+  "count": 1599,
+  "gold_scored": 11,
+  "gold_reachable": 11,
+  "retrieved": 8,
+  "recall_percent": 72.7,
+  "missed": [
+    "35961599",
+    "36123366",
+    "39883436"
+  ],
+  "nnr": 199.9,
+  "translation_issues": []
+}

@@ -1,0 +1,16 @@
+{
+  "topic": "Liu_2023_VR_nursing",
+  "source": "naive",
+  "condition": "noseed",
+  "strategy": "(\"nursing students\"[tiab] OR \"nursing student\"[tiab] OR \"student nurses\"[tiab] OR \"nursing education\"[tiab] OR \"nurse education\"[tiab] OR \"education, nursing\"[tiab] OR \"baccalaureate nursing\"[tiab] OR \"undergraduate nursing\"[tiab] OR \"nursing curriculum\"[tiab] OR \"nurse training\"[tiab]) AND (\"virtual reality\"[tiab] OR VR[tiab] OR \"virtual simulation\"[tiab] OR \"virtual patient\"[tiab] OR \"virtual patients\"[tiab] OR \"immersive virtual\"[tiab] OR \"immersive technology\"[tiab] OR \"head-mounted display\"[tiab] OR \"augmented reality\"[tiab] OR \"mixed reality\"[tiab] OR \"computer simulation\"[tiab] OR \"serious games\"[tiab])",
+  "scored": "20260926T201312Z",
+  "as_of": "2023-03-31",
+  "count": 374,
+  "gold_scored": 6,
+  "gold_reachable": 6,
+  "retrieved": 6,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 62.3,
+  "translation_issues": []
+}

@@ -1,0 +1,18 @@
+{
+  "topic": "CD011926",
+  "source": "reference",
+  "condition": "seeded",
+  "strategy": "( \"Infant, Newborn\"[Mesh] OR neonat*[tiab] OR newborn*[tiab] OR \"new born\"[tiab] OR \"new borns\"[tiab] OR neonate*[tiab] OR preterm*[tiab] OR \"pre term\"[tiab] OR premature*[tiab] OR perinatal*[tiab] OR \"very low birth weight\"[tiab] OR VLBW[tiab] OR NICU[tiab] ) AND ( \"Sepsis\"[Mesh] OR \"Neonatal Sepsis\"[Mesh] OR \"Bacteremia\"[Mesh] OR \"Systemic Inflammatory Response Syndrome\"[Mesh] OR sepsis[tiab] OR septic*[tiab] OR septicemi*[tiab] OR septicaemi*[tiab] OR bacteremi*[tiab] OR bacteraemi*[tiab] OR fungemi*[tiab] OR fungaemi*[tiab] OR \"bloodstream infection\"[tiab] OR \"bloodstream infections\"[tiab] OR \"blood stream infection\"[tiab] OR \"blood stream infections\"[tiab] OR \"blood culture\"[tiab] OR \"blood cultures\"[tiab] ) AND ( \"Polymerase Chain Reaction\"[Mesh] OR \"Nucleic Acid Amplification Techniques\"[Mesh] OR \"Molecular Diagnostic Techniques\"[Mesh] OR \"Real-Time Polymerase Chain Reaction\"[Mesh] OR \"In Situ Hybridization\"[Mesh] OR \"Sequence Analysis, DNA\"[Mesh] OR PCR[tiab] OR \"polymerase chain reaction\"[tiab] OR \"real time PCR\"[tiab] OR \"real-time PCR\"[tiab] OR qPCR[tiab] OR \"multiplex PCR\"[tiab] OR \"broad range PCR\"[tiab] OR \"16S rRNA\"[tiab] OR \"16S ribosomal\"[tiab] OR \"nucleic acid amplification\"[tiab] OR \"molecular assay\"[tiab] OR \"molecular assays\"[tiab] OR \"molecular method\"[tiab] OR \"molecular methods\"[tiab] OR \"molecular diagnosis\"[tiab] OR \"molecular diagnostics\"[tiab] OR hybridization[tiab] OR hybridisation[tiab] OR sequencing[tiab] OR pyrosequencing[tiab] OR \"mass spectrometry\"[tiab] OR SeptiFast[tiab] OR LightCycler[tiab] )",
+  "scored": "20260926T201312Z",
+  "as_of": "2014-08-09",
+  "count": 1001,
+  "gold_scored": 26,
+  "gold_reachable": 26,
+  "retrieved": 25,
+  "recall_percent": 96.2,
+  "missed": [
+    "19279393"
+  ],
+  "nnr": 40.0,
+  "translation_issues": []
+}

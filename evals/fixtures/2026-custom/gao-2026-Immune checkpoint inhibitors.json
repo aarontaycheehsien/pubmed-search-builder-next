@@ -1,0 +1,51 @@
+{
+  "id": "gao-2026-Immune checkpoint inhibitors",
+  "suite": "2026-custom",
+  "question": "Immune checkpoint inhibitors plus chemotherapy for early triple-negative breast cancer",
+  "eligibility": [
+    "Early triple-negative breast cancer.",
+    "Immune checkpoint inhibitor given with chemotherapy."
+  ],
+  "as_of": "2025-01-31",
+  "as_of_source": "day after the latest Entrez date among gold records (a lower bound on the review's search date)",
+  "seeds": [
+    "32053137",
+    "35139274",
+    "35182721"
+  ],
+  "gold_pmids": [
+    "39883436",
+    "31095287",
+    "35961599",
+    "32966830",
+    "36123366",
+    "32053137",
+    "32101663",
+    "35139274",
+    "39282906",
+    "36585404",
+    "35182721"
+  ],
+  "source": "custom fixture; gold from PMIDs (CLI)",
+  "naive_blocks": [
+    {
+      "id": "triple_negative_breast_cancer",
+      "name": "Triple-negative breast cancer",
+      "terms": [
+        "triple negative breast cancer",
+        "TNBC"
+      ]
+    },
+    {
+      "id": "immune_checkpoint_inhibitor",
+      "name": "Immune checkpoint inhibitors",
+      "terms": [
+        "immune checkpoint inhibitor",
+        "PD-1",
+        "PD-L1",
+        "pembrolizumab"
+      ]
+    }
+  ],
+  "notes": "Converted from the protocol-first branch. naive_blocks come from protocols written by the fixture author, some tightened while looking at the gold set, so the naive floor may be optimistic."
+}

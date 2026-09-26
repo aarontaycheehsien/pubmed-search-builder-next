@@ -1,0 +1,40 @@
+{
+  "id": "Appenzeller-Herzog_2019",
+  "suite": "synergy",
+  "question": "Comparative effectiveness of common therapies for Wilson disease",
+  "eligibility": [],
+  "as_of": "2018-12-23",
+  "as_of_source": "day after the latest Entrez date among gold records (a lower bound on the review's search date)",
+  "seeds": [
+    "5635646",
+    "16606763",
+    "20333789"
+  ],
+  "gold_pmids": [
+    "26067812",
+    "26071888",
+    "24661374",
+    "24447648",
+    "23011036",
+    "15742108",
+    "8936358",
+    "20958917",
+    "20333789",
+    "19473354",
+    "16709660",
+    "17063115",
+    "15622480",
+    "11358907",
+    "5635646",
+    "23542331",
+    "21185835",
+    "16606763",
+    "15448420",
+    "11819363",
+    "30576569",
+    "28578978"
+  ],
+  "source": "SYNERGY dataset Appenzeller-Herzog_2019 (asreview/synergy-dataset); gold = included records with DOIs from the source systematic review. Discipline: biomedical (hepatology).",
+  "naive_blocks": null,
+  "notes": "Converted from the protocol-first branch. naive_blocks come from protocols written by the fixture author, some tightened while looking at the gold set, so the naive floor may be optimistic."
+}

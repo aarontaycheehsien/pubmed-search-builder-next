@@ -1,0 +1,16 @@
+{
+  "topic": "Donners_2021",
+  "source": "naive",
+  "condition": "seeded",
+  "strategy": "(emicizumab[tiab] OR ACE910[tiab] OR \"ACE-910\"[tiab] OR \"factor VIII-mimetic\"[tiab] OR \"factor VIII mimetic\"[tiab] OR \"FVIII-mimetic\"[tiab] OR \"bispecific antibody\"[tiab] OR Hemlibra[tiab])",
+  "scored": "20260926T201318Z",
+  "as_of": "2020-10-22",
+  "count": 1614,
+  "gold_scored": 12,
+  "gold_reachable": 12,
+  "retrieved": 12,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 134.5,
+  "translation_issues": []
+}

@@ -1,0 +1,24 @@
+{
+  "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+  "source": "reference",
+  "condition": "seeded",
+  "strategy": "( \"Schools\"[Mesh] OR \"Students\"[Mesh] OR school*[tiab] OR classroom*[tiab] OR \"class room*\"[tiab] OR student*[tiab] OR pupil*[tiab] OR teacher*[tiab] OR \"middle school*\"[tiab] OR \"secondary school*\"[tiab] OR \"high school*\"[tiab] OR \"junior high\"[tiab] OR \"school-based\"[tiab] OR \"school based\"[tiab] OR \"school setting*\"[tiab] OR \"school environment*\"[tiab] ) AND ( \"Adolescent\"[Mesh] OR \"Child\"[Mesh] OR adolescen*[tiab] OR teen*[tiab] OR youth*[tiab] OR \"young people\"[tiab] OR \"young person*\"[tiab] OR \"young adolescent*\"[tiab] OR \"early adolescent*\"[tiab] OR \"late adolescent*\"[tiab] OR \"middle school student*\"[tiab] OR \"secondary school student*\"[tiab] OR \"high school student*\"[tiab] OR \"schoolchild*\"[tiab] OR \"school child*\"[tiab] OR \"school-age*\"[tiab] OR \"school age*\"[tiab] ) AND ( \"Health Education\"[Mesh] OR \"Health Promotion\"[Mesh] OR \"Nutritional Sciences/education\"[Mesh] OR \"Dietetics/education\"[Mesh] OR \"nutrition education\"[tiab] OR \"nutritional education\"[tiab] OR \"dietary education\"[tiab] OR \"diet education\"[tiab] OR \"food education\"[tiab] OR \"food and nutrition education\"[tiab] OR \"healthy eating education\"[tiab] OR \"nutrition intervention*\"[tiab] OR \"dietary intervention*\"[tiab] OR \"food intervention*\"[tiab] OR \"school nutrition program*\"[tiab] OR \"school nutrition programme*\"[tiab] OR \"nutrition program*\"[tiab] OR \"nutrition programme*\"[tiab] OR \"food program*\"[tiab] OR \"food programme*\"[tiab] OR \"nutrition curriculum\"[tiab] OR \"nutrition curricula\"[tiab] OR \"food curriculum\"[tiab] OR \"food curricula\"[tiab] OR \"nutrition lesson*\"[tiab] OR \"food lesson*\"[tiab] OR \"diet lesson*\"[tiab] OR \"healthy eating lesson*\"[tiab] OR \"food literacy\"[tiab] OR \"nutrition literacy\"[tiab] OR \"culinary education\"[tiab] OR \"cooking education\"[tiab] OR \"garden-based\"[tiab] OR \"garden based\"[tiab] OR \"school garden*\"[tiab] OR \"nutrition promotion\"[tiab] OR \"healthy eating promotion\"[tiab] OR ( (nutrition*[tiab] OR diet*[tiab] OR food*[tiab] OR eating[tiab] OR \"healthy eating\"[tiab]) AND (educat*[tiab] OR teach*[tiab] OR lesson*[tiab] OR curriculum[tiab] OR curricula[tiab] OR intervention*[tiab] OR program*[tiab] OR programme*[tiab] OR promot*[tiab] OR training[tiab] OR workshop*[tiab]) ) ) NOT ( animals[mh] NOT humans[mh] )",
+  "scored": "20260926T201254Z",
+  "as_of": "2017-12-14",
+  "count": 24320,
+  "gold_scored": 6,
+  "gold_reachable": 6,
+  "retrieved": 5,
+  "recall_percent": 83.3,
+  "missed": [
+    "25797051"
+  ],
+  "nnr": 4864.0,
+  "translation_issues": [
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "automatic_term_mapping",
+    "truncation_dropped"
+  ]
+}

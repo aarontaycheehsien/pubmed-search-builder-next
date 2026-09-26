@@ -61,3 +61,9 @@ def test_cli_reports_missing_workspace(tmp_path, capsys, monkeypatch):
     monkeypatch.delenv("PSB_WORKSPACE", raising=False)
     code, out = run(capsys, "status")
     assert code == 1 and "no workspace found" in out["error"]
+
+
+def test_env_as_of_overrides_protocol(tmp_path, monkeypatch):
+    ws = Workspace.create(tmp_path / "w", "Q")
+    monkeypatch.setenv("PSB_AS_OF", "2015-06-30")
+    assert ws.pubmed.as_of == "2015-06-30"

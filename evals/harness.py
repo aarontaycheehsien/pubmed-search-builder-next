@@ -1,0 +1,142 @@
+"""Evaluation harness: fixtures, scoring, baselines, and leakage checks.
+
+A fixture is what a user would bring (a question, sometimes eligibility criteria and a few known
+articles) plus a sealed answer key: the included studies of a published review. Every count is
+bounded by ``as_of`` (the review's search date, or a lower bound on it), so a strategy is judged
+against the PubMed that existed when the review searched.
+"""
+
+from __future__ import annotations
+
+import json
+import re
+import sys
+from pathlib import Path
+
+EVALS = Path(__file__).resolve().parent
+REPO = EVALS.parent
+sys.path.insert(0, str(REPO / "scripts"))
+
+from psb.cache import Cache  # noqa: E402
+from psb.ncbi import PubMed  # noqa: E402
+
+FIXTURES = EVALS / "fixtures"
+RESULTS = EVALS / "results"
+
+
+class HarnessError(RuntimeError):
+    pass
+
+
+def fixture_paths() -> list[Path]:
+    return sorted(FIXTURES.glob("*/*.json"))
+
+
+def load_fixture(ref: str) -> dict:
+    path = Path(ref)
+    if not path.is_file():
+        matches = [p for p in fixture_paths() if p.stem == ref]
+        if len(matches) != 1:
+            raise HarnessError(f"no unique fixture named {ref!r}")
+        path = matches[0]
+    data = json.loads(path.read_text(encoding="utf-8"))
+    data["_path"] = str(path)
+    return data
+
+
+def client(fixture: dict, *, use_cache: bool = True) -> PubMed:
+    cache = Cache(EVALS / ".cache" / re.sub(r"[^A-Za-z0-9_.-]", "_", fixture["id"]), enabled=use_cache)
+    return PubMed(cache=cache, as_of=fixture.get("as_of"))
+
+
+def score(fixture: dict, query: str, *, exclude: set[str] | None = None, seen: set[str] | None = None,
+          pm: PubMed | None = None) -> dict:
+    """Recall of ``query`` on the fixture's gold set, within the fixture's ``as_of`` window.
+
+    ``exclude``: gold records given to the agent (seeds), left out of the denominator.
+    ``seen``: gold records the agent screened into its own sets; recall is also reported without
+    them, because a build that found a record while developing is partly measuring itself.
+    """
+    pm = pm or client(fixture)
+    query = " ".join(query.split())
+    if not query:
+        raise HarnessError("empty strategy")
+    exclude = exclude or set()
+    gold = [p for p in fixture["gold_pmids"] if p not in exclude]
+    reachable = pm.existing(gold)
+    found = pm.among(query, reachable)
+    search = pm.search(query)
+    result = {
+        "as_of": fixture.get("as_of"),
+        "count": search["count"],
+        "gold_scored": len(gold),
+        "gold_reachable": len(reachable),
+        "retrieved": len(found),
+        "recall_percent": round(100 * len(found) / len(reachable), 1) if reachable else None,
+        "missed": sorted(reachable - found, key=int),
+        "nnr": round(search["count"] / len(found), 1) if found else None,
+        "translation_issues": [i["code"] for i in search["issues"]],
+    }
+    if seen is not None:
+        unseen = reachable - seen
+        result["gold_seen_by_agent"] = len(reachable & seen)
+        result["unseen_retrieved"] = len(found & unseen)
+        result["unseen_recall_percent"] = round(100 * len(found & unseen) / len(unseen), 1) if unseen else None
+    return result
+
+
+def tiab(term: str) -> str:
+    clean = " ".join(str(term).split())
+    return f'"{clean}"[tiab]' if (" " in clean or "-" in clean) else f"{clean}[tiab]"
+
+
+def naive_query(fixture: dict) -> str:
+    """The floor: each concept's terms OR-ed as [tiab] phrases, concepts AND-ed. No MeSH, no
+    expansion, no testing."""
+    blocks = fixture.get("naive_blocks")
+    if not blocks:
+        raise HarnessError(f"{fixture['id']} has no naive_blocks")
+    return " AND ".join("(" + " OR ".join(tiab(t) for t in b["terms"]) + ")" for b in blocks)
+
+
+def baseline_queries(fixture: dict) -> dict[str, str]:
+    queries = {}
+    if fixture.get("naive_blocks"):
+        queries["naive"] = naive_query(fixture)
+    if fixture.get("reference_strategy"):
+        queries["reference"] = fixture["reference_strategy"]
+    return queries
+
+
+# -- leakage and provenance checks on a generated run -----------------------------------------
+
+def leakage(fixture: dict, run_dir: Path, transcript: str) -> list[str]:
+    """Signs that a run saw the answer key or the literature after ``as_of``."""
+    problems = []
+    lowered = transcript.lower()
+    for marker in (fixture["id"].lower(), "clef tar", "synergy dataset", "qrels", "gold_pmids", "evals/fixtures"):
+        if marker and marker in lowered:
+            problems.append(f"transcript mentions {marker!r}")
+    log = run_dir / "work" / "log.jsonl"
+    if log.exists() and fixture.get("as_of"):
+        undated = 0
+        for line in log.read_text(encoding="utf-8").splitlines():
+            entry = json.loads(line)
+            params = entry.get("params") or {}
+            if entry.get("endpoint") == "esearch.fcgi" and params.get("db") == "pubmed" and "maxdate" not in params \
+                    and "[doi]" not in str(params.get("term", "")):
+                undated += 1
+        if undated:
+            problems.append(f"{undated} PubMed searches ran without the as_of bound")
+    return problems
+
+
+def gold_seen(fixture: dict, run_dir: Path) -> set[str]:
+    """Gold records the agent put into its own known-record sets."""
+    seen: set[str] = set()
+    for path in (run_dir / "work" / "sets").glob("*.json"):
+        try:
+            seen.update(json.loads(path.read_text(encoding="utf-8")).get("pmids", []))
+        except ValueError:
+            continue
+    return seen & set(fixture["gold_pmids"])

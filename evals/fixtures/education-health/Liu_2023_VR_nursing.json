@@ -1,0 +1,61 @@
+{
+  "id": "Liu_2023_VR_nursing",
+  "suite": "education-health",
+  "question": "In nursing students, is virtual reality-based teaching more effective than traditional or alternative teaching methods for improving theoretical knowledge, practical skills, skill retention, satisfaction, and critical thinking?",
+  "eligibility": [
+    "Participants are nursing students in a nursing education programme (undergraduate/pre-registration or postgraduate).",
+    "The intervention delivers education or training through virtual reality, immersive simulation, or a virtual patient/environment.",
+    "Comparison against traditional/conventional teaching or an alternative (e.g. non-immersive) instructional method.",
+    "Reports at least one learning outcome: knowledge, practical/clinical skills, skill retention, satisfaction, self-efficacy, or critical thinking.",
+    "A randomized controlled trial or otherwise controlled comparative educational intervention."
+  ],
+  "as_of": "2023-03-31",
+  "as_of_source": "review search date",
+  "seeds": [],
+  "gold_pmids": [
+    "30882355",
+    "36357886",
+    "36327261",
+    "35457689",
+    "33894407",
+    "33555626"
+  ],
+  "source": "Health-professions (nursing) education systematic review + meta-analysis: Liu et al., 'Effectiveness of virtual reality in nursing education', BMC Med Educ 2023;23:710 (PMID 37770884, doi 10.1186/s12909-023-04662-x). Education-adjacent-health topic chosen for PubMed reachability; gold = 6/12 included RCTs that are MEDLINE-indexed (6 Chinese-language included studies are PubMed-unreachable).",
+  "naive_blocks": [
+    {
+      "id": "nursing-education",
+      "name": "Nursing students / nursing education",
+      "terms": [
+        "nursing students",
+        "nursing student",
+        "student nurses",
+        "nursing education",
+        "nurse education",
+        "education, nursing",
+        "baccalaureate nursing",
+        "undergraduate nursing",
+        "nursing curriculum",
+        "nurse training"
+      ]
+    },
+    {
+      "id": "virtual-reality",
+      "name": "Virtual reality / virtual simulation",
+      "terms": [
+        "virtual reality",
+        "VR",
+        "virtual simulation",
+        "virtual patient",
+        "virtual patients",
+        "immersive virtual",
+        "immersive technology",
+        "head-mounted display",
+        "augmented reality",
+        "mixed reality",
+        "computer simulation",
+        "serious games"
+      ]
+    }
+  ],
+  "notes": "Converted from the protocol-first branch. naive_blocks come from protocols written by the fixture author, some tightened while looking at the gold set, so the naive floor may be optimistic."
+}

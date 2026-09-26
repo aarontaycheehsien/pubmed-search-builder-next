@@ -1,0 +1,68 @@
+{
+  "id": "CD011431",
+  "suite": "clef-tar-2018",
+  "question": "Rapid diagnostic tests for diagnosing uncomplicated non-falciparum or Plasmodium vivax malaria in endemic countries (a diagnostic-test-accuracy review: in people with suspected non-falciparum / P. vivax malaria, what is the accuracy of rapid diagnostic tests?)",
+  "eligibility": [
+    "Suspected or confirmed uncomplicated non-falciparum or P. vivax malaria.",
+    "Evaluates a malaria rapid diagnostic test.",
+    "Reports diagnostic performance against an eligible reference standard.",
+    "Conducted in a malaria-endemic setting."
+  ],
+  "as_of": "2013-06-09",
+  "as_of_source": "day after the latest Entrez date among gold records (a lower bound on the review's search date)",
+  "seeds": [
+    "10405377",
+    "16711337",
+    "20979601"
+  ],
+  "gold_pmids": [
+    "10405377",
+    "11123823",
+    "11693975",
+    "12932092",
+    "15000726",
+    "15228812",
+    "15255320",
+    "16117960",
+    "16711337",
+    "17172395",
+    "17360871",
+    "18256418",
+    "18620560",
+    "18981501",
+    "20005196",
+    "20046179",
+    "20529273",
+    "20602766",
+    "20979601",
+    "21376357",
+    "21703009",
+    "22536317",
+    "22818643",
+    "23234579",
+    "23294729",
+    "23742633"
+  ],
+  "source": "CLEF TAR 2018 Task 2 (Testing), content-level qrels — finally-included studies of Cochrane review CD011431.",
+  "naive_blocks": [
+    {
+      "id": "malaria",
+      "name": "Malaria",
+      "terms": [
+        "malaria",
+        "Plasmodium"
+      ]
+    },
+    {
+      "id": "rapid_diagnostic_test",
+      "name": "Rapid diagnostic tests",
+      "terms": [
+        "rapid diagnostic test",
+        "rapid test",
+        "RDT",
+        "immunochromatographic test"
+      ]
+    }
+  ],
+  "notes": "Converted from the protocol-first branch. naive_blocks come from protocols written by the fixture author, some tightened while looking at the gold set, so the naive floor may be optimistic."
+}

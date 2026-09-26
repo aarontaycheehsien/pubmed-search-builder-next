@@ -154,7 +154,9 @@ class Workspace:
     @property
     def pubmed(self) -> PubMed:
         if self._pubmed is None:
-            as_of = self.protocol().get("as_of") or None
+            # PSB_AS_OF (set by the eval harness) overrides the protocol, so a run cannot see
+            # literature added after the source review's search, whatever the agent writes.
+            as_of = os.environ.get("PSB_AS_OF") or self.protocol().get("as_of") or None
             cache = Cache(self.root / ".cache", enabled=self.use_cache)
             self._pubmed = PubMed(cache=cache, log=self.log, as_of=as_of)
         return self._pubmed

@@ -1,0 +1,16 @@
+{
+  "topic": "Muthu_2022",
+  "source": "naive",
+  "condition": "noseed",
+  "strategy": "(\"rotator cuff\"[tiab] OR \"rotator-cuff\"[tiab] OR \"rotator cuff tear\"[tiab] OR \"rotator cuff repair\"[tiab] OR supraspinatus[tiab] OR \"rotator cuff injury\"[tiab]) AND (\"stem cells\"[tiab] OR \"mesenchymal stem cells\"[tiab] OR mesenchymal[tiab] OR MSC[tiab] OR \"bone marrow\"[tiab] OR \"bone marrow aspirate\"[tiab] OR \"bone marrow aspirate concentrate\"[tiab] OR \"cellular therapy\"[tiab] OR \"cell therapy\"[tiab] OR \"platelet-rich plasma\"[tiab] OR PRP[tiab] OR \"adipose-derived\"[tiab] OR \"tendon-derived\"[tiab] OR \"biologic augmentation\"[tiab])",
+  "scored": "20260926T201321Z",
+  "as_of": "2020-05-15",
+  "count": 505,
+  "gold_scored": 6,
+  "gold_reachable": 6,
+  "retrieved": 6,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 84.2,
+  "translation_issues": []
+}

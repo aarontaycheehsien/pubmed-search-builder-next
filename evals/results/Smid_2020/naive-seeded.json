@@ -1,0 +1,20 @@
+{
+  "topic": "Smid_2020",
+  "source": "naive",
+  "condition": "seeded",
+  "strategy": "(\"structural equation modeling\"[tiab] OR \"structural equation model\"[tiab] OR SEM[tiab] OR \"latent variable model\"[tiab] OR \"latent variable\"[tiab] OR \"latent class\"[tiab] OR \"latent growth\"[tiab] OR \"confirmatory factor analysis\"[tiab] OR \"factor analysis\"[tiab] OR \"mediation analysis\"[tiab] OR \"mediated effect\"[tiab] OR \"indirect effect\"[tiab] OR \"multilevel model\"[tiab] OR \"growth mixture model\"[tiab] OR \"mixture model\"[tiab]) AND (\"Bayesian estimation\"[tiab] OR Bayesian[tiab] OR Bayes[tiab] OR \"prior distribution\"[tiab] OR \"informative prior\"[tiab] OR MCMC[tiab] OR \"Markov chain Monte Carlo\"[tiab] OR \"Gibbs sampling\"[tiab] OR \"posterior distribution\"[tiab])",
+  "scored": "20260926T201326Z",
+  "as_of": "2017-11-29",
+  "count": 1369,
+  "gold_scored": 11,
+  "gold_reachable": 11,
+  "retrieved": 8,
+  "recall_percent": 72.7,
+  "missed": [
+    "19001592",
+    "23148476",
+    "25765534"
+  ],
+  "nnr": 171.1,
+  "translation_issues": []
+}
