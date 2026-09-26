@@ -61,10 +61,14 @@ Tests run offline against a fake PubMed that evaluates Boolean queries over a sm
 
 ## Status
 
-- Done: core library and CLI, offline tests, `SKILL.md` and references.
-- Next: an evaluation harness that runs the skill end to end on gold-standard reviews (CLEF TAR,
-  SYNERGY) with sealed gold sets and `as_of` dating, against naive, lean-skill and original-review
-  baselines. New components are added only when they improve recall or workload there.
+- Done: core library and CLI, offline tests, `SKILL.md` and references, and the evaluation harness
+  (`evals/`, see its README) with 20 fixtures, naive and reference baselines, and Claude/Codex drivers.
+- First end-to-end runs (one run each, Claude, no seeds) are in `evals/RESULTS.md`. Both topics
+  reached 100% recall; on CD011926 the lean `creating-high-sensitivity-pubmed-searches-optimal`
+  skill did too, at similar workload and lower cost. Single runs on two topics prove the pipeline,
+  not a difference between skills.
+- Next: repeated runs across the suite (both skills, noseed and seeded) to find where they differ,
+  then add components only where they help.
 
 ## Licence
 

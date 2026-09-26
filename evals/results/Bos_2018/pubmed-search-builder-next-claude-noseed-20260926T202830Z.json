@@ -1,0 +1,67 @@
+{
+  "topic": "Bos_2018",
+  "source": "generated:pubmed-search-builder-next",
+  "driver": "claude",
+  "model": null,
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "pubmed-search-builder-next-claude-noseed-20260926T202830Z",
+  "scored": "20260926T204107Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 757,
+    "cost_usd": 2.6033796000000002,
+    "turns": 41,
+    "usage": {
+      "input_tokens": 82,
+      "cache_creation_input_tokens": 127031,
+      "cache_read_input_tokens": 3258623,
+      "output_tokens": 31084,
+      "output_tokens_details": {
+        "thinking_tokens": 8617
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 127031,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 1421,
+          "cache_read_input_tokens": 138330,
+          "cache_creation_input_tokens": 2377,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 2377
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    },
+    "is_error": false
+  },
+  "final_message": "es and not used to choose terms | 4 of 4 |\n\n**Decisions I made without you** (all recorded in `work/protocol.json`):\n- **Outcome as a search block:** small vessel disease is treated as the exposure and dementia/cognition as the outcome. I included the outcome as a search block because small vessel disease papers cover many other outcomes (stroke, gait, mood, mortality). I kept that block very broad, and removing it would not recover any of the known studies.\n- **Left to screening:** cohort design, community setting, incidence and MRI are not searched.\n- **Cutting noise:** the first draft retrieved 19,500 records. Most of the reduction came from requiring MRI wording alongside three broad stroke/haemorrhage headings, which were bringing in acute-stroke papers. No known study was lost at any step.\n- **Review rounds:** two fresh-context review rounds checked the strategy against the PRESS checklist. This was an automated internal check, not PRESS peer review. Every finding was fixed or answered with a stated reason. The main one I rejected was adding the White Matter heading: tested, it added 507–849 records of brain-connectivity (DTI) and psychiatric studies and nothing relevant.\n\n**Risks for the reviewer:**\n- **Screening load:** most of it comes from the broad cognition terms (Neuropsychological Tests, memory, information processing). If 12,495 records is too many, test removing those against the known studies before adding any study-design block.\n- **Under-represented markers:** the earlier reviews focused on white matter hyperintensities and microbleeds, so studies about only lacunes or perivascular spaces are thinly represented in the known sets.\n- **CT-based studies:** studies of white matter lesions seen on CT are retrieved, but the eligibility criteria specify MRI markers. Whether to include them is a screening decision.\n- **PubMed only:** a systematic review also needs Embase and other sources.\n\nFiles are in `./work`:\n- audit.md\n- protocol.json\n- strategy.json",
+  "strategy": "((\"Cerebral Small Vessel Diseases\"[Mesh] OR \"Leukoaraiosis\"[Mesh] OR \"Leukoencephalopathies\"[Mesh:noexp] OR (\"Cerebrovascular Disorders\"[Mesh:noexp] AND (\"Magnetic Resonance Imaging\"[Mesh] OR MRI[tiab] OR \"magnetic resonance\"[tiab] OR neuroimaging[tiab] OR \"Neuroimaging\"[Mesh])) OR (\"Brain Infarction\"[Mesh] AND (\"Magnetic Resonance Imaging\"[Mesh] OR MRI[tiab] OR \"magnetic resonance\"[tiab] OR neuroimaging[tiab] OR \"Neuroimaging\"[Mesh])) OR (\"Cerebral Hemorrhage\"[Mesh] AND (\"Magnetic Resonance Imaging\"[Mesh] OR MRI[tiab] OR \"magnetic resonance\"[tiab] OR neuroimaging[tiab] OR \"Neuroimaging\"[Mesh])) OR \"Cerebral Amyloid Angiopathy\"[Mesh] OR (\"small vessel disease\"[tiab] OR \"small vessel diseases\"[tiab] OR \"small-vessel disease\"[tiab] OR \"small-vessel diseases\"[tiab] OR SVD[tiab] OR CSVD[tiab] OR \"cerebral small vessel*\"[tiab] OR \"brain small vessel*\"[tiab] OR \"small vessel ischemic\"[tiab] OR \"small vessel ischaemic\"[tiab] OR \"small vessel cerebrovascular\"[tiab] OR \"small vessel pathology\"[tiab] OR \"small vessel change*\"[tiab] OR \"small-vessel ischemic\"[tiab] OR \"small-vessel ischaemic\"[tiab]) OR (microangiopath*[tiab] OR \"microvascular disease*\"[tiab] OR \"microvascular brain\"[tiab] OR \"cerebral microvascular\"[tiab] OR arteriolosclerosis[tiab]) OR (\"white matter hyperintens*\"[tiab] OR \"periventricular hyperintens*\"[tiab] OR \"subcortical hyperintens*\"[tiab] OR \"white matter signal hyperintens*\"[tiab] OR hyperintensities[tiab] OR hyperintensity[tiab] OR \"hyperintense lesion*\"[tiab] OR WMH[tiab] OR WMHs[tiab]) OR (\"white matter lesion\"[tiab] OR \"white matter lesions\"[tiab] OR \"white matter change\"[tiab] OR \"white matter changes\"[tiab] OR \"white matter disease\"[tiab] OR \"white matter damage\"[tiab] OR \"white matter abnormalities\"[tiab] OR \"white matter abnormality\"[tiab] OR \"white matter grade\"[tiab] OR \"white matter hypodensity\"[tiab] OR \"white matter hypodensities\"[tiab] OR WML[tiab] OR WMLs[tiab]) OR (leukoaraio*[tiab] OR leucoaraio*[tiab] OR \"leuko-araiosis\"[tiab] OR binswanger*[tiab] OR \"subcortical arteriosclerotic encephalopathy\"[tiab] OR \"ischemic leukoencephalopathy\"[tiab] OR \"vascular leukoencephalopathy\"[tiab]) OR (lacune*[tiab] OR lacunar*[tiab] OR lacunae[tiab]) OR (\"silent infarct*\"[tiab] OR \"silent brain infarct*\"[tiab] OR \"silent cerebral infarct*\"[tiab] OR \"silent stroke*\"[tiab] OR \"covert infarct*\"[tiab] OR \"covert brain infarct*\"[tiab] OR \"covert stroke*\"[tiab] OR \"covert cerebrovascular\"[tiab] OR \"subclinical infarct*\"[tiab] OR \"subclinical brain infarct*\"[tiab] OR \"subclinical cerebral infarct*\"[tiab] OR \"subclinical stroke*\"[tiab] OR \"subclinical cerebrovascular\"[tiab] OR \"asymptomatic infarct*\"[tiab] OR \"asymptomatic brain infarct*\"[tiab]) OR (\"brain infarct*\"[tiab] OR \"cerebral infarct*\"[tiab] OR \"MRI-defined infarct*\"[tiab] OR \"MRI-defined brain infarct*\"[tiab] OR \"MRI infarct*\"[tiab] OR \"subcortical infarct*\"[tiab] OR microinfarct*[tiab] OR \"micro-infarcts\"[tiab] OR \"micro infarcts\"[tiab]) OR (microbleed*[tiab] OR \"micro-bleeds\"[tiab] OR \"micro bleeds\"[tiab] OR microhemorrhag*[tiab] OR microhaemorrhag*[tiab] OR \"micro-hemorrhages\"[tiab] OR \"micro-haemorrhages\"[tiab] OR ((CMB[tiab] OR CMBs[tiab]) AND (cerebral[tiab] OR brain[tiab] OR MRI[tiab]))) OR (\"perivascular space\"[tiab] OR \"perivascular spaces\"[tiab] OR \"Virchow-Robin\"[tiab] OR EPVS[tiab] OR (PVS[tiab] AND (perivascular[tiab] OR MRI[tiab] OR \"magnetic resonance\"[tiab]))) OR (\"vascular brain injury\"[tiab] OR \"vascular brain lesions\"[tiab] OR \"vascular brain damage\"[tiab] OR \"cerebrovascular lesions\"[tiab] OR \"subcortical vascular\"[tiab] OR \"subcortical ischemic\"[tiab] OR \"subcortical ischaemic\"[tiab] OR \"cerebral amyloid angiopathy\"[tiab])) AND (\"Dementia\"[Mesh] OR \"Cognitive Dysfunction\"[Mesh] OR \"Cognition Disorders\"[Mesh] OR \"Cognition\"[Mesh] OR \"Memory Disorders\"[Mesh] OR \"Neuropsychological Tests\"[Mesh] OR (dementia*[tiab] OR alzheimer*[tiab]) OR (cognit*[tiab] OR neurocognit*[tiab] OR MCI[tiab]) OR (memory[tiab] OR \"executive function\"[tiab] OR \"executive functions\"[tiab] OR \"executive functioning\"[tiab] OR \"processing speed\"[tiab] OR \"information processing\"[tiab] OR \"psychomotor speed\"[tiab] OR neuropsycholog*[tiab] OR \"mini-mental\"[tiab] OR MMSE[tiab] OR \"intellectual decline\"[tiab] OR \"mental decline\"[tiab]))) NOT ((\"Animals\"[Mesh] NOT \"Humans\"[Mesh]))",
+  "as_of": "2017-05-06",
+  "count": 12495,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 9,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 1388.3,
+  "translation_issues": [],
+  "gold_seen_by_agent": 6,
+  "unseen_retrieved": 3,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "valid": true
+}

@@ -1,0 +1,67 @@
+{
+  "topic": "CD011926",
+  "source": "generated:pubmed-search-builder-next",
+  "driver": "claude",
+  "model": null,
+  "condition": "noseed",
+  "depth": "standard",
+  "scored": "20260926T202755Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 830,
+    "cost_usd": 2.2440086000000004,
+    "turns": 38,
+    "usage": {
+      "input_tokens": 74,
+      "cache_creation_input_tokens": 126054,
+      "cache_read_input_tokens": 2767226,
+      "output_tokens": 24142,
+      "output_tokens_details": {
+        "thinking_tokens": 6438
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 126054,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 1361,
+          "cache_read_input_tokens": 124990,
+          "cache_creation_input_tokens": 1064,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 1064
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    },
+    "is_error": false
+  },
+  "final_message": "here are no limits and no study-design filter.\n\n**How I checked it:**\n- **Known studies:** you had none, so I screened about 150 candidates from a narrow pilot search and from related-article links, and included 30. I kept 9 aside and used none of their words to build the search; it found all of those too. Relative recall on both groups is 100%, but it is not an estimate of true sensitivity.\n- **Prior review:** I found Pammi et al. 2011 (PMID 21949139), but couldn't get its reference list, so I couldn't test the search against its included studies. Doing that is the most useful next check.\n- **Rejected terms:** broad \"bacterial infection\" terms added about 600 mostly off-topic records, so I dropped them. I also swapped `FISH[tiab]`, which mainly finds records about fish, for the spelled-out \"fluorescence in situ hybridization\" phrases.\n- **Internal review:** a separate reviewer went through the draft once against the PRESS checklist. I made four of its six fixes and recorded reasons for the other two. This is an internal check, not the librarian review above.\n\n**Assumptions I made because you couldn't be asked:**\n- \"Molecular assay\" means tests that detect pathogen DNA or RNA (amplification, hybridisation or sequencing). Protein biomarkers and host gene-expression tests are not searched for; any that turn up are judged at screening.\n- Sepsis includes bloodstream infection, bacteraemia and fungaemia, both early- and late-onset.\n- Standard depth, no date or language limits, and the search is dated 2014-08-09.\n\n**Main risks:**\n- Newborn studies that only say \"infection\", with no sepsis, bacteraemia or blood-culture wording, could be missed.\n- Mixed child studies that never mention newborns or infants could be missed.\n- The strategy covers PubMed only; other databases need their own searches.\n\nThe full audit, with line-by-line counts, the version history, the review findings and these risks, is in `work/audit.md`.\n\nFiles are in `./`:\n- final_strategy.txt\n- work/audit.md",
+  "strategy": "(\"Infant, Newborn\"[Mesh] OR \"Infant, Newborn, Diseases\"[Mesh] OR \"Intensive Care Units, Neonatal\"[Mesh] OR \"Intensive Care, Neonatal\"[Mesh] OR neonat*[tiab] OR newborn*[tiab] OR \"new born\"[tiab] OR \"new borns\"[tiab] OR infant*[tiab] OR preterm*[tiab] OR \"pre term\"[tiab] OR premature*[tiab] OR prematurity[tiab] OR NICU*[tiab] OR \"low birth weight\"[tiab] OR \"low birthweight\"[tiab] OR VLBW[tiab] OR ELBW[tiab] OR \"early onset sepsis\"[tiab] OR \"late onset sepsis\"[tiab] OR \"early onset infection\"[tiab] OR \"late onset infection\"[tiab] OR baby[tiab] OR babies[tiab]) AND (\"Sepsis\"[Mesh] OR \"Systemic Inflammatory Response Syndrome\"[Mesh] OR \"Candidemia\"[Mesh] OR sepsis[tiab] OR septic*[tiab] OR septicemi*[tiab] OR septicaemi*[tiab] OR bacteremi*[tiab] OR bacteraemi*[tiab] OR fungemi*[tiab] OR fungaemi*[tiab] OR candidemi*[tiab] OR candidaemi*[tiab] OR pyemi*[tiab] OR pyaemi*[tiab] OR \"bloodstream infection\"[tiab] OR \"bloodstream infections\"[tiab] OR \"blood stream infection\"[tiab] OR \"blood stream infections\"[tiab] OR \"bloodstream pathogens\"[tiab] OR \"blood infection\"[tiab] OR \"blood infections\"[tiab] OR \"systemic infection\"[tiab] OR \"systemic infections\"[tiab] OR \"invasive infection\"[tiab] OR \"invasive infections\"[tiab] OR \"blood culture\"[tiab] OR \"blood cultures\"[tiab] OR SIRS[tiab] OR \"neonatal infection\"[tiab] OR \"neonatal infections\"[tiab] OR \"newborn infection\"[tiab] OR \"newborn infections\"[tiab] OR \"serious bacterial infection\"[tiab] OR \"serious bacterial infections\"[tiab] OR \"invasive bacterial infection\"[tiab] OR \"invasive bacterial infections\"[tiab] OR \"suspected infection\"[tiab] OR \"suspected infections\"[tiab]) AND (\"Molecular Diagnostic Techniques\"[Mesh] OR \"Nucleic Acid Amplification Techniques\"[Mesh] OR \"Nucleic Acid Hybridization\"[Mesh] OR \"Oligonucleotide Array Sequence Analysis\"[Mesh] OR \"Sequence Analysis, DNA\"[Mesh] OR \"DNA Probes\"[Mesh] OR \"RNA, Ribosomal, 16S\"[Mesh] OR \"RNA, Ribosomal, 18S\"[Mesh] OR \"DNA, Ribosomal\"[Mesh] OR \"Genes, rRNA\"[Mesh] OR \"DNA, Bacterial\"[Mesh] OR \"DNA, Fungal\"[Mesh] OR PCR[tiab] OR \"polymerase chain reaction\"[tiab] OR \"polymerase chain reactions\"[tiab] OR RT-PCR[tiab] OR qPCR[tiab] OR rtPCR[tiab] OR molecular[tiab] OR \"nucleic acid\"[tiab] OR \"nucleic acids\"[tiab] OR amplif*[tiab] OR 16S[tiab] OR 18S[tiab] OR rRNA[tiab] OR rDNA[tiab] OR \"ribosomal DNA\"[tiab] OR \"ribosomal RNA\"[tiab] OR DNA[tiab] OR SeptiFast[tiab] OR \"Septi Fast\"[tiab] OR LightCycler[tiab] OR SepsiTest[tiab] OR VYOO[tiab] OR Magicplex[tiab] OR Xpert[tiab] OR GeneXpert[tiab] OR microarray*[tiab] OR genechip*[tiab] OR \"gene chip\"[tiab] OR \"gene chips\"[tiab] OR hybridization[tiab] OR hybridisation[tiab] OR sequencing[tiab] OR pyrosequenc*[tiab] OR \"universal primer\"[tiab] OR \"universal primers\"[tiab] OR \"broad range\"[tiab] OR panbacterial[tiab] OR \"pan bacterial\"[tiab] OR \"loop mediated\"[tiab] OR LAMP[tiab] OR isothermal[tiab] OR multiplex[tiab] OR \"in situ hybridization\"[tiab] OR \"fluorescence in situ hybridization\"[tiab] OR \"fluorescent in situ hybridization\"[tiab] OR \"PNA FISH\"[tiab] OR \"High-Throughput Nucleotide Sequencing\"[Mesh] OR \"Metagenomics\"[Mesh] OR metagenom*[tiab] OR \"next generation sequencing\"[tiab] OR \"next-generation sequencing\"[tiab] OR NGS[tiab] OR FilmArray[tiab] OR BioFire[tiab] OR Verigene[tiab] OR T2Candida[tiab] OR \"T2 magnetic resonance\"[tiab] OR ddPCR[tiab] OR \"digital PCR\"[tiab] OR Unyvero[tiab])",
+  "as_of": "2014-08-09",
+  "count": 2055,
+  "gold_scored": 29,
+  "gold_reachable": 29,
+  "retrieved": 29,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 70.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 24,
+  "unseen_retrieved": 5,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "valid": true,
+  "run_label": "pubmed-search-builder-next-claude-noseed-20260926T201405Z"
+}

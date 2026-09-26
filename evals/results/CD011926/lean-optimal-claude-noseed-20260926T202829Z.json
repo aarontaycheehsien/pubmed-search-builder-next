@@ -1,0 +1,67 @@
+{
+  "topic": "CD011926",
+  "source": "generated:lean-optimal",
+  "driver": "claude",
+  "model": null,
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-claude-noseed-20260926T202829Z",
+  "scored": "20260926T204234Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 844,
+    "cost_usd": 1.7247566,
+    "turns": 39,
+    "usage": {
+      "input_tokens": 76,
+      "cache_creation_input_tokens": 80951,
+      "cache_read_input_tokens": 2382023,
+      "output_tokens": 30022,
+      "output_tokens_details": {
+        "thinking_tokens": 8248
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 80951,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 1191,
+          "cache_read_input_tokens": 94202,
+          "cache_creation_input_tokens": 425,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 425
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    },
+    "is_error": false
+  },
+  "final_message": "ook neonatal sepsis diagnostic records that the molecular block excludes (1,910 in total) and screened the titles of the 400 most recent. None evaluated a nucleic-acid assay; they were about CRP, procalcitonin, CD64, antigen tests and MALDI-TOF.\n- **A pitfall avoided:** the truncated form `PCR*` returned fewer records than spelling out PCR, PCRs and \"polymerase chain reaction(s)\". PubMed caps how many word variants a truncation expands to, so I used the explicit terms.\n- **Syntax:** PubMed reported no errors or warnings for the full query.\n\n**Decisions I made on your behalf:**\n- **No filters:** no study-design, language or date limits. During testing I limited results to 2014-08-09 or earlier; that limit is not in the final query.\n- **\"Molecular assay\" scope:** I read it as tests that detect pathogen DNA or RNA (PCR, 16S, broad-range, FISH, microarray, sequencing, isothermal methods, and products like SeptiFast). Tests that measure the baby's own gene expression aren't deliberately searched.\n- **Kept broad terms for sensitivity:** the words \"infant/infants/infancy\" and \"molecular\" in the title or abstract, \"blood culture\", and the full Sepsis heading, which also pulls in viremia and parasitemia. Each adds roughly 70–430 records, mostly irrelevant. The report gives the numbers and a narrower alternative for the sepsis heading if screening load matters more.\n- **No neonatal sepsis heading:** PubMed only added a specific \"Neonatal Sepsis\" heading in 2017, so title/abstract words do that job here.\n\nYou should also search other databases such as Embase and Cochrane CENTRAL; PubMed alone isn't enough for a diagnostic accuracy review.\n\nTwo things about my process:\n- **Workaround:** the skill's search tool couldn't send queries this long, so I added a small wrapper in `./work` that sends them in a different request format. The skill itself is unchanged.\n- **Your email:** the tool has your email address hard-coded and sends it to NCBI with every request, which NCBI asks for.",
+  "strategy": "(\"Infant, Newborn\"[Mesh] OR \"Infant, Newborn, Diseases\"[Mesh] OR \"Intensive Care Units, Neonatal\"[Mesh] OR \"Intensive Care, Neonatal\"[Mesh] OR neonat*[tiab] OR newborn*[tiab] OR \"new born\"[tiab] OR \"new borns\"[tiab] OR \"new-born\"[tiab] OR \"new-borns\"[tiab] OR preterm*[tiab] OR prematur*[tiab] OR NICU[tiab] OR NICUs[tiab] OR \"low birth weight\"[tiab] OR \"low birthweight\"[tiab] OR VLBW[tiab] OR ELBW[tiab] OR LBW[tiab] OR infant[tiab] OR infants[tiab] OR infancy[tiab] OR perinat*[tiab] OR nursery[tiab] OR nurseries[tiab] OR \"small for gestational age\"[tiab] OR \"large for gestational age\"[tiab] OR postmature[tiab] OR \"high birth weight\"[tiab]) AND (\"Sepsis\"[Mesh] OR \"Systemic Inflammatory Response Syndrome\"[Mesh:noexp] OR sepsis[tiab] OR sepses[tiab] OR septic*[tiab] OR septicemi*[tiab] OR septicaemi*[tiab] OR bacteremi*[tiab] OR bacteraemi*[tiab] OR fungemi*[tiab] OR fungaemi*[tiab] OR candidemi*[tiab] OR candidaemi*[tiab] OR \"bloodstream infection\"[tiab] OR \"bloodstream infections\"[tiab] OR \"blood stream infection\"[tiab] OR \"blood stream infections\"[tiab] OR \"blood infection\"[tiab] OR \"blood infections\"[tiab] OR BSI[tiab] OR BSIs[tiab] OR \"blood poisoning\"[tiab] OR \"blood poisonings\"[tiab] OR pyemi*[tiab] OR pyaemi*[tiab] OR pyohemi*[tiab] OR endotoxemi*[tiab] OR endotoxaemi*[tiab] OR \"bacterial infection\"[tiab:~3] OR \"bacterial infections\"[tiab:~3] OR \"fungal infection\"[tiab:~3] OR \"fungal infections\"[tiab:~3] OR \"invasive infection\"[tiab:~2] OR \"invasive infections\"[tiab:~2] OR \"systemic infection\"[tiab:~2] OR \"systemic infections\"[tiab:~2] OR \"invasive candidiasis\"[tiab] OR \"invasive candidosis\"[tiab] OR \"systemic inflammatory response syndrome\"[tiab] OR \"toxic shock\"[tiab] OR \"endotoxin shock\"[tiab] OR \"endotoxic shock\"[tiab] OR \"blood culture\"[tiab] OR \"blood cultures\"[tiab]) AND (\"Nucleic Acid Amplification Techniques\"[Mesh] OR \"Molecular Diagnostic Techniques\"[Mesh] OR \"Pathology, Molecular\"[Mesh] OR \"DNA, Bacterial\"[Mesh] OR \"DNA, Fungal\"[Mesh] OR \"RNA, Ribosomal, 16S\"[Mesh] OR \"RNA, Ribosomal, 23S\"[Mesh] OR \"DNA, Ribosomal\"[Mesh] OR \"DNA, Ribosomal Spacer\"[Mesh] OR \"Genes, rRNA\"[Mesh] OR \"Nucleic Acid Hybridization\"[Mesh] OR \"DNA Probes\"[Mesh] OR \"Oligonucleotide Array Sequence Analysis\"[Mesh] OR \"Sequence Analysis, DNA\"[Mesh] OR PCR[tiab] OR PCRs[tiab] OR \"polymerase chain reaction\"[tiab] OR \"polymerase chain reactions\"[tiab] OR RT-PCR[tiab] OR qPCR[tiab] OR \"real time\"[tiab] OR \"real-time\"[tiab] OR realtime[tiab] OR \"nucleic acid amplification\"[tiab] OR \"nucleic acid test\"[tiab] OR \"nucleic acid tests\"[tiab] OR \"nucleic acid testing\"[tiab] OR NAAT[tiab] OR NAATs[tiab] OR \"nucleic acid based\"[tiab] OR \"nucleic acid-based\"[tiab] OR \"DNA amplification\"[tiab] OR \"RNA amplification\"[tiab] OR \"gene amplification\"[tiab] OR amplicon*[tiab] OR molecular[tiab] OR 16S[tiab] OR 18S[tiab] OR 23S[tiab] OR rRNA[tiab] OR rDNA[tiab] OR \"ribosomal DNA\"[tiab] OR \"ribosomal RNA\"[tiab] OR \"broad range\"[tiab] OR \"broad-range\"[tiab] OR eubacterial[tiab] OR panbacterial[tiab] OR \"pan-bacterial\"[tiab] OR \"universal primer\"[tiab] OR \"universal primers\"[tiab] OR panfungal[tiab] OR \"pan-fungal\"[tiab] OR \"bacterial DNA\"[tiab] OR \"fungal DNA\"[tiab] OR \"microbial DNA\"[tiab] OR \"pathogen DNA\"[tiab] OR DNAemia[tiab] OR \"bacterial load\"[tiab] OR \"bacterial loads\"[tiab] OR SeptiFast[tiab] OR \"Septi Fast\"[tiab] OR LightCycler[tiab] OR SepsiTest[tiab] OR VYOO[tiab] OR \"Prove-it\"[tiab] OR FilmArray[tiab] OR Xpert[tiab] OR GeneXpert[tiab] OR Verigene[tiab] OR \"Plex-ID\"[tiab] OR Magicplex[tiab] OR \"in situ hybridization\"[tiab] OR \"in situ hybridisation\"[tiab] OR FISH[tiab] OR \"peptide nucleic acid\"[tiab] OR PNA[tiab] OR microarray*[tiab] OR \"DNA chip\"[tiab] OR \"DNA chips\"[tiab] OR \"gene chip\"[tiab] OR \"gene chips\"[tiab] OR \"DNA array\"[tiab] OR \"DNA arrays\"[tiab] OR \"loop mediated\"[tiab] OR \"loop-mediated\"[tiab] OR \"isothermal amplification\"[tiab] OR NASBA[tiab] OR \"ligase chain reaction\"[tiab] OR \"strand displacement amplification\"[tiab] OR \"transcription mediated amplification\"[tiab] OR \"transcription-mediated amplification\"[tiab] OR \"gene probe\"[tiab] OR \"gene probes\"[tiab] OR \"DNA probe\"[tiab] OR \"DNA probes\"[tiab] OR \"hybridization probe\"[tiab] OR \"hybridization probes\"[tiab] OR \"nucleic acid hybridization\"[tiab] OR \"nucleic acid probe\"[tiab] OR \"nucleic acid probes\"[tiab] OR sequencing[tiab] OR pyrosequencing[tiab] OR \"sequence analysis\"[tiab] OR \"self-sustained sequence replication\"[tiab] OR \"nucleic acid sequence-based amplification\"[tiab] OR \"nucleic acid sequence based amplification\"[tiab] OR \"ligation-dependent probe amplification\"[tiab] OR \"ligation dependent probe amplification\"[tiab] OR MLPA[tiab] OR \"random amplified polymorphic DNA\"[tiab] OR RAPD[tiab] OR \"arbitrarily primed\"[tiab] OR \"amplified fragment length polymorphism\"[tiab] OR AFLP[tiab] OR \"internal transcribed spacer\"[tiab] OR \"ribosomal spacer\"[tiab] OR \"oligonucleotide array\"[tiab] OR \"oligonucleotide arrays\"[tiab] OR \"cDNA array\"[tiab] OR \"cDNA arrays\"[tiab] OR genechip*[tiab] OR \"DNA microchip\"[tiab] OR \"DNA microchips\"[tiab] OR \"fluorescent in situ\"[tiab] OR \"fluorescence in situ\"[tiab] OR genotypic[tiab] OR \"nucleic acid\"[tiab] OR \"nucleic acids\"[tiab])",
+  "as_of": "2014-08-09",
+  "count": 2179,
+  "gold_scored": 29,
+  "gold_reachable": 29,
+  "retrieved": 29,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 75.1,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 29,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "valid": true
+}

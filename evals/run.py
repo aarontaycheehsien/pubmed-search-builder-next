@@ -109,7 +109,7 @@ def cmd_generate(args) -> int:
             if (run_dir / name).exists():
                 transcript = (run_dir / name).read_text(encoding="utf-8", errors="replace")
         card = {"topic": fixture["id"], "source": f"generated:{skill_name}", "driver": args.driver,
-                "model": args.model, "condition": args.condition, "depth": args.depth, "run_dir": str(run_dir),
+                "model": args.model, "condition": args.condition, "depth": args.depth, "run_label": label,
                 "scored": stamp(), "run": {k: v for k, v in run.items() if k != "final_message"},
                 "final_message": run.get("final_message", "")}
         strategy_path = run_dir / "final_strategy.txt"
