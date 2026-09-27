@@ -15,6 +15,11 @@ plus allowable qualifiers for descriptor/subheading combinations. Entry terms pr
 heading suggestions. An authority outage means unverified; a valid heading with zero retrieval
 is not an invalid heading. `mesh lookup/show` remain discovery tools, not delivery certificates.
 
+Also technical: a `[pt]`, `[sb]`, `[la]` or `[pa]` value PubMed reports as not found
+(`filter_value_not_found`; e.g. `"Randomised Controlled Trial"[pt]`), a tag after a group such as
+`(a OR b)[tiab]` (`group_field_tag`; PubMed drops it and searches All Fields), and typographic
+quotes, dashes or spaces (`typographic_character`); use plain ASCII and tag each term.
+
 No override, critic rejection, or accepted-risk label can waive a technical blocker. Diagnostics
 preserve original queries, full evidence and translations; final checks include filters and limits.
 

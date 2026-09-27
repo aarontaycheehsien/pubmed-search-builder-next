@@ -30,6 +30,16 @@ FIELD_GROUPS = (
 )
 ALIASES = {alias: group.split("|")[0] for group in FIELD_GROUPS for alias in group.split("|")}
 
+# Word-processor and LLM output substitutes these for plain ASCII. PubMed quietly normalises some of
+# them, but the tokeniser here does not treat curly quotes as quotes, other interfaces may not
+# normalise at all, and the delivered query must be the text that was actually validated.
+TYPOGRAPHIC = {
+    "“": '"', "”": '"', "„": '"', "‟": '"', "«": '"', "»": '"',
+    "‘": "'", "’": "'", "‚": "'", "‛": "'",
+    "‐": "-", "‑": "-", "‒": "-", "–": "-", "—": "-", "−": "-",
+    " ": " ", " ": " ", " ": " ", "​": "",
+}
+
 
 def tokens(text: str) -> list[str]:
     return TOKEN.findall(text)
@@ -78,6 +88,11 @@ def untagged(text: str) -> list[str]:
 
 def problems(text: str, *, combination: bool = False) -> list[tuple[str, str]]:
     found = []
+    for char in dict.fromkeys(c for c in text if c in TYPOGRAPHIC):
+        plain = TYPOGRAPHIC[char]
+        found.append(("typographic_character",
+                      f"replace typographic character U+{ord(char):04X} with "
+                      + (f"plain {plain!r}" if plain.strip() else "a plain space" if plain else "nothing")))
     need_operand, depth, previous = True, 0, None
     for token in tokens(text):
         if token in {'"', "[", "]"}:
@@ -99,7 +114,11 @@ def problems(text: str, *, combination: bool = False) -> list[tuple[str, str]]:
                 found.append(("syntax", "Boolean operator has no left operand"))
             need_operand = True
         elif token.startswith("["):
-            if need_operand or (previous and previous.startswith("[")):
+            if previous == ")" and not need_operand:
+                # PubMed does not distribute a tag over a group: it drops the tag and sends the
+                # group's words through Automatic Term Mapping into All Fields.
+                found.append(("group_field_tag", "PubMed ignores a field tag after a parenthesised group; tag each term"))
+            elif need_operand or (previous and previous.startswith("[")):
                 found.append(("syntax", "field tag has no operand or repeats another tag"))
             tag = token[1:-1].strip().lower()
             if not tag:

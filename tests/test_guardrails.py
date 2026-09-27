@@ -52,6 +52,8 @@ def codes(result):
     '"heart attack"[tiab:~-1]', '"heart attack[tiab]', "heart[tiab",
     "(heart[tiab] and attack[tiab])", "heart[tiab] AND", "heart[tiab] OR OR attack[tiab]",
     "heart[tiab])", "()[tiab]", '"heart"[tiab:~0]',
+    "(heart[tiab] OR attack[tiab])[tiab]", "“heart attack”[tiab]", '"anti–inflammatory"[tiab]',
+    "heart attack[tiab]",
 ])
 def test_lint_errors_cannot_evaluate_successfully(make_ws, bad):
     ws, pm = setup(make_ws, second=bad)
@@ -102,6 +104,43 @@ def test_eight_warnings_cannot_hide_later_errors():
                               errors={"fieldsnotfound": ["bogus"]})
     assert {"field_not_found", "truncation_dropped"} <= {r["code"] for r in rows}
     assert len(rows) > 8
+
+
+def test_group_tag_and_typographic_characters_are_named():
+    from psb import syntax
+    assert "group_field_tag" in {c for c, _ in syntax.problems("(asthma OR wheeze)[tiab]")}
+    assert "typographic_character" in {c for c, _ in syntax.problems("“Asthma”[Mesh]")}
+    assert not syntax.problems('("asthma"[tiab] OR wheeze[tiab]) AND child*[tiab]')
+
+
+@pytest.mark.parametrize("query,warnings,errors", [
+    ('"Randomised Controlled Trial"[pt] OR asthma[tiab]',
+     {"quotedphrasesnotfound": ['"Randomised Controlled Trial"[pt]']}, None),
+    ("systematicx[sb] OR asthma[tiab]", None, {"phrasesnotfound": ["systematicx"], "fieldsnotfound": []}),
+    ("englsh[la] OR asthma[tiab]", None, {"phrasesnotfound": ["englsh"], "fieldsnotfound": []}),
+])
+def test_unknown_filter_value_is_a_technical_blocker(query, warnings, errors):
+    rows = [validation.identify(r) for r in translation_issues(query, '"asthma"[Title/Abstract]', None, warnings, errors)]
+    assert [r["code"] for r in rows] == ["filter_value_not_found"]
+    assert rows[0]["blocking"] and not rows[0]["requires_review"]
+
+
+def test_free_text_not_found_stays_a_review_item():
+    rows = translation_issues('"frobnicated widget"[tiab] OR englsh[tiab] OR english[la]', "t", None,
+                              {"quotedphrasesnotfound": ['"frobnicated widget"[tiab]']},
+                              {"phrasesnotfound": ["englsh"]})
+    assert {r["code"] for r in rows} == {"quoted_phrase_not_found", "phrase_not_found"}
+    assert not any(validation.identify(r)["blocking"] for r in rows)
+
+
+def test_filter_value_blocker_cannot_be_waived(make_ws, monkeypatch):
+    ws, pm = setup(make_ws)
+    add_issue(pm, monkeypatch, code="filter_value_not_found", severity="error")
+    ev = snapshot(ws)
+    review(ws, ev)
+    result = deliver.report(ws)
+    assert not result["ok"] and "filter_value_not_found" in codes(result)
+    assert not (ws.root / "final-query.txt").exists()
 
 
 def test_tagged_subheading_normalisation_is_not_atm():
@@ -476,3 +515,6 @@ def test_live_authority_and_translation():
     found = pm.search('"Asthma"[Mesh] OR asthma[tiab]')
     assert isinstance(found["count"], int) and found["translation"]
     assert not any(i["severity"] == "error" for i in found["issues"])
+    for bad in ('"Randomised Controlled Trial"[pt] OR asthma[tiab]', "systematicx[sb] OR asthma[tiab]"):
+        assert "filter_value_not_found" in {i["code"] for i in pm.search(bad)["issues"]}
+    assert not any(i["severity"] == "error" for i in pm.search('"Randomized Controlled Trial"[pt] OR english[la]')["issues"])

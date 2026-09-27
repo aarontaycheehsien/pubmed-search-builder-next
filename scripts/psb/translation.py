@@ -32,6 +32,26 @@ def _pairs(translations: object) -> list[tuple[str, str]]:
     return [pair for pair in pairs if pair[0] or pair[1]]
 
 
+# Fields whose values come from a closed NLM list. A value PubMed cannot find in one of these is a
+# misspelt or invented value, not a rare word: it silently drops out of an OR, or empties an AND.
+FILTER_FIELDS = {"pt", "sb", "la", "pa"}
+FILTER_VALUE_MESSAGE = ("PubMed does not recognise this publication type, subset, language or pharmacological "
+                        "action value; use the exact NLM value.")
+
+
+def _filter_value(query: str, phrase: str) -> bool:
+    """True when a not-found phrase is a value of a closed-list field in ``query``.
+
+    Quoted not-found phrases come back with their tag (``"X"[pt]``); unquoted ones come back bare
+    (``systematicx``) and are matched against the query's tagged terms.
+    """
+    tagged = syntax.atoms(phrase)
+    if tagged:
+        return any(a["field"] in FILTER_FIELDS for a in tagged)
+    text = phrase.strip().strip('"').casefold()
+    return any(a["field"] in FILTER_FIELDS and a["text"].strip('"').casefold() == text for a in syntax.atoms(query))
+
+
 def translation_issues(
     query: str,
     translation: str,
@@ -47,11 +67,17 @@ def translation_issues(
 
     for item in _items(warnings):
         phrase_warning = "phrase" in item.casefold() and ("not found" in item.casefold() or "notfound" in item.casefold())
+        if phrase_warning and _filter_value(query, item.split(": ", 1)[-1]):
+            add("error", "filter_value_not_found", FILTER_VALUE_MESSAGE, item)
+            continue
         add("warning", "quoted_phrase_not_found" if phrase_warning else "pubmed_warning",
             "Review the clause translation; phrase-index absence does not establish zero retrieval."
             if phrase_warning else "PubMed reported a warning; review the translation.", item)
     if isinstance(errors, dict):
         for phrase in _items(errors.get("phrasesnotfound")):
+            if _filter_value(query, phrase):
+                add("error", "filter_value_not_found", FILTER_VALUE_MESSAGE, phrase)
+                continue
             add("warning", "phrase_not_found",
                 "Review this clause and its translation. Distinguish an unrecognised phrase, a zero-hit clause, "
                 "and an invalid controlled-vocabulary term; no automatic rewrite or deletion.", phrase)
