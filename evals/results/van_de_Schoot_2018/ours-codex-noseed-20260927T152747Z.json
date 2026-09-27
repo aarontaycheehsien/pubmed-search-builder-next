@@ -1,0 +1,37 @@
+{
+  "topic": "van_de_Schoot_2018",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260927T152747Z",
+  "scored": "20260927T154134Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 827
+  },
+  "final_message": "The final strategy is saved as a single line in [final_strategy.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20260927T152747Z/final_strategy.txt). PubMed returned **31,980 records** through the requested date cutoff, with no translation warnings.\n\nIt retrieved **9 of 9** screened records from a prior review’s references. That is relative recall against a small benchmark, not an estimate of sensitivity; no articles were supplied as seeds. The scope assumptions, line-by-line counts, screening notes, and critic findings are in the [audit](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20260927T152747Z/work/audit.md).\n\nThis draft still needs PRESS peer review by an information specialist before use.",
+  "strategy": "((\"Stress Disorders, Post-Traumatic\"[Mesh] OR PTSD[tiab] OR \"posttraumatic stress disorder\"[tiab] OR \"post-traumatic stress disorder\"[tiab] OR \"post traumatic stress disorder\"[tiab] OR \"posttraumatic stress\"[tiab] OR \"post-traumatic stress\"[tiab] OR \"post traumatic stress\"[tiab] OR posttraumatic stress disorder*[tiab] OR post-traumatic stress disorder*[tiab] OR post traumatic stress disorder*[tiab] OR posttraumatic stress symptom*[tiab] OR post-traumatic stress symptom*[tiab] OR post traumatic stress symptom*[tiab])) AND (1800:2016/01/24[dp])",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2016-01-24",
+  "count": 31980,
+  "gold_scored": 38,
+  "gold_reachable": 38,
+  "retrieved": 35,
+  "recall_percent": 92.1,
+  "missed": [
+    "20061839",
+    "20836603",
+    "26412244"
+  ],
+  "nnr": 913.7,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 35,
+  "unseen_recall_percent": 92.1,
+  "leakage": [],
+  "valid": true
+}

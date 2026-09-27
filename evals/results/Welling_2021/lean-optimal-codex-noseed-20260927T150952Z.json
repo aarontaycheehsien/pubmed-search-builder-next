@@ -1,0 +1,46 @@
+{
+  "topic": "Welling_2021",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260927T150952Z",
+  "scored": "20260927T152743Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1071
+  },
+  "final_message": "Created the **single-line** PubMed query at [final_strategy.txt](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/lean-optimal-codex-noseed-20260927T150952Z/final_strategy.txt) and the MeSH, testing, assumptions, and reporting notes at [search_report.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/lean-optimal-codex-noseed-20260927T150952Z/work/search_report.md).\n\nThe combined query ran through the NCBI CLI and returned **22,306 records** with the publication-date ceiling of 2020-11-22. Counts reflect the live PubMed index, not a frozen 2020 snapshot. No web search was used. This is a draft and should receive PRESS review by a second information specialist before final use.\n\n`uv sync` created `skill/scripts/.venv`; the attempt to remove it was blocked by execution policy, so it remains.",
+  "strategy": "( \"COVID-19\"[Mesh] OR \"COVID-19\"[tiab] OR \"COVID 19\"[tiab] OR \"SARS Coronavirus 2 Infection\"[tiab] OR \"2019-nCoV Infection\"[tiab] OR \"2019 nCoV Infection\"[tiab] OR \"2019-nCoV Infections\"[tiab] OR \"Infection, 2019-nCoV\"[tiab] OR \"SARS-CoV-2 Infection\"[tiab] OR \"Infection, SARS-CoV-2\"[tiab] OR \"SARS CoV 2 Infection\"[tiab] OR \"SARS-CoV-2 Infections\"[tiab] OR \"2019 Novel Coronavirus Disease\"[tiab] OR \"2019 Novel Coronavirus Infection\"[tiab] OR \"2019-nCoV Disease\"[tiab] OR \"2019 nCoV Disease\"[tiab] OR \"2019-nCoV Diseases\"[tiab] OR \"Disease, 2019-nCoV\"[tiab] OR \"COVID19\"[tiab] OR \"Coronavirus Disease 2019\"[tiab] OR \"Disease 2019, Coronavirus\"[tiab] OR \"Severe Acute Respiratory Syndrome Coronavirus 2 Infection\"[tiab] OR \"COVID-19 Virus Disease\"[tiab] OR \"COVID 19 Virus Disease\"[tiab] OR \"COVID-19 Virus Diseases\"[tiab] OR \"Disease, COVID-19 Virus\"[tiab] OR \"Virus Disease, COVID-19\"[tiab] OR \"Coronavirus Disease-19\"[tiab] OR \"Coronavirus Disease 19\"[tiab] OR \"COVID-19 Virus Infection\"[tiab] OR \"COVID 19 Virus Infection\"[tiab] OR \"COVID-19 Virus Infections\"[tiab] OR \"Infection, COVID-19 Virus\"[tiab] OR \"Virus Infection, COVID-19\"[tiab] OR \"COVID-19 Pandemic\"[tiab] OR \"COVID 19 Pandemic\"[tiab] OR \"Pandemic, COVID-19\"[tiab] OR \"COVID-19 Pandemics\"[tiab] OR covid*[tiab] OR \"2019-nCoV\"[tiab] OR \"SARS-CoV-2\"[tiab] OR \"severe acute respiratory syndrome coronavirus 2\"[tiab] OR lockdown*[tiab] OR quarantin*[tiab] OR \"stay-at-home\"[tiab] OR \"stay at home\"[tiab] OR \"shelter-in-place\"[tiab] OR \"shelter in place\"[tiab] OR \"social distancing\"[tiab] OR \"physical distancing\"[tiab] OR \"social isolation\"[tiab] OR confinement[tiab] OR shutdown*[tiab] ) AND ( \"Life Style\"[Mesh] OR \"Quality of Life\"[Mesh] OR \"Life Style\"[tiab] OR \"Life Styles\"[tiab] OR \"Lifestyle\"[tiab] OR \"Lifestyles\"[tiab] OR \"Life Style Induced Illness\"[tiab] OR \"Lifestyle Factors\"[tiab] OR \"Factor, Lifestyle\"[tiab] OR \"Lifestyle Factor\"[tiab] OR \"Lifestyle Behavior\"[tiab] OR \"Lifestyle Habits\"[tiab] OR \"Lifestyle Patterns\"[tiab] OR \"Quality of Life\"[tiab] OR \"Life Quality\"[tiab] OR \"Health-Related Quality Of Life\"[tiab] OR \"Health Related Quality Of Life\"[tiab] OR \"HRQOL\"[tiab] OR lifestyle*[tiab] OR behavior*[tiab] OR behaviour*[tiab] OR exercise*[tiab] OR \"physical activity\"[tiab] OR \"physical activities\"[tiab] OR sedentar*[tiab] OR diet*[tiab] OR nutrition*[tiab] OR sleep*[tiab] OR smok*[tiab] OR alcohol*[tiab] OR wellbeing[tiab] OR \"well-being\"[tiab] OR \"life satisfaction\"[tiab] OR \"psychological distress\"[tiab] OR \"mental health\"[tiab] OR anxiety[tiab] OR depress*[tiab] OR stress[tiab] OR loneliness[tiab] ) AND (\"1900/01/01\"[dp] : \"2020/11/22\"[dp])",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2020-11-22",
+  "count": 20531,
+  "gold_scored": 53,
+  "gold_reachable": 53,
+  "retrieved": 44,
+  "recall_percent": 83.0,
+  "missed": [
+    "32227671",
+    "32242089",
+    "32463530",
+    "32640077",
+    "32762129",
+    "32959000",
+    "33004322",
+    "33105275",
+    "33181369"
+  ],
+  "nnr": 466.6,
+  "translation_issues": [
+    "pubmed_warning",
+    "pubmed_warning"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 44,
+  "unseen_recall_percent": 83.0,
+  "leakage": [],
+  "valid": true
+}

@@ -1,0 +1,45 @@
+{
+  "topic": "Smid_2020",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260927T145608Z",
+  "scored": "20260927T150949Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 821
+  },
+  "final_message": "The high-sensitivity draft is in [final_strategy.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/lean-optimal-codex-noseed-20260927T145608Z/final_strategy.txt). It contains one query line with a publication-date ceiling of 2017-11-29. Development notes, MeSH checks, and query tests are in [search_build_report.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/lean-optimal-codex-noseed-20260927T145608Z/work/search_build_report.md).\n\nThe final search combines SEM and latent-variable model terms with Bayesian estimation terms. It leaves small-sample context, simulation, comparison, and publication type to screening to reduce the risk of missing eligible studies.\n\nThe present-day PubMed index returned 1,094 matches for the date-limited query. That count is not a frozen 2017 result set: current PubMed records can carry multiple publication dates. No seed PMIDs were available. This PubMed-only draft still needs review by a second information specialist under PRESS before use as the final search.",
+  "strategy": "((\"Factor Analysis, Statistical\"[Mesh] OR \"Factor Analysis, Statistical\"[tiab] OR \"Analysis, Statistical Factor\"[tiab] OR \"Analyses, Statistical Factor\"[tiab] OR \"Factor Analyses, Statistical\"[tiab] OR \"Statistical Factor Analyses\"[tiab] OR \"Statistical Factor Analysis\"[tiab] OR \"Analysis, Factor\"[tiab] OR \"Analyses, Factor\"[tiab] OR \"Factor Analysis\"[tiab] OR \"Factor Analyses\"[tiab] OR \"structural equation model\"[tiab] OR \"structural equation models\"[tiab] OR \"structural equation modeling\"[tiab] OR \"structural equation modelling\"[tiab] OR \"structural equation modelings\"[tiab] OR \"latent variable modeling\"[tiab] OR \"latent variable modelings\"[tiab] OR \"modeling, latent variable\"[tiab] OR \"variable modeling, latent\"[tiab] OR \"probabilistic latent semantic analysis\"[tiab] OR \"latent class model\"[tiab] OR \"latent class models\"[tiab] OR \"model, latent class\"[tiab] OR \"confirmatory factor analysis\"[tiab] OR \"exploratory factor analysis\"[tiab] OR \"factor analysis\"[tiab] OR \"factor analyses\"[tiab] OR \"latent growth\"[tiab] OR \"growth curve model\"[tiab] OR \"latent class\"[tiab] OR \"multilevel analysis\"[tiab] OR \"multilevel model\"[tiab] OR \"multilevel models\"[tiab] OR mediation[tiab] OR \"path analysis\"[tiab] OR CFA[tiab] OR SEM[tiab] OR \"item response theory\"[tiab] OR IRT[tiab])) AND ((\"Bayes Theorem\"[Mesh] OR \"Bayes Theorem\"[tiab] OR \"Theorem, Bayes\"[tiab] OR \"Bayesian Analysis\"[tiab] OR \"Bayesian Approach\"[tiab] OR \"Approach, Bayesian\"[tiab] OR \"Approachs, Bayesian\"[tiab] OR \"Bayesian Approachs\"[tiab] OR \"Analysis, Bayesian\"[tiab] OR \"Bayesian Forecast\"[tiab] OR \"Forecast, Bayesian\"[tiab] OR \"Bayesian Method\"[tiab] OR \"Method, Bayesian\"[tiab] OR \"Bayesian Prediction\"[tiab] OR \"Prediction, Bayesian\"[tiab] OR \"Bayesian Estimation\"[tiab] OR \"Estimation, Bayesian\"[tiab] OR Bayesian*[tiab] OR Bayes*[tiab] OR MCMC[tiab] OR \"Markov chain Monte Carlo\"[tiab])) AND (\"1900/01/01\"[Date - Publication] : \"2017/11/29\"[Date - Publication])",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2017-11-29",
+  "count": 1069,
+  "gold_scored": 14,
+  "gold_reachable": 14,
+  "retrieved": 11,
+  "recall_percent": 78.6,
+  "missed": [
+    "19001592",
+    "25765534",
+    "28342072"
+  ],
+  "nnr": 97.2,
+  "translation_issues": [
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 11,
+  "unseen_recall_percent": 78.6,
+  "leakage": [],
+  "valid": true
+}

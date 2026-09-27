@@ -1,0 +1,40 @@
+{
+  "topic": "van_Dis_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260927T151508Z",
+  "scored": "20260927T153053Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 944
+  },
+  "final_message": "Completed the standard-depth search build. The single-line PubMed query is in [final_strategy.txt](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-62327eccbc31903b/ours-codex-noseed-20260927T151508Z/final_strategy.txt); the [audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-62327eccbc31903b/ours-codex-noseed-20260927T151508Z/work/audit.md) includes line-by-line counts, assumptions, and the internal critique.\n\nThe query returned 15,738 records through the required 2017-08-24 publication cutoff. It retrieved all five screened development records; that relative recall is not independent validation. I assumed “long-term” means at least six months for pilot screening and included OCD and PTSD within “anxiety-related disorders.” An information specialist should PRESS-review the draft before use.",
+  "strategy": "((\"Anxiety Disorders\"[Mesh] OR \"Phobic Disorders\"[Mesh] OR \"Panic Disorder\"[Mesh] OR \"Obsessive-Compulsive Disorder\"[Mesh] OR \"Stress Disorders, Post-Traumatic\"[Mesh] OR anxi*[tiab] OR phobi*[tiab] OR agoraphobi*[tiab] OR panic[tiab] OR \"panic disorder\"[tiab] OR \"social anxiety\"[tiab] OR \"obsessive compulsive\"[tiab] OR \"obsessive-compulsive\"[tiab] OR OCD[tiab] OR PTSD[tiab] OR \"post-traumatic stress\"[tiab] OR \"posttraumatic stress\"[tiab]) AND (Cognitive Therapy[Mesh] OR \"Behavior Therapy\"[Mesh] OR \"cognitive behavioral therapy\"[tiab] OR \"cognitive behaviour therapy\"[tiab] OR \"cognitive behavior therapy\"[tiab] OR \"cognitive behavioral treatment\"[tiab] OR \"cognitive behavioural treatment\"[tiab] OR \"cognitive behavior treatment\"[tiab] OR \"cognitive behaviour treatment\"[tiab] OR \"cognitive behavioral intervention\"[tiab] OR \"cognitive behavioural intervention\"[tiab] OR \"cognitive behavior intervention\"[tiab] OR \"cognitive behaviour intervention\"[tiab] OR CBT[tiab] OR \"cognitive therapy\"[tiab])) AND ((\"1800/01/01\"[dp] : \"2017/08/24\"[dp]))",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2017-08-24",
+  "count": 15738,
+  "gold_scored": 61,
+  "gold_reachable": 61,
+  "retrieved": 57,
+  "recall_percent": 93.4,
+  "missed": [
+    "10838679",
+    "10883554",
+    "21644186",
+    "27459503"
+  ],
+  "nnr": 276.1,
+  "translation_issues": [
+    "automatic_term_mapping"
+  ],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 56,
+  "unseen_recall_percent": 93.3,
+  "leakage": [],
+  "valid": true
+}

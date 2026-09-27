@@ -1,0 +1,37 @@
+{
+  "topic": "Oud_2018",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260927T144524Z",
+  "scored": "20260927T145605Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 641
+  },
+  "final_message": "Created the one-line PubMed query in [final_strategy.txt](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-f0c52b41b3ed9d0d/lean-optimal-codex-noseed-20260927T144524Z/final_strategy.txt>). It includes a publication-date ceiling of March 27, 2015; the final CLI check returned 1,903 records.\n\nThe search notes, including MeSH checks, query tests, and assumptions, are in [search_notes.md](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-f0c52b41b3ed9d0d/lean-optimal-codex-noseed-20260927T144524Z/work/search_notes.md>). This is a draft for review by a second information specialist before use as the final systematic-review search.",
+  "strategy": "(\"Borderline Personality Disorder\"[Mesh] OR \"Borderline Personality Disorder\"[tiab] OR \"Borderline Personality Disorders\"[tiab] OR \"borderline personality\"[tiab] OR \"borderline personalities\"[tiab] OR \"Disorder, Borderline Personality\"[tiab] OR \"Disorders, Borderline Personality\"[tiab] OR \"Personality Disorder, Borderline\"[tiab] OR \"Personality Disorders, Borderline\"[tiab] OR \"emotionally unstable personality disorder\"[tiab] OR \"emotionally unstable personality\"[tiab] OR BPD[tiab]) AND (\"Psychotherapy\"[Mesh] OR psychotherap*[tiab] OR \"dialectical behavior therapy\"[tiab] OR \"dialectical behaviour therapy\"[tiab] OR \"dialectical behavioral therapy\"[tiab] OR \"dialectical behavioural therapy\"[tiab] OR DBT[tiab] OR \"mentalization based treatment\"[tiab] OR \"mentalization-based treatment\"[tiab] OR \"mentalization based therapy\"[tiab] OR \"mentalization-based therapy\"[tiab] OR \"mentalisation based treatment\"[tiab] OR \"mentalisation-based treatment\"[tiab] OR \"mentalisation based therapy\"[tiab] OR \"mentalisation-based therapy\"[tiab] OR MBT[tiab] OR \"transference focused psychotherapy\"[tiab] OR \"transference-focused psychotherapy\"[tiab] OR \"transference focused therapy\"[tiab] OR \"transference-focused therapy\"[tiab] OR TFP[tiab] OR \"schema therapy\"[tiab] OR \"schema-focused therapy\"[tiab] OR \"schema focused therapy\"[tiab] OR STEPPS[tiab] OR \"systems training for emotional predictability and problem solving\"[tiab] OR \"general psychiatric management\"[tiab] OR GPM[tiab] OR \"dynamic deconstructive psychotherapy\"[tiab] OR DDP[tiab] OR \"cognitive analytic therapy\"[tiab] OR \"cognitive analytic psychotherapy\"[tiab] OR \"cognitive behavioral therapy\"[tiab] OR \"cognitive behaviour therapy\"[tiab] OR \"cognitive behavioural therapy\"[tiab] OR CBT[tiab]) AND 1900/01/01:2015/03/27[dp]",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2015-03-27",
+  "count": 1880,
+  "gold_scored": 17,
+  "gold_reachable": 17,
+  "retrieved": 16,
+  "recall_percent": 94.1,
+  "missed": [
+    "25806661"
+  ],
+  "nnr": 117.5,
+  "translation_issues": [
+    "pubmed_warning"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 16,
+  "unseen_recall_percent": 94.1,
+  "leakage": [],
+  "valid": true
+}

@@ -1,0 +1,33 @@
+{
+  "topic": "Muthu_2022",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260927T142823Z",
+  "scored": "20260927T144522Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1019
+  },
+  "final_message": "The single-line PubMed query is saved in [final_strategy.txt](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-05063212dadf5296/ours-codex-noseed-20260927T142823Z/final_strategy.txt). The full strategy, line counts, scope assumptions, and audit are in [audit.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-05063212dadf5296/ours-codex-noseed-20260927T142823Z/work/audit.md).\n\nWith the 2020-05-15 publication cutoff, PubMed returned **583 records**. The query retrieved all **27 screened relevant records**: 19 development records and 8 held-out validation records. This is relative recall on a pilot-derived set, not an estimate of sensitivity. No web search or post-cutoff literature was used.\n\nThe scope was not personally confirmed because you asked me to proceed without questions. The two internal critique rounds resolved their findings; an information specialist’s PRESS peer review is still pending.",
+  "strategy": "((\"Rotator Cuff Injuries\"[Mesh] OR \"Rotator cuff disease\"[tiab] OR \"rotator cuff diseases\"[tiab] OR \"rotator cuff syndrome\"[tiab] OR \"rotator cuff syndromes\"[tiab] OR \"rotator cuff lesion\"[tiab] OR \"rotator cuff lesions\"[tiab] OR \"rotator cuff tendinopathy\"[tiab] OR \"rotator cuff tendinopathies\"[tiab] OR \"rotator cuff pathology\"[tiab] OR \"Rotator Cuff\"[Mesh] OR \"rotator cuff\"[tiab] OR \"rotator cuff tear\"[tiab] OR \"rotator cuff tears\"[tiab] OR \"rotator cuff repair\"[tiab] OR \"rotator cuff repairs\"[tiab] OR \"cuff tear\"[tiab] OR \"cuff tears\"[tiab] OR \"cuff repair\"[tiab] OR \"cuff repairs\"[tiab] OR supraspinatus[tiab] OR infraspinatus[tiab] OR subscapularis[tiab] OR \"full thickness tear\"[tiab] OR \"full-thickness tear\"[tiab] OR \"partial thickness tear\"[tiab] OR \"partial-thickness tear\"[tiab]) AND (\"Platelet-Rich Plasma\"[Mesh] OR \"Mesenchymal Stem Cells\"[Mesh] OR \"Stem Cells\"[Mesh] OR \"Bone Marrow Cells\"[Mesh:noexp] OR \"Cell- and Tissue-Based Therapy\"[Mesh:noexp] OR \"Cell Transplantation\"[Mesh] OR \"Mesenchymal Stem Cell Transplantation\"[Mesh] OR \"Tissue Engineering\"[Mesh] OR \"platelet-rich plasma\"[tiab] OR \"platelet rich plasma\"[tiab] OR PRP[tiab] OR \"platelet-rich fibrin\"[tiab] OR \"platelet rich fibrin\"[tiab] OR \"platelet-rich fibrin matrix\"[tiab] OR \"platelet rich fibrin matrix\"[tiab] OR \"platelet-rich plasma fibrin matrix\"[tiab] OR \"platelet-rich fibrin gel\"[tiab] OR \"leukocyte-rich platelet-rich fibrin\"[tiab] OR \"platelet-leukocyte membrane\"[tiab] OR PRFM[tiab] OR L-PRF[tiab] OR \"autologous conditioned plasma\"[tiab] OR \"autologous platelet concentrate\"[tiab] OR \"platelet lysate\"[tiab] OR \"platelet gel\"[tiab] OR \"mesenchymal stem cell\"[tiab] OR \"mesenchymal stem cells\"[tiab] OR \"mesenchymal stromal cell\"[tiab] OR \"mesenchymal stromal cells\"[tiab] OR \"stem cell\"[tiab] OR \"stem cells\"[tiab] OR \"stem cell*\"[tiab] OR MSC[tiab] OR MSCs[tiab] OR \"bone marrow aspirate\"[tiab] OR \"bone marrow concentrate\"[tiab] OR \"bone marrow aspirate concentrate\"[tiab] OR \"bone marrow-derived cell\"[tiab] OR \"bone marrow derived cell\"[tiab] OR BMAC[tiab] OR BMC[tiab] OR \"adipose-derived stem cell\"[tiab] OR \"adipose derived stem cell\"[tiab] OR \"adipose-derived cell\"[tiab] OR \"adipose derived cell\"[tiab] OR \"stromal vascular fraction\"[tiab] OR \"tendon-derived stem cell\"[tiab] OR \"tendon derived stem cell\"[tiab] OR \"tendon stem cell\"[tiab] OR \"tendon progenitor cell\"[tiab] OR \"biologic augmentation\"[tiab] OR \"biological augmentation\"[tiab] OR \"bone marrow stimulation\"[tiab] OR \"marrow stimulation\"[tiab] OR \"marrow venting\"[tiab] OR microfracture[tiab])) AND ((\"1800/01/01\"[dp] : \"2020/05/15\"[dp]))",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2020-05-15",
+  "count": 583,
+  "gold_scored": 6,
+  "gold_reachable": 6,
+  "retrieved": 6,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 97.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 5,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "valid": true
+}

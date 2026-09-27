@@ -1,0 +1,19 @@
+{
+  "topic": "Muthu_2022",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260927T114833Z",
+  "scored": "20260927T114845Z",
+  "run": {
+    "returncode": 1,
+    "timed_out": false,
+    "seconds": 12
+  },
+  "final_message": "",
+  "valid": false,
+  "error": "no final_strategy.txt"
+}

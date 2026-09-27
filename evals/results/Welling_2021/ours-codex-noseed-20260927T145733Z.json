@@ -1,0 +1,37 @@
+{
+  "topic": "Welling_2021",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260927T145733Z",
+  "scored": "20260927T151505Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1052
+  },
+  "final_message": "## Deliverables\n\n- [Final one-line PubMed query](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260927T145733Z/final_strategy.txt>)\n- [Full audit, line counts, and critique notes](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260927T145733Z/work/audit.md>)\n\nThe search uses one broad COVID-19/pandemic and restriction block; lifestyle and well-being outcomes are screened rather than required as a second block. The publication cutoff is **2020-11-22**. PubMed returned **151,652 records** with that cutoff.\n\nAll six records in the small development set were retrieved. That is **relative recall on records used while building the strategy**, not independent validation; no held-out set was available. The draft still needs PRESS peer review by an information specialist before use.",
+  "strategy": "((Coronavirus Infections[Mesh] OR Pandemics[Mesh] OR Quarantine[Mesh] OR COVID-19[tiab] OR COVID19[tiab] OR \"COVID 19\"[tiab] OR \"coronavirus disease 2019\"[tiab] OR \"2019 novel coronavirus\"[tiab] OR 2019-nCoV[tiab] OR SARS-CoV-2[tiab] OR SARS-CoV2[tiab] OR \"severe acute respiratory syndrome coronavirus 2\"[tiab] OR coronavirus[tiab] OR pandemic*[tiab] OR lockdown*[tiab] OR \"lock down\"[tiab] OR quarantine*[tiab] OR \"stay at home\"[tiab] OR \"stay-at-home\"[tiab] OR \"stay home\"[tiab] OR \"shelter in place\"[tiab] OR \"shelter-in-place\"[tiab] OR \"social distancing\"[tiab] OR \"social isolation\"[tiab] OR \"self isolation\"[tiab] OR confinement[tiab] OR \"home confinement\"[tiab] OR \"home-confinement\"[tiab] OR \"movement restriction\"[tiab] OR \"movement restrictions\"[tiab] OR \"movement control order\"[tiab] OR self-isolation[tiab] OR self-isolate[tiab] OR self-isolated[tiab] OR \"physical distancing\"[tiab] OR \"physical distance\"[tiab] OR \"restriction of movement\"[tiab] OR \"mobility restriction\"[tiab] OR \"mobility restrictions\"[tiab])) AND ((\"1900/01/01\"[dp] : \"2020/11/22\"[dp]))",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2020-11-22",
+  "count": 151652,
+  "gold_scored": 53,
+  "gold_reachable": 53,
+  "retrieved": 52,
+  "recall_percent": 98.1,
+  "missed": [
+    "33105275"
+  ],
+  "nnr": 2916.4,
+  "translation_issues": [
+    "automatic_term_mapping"
+  ],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 51,
+  "unseen_recall_percent": 98.1,
+  "leakage": [],
+  "valid": true
+}

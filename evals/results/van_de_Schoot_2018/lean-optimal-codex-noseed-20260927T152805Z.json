@@ -1,0 +1,46 @@
+{
+  "topic": "van_de_Schoot_2018",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260927T152805Z",
+  "scored": "20260927T154552Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1066
+  },
+  "final_message": "The draft search is saved as a single line in [final_strategy.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/lean-optimal-codex-noseed-20260927T152805Z/final_strategy.txt). The workflow, MeSH decisions, counts, and limitations are in the [search report](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/lean-optimal-codex-noseed-20260927T152805Z/work/search_report.md).\n\nThe final query returned 7,135 records with the 2016-01-24 publication-date cap. No seed PMIDs were available, so validation was limited to MeSH checks, query testing, and sample inspection. The strategy is a draft and should be reviewed by a second information specialist before final use.",
+  "strategy": "(\"Stress Disorders, Post-Traumatic\"[Mesh] OR \"Stress Disorders, Post-Traumatic\"[tiab] OR \"Post-Traumatic Stress Disorder\"[tiab] OR \"Stress Disorder, Post-Traumatic\"[tiab] OR \"Post Traumatic Stress Disorder\"[tiab] OR \"Neuroses, Post-Traumatic\"[tiab] OR \"Neuroses, Post Traumatic\"[tiab] OR \"Post-Traumatic Neuroses\"[tiab] OR \"PTSD\"[tiab] OR \"Stress Disorder, Post Traumatic\"[tiab] OR \"Post-Traumatic Stress Disorders\"[tiab] OR \"Post Traumatic Stress Disorders\"[tiab] OR \"Posttraumatic Stress Disorders\"[tiab] OR \"Posttraumatic Stress Disorder\"[tiab] OR \"Stress Disorder, Posttraumatic\"[tiab] OR \"Stress Disorders, Posttraumatic\"[tiab] OR \"Neuroses, Posttraumatic\"[tiab] OR \"Posttraumatic Neuroses\"[tiab] OR \"Acute Post-Traumatic Stress Disorder\"[tiab] OR \"Acute Post Traumatic Stress Disorder\"[tiab] OR \"Chronic Post-Traumatic Stress Disorder\"[tiab] OR \"Chronic Post Traumatic Stress Disorder\"[tiab] OR \"Delayed Onset Post-Traumatic Stress Disorder\"[tiab] OR \"Delayed Onset Post Traumatic Stress Disorder\"[tiab] OR \"Moral Injury\"[tiab] OR \"Injury, Moral\"[tiab] OR \"Moral Injuries\"[tiab] OR PTSD[tiab] OR \"post-traumatic stress\"[tiab] OR \"post traumatic stress\"[tiab] OR \"posttraumatic stress\"[tiab] OR \"posttraumatic stress symptoms\"[tiab] OR \"post-traumatic stress symptoms\"[tiab] OR \"post traumatic stress symptoms\"[tiab] OR \"posttraumatic stress symptom\"[tiab] OR \"post-traumatic stress symptom\"[tiab] OR \"post traumatic stress symptom\"[tiab] OR \"PTSD symptoms\"[tiab]) AND (\"Longitudinal Studies\"[Mesh] OR \"Follow-Up Studies\"[Mesh] OR \"Disease Progression\"[Mesh] OR \"Longitudinal Studies\"[tiab] OR \"Longitudinal Study\"[tiab] OR \"Studies, Longitudinal\"[tiab] OR \"Study, Longitudinal\"[tiab] OR \"Longitudinal Survey\"[tiab] OR \"Longitudinal Surveys\"[tiab] OR \"Survey, Longitudinal\"[tiab] OR \"Surveys, Longitudinal\"[tiab] OR \"Bogalusa Heart Study\"[tiab] OR \"Bogalusa Heart Studies\"[tiab] OR \"Heart Studies, Bogalusa\"[tiab] OR \"Heart Study, Bogalusa\"[tiab] OR \"Studies, Bogalusa Heart\"[tiab] OR \"Study, Bogalusa Heart\"[tiab] OR \"California Teachers Study\"[tiab] OR \"California Teachers Studies\"[tiab] OR \"Studies, California Teachers\"[tiab] OR \"Study, California Teachers\"[tiab] OR \"Teachers Studies, California\"[tiab] OR \"Teachers Study, California\"[tiab] OR \"Jackson Heart Study\"[tiab] OR \"Heart Studies, Jackson\"[tiab] OR \"Heart Study, Jackson\"[tiab] OR \"Jackson Heart Studies\"[tiab] OR \"Studies, Jackson Heart\"[tiab] OR \"Tuskegee Syphilis Study\"[tiab] OR \"Syphilis Studies, Tuskegee\"[tiab] OR \"Syphilis Study, Tuskegee\"[tiab] OR \"Tuskegee Syphilis Studies\"[tiab] OR \"Framingham Heart Study\"[tiab] OR \"Framingham Heart Studies\"[tiab] OR \"Heart Studies, Framingham\"[tiab] OR \"Heart Study, Framingham\"[tiab] OR \"Follow-Up Studies\"[tiab] OR \"Follow Up Studies\"[tiab] OR \"Follow-Up Study\"[tiab] OR \"Studies, Follow-Up\"[tiab] OR \"Study, Follow-Up\"[tiab] OR \"Followup Studies\"[tiab] OR \"Followup Study\"[tiab] OR \"Studies, Followup\"[tiab] OR \"Study, Followup\"[tiab] OR \"Disease Progression\"[tiab] OR \"Progression, Disease\"[tiab] OR \"Disease Exacerbation\"[tiab] OR \"Exacerbation, Disease\"[tiab] OR \"Clinical Course\"[tiab] OR \"Clinical Progression\"[tiab] OR \"Progression, Clinical\"[tiab] OR trajector*[tiab] OR longitudinal[tiab] OR \"longitudinal course\"[tiab] OR \"symptom trajectory\"[tiab] OR \"symptom trajectories\"[tiab] OR \"trajectory of symptoms\"[tiab] OR \"trajectories of symptoms\"[tiab] OR \"course of symptoms\"[tiab] OR \"symptom course\"[tiab] OR \"course of illness\"[tiab] OR \"illness course\"[tiab] OR \"course of disease\"[tiab] OR \"natural history\"[tiab] OR \"disease course\"[tiab] OR \"symptom pattern\"[tiab] OR \"symptom patterns\"[tiab] OR \"pattern of symptoms\"[tiab] OR \"patterns of symptoms\"[tiab] OR \"symptom change\"[tiab] OR \"symptom changes\"[tiab] OR \"change in symptoms\"[tiab] OR \"changes in symptoms\"[tiab] OR followup[tiab] OR \"follow-up\"[tiab] OR \"follow up\"[tiab] OR \"follow up study\"[tiab] OR persistent[tiab] OR persistence[tiab] OR chronicity[tiab] OR remission[tiab] OR recovery[tiab] OR subtype*[tiab] OR subgroup*[tiab] OR \"latent class\"[tiab] OR \"latent classes\"[tiab]) AND (\"1900/01/01\"[dp] : \"2016/01/24\"[dp])",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2016-01-24",
+  "count": 7025,
+  "gold_scored": 38,
+  "gold_reachable": 38,
+  "retrieved": 35,
+  "recall_percent": 92.1,
+  "missed": [
+    "20061839",
+    "20836603",
+    "26412244"
+  ],
+  "nnr": 200.7,
+  "translation_issues": [
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 35,
+  "unseen_recall_percent": 92.1,
+  "leakage": [],
+  "valid": true
+}

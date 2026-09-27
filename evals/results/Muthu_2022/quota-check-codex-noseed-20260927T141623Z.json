@@ -1,0 +1,19 @@
+{
+  "topic": "Muthu_2022",
+  "source": "generated:quota-check",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "quota-check-codex-noseed-20260927T141623Z",
+  "scored": "20260927T141723Z",
+  "run": {
+    "returncode": 1,
+    "timed_out": true,
+    "seconds": 60
+  },
+  "final_message": "",
+  "valid": false,
+  "error": "no final_strategy.txt"
+}

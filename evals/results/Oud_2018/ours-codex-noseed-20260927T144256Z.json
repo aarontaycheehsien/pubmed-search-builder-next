@@ -1,0 +1,37 @@
+{
+  "topic": "Oud_2018",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260927T144256Z",
+  "scored": "20260927T145731Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 874
+  },
+  "final_message": "Completed the standard-depth PubMed strategy with the required 2015-03-27 cutoff. The final query is saved as a single line in [final_strategy.txt](/abs/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-f0c52b41b3ed9d0d/ours-codex-noseed-20260927T144256Z/final_strategy.txt); the full audit and assumptions are in [audit.md](/abs/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-f0c52b41b3ed9d0d/ours-codex-noseed-20260927T144256Z/work/audit.md).\n\nThe strategy returned 1,880 records. It retrieved all 18 screened development records, but there was no independent benchmark, so that relative recall does not establish sensitivity. The internal PRESS-structured critique has no open must-fix findings; an information specialist’s PRESS peer review is still needed before use.",
+  "strategy": "((Borderline Personality Disorder[Mesh] OR \"borderline personality disorder\"[tiab] OR \"borderline personality disorders\"[tiab] OR \"borderline personality\"[tiab] OR \"personality disorder, borderline\"[tiab] OR \"borderline personality pathology\"[tiab] OR BPD[tiab] OR \"emotionally unstable personality disorder\"[tiab]) AND (Psychotherapy[Mesh] OR Behavior Therapy[Mesh] OR Psychoanalytic Therapy[Mesh] OR psychotherap*[tiab] OR \"psychological therap*\"[tiab] OR \"psychological treatment\"[tiab] OR \"psychological treatments\"[tiab] OR \"behavior therap*\"[tiab] OR \"behaviour therap*\"[tiab] OR \"dialectical behavio* therap*\"[tiab] OR \"dialectical behavio* treatment\"[tiab] OR \"mentalization-based treatment\"[tiab] OR \"mentalisation-based treatment\"[tiab] OR \"mentalization based treatment\"[tiab] OR \"mentalisation based treatment\"[tiab] OR \"transference-focused psychotherapy\"[tiab] OR \"transference focused psychotherapy\"[tiab] OR \"schema-focused therap*\"[tiab] OR \"schema focused therap*\"[tiab] OR \"schema therap*\"[tiab] OR STEPPS[tiab] OR \"systems training for emotional predictability and problem solving\"[tiab] OR \"dynamic deconstructive psychotherapy\"[tiab] OR \"cognitive analytic therap*\"[tiab] OR \"psychodynamic therap*\"[tiab] OR \"interpersonal psychotherapy\"[tiab] OR \"interpersonal therap*\"[tiab] OR \"manual-assisted cognitive treatment\"[tiab] OR \"manual assisted cognitive treatment\"[tiab] OR \"client-centered therap*\"[tiab] OR \"client centred therap*\"[tiab] OR \"general psychiatric management\"[tiab] OR DBT[tiab] OR MBT[tiab] OR TFP[tiab] OR \"cognitive behavioral therap*\"[tiab] OR \"cognitive behavioural therap*\"[tiab] OR \"cognitive-behavioral therapy\"[tiab] OR \"cognitive-behavioural therapy\"[tiab])) AND (1800/01/01:2015/03/27[dp])",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2015-03-27",
+  "count": 1880,
+  "gold_scored": 17,
+  "gold_reachable": 17,
+  "retrieved": 16,
+  "recall_percent": 94.1,
+  "missed": [
+    "25806661"
+  ],
+  "nnr": 117.5,
+  "translation_issues": [
+    "automatic_term_mapping"
+  ],
+  "gold_seen_by_agent": 6,
+  "unseen_retrieved": 10,
+  "unseen_recall_percent": 90.9,
+  "leakage": [],
+  "valid": true
+}

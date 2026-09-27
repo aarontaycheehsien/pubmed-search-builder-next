@@ -1,0 +1,39 @@
+{
+  "topic": "Smid_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260927T145334Z",
+  "scored": "20260927T151730Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1436
+  },
+  "final_message": "Completed the standard-depth strategy and audit. The copyable query is on one line in [final_strategy.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260927T145334Z/final_strategy.txt); the full rationale and search history are in [audit.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260927T145334Z/work/audit.md).\n\nThe cutoff-bound query returns **870 records** through the 2017-11-29 PubMed entry-date cutoff. It retrieved all **7/7** screened development records; that is relative recall on a small, non-independent set, not sensitivity. Two internal PRESS-structured reviews found no issues. An information specialist’s PRESS peer review is still needed before use.",
+  "strategy": "(\"Factor Analysis, Statistical\"[Mesh] OR \"structural equation model*\"[tiab] OR \"structural equation modeling\"[tiab] OR \"structural equation modelling\"[tiab] OR \"latent variable model*\"[tiab] OR \"latent variable\"[tiab] OR \"confirmatory factor analys*\"[tiab] OR \"factor analys*\"[tiab] OR \"path analys*\"[tiab] OR \"latent growth\"[tiab] OR \"growth mixture model*\"[tiab] OR \"latent class model*\"[tiab] OR \"multilevel structural equation\"[tiab] OR \"mediation model*\"[tiab] OR SEM[tiab] OR \"latent covariate model*\"[tiab] OR \"latent group mean\"[tiab] OR \"mediational model*\"[tiab] OR \"logistic mediation\"[tiab]) AND (\"Bayes Theorem\"[Mesh] OR Bayesian[tiab] OR Bayes[tiab] OR \"Bayesian estimat*\"[tiab] OR \"Bayesian approach*\"[tiab] OR \"Bayesian method*\"[tiab] OR \"Bayesian analys*\"[tiab] OR \"Bayesian structural equation\"[tiab] OR \"Bayesian SEM\"[tiab] OR \"prior distribution*\"[tiab] OR \"posterior distribution*\"[tiab] OR \"Markov chain Monte Carlo\"[tiab] OR MCMC[tiab] OR \"Gibbs sampling\"[tiab]) AND 1800/01/01:2017/11/29[Date - Entry]",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2017-11-29",
+  "count": 870,
+  "gold_scored": 14,
+  "gold_reachable": 14,
+  "retrieved": 9,
+  "recall_percent": 64.3,
+  "missed": [
+    "19001592",
+    "19968395",
+    "23148476",
+    "25765534",
+    "27269278"
+  ],
+  "nnr": 96.7,
+  "translation_issues": [],
+  "gold_seen_by_agent": 4,
+  "unseen_retrieved": 5,
+  "unseen_recall_percent": 50.0,
+  "leakage": [],
+  "valid": true
+}

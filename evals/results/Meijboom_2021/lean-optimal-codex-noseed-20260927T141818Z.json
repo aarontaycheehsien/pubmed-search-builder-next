@@ -1,0 +1,47 @@
+{
+  "topic": "Meijboom_2021",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260927T141818Z",
+  "scored": "20260927T143903Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1244
+  },
+  "final_message": "]` variants. Also checked MeSH and Supplementary Concept records for biosimilar TNF medicines; the query includes relevant product codes and Supplementary Concepts, including CT-P13 and SB2 infliximab.\n- MeSH lookups for reverse switch, back switch, and switching back found no dedicated heading. An exploratory untagged query mapped “back” to an unrelated MeSH term and “originator” to unrelated terms, so the final query uses explicit field tags.\n- Tested the three blocks and the combined query. The combined query returned **515 records** under the date limits. A sample retrieval included PMID 33442230, a paper reporting patients who switched back to originator infliximab; intersecting it with the final query returned that PMID.\n- Proximity syntax was not used because the requested cutoff predates PubMed’s introduction of proximity searching.\n\n## Assumptions and limits\n\nThe query applies both a publication-date ceiling and a PubMed entry-date ceiling of **2021-02-12**. This matters because some PubMed records have only a publication year, which can make a publication-date range include later records from the same year. The entry-date ceiling limits the search to records indexed by the requested date. Counts reflect the current NCBI index with those historical limits.\n\nNo language, study-type, age, or species limits were applied. No known seed articles were available, so validation was limited to MeSH checks, block tests, and sample retrieval inspection. The broad terms favor sensitivity and will require screening.\n\n## Peer review and reporting\n\nThis is a draft strategy. Per PRESS (McGowan et al., 2016), a second information specialist should peer review it before it is used as the final search. The strategy covers PubMed only; the review team should specify additional databases and supplementary methods such as registry and citation searching. PRISMA-S reporting should also document the search date, updates, record totals, and deduplication after the searches are run.",
+  "strategy": "((\"Biosimilar Pharmaceuticals\"[Mesh] OR \"Biosimilar Pharmaceuticals\"[tiab] OR \"Pharmaceuticals, Biosimilar\"[tiab] OR \"Follow-on Biologics\"[tiab] OR \"Biologics, Follow-on\"[tiab] OR \"Follow on Biologics\"[tiab] OR \"Subsequent Entry Biologics\"[tiab] OR \"Biologics, Subsequent Entry\"[tiab] OR \"Biosimilar\"[tiab] OR \"Biosimilars\"[tiab] OR biosimilar*[tiab] OR \"similar biotherapeutic products\"[tiab] OR \"similar biological medicinal products\"[tiab] OR \"CT-P13\"[Supplementary Concept] OR \"SB2 infliximab\"[Supplementary Concept] OR \"etanercept biosimilar SB4\"[Supplementary Concept] OR \"ABP 501\"[Supplementary Concept] OR \"GP2017\"[Supplementary Concept] OR \"PF-06410293\"[Supplementary Concept] OR CT-P13[tiab] OR Remsima[tiab] OR Inflectra[tiab] OR SB2[tiab] OR Flixabi[tiab] OR SB4[tiab] OR SB5[tiab] OR Benepali[tiab] OR Imraldi[tiab] OR \"ABP 501\"[tiab] OR GP2017[tiab] OR \"PF-06410293\"[tiab] OR FKB327[tiab] OR GP2015[tiab]) AND (\"Tumor Necrosis Factor Inhibitors\"[Mesh] OR \"Tumor Necrosis Factor Inhibitors\"[tiab] OR \"Tumor Necrosis Factor Antagonists\"[tiab] OR \"Tumor Necrosis Factor Blockers\"[tiab] OR \"TNF Inhibitors\"[tiab] OR \"Inhibitors, TNF\"[tiab] OR \"TNF Blockers\"[tiab] OR \"Blockers, TNF\"[tiab] OR \"TNF Antagonists\"[tiab] OR \"Antagonists, TNF\"[tiab] OR \"Tumor Necrosis Factor Antagonist\"[tiab] OR \"Tumor Necrosis Factor Inhibitor\"[tiab] OR \"TNF Antagonist\"[tiab] OR \"Antagonist, TNF\"[tiab] OR \"TNF Blocker\"[tiab] OR \"Blocker, TNF\"[tiab] OR \"TNF Inhibitor\"[tiab] OR \"Inhibitor, TNF\"[tiab] OR \"Tumor Necrosis Factor Blocker\"[tiab] OR \"Tumor Necrosis Factor-a (TNF-a) Inhibitors\"[tiab] OR \"Tumor Necrosis Factor-a (TNF-a) Inhibitor\"[tiab] OR \"Tumor Necrosis Factor-a (TNF-a) Blockers\"[tiab] OR \"Tumor Necrosis Factor-a (TNF-a) Blocker\"[tiab] OR \"Tumor Necrosis Factor-a (TNF-a) Antagonists\"[tiab] OR \"Tumor Necrosis Factor-a (TNF-a) Antagonist\"[tiab] OR \"anti-TNF\"[tiab] OR TNF[tiab] OR infliximab[tiab] OR adalimumab[tiab] OR etanercept[tiab] OR certolizumab[tiab] OR golimumab[tiab]) AND (\"Drug Substitution\"[Mesh] OR \"Drug Substitution\"[tiab] OR \"Drug Substitutions\"[tiab] OR \"Substitution, Drug\"[tiab] OR \"Substitutions, Drug\"[tiab] OR \"Drug Switching\"[tiab] OR \"Drug Switchings\"[tiab] OR \"Switching, Drug\"[tiab] OR \"Switchings, Drug\"[tiab] OR \"Therapeutic Substitution\"[tiab] OR \"Substitutions, Therapeutic\"[tiab] OR \"Substitution, Therapeutic\"[tiab] OR \"Therapeutic Substitutions\"[tiab] OR \"Generic Substitution\"[tiab] OR \"Generic Substitutions\"[tiab] OR \"Substitution, Generic\"[tiab] OR \"Substitutions, Generic\"[tiab] OR switch*[tiab] OR back-switch*[tiab] OR backswitch*[tiab] OR switchback*[tiab] OR reswitch*[tiab] OR re-switch*[tiab] OR retransition*[tiab] OR revert*[tiab] OR return*[tiab] OR \"switching back\"[tiab] OR \"switched back\"[tiab] OR \"reference product\"[tiab] OR originator[tiab])) AND (\"1900/01/01\"[dp] : \"2021/02/12\"[dp]) AND (\"1900/01/01\"[edat] : \"2021/02/12\"[edat])",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2021-02-12",
+  "count": 515,
+  "gold_scored": 35,
+  "gold_reachable": 35,
+  "retrieved": 31,
+  "recall_percent": 88.6,
+  "missed": [
+    "32662409",
+    "32776313",
+    "33538298",
+    "33570142"
+  ],
+  "nnr": 16.6,
+  "translation_issues": [
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 31,
+  "unseen_recall_percent": 88.6,
+  "leakage": [],
+  "valid": true
+}

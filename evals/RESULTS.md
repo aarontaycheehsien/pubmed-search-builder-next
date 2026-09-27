@@ -1,6 +1,6 @@
 # Evaluation results
 
-Generated 20260927T114335Z by `python evals/run.py report`.
+Generated 20260927T154856Z by `python evals/run.py report`.
 
 Recall is over gold records in PubMed on or before `as_of`; in the seeded condition the three seeds are excluded. `unseen` recall leaves out gold records the agent itself screened into its sets. NNR is total results divided by gold retrieved: a workload proxy, not precision. Generated rows show the mean (min-max) over valid runs.
 
@@ -48,26 +48,27 @@ Recall is over gold records in PubMed on or before `as_of`; in the seeded condit
 | Medeiros-2022-School-based food and nutr | naive | seeded | 1/1 | 16.7 | n/a | 767 | 767.0 | n/a |
 | Medeiros-2022-School-based food and nutr | reference | noseed | 1/1 | 88.9 | n/a | 24320 | 3040.0 | n/a |
 | Medeiros-2022-School-based food and nutr | reference | seeded | 1/1 | 83.3 | n/a | 24320 | 4864.0 | n/a |
-| Meijboom_2021 | generated:lean-optimal (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
+| Meijboom_2021 | generated:lean-optimal (codex) | noseed | 1/2 | 88.6 | 88.6 | 515 | 16.6 | n/a |
 | Meijboom_2021 | generated:ours (codex) | noseed | 1/1 | 74.3 | 74.3 | 443 | 17.0 | n/a |
-| Menon_2022 | generated:lean-optimal (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
-| Menon_2022 | generated:ours (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
-| Muthu_2022 | generated:lean-optimal (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
-| Muthu_2022 | generated:ours (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
+| Menon_2022 | generated:lean-optimal (codex) | noseed | 1/2 | 10.8 | 10.8 | 1006 | 125.8 | n/a |
+| Menon_2022 | generated:ours (codex) | noseed | 1/2 | 64.9 | 64.9 | 5260 | 109.6 | n/a |
+| Muthu_2022 | generated:lean-optimal (codex) | noseed | 1/2 | 100.0 | 100.0 | 591 | 98.5 | n/a |
+| Muthu_2022 | generated:ours (codex) | noseed | 1/3 | 100.0 | 100.0 | 583 | 97.2 | n/a |
+| Muthu_2022 | generated:quota-check (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
 | Muthu_2022 | naive | noseed | 1/1 | 100.0 | n/a | 505 | 84.2 | n/a |
-| Oud_2018 | generated:lean-optimal (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
-| Oud_2018 | generated:ours (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
-| Smid_2020 | generated:lean-optimal (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
-| Smid_2020 | generated:ours (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
+| Oud_2018 | generated:lean-optimal (codex) | noseed | 1/2 | 94.1 | 94.1 | 1880 | 117.5 | n/a |
+| Oud_2018 | generated:ours (codex) | noseed | 1/2 | 94.1 | 90.9 | 1880 | 117.5 | n/a |
+| Smid_2020 | generated:lean-optimal (codex) | noseed | 1/2 | 78.6 | 78.6 | 1069 | 97.2 | n/a |
+| Smid_2020 | generated:ours (codex) | noseed | 1/2 | 64.3 | 50.0 | 870 | 96.7 | n/a |
 | Smid_2020 | naive | noseed | 1/1 | 78.6 | n/a | 1369 | 124.5 | n/a |
 | Smid_2020 | naive | seeded | 1/1 | 72.7 | n/a | 1369 | 171.1 | n/a |
-| Welling_2021 | generated:lean-optimal (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
-| Welling_2021 | generated:ours (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
+| Welling_2021 | generated:lean-optimal (codex) | noseed | 1/2 | 83.0 | 83.0 | 20531 | 466.6 | n/a |
+| Welling_2021 | generated:ours (codex) | noseed | 1/2 | 98.1 | 98.1 | 151652 | 2916.4 | n/a |
 | gao-2026-Immune checkpoint inhibitors | generated:lean-optimal (codex) | noseed | 1/1 | 72.7 | 72.7 | 1220 | 152.5 | n/a |
 | gao-2026-Immune checkpoint inhibitors | generated:ours (codex) | noseed | 1/1 | 100.0 | 100.0 | 1587 | 144.3 | n/a |
 | gao-2026-Immune checkpoint inhibitors | naive | noseed | 1/1 | 72.7 | n/a | 1599 | 199.9 | n/a |
 | gao-2026-Immune checkpoint inhibitors | naive | seeded | 1/1 | 62.5 | n/a | 1599 | 319.8 | n/a |
-| van_Dis_2020 | generated:lean-optimal (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
-| van_Dis_2020 | generated:ours (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
-| van_de_Schoot_2018 | generated:lean-optimal (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
-| van_de_Schoot_2018 | generated:ours (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
+| van_Dis_2020 | generated:lean-optimal (codex) | noseed | 1/2 | 59.0 | 59.0 | 10137 | 281.6 | n/a |
+| van_Dis_2020 | generated:ours (codex) | noseed | 1/2 | 93.4 | 93.3 | 15738 | 276.1 | n/a |
+| van_de_Schoot_2018 | generated:lean-optimal (codex) | noseed | 1/2 | 92.1 | 92.1 | 7025 | 200.7 | n/a |
+| van_de_Schoot_2018 | generated:ours (codex) | noseed | 1/2 | 92.1 | 92.1 | 31980 | 913.7 | n/a |
