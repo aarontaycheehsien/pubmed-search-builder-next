@@ -17,28 +17,38 @@ def evaluated(make_ws):
     write_json(ws.root / "protocol.json", protocol)
     write_json(ws.root / "strategy.json", STRATEGY)
     ws.save_set("seeds", "seed", ["1", "3", "4"])
-    ws.save_version(evaluate(ws), "first")
+    evaluation = evaluate(ws)
+    deliver.record_evaluation(ws, evaluation, note="first")
+    ws.save_attempt(evaluation)
     return ws
 
 
 def test_packet_and_report_use_evaluated_numbers(make_ws):
     ws = evaluated(make_ws)
     packet = deliver.critic_packet(ws).read_text(encoding="utf-8")
-    assert "Treatments for asthma?" in packet and "| 3 | `#1 OR #2` | 3 |" in packet
-    audit = deliver.report(ws).read_text(encoding="utf-8")
-    assert "Total records: 3" in audit and "| seeds | seed" in audit and "No critic round was run." in audit
+    assert "Treatments for asthma?" in packet and "| 3 | `#1 OR #2` | 3 | none |" in packet
+    round_file(ws, 1, [])
+    result = deliver.report(ws)
+    assert result["ok"], result
+    audit = (ws.root / "audit.md").read_text(encoding="utf-8")
+    assert "Total records: 3" in audit and "| seeds | seed" in audit and "Round 1 on version 1" in audit
     assert '("Asthma"[Mesh] OR asthma*[tiab])' in audit
 
 
 def test_report_refuses_stale_evaluation(make_ws):
     ws = evaluated(make_ws)
+    round_file(ws, 1, [])
     write_json(ws.root / "strategy.json", {"blocks": [{"id": "asthma", "terms": ["asthma*[tiab]"]}]})
-    with pytest.raises(WorkspaceError, match="changed since the last psb eval"):
-        deliver.report(ws)
+    result = deliver.report(ws)
+    assert not result["ok"] and "critic_stale" in {b["code"] for b in result["blockers"]}
+    assert not (ws.root / "final-query.txt").exists()
 
 
 def round_file(ws, number, findings, domains=None):
-    data = {"round": number, "strategy_version": 1,
+    evaluation = ws.attempts()[-1]["evaluation"]
+    findings = [{"domain": "text_words", "finding": "A documented concern", **f} for f in findings]
+    data = {"round": number, "strategy_version": 1, "review_sha256": evaluation["review_sha256"],
+            "issue_dispositions": [{"issue_id": i["id"], "status": "accepted-risk", "response": "Reviewed the scope", "evidence": "Fixture topic requirements"} for i in evaluation["validation"]["review_required"]],
             "domains": domains or {d: {"verdict": "pass"} for d in deliver.DOMAINS}, "findings": findings}
     path = ws.root / "critic" / f"round-{number}.json"
     path.write_text(json.dumps(data), encoding="utf-8")
@@ -48,10 +58,11 @@ def round_file(ws, number, findings, domains=None):
 def test_check_round_enforces_verdicts_and_carries_open_findings(make_ws):
     ws = evaluated(make_ws)
     first = round_file(ws, 1, [{"id": "F1", "severity": "must-fix", "kind": "lexical", "status": "open"}])
-    assert deliver.check_round(ws, first) == {"ok": True, "problems": [], "open_must_fix": ["F1"]}
+    checked = deliver.check_round(ws, first)
+    assert not checked["ok"] and checked["open_must_fix"] == ["F1"]
     second = round_file(ws, 2, [], domains={"translation": {"verdict": "pass"}})
     result = deliver.check_round(ws, second)
     assert not result["ok"]
-    assert any("F1" in p for p in result["problems"]) and any("operators" in p for p in result["problems"])
+    assert any(b["code"] == "critic_invalid" for b in result["blockers"])
     third = round_file(ws, 3, [{"id": "F1", "severity": "must-fix", "kind": "lexical", "status": "rejected"}])
-    assert any("needs a response" in p for p in deliver.check_round(ws, third)["problems"])
+    assert "needs a response" in json.dumps(deliver.check_round(ws, third))

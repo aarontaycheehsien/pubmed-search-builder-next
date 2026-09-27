@@ -29,7 +29,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import drivers  # noqa: E402
 import harness  # noqa: E402
-from psb import config  # noqa: E402
+from psb import config, deliver  # noqa: E402
+from psb.workspace import Workspace  # noqa: E402
 
 DEFAULT_RUNS_ROOT = Path(tempfile.gettempdir()) / "psb-evals"
 
@@ -38,7 +39,7 @@ def stamp() -> str:
     return dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
 
 
-def find_strategy_file(run_dir: Path) -> Path | None:
+def find_strategy_file(run_dir: Path, *, require_protected: bool = False, effective_as_of: str | None = None) -> Path | None:
     """The agent's final strategy, wherever it actually wrote it.
 
     The prompt asks for ``./final_strategy.txt``, but a skill with its own filing convention
@@ -46,6 +47,18 @@ def find_strategy_file(run_dir: Path) -> Path | None:
     Preferring the root path first keeps the common case exact; falling back to ``work/`` scores
     a skill's real output rather than discarding a completed, on-topic run over a path detail.
     """
+    if require_protected:
+        previous = os.environ.get("PSB_AS_OF")
+        try:
+            if effective_as_of:
+                os.environ["PSB_AS_OF"] = effective_as_of
+            verified = deliver.verify_delivery(Workspace(run_dir / "work"))
+            return Path(verified["query_file"]) if verified["ok"] else None
+        finally:
+            if previous is None:
+                os.environ.pop("PSB_AS_OF", None)
+            else:
+                os.environ["PSB_AS_OF"] = previous
     for candidate in (run_dir / "final_strategy.txt", run_dir / "work" / "final_strategy.txt"):
         if candidate.exists() and candidate.read_text(encoding="utf-8").strip():
             return candidate
@@ -139,7 +152,8 @@ def cmd_generate(args) -> int:
                 "model": args.model, "effort": args.effort, "condition": args.condition, "depth": args.depth, "run_label": label,
                 "scored": stamp(), "run": {k: v for k, v in run.items() if k != "final_message"},
                 "final_message": run.get("final_message", "")}
-        strategy_path = find_strategy_file(run_dir)
+        protected = (skill_dir / "scripts" / "psb" / "validation.py").exists()
+        strategy_path = find_strategy_file(run_dir, require_protected=protected, effective_as_of=fixture.get("as_of"))
         if strategy_path is not None:
             query = strategy_path.read_text(encoding="utf-8")
             seen = harness.gold_seen(fixture, run_dir) - set(seeds)
@@ -150,7 +164,7 @@ def cmd_generate(args) -> int:
             card["valid"] = not card["leakage"]
         else:
             card["valid"] = False
-            card["error"] = "no final_strategy.txt"
+            card["error"] = "no current protected delivery" if protected else "no final_strategy.txt"
             status = 2
         out = save(fixture["id"], label, card)
         for report_name in ("audit.md", "report.md"):  # our own skill vs. others' naming

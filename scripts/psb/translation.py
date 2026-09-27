@@ -8,10 +8,8 @@ from __future__ import annotations
 
 import re
 
-from . import wildcards
+from . import wildcards, syntax
 
-MAX_ISSUES = 8
-EVIDENCE_LIMIT = 240
 ATM_EXPANSION_RATIO = 4.0
 
 
@@ -34,14 +32,6 @@ def _pairs(translations: object) -> list[tuple[str, str]]:
     return [pair for pair in pairs if pair[0] or pair[1]]
 
 
-def _untagged_words(query: str) -> list[str]:
-    text = re.sub(r'"[^"]+"\s*\[[^\]]+\]', " ", query)
-    text = re.sub(r"[\w*.'-]+\s*\[[^\]]+\]", " ", text)
-    text = re.sub(r"\[[^\]]+\]", " ", text)
-    words = re.findall(r"\b[A-Za-z][A-Za-z0-9-]+\b", text)
-    return [word for word in words if word.upper() not in {"AND", "OR", "NOT"}]
-
-
 def translation_issues(
     query: str,
     translation: str,
@@ -52,36 +42,31 @@ def translation_issues(
     issues: list[dict[str, str]] = []
 
     def add(severity: str, code: str, message: str, evidence: object = "") -> None:
-        if len(issues) < MAX_ISSUES:
-            issue = {"severity": severity, "code": code, "message": message}
-            text = str(evidence)
-            if text:
-                issue["evidence"] = text if len(text) <= EVIDENCE_LIMIT else text[: EVIDENCE_LIMIT - 3] + "..."
-            issues.append(issue)
+        issues.append({"severity": severity, "code": code, "message": message,
+                       "evidence": evidence, "query": query, "translation": translation})
 
     for item in _items(warnings):
-        add("warning", "pubmed_warning", "PubMed reported a warning; check the translation.", item)
-
-    phrases, fields = [], []
+        phrase_warning = "phrase" in item.casefold() and ("not found" in item.casefold() or "notfound" in item.casefold())
+        add("warning", "quoted_phrase_not_found" if phrase_warning else "pubmed_warning",
+            "Review the clause translation; phrase-index absence does not establish zero retrieval."
+            if phrase_warning else "PubMed reported a warning; review the translation.", item)
     if isinstance(errors, dict):
-        phrases = _items(errors.get("phrasesnotfound"))
-        fields = _items(errors.get("fieldsnotfound"))
+        for phrase in _items(errors.get("phrasesnotfound")):
+            add("warning", "phrase_not_found",
+                "Review this clause and its translation. Distinguish an unrecognised phrase, a zero-hit clause, "
+                "and an invalid controlled-vocabulary term; no automatic rewrite or deletion.", phrase)
+        for name in _items(errors.get("fieldsnotfound")):
+            add("error", "field_not_found", "PubMed did not recognise a field tag.", name)
+        other = {k: v for k, v in errors.items() if k not in {"phrasesnotfound", "fieldsnotfound"}}
+        if other:
+            add("error", "pubmed_error", "Unclassified PubMed error requires investigation.", other)
     elif errors:
-        phrases = _items(errors)
-    if phrases:
-        add(
-            "warning",
-            "phrase_not_found",
-            "PubMed found no records for these terms. Check spelling, hyphenation and spacing "
-            "before deciding they are genuinely absent; a zero-hit term is recall-neutral.",
-            ", ".join(dict.fromkeys(phrases)),
-        )
-    if fields:
-        add("error", "field_not_found", "PubMed did not recognise these field tags.", ", ".join(dict.fromkeys(fields)))
+        add("error", "pubmed_error", "Unexpected PubMed error response.", errors)
 
     lower = (translation or "").lower()
     pairs = _pairs(translations)
-    untagged = [source for source, _ in pairs] or _untagged_words(query)
+    pairs = [(a, b) for a, b in pairs if syntax.untagged(a)]
+    untagged = syntax.untagged(query)
     tagged = bool(re.search(r"\[[^\]]+\]", query))
 
     if untagged and pairs:
@@ -90,16 +75,16 @@ def translation_issues(
             "automatic_term_mapping",
             "Untagged text went through Automatic Term Mapping; tag it explicitly so the "
             "search does not depend on ATM behaviour.",
-            "; ".join(f"{a} -> {b}" for a, b in pairs[:3]),
+            "; ".join(f"{a} -> {b}" for a, b in pairs),
         )
     if untagged and "[all fields]" in lower:
-        add("warning", "all_fields", "Untagged text was searched in All Fields.", ", ".join(untagged[:8]))
+        add("warning", "all_fields", "Untagged text was searched in All Fields.", ", ".join(untagged))
     acronyms = [token for word in untagged for token in re.findall(r"\b[A-Z0-9]{2,6}\b", word)]
     if acronyms and translation:
         add("warning", "untagged_acronym", "Untagged acronyms may map ambiguously.", ", ".join(acronyms))
     if untagged and len(" ".join(lower.split())) > max(200, int(len(" ".join(query.split())) * ATM_EXPANSION_RATIO)):
         add("warning", "large_expansion", "PubMed expanded the query substantially.", translation)
-    if tagged and not untagged and "[all fields]" in lower and "[all fields]" not in query.lower():
+    if tagged and not untagged and "[all fields]" in lower and not any(a["field"] == "all" for a in syntax.atoms(query)):
         add("warning", "all_fields_fallback", "A field-tagged query translated to All Fields.", translation)
 
     dropped = wildcards.dropped_truncations(query, translation) if translation else []

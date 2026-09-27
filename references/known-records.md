@@ -54,4 +54,6 @@ a validation miss, report that the set became part of development.
 
 With no seeds, no matching prior review, and nothing screened in, say so plainly: the strategy is
 empirically unvalidated, recall is not estimated, and the audit must state it. Ask the user
-whether they can supply known articles or name a related review before you continue.
+whether they can supply known articles or name a related review before you continue, unless
+this is a quick search without seeds or the user asked you to proceed with documented
+assumptions. Those cases may proceed without recall measurement; record that limitation.

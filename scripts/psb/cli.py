@@ -9,7 +9,7 @@ import random
 import sys
 from pathlib import Path
 
-from . import config, deliver, mesh, terms
+from . import config, deliver, mesh, terms, validation
 from .evaluate import compare, evaluate
 from .ncbi import LINKNAMES, NcbiError, PubMed
 from .strategy import StrategyError, lint, numbered_lines, full_query
@@ -71,11 +71,11 @@ def cmd_status(args) -> dict:
         todo.append("state the plain-language question in protocol.json")
     if not concepts:
         todo.append("record concepts with roles (search / screen / optional) in protocol.json")
-    if not protocol.get("scope_confirmed"):
+    if not protocol.get("scope_confirmed") and not str(protocol.get("notes") or "").strip():
         todo.append("confirm concept roles and limits with the user (or note why not in protocol.notes)")
     if not strategy.blocks:
         todo.append("draft strategy.json blocks")
-    if not sets:
+    if not sets and protocol.get("depth") != "quick":
         todo.append("add known relevant PMIDs (psb set add) so recall can be measured")
     if not versions:
         todo.append("run psb eval")
@@ -96,6 +96,7 @@ def cmd_status(args) -> dict:
         "versions": len(versions),
         "last_eval": {"count": last.get("count"), "recall": {n: s.get("recall_percent") for n, s in (last.get("sets") or {}).items()}} if last else None,
         "critic_rounds": critic,
+        "delivery": deliver.verify_delivery(ws),
         "todo": todo,
     }
 
@@ -226,42 +227,22 @@ def cmd_lint(args) -> dict:
 
 
 def _eval_signature(evaluation: dict) -> tuple:
-    """The parts of an evaluation that matter for deduplication: not translation issues or lint,
-    which can be phrased differently between identical PubMed responses."""
-    sets = tuple(sorted((n, s.get("retrieved"), s.get("recall_percent")) for n, s in (evaluation.get("sets") or {}).items()))
-    return (evaluation.get("count"), sets, tuple(m["pmid"] for m in evaluation.get("misses") or []))
+    return (evaluation.get("count"), evaluation.get("review_sha256"),
+            validation.digest(evaluation.get("translation_issues", [])),
+            validation.digest(evaluation.get("sets", {})))
 
 
 def cmd_eval(args) -> dict:
     ws = workspace(args)
     evaluation = evaluate(ws, term_counts=not args.no_term_counts)
-    if not evaluation.get("ok"):
-        return evaluation
-    versions = ws.versions()
-    previous = versions[-1] if versions else None
-    strategy = ws.strategy().to_dict()
-    changed = previous is None or previous["strategy_sha256"] != sha256_text(json.dumps(strategy, sort_keys=True))
-    # A note alone does not force a new version: re-running `eval`/`report --fresh` against an
-    # unchanged strategy with the same result would otherwise pad the history with duplicates.
-    identical_to_previous = not changed and previous is not None and _eval_signature(previous["evaluation"]) == _eval_signature(evaluation)
-    diff = compare(previous, evaluation, strategy)
-    if diff:
-        evaluation["since_previous"] = diff
-    if not identical_to_previous and (changed or args.note):
-        if diff and diff["regression"] and not args.note:
-            evaluation["warning"] = "this version lost known relevant records; record why with --note or revert"
-        saved = ws.save_version(evaluation, args.note or "")
-        evaluation["version"] = saved["version"]
-    else:
-        evaluation["version"] = previous["version"] if previous else None
-        evaluation["saved"] = "identical to the previous version; no new version" if identical_to_previous else "unchanged strategy; no new version"
+    deliver.record_evaluation(ws, evaluation, note=args.note)
+    attempt = ws.save_attempt(evaluation)
+    output = dict(evaluation, attempt_id=attempt["attempt_id"])
     if args.brief:
-        evaluation.pop("lines", None)
-        evaluation.pop("retrieved_known", None)
-        evaluation.pop("known_in_pubmed", None)
-    else:
-        evaluation.pop("known_in_pubmed", None)
-    return evaluation
+        output.pop("lines", None)
+        output.pop("retrieved_known", None)
+    output.pop("known_in_pubmed", None)
+    return output
 
 
 def cmd_terms(args) -> dict:
@@ -284,7 +265,8 @@ def cmd_terms(args) -> dict:
     versions = ws.versions()
     if not versions:
         raise UsageError("run psb eval first")
-    evaluation = versions[-1]["evaluation"]
+    attempts = ws.attempts()
+    evaluation = attempts[-1]["evaluation"] if attempts else versions[-1]["evaluation"]
     missed = [m["pmid"] for m in evaluation.get("misses", []) if not args.set or set(m["sets"]) & set(args.set)]
     records = list(ws.ensure_records(missed).values())
     return {"ok": True, "version": versions[-1]["version"], "misses": terms.miss_report(records, evaluation, strategy),
@@ -299,26 +281,15 @@ def cmd_critic(args) -> dict:
         return {"ok": True, "packet": str(path),
                 "next": "give only this file to a fresh-context reviewer (subagent) and save its JSON as "
                         f"critic/round-N.json; then run psb critic check"}
-    path = Path(args.round) if args.round else max((ws.root / "critic").glob("round-*.json"), default=None)
+    paths = deliver.round_paths(ws)
+    path = Path(args.round) if args.round else (paths[-1] if paths else None)
     if path is None:
         raise UsageError("no critic/round-*.json to check")
     return {"round_file": str(path), **deliver.check_round(ws, path)}
 
 
 def cmd_report(args) -> dict:
-    if args.fresh:
-        args.no_cache = True
-        args.note = args.note or "final counts, run live"
-        args.no_term_counts = False
-        args.brief = True
-        refreshed = cmd_eval(args)  # records a version only if live counts actually differ from the last one
-        if not refreshed.get("ok"):
-            return refreshed
-    ws = workspace(args)
-    path = deliver.report(ws)
-    open_must = [f.get("id") for r in deliver.critic_rounds(ws)[-1:] for f in r.get("findings", [])
-                 if f.get("status") == "open" and f.get("severity") == "must-fix"]
-    return {"ok": True, "report": str(path), "open_must_fix_findings": open_must}
+    return deliver.report(workspace(args), diagnostic=args.diagnostic, note=args.note)
 
 
 def cmd_log(args) -> dict:
@@ -449,7 +420,8 @@ def build_parser() -> argparse.ArgumentParser:
     p.set_defaults(func=cmd_critic)
 
     p = sub.add_parser("report", help="render audit.md from the workspace")
-    p.add_argument("--fresh", action="store_true", help="re-run the evaluation live (no cache) first")
+    p.add_argument("--fresh", action="store_true", help="compatible alias: reporting always validates live")
+    p.add_argument("--diagnostic", action="store_true", help="write unfinished diagnostic output only; no final query")
     p.add_argument("--note", default="")
     p.set_defaults(func=cmd_report)
 

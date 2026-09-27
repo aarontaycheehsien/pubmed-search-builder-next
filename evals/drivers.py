@@ -133,5 +133,8 @@ Harness rules:
 - Keep all working files in ./work (use it as the workspace directory).
 - Work as if today were {fixture.get('as_of') or 'the present'}: do not use web search, and do not use
   literature published after that date.
-- When you have finished, write the final PubMed query as a single line to ./final_strategy.txt.
+- If the skill generates a protected final-query.txt and validation manifest, finish through its
+  report command and leave those generated files intact in ./work. Do not hand-author a substitute
+  query when validation is blocked. For a skill without protected delivery, write the final PubMed
+  query as a single line to ./final_strategy.txt.
 """
