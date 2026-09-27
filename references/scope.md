@@ -47,6 +47,26 @@ concepts as `screen` unless the question cannot be searched without them. If one
 searched, give it a broad layer of descriptive phrases as well as its labels, and watch its
 ablation result: a block whose removal gains known records is losing relevant papers.
 
+### Direction, sequence and events in a subset
+
+A concept that names one direction or step of a process (switching back, reverse switching,
+de-escalation, restarting, discontinuation) or an event that happens to only some participants
+is fragile even when the question is about it. Studies of the whole process (switching from the
+originator to a biosimilar) often report it as a secondary finding, in a sentence of the abstract
+or only in the full text. Search the process in either direction (`switch*`, `transition*`,
+`substitut*`, the relevant MeSH), and screen for the direction or event. A prior review of the
+parent process is a candidate benchmark source: its included studies may report the event.
+
+## Named members of a concept
+
+When the question or eligibility criteria list members of a concept ("SEM-family models (CFA,
+latent growth, multilevel, mediation)", "biologics such as infliximab or adalimumab"), every
+member belongs in that concept's block, searched by its own bare name: `mediation`,
+`multilevel`, `"hierarchical model*"`. Do not narrow a member with the parent's wording
+(`"mediation model*"`, `"multilevel structural equation"`): records about a member rarely also
+name the parent, which is why the criteria list it. The member terms are usually cheap because
+another AND-ed block restricts them; check the final count, not the line count.
+
 ## Ambiguity check
 
 Before assigning roles, list ambiguities and ask the user about any that would change which

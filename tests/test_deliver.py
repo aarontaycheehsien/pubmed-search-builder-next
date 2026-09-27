@@ -35,6 +35,23 @@ def test_packet_and_report_use_evaluated_numbers(make_ws):
     assert '("Asthma"[Mesh] OR asthma*[tiab])' in audit
 
 
+def test_packet_leads_with_scope_and_translation_checks(make_ws):
+    ws, _ = make_ws(ATOMS, question="Treatments for asthma?")
+    protocol = ws.protocol()
+    protocol["concepts"] = [{"id": "asthma", "name": "Asthma", "role": "search", "rationale": "topic anchor"}]
+    protocol["eligibility"] = {"include": ["asthma of any type (allergic, exercise-induced)"], "exclude": []}
+    write_json(ws.root / "protocol.json", protocol)
+    write_json(ws.root / "strategy.json", STRATEGY)
+    evaluation = evaluate(ws)
+    deliver.record_evaluation(ws, evaluation, note="first")
+    ws.save_attempt(evaluation)
+    packet = deliver.critic_packet(ws).read_text(encoding="utf-8")
+    scope = packet[packet.index("## Scope"):packet.index("| # | Search |")]
+    assert "| Asthma | search | topic anchor |" in scope
+    assert "- asthma of any type (allergic, exercise-induced)" in scope and "Eligibility (exclude)" not in scope
+    assert "bare name" in scope and "direction" in scope
+
+
 def test_report_refuses_stale_evaluation(make_ws):
     ws = evaluated(make_ws)
     round_file(ws, 1, [])

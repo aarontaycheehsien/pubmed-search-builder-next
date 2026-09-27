@@ -1,0 +1,35 @@
+{
+  "topic": "Smid_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260927T214454Z",
+  "scored": "20260927T215914Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 859
+  },
+  "final_message": " \"structural equation\"[tiab] OR \"structural equation model\"[tiab:~1] OR \"structural equation modeling\"[tiab] OR \"structural equation modelling\"[tiab] OR SEM[tiab] OR \"confirmatory factor analysis\"[tiab] OR CFA[tiab] OR \"latent variable\"[tiab] OR \"latent growth\"[tiab] OR \"growth curve\"[tiab] OR \"growth mixture\"[tiab] OR \"latent class\"[tiab] OR multilevel[tiab] OR \"hierarchical linear model\"[tiab:~1] OR mediation[tiab] OR \"indirect effect\"[tiab]) AND (\"Bayes Theorem\"[Mesh] OR Bayesian[tiab] OR Bayes[tiab] OR \"Bayesian estimation\"[tiab] OR \"Bayesian method\"[tiab] OR \"Bayesian approach\"[tiab] OR MCMC[tiab] OR \"Markov chain Monte Carlo\"[tiab] OR \"Gibbs sampling\"[tiab] OR \"prior distribution\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/11/29\"[edat])\n```\n\nThe final search returned **1,430 records**. Relative recall was **3/3 (100%)** against records found and screened during the build. Those records were used to develop the strategy, so this is not independent validation or absolute sensitivity. Small-sample context, estimator comparison, simulation design, outcomes, and field remain screening criteria.\n\nThe [audit](<C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260927T214454Z/work/audit.md>) contains the numbered line-by-line strategy and counts. The other generated files are [final-query.txt](<C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260927T214454Z/work/final-query.txt>), [validation-manifest.json](<C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260927T214454Z/work/validation-manifest.json>), and [narrative.md](<C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260927T214454Z/work/narrative.md>).\n\nThe scope choices are recorded as provisional because you asked me to proceed without clarification. Two fresh-context internal critic rounds passed; **PRESS peer review by an information specialist is still needed before use**.",
+  "strategy": "((\"Factor Analysis, Statistical\"[Mesh] OR \"Multilevel Analysis\"[Mesh] OR \"structural equation\"[tiab] OR \"structural equation model\"[tiab:~1] OR \"structural equation modeling\"[tiab] OR \"structural equation modelling\"[tiab] OR SEM[tiab] OR \"confirmatory factor analysis\"[tiab] OR CFA[tiab] OR \"latent variable\"[tiab] OR \"latent growth\"[tiab] OR \"growth curve\"[tiab] OR \"growth mixture\"[tiab] OR \"latent class\"[tiab] OR multilevel[tiab] OR \"hierarchical linear model\"[tiab:~1] OR mediation[tiab] OR \"indirect effect\"[tiab]) AND (\"Bayes Theorem\"[Mesh] OR Bayesian[tiab] OR Bayes[tiab] OR \"Bayesian estimation\"[tiab] OR \"Bayesian method\"[tiab] OR \"Bayesian approach\"[tiab] OR MCMC[tiab] OR \"Markov chain Monte Carlo\"[tiab] OR \"Gibbs sampling\"[tiab] OR \"prior distribution\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/11/29\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-11-29",
+  "count": 1430,
+  "gold_scored": 14,
+  "gold_reachable": 14,
+  "retrieved": 13,
+  "recall_percent": 92.9,
+  "missed": [
+    "25765534"
+  ],
+  "nnr": 110.0,
+  "translation_issues": [],
+  "gold_seen_by_agent": 3,
+  "unseen_retrieved": 10,
+  "unseen_recall_percent": 90.9,
+  "leakage": [],
+  "valid": true
+}

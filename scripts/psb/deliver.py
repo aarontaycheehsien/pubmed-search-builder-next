@@ -80,6 +80,26 @@ def _line_table(evaluation: dict) -> list[str]:
     return rows
 
 
+def _scope_section(evaluation: dict) -> list[str]:
+    protocol = (evaluation.get("inputs") or {}).get("protocol") or {}
+    eligibility = protocol.get("eligibility") or {}
+    rows = ["## Scope", "", f"Question: {protocol.get('question') or '(none)'}", "",
+            "| Concept | Role | Rationale |", "|---|---|---|"]
+    for concept in protocol.get("concepts") or []:
+        rows.append(f"| {concept.get('name') or concept.get('id')} | {concept.get('role')} | "
+                    f"{str(concept.get('rationale') or '').replace('|', '/')} |")
+    for label in ("include", "exclude"):
+        items = eligibility.get(label) if isinstance(eligibility, dict) else None
+        if items:
+            rows += ["", f"Eligibility ({label}):", *[f"- {item}" for item in items]]
+    rows += ["", "Translation checks: (1) every member that the question or eligibility names for a searched "
+             "concept is covered by its own bare name, not only by a phrase narrowed with the parent's wording "
+             "(`mediation`, not only `\"mediation model*\"`); (2) a searched block that names one direction or step "
+             "of a process, or an event in some participants (switching back, discontinuation), is fragile: "
+             "recommend searching the process in either direction and screening the direction.", ""]
+    return rows
+
+
 def _recall_table(evaluation: dict) -> list[str]:
     rows = ["| Set | Role (independence) | In PubMed | Retrieved | Recall |", "|---|---|---:|---:|---:|"]
     for name, data in (evaluation.get("sets") or {}).items():
@@ -209,7 +229,7 @@ def critic_packet(ws: Workspace) -> Path:
              "Phrase warnings require clause-specific interpretation review. ~0 allows any order; no wildcards in proximity. "
              "Prefer explicit tested expressions; do not delete terms merely because seeds are already covered. "
              "A retained warning needs a reason and evidence. Rewrites/removals require another complete evaluation.", "",
-             *_line_table(evaluation), "", "## Complete evidence", "", "```json", json.dumps(evaluation, indent=2, ensure_ascii=False),
+             *_scope_section(evaluation), *_line_table(evaluation), "", "## Complete evidence", "", "```json", json.dumps(evaluation, indent=2, ensure_ascii=False),
              "```", "", "## Earlier critic rounds", "", "```json", json.dumps(rounds, indent=2, ensure_ascii=False), "```", "",
              "## Response JSON", "", "```json", json.dumps(template, indent=2, ensure_ascii=False), "```"]
     path = ws.root / "critic" / f"packet-{number}.md"

@@ -1,6 +1,6 @@
 # Evaluation results
 
-Generated 20260927T154856Z by `python evals/run.py report`.
+Generated 20260927T232046Z by `python evals/run.py report`.
 
 Recall is over gold records in PubMed on or before `as_of`; in the seeded condition the three seeds are excluded. `unseen` recall leaves out gold records the agent itself screened into its sets. NNR is total results divided by gold retrieved: a workload proxy, not precision. Generated rows show the mean (min-max) over valid runs.
 
@@ -10,7 +10,7 @@ Recall is over gold records in PubMed on or before `as_of`; in the seeded condit
 | Appenzeller-Herzog_2019 | generated:ours (codex) | noseed | 1/1 | 100.0 | 100.0 | 4062 | 193.4 | n/a |
 | Bos_2018 | generated:lean-optimal (codex) | noseed | 1/1 | 100.0 | 100.0 | 5313 | 590.3 | n/a |
 | Bos_2018 | generated:pubmed-search-builder-next (claude) | noseed | 1/1 | 100.0 | 100.0 | 12495 | 1388.3 | 2.6 |
-| Bos_2018 | generated:pubmed-search-builder-next (codex) | noseed | 1/2 | 100.0 | 100.0 | 83107 | 9234.1 | n/a |
+| Bos_2018 | generated:pubmed-search-builder-next (codex) | noseed | 2/3 | 100.0 (100.0-100.0) | 100.0 (100.0-100.0) | 68692 (54277-83107) | 7632.5 (6030.8-9234.1) | n/a |
 | Bos_2018 | naive | noseed | 1/1 | 66.7 | n/a | 2339 | 389.8 | n/a |
 | Bos_2018 | naive | seeded | 1/1 | 66.7 | n/a | 2339 | 584.8 | n/a |
 | Brouwer_2019 | generated:lean-optimal (codex) | noseed | 1/1 | 96.3 | 96.3 | 17550 | 337.5 | n/a |
@@ -49,7 +49,7 @@ Recall is over gold records in PubMed on or before `as_of`; in the seeded condit
 | Medeiros-2022-School-based food and nutr | reference | noseed | 1/1 | 88.9 | n/a | 24320 | 3040.0 | n/a |
 | Medeiros-2022-School-based food and nutr | reference | seeded | 1/1 | 83.3 | n/a | 24320 | 4864.0 | n/a |
 | Meijboom_2021 | generated:lean-optimal (codex) | noseed | 1/2 | 88.6 | 88.6 | 515 | 16.6 | n/a |
-| Meijboom_2021 | generated:ours (codex) | noseed | 1/1 | 74.3 | 74.3 | 443 | 17.0 | n/a |
+| Meijboom_2021 | generated:ours (codex) | noseed | 3/3 | 91.4 (74.3-100.0) | 91.4 (74.3-100.0) | 719 (443-1056) | 22.0 (17.0-30.2) | n/a |
 | Menon_2022 | generated:lean-optimal (codex) | noseed | 1/2 | 10.8 | 10.8 | 1006 | 125.8 | n/a |
 | Menon_2022 | generated:ours (codex) | noseed | 1/2 | 64.9 | 64.9 | 5260 | 109.6 | n/a |
 | Muthu_2022 | generated:lean-optimal (codex) | noseed | 1/2 | 100.0 | 100.0 | 591 | 98.5 | n/a |
@@ -59,7 +59,7 @@ Recall is over gold records in PubMed on or before `as_of`; in the seeded condit
 | Oud_2018 | generated:lean-optimal (codex) | noseed | 1/2 | 94.1 | 94.1 | 1880 | 117.5 | n/a |
 | Oud_2018 | generated:ours (codex) | noseed | 1/2 | 94.1 | 90.9 | 1880 | 117.5 | n/a |
 | Smid_2020 | generated:lean-optimal (codex) | noseed | 1/2 | 78.6 | 78.6 | 1069 | 97.2 | n/a |
-| Smid_2020 | generated:ours (codex) | noseed | 1/2 | 64.3 | 50.0 | 870 | 96.7 | n/a |
+| Smid_2020 | generated:ours (codex) | noseed | 3/4 | 83.4 (64.3-92.9) | 77.0 (50.0-90.9) | 1494.7 (870-2184) | 124.9 (96.7-168.0) | n/a |
 | Smid_2020 | naive | noseed | 1/1 | 78.6 | n/a | 1369 | 124.5 | n/a |
 | Smid_2020 | naive | seeded | 1/1 | 72.7 | n/a | 1369 | 171.1 | n/a |
 | Welling_2021 | generated:lean-optimal (codex) | noseed | 1/2 | 83.0 | 83.0 | 20531 | 466.6 | n/a |

@@ -1,0 +1,33 @@
+{
+  "topic": "Meijboom_2021",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260927T214456Z",
+  "scored": "20260927T215825Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 809
+  },
+  "final_message": "n/AppData/Local/Temp/psb-evals/run-1b21fe8244224b90/ours-codex-noseed-20260927T214456Z/work/narrative.md>)\n\nThe strategy searches biosimilar TNF inhibitor records broadly and screens for the return-to-originator direction, since that event may appear only as a secondary finding. Three discovered records were screened in for development: PMIDs 33538298, 30990409, and 30630103.\n\n| Line | Search component | Results |\n|---|---|---:|\n| 1 | MeSH and supplementary concepts | 652 |\n| 2 | Title and abstract terms | 983 |\n| 3 | Combined query | 1,056 |\n\nRelative recall was 3/3 (100%) against that small **development set**. There was no independent validation set, so this is not a sensitivity estimate.\n\nThe generated query includes the harness’s Entrez-date wrapper through 2021-02-12; there is no publication-date limit. Counts use the current PubMed index with that entry-date bound, not a reconstruction of the historical index. The query still needs PRESS peer review by an information specialist before use.\n\n```text\n(((\"Biosimilar Pharmaceuticals\"[Mesh] AND (\"Tumor Necrosis Factor-alpha\"[Mesh] OR \"Infliximab\"[Mesh] OR \"Etanercept\"[Mesh] OR \"Adalimumab\"[Mesh] OR \"Certolizumab Pegol\"[Mesh] OR \"Golimumab\"[nm])) OR ((biosimilar*[tiab] OR bio-similar*[tiab] OR \"follow-on biologic*\"[tiab] OR \"subsequent entry biologic*\"[tiab]) AND (\"tumor necrosis factor\"[tiab] OR \"tumour necrosis factor\"[tiab] OR \"anti-TNF\"[tiab] OR \"anti TNF\"[tiab] OR TNF[tiab] OR infliximab[tiab] OR etanercept[tiab] OR adalimumab[tiab] OR certolizumab[tiab] OR golimumab[tiab] OR CT-P13[tiab] OR SB2[tiab] OR SB4[tiab] OR GP1111[tiab] OR GP2015[tiab] OR GP2017[tiab] OR \"ABP 501\"[tiab] OR \"BI 695501\"[tiab] OR \"PF-06438179\"[tiab] OR Remsima[tiab] OR Inflectra[tiab] OR Flixabi[tiab] OR Zessly[tiab] OR Renflexis[tiab] OR Ixifi[tiab] OR Benepali[tiab] OR Erelzi[tiab] OR Amjevita[tiab] OR Amgevita[tiab] OR Cyltezo[tiab] OR Hyrimoz[tiab] OR Imraldi[tiab] OR Hulio[tiab])))) AND (\"1800/01/01\"[edat] : \"2021/02/12\"[edat])\n```",
+  "strategy": "(((\"Biosimilar Pharmaceuticals\"[Mesh] AND (\"Tumor Necrosis Factor-alpha\"[Mesh] OR \"Infliximab\"[Mesh] OR \"Etanercept\"[Mesh] OR \"Adalimumab\"[Mesh] OR \"Certolizumab Pegol\"[Mesh] OR \"Golimumab\"[nm])) OR ((biosimilar*[tiab] OR bio-similar*[tiab] OR \"follow-on biologic*\"[tiab] OR \"subsequent entry biologic*\"[tiab]) AND (\"tumor necrosis factor\"[tiab] OR \"tumour necrosis factor\"[tiab] OR \"anti-TNF\"[tiab] OR \"anti TNF\"[tiab] OR TNF[tiab] OR infliximab[tiab] OR etanercept[tiab] OR adalimumab[tiab] OR certolizumab[tiab] OR golimumab[tiab] OR CT-P13[tiab] OR SB2[tiab] OR SB4[tiab] OR GP1111[tiab] OR GP2015[tiab] OR GP2017[tiab] OR \"ABP 501\"[tiab] OR \"BI 695501\"[tiab] OR \"PF-06438179\"[tiab] OR Remsima[tiab] OR Inflectra[tiab] OR Flixabi[tiab] OR Zessly[tiab] OR Renflexis[tiab] OR Ixifi[tiab] OR Benepali[tiab] OR Erelzi[tiab] OR Amjevita[tiab] OR Amgevita[tiab] OR Cyltezo[tiab] OR Hyrimoz[tiab] OR Imraldi[tiab] OR Hulio[tiab])))) AND (\"1800/01/01\"[edat] : \"2021/02/12\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2021-02-12",
+  "count": 1056,
+  "gold_scored": 35,
+  "gold_reachable": 35,
+  "retrieved": 35,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 30.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 34,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "valid": true
+}

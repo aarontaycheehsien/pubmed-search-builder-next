@@ -57,6 +57,8 @@ Read `references/scope.md`. Fill `protocol.json`:
 
 Only AND a concept that passes the admission test in `references/scope.md`; when in doubt, do
 not AND it. Outcomes, comparators, settings and study designs are usually `screen`.
+A block that names one direction of a process (switching back) is fragile; search the process.
+Every member the criteria list for a concept is searched by its own name.
 Decide roles from the question before reading any seed record.
 
 Show the user a short table of concepts, roles and limits, and ask them to confirm. Set

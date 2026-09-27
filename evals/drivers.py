@@ -132,7 +132,10 @@ reasonable decisions, record your assumptions, and carry on to the end.
 Harness rules:
 - Keep all working files in ./work (use it as the workspace directory).
 - Work as if today were {fixture.get('as_of') or 'the present'}: do not use web search, and do not use
-  literature published after that date.
+  literature added to PubMed after that date. The harness pins PubMed to that date through the
+  PSB_AS_OF environment variable (an Entrez-date bound); leave it set for every command. Do not
+  add a publication-date ([dp]) limit for the cutoff: it drops records that were already in
+  PubMed but carry a later publication date.
 - If the skill generates a protected final-query.txt and validation manifest, finish through its
   report command and leave those generated files intact in ./work. Do not hand-author a substitute
   query when validation is blocked. For a skill without protected delivery, write the final PubMed
