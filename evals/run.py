@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import hashlib
 import json
 import os
 import re
@@ -35,6 +36,17 @@ DEFAULT_RUNS_ROOT = Path(tempfile.gettempdir()) / "psb-evals"
 
 def stamp() -> str:
     return dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+
+
+def anon_dir(topic: str) -> str:
+    """A non-identifying directory name for the agent-visible run path.
+
+    A short citation-style id (e.g. "Bos_2018") in the agent's own cwd is itself a leak: the
+    agent can read it from `pwd`/an error message/a sandbox banner without ever being told the
+    review's identity, and for a named topic it hands over exactly the citation key. Only our own
+    ``evals/results/<topic>/`` path (never shown to the agent) uses the readable id.
+    """
+    return "run-" + hashlib.sha256(topic.encode("utf-8")).hexdigest()[:16]
 
 
 def save(topic: str, name: str, data: dict) -> Path:
@@ -95,21 +107,22 @@ def cmd_generate(args) -> int:
     status = 0
     for repeat in range(args.runs):
         label = f"{skill_name}-{args.driver}-{args.condition}-{stamp()}"
-        run_dir = Path(args.runs_root) / re.sub(r"[^A-Za-z0-9_.-]", "_", fixture["id"]) / label
+        run_dir = Path(args.runs_root) / anon_dir(fixture["id"]) / label
         run_dir.mkdir(parents=True)
         drivers.stage_skill(skill_dir, run_dir)
         (run_dir / "work").mkdir()
         prompt = drivers.prompt_for(fixture, seeds=seeds, depth=args.depth)
         (run_dir / "prompt.txt").write_text(prompt, encoding="utf-8")
         print(f"[{repeat + 1}/{args.runs}] {fixture['id']} {label}\n  run dir: {run_dir}", flush=True)
+        extra = {"effort": args.effort} if args.driver == "codex" and args.effort else {}
         run = drivers.DRIVERS[args.driver](prompt, run_dir, env=child_env(skill_dir, fixture.get("as_of")),
-                                           timeout=args.timeout, model=args.model)
+                                           timeout=args.timeout, model=args.model, **extra)
         transcript = ""
         for name in ("transcript.json", "transcript.jsonl"):
             if (run_dir / name).exists():
                 transcript = (run_dir / name).read_text(encoding="utf-8", errors="replace")
         card = {"topic": fixture["id"], "source": f"generated:{skill_name}", "driver": args.driver,
-                "model": args.model, "condition": args.condition, "depth": args.depth, "run_label": label,
+                "model": args.model, "effort": args.effort, "condition": args.condition, "depth": args.depth, "run_label": label,
                 "scored": stamp(), "run": {k: v for k, v in run.items() if k != "final_message"},
                 "final_message": run.get("final_message", "")}
         strategy_path = run_dir / "final_strategy.txt"
@@ -200,6 +213,7 @@ def main() -> int:
     p.add_argument("--skill", default=str(harness.REPO), help="skill directory to test (default: this repo)")
     p.add_argument("--skill-name", help="label for results (default: directory name)")
     p.add_argument("--model")
+    p.add_argument("--effort", choices=["low", "medium", "high"], help="codex model_reasoning_effort (default: medium)")
     p.add_argument("--runs", type=int, default=1)
     p.add_argument("--timeout", type=int, default=5400)
     p.add_argument("--runs-root", default=str(DEFAULT_RUNS_ROOT))

@@ -225,6 +225,13 @@ def cmd_lint(args) -> dict:
     return body
 
 
+def _eval_signature(evaluation: dict) -> tuple:
+    """The parts of an evaluation that matter for deduplication: not translation issues or lint,
+    which can be phrased differently between identical PubMed responses."""
+    sets = tuple(sorted((n, s.get("retrieved"), s.get("recall_percent")) for n, s in (evaluation.get("sets") or {}).items()))
+    return (evaluation.get("count"), sets, tuple(m["pmid"] for m in evaluation.get("misses") or []))
+
+
 def cmd_eval(args) -> dict:
     ws = workspace(args)
     evaluation = evaluate(ws, term_counts=not args.no_term_counts)
@@ -234,17 +241,20 @@ def cmd_eval(args) -> dict:
     previous = versions[-1] if versions else None
     strategy = ws.strategy().to_dict()
     changed = previous is None or previous["strategy_sha256"] != sha256_text(json.dumps(strategy, sort_keys=True))
+    # A note alone does not force a new version: re-running `eval`/`report --fresh` against an
+    # unchanged strategy with the same result would otherwise pad the history with duplicates.
+    identical_to_previous = not changed and previous is not None and _eval_signature(previous["evaluation"]) == _eval_signature(evaluation)
     diff = compare(previous, evaluation, strategy)
     if diff:
         evaluation["since_previous"] = diff
-    if changed or args.note:
+    if not identical_to_previous and (changed or args.note):
         if diff and diff["regression"] and not args.note:
             evaluation["warning"] = "this version lost known relevant records; record why with --note or revert"
         saved = ws.save_version(evaluation, args.note or "")
         evaluation["version"] = saved["version"]
     else:
         evaluation["version"] = previous["version"] if previous else None
-        evaluation["saved"] = "unchanged strategy; no new version"
+        evaluation["saved"] = "identical to the previous version; no new version" if identical_to_previous else "unchanged strategy; no new version"
     if args.brief:
         evaluation.pop("lines", None)
         evaluation.pop("retrieved_known", None)
@@ -301,7 +311,7 @@ def cmd_report(args) -> dict:
         args.note = args.note or "final counts, run live"
         args.no_term_counts = False
         args.brief = True
-        refreshed = cmd_eval(args)  # a note always saves a version, so the live counts are recorded
+        refreshed = cmd_eval(args)  # records a version only if live counts actually differ from the last one
         if not refreshed.get("ok"):
             return refreshed
     ws = workspace(args)

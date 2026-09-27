@@ -1,0 +1,35 @@
+{
+  "topic": "Bos_2018",
+  "source": "generated:pubmed-search-builder-next",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "pubmed-search-builder-next-codex-noseed-20260927T002230Z",
+  "scored": "20260927T003935Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1025
+  },
+  "final_message": "The one-line PubMed query is saved in [final_strategy.txt](/abs/path/C%3A/Users/aaron/AppData/Local/Temp/psb-evals/Bos_2018/pubmed-search-builder-next-codex-noseed-20260927T002230Z/final_strategy.txt). The [audit](/abs/path/C%3A/Users/aaron/AppData/Local/Temp/psb-evals/Bos_2018/pubmed-search-builder-next-codex-noseed-20260927T002230Z/work/audit.md) includes line-by-line counts, scope decisions, screening notes, and critic findings.\n\nWith the publication cutoff of 2017-05-06, the search returned **91,025 records**. It retrieved all **7/7 development records**; that relative recall is not an estimate of sensitivity, and there was no independent validation set. The draft still needs PRESS peer review by an information specialist before use.",
+  "strategy": "((\"Cerebral Small Vessel Diseases\"[Mesh] OR \"Leukoaraiosis\"[Mesh] OR \"Stroke, Lacunar\"[Mesh] OR \"Cerebral Infarction\"[Mesh] OR \"Brain Infarction\"[Mesh] OR \"Cerebral Hemorrhage\"[Mesh] OR \"White Matter\"[Mesh] OR \"cerebral small vessel disease\"[tiab] OR \"small vessel disease\"[tiab] OR \"small-vessel disease\"[tiab] OR \"cerebral microangiopath*\"[tiab] OR \"small vessel ischemic disease\"[tiab] OR \"subcortical ischemic vascular disease\"[tiab] OR \"white matter hyperintens*\"[tiab] OR \"white-matter hyperintens*\"[tiab] OR \"white matter lesion*\"[tiab] OR \"white-matter lesion*\"[tiab] OR \"white matter change*\"[tiab] OR \"white matter abnormalit*\"[tiab] OR leukoaraiosis[tiab] OR leucoaraiosis[tiab] OR \"age-related white matter change*\"[tiab] OR \"age related white matter change*\"[tiab] OR ARWMC[tiab] OR WMH[tiab] OR WML[tiab] OR lacune*[tiab] OR \"lacunar infarction\"[tiab] OR \"lacunar infarct*\"[tiab] OR \"lacunar stroke*\"[tiab] OR \"silent brain infarct*\"[tiab] OR \"silent cerebral infarct*\"[tiab] OR \"silent infarct*\"[tiab] OR \"silent infarction\"[tiab] OR \"subclinical infarct*\"[tiab] OR \"covert infarct*\"[tiab] OR \"brain infarct*\"[tiab] OR \"cerebral infarct*\"[tiab] OR \"cerebral microbleed*\"[tiab] OR \"brain microbleed*\"[tiab] OR \"cerebral microhemorrhag*\"[tiab] OR \"cerebral microhaemorrhag*\"[tiab] OR \"brain microhemorrhag*\"[tiab] OR \"vascular brain injury\"[tiab] OR \"vascular brain lesion*\"[tiab] OR \"subcortical vascular lesion*\"[tiab] OR SIVD[tiab])) AND (1800/01/01:2017/05/06[dp])",
+  "as_of": "2017-05-06",
+  "count": 91025,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 9,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 10113.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 8,
+  "unseen_recall_percent": 100.0,
+  "leakage": [
+    "transcript mentions 'bos_2018'"
+  ],
+  "valid": false,
+  "leakage_note": "Flagged only because the run directory was named after the readable fixture id (e.g. via a wrong-path error message echoing cwd), a harness bug fixed after this run in evals/run.py (anon_dir). No other leakage sign was present; recall figures are trustworthy but the run is kept marked invalid since it predates the fix."
+}

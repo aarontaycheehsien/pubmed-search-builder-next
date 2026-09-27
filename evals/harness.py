@@ -110,10 +110,26 @@ def baseline_queries(fixture: dict) -> dict[str, str]:
 
 # -- leakage and provenance checks on a generated run -----------------------------------------
 
+def _run_dir_pattern(run_dir: Path) -> re.Pattern:
+    """Match the run directory's path at any JSON escaping depth: a JSON transcript that nests a
+    JSON blob as a string value re-escapes each ``\\`` again, so ``\\`` may appear doubled,
+    quadrupled, and so on. A run of one-or-more ``\\``/``/`` between path segments matches all of
+    those depths, since escaping only ever multiplies backslash characters, never other symbols.
+    """
+    segments = [s for s in re.split(r"[\\/]+", str(run_dir).rstrip("\\/")) if s]
+    return re.compile(r"[\\/]+".join(re.escape(s) for s in segments), re.IGNORECASE)
+
+
 def leakage(fixture: dict, run_dir: Path, transcript: str) -> list[str]:
-    """Signs that a run saw the answer key or the literature after ``as_of``."""
+    """Signs that a run saw the answer key or the literature after ``as_of``.
+
+    The run directory is named after the fixture id (``<runs_root>/<id>/<label>``) so every tool
+    call that echoes its own working directory trivially "mentions" the id. Strip the run
+    directory's own path before scanning, whatever form it takes in the transcript.
+    """
     problems = []
-    lowered = transcript.lower()
+    cleaned = _run_dir_pattern(run_dir).sub("", transcript)
+    lowered = cleaned.lower()
     for marker in (fixture["id"].lower(), "clef tar", "synergy dataset", "qrels", "gold_pmids", "evals/fixtures"):
         if marker and marker in lowered:
             problems.append(f"transcript mentions {marker!r}")

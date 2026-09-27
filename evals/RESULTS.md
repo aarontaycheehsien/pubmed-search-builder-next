@@ -1,12 +1,13 @@
 # Evaluation results
 
-Generated 20260926T204241Z by `python evals/run.py report`.
+Generated 20260927T004215Z by `python evals/run.py report`.
 
 Recall is over gold records in PubMed on or before `as_of`; in the seeded condition the three seeds are excluded. `unseen` recall leaves out gold records the agent itself screened into its sets. NNR is total results divided by gold retrieved: a workload proxy, not precision. Generated rows show the mean (min-max) over valid runs.
 
 | Topic | Source | Condition | Runs | Recall % | Unseen recall % | Results | NNR | Cost $ |
 |---|---|---|---:|---|---|---:|---:|---:|
 | Bos_2018 | generated:pubmed-search-builder-next (claude) | noseed | 1/1 | 100.0 | 100.0 | 12495 | 1388.3 | 2.6 |
+| Bos_2018 | generated:pubmed-search-builder-next (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
 | Bos_2018 | naive | noseed | 1/1 | 66.7 | n/a | 2339 | 389.8 | n/a |
 | Bos_2018 | naive | seeded | 1/1 | 66.7 | n/a | 2339 | 584.8 | n/a |
 | CD010657 | naive | noseed | 1/1 | 91.4 | n/a | 644 | 20.1 | n/a |
@@ -15,6 +16,7 @@ Recall is over gold records in PubMed on or before `as_of`; in the seeded condit
 | CD011431 | naive | seeded | 1/1 | 78.3 | n/a | 502 | 27.9 | n/a |
 | CD011926 | generated:lean-optimal (claude) | noseed | 1/1 | 100.0 | 100.0 | 2179 | 75.1 | 1.7 |
 | CD011926 | generated:pubmed-search-builder-next (claude) | noseed | 1/1 | 100.0 | 100.0 | 2055 | 70.9 | 2.2 |
+| CD011926 | generated:pubmed-search-builder-next (codex) | noseed | 1/1 | 96.6 | 95.0 | 1479 | 52.8 | n/a |
 | CD011926 | naive | noseed | 1/1 | 62.1 | n/a | 117 | 6.5 | n/a |
 | CD011926 | naive | seeded | 1/1 | 57.7 | n/a | 117 | 7.8 | n/a |
 | CD011926 | reference | noseed | 1/1 | 96.6 | n/a | 1001 | 35.8 | n/a |

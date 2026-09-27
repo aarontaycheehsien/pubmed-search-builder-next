@@ -1,0 +1,34 @@
+{
+  "topic": "CD011926",
+  "source": "generated:pubmed-search-builder-next",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "pubmed-search-builder-next-codex-noseed-20260927T002229Z",
+  "scored": "20260927T003559Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 810
+  },
+  "final_message": "Completed the standard-depth PubMed strategy. The final query is saved as one line in [final_strategy.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/CD011926/pubmed-search-builder-next-codex-noseed-20260927T002229Z/final_strategy.txt). The full line-by-line strategy and audit are in [work/audit.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/CD011926/pubmed-search-builder-next-codex-noseed-20260927T002229Z/work/audit.md).\n\nThe search uses three required blocks: newborns, sepsis or bloodstream infection, and molecular assays. It applies the 2014-08-09 publication cutoff and the matching PubMed entry-date bound. The final count was **1,479** records.\n\nAll **12 of 12** screened development records were retrieved. This is relative recall against records used during development, not independent validation or sensitivity. The two-round PRESS-structured internal critique has no open must-fix findings; information-specialist PRESS peer review is still needed before use.",
+  "strategy": "((\"Infant, Newborn\"[Mesh] OR \"Infant\"[Mesh] OR neonat*[tiab] OR newborn*[tiab] OR neonate*[tiab] OR infant*[tiab] OR preterm[tiab] OR prematur*[tiab] OR \"very low birth weight\"[tiab] OR VLBW[tiab] OR \"young infant\"[tiab]) AND (\"Sepsis\"[Mesh] OR sepsis[tiab] OR septic*[tiab] OR septicemia[tiab] OR septicaemia[tiab] OR bloodstream infection*[tiab] OR bacteremia[tiab] OR bacteraemia[tiab] OR fungemia[tiab] OR fungaemia[tiab] OR candidemia[tiab] OR candidaemia[tiab] OR septicemia*[tiab] OR septicaemia*[tiab]) AND (\"Molecular Diagnostic Techniques\"[Mesh] OR \"Nucleic Acid Amplification Techniques\"[Mesh] OR \"Polymerase Chain Reaction\"[Mesh] OR \"Reverse Transcriptase Polymerase Chain Reaction\"[Mesh] OR \"Real-Time Polymerase Chain Reaction\"[Mesh] OR \"Multiplex Polymerase Chain Reaction\"[Mesh] OR \"Nucleic Acid Hybridization\"[Mesh] OR \"In Situ Hybridization\"[Mesh] OR \"In Situ Hybridization, Fluorescence\"[Mesh] OR \"DNA Probes\"[Mesh] OR \"Oligonucleotide Array Sequence Analysis\"[Mesh] OR \"RNA, Ribosomal, 16S\"[Mesh] OR PCR[tiab] OR \"polymerase chain reaction\"[tiab] OR RT-PCR[tiab] OR \"reverse transcriptase PCR\"[tiab] OR \"real-time PCR\"[tiab] OR \"real time PCR\"[tiab] OR qPCR[tiab] OR \"quantitative PCR\"[tiab] OR \"multiplex PCR\"[tiab] OR \"nucleic acid amplification\"[tiab] OR \"DNA amplification\"[tiab] OR \"molecular assay\"[tiab] OR \"molecular assays\"[tiab] OR \"molecular test\"[tiab] OR \"molecular tests\"[tiab] OR \"molecular diagnostic\"[tiab] OR \"molecular diagnostics\"[tiab] OR \"16S rRNA\"[tiab] OR \"16S rDNA\"[tiab] OR \"ribosomal RNA\"[tiab] OR \"bacterial DNA\"[tiab] OR \"DNA probe\"[tiab] OR \"DNA probes\"[tiab] OR hybridization[tiab] OR hybridisation[tiab] OR microarray*[tiab] OR FISH[tiab] OR SeptiFast[tiab] OR LightCycler[tiab] OR \"Self-Sustained Sequence Replication\"[Mesh] OR \"Sequence Analysis, DNA\"[Mesh] OR LAMP[tiab] OR \"loop-mediated isothermal amplification\"[tiab] OR \"isothermal amplification\"[tiab] OR \"DNA sequencing\"[tiab] OR \"16S sequencing\"[tiab] OR \"sequence-based assay\"[tiab] OR \"sequencing assay\"[tiab] OR sequencing[tiab])) AND (1800/01/01:2014/08/09[dp])",
+  "as_of": "2014-08-09",
+  "count": 1479,
+  "gold_scored": 29,
+  "gold_reachable": 29,
+  "retrieved": 28,
+  "recall_percent": 96.6,
+  "missed": [
+    "19279393"
+  ],
+  "nnr": 52.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 9,
+  "unseen_retrieved": 19,
+  "unseen_recall_percent": 95.0,
+  "leakage": [],
+  "valid": true
+}

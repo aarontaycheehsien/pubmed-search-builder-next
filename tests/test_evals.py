@@ -50,6 +50,20 @@ def test_leakage_flags_answer_key_mentions_and_undated_searches(tmp_path):
     assert harness.leakage(FIXTURE, tmp_path / "nowhere", "clean transcript") == []
 
 
+def test_leakage_ignores_the_run_directorys_own_path(tmp_path):
+    run_dir = tmp_path / "runs" / "T1" / "some-label"
+    run_dir.mkdir(parents=True)
+    raw = str(run_dir)
+    once = raw.replace(chr(92), chr(92) * 2)  # single JSON escaping
+    twice = once.replace(chr(92), chr(92) * 2)  # a JSON blob nested as a string value, re-escaped
+    # A tool echoing its own cwd trivially "mentions" the id via the run directory name, at
+    # whatever escaping depth a (possibly nested) JSON transcript renders it.
+    transcript = f'{{"cwd": "{raw}"}} and {{"cwd": "{once}"}} and {{"nested": "{{\\"cwd\\": \\"{twice}\\"}}"}}'
+    assert harness.leakage(FIXTURE, run_dir, transcript) == []
+    # A genuine mention elsewhere in the transcript is still caught.
+    assert harness.leakage(FIXTURE, run_dir, transcript + " topic T1 is a CLEF TAR review") != []
+
+
 def test_gold_seen_reads_agent_sets(tmp_path):
     sets = tmp_path / "work" / "sets"
     sets.mkdir(parents=True)
