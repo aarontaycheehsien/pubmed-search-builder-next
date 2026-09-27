@@ -1,0 +1,32 @@
+{
+  "topic": "Bos_2018",
+  "source": "generated:pubmed-search-builder-next",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "pubmed-search-builder-next-codex-noseed-20260927T004221Z",
+  "scored": "20260927T005406Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 704
+  },
+  "final_message": "The high-sensitivity PubMed query is saved as a single line in [final_strategy.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-535fe3dc7ca88971/pubmed-search-builder-next-codex-noseed-20260927T004221Z/final_strategy.txt), with the publication cutoff set to **2017-05-06**.\n\nThe search retrieved **83,203 records** by that cutoff. It retrieved all 8 screened records from a matching prior review, but one record’s MeSH heading informed a revision, so that benchmark is now development-informed—not independent validation. The strategy still needs review by an information specialist before use.\n\nThe workflow and rationale are documented in [audit.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-535fe3dc7ca88971/pubmed-search-builder-next-codex-noseed-20260927T004221Z/work/audit.md). The internal critique found no open must-fix items; it was same-context and does not replace PRESS peer review.",
+  "strategy": "(\"Leukoaraiosis\"[Mesh] OR \"Cerebral Small Vessel Diseases\"[Mesh] OR \"Stroke, Lacunar\"[Mesh] OR \"Cerebral Infarction\"[Mesh] OR \"Cerebral Hemorrhage\"[Mesh] OR \"cerebral small vessel disease\"[tiab] OR \"cerebral small-vessel disease\"[tiab] OR \"small vessel disease\"[tiab] OR \"small-vessel disease\"[tiab] OR \"cerebral microangiopath*\"[tiab] OR \"white matter hyperintens*\"[tiab] OR \"white-matter hyperintens*\"[tiab] OR \"white matter lesion*\"[tiab] OR \"white-matter lesion*\"[tiab] OR \"white matter change*\"[tiab] OR leukoaraiosis[tiab] OR \"subcortical ischemic vascular disease\"[tiab] OR \"subcortical ischaemic vascular disease\"[tiab] OR \"subcortical vascular disease\"[tiab] OR \"lacunar infarct*\"[tiab] OR \"lacunar lesion*\"[tiab] OR \"silent infarct*\"[tiab] OR \"silent brain infarct*\"[tiab] OR \"covert infarct*\"[tiab] OR \"subclinical infarct*\"[tiab] OR \"brain infarct*\"[tiab] OR \"cerebral infarct*\"[tiab] OR \"cerebral microbleed*\"[tiab] OR \"brain microbleed*\"[tiab] OR \"microbleed*\"[tiab] OR \"cerebral microhemorrhag*\"[tiab] OR \"cerebral microhaemorrhag*\"[tiab] OR \"brain microhemorrhag*\"[tiab] OR \"vascular brain injury\"[tiab] OR \"vascular brain lesions\"[tiab] OR \"vascular brain disease\"[tiab] OR (\"white matter\"[tiab] AND (WMH[tiab] OR WML[tiab] OR WMSH[tiab])) OR \"periventricular hyperintens*\"[tiab] OR \"subcortical hyperintens*\"[tiab] OR \"white matter signal hyperintens*\"[tiab]) AND (\"1800/01/01\"[dp] : \"2017/05/06\"[dp])",
+  "as_of": "2017-05-06",
+  "count": 83107,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 9,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 9234.1,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 8,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "valid": true
+}

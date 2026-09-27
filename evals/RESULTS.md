@@ -1,13 +1,13 @@
 # Evaluation results
 
-Generated 20260927T004215Z by `python evals/run.py report`.
+Generated 20260927T005424Z by `python evals/run.py report`.
 
 Recall is over gold records in PubMed on or before `as_of`; in the seeded condition the three seeds are excluded. `unseen` recall leaves out gold records the agent itself screened into its sets. NNR is total results divided by gold retrieved: a workload proxy, not precision. Generated rows show the mean (min-max) over valid runs.
 
 | Topic | Source | Condition | Runs | Recall % | Unseen recall % | Results | NNR | Cost $ |
 |---|---|---|---:|---|---|---:|---:|---:|
 | Bos_2018 | generated:pubmed-search-builder-next (claude) | noseed | 1/1 | 100.0 | 100.0 | 12495 | 1388.3 | 2.6 |
-| Bos_2018 | generated:pubmed-search-builder-next (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
+| Bos_2018 | generated:pubmed-search-builder-next (codex) | noseed | 1/2 | 100.0 | 100.0 | 83107 | 9234.1 | n/a |
 | Bos_2018 | naive | noseed | 1/1 | 66.7 | n/a | 2339 | 389.8 | n/a |
 | Bos_2018 | naive | seeded | 1/1 | 66.7 | n/a | 2339 | 584.8 | n/a |
 | CD010657 | naive | noseed | 1/1 | 91.4 | n/a | 644 | 20.1 | n/a |
