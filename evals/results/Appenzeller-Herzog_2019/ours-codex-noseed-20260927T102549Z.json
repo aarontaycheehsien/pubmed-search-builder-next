@@ -1,0 +1,33 @@
+{
+  "topic": "Appenzeller-Herzog_2019",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260927T102549Z",
+  "scored": "20260927T104247Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1018
+  },
+  "final_message": "Built the high sensitivity PubMed draft and saved the single line query to [final_strategy.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-codex-noseed-20260927T102549Z/final_strategy.txt). The search requires Wilson disease and anticopper therapy; comparators, outcomes, and study design are assessed during screening.\n\nWith the 2018-12-23 cutoff, PubMed returned 4,062 records. The query retrieved all 7 screened development records, but there was no independent validation set, so this does not establish sensitivity. Two internal PRESS-structured critiques found no issues. The draft still needs PRESS peer review by an information specialist before use.\n\nThe full strategy, counts, assumptions, and audit are in [audit.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-codex-noseed-20260927T102549Z/work/audit.md).",
+  "strategy": "((\"Hepatolenticular Degeneration\"[Mesh] OR Wilson[tiab] OR \"wilson disease\"[tiab] OR \"wilson's disease\"[tiab] OR \"wilson disease\"[tiab:~2] OR hepatolenticular degeneration[tiab] OR \"progressive lenticular degeneration\"[tiab] OR \"copper storage disease\"[tiab] OR ATP7B[tiab]) AND (\"Penicillamine\"[Mesh] OR \"Trientine\"[Mesh] OR \"Zinc\"[Mesh] OR \"Zinc Compounds\"[Mesh] OR \"Chelating Agents\"[Mesh] OR penicillamine[tiab] OR \"D-penicillamine\"[tiab] OR \"D penicillamine\"[tiab] OR trientine[tiab] OR triethylenetetramine[tiab] OR Syprine[tiab] OR zinc[tiab] OR \"zinc acetate\"[tiab] OR \"zinc sulfate\"[tiab] OR \"zinc salts\"[tiab] OR tetrathiomolybdate[tiab] OR \"ammonium tetrathiomolybdate\"[tiab] OR dimercaprol[tiab] OR chelating[tiab] OR chelation[tiab] OR treat*[tiab] OR therap*[tiab])) AND (1800:2018/12/23[dp])",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2018-12-23",
+  "count": 4062,
+  "gold_scored": 22,
+  "gold_reachable": 21,
+  "retrieved": 21,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 193.4,
+  "translation_issues": [],
+  "gold_seen_by_agent": 5,
+  "unseen_retrieved": 16,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "valid": true
+}

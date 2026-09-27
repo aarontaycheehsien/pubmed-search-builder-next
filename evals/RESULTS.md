@@ -1,35 +1,73 @@
 # Evaluation results
 
-Generated 20260927T005424Z by `python evals/run.py report`.
+Generated 20260927T114335Z by `python evals/run.py report`.
 
 Recall is over gold records in PubMed on or before `as_of`; in the seeded condition the three seeds are excluded. `unseen` recall leaves out gold records the agent itself screened into its sets. NNR is total results divided by gold retrieved: a workload proxy, not precision. Generated rows show the mean (min-max) over valid runs.
 
 | Topic | Source | Condition | Runs | Recall % | Unseen recall % | Results | NNR | Cost $ |
 |---|---|---|---:|---|---|---:|---:|---:|
+| Appenzeller-Herzog_2019 | generated:lean-optimal (codex) | noseed | 1/1 | 100.0 | 100.0 | 7579 | 360.9 | n/a |
+| Appenzeller-Herzog_2019 | generated:ours (codex) | noseed | 1/1 | 100.0 | 100.0 | 4062 | 193.4 | n/a |
+| Bos_2018 | generated:lean-optimal (codex) | noseed | 1/1 | 100.0 | 100.0 | 5313 | 590.3 | n/a |
 | Bos_2018 | generated:pubmed-search-builder-next (claude) | noseed | 1/1 | 100.0 | 100.0 | 12495 | 1388.3 | 2.6 |
 | Bos_2018 | generated:pubmed-search-builder-next (codex) | noseed | 1/2 | 100.0 | 100.0 | 83107 | 9234.1 | n/a |
 | Bos_2018 | naive | noseed | 1/1 | 66.7 | n/a | 2339 | 389.8 | n/a |
 | Bos_2018 | naive | seeded | 1/1 | 66.7 | n/a | 2339 | 584.8 | n/a |
+| Brouwer_2019 | generated:lean-optimal (codex) | noseed | 1/1 | 96.3 | 96.3 | 17550 | 337.5 | n/a |
+| Brouwer_2019 | generated:ours (codex) | noseed | 1/1 | 96.3 | 96.2 | 17383 | 334.3 | n/a |
+| CD010657 | generated:lean-optimal (codex) | noseed | 1/1 | 97.1 | 97.1 | 993 | 29.2 | n/a |
+| CD010657 | generated:ours (codex) | noseed | 1/1 | 100.0 | 100.0 | 2061 | 58.9 | n/a |
 | CD010657 | naive | noseed | 1/1 | 91.4 | n/a | 644 | 20.1 | n/a |
 | CD010657 | naive | seeded | 1/1 | 90.6 | n/a | 644 | 22.2 | n/a |
+| CD011431 | generated:lean-optimal (codex) | noseed | 1/1 | 100.0 | 100.0 | 1864 | 71.7 | n/a |
+| CD011431 | generated:ours (codex) | noseed | 1/1 | 100.0 | 100.0 | 6099 | 234.6 | n/a |
 | CD011431 | naive | noseed | 1/1 | 80.8 | n/a | 502 | 23.9 | n/a |
 | CD011431 | naive | seeded | 1/1 | 78.3 | n/a | 502 | 27.9 | n/a |
 | CD011926 | generated:lean-optimal (claude) | noseed | 1/1 | 100.0 | 100.0 | 2179 | 75.1 | 1.7 |
+| CD011926 | generated:lean-optimal (codex) | noseed | 1/1 | 96.6 | 96.6 | 1985 | 70.9 | n/a |
 | CD011926 | generated:pubmed-search-builder-next (claude) | noseed | 1/1 | 100.0 | 100.0 | 2055 | 70.9 | 2.2 |
 | CD011926 | generated:pubmed-search-builder-next (codex) | noseed | 1/1 | 96.6 | 95.0 | 1479 | 52.8 | n/a |
 | CD011926 | naive | noseed | 1/1 | 62.1 | n/a | 117 | 6.5 | n/a |
 | CD011926 | naive | seeded | 1/1 | 57.7 | n/a | 117 | 7.8 | n/a |
 | CD011926 | reference | noseed | 1/1 | 96.6 | n/a | 1001 | 35.8 | n/a |
 | CD011926 | reference | seeded | 1/1 | 96.2 | n/a | 1001 | 40.0 | n/a |
+| Donners_2021 | generated:lean-optimal (codex) | noseed | 1/1 | 93.3 | 93.3 | 231 | 16.5 | n/a |
+| Donners_2021 | generated:ours (codex) | noseed | 1/1 | 100.0 | 100.0 | 234 | 15.6 | n/a |
 | Donners_2021 | naive | noseed | 1/1 | 100.0 | n/a | 1614 | 107.6 | n/a |
 | Donners_2021 | naive | seeded | 1/1 | 100.0 | n/a | 1614 | 134.5 | n/a |
+| Jeyaraman_2020 | generated:lean-optimal (codex) | noseed | 1/1 | 16.5 | 16.5 | 762 | 50.8 | n/a |
+| Jeyaraman_2020 | generated:ours (codex) | noseed | 1/1 | 17.6 | 17.6 | 2737 | 171.1 | n/a |
+| Kwok_2020 | generated:lean-optimal (codex) | noseed | 1/1 | 90.5 | 90.5 | 755 | 7.2 | n/a |
+| Kwok_2020 | generated:ours (codex) | noseed | 1/1 | 90.5 | 89.9 | 822 | 7.8 | n/a |
+| Liu_2023_VR_nursing | generated:lean-optimal (codex) | noseed | 1/1 | 100.0 | 100.0 | 737 | 122.8 | n/a |
+| Liu_2023_VR_nursing | generated:ours (codex) | noseed | 1/1 | 100.0 | 100.0 | 2600 | 433.3 | n/a |
 | Liu_2023_VR_nursing | naive | noseed | 1/1 | 100.0 | n/a | 374 | 62.3 | n/a |
+| Medeiros-2022-School-based food and nutr | generated:lean-optimal (codex) | noseed | 1/1 | 88.9 | 88.9 | 23351 | 2918.9 | n/a |
+| Medeiros-2022-School-based food and nutr | generated:ours (codex) | noseed | 1/1 | 88.9 | 88.9 | 25088 | 3136.0 | n/a |
 | Medeiros-2022-School-based food and nutr | naive | noseed | 1/1 | 11.1 | n/a | 767 | 767.0 | n/a |
 | Medeiros-2022-School-based food and nutr | naive | seeded | 1/1 | 16.7 | n/a | 767 | 767.0 | n/a |
 | Medeiros-2022-School-based food and nutr | reference | noseed | 1/1 | 88.9 | n/a | 24320 | 3040.0 | n/a |
 | Medeiros-2022-School-based food and nutr | reference | seeded | 1/1 | 83.3 | n/a | 24320 | 4864.0 | n/a |
+| Meijboom_2021 | generated:lean-optimal (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
+| Meijboom_2021 | generated:ours (codex) | noseed | 1/1 | 74.3 | 74.3 | 443 | 17.0 | n/a |
+| Menon_2022 | generated:lean-optimal (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
+| Menon_2022 | generated:ours (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
+| Muthu_2022 | generated:lean-optimal (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
+| Muthu_2022 | generated:ours (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
 | Muthu_2022 | naive | noseed | 1/1 | 100.0 | n/a | 505 | 84.2 | n/a |
+| Oud_2018 | generated:lean-optimal (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
+| Oud_2018 | generated:ours (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
+| Smid_2020 | generated:lean-optimal (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
+| Smid_2020 | generated:ours (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
 | Smid_2020 | naive | noseed | 1/1 | 78.6 | n/a | 1369 | 124.5 | n/a |
 | Smid_2020 | naive | seeded | 1/1 | 72.7 | n/a | 1369 | 171.1 | n/a |
+| Welling_2021 | generated:lean-optimal (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
+| Welling_2021 | generated:ours (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
+| gao-2026-Immune checkpoint inhibitors | generated:lean-optimal (codex) | noseed | 1/1 | 72.7 | 72.7 | 1220 | 152.5 | n/a |
+| gao-2026-Immune checkpoint inhibitors | generated:ours (codex) | noseed | 1/1 | 100.0 | 100.0 | 1587 | 144.3 | n/a |
 | gao-2026-Immune checkpoint inhibitors | naive | noseed | 1/1 | 72.7 | n/a | 1599 | 199.9 | n/a |
 | gao-2026-Immune checkpoint inhibitors | naive | seeded | 1/1 | 62.5 | n/a | 1599 | 319.8 | n/a |
+| van_Dis_2020 | generated:lean-optimal (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
+| van_Dis_2020 | generated:ours (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
+| van_de_Schoot_2018 | generated:lean-optimal (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |
+| van_de_Schoot_2018 | generated:ours (codex) | noseed | 0/1 | n/a | n/a | n/a | n/a | n/a |

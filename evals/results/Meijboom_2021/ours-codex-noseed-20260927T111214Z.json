@@ -1,0 +1,43 @@
+{
+  "topic": "Meijboom_2021",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260927T111214Z",
+  "scored": "20260927T112836Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 981
+  },
+  "final_message": "The one-line PubMed strategy is saved in [final_strategy.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1b21fe8244224b90/ours-codex-noseed-20260927T111214Z/final_strategy.txt). It includes publication-date and PubMed entry-date ceilings through 2021-02-12.\n\nThe [audit](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1b21fe8244224b90/ours-codex-noseed-20260927T111214Z/work/audit.md) records 443 results and relative recall of 100% against two development records. That is not independent validation; PRESS peer review by an information specialist is still needed.",
+  "strategy": "(((\"Biosimilar Pharmaceuticals\"[Mesh] OR Biosimilar[tiab] OR biosimilar*[tiab] OR \"follow-on biologic\"[tiab] OR \"follow-on biologics\"[tiab] OR \"subsequent entry biologic\"[tiab] OR \"subsequent entry biologics\"[tiab] OR \"reference product\"[tiab] OR \"reference biologic\"[tiab] OR \"originator biologic\"[tiab] OR \"originator infliximab\"[tiab] OR CT-P13[tiab] OR Remsima[tiab] OR Inflectra[tiab] OR SB2[tiab] OR Flixabi[tiab] OR etanercept biosimilar*[tiab] OR adalimumab biosimilar*[tiab] OR infliximab biosimilar*[tiab] OR Remicade[tiab] OR Humira[tiab] OR Enbrel[tiab]) AND (\"Drug Substitution\"[Mesh] OR \"reverse switching\"[tiab] OR \"reverse switch\"[tiab] OR \"switching back\"[tiab] OR \"switch back\"[tiab] OR switchback[tiab] OR \"switch-back\"[tiab] OR \"switch back to originator\"[tiab:~2] OR \"switching back to originator\"[tiab:~2] OR \"back to originator\"[tiab:~2] OR \"back to reference product\"[tiab:~2] OR \"back to reference biologic\"[tiab:~2] OR \"return to originator\"[tiab:~2] OR \"return to reference product\"[tiab:~2] OR \"biosimilar to originator\"[tiab:~3] OR \"biosimilar to reference\"[tiab:~3] OR \"from biosimilar to Remicade\"[tiab:~2] OR \"biosimilar to Remicade\"[tiab:~2] OR \"switch Humira\"[tiab:~4] OR \"switch Enbrel\"[tiab:~4] OR \"switch Remicade\"[tiab:~4] OR \"switch originator\"[tiab:~4] OR \"switch reference\"[tiab:~4])) AND ((\"1800/01/01\"[Date - Publication] : \"2021/02/12\"[Date - Publication]))) AND ((\"1800/01/01\"[Date - Entry] : \"2021/02/12\"[Date - Entry]))",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2021-02-12",
+  "count": 443,
+  "gold_scored": 35,
+  "gold_reachable": 35,
+  "retrieved": 26,
+  "recall_percent": 74.3,
+  "missed": [
+    "25974251",
+    "32268935",
+    "32514676",
+    "32524081",
+    "32662409",
+    "32776313",
+    "32850911",
+    "33538298",
+    "33570142"
+  ],
+  "nnr": 17.0,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 26,
+  "unseen_recall_percent": 74.3,
+  "leakage": [],
+  "valid": true
+}

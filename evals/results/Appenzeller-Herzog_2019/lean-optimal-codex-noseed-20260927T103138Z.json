@@ -1,0 +1,42 @@
+{
+  "topic": "Appenzeller-Herzog_2019",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260927T103138Z",
+  "scored": "20260927T103945Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 486
+  },
+  "final_message": "## Draft PubMed strategy\n\nThe final query is in [final_strategy.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/lean-optimal-codex-noseed-20260927T103138Z/final_strategy.txt). It is a single line, includes an explicit publication date limit through **2018-12-23**, and was tested with the CLI.\n\nI used Wilson disease as the sole required concept. I left out therapy, comparator, and outcome blocks to avoid missing disease studies that do not name treatments in the title or abstract. There were no seed PMIDs, so seed validation was not possible.\n\n## Checks and limitations\n\n- The MeSH lookup identified **Hepatolenticular Degeneration** (D006527), introduced in 1964. Its tree check found no narrower descriptors; the final query uses the exploded `[Mesh]` heading and its entry terms as `[tiab]` variants. The lookup also returned unrelated Wilson-named terms, which I excluded.\n- I tested an unfielded `Wilson disease` query; its translation mapped to the disease MeSH heading and text terms. I also tested the MeSH heading, disease text terms, `wilson*[tiab]`, and the combined query. The tested combined query returned **7,604** results with the date limit; the dated MeSH-only query returned **5,702**.\n- `WD` was too ambiguous to include. The `wilson*` wildcard was tested and left out because it is broad; the final query uses explicit disease variants and `ATP7B[tiab]`.\n- The CLI’s PubMed fetch returned no article records for sample PMIDs, so I could not inspect sample titles or abstracts. Counts and sample retrieval therefore have that limitation.\n- The CLI accessed PubMed in the current environment. The publication date limit excludes literature dated after 2018-12-23, but this is not a frozen snapshot of what PubMed contained on that date; later-added records with earlier publication dates may be included.\n\nThis is a draft for peer review by a second information specialist under PRESS before use as the final search.",
+  "strategy": "﻿(\"Hepatolenticular Degeneration\"[Mesh] OR \"Hepatolenticular Degeneration\"[tiab] OR \"Degeneration, Hepatolenticular\"[tiab] OR \"Progressive Lenticular Degeneration\"[tiab] OR \"Degeneration, Progressive Lenticular\"[tiab] OR \"Lenticular Degeneration, Progressive\"[tiab] OR Pseudosclerosis[tiab] OR \"Wilson Disease\"[tiab] OR \"Wilson's Disease\"[tiab] OR \"Wilsons Disease\"[tiab] OR \"Cerebral Pseudosclerosis\"[tiab] OR \"Cerebral Pseudoscleroses\"[tiab] OR \"Pseudoscleroses, Cerebral\"[tiab] OR \"Pseudosclerosis, Cerebral\"[tiab] OR \"Neurohepatic Degeneration\"[tiab] OR \"Degeneration, Neurohepatic\"[tiab] OR \"Degenerations, Neurohepatic\"[tiab] OR \"Neurohepatic Degenerations\"[tiab] OR \"Hepato-Neurologic Wilson Disease\"[tiab] OR \"Diseases, Hepato-Neurologic Wilson\"[tiab] OR \"Hepato Neurologic Wilson Disease\"[tiab] OR \"Hepato-Neurologic Wilson Diseases\"[tiab] OR \"Wilson Disease, Hepato-Neurologic\"[tiab] OR \"Wilson Diseases, Hepato-Neurologic\"[tiab] OR \"Hepatocerebral Degeneration\"[tiab] OR \"Degeneration, Hepatocerebral\"[tiab] OR \"Degenerations, Hepatocerebral\"[tiab] OR \"Hepatocerebral Degenerations\"[tiab] OR \"Kinnier-Wilson Disease\"[tiab] OR \"Diseases, Kinnier-Wilson\"[tiab] OR \"Kinnier Wilson Disease\"[tiab] OR \"Kinnier-Wilson Diseases\"[tiab] OR \"Westphal-Strumpell Syndrome\"[tiab] OR \"Westphal Strumpell Syndrome\"[tiab] OR \"Westphal-Strumpell Syndromes\"[tiab] OR \"Copper Storage Disease\"[tiab] OR \"Copper Storage Diseases\"[tiab] OR \"Disease, Copper Storage\"[tiab] OR \"Diseases, Copper Storage\"[tiab] OR \"Storage Disease, Copper\"[tiab] OR \"Storage Diseases, Copper\"[tiab] OR \"Hepatolenticular Degeneration Syndrome\"[tiab] OR \"Degeneration Syndrome, Hepatolenticular\"[tiab] OR \"Degeneration Syndromes, Hepatolenticular\"[tiab] OR \"Hepatolenticular Degeneration Syndromes\"[tiab] OR \"Syndrome, Hepatolenticular Degeneration\"[tiab] OR \"Syndromes, Hepatolenticular Degeneration\"[tiab] OR \"Hepatic Form of Wilson Disease\"[tiab] OR \"Wilson Disease, Hepatic Form\"[tiab] OR ATP7B[tiab]) AND (\"1900/01/01\"[Date - Publication] : \"2018/12/23\"[Date - Publication])",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2018-12-23",
+  "count": 7579,
+  "gold_scored": 22,
+  "gold_reachable": 21,
+  "retrieved": 21,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 360.9,
+  "translation_issues": [
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 21,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "valid": true
+}

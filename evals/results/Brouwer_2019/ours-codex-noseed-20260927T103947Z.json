@@ -1,0 +1,36 @@
+{
+  "topic": "Brouwer_2019",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260927T103947Z",
+  "scored": "20260927T105348Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 841
+  },
+  "final_message": "Saved the single-line query to [final_strategy.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260927T103947Z/final_strategy.txt). The full audit, including line counts and assumptions, is in [audit.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260927T103947Z/work/audit.md).\n\nThe final search returned **17,383 records** through the 2018-11-17 publication cutoff. Its depression block returned 460,494; the relapse/recurrence block returned 706,784; their intersection returned 17,415 before the date limit. Relative recall was 100% against the five records found and screened during this build. That small development set is not independent validation and does not estimate sensitivity.\n\nThe psychological-theory criterion is handled at screening, so the query is broad. The draft still needs PRESS peer review by an information specialist before use.",
+  "strategy": "((\"Depressive Disorder\"[Mesh] OR \"Major Depressive Disorder\"[Mesh] OR \"Depression\"[Mesh] OR depress*[tiab] OR \"depressive disorder\"[tiab] OR \"depressive disorders\"[tiab] OR \"major depression\"[tiab] OR \"major depressive disorder\"[tiab] OR \"unipolar depression\"[tiab] OR \"depressive illness\"[tiab] OR melanchol*[tiab]) AND (\"Recurrence\"[Mesh] OR relaps*[tiab] OR recurren*[tiab] OR recrudescen*[tiab] OR \"new episode\"[tiab] OR \"new episodes\"[tiab] OR \"subsequent episode\"[tiab] OR \"subsequent episodes\"[tiab] OR \"future episode\"[tiab] OR \"future episodes\"[tiab] OR \"repeat episode\"[tiab] OR \"repeat episodes\"[tiab])) AND ((\"1800/01/01\"[dp] : \"2018/11/17\"[dp]))",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2018-11-17",
+  "count": 17383,
+  "gold_scored": 54,
+  "gold_reachable": 54,
+  "retrieved": 52,
+  "recall_percent": 96.3,
+  "missed": [
+    "17696703",
+    "21848705"
+  ],
+  "nnr": 334.3,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 51,
+  "unseen_recall_percent": 96.2,
+  "leakage": [],
+  "valid": true
+}

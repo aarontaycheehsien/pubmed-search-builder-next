@@ -1,0 +1,35 @@
+{
+  "topic": "Donners_2021",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260927T105350Z",
+  "scored": "20260927T110137Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 467
+  },
+  "final_message": "The final query is saved as a single line in [final_strategy.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-86f1a115e64cced2/lean-optimal-codex-noseed-20260927T105350Z/final_strategy.txt).\n\nIt searches emicizumab and its development names, with a publication-date ceiling of 2020-10-22. I kept haemophilia, human, and PK/efficacy terms out of required `AND` blocks: adding haemophilia reduced the tested results from 229 to 203, and adding PK/exposure/efficacy terms reduced them to 77. Those limits could miss healthy-volunteer bridging studies or eligible reports that use different outcome wording.\n\nThe NCBI CLI checks included MeSH lookup and inspection for emicizumab/ACE910, haemophilia A, and pharmacokinetics, plus tests of the candidate text-word blocks and sample records. The final query returned 235 records in the CLI check. The “factor VIII mimetic” phrase returned 8 records on its own, including a healthy-subject phase 1 study, so I retained it. No seed PMIDs were provided; seed validation was not possible.\n\nThis is a draft strategy and should be peer reviewed by a second information specialist under PRESS before use as the final systematic-review search.",
+  "strategy": "﻿(\"emicizumab\"[Supplementary Concept] OR emicizumab[tiab] OR emicizumab*[tiab] OR ACE910[tiab] OR \"ACE-910\"[tiab] OR \"emicizumab-kxwh\"[tiab] OR Hemlibra[tiab] OR \"factor VIII mimetic\"[tiab] OR \"factor VIII-mimetic\"[tiab]) AND (\"1900/01/01\"[Date - Publication] : \"2020/10/22\"[Date - Publication])",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2020-10-22",
+  "count": 231,
+  "gold_scored": 15,
+  "gold_reachable": 15,
+  "retrieved": 14,
+  "recall_percent": 93.3,
+  "missed": [
+    "32504271"
+  ],
+  "nnr": 16.5,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 14,
+  "unseen_recall_percent": 93.3,
+  "leakage": [],
+  "valid": true
+}

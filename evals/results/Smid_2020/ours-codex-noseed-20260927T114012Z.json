@@ -1,0 +1,19 @@
+{
+  "topic": "Smid_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260927T114012Z",
+  "scored": "20260927T114021Z",
+  "run": {
+    "returncode": 1,
+    "timed_out": false,
+    "seconds": 9
+  },
+  "final_message": "",
+  "valid": false,
+  "error": "Codex account hit its usage limit mid-run (not a strategy failure): ou’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or tr"
+}

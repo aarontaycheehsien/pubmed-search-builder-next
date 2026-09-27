@@ -1,0 +1,38 @@
+{
+  "topic": "Brouwer_2019",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260927T104249Z",
+  "scored": "20260927T105101Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 491
+  },
+  "final_message": "Completed the draft. The final PubMed query is saved as a **single line** in [final_strategy.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/lean-optimal-codex-noseed-20260927T104249Z/final_strategy.txt). Search decisions, MeSH checks, test counts, assumptions, and caveats are in [strategy_notes.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/lean-optimal-codex-noseed-20260927T104249Z/work/strategy_notes.md).\n\nThe search uses depression and relapse/recurrence as its two required blocks. I left “psychological theory” out as a required block to reduce the risk of missing relevant papers that describe mechanisms without using theory terminology. The tested query returned 17,627 records with the publication-date ceiling of 2018-11-17; adding a theory wording block reduced retrieval to 191. Counts reflect the present PubMed index under that date limit, not historical counts from 2018.\n\nNo seed articles were available for validation. This draft should receive PRESS review by a second information specialist before use as the final systematic-review search.",
+  "strategy": "(\"Depressive Disorder\"[Mesh] OR \"Depression\"[Mesh] OR depress*[tiab] OR MDD[tiab] OR \"Depressive Disorder\"[tiab] OR \"Depressive Disorders\"[tiab] OR \"Disorder, Depressive\"[tiab] OR \"Disorders, Depressive\"[tiab] OR \"Depression Disorder\"[tiab] OR \"Disorders, Depression\"[tiab] OR \"Neurosis, Depressive\"[tiab] OR \"Depressive Neuroses\"[tiab] OR \"Neuroses, Depressive\"[tiab] OR \"Depression, Endogenous\"[tiab] OR \"Depressions, Endogenous\"[tiab] OR \"Endogenous Depression\"[tiab] OR \"Melancholia\"[tiab] OR \"Unipolar Depression\"[tiab] OR \"Depression, Unipolar\"[tiab] OR \"Depressive Syndrome\"[tiab] OR \"Syndrome, Depressive\"[tiab] OR \"Syndromes, Depressive\"[tiab] OR \"Depression, Neurotic\"[tiab] OR \"Depressions, Neurotic\"[tiab] OR \"Neurotic Depression\"[tiab] OR \"Depression\"[tiab] OR \"Depressive Symptoms\"[tiab] OR \"Depressive Symptom\"[tiab] OR \"Symptom, Depressive\"[tiab] OR \"Emotional Depression\"[tiab] OR \"Depression, Emotional\"[tiab]) AND (\"Recurrence\"[Mesh] OR relaps*[tiab] OR recurr*[tiab] OR recrudescen*[tiab] OR \"Recurrence\"[tiab] OR \"Recurrences\"[tiab] OR \"Relapse\"[tiab] OR \"Relapses\"[tiab] OR \"Recrudescence\"[tiab] OR \"Recrudescences\"[tiab]) AND (\"1800/01/01\"[Date - Publication] : \"2018/11/17\"[Date - Publication])",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2018-11-17",
+  "count": 17550,
+  "gold_scored": 54,
+  "gold_reachable": 54,
+  "retrieved": 52,
+  "recall_percent": 96.3,
+  "missed": [
+    "17696703",
+    "21848705"
+  ],
+  "nnr": 337.5,
+  "translation_issues": [
+    "pubmed_warning"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 52,
+  "unseen_recall_percent": 96.3,
+  "leakage": [],
+  "valid": true
+}

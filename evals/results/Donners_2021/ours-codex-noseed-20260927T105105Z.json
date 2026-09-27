@@ -1,0 +1,35 @@
+{
+  "topic": "Donners_2021",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260927T105105Z",
+  "scored": "20260927T110835Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1049
+  },
+  "final_message": "Completed the high sensitivity strategy. The query is in [final_strategy.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-86f1a115e64cced2/ours-codex-noseed-20260927T105105Z/final_strategy.txt) as a single line; the full search audit is in [audit.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-86f1a115e64cced2/ours-codex-noseed-20260927T105105Z/work/audit.md).\n\nUnder the 2020-10-22 PubMed entry-date bound, the query returned 234 records. It retrieved all 7 development records and all 3 records held out from term mining. Those recall figures are relative to small screened sets, not estimates of sensitivity. The draft still needs PRESS peer review by an information specialist before use.",
+  "strategy": "(emicizumab[nm] OR emicizumab[tiab] OR ACE910[tiab] OR \"ACE 910\"[tiab] OR \"ACE-910\"[tiab] OR \"emicizumab-kxwh\"[tiab] OR Hemlibra[tiab] OR \"factor VIII mimetic\"[tiab] OR \"factor VIII-mimetic\"[tiab] OR \"anti-factor IXa/X bispecific antibody\"[tiab])",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2020-10-22",
+  "count": 234,
+  "gold_scored": 15,
+  "gold_reachable": 15,
+  "retrieved": 15,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 15.6,
+  "translation_issues": [
+    "automatic_term_mapping"
+  ],
+  "gold_seen_by_agent": 10,
+  "unseen_retrieved": 5,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "valid": true
+}

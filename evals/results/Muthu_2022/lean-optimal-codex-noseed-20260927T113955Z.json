@@ -1,0 +1,19 @@
+{
+  "topic": "Muthu_2022",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260927T113955Z",
+  "scored": "20260927T114007Z",
+  "run": {
+    "returncode": 1,
+    "timed_out": false,
+    "seconds": 13
+  },
+  "final_message": "",
+  "valid": false,
+  "error": "Codex account hit its usage limit mid-run (not a strategy failure): ou’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or tr"
+}

@@ -1,0 +1,32 @@
+{
+  "topic": "Liu_2023_VR_nursing",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260927T101306Z",
+  "scored": "20260927T103136Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1110
+  },
+  "final_message": "The final PubMed query is saved as a single line in [final_strategy.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3d10494d5653b6c0/ours-codex-noseed-20260927T101306Z/final_strategy.txt). The full audit, including line-by-line counts and the search rationale, is in [work/audit.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3d10494d5653b6c0/ours-codex-noseed-20260927T101306Z/work/audit.md).\n\nThe query returned 2,600 records through the 2023-03-31 cutoff. It retrieved all 17 screened development records, but that relative recall is not independent validation or sensitivity. The draft still needs PRESS peer review by an information specialist.",
+  "strategy": "((\"Students, Nursing\"[Mesh] OR \"Education, Nursing\"[Mesh] OR \"nursing student\"[tiab] OR \"nursing students\"[tiab] OR \"student nurse\"[tiab] OR \"student nurses\"[tiab] OR \"nurse student\"[tiab] OR \"nurse students\"[tiab] OR \"nursing education\"[tiab] OR prelicensure[tiab] OR pre-licensure[tiab] OR \"pre-registration nursing\"[tiab] OR \"preregistration nursing\"[tiab] OR \"graduate nursing student\"[tiab] OR \"postgraduate nursing student\"[tiab]) AND (\"Virtual Reality\"[Mesh] OR \"virtual reality\"[tiab] OR \"virtual-reality\"[tiab] OR \"virtual reality-based\"[tiab] OR \"virtual reality based\"[tiab] OR \"virtual simulation\"[tiab] OR \"virtual clinical simulation\"[tiab] OR \"immersive simulation\"[tiab] OR \"immersive virtual reality\"[tiab] OR \"immersive virtual\"[tiab] OR \"immersive technology\"[tiab] OR \"virtual patient\"[tiab] OR \"virtual patients\"[tiab] OR \"virtual environment\"[tiab] OR \"virtual environments\"[tiab] OR \"virtual world\"[tiab] OR \"virtual worlds\"[tiab] OR \"virtual gaming simulation\"[tiab] OR \"computer-based simulation\"[tiab] OR \"computer based simulation\"[tiab] OR \"web-based simulation\"[tiab] OR \"web based simulation\"[tiab] OR \"3D simulation\"[tiab] OR \"three-dimensional simulation\"[tiab] OR VR[tiab] OR \"virtual simulator\"[tiab] OR \"virtual simulators\"[tiab] OR \"head-mounted display\"[tiab] OR \"head mounted display\"[tiab] OR \"head-mounted displays\"[tiab] OR \"head mounted displays\"[tiab] OR \"Simulation Training\"[Mesh] OR \"Computer Simulation\"[Mesh])) AND ((\"1900/01/01\"[Date - Publication] : \"2023/03/31\"[Date - Publication]))",
+  "as_of": "2023-03-31",
+  "count": 2600,
+  "gold_scored": 6,
+  "gold_reachable": 6,
+  "retrieved": 6,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 433.3,
+  "translation_issues": [],
+  "gold_seen_by_agent": 3,
+  "unseen_retrieved": 3,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "valid": true
+}

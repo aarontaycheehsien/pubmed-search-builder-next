@@ -1,0 +1,41 @@
+{
+  "topic": "Liu_2023_VR_nursing",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260927T101600Z",
+  "scored": "20260927T103820Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1339
+  },
+  "final_message": "The single-line PubMed query is saved in [final_strategy.txt](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3d10494d5653b6c0/lean-optimal-codex-noseed-20260927T101600Z/final_strategy.txt). The search log and MeSH notes are in [strategy_notes.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3d10494d5653b6c0/lean-optimal-codex-noseed-20260927T101600Z/work/strategy_notes.md).\n\nThe query uses two essential blocks: nursing students/nursing education and virtual reality or virtual simulation. It omits comparator, outcome, and study-design terms to preserve recall; screen for those eligibility criteria afterward. With publication and PubMed entry dates limited through 2023-03-31, the live PubMed search returned **737 records**. No seed PMIDs were available for validation.\n\nOne MeSH caveat: PubMed recognizes “Virtual Reality” as a MeSH term, but the current descriptor lookup resolves that wording inconsistently, including to a therapy-specific heading. I retained the literal heading and documented the uncertainty in the work log. The query was executed against today’s live index with date limits; current indexing may differ from a historical PubMed snapshot.\n\nThis is a draft for peer review by a second information specialist using PRESS before final use. It covers PubMed only; translate the strategy for other databases and report any additional searches and limits under PRISMA-S.",
+  "strategy": "((\"Students, Nursing\"[Mesh] OR \"Nursing Student\"[tiab] OR \"Nursing Students\"[tiab] OR \"Student, Nursing\"[tiab] OR \"Students, Nursing\"[tiab] OR \"Nurses, Pupil\"[tiab] OR \"Nurse, Pupil\"[tiab] OR \"Pupil Nurse\"[tiab] OR \"Pupil Nurses\"[tiab] OR \"Education, Nursing\"[Mesh] OR \"Education, Nursing\"[tiab] OR \"Nursing Education\"[tiab] OR \"Educations, Nursing\"[tiab] OR \"Nursing Educations\"[tiab] OR (student*[tiab] AND (nurs*[tiab] OR nurse*[tiab])) OR (undergraduate[tiab] AND nurs*[tiab]) OR (postgraduate[tiab] AND nurs*[tiab]) OR prelicensure[tiab] OR \"pre-licensure\"[tiab] OR \"pre-registration\"[tiab])) AND ((\"Virtual Reality\"[Mesh] OR \"Virtual Reality\"[tiab] OR \"Reality, Virtual\"[tiab] OR \"Virtual Reality, Educational\"[tiab] OR \"Educational Virtual Reality\"[tiab] OR \"Educational Virtual Realities\"[tiab] OR \"Reality, Educational Virtual\"[tiab] OR \"Virtual Realities, Educational\"[tiab] OR \"Virtual Reality, Instructional\"[tiab] OR \"Instructional Virtual Reality\"[tiab] OR \"Instructional Virtual Realities\"[tiab] OR \"Realities, Instructional Virtual\"[tiab] OR \"Reality, Instructional Virtual\"[tiab] OR \"Virtual Realities, Instructional\"[tiab] OR VR[tiab] OR \"virtual reality simulation\"[tiab] OR \"virtual reality simulations\"[tiab] OR \"virtual reality-based\"[tiab] OR \"virtual reality based\"[tiab] OR \"immersive virtual reality\"[tiab] OR \"immersive simulation\"[tiab] OR \"immersive simulations\"[tiab] OR \"virtual patient\"[tiab] OR \"virtual patients\"[tiab] OR \"virtual patient\"[tiab:~2] OR \"virtual environment\"[tiab] OR \"virtual environments\"[tiab] OR \"virtual environment\"[tiab:~2] OR \"virtual learning environment\"[tiab] OR \"virtual learning environments\"[tiab] OR \"virtual simulation\"[tiab] OR \"virtual simulations\"[tiab] OR \"virtual clinical simulation\"[tiab] OR \"virtual clinical simulations\"[tiab] OR \"computer simulation\"[tiab] OR \"computer simulations\"[tiab] OR \"computer-based simulation\"[tiab] OR (immersive*[tiab] AND simulat*[tiab]))) AND (\"1900/01/01\"[edat] : \"2023/03/31\"[edat]) AND (\"1900/01/01\"[dp] : \"2023/03/31\"[dp])",
+  "as_of": "2023-03-31",
+  "count": 737,
+  "gold_scored": 6,
+  "gold_reachable": 6,
+  "retrieved": 6,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 122.8,
+  "translation_issues": [
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 6,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "valid": true
+}
