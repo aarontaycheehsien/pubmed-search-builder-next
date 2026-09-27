@@ -120,6 +120,34 @@ def _run_dir_pattern(run_dir: Path) -> re.Pattern:
     return re.compile(r"[\\/]+".join(re.escape(s) for s in segments), re.IGNORECASE)
 
 
+_INLINE_BOUND = re.compile(r'\s+AND\s+\(\s*"\d{4}/\d{2}/\d{2}"\[edat\]\s*:\s*"(\d{4})/(\d{2})/(\d{2})"\[edat\]\s*\)\s*$',
+                           re.IGNORECASE)
+
+
+def inline_bounded(term: str, as_of: str) -> bool:
+    """True when ``term`` is ``(query) AND (".."[edat] : "<date>"[edat])`` with date <= ``as_of``.
+
+    ``psb eval`` writes the as-of bound into the query text (``evaluate.effective_query``) rather
+    than the ``maxdate`` parameter, so the delivered query carries it. That only bounds the search
+    when the date range is AND-ed onto the whole query, so the prefix must be a single group.
+    """
+    match = _INLINE_BOUND.search(term)
+    if not match or "-".join(match.groups()) > as_of:
+        return False
+    prefix = term[: match.start()].strip()
+    if not (prefix.startswith("(") and prefix.endswith(")")):
+        return False
+    depth, quoted = 0, False
+    for index, char in enumerate(prefix):
+        if char == '"':
+            quoted = not quoted
+        elif not quoted and char in "()":
+            depth += 1 if char == "(" else -1
+            if depth == 0 and index != len(prefix) - 1:
+                return False
+    return depth == 0
+
+
 def leakage(fixture: dict, run_dir: Path, transcript: str) -> list[str]:
     """Signs that a run saw the answer key or the literature after ``as_of``.
 
@@ -144,8 +172,9 @@ def leakage(fixture: dict, run_dir: Path, transcript: str) -> list[str]:
             except ValueError:
                 continue  # a line torn by a concurrent writer in the agent's own session; skip it
             params = entry.get("params") or {}
+            term = str(params.get("term", ""))
             if entry.get("endpoint") == "esearch.fcgi" and params.get("db") == "pubmed" and "maxdate" not in params \
-                    and "[doi]" not in str(params.get("term", "")):
+                    and "[doi]" not in term and not inline_bounded(term, fixture["as_of"]):
                 undated += 1
         if undated:
             problems.append(f"{undated} PubMed searches ran without the as_of bound")
