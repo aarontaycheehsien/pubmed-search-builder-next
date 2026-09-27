@@ -1,0 +1,32 @@
+{
+  "topic": "gao-2026-Immune checkpoint inhibitors",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260927T091850Z",
+  "scored": "20260927T093802Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1152
+  },
+  "final_message": "Saved the **single-line PubMed query** to [final_strategy.txt](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-dc89f4701b07ff28/ours-codex-noseed-20260927T091850Z/final_strategy.txt>). The full audit, including the query line by line with counts, is in [audit.md](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-dc89f4701b07ff28/ours-codex-noseed-20260927T091850Z/work/audit.md>).\n\nThe final search returned **1,587 records** with the publication-date cutoff of 2025-01-31. Relative recall was 6/6 against the prior-review benchmark and 1/1 against the development record; these figures do not establish sensitivity. The PRESS-structured critique was same-context internal review, so an information specialist should peer-review the draft before use.",
+  "strategy": "((\"Triple Negative Breast Neoplasms\"[Mesh] OR \"triple negative breast cancer\"[tiab] OR \"triple-negative breast cancer\"[tiab] OR \"triple negative breast neoplasm\"[tiab] OR \"triple-negative breast neoplasm\"[tiab] OR \"triple negative breast carcinoma\"[tiab] OR \"triple-negative breast carcinoma\"[tiab] OR TNBC[tiab] OR eTNBC[tiab] OR \"ER-negative PR-negative HER2-negative breast cancer\"[tiab] OR \"ER negative PR negative HER2 negative breast cancer\"[tiab] OR (\"ER-negative\"[tiab] AND \"HER2-negative\"[tiab] AND breast[tiab])) AND (((\"Immune Checkpoint Inhibitors\"[Mesh] OR \"Antineoplastic Agents, Immunological\"[Mesh] OR \"Programmed Cell Death 1 Receptor\"[Mesh] OR \"B7-H1 Antigen\"[Mesh] OR \"CTLA-4 Antigen\"[Mesh] OR \"Nivolumab\"[Mesh] OR \"Ipilimumab\"[Mesh] OR \"pembrolizumab\"[Supplementary Concept] OR \"atezolizumab\"[Supplementary Concept] OR \"durvalumab\"[Supplementary Concept] OR \"avelumab\"[Supplementary Concept] OR \"cemiplimab\"[Supplementary Concept] OR \"Immunotherapy\"[Mesh] OR immunotherap*[tiab] OR \"immune checkpoint inhibitor\"[tiab] OR \"immune checkpoint inhibitors\"[tiab] OR \"checkpoint inhibitor\"[tiab] OR \"checkpoint inhibitors\"[tiab] OR \"checkpoint blockade\"[tiab] OR \"PD-1 inhibitor\"[tiab] OR \"PD-1 inhibitors\"[tiab] OR \"PD-L1 inhibitor\"[tiab] OR \"PD-L1 inhibitors\"[tiab] OR \"anti-PD-1\"[tiab] OR \"anti-PD-L1\"[tiab] OR pembrolizumab[tiab] OR atezolizumab[tiab] OR durvalumab[tiab] OR nivolumab[tiab] OR avelumab[tiab] OR ipilimumab[tiab] OR cemiplimab[tiab] OR dostarlimab[tiab] OR tislelizumab[tiab] OR toripalimab[tiab]) AND (\"Antineoplastic Combined Chemotherapy Protocols\"[Mesh] OR \"Chemotherapy, Adjuvant\"[Mesh] OR chemotherap*[tiab] OR cytotoxic*[tiab] OR taxane*[tiab] OR anthracycline*[tiab] OR platinum[tiab] OR carboplatin[tiab] OR cisplatin[tiab] OR paclitaxel[tiab] OR \"nab-paclitaxel\"[tiab] OR docetaxel[tiab] OR doxorubicin[tiab] OR epirubicin[tiab] OR cyclophosphamide[tiab] OR fluorouracil[tiab] OR gemcitabine[tiab])))) AND ((\"1800/01/01\"[dp] : \"2025/01/31\"[dp]))",
+  "as_of": "2025-01-31",
+  "count": 1587,
+  "gold_scored": 11,
+  "gold_reachable": 11,
+  "retrieved": 11,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 144.3,
+  "translation_issues": [],
+  "gold_seen_by_agent": 7,
+  "unseen_retrieved": 4,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "valid": true
+}

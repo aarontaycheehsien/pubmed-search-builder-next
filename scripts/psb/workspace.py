@@ -142,14 +142,31 @@ class Workspace:
         return Strategy.from_dict(read_json(self.root / "strategy.json"))
 
     def log(self, entry: dict) -> None:
-        with (self.root / "log.jsonl").open("a", encoding="utf-8") as handle:
-            handle.write(json.dumps({"ts": now(), **entry}, ensure_ascii=False) + "\n")
+        # A buffered text-mode append can split into more than one underlying write, so two
+        # `psb` processes running at once (the agent backgrounding commands, or a second
+        # terminal) can interleave and corrupt a line. A single os.write of the encoded bytes to
+        # an O_APPEND descriptor is one kernel call, which the OS does not interleave with
+        # another process's own single call to the same file.
+        line = (json.dumps({"ts": now(), **entry}, ensure_ascii=False) + "\n").encode("utf-8")
+        fd = os.open(self.root / "log.jsonl", os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o644)
+        try:
+            os.write(fd, line)
+        finally:
+            os.close(fd)
 
     def log_entries(self) -> list[dict]:
         path = self.root / "log.jsonl"
         if not path.exists():
             return []
-        return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+        entries = []
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            try:
+                entries.append(json.loads(line))
+            except ValueError:
+                continue  # a line torn by a concurrent write; skip rather than fail the reader
+        return entries
 
     @property
     def pubmed(self) -> PubMed:

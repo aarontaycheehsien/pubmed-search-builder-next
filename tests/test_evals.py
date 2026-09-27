@@ -50,6 +50,14 @@ def test_leakage_flags_answer_key_mentions_and_undated_searches(tmp_path):
     assert harness.leakage(FIXTURE, tmp_path / "nowhere", "clean transcript") == []
 
 
+def test_leakage_skips_a_log_line_torn_by_a_concurrent_writer(tmp_path):
+    work = tmp_path / "work"
+    work.mkdir()
+    good = {"type": "ncbi", "endpoint": "esearch.fcgi", "params": {"db": "pubmed", "term": "x", "maxdate": "2015/01/01"}}
+    (work / "log.jsonl").write_text(json.dumps(good) + "\n" + '{"ts": "x", "type": "ncbi", "para', encoding="utf-8")
+    assert harness.leakage(FIXTURE, tmp_path, "clean transcript") == []
+
+
 def test_leakage_ignores_the_run_directorys_own_path(tmp_path):
     run_dir = tmp_path / "runs" / "T1" / "some-label"
     run_dir.mkdir(parents=True)

@@ -1,4 +1,5 @@
 import json
+import os
 
 import pytest
 
@@ -67,3 +68,25 @@ def test_env_as_of_overrides_protocol(tmp_path, monkeypatch):
     ws = Workspace.create(tmp_path / "w", "Q")
     monkeypatch.setenv("PSB_AS_OF", "2015-06-30")
     assert ws.pubmed.as_of == "2015-06-30"
+
+
+def test_log_entries_skips_a_line_torn_by_a_concurrent_writer(tmp_path):
+    ws = Workspace.create(tmp_path / "w", "Q")
+    ws.log({"type": "command", "argv": ["one"]})
+    # Simulate two processes' single os.write calls landing back to back with no newline between
+    # them, which tears the JSON on the shared boundary line.
+    with (ws.root / "log.jsonl").open("a", encoding="utf-8") as handle:
+        handle.write('{"ts": "x", "type": "ncbi", "para')
+        handle.write('ms": {"term": "asthma"}}\n')
+    ws.log({"type": "command", "argv": ["two"]})
+    entries = ws.log_entries()
+    assert [e["argv"] for e in entries if e.get("type") == "command"] == [["one"], ["two"]]
+
+
+def test_log_write_is_one_os_level_call(tmp_path, monkeypatch):
+    ws = Workspace.create(tmp_path / "w", "Q")
+    calls = []
+    real_write = os.write
+    monkeypatch.setattr(os, "write", lambda fd, data: calls.append(data) or real_write(fd, data))
+    ws.log({"type": "command", "argv": ["x"]})
+    assert len(calls) == 1

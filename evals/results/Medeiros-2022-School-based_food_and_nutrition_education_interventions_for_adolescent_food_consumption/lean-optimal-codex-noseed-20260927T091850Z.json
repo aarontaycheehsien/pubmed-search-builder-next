@@ -1,0 +1,36 @@
+{
+  "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260927T091850Z",
+  "scored": "20260927T093501Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 971
+  },
+  "final_message": "The one-line PubMed query is saved to [final_strategy.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/lean-optimal-codex-noseed-20260927T091850Z/final_strategy.txt). The search uses education, adolescent/student, and school-setting concepts, with a publication-date limit through 2017-12-14. It does not require a separate food-consumption outcome term, to reduce the chance of missing eligible studies.\n\nThe CLI reported 23,453 results, but its date-limited samples included records published after the cutoff. I documented this inconsistency and the MeSH checks, search decisions, and limitations in the [run report](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/lean-optimal-codex-noseed-20260927T091850Z/work/strategy_report.md). Treat the count cautiously and recheck the date limit in PubMed. The strategy remains a draft for peer review by a second information specialist.",
+  "strategy": "((\"Health Education\"[Mesh] OR \"Health Education\"[tiab] OR \"Education, Health\"[tiab] OR \"Community Health Education\"[tiab] OR \"Education, Community Health\"[tiab] OR \"Health Education, Community\"[tiab] OR \"nutrition education\"[tiab] OR \"food education\"[tiab] OR \"food and nutrition education\"[tiab] OR \"nutrition teaching\"[tiab] OR \"diet education\"[tiab] OR \"nutrition intervention\"[tiab] OR \"dietary intervention\"[tiab] OR \"food literacy\"[tiab] OR \"nutrition literacy\"[tiab] OR ((nutrition[tiab] OR diet*[tiab] OR dietary[tiab] OR food[tiab] OR eating[tiab]) AND (educat*[tiab] OR teach*[tiab] OR curricul*[tiab] OR intervention*[tiab] OR program*[tiab] OR promot*[tiab]))) AND (\"Adolescent\"[Mesh] OR \"Adolescent\"[tiab] OR \"Adolescents\"[tiab] OR \"Adolescence\"[tiab] OR \"Adolescents, Female\"[tiab] OR \"Adolescent, Female\"[tiab] OR \"Female Adolescent\"[tiab] OR \"Female Adolescents\"[tiab] OR \"Adolescents, Male\"[tiab] OR \"Adolescent, Male\"[tiab] OR \"Male Adolescent\"[tiab] OR \"Male Adolescents\"[tiab] OR \"Youth\"[tiab] OR \"Youths\"[tiab] OR \"Teens\"[tiab] OR \"Teen\"[tiab] OR \"Teenagers\"[tiab] OR \"Teenager\"[tiab] OR \"Students\"[Mesh:noexp] OR \"Students\"[tiab] OR \"Student\"[tiab] OR \"School Enrollment\"[tiab] OR \"Enrollment, School\"[tiab] OR \"Enrollments, School\"[tiab] OR \"School Enrollments\"[tiab] OR adolescen*[tiab] OR teen*[tiab] OR youth*[tiab] OR student*[tiab] OR pupil*[tiab] OR child*[tiab] OR schoolchild*[tiab]) AND (\"Schools\"[Mesh:noexp] OR \"Schools\"[tiab] OR \"School\"[tiab] OR \"Primary Schools\"[tiab] OR \"Primary School\"[tiab] OR \"School, Primary\"[tiab] OR \"Schools, Primary\"[tiab] OR \"Schools, Secondary\"[tiab] OR \"School, Secondary\"[tiab] OR \"Secondary School\"[tiab] OR \"Secondary Schools\"[tiab] OR school*[tiab] OR classroom*[tiab] OR \"school-based\"[tiab] OR \"school based\"[tiab])) AND (\"1900/01/01\"[Date - Publication] : \"2017/12/14\"[Date - Publication])",
+  "as_of": "2017-12-14",
+  "count": 23351,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 8,
+  "recall_percent": 88.9,
+  "missed": [
+    "25797051"
+  ],
+  "nnr": 2918.9,
+  "translation_issues": [
+    "pubmed_warning"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 8,
+  "unseen_recall_percent": 88.9,
+  "leakage": [],
+  "valid": true
+}

@@ -137,7 +137,12 @@ def leakage(fixture: dict, run_dir: Path, transcript: str) -> list[str]:
     if log.exists() and fixture.get("as_of"):
         undated = 0
         for line in log.read_text(encoding="utf-8").splitlines():
-            entry = json.loads(line)
+            if not line.strip():
+                continue
+            try:
+                entry = json.loads(line)
+            except ValueError:
+                continue  # a line torn by a concurrent writer in the agent's own session; skip it
             params = entry.get("params") or {}
             if entry.get("endpoint") == "esearch.fcgi" and params.get("db") == "pubmed" and "maxdate" not in params \
                     and "[doi]" not in str(params.get("term", "")):

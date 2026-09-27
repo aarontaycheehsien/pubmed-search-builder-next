@@ -1,0 +1,34 @@
+{
+  "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260927T091850Z",
+  "scored": "20260927T094259Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": null,
+    "note": "recovered offline after evals/run.py crashed scoring this already-completed run on a torn log.jsonl line; the agent's Codex process itself finished normally (exit 0)."
+  },
+  "strategy": "((\"Health Education\"[Mesh] OR \"Health Promotion\"[Mesh] OR \"nutrition education\"[tiab] OR \"diet education\"[tiab] OR \"dietary education\"[tiab] OR \"food education\"[tiab] OR \"food and nutrition education\"[tiab] OR \"nutrition instruction\"[tiab] OR \"nutrition training\"[tiab] OR \"nutrition promotion\"[tiab] OR \"nutrition intervention\"[tiab] OR \"nutrition interventions\"[tiab] OR \"dietary intervention\"[tiab] OR \"dietary interventions\"[tiab] OR \"nutrition program\"[tiab] OR \"nutrition programs\"[tiab] OR \"nutrition programme\"[tiab] OR \"nutrition programmes\"[tiab] OR \"healthy eating education\"[tiab] OR \"food literacy\"[tiab] OR \"nutrition literacy\"[tiab] OR \"eating education\"[tiab] OR \"dietary behavior intervention\"[tiab] OR \"health promotion\"[tiab] OR \"dietary habits\"[tiab] OR nutrition[tiab] OR cooking[tiab] OR \"Cooking\"[Mesh] OR gardening[tiab] OR \"Gardening\"[Mesh] OR \"nutrition curriculum\"[tiab] OR \"nutrition curricula\"[tiab] OR \"nutrition counseling\"[tiab] OR \"nutrition counselling\"[tiab] OR \"dietary counseling\"[tiab] OR \"dietary counselling\"[tiab]) AND (\"Adolescent\"[Mesh] OR \"Child\"[Mesh] OR \"Students\"[Mesh] OR adolescen*[tiab] OR teen*[tiab] OR youth*[tiab] OR child*[tiab] OR student*[tiab] OR schoolchild*[tiab] OR pupil*[tiab] OR \"high school\"[tiab] OR \"middle school\"[tiab] OR \"secondary school\"[tiab] OR \"primary school\"[tiab] OR \"school student\"[tiab] OR \"school students\"[tiab] OR \"school children\"[tiab] OR \"schoolchild\"[tiab] OR \"schoolchildren\"[tiab] OR \"school aged\"[tiab] OR \"school-aged\"[tiab]) AND (\"School Health Services\"[Mesh] OR \"Schools\"[Mesh] OR school*[tiab] OR classroom*[tiab] OR \"school-based\"[tiab] OR \"school based\"[tiab] OR \"school setting\"[tiab] OR \"school settings\"[tiab] OR \"school-delivered\"[tiab] OR \"school delivered\"[tiab])) AND (1800:2017/12/14[dp])",
+  "as_of": "2017-12-14",
+  "count": 25088,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 8,
+  "recall_percent": 88.9,
+  "missed": [
+    "25797051"
+  ],
+  "nnr": 3136.0,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 8,
+  "unseen_recall_percent": 88.9,
+  "leakage": [],
+  "valid": true
+}
