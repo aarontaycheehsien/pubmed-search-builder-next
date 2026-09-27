@@ -1,0 +1,43 @@
+{
+  "topic": "CD010657",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260927T093949Z",
+  "scored": "20260927T095701Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1032
+  },
+  "final_message": "The one-line PubMed query is saved in [final_strategy.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-01491638976b58ef/lean-optimal-codex-noseed-20260927T093949Z/final_strategy.txt). The search combines reflux, DMSA or ultrasound imaging, and UTI, with a publication-date limit through 2013-01-30.\n\nThe bundled CLI returned **1,003 results** for the combined query. No known-study validation was possible because no seed PMIDs were provided. The full search choices and CLI checks are recorded in [search_notes.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-01491638976b58ef/lean-optimal-codex-noseed-20260927T093949Z/work/search_notes.md).\n\nThis is a draft; the skill recommends PRESS review by a second information specialist before using it as the final search.",
+  "strategy": "(\"Vesico-Ureteral Reflux\"[Mesh] OR \"Vesico-Ureteral Reflux\"[tiab] OR \"Reflux, Vesico-Ureteral\"[tiab] OR \"Vesico Ureteral Reflux\"[tiab] OR \"Vesicoureteral Reflux\"[tiab] OR \"Reflux, Vesicoureteral\"[tiab] OR \"Vesicoureteral Reflux 1\"[tiab] OR \"Vesicoureteral Reflux Grade1\"[tiab] OR \"Grade1, Vesicoureteral Reflux\"[tiab] OR \"Vesicoureteral Reflux1\"[tiab] OR \"Reflux1, Vesicoureteral\"[tiab] OR \"Vesicoureteral Reflux1s\"[tiab] OR \"Primary Vesicoureteral Reflux\"[tiab] OR \"Reflux, Primary Vesicoureteral\"[tiab] OR \"Vesicoureteral Reflux, Primary\"[tiab] OR \"Secondary Vesicoureteral Reflux\"[tiab] OR \"Reflux, Secondary Vesicoureteral\"[tiab] OR \"Vesicoureteral Reflux, Secondary\"[tiab] OR \"vesicoureteric reflux\"[tiab] OR VUR[tiab]) AND (\"Technetium Tc 99m Dimercaptosuccinic Acid\"[Mesh] OR \"Technetium Tc 99m Dimercaptosuccinic Acid\"[tiab] OR \"99mTc-Dimercaptosuccinic Acid\"[tiab] OR \"99mTc Dimercaptosuccinic Acid\"[tiab] OR \"Acid, 99mTc-Dimercaptosuccinic\"[tiab] OR \"99mTc-DMSA\"[tiab] OR \"99mTc DMSA\"[tiab] OR \"99m-Tc-Dimercaptosuccinic Acid\"[tiab] OR \"99m Tc Dimercaptosuccinic Acid\"[tiab] OR \"Acid, 99m-Tc-Dimercaptosuccinic\"[tiab] OR \"Tc-99m Dimercaptosuccinic Acid\"[tiab] OR \"Acid, Tc-99m Dimercaptosuccinic\"[tiab] OR \"Dimercaptosuccinic Acid, Tc-99m\"[tiab] OR \"Tc 99m Dimercaptosuccinic Acid\"[tiab] OR \"Technetium-99m-Dimercaptosuccinic Acid\"[tiab] OR \"Acid, Technetium-99m-Dimercaptosuccinic\"[tiab] OR \"Technetium 99m Dimercaptosuccinic Acid\"[tiab] OR \"Technetium-99m-DMSA\"[tiab] OR \"Technetium 99m DMSA\"[tiab] OR \"99Tc-Succimer\"[tiab] OR \"99Tc Succimer\"[tiab] OR \"Technetium Tc 99m Succimer\"[tiab] OR \"99mTc-Dimercaptosuccinate\"[tiab] OR \"99mTc Dimercaptosuccinate\"[tiab] OR (DMSA[tiab] AND (scan*[tiab] OR scintigraph*[tiab] OR renal[tiab] OR kidney[tiab])) OR \"dimercaptosuccinic acid scan\"[tiab] OR \"dimercaptosuccinic acid scintigraphy\"[tiab] OR \"renal cortical scintigraphy\"[tiab] OR \"renal cortical scan\"[tiab] OR \"Ultrasonography\"[Mesh] OR \"Ultrasonography\"[tiab] OR \"Diagnostic Ultrasound\"[tiab] OR \"Diagnostic Ultrasounds\"[tiab] OR \"Ultrasound, Diagnostic\"[tiab] OR \"Ultrasounds, Diagnostic\"[tiab] OR \"Echography\"[tiab] OR \"Echotomography\"[tiab] OR \"Sonography, Medical\"[tiab] OR \"Medical Sonography\"[tiab] OR \"Ultrasonic Imaging\"[tiab] OR \"Imaging, Ultrasonic\"[tiab] OR \"Ultrasonographic Imaging\"[tiab] OR \"Imagings, Ultrasonographic\"[tiab] OR \"Imaging, Ultrasonographic\"[tiab] OR \"Ultrasonographic Imagings\"[tiab] OR \"Ultrasound Imaging\"[tiab] OR \"Imagings, Ultrasound\"[tiab] OR \"Imaging, Ultrasound\"[tiab] OR \"Echotomography, Computer\"[tiab] OR \"Computer Echotomography\"[tiab] OR \"Tomography, Ultrasonic\"[tiab] OR \"Ultrasonic Tomography\"[tiab] OR \"Diagnosis, Ultrasonic\"[tiab] OR \"Diagnoses, Ultrasonic\"[tiab] OR \"Ultrasonic Diagnoses\"[tiab] OR \"Ultrasonic Diagnosis\"[tiab] OR \"renal ultrasound\"[tiab] OR \"renal ultrasonography\"[tiab] OR \"kidney ultrasound\"[tiab] OR \"kidney ultrasonography\"[tiab] OR \"urinary tract ultrasound\"[tiab] OR \"urinary tract ultrasonography\"[tiab] OR ultrasound*[tiab] OR sonograph*[tiab] OR \"Radionuclide Imaging\"[Mesh] OR \"Radionuclide Imaging\"[tiab] OR \"Imaging, Radionuclide\"[tiab] OR \"Gamma Camera Imaging\"[tiab] OR \"Imaging, Gamma Camera\"[tiab] OR \"Radioisotope Scanning\"[tiab] OR \"Scanning, Radioisotope\"[tiab] OR \"Scintigraphy\"[tiab] OR \"Scintiphotography\"[tiab]) AND (\"Urinary Tract Infections\"[Mesh] OR \"Urinary Tract Infections\"[tiab] OR \"Infections, Urinary Tract\"[tiab] OR \"Infection, Urinary Tract\"[tiab] OR \"Tract Infections, Urinary\"[tiab] OR \"Tract Infection, Urinary\"[tiab] OR \"Urinary Tract Infection\"[tiab] OR UTI[tiab] OR UTIs[tiab] OR \"urinary infection\"[tiab] OR \"urinary infections\"[tiab] OR pyelonephritis[tiab]) AND \"0001/01/01\"[dp] : \"2013/01/30\"[dp]",
+  "as_of": "2013-01-30",
+  "count": 993,
+  "gold_scored": 35,
+  "gold_reachable": 35,
+  "retrieved": 34,
+  "recall_percent": 97.1,
+  "missed": [
+    "23354031"
+  ],
+  "nnr": 29.2,
+  "translation_issues": [
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 34,
+  "unseen_recall_percent": 97.1,
+  "leakage": [],
+  "valid": true
+}

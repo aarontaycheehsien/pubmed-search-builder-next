@@ -1,0 +1,42 @@
+{
+  "topic": "CD011431",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260927T095703Z",
+  "scored": "20260927T101916Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1136,
+    "note": "recovered offline: the lean skill wrote final_strategy.txt under work/, one level below the prompted ./final_strategy.txt; evals/run.py now checks both locations."
+  },
+  "strategy": "(\"Malaria\"[Mesh] OR \"Malaria, Vivax\"[Mesh] OR \"Plasmodium vivax\"[Mesh] OR \"Malaria\"[tiab] OR \"Infections, Plasmodium\"[tiab] OR \"Infection, Plasmodium\"[tiab] OR \"Plasmodium Infection\"[tiab] OR \"Plasmodium Infections\"[tiab] OR \"Paludism\"[tiab] OR \"Remittent Fever\"[tiab] OR \"Fever, Remittent\"[tiab] OR \"Marsh Fever\"[tiab] OR \"Fever, Marsh\"[tiab] OR \"Malaria, Vivax\"[tiab] OR \"Vivax Malaria\"[tiab] OR \"Plasmodium vivax Malaria\"[tiab] OR \"Malaria, Plasmodium vivax\"[tiab] OR \"Plasmodium vivax\"[tiab] OR \"Plasmodium vivaxs\"[tiab] OR \"vivax, Plasmodium\"[tiab] OR \"vivax\"[tiab] OR \"P. vivax\"[tiab] OR \"P vivax\"[tiab] OR \"non-falciparum\"[tiab] OR \"non falciparum\"[tiab] OR \"nonfalciparum\"[tiab] OR \"Plasmodium ovale\"[tiab] OR \"P. ovale\"[tiab] OR \"Plasmodium malariae\"[tiab] OR \"P. malariae\"[tiab] OR \"ovale\"[tiab] OR \"malariae\"[tiab]) AND (\"Reagent Kits, Diagnostic\"[Mesh] OR \"Reagent Kits, Diagnostic\"[tiab] OR \"Kits, Diagnostic Reagent\"[tiab] OR \"Diagnostic Reagent Kit\"[tiab] OR \"Kit, Diagnostic Reagent\"[tiab] OR \"Reagent Kit, Diagnostic\"[tiab] OR \"Diagnostic Reagent Kits\"[tiab] OR \"Diagnostic Test Kits\"[tiab] OR \"Diagnostic Test Kit\"[tiab] OR \"Kit, Diagnostic Test\"[tiab] OR \"Kits, Diagnostic Test\"[tiab] OR \"Test Kit, Diagnostic\"[tiab] OR \"Test Kits, Diagnostic\"[tiab] OR \"Diagnostic Reagents and Test Kits\"[tiab] OR \"In Vitro Diagnostic Devices\"[tiab] OR \"In Vitro Diagnostic Device\"[tiab] OR \"In Vitro Diagnostic Medical Device\"[tiab] OR \"In Vitro Diagnostic Medical Devices\"[tiab] OR \"rapid diagnostic test\"[tiab] OR \"rapid diagnostic tests\"[tiab] OR \"rapid test\"[tiab] OR \"rapid tests\"[tiab] OR \"rapid malaria test\"[tiab] OR \"rapid malaria tests\"[tiab] OR \"rapid card\"[tiab] OR \"rapid cards\"[tiab] OR \"RDT\"[tiab] OR \"RDTs\"[tiab] OR \"ICT\"[tiab] OR \"ICTs\"[tiab] OR \"immunochromatographic test\"[tiab] OR \"immunochromatographic tests\"[tiab] OR \"lateral flow\"[tiab] OR \"lateral-flow\"[tiab] OR \"lateral flow assay\"[tiab] OR \"lateral flow assays\"[tiab] OR \"test strip\"[tiab] OR \"test strips\"[tiab] OR \"bedside test\"[tiab] OR \"bedside tests\"[tiab] OR \"point of care\"[tiab] OR \"point-of-care\"[tiab] OR immunochromatograph*[tiab] OR dipstick*[tiab] OR (rapid[tiab] AND (diagnos*[tiab] OR test*[tiab] OR detect*[tiab]))) AND (\"1900/01/01\"[Date - Publication] : \"2013/06/09\"[Date - Publication])",
+  "strategy_path": "work/final_strategy.txt",
+  "as_of": "2013-06-09",
+  "count": 1864,
+  "gold_scored": 26,
+  "gold_reachable": 26,
+  "retrieved": 26,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 71.7,
+  "translation_issues": [
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 26,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "valid": true
+}

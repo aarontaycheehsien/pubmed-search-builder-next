@@ -38,6 +38,20 @@ def stamp() -> str:
     return dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
 
 
+def find_strategy_file(run_dir: Path) -> Path | None:
+    """The agent's final strategy, wherever it actually wrote it.
+
+    The prompt asks for ``./final_strategy.txt``, but a skill with its own filing convention
+    (e.g. keeping everything under a ``work/`` directory) may write it one level down instead.
+    Preferring the root path first keeps the common case exact; falling back to ``work/`` scores
+    a skill's real output rather than discarding a completed, on-topic run over a path detail.
+    """
+    for candidate in (run_dir / "final_strategy.txt", run_dir / "work" / "final_strategy.txt"):
+        if candidate.exists() and candidate.read_text(encoding="utf-8").strip():
+            return candidate
+    return None
+
+
 def anon_dir(topic: str) -> str:
     """A non-identifying directory name for the agent-visible run path.
 
@@ -125,11 +139,12 @@ def cmd_generate(args) -> int:
                 "model": args.model, "effort": args.effort, "condition": args.condition, "depth": args.depth, "run_label": label,
                 "scored": stamp(), "run": {k: v for k, v in run.items() if k != "final_message"},
                 "final_message": run.get("final_message", "")}
-        strategy_path = run_dir / "final_strategy.txt"
-        if strategy_path.exists() and strategy_path.read_text(encoding="utf-8").strip():
+        strategy_path = find_strategy_file(run_dir)
+        if strategy_path is not None:
             query = strategy_path.read_text(encoding="utf-8")
             seen = harness.gold_seen(fixture, run_dir) - set(seeds)
             card["strategy"] = " ".join(query.split())
+            card["strategy_path"] = strategy_path.relative_to(run_dir).as_posix()
             card.update(harness.score(fixture, query, exclude=set(seeds), seen=seen))
             card["leakage"] = harness.leakage(fixture, run_dir, transcript)
             card["valid"] = not card["leakage"]
@@ -137,11 +152,12 @@ def cmd_generate(args) -> int:
             card["valid"] = False
             card["error"] = "no final_strategy.txt"
             status = 2
-        name = f"{label}"
-        out = save(fixture["id"], name, card)
-        for extra in ("audit.md",):
-            if (run_dir / "work" / extra).exists():
-                shutil.copy2(run_dir / "work" / extra, out.with_suffix(".audit.md"))
+        out = save(fixture["id"], label, card)
+        for report_name in ("audit.md", "report.md"):  # our own skill vs. others' naming
+            report_path = run_dir / "work" / report_name
+            if report_path.exists():
+                shutil.copy2(report_path, out.with_suffix(".audit.md"))
+                break
         print(f"  recall={card.get('recall_percent')}% ({card.get('retrieved')}/{card.get('gold_reachable')}) "
               f"unseen={card.get('unseen_recall_percent')}% count={card.get('count')} "
               f"cost=${card['run'].get('cost_usd')} seconds={card['run'].get('seconds')} "

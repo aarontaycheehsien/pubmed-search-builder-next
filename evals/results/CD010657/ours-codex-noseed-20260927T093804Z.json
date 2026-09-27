@@ -1,0 +1,32 @@
+{
+  "topic": "CD010657",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260927T093804Z",
+  "scored": "20260927T095029Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 744
+  },
+  "final_message": "The final one-line query is saved in [final_strategy.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-01491638976b58ef/ours-codex-noseed-20260927T093804Z/final_strategy.txt). It includes the PubMed entry-date bound for the requested 2013-01-30 cutoff and returned 2,061 records.\n\nThe audit, including line-by-line counts and search rationale, is in [audit.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-01491638976b58ef/ours-codex-noseed-20260927T093804Z/work/audit.md). The search retrieved all six screened development records (100% relative recall); this is not independent validation or an estimate of sensitivity. A human information specialist should PRESS-review the draft before use.",
+  "strategy": "(\"Vesico-Ureteral Reflux\"[Mesh] OR vesicoureteral reflux[tiab] OR vesico-ureteral reflux[tiab] OR vesicoureteric reflux[tiab] OR vesico-ureteric reflux[tiab] OR VUR[tiab]) AND (\"Technetium Tc 99m Dimercaptosuccinic Acid\"[Mesh] OR \"Radionuclide Imaging\"[Mesh] OR \"Ultrasonography\"[Mesh] OR DMSA[tiab] OR dimercaptosuccinic acid[tiab] OR 99mTc-DMSA[tiab] OR Tc-99m DMSA[tiab] OR dimercaptosuccinic acid scintigraph*[tiab] OR renal scintigraph*[tiab] OR renal scan[tiab] OR kidney scan[tiab] OR ultrasound[tiab] OR ultrasonograph*[tiab] OR sonograph*[tiab] OR renal sonography[tiab] OR renal ultrasound[tiab] OR urinary ultrasound[tiab] OR echograph*[tiab] OR cystosonograph*[tiab] OR voiding urosonograph*[tiab] OR reflux sonograph*[tiab]) AND 1800/01/01:2013/01/30[Date - Entry]",
+  "as_of": "2013-01-30",
+  "count": 2061,
+  "gold_scored": 35,
+  "gold_reachable": 35,
+  "retrieved": 35,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 58.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 3,
+  "unseen_retrieved": 32,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "valid": true
+}

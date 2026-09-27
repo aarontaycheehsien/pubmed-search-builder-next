@@ -1,0 +1,32 @@
+{
+  "topic": "CD011431",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260927T095032Z",
+  "scored": "20260927T101303Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1351
+  },
+  "final_message": "Created the one-line query in [final_strategy.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-codex-noseed-20260927T095032Z/final_strategy.txt) and the full audit, including line-by-line counts, in [audit.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-codex-noseed-20260927T095032Z/work/audit.md).\n\nThe historical query returns **6,099 records**. One pilot-discovered record was retained in the development set and retrieved; that 100% relative recall is not independent validation. The audit records the assumptions, screening decisions, risks, and same-context internal critique. Independent PRESS peer review is still pending.\n\n```text\n(\"Malaria\"[Mesh] OR \"Malaria, Vivax\"[Mesh] OR \"Plasmodium vivax\"[Mesh] OR malaria[tiab] OR plasmodium[tiab] OR paludism[tiab]) AND (\"Diagnostic Tests, Routine\"[Mesh] OR \"Reagent Kits, Diagnostic\"[Mesh] OR \"Antigens, Protozoan\"[Mesh] OR \"rapid diagnostic test\"[tiab] OR \"rapid diagnostic tests\"[tiab] OR \"rapid test\"[tiab] OR \"rapid tests\"[tiab] OR RDT[tiab] OR RDTs[tiab] OR immunochromatograph*[tiab] OR \"antigen detection\"[tiab] OR \"antigen test\"[tiab] OR \"antigen tests\"[tiab] OR dipstick[tiab] OR \"rapid diagnostic\"[tiab]) AND ((\"1800/01/01\"[Date - Publication] : \"2013/06/09\"[Date - Publication]) AND (\"1800/01/01\"[Date - Entry] : \"2013/06/09\"[Date - Entry]))\n```",
+  "strategy": "(\"Malaria\"[Mesh] OR \"Malaria, Vivax\"[Mesh] OR \"Plasmodium vivax\"[Mesh] OR malaria[tiab] OR plasmodium[tiab] OR paludism[tiab]) AND (\"Diagnostic Tests, Routine\"[Mesh] OR \"Reagent Kits, Diagnostic\"[Mesh] OR \"Antigens, Protozoan\"[Mesh] OR \"rapid diagnostic test\"[tiab] OR \"rapid diagnostic tests\"[tiab] OR \"rapid test\"[tiab] OR \"rapid tests\"[tiab] OR RDT[tiab] OR RDTs[tiab] OR immunochromatograph*[tiab] OR \"antigen detection\"[tiab] OR \"antigen test\"[tiab] OR \"antigen tests\"[tiab] OR dipstick[tiab] OR \"rapid diagnostic\"[tiab]) AND ((\"1800/01/01\"[Date - Publication] : \"2013/06/09\"[Date - Publication]) AND (\"1800/01/01\"[Date - Entry] : \"2013/06/09\"[Date - Entry]))",
+  "as_of": "2013-06-09",
+  "count": 6099,
+  "gold_scored": 26,
+  "gold_reachable": 26,
+  "retrieved": 26,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 234.6,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 26,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "valid": true
+}

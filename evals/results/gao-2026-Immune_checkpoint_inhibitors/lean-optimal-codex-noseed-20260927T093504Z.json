@@ -1,0 +1,42 @@
+{
+  "topic": "gao-2026-Immune checkpoint inhibitors",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": null,
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260927T093504Z",
+  "scored": "20260927T095811Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1385
+  },
+  "final_message": "Built the high-sensitivity strategy and saved it as a single line in [final_strategy.txt](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-dc89f4701b07ff28/lean-optimal-codex-noseed-20260927T093504Z/final_strategy.txt). The construction notes, MeSH checks, and PubMed block counts are in [search_report.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-dc89f4701b07ff28/lean-optimal-codex-noseed-20260927T093504Z/work/search_report.md).\n\nThe query requires TNBC and immune checkpoint inhibition. Early-stage disease and chemotherapy are left for screening: adding either as a required block reduced retrieval in the cutoff-capped tests. The expanded query returned 1,220 records; adding early-stage terms returned 404, and adding chemotherapy terms returned 629.\n\n**Cutoff caveat:** E-utilities returned sample records labeled 2025 despite the Jan 31 date limits, without enough date detail to verify they fell before the cutoff. I excluded those samples from the final evidence; the saved query retains both publication-date and entry-date limits through 2025-01-31. The strategy is a draft and should receive PRESS review before final use.",
+  "strategy": "(\"Triple Negative Breast Neoplasms\"[Mesh] OR \"ER-Negative PR-Negative HER2-Negative Breast Cancer\"[tiab] OR \"ER Negative PR Negative HER2 Negative Breast Cancer\"[tiab] OR \"ER-Negative PR-Negative HER2-Negative Breast Neoplasms\"[tiab] OR \"ER Negative PR Negative HER2 Negative Breast Neoplasms\"[tiab] OR \"Triple Negative Breast Cancer\"[tiab] OR \"Triple-Negative Breast Cancer\"[tiab] OR \"Breast Cancers, Triple-Negative\"[tiab] OR \"Breast Cancer, Triple-Negative\"[tiab] OR \"Triple-Negative Breast Cancers\"[tiab] OR \"Triple-Negative Breast Neoplasm\"[tiab] OR \"Breast Neoplasms, Triple-Negative\"[tiab] OR \"Breast Neoplasm, Triple-Negative\"[tiab] OR \"Triple Negative Breast Neoplasm\"[tiab] OR \"Triple-Negative Breast Neoplasms\"[tiab] OR TNBC[tiab]) AND (\"Immune Checkpoint Inhibitors\"[Supplementary Concept] OR \"Immune Checkpoint Inhibitors\"[tiab] OR \"Checkpoint Inhibitors, Immune\"[tiab] OR \"Immune Checkpoint Blockers\"[tiab] OR \"Checkpoint Blockers, Immune\"[tiab] OR \"Immune Checkpoint Inhibitor\"[tiab] OR \"Checkpoint Inhibitor, Immune\"[tiab] OR \"CTLA-4 Inhibitors\"[tiab] OR \"CTLA 4 Inhibitors\"[tiab] OR \"Cytotoxic T-Lymphocyte-Associated Protein 4 Inhibitors\"[tiab] OR \"Cytotoxic T Lymphocyte Associated Protein 4 Inhibitors\"[tiab] OR \"Cytotoxic T-Lymphocyte-Associated Protein 4 Inhibitor\"[tiab] OR \"Cytotoxic T Lymphocyte Associated Protein 4 Inhibitor\"[tiab] OR \"CTLA-4 Inhibitor\"[tiab] OR \"CTLA 4 Inhibitor\"[tiab] OR \"PD-1 Inhibitors\"[tiab] OR \"PD 1 Inhibitors\"[tiab] OR \"Programmed Cell Death Protein 1 Inhibitor\"[tiab] OR \"Programmed Cell Death Protein 1 Inhibitors\"[tiab] OR \"PD-1 Inhibitor\"[tiab] OR \"Inhibitor, PD-1\"[tiab] OR \"PD 1 Inhibitor\"[tiab] OR \"Immune Checkpoint Blockade\"[tiab] OR \"Checkpoint Blockade, Immune\"[tiab] OR \"Immune Checkpoint Inhibition\"[tiab] OR \"Checkpoint Inhibition, Immune\"[tiab] OR \"PD-L1 Inhibitors\"[tiab] OR \"PD L1 Inhibitors\"[tiab] OR \"Programmed Death-Ligand 1 Inhibitors\"[tiab] OR \"Programmed Death Ligand 1 Inhibitors\"[tiab] OR \"PD-L1 Inhibitor\"[tiab] OR \"PD L1 Inhibitor\"[tiab] OR \"PD-1-PD-L1 Blockade\"[tiab] OR \"Blockade, PD-1-PD-L1\"[tiab] OR \"PD 1 PD L1 Blockade\"[tiab] OR \"pembrolizumab\"[Supplementary Concept] OR \"MK-3475\"[tiab] OR \"Keytruda\"[tiab] OR \"lambrolizumab\"[tiab] OR \"SCH-900475\"[tiab] OR \"atezolizumab\"[Supplementary Concept] OR \"immunoglobulin G1, anti-(human CD antigen CD274) (human monoclonal MDPL3280a heavy chain), disulfide with human monoclonal MDPL3280a kappa-chain, dimer\"[tiab] OR \"anti-PDL1\"[tiab] OR \"MPDL3280A\"[tiab] OR \"MPDL-3280A\"[tiab] OR \"Tecentriq\"[tiab] OR \"RG7446\"[tiab] OR \"RG-7446\"[tiab] OR \"Nivolumab\"[Supplementary Concept] OR \"MDX-1106\"[tiab] OR \"MDX1106\"[tiab] OR \"MDX 1106\"[tiab] OR \"Opdivo\"[tiab] OR \"BMS-936558\"[tiab] OR \"BMS936558\"[tiab] OR \"BMS 936558\"[tiab] OR \"ONO-4538\"[tiab] OR \"ONO4538\"[tiab] OR \"ONO 4538\"[tiab] OR \"durvalumab\"[Supplementary Concept] OR \"MEDI4736\"[tiab] OR \"MEDI-4736\"[tiab] OR \"Imfinzi\"[tiab] OR \"Ipilimumab\"[Supplementary Concept] OR \"Anti-CTLA-4 MAb Ipilimumab\"[tiab] OR \"Anti CTLA 4 MAb Ipilimumab\"[tiab] OR \"Ipilimumab, Anti-CTLA-4 MAb\"[tiab] OR \"MDX 010\"[tiab] OR \"MDX-010\"[tiab] OR \"MDX010\"[tiab] OR \"MDX-CTLA-4\"[tiab] OR \"MDX CTLA 4\"[tiab] OR \"Yervoy\"[tiab] OR \"avelumab\"[Supplementary Concept] OR \"MSB0010718C\"[tiab] OR \"MSB-0010718C\"[tiab] OR \"Bavencio\"[tiab] OR \"MSB-0010682\"[tiab] OR \"MSB0010682\"[tiab] OR \"cemiplimab\"[Supplementary Concept] OR \"REGN2810\"[tiab]) AND (\"1900/01/01\"[Date - Publication] : \"2025/01/31\"[Date - Publication]) AND (\"1900/01/01\"[Date - Entry] : \"2025/01/31\"[Date - Entry])",
+  "as_of": "2025-01-31",
+  "count": 1220,
+  "gold_scored": 11,
+  "gold_reachable": 11,
+  "retrieved": 8,
+  "recall_percent": 72.7,
+  "missed": [
+    "36123366",
+    "36585404",
+    "39883436"
+  ],
+  "nnr": 152.5,
+  "translation_issues": [
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning",
+    "pubmed_warning"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 8,
+  "unseen_recall_percent": 72.7,
+  "leakage": [],
+  "valid": true
+}
