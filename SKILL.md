@@ -39,8 +39,9 @@ If the user pasted a Boolean strategy, still ask for the question: the strategy 
 under review, never evidence of scope.
 
 In one message, also ask for: known relevant articles (PMIDs, DOIs, PMCIDs; optional), the
-depth (`quick`, `standard` or `thorough`; default `standard`), and any required limits such as
-dates or languages. When the user says to proceed without answers, use the defaults and record
+depth (`quick`, `standard` or `thorough`; default `standard`), any required limits such as
+dates or languages, and how many records they can screen (`workload_budget`; default 10,000 at
+`standard`, 20,000 at `thorough`, none at `quick`). When the user says to proceed without answers, use the defaults and record
 the assumptions in `protocol.json` `notes`.
 
 Create the workspace: `psb init <run-dir> --question "..."`. Keep all build files inside it.
@@ -50,13 +51,16 @@ Create the workspace: `psb init <run-dir> --question "..."`. Keep all build file
 Read `references/scope.md`. Fill `protocol.json`:
 
 - `concepts`: each candidate concept with `id`, `name`, `role` and `rationale`.
-  Roles: `search` (an AND-ed block), `screen` (handled at screening, not searched), `optional`
-  (a possible block to test, not in the main strategy).
+  Roles: `search` (an AND-ed block), `optional` (searchable but not certain to be named: tested
+  as an extra AND-ed block in step 5, then decided), `screen` (cannot be searched reliably;
+  handled at screening).
 - `eligibility`: include and exclude criteria for screening.
 - `limits`: only limits the question truly requires, each with a reason.
 
 Only AND a concept that passes the admission test in `references/scope.md`; when in doubt, do
-not AND it. Outcomes, comparators, settings and study designs are usually `screen`.
+not AND it yet. A topic-defining outcome, setting or design that authors do name is `optional`,
+not `screen`: test it before leaving it out. Comparators, severity and full-text-only properties
+are `screen`.
 A block that names one direction of a process (switching back) is fragile; search the process.
 Every member the criteria list for a concept is searched by its own name.
 Decide roles from the question before reading any seed record.
@@ -108,6 +112,13 @@ records, leave-one-block-out ablation, and what changed since the previous versi
   and `psb sample` to find noisy terms. Recall comes first.
 - A block whose removal gains known records (ablation) is a sign of over-structuring:
   reconsider its role in `protocol.json`.
+- Test every `optional` concept (`references/scope.md`, "Optional concepts"): put its block in
+  `strategy.json` `candidates`; `psb eval` reports the count with it AND-ed, the reduction, and
+  the known records it would lose. Run `psb optional sample <id>`, screen every drawn record,
+  add relevant ones to a `relevant` set, then `psb optional decide <id> --choice and|leave_out
+  --reason "..." --relevant ...`. AND it only when it loses no known record, its loss sample has
+  no relevant record, and it cuts the count materially (about 30% or more). Over the workload
+  budget, `psb report` refuses delivery until every optional concept has a current decision.
 - Recovering a held-out validation miss makes that set part of development. Say so.
 
 A phrase-index warning is a mandatory review, not proof of zero hits. Read the phrase decision

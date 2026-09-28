@@ -323,3 +323,26 @@ def gold_seen(fixture: dict, run_dir: Path) -> set[str]:
         except ValueError:
             continue
     return seen & set(fixture["gold_pmids"])
+
+
+def optional_summary(run_dir: Path) -> dict | None:
+    """What the agent did with optional concepts, from its protocol.json (None for other skills)."""
+    path = run_dir / "work" / "protocol.json"
+    try:
+        protocol = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    if not isinstance(protocol, dict):
+        return None
+    concepts = protocol.get("concepts") or []
+    rows = []
+    for concept in concepts:
+        if not isinstance(concept, dict) or concept.get("role") != "optional":
+            continue
+        decision = concept.get("decision") or {}
+        sample = decision.get("loss_sample") or {}
+        rows.append({"id": concept.get("id"), "choice": decision.get("choice"),
+                     "screened": len(sample.get("screened") or []), "relevant": len(sample.get("relevant") or [])})
+    roles = [c.get("role") for c in concepts if isinstance(c, dict)]
+    return {"workload_budget": protocol.get("workload_budget"), "roles": {r: roles.count(r) for r in sorted(set(map(str, roles)))},
+            "optional": rows}

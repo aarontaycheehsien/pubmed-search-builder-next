@@ -5,6 +5,7 @@
 - recall on every PMID set, labelled by how independent that set is
 - for each missed known record, the blocks that fail to retrieve it
 - leave-one-block-out ablation
+- optional concepts: what AND-ing each candidate block would cost and save
 - the change since the previous evaluated version, including known records it lost
 
 The numbers are recomputed every time; nothing here is read back from an earlier report
@@ -14,7 +15,7 @@ except the previous version's retrieved PMIDs, used for the diff.
 from __future__ import annotations
 
 from .ncbi import NcbiError
-from . import validation, mesh, syntax
+from . import validation, mesh, optional, syntax
 from .strategy import block_query, core_query, full_query, lint, numbered_lines
 from .workspace import ROLES, Workspace, now
 
@@ -71,6 +72,7 @@ def evaluate(ws: Workspace, *, term_counts: bool = True) -> dict:
             result["vocabulary"], vocabulary_issues = mesh.validate_query(ws.pubmed, result["query"], result["run_date"])
             collected.extend(vocabulary_issues)
             _measure(ws, result, term_counts=term_counts)
+            collected.extend(optional.issues(ws.pubmed, result.get("optional", []), inputs["protocol"], result.get("count")))
             complete = term_counts and not any(r.get("status") == "unverified" for r in result["vocabulary"])
     except (NcbiError, ValueError) as exc:
         collected.append(validation.issue("validation_unavailable", "Evaluation could not complete", evidence=str(exc)))
@@ -120,6 +122,7 @@ def _measure(ws: Workspace, result: dict, *, term_counts: bool) -> None:
     if not known:
         result["sets"] = {}
         result["note"] = "no PMID sets: recall not measured (add seeds, relevant, validation or benchmark sets)"
+        result["optional"] = optional.measure(pm, strategy, ws.protocol(), set(), sets)
         return
 
     in_pubmed = pm.existing(known)
@@ -172,7 +175,7 @@ def _measure(ws: Workspace, result: dict, *, term_counts: bool) -> None:
         result["ablation"] = ablation
     elif strategy.combine:
         result["ablation"] = "skipped: ablation needs the default AND combination"
-    return
+    result["optional"] = optional.measure(pm, strategy, ws.protocol(), in_pubmed, sets)
 
 
 def compare(previous: dict | None, current: dict, strategy: dict) -> dict | None:

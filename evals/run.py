@@ -227,6 +227,7 @@ def generate_once(args, fixture: dict, split: str, *, skill_dir: Path, skill_nam
         card["leakage"] = harness.leakage(fixture, run_dir, transcript)
     else:
         card["error"] = "no current protected delivery" if protected else "no final_strategy.txt"
+    card["concepts"] = harness.optional_summary(run_dir)
     card["status"] = harness.run_status(card, drivers.error_text(run_dir))
     card["valid"] = card["status"] == "ok"
     out = save(fixture["id"], label, seal(card, split))

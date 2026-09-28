@@ -26,7 +26,7 @@ quality assurance, not PRESS peer review, and the audit must say so.
 
 | Key | PRESS element | Ask |
 |---|---|---|
-| `translation` | Translation of the question | Do the AND-ed blocks match the concepts? Is anything AND-ed that should be screened? Is every member the criteria name searched by its bare name? Does a block require one direction of a process? (`scope.md`) |
+| `translation` | Translation of the question | Do the AND-ed blocks match the concepts? Is anything AND-ed that should be screened? Is every member the criteria name searched by its bare name? Does a block require one direction of a process? Is a searchable, topic-defining outcome or setting only screened, or an optional block AND-ed or left out against its measured losses and loss sample? (`scope.md`) |
 | `operators` | Boolean and proximity operators | Are OR and AND used correctly? Any NOT? Proximity distances sensible? |
 | `subject_headings` | Subject headings | Right descriptors, explosion, missing narrower or related headings, supplementary concepts? |
 | `text_words` | Text-word searching | Missing synonyms, spellings, plurals, acronyms; truncation too short or too broad? |

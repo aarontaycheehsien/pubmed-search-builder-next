@@ -31,13 +31,49 @@ A concept becomes an AND-ed block (`role: search`) only if all of these hold:
    filter.
 5. No high-impact ambiguity about it remains.
 
-If any answer is "no" or "unsure", make it `screen` or `optional`. Outcomes, comparators,
-narrow settings, subgroups, severity and study design fail by default unless the question makes
-them the topic itself (for example, a review about a specific cause of death).
+If any answer is "no" or "unsure", the concept is not `search`. Choose between the other two:
 
-Evidence: C and O elements have lower retrieval potential in PubMed (Frandsen 2020,
-doi:10.1016/j.jclinepi.2020.07.005); two-block searches found more relevant reviews than
-four-block searches (Ho 2016, doi:10.1371/journal.pone.0167170).
+- `optional` when authors usually name it in the title, abstract or MeSH but not reliably
+  enough to require it (test 1 or 3 fails, test 2 is about its type): a topic-defining outcome
+  ("lifestyle behaviours", "symptom trajectories", "dementia"), a setting, or a design with
+  recognisable labels. Optional concepts are tested, never dropped untested.
+- `screen` when it cannot be searched reliably at all: comparators, severity, subgroups,
+  properties reported only in full text, and designs better handled by a validated filter.
+
+Evidence: C and O elements have lower retrieval potential in PubMed (Frandsen 2020), so they
+are not AND-ed by default; but leaving a topic-defining outcome unsearched can multiply the
+screening load tenfold with no gain in recall. Testing decides.
+
+References: Frandsen 2020, doi:10.1016/j.jclinepi.2020.07.005; two-block searches found more
+relevant reviews than four-block searches (Ho 2016, doi:10.1371/journal.pone.0167170).
+
+## Optional concepts: test, then decide
+
+1. Build the block as carefully as a searched one (MeSH and free text; every member the
+   criteria list, by its bare name) and put it in `strategy.json` `candidates`, with the
+   concept's `id`. Candidates are never part of the query.
+2. `psb eval` reports, for each optional concept: records without and with the block, the
+   reduction, and the known records it would lose (by set).
+3. `psb optional sample <id>` draws a random sample of the records the block would remove
+   (30 at `standard`, 60 at `thorough`). Screen each against the eligibility criteria. Add any
+   relevant record to a `relevant` set: it is now a known record the block loses.
+4. Decide with `psb optional decide <id> --choice and|leave_out --reason "..." --relevant ...`.
+   AND the block only when all three hold:
+   - it loses no known record;
+   - its loss sample contains no relevant record;
+   - it cuts the count materially (about 30% or more).
+   Otherwise leave it out and say why. `and` moves the block into `blocks`, where ablation keeps
+   checking it; `leave_out` keeps it in `candidates`.
+5. A decision is bound to the block and the query it was measured against. Any later change to
+   either makes it stale: sample and decide again.
+
+A loss sample of 0/30 only shows that fewer than about 10% of the removed records are relevant
+(0/60: about 5%). With thousands removed that can still be many records, so the known-record
+loss and the reduction matter as much as the sample. The audit reports all three.
+
+Over the workload budget (`workload_budget` in `protocol.json`), `psb report` refuses delivery
+until every optional concept has a current decision, and the count over budget needs a review
+disposition: check whether any `screen` concept is in fact searchable and should be `optional`.
 
 ## Fragile concepts
 
@@ -90,6 +126,7 @@ concepts are AND-ed:
     {"id": "children_uti", "name": "Children with UTI", "role": "screen", "rationale": "age and UTI context often only in full text"},
     {"id": "accuracy", "name": "Accuracy measures", "role": "screen", "rationale": "accuracy terms are unreliable in abstracts"}
   ],
+  "workload_budget": 10000,
   "eligibility": {"include": ["children with UTI", "DMSA or ultrasound compared with VCUG"], "exclude": ["case reports"]},
   "limits": [],
   "as_of": null,

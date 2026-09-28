@@ -11,6 +11,8 @@ explicit effective `as_of` entry-date restriction. The audit includes:
 - the strategy line by line with counts, and as one line for copying into PubMed
 - recall on each known set with its role, missed records and the blocks that miss them
 - leave-one-block-out results
+- tested optional concepts: records without and with each block, reduction, known records lost,
+  loss sample (relevant/screened, with its upper bound when none were relevant), decision and reason
 - the development history (every evaluated version, its change, lost records, and note)
 - critic rounds and finding status
 - standard limitations and the provenance line (NCBI requests, cache use, strategy hash)
@@ -20,7 +22,7 @@ Do not edit `audit.md` or `final-query.txt`; their bytes are verified by the man
 
 ## Add these sections separately in `narrative.md`
 
-1. **Rationale.** Why each concept is searched or screened; key MeSH decisions (explosion,
+1. **Rationale.** Why each concept is searched, optional or screened, and for each optional concept why it was AND-ed or left out; key MeSH decisions (explosion,
    `:noexp`, supplementary concepts); notable text-word choices; why limits were used.
 2. **How known records were found.** Sources, screening budget, how many screened and included,
    how the validation set was held out, and whether it later became part of development.

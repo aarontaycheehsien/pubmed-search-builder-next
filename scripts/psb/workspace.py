@@ -143,6 +143,12 @@ class Workspace:
     def strategy(self) -> Strategy:
         return Strategy.from_dict(read_json(self.root / "strategy.json"))
 
+    def write_protocol(self, protocol: dict) -> None:
+        write_json(self.root / MARKER, protocol)
+
+    def write_strategy(self, strategy: Strategy) -> None:
+        write_json(self.root / "strategy.json", strategy.to_dict())
+
     def log(self, entry: dict) -> None:
         # A buffered text-mode append can split into more than one underlying write, so two
         # `psb` processes running at once (the agent backgrounding commands, or a second

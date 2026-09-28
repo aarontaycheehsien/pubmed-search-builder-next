@@ -167,6 +167,17 @@ Bad, when eligibility says "SEM-family models (CFA, latent growth, multilevel, m
 
 Better: `multilevel[tiab] OR "Multilevel Analysis"[Mesh] OR mediation[tiab] OR "indirect effect*"[tiab]`. A paper on Bayesian multilevel models seldom says "structural equation"; that is why the criteria list multilevel models separately. See "Named members of a concept" in `scope.md`.
 
+## Mistake 17: Screening a searchable, topic-defining concept without testing it
+
+Bad, for "Impact of the COVID-19 pandemic and lockdown on lifestyle behaviours and well-being":
+one COVID block, with "lifestyle behaviours and well-being" set to `screen` because outcome labels
+vary. The strategy returns 150,000 records.
+
+Better: make the outcome `optional`, build its block (physical activity, diet, sleep, screen
+time, alcohol, smoking, well-being, mental health ...), put it in `candidates`, and let `psb eval`,
+a loss sample and `psb optional decide` show whether AND-ing it loses relevant records. Leaving
+it out can be right, but only as a recorded decision. See "Optional concepts" in `scope.md`.
+
 ## References
 
 - Adam GP, et al. Literature search sandbox: a large language model that generates search queries for systematic reviews. *JAMIA Open* 2024. [doi:10.1093/jamiaopen/ooae098](https://doi.org/10.1093/jamiaopen/ooae098).

@@ -101,3 +101,16 @@ def test_stage_skill_copies_skill_but_not_evals(tmp_path):
     staged = drivers.stage_skill(harness.REPO, run)
     assert (staged / "SKILL.md").exists() and (staged / "scripts" / "psb.py").exists()
     assert not (staged / "evals").exists() and not (staged / "tests").exists()
+
+
+def test_optional_summary_reads_roles_and_decisions(tmp_path):
+    work = tmp_path / "work"
+    work.mkdir()
+    protocol = {"workload_budget": 10000, "concepts": [
+        {"id": "covid", "role": "search"}, {"id": "age", "role": "screen"},
+        {"id": "lifestyle", "role": "optional", "decision": {"choice": "and", "loss_sample": {"screened": ["1", "2"], "relevant": []}}}]}
+    (work / "protocol.json").write_text(json.dumps(protocol), encoding="utf-8")
+    summary = harness.optional_summary(tmp_path)
+    assert summary["roles"] == {"optional": 1, "screen": 1, "search": 1}
+    assert summary["optional"] == [{"id": "lifestyle", "choice": "and", "screened": 2, "relevant": 0}]
+    assert harness.optional_summary(tmp_path / "missing") is None

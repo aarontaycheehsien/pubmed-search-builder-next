@@ -5,6 +5,7 @@
     {"blocks": [{"id": "condition", "name": "Vesicoureteral reflux",
                  "terms": ["\\"Vesico-Ureteral Reflux\\"[Mesh]", "vesicoureteral reflux*[tiab]"]}],
      "combine": null,            # null = AND of all blocks; or e.g. "condition AND (test OR imaging)"
+     "candidates": [],           # blocks for optional concepts: measured by psb eval, never in the query
      "limits": [{"clause": "NOT (animals[mh] NOT humans[mh])", "rationale": "..."}]}
 
 A block ``id`` is the one key for a concept everywhere: protocol, strategy, evaluation, report.
@@ -44,31 +45,39 @@ class Strategy:
     blocks: list[Block]
     combine: str | None = None
     limits: list[Limit] = field(default_factory=list)
+    candidates: list[Block] = field(default_factory=list)
 
     @classmethod
     def from_dict(cls, data: dict) -> "Strategy":
         if not isinstance(data, dict):
             raise StrategyError("strategy must be a JSON object")
-        blocks = []
-        for raw in data.get("blocks") or []:
-            if not isinstance(raw, dict):
-                raise StrategyError("each block must be an object")
-            terms = [str(t).strip() for t in raw.get("terms") or [] if str(t).strip()]
-            blocks.append(Block(str(raw.get("id", "")).strip(), str(raw.get("name", "")).strip(), terms))
+        def parse(key: str) -> list[Block]:
+            parsed = []
+            for raw in data.get(key) or []:
+                if not isinstance(raw, dict):
+                    raise StrategyError(f"each entry of {key} must be an object")
+                terms = [str(t).strip() for t in raw.get("terms") or [] if str(t).strip()]
+                parsed.append(Block(str(raw.get("id", "")).strip(), str(raw.get("name", "")).strip(), terms))
+            return parsed
+
+        blocks = parse("blocks")
         limits = [
             Limit(str(item.get("clause", "")).strip(), str(item.get("rationale", "")).strip())
             for item in data.get("limits") or []
             if isinstance(item, dict) and str(item.get("clause", "")).strip()
         ]
         combine = data.get("combine")
-        return cls(blocks, str(combine).strip() if combine else None, limits)
+        return cls(blocks, str(combine).strip() if combine else None, limits, parse("candidates"))
 
     def to_dict(self) -> dict:
-        return {
+        data = {
             "blocks": [{"id": b.id, "name": b.name, "terms": list(b.terms)} for b in self.blocks],
             "combine": self.combine,
             "limits": [{"clause": l.clause, "rationale": l.rationale} for l in self.limits],
         }
+        if self.candidates:  # absent when unused, so older strategies keep their fingerprints
+            data["candidates"] = [{"id": b.id, "name": b.name, "terms": list(b.terms)} for b in self.candidates]
+        return data
 
     def block(self, block_id: str) -> Block:
         for block in self.blocks:
@@ -89,10 +98,18 @@ class Strategy:
             seen.add(block.id)
             if not block.terms:
                 errors.append(f"block {block.id!r} has no terms")
+        for block in self.candidates:
+            if not ID_PATTERN.fullmatch(block.id) or block.id.upper() in OPERATORS:
+                errors.append(f"invalid candidate id {block.id!r} (letters, digits, underscore; not AND/OR/NOT)")
+            if block.id in seen:
+                errors.append(f"candidate {block.id!r} duplicates a block or candidate id")
+            seen.add(block.id)
+            if not block.terms:
+                errors.append(f"candidate {block.id!r} has no terms")
         if self.combine:
             errors.extend(message for _, message in syntax.problems(self.combine, combination=True))
             words = set(re.findall(r"[A-Za-z][A-Za-z0-9_]*", self.combine)) - OPERATORS
-            unknown = sorted(words - seen)
+            unknown = sorted(words - {b.id for b in self.blocks})
             if unknown:
                 errors.append(f"combine references unknown block ids: {', '.join(unknown)}")
         return errors
@@ -268,7 +285,14 @@ def lint(strategy: Strategy, *, concepts: list[dict] | None = None) -> list[dict
         for extra in sorted(block_ids - known):
             issues.append({"severity": "warning", "code": "block_without_concept",
                            "message": f"block {extra!r} is not a protocol concept; add it to protocol.json with a role"})
+        optional = {str(c.get("id")) for c in concepts if c.get("role") == "optional"}
+        for extra in sorted({b.id for b in strategy.candidates} - optional):
+            issues.append({"severity": "warning", "code": "candidate_without_optional_concept",
+                           "message": f"candidate {extra!r} is not an optional concept in protocol.json"})
         for concept in concepts:
+            decided_and = concept.get("role") == "optional" and (concept.get("decision") or {}).get("choice") == "and"
+            if decided_and:
+                continue  # an optional block AND-ed by a recorded decision (psb optional decide)
             if concept.get("role") in {"screen", "optional"} and concept.get("id") in block_ids and not strategy.combine:
                 issues.append({"severity": "warning", "code": "screen_concept_searched",
                                "message": f"concept {concept.get('id')!r} is role {concept.get('role')!r} but is AND-ed as a block"})

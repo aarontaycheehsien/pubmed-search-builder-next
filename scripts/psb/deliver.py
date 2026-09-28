@@ -8,7 +8,7 @@ import time
 from contextlib import contextmanager
 from pathlib import Path
 
-from . import validation
+from . import optional, validation
 from .evaluate import evaluate, compare
 from .strategy import Strategy
 from .workspace import Workspace, WorkspaceError, ROLES, now, read_json, write_json, sha256_text
@@ -106,6 +106,40 @@ def _recall_table(evaluation: dict) -> list[str]:
         recall = "n/a" if data["recall_percent"] is None else f"{data['recall_percent']}%"
         rows.append(f"| {name} | {data['role']} ({ROLES.get(data['role'], '')}) | {data['in_pubmed']} | {data['retrieved']} | {recall} |")
     return rows
+
+
+def _optional_section(evaluation: dict) -> list[str]:
+    """Each optional concept: what AND-ing its block cost and saved, the loss sample, the decision."""
+    rows = evaluation.get("optional") or []
+    if not rows:
+        return []
+    protocol = (evaluation.get("inputs") or {}).get("protocol") or {}
+    budget = optional.workload_budget(protocol)
+    lines = ["### Tested optional concepts", "",
+             f"Workload budget: {f'{budget:,} records' if budget else 'none'}. Each optional concept was tested as an "
+             "extra AND-ed block. The loss sample is a random sample of the records that block removes, screened "
+             "against the eligibility criteria.", "",
+             "| Concept | Decision | Records without / with block | Reduction | Known records lost | Loss sample relevant | Reason |",
+             "|---|---|---:|---:|---|---|---|"]
+    for row in rows:
+        decision = row.get("decision") or {}
+        sample = decision.get("loss_sample") or {}
+        screened, relevant = len(sample.get("screened") or []), len(sample.get("relevant") or [])
+        if not screened:
+            found = "not sampled"
+        elif relevant:
+            found = f"{relevant}/{screened}"
+        else:  # exact one-sided 95% upper bound for zero events in n draws
+            found = f"0/{screened} (up to {100 * (1 - 0.05 ** (1 / screened)):.0f}% of removed records could be relevant)"
+        counts = (f"{row['count_without_block']:,} / {row['count_with_block']:,}" if "count_with_block" in row else "n/a")
+        reduction = f"{row['reduction_percent']}%" if row.get("reduction_percent") is not None else "n/a"
+        lost = ", ".join(row.get("known_lost") or []) or ("none" if "known_lost" in row else "n/a")
+        label = {"and": "AND-ed", "leave_out": "left out"}.get(decision.get("choice"), "undecided")
+        if row.get("status") not in {"current", None} and decision:
+            label += f" ({row['status']})"
+        reason = str(decision.get("reason") or "").replace("|", "/")
+        lines.append(f"| {row['name']} | {label} | {counts} | {reduction} | {lost} | {found} | {reason} |")
+    return lines + [""]
 
 
 def _nonempty(value) -> bool:
@@ -229,7 +263,7 @@ def critic_packet(ws: Workspace) -> Path:
              "Phrase warnings require clause-specific interpretation review. ~0 allows any order; no wildcards in proximity. "
              "Prefer explicit tested expressions; do not delete terms merely because seeds are already covered. "
              "A retained warning needs a reason and evidence. Rewrites/removals require another complete evaluation.", "",
-             *_scope_section(evaluation), *_line_table(evaluation), "", "## Complete evidence", "", "```json", json.dumps(evaluation, indent=2, ensure_ascii=False),
+             *_scope_section(evaluation), *_line_table(evaluation), "", *_optional_section(evaluation), "## Complete evidence", "", "```json", json.dumps(evaluation, indent=2, ensure_ascii=False),
              "```", "", "## Earlier critic rounds", "", "```json", json.dumps(rounds, indent=2, ensure_ascii=False), "```", "",
              "## Response JSON", "", "```json", json.dumps(template, indent=2, ensure_ascii=False), "```"]
     path = ws.root / "critic" / f"packet-{number}.md"
@@ -411,6 +445,7 @@ def _audit(ws: Workspace, evaluation: dict, rounds: list[dict]) -> str:
             lines.append("")
     else:
         lines += ["No known relevant records were available, so recall was not estimated.", ""]
+    lines += _optional_section(evaluation)
     if isinstance(evaluation.get("ablation"), list):
         lines += ["### Leave-one-block-out", "", "| Block dropped | Records | Known records gained |", "|---|---:|---:|"]
         lines += [f"| {a['drop']} | {a['count']:,} | {a['known_gained']} |" for a in evaluation["ablation"]]

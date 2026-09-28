@@ -9,7 +9,7 @@ import random
 import sys
 from pathlib import Path
 
-from . import config, deliver, mesh, terms, validation
+from . import config, deliver, mesh, optional, terms, validation
 from .evaluate import compare, evaluate
 from .ncbi import LINKNAMES, NcbiError, PubMed
 from .strategy import StrategyError, lint, numbered_lines, full_query
@@ -81,6 +81,12 @@ def cmd_status(args) -> dict:
         todo.append("run psb eval")
     elif versions[-1]["strategy_sha256"] != sha256_text(json.dumps(strategy.to_dict(), sort_keys=True)):
         todo.append("strategy.json changed since the last psb eval")
+    candidates = {b.id for b in strategy.candidates} | {b.id for b in strategy.blocks}
+    for concept in concepts:
+        if concept.get("role") == "optional" and str(concept.get("id")) not in candidates:
+            todo.append(f"add a candidate block for optional concept {concept.get('id')!r} to strategy.json candidates")
+        elif concept.get("role") == "optional" and not concept.get("decision"):
+            todo.append(f"sample and decide optional concept {concept.get('id')!r} (psb optional sample / decide)")
     if not critic:
         todo.append("run a critic round (psb critic packet)")
     last = versions[-1]["evaluation"] if versions else {}
@@ -300,6 +306,15 @@ def cmd_log(args) -> dict:
             "from_cache": sum(1 for e in ncbi if e.get("cache")), "tail": entries[-args.tail:] if args.tail else []}
 
 
+def cmd_optional(args) -> dict:
+    ws = workspace(args)
+    if args.optional_command == "sample":
+        return {"ok": True, **optional.sample(ws, args.concept, n=args.n, seed=args.seed)}
+    screened = normalize_pmids(args.screened) if args.screened else None
+    return {"ok": True, **optional.decide(ws, args.concept, choice=args.choice, reason=args.reason,
+                                          screened=screened, relevant=normalize_pmids(args.relevant or []))}
+
+
 def cmd_doctor(args) -> dict:
     pm = PubMed()
     result = pm.search("asthma[tiab]", dated=False)
@@ -411,6 +426,20 @@ def build_parser() -> argparse.ArgumentParser:
     q = tsub.add_parser("miss", help="diagnose missed known records from the last eval")
     q.add_argument("--set", action="append")
     p.set_defaults(func=cmd_terms)
+
+    p = sub.add_parser("optional", help="test optional concepts: loss sample and decision")
+    osub = p.add_subparsers(dest="optional_command", required=True)
+    q = osub.add_parser("sample", help="random sample of the records an optional block would remove")
+    q.add_argument("concept")
+    q.add_argument("--n", type=int, help="records to draw (default: 30 standard, 60 thorough)")
+    q.add_argument("--seed", type=int, default=1)
+    q = osub.add_parser("decide", help="record whether to AND an optional block, bound to the current strategy")
+    q.add_argument("concept")
+    q.add_argument("--choice", required=True, choices=["and", "leave_out"])
+    q.add_argument("--reason", required=True)
+    q.add_argument("--screened", nargs="*", help="PMIDs screened (default: the stored loss sample)")
+    q.add_argument("--relevant", nargs="*", help="screened PMIDs that met the eligibility criteria")
+    p.set_defaults(func=cmd_optional)
 
     p = sub.add_parser("critic", help="PRESS critic packet and round check")
     csub = p.add_subparsers(dest="critic_command", required=True)
