@@ -1,0 +1,33 @@
+{
+  "id": "social-prescribing-older-adults",
+  "suite": "frozen",
+  "question": "What components of social prescribing programmes affect loneliness, health, or wellbeing among older adults?",
+  "eligibility": [
+    "Older-adult populations.",
+    "Social prescribing or link-worker referral to community activities.",
+    "Reports loneliness, health, or wellbeing outcomes.",
+    "Study designs represented in the included-study table."
+  ],
+  "as_of": "2019-12-30",
+  "as_of_source": "Day after latest Entrez date among included PubMed records (lower bound; review search cutoff not independently confirmed).",
+  "seeds": [
+    "25744110",
+    "28389486",
+    "29268802"
+  ],
+  "gold_pmids": [
+    "25744110",
+    "28389486",
+    "29268802",
+    "30081874",
+    "30670001",
+    "31199436",
+    "31547895",
+    "31727668",
+    "31740455",
+    "31883018"
+  ],
+  "source": "Rapo et al. 2023, Critical components of social prescribing programmes with a focus on older adults. PMID 37485982; PMCID PMC10478612. https://pmc.ncbi.nlm.nih.gov/articles/PMC10478612/",
+  "naive_blocks": null,
+  "notes": "Gold contains 10 of 12 included articles with PubMed records; 2 table references had no exact PubMed title record."
+}

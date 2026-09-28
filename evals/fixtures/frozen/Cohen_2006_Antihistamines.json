@@ -1,0 +1,37 @@
+{
+  "id": "Cohen_2006_Antihistamines",
+  "suite": "frozen",
+  "question": "What is the efficacy and safety of antihistamine drugs for allergic conditions?",
+  "eligibility": [
+    "Antihistamine-related records labelled included in the Cohen 2006 SYNERGY dataset.",
+    "PubMed-indexed records with label_included=1."
+  ],
+  "as_of": "2002-05-26",
+  "as_of_source": "Day after latest Entrez date among included SYNERGY records (lower bound).",
+  "seeds": [
+    "7542992",
+    "7622644",
+    "7677241"
+  ],
+  "gold_pmids": [
+    "7542992",
+    "7622644",
+    "7677241",
+    "7719255",
+    "7834324",
+    "7906659",
+    "8067592",
+    "8893110",
+    "9283989",
+    "9534917",
+    "10090440",
+    "10423657",
+    "10664928",
+    "10929922",
+    "11588693",
+    "12028119"
+  ],
+  "source": "Cohen et al. 2006 screening collection, Antihistamines SYNERGY subset (16 included PubMed IDs): https://raw.githubusercontent.com/asreview/systematic-review-datasets/metadata-v1-final/datasets/Cohen_2006/output/online/Antihistamines.csv; source paper DOI https://doi.org/10.1197/jamia.M1929",
+  "naive_blocks": null,
+  "notes": "Topic scope is inferred from the dataset subset name; the answer key uses label_included PubMed IDs."
+}
