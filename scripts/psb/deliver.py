@@ -177,6 +177,32 @@ def _round_problems(data: dict) -> list[str]:
     return problems
 
 
+def revision_budget(depth: str | None) -> int:
+    """Revision rounds per depth. One closing round may follow them (see ``review_gate``)."""
+    return {"quick": 1, "standard": 2, "thorough": 3}.get(depth or "standard", 2)
+
+
+def _closing_problems(rounds: list[dict]) -> list[tuple[int, str]]:
+    """A closing round verifies how earlier findings were handled; it cannot open a new front.
+
+    Without it, a last revision round that asks for changes is a dead end: fixing the strategy
+    makes the critic stale with no round left, and leaving the findings open blocks delivery.
+    """
+    problems = []
+    earlier: set[str] = set()
+    for index, r in enumerate(rounds):
+        findings = [f for f in r.get("findings") or [] if isinstance(f, dict)]
+        if r.get("closing"):
+            if index != len(rounds) - 1:
+                problems.append((r.get("round"), "a closing round must be the last round"))
+            for f in findings:
+                if f.get("id") not in earlier and f.get("severity") != "document":
+                    problems.append((r.get("round"), f"{f.get('id')}: a closing round may only verify earlier findings; "
+                                     "a new concern must be severity 'document'"))
+        earlier.update(str(f.get("id")) for f in findings)
+    return problems
+
+
 def review_gate(ws: Workspace, evaluation: dict, *, rounds: list[dict] | None = None) -> dict:
     blockers = []
     rounds = critic_rounds(ws) if rounds is None else rounds
@@ -191,13 +217,15 @@ def review_gate(ws: Workspace, evaluation: dict, *, rounds: list[dict] | None = 
             continue
         for f in r["findings"]:
             active[f["id"]] = f
+    for number, problem in _closing_problems(rounds):
+        blockers.append(validation.issue("critic_invalid", "Invalid closing round", location=f"critic:{number}", evidence=[problem]))
     if blockers:
         return {"blockers": blockers, "findings": list(active.values())}
     if latest.get("review_sha256") != evaluation.get("review_sha256"):
         blockers.append(validation.issue("critic_stale", "Critic must review the current inputs, translation and known-record retrieval"))
-    budget = {"quick": 1, "standard": 2, "thorough": 3}.get(evaluation["inputs"]["protocol"].get("depth"), 2)
-    if sum(bool(r.get("review_sha256")) for r in rounds) > budget:
-        blockers.append(validation.issue("critic_budget", "Critic round budget exhausted; deliver a diagnostic handoff"))
+    budget = revision_budget(evaluation["inputs"]["protocol"].get("depth"))
+    if sum(bool(r.get("review_sha256")) and not r.get("closing") for r in rounds) > budget:
+        blockers.append(validation.issue("critic_budget", "Critic revision budget exhausted; use the closing round or deliver a diagnostic handoff"))
     for fid, f in active.items():
         if f["status"] == "open" and f["severity"] in {"must-fix", "should-fix"}:
             blockers.append(validation.issue("critic_open", "Finding needs a disposition", location=f"critic:{fid}", evidence=f))
@@ -249,13 +277,21 @@ def critic_packet(ws: Workspace) -> Path:
         raise WorkspaceError("run a complete psb eval before requesting critique")
     rounds = critic_rounds(ws)
     number = max((r["round"] for r in rounds), default=0) + 1
-    budget = {"quick": 1, "standard": 2, "thorough": 3}.get(ws.protocol().get("depth"), 2)
-    if sum(bool(r.get("review_sha256")) for r in rounds) >= budget:
-        raise WorkspaceError("critic budget exhausted; use report --diagnostic for the handoff")
-    template = {"round": number, "strategy_version": evaluation.get("version"), "review_sha256": evaluation["review_sha256"],
+    budget = revision_budget(ws.protocol().get("depth"))
+    if any(r.get("closing") for r in rounds):
+        raise WorkspaceError("the closing round has been used; use report --diagnostic for the handoff")
+    closing = sum(bool(r.get("review_sha256")) for r in rounds) >= budget
+    template = {"round": number, **({"closing": True} if closing else {}),
+                "strategy_version": evaluation.get("version"), "review_sha256": evaluation["review_sha256"],
                 "domains": {d: {"verdict": "pass | revise", "note": "explanation"} for d in DOMAINS}, "findings": [],
                 "issue_dispositions": [{"issue_id": i["id"], "status": "accepted-risk | rejected", "response": "reason", "evidence": "observations", **({"query": i.get("query"), "translation": i.get("translation")} if i["code"] in validation.PHRASE_CODES else {})} for i in evaluation["validation"]["review_required"]]}
-    lines = [f"# Critic packet, round {number}", "", "Review this draft as an information specialist using the six PRESS domains. "
+    closing_note = ([f"**Closing round.** The {budget} revision round(s) are used. Verify how each earlier finding was "
+                     "handled in the current strategy: mark it resolved, rejected or accepted-risk with a response, or keep "
+                     "it open and the domain at revise if it was not handled. Do not raise new must-fix or should-fix "
+                     "findings; record any new concern as severity 'document'. Keep \"closing\": true in the response.", ""]
+                    if closing else [])
+    lines = [f"# Critic packet, round {number}{' (closing)' if closing else ''}", "", *closing_note,
+             "Review this draft as an information specialist using the six PRESS domains. "
              "Use only the packet. Do not answer the evidence question. Technical errors cannot be waived. "
              "Carry earlier finding IDs forward with explicit dispositions. For each finding provide id, domain, severity "
              "(must-fix/should-fix/document), kind (lexical/structural/scope/filter/syntax/reporting), finding, "

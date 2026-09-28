@@ -61,5 +61,14 @@ Read `validation.md` for the phrase-review decision tree.
 Before accepting a change, check that `psb eval` shows no newly lost known records. Update the
 finding's `status` and `response` in the next round's file. Stop when no substantive (`must-fix` or `should-fix`) finding is open; accepted risks need
 explanations. List remaining documentation findings in the audit. Every depth requires review;
-quick/standard/thorough have budgets of 1/2/3 rounds. Budget exhaustion with unresolved concerns
-requires diagnostic handoff. Historical unbound rounds remain readable but do not authorize delivery.
+quick/standard/thorough allow 1/2/3 revision rounds, then one closing round. Make all planned
+changes before the last revision round, and check them with `psb report --diagnostic`.
+
+## Closing round
+
+When the revision rounds are used, `psb critic packet` issues a closing round (`"closing": true`).
+Its reviewer verifies how each earlier finding was handled in the current strategy: resolved,
+rejected or accepted-risk with a response, or still open with the domain at `revise`. It may not
+raise a new `must-fix` or `should-fix` finding (`psb critic check` rejects one); a new concern is
+recorded as `document`. A closing round must be the last round. If it still asks for revision,
+deliver the diagnostic handoff. Historical unbound rounds remain readable but do not authorize delivery.
