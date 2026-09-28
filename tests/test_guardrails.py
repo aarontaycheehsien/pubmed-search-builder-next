@@ -19,7 +19,7 @@ from test_ncbi import ScriptedTransport, esearch_body
 def setup(make_ws, *, term='"Asthma"[Mesh]', second="asthma*[tiab]", depth="standard"):
     ws, pm = make_ws({term: {"1"}, second: {"2"}})
     protocol = ws.protocol()
-    protocol.update(depth=depth, concepts=[{"id": "topic", "role": "search", "name": "Asthma", "rationale": "Review question"}])
+    protocol.update(depth=depth, concepts=[{"id": "topic", "role": "search", "category": False, "name": "Asthma", "rationale": "Review question"}])
     write_json(ws.root / "protocol.json", protocol)
     write_json(ws.root / "strategy.json", {"blocks": [{"id": "topic", "terms": [term, second]}]})
     return ws, pm

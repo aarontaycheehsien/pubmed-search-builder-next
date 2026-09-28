@@ -11,8 +11,8 @@ from psb.workspace import write_json
 ATOMS = {"covid*[tiab]": {str(i) for i in range(1, 11)}, "lifestyle[tiab]": {"1", "2", "3", "4", "50"}}
 COVID = {"id": "covid", "name": "COVID-19", "terms": ["covid*[tiab]"]}
 LIFESTYLE = {"id": "lifestyle", "name": "Lifestyle", "terms": ["lifestyle[tiab]"]}
-CONCEPTS = [{"id": "covid", "name": "COVID-19", "role": "search", "rationale": "exposure"},
-            {"id": "lifestyle", "name": "Lifestyle", "role": "optional", "rationale": "topic-defining outcome"}]
+CONCEPTS = [{"id": "covid", "name": "COVID-19", "role": "search", "category": False, "rationale": "exposure"},
+            {"id": "lifestyle", "name": "Lifestyle", "role": "optional", "category": False, "rationale": "topic-defining outcome"}]
 
 
 def build(make_ws, *, budget=5, candidates=True, depth="standard"):

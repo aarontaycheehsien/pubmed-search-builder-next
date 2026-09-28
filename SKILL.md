@@ -64,7 +64,8 @@ are `screen`.
 A block that names one direction of a process (switching back) is fragile; search the process.
 Every member the criteria list for a concept is searched by its own name.
 A concept whose records often name only a member (chronic conditions: asthma, epilepsy)
-is a category: mark it `"category": true` and probe it (`references/scope.md`).
+is a category: mark it `"category": true` and probe it (`references/scope.md`). Give every
+`search` and `optional` concept `"category": true` or `false`; `psb eval` blocks until you do.
 Decide roles from the question before reading any seed record.
 
 Show the user a short table of concepts, roles and limits, and ask them to confirm. Set

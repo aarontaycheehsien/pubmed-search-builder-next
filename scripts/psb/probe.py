@@ -139,6 +139,14 @@ def issues(rows: list[dict], protocol: dict) -> list[dict]:
     if not PROBE_BUDGET.get(depth):
         return []
     found = []
+    # Recognising a category is the step that fails silently, so every searched concept must
+    # declare it: true (probe it) or false (its records name the concept itself).
+    for concept in protocol.get("concepts") or []:
+        if concept.get("role") in {"search", "optional"} and not isinstance(concept.get("category"), bool):
+            found.append(validation.issue(
+                "category_undeclared", "Declare \"category\": true or false: do relevant records often name only a "
+                "member of this concept (a specific exposure, condition, drug or behaviour) and never the concept?",
+                location=f"concept:{concept.get('id')}"))
     for row in rows:
         location = f"concept:{row['concept']}"
         if row["status"] in {"unprobed", "stale"}:

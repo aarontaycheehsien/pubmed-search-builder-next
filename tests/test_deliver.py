@@ -13,7 +13,7 @@ STRATEGY = {"blocks": [{"id": "asthma", "name": "Asthma", "terms": ['"Asthma"[Me
 def evaluated(make_ws):
     ws, _ = make_ws(ATOMS, question="Treatments for asthma?")
     protocol = ws.protocol()
-    protocol["concepts"] = [{"id": "asthma", "name": "Asthma", "role": "search", "rationale": "topic anchor"}]
+    protocol["concepts"] = [{"id": "asthma", "name": "Asthma", "role": "search", "category": False, "rationale": "topic anchor"}]
     write_json(ws.root / "protocol.json", protocol)
     write_json(ws.root / "strategy.json", STRATEGY)
     ws.save_set("seeds", "seed", ["1", "3", "4"])
@@ -38,7 +38,7 @@ def test_packet_and_report_use_evaluated_numbers(make_ws):
 def test_packet_leads_with_scope_and_translation_checks(make_ws):
     ws, _ = make_ws(ATOMS, question="Treatments for asthma?")
     protocol = ws.protocol()
-    protocol["concepts"] = [{"id": "asthma", "name": "Asthma", "role": "search", "rationale": "topic anchor"}]
+    protocol["concepts"] = [{"id": "asthma", "name": "Asthma", "role": "search", "category": False, "rationale": "topic anchor"}]
     protocol["eligibility"] = {"include": ["asthma of any type (allergic, exercise-induced)"], "exclude": []}
     write_json(ws.root / "protocol.json", protocol)
     write_json(ws.root / "strategy.json", STRATEGY)

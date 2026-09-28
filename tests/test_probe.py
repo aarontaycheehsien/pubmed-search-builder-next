@@ -13,7 +13,7 @@ ATOMS = {"systematic review*[tiab]": {str(i) for i in range(1, 13)}, "environmen
          "exposure*[tiab]": {"5", "6", "7", "8", "9"}, "phthalate*[tiab]": {"5", "6"}, "arsenic[tiab]": {"7", "8"}}
 SR = {"id": "reviews", "name": "Systematic reviews", "terms": ["systematic review*[tiab]"]}
 ENV = {"id": "env", "name": "Environmental health", "terms": ["environment*[tiab]"]}
-CONCEPTS = [{"id": "reviews", "name": "Systematic reviews", "role": "search", "rationale": "report type"},
+CONCEPTS = [{"id": "reviews", "name": "Systematic reviews", "role": "search", "category": False, "rationale": "report type"},
             {"id": "env", "name": "Environmental health", "role": "search", "category": True, "rationale": "topic"}]
 
 
@@ -92,3 +92,12 @@ def test_packet_shows_the_probe_history(make_ws):
     ws.save_attempt(evaluation)
     packet = deliver.critic_packet(ws).read_text(encoding="utf-8")
     assert "### Category probes" in packet and "| Environmental health | 1 | `exposure*[tiab]` | 5 | 0/5 |" in packet
+
+
+def test_every_searched_concept_must_declare_whether_it_is_a_category(make_ws):
+    ws = build(make_ws)
+    protocol = ws.protocol()
+    del protocol["concepts"][0]["category"]
+    write_json(ws.root / "protocol.json", protocol)
+    issues = {i["code"]: i for i in evaluate(ws)["validation"]["issues"]}
+    assert issues["category_undeclared"]["blocking"] and issues["category_undeclared"]["location"] == "concept:reviews"

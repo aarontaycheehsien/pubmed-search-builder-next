@@ -111,7 +111,9 @@ category: "chronic conditions" (type 1 diabetes, asthma, epilepsy), "psychotropi
 category's own words misses them, and its seeds rarely show it, because the records you find
 first are the ones that use the category's words.
 
-1. Mark the concept `"category": true` in `protocol.json`.
+1. Mark the concept `"category": true` in `protocol.json`. Every `search` and `optional` concept
+   declares `"category": true` or `false` at `standard` and `thorough` depth; ask for each one
+   whether a relevant record could name only a member and never the concept itself.
 2. Build the block from members as well as the category: its MeSH tree (`psb mesh show` lists
    narrower headings; explode where the tree matches the concept), and the members the
    question, the eligibility criteria and screened records name.

@@ -1,0 +1,98 @@
+{
+  "topic": "Menon_2022",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T160850Z",
+  "scored": "20260928T164134Z",
+  "skill": {
+    "name": "ours",
+    "hash": "472d3efba02414eda1704da54de0c110fa1870a29acc44d6e4509d385bd8d24e",
+    "commit": "b763d23f1d41154f170253203b4e0a886265f049",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b763d23f1d41154f170253203b4e0a886265f049",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1964
+  },
+  "final_message": " as Topic\"[Mesh]` | 6,347 |\n| 13 | `\"Meta-Analysis as Topic\"[Mesh]` | 20,321 |\n| 14 | `\"Review Literature as Topic\"[Mesh]` | 18,599 |\n| 15 | `systematic review*[tiab]` | 175,484 |\n| 16 | `meta-analy*[tiab]` | 176,011 |\n| 17 | `\"evidence synthesis\"[tiab]` | 4,462 |\n| 18 | `\"research synthesis\"[tiab]` | 540 |\n| 19 | `umbrella review*[tiab]` | 437 |\n| 20 | `overview*[tiab] AND review*[tiab]` | 74,285 |\n| 21 | `#12 OR #13 OR … OR #20` | 362,110 |\n| 22 | `#11 AND #21` | **6,351** |\n\n## Validation and limits\n\nTwo screened records were added to the development set: PMID 26923218, which evaluates methods and reporting practice in environmental-health systematic reviews, and PMID 32653802 (COSTER), which gives recommendations for their conduct. Both were retrieved, giving **100% development-set relative recall (2/2)**. There was no independent benchmark or held-out validation set, so this does not estimate sensitivity.\n\nThe optional methodological-rigour block was left out after testing: its broadened version reduced the count by 18.7%, below the skill’s approximate 30% material-reduction criterion. Its final 30-record loss sample had no clearly eligible record; one commentary had no abstract and remained uncertain.\n\nThe strategy passed the protected report gate. It is a draft for **human PRESS peer review by an information specialist before use**. The internal critic does not replace that review.\n\n## Files\n\n- [Generated query](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-37e3fa46fd7e2f7f/ours-codex-noseed-20260928T160850Z/work/final-query.txt>)\n- [Audit](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-37e3fa46fd7e2f7f/ours-codex-noseed-20260928T160850Z/work/audit.md>)\n- [Validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-37e3fa46fd7e2f7f/ours-codex-noseed-20260928T160850Z/work/validation-manifest.json>)\n- [Narrative supplement](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-37e3fa46fd7e2f7f/ours-codex-noseed-20260928T160850Z/work/narrative.md>)",
+  "strategy": "((\"Environmental Health\"[Mesh] OR \"Environmental Exposure\"[Mesh] OR \"Environmental Pollution\"[Mesh] OR \"environmental health\"[tiab] OR \"environmental medicine\"[tiab] OR \"environmental epidemiolog*\"[tiab] OR \"environmental toxicolog*\"[tiab] OR \"environmental health science*\"[tiab] OR \"environmental hazard*\"[tiab] OR \"environmental exposure*\"[tiab]) AND (\"Systematic Reviews as Topic\"[Mesh] OR \"Meta-Analysis as Topic\"[Mesh] OR \"Review Literature as Topic\"[Mesh] OR systematic review*[tiab] OR meta-analy*[tiab] OR \"evidence synthesis\"[tiab] OR \"research synthesis\"[tiab] OR umbrella review*[tiab] OR (overview*[tiab] AND review*[tiab]))) AND (\"1800/01/01\"[edat] : \"2020/07/20\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-07-20",
+  "count": 6351,
+  "gold_scored": 74,
+  "gold_reachable": 74,
+  "retrieved": 38,
+  "recall_percent": 51.4,
+  "missed": [
+    "30696940",
+    "30884495",
+    "31692109",
+    "31711095",
+    "31727405",
+    "31734383",
+    "31767045",
+    "31809833",
+    "31884209",
+    "31899558",
+    "31932956",
+    "32026567",
+    "32048436",
+    "32059156",
+    "32091510",
+    "32108942",
+    "32143119",
+    "32169997",
+    "32246781",
+    "32248699",
+    "32252671",
+    "32272785",
+    "32283742",
+    "32313524",
+    "32325560",
+    "32325616",
+    "32343457",
+    "32354630",
+    "32361950",
+    "32398147",
+    "32438096",
+    "32473798",
+    "32474653",
+    "32497902",
+    "32516633",
+    "32666031"
+  ],
+  "nnr": 167.1,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 38,
+  "unseen_recall_percent": 51.4,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "methodological_rigour",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}
