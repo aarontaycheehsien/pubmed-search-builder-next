@@ -1,0 +1,39 @@
+{
+  "topic": "Welling_2021",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T032151Z",
+  "scored": "20260928T040132Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2381
+  },
+  "final_message": "ical Well-Being[Mesh] OR Quality of Life[Mesh] OR Personal Satisfaction[Mesh] OR Social Isolation[Mesh] OR Stress, Psychological[Mesh] OR Anxiety[Mesh] OR Depression[Mesh] OR Life Style[tiab] OR Lifestyle[tiab] OR lifestyle*[tiab] OR behavior*[tiab] OR behaviour*[tiab] OR Health Behavior[tiab] OR Health Behaviour[tiab] OR health behaviors[tiab] OR health behaviours[tiab] OR Physical Activity[tiab] OR Physical Activities[tiab] OR Exercise[tiab] OR Sedentary[tiab] OR Inactive[tiab] OR Inactivity[tiab] OR Diet[tiab] OR Dietary[tiab] OR Nutrition[tiab] OR Eating[tiab] OR Food intake[tiab] OR Sleep[tiab] OR Sleeping[tiab] OR Insomnia[tiab] OR Alcohol[tiab] OR Drinking[tiab] OR Smoking[tiab] OR Tobacco[tiab] OR Substance Use[tiab] OR Wellbeing[tiab] OR Well-being[tiab] OR Well being[tiab] OR Wellness[tiab] OR Mental Health[tiab] OR Psychological[tiab] OR Emotional[tiab] OR Quality of Life[tiab] OR Life Satisfaction[tiab] OR Personal Satisfaction[tiab] OR Social Isolation[tiab] OR Social Participation[tiab] OR Social Activity[tiab] OR Anxiety[tiab] OR Depression[tiab] OR Distress[tiab] OR Stress[tiab] OR Loneliness[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])\n```\n\nThe COVID block returned **77,808** records, the broad outcomes block **4,935,217**, and the combined strategy **13,793**. Counts were run on 2026-09-28 with the required Entrez-date cutoff through 2020-11-22; no publication-date limit was used. Individual line counts are in the audit.\n\nRelative recall was **11/11 (100%)** on the development set and **4/4 (100%)** on the held-out set. These 15 records came from discovery and cited-reference screening; the held-out set is small and semi-independent, so these figures do not establish absolute sensitivity. One verified MeSH heading, `Psychological Well-Being[Mesh]`, returned zero records under the cutoff and is documented in the audit as a retained OR alternative.\n\nThis is a draft strategy and needs PRESS peer review by an information specialist before use.",
+  "strategy": "((COVID-19[Mesh] OR SARS-CoV-2[Mesh] OR COVID-19[tiab] OR COVID19[tiab] OR COVID[tiab] OR SARS-CoV-2[tiab] OR SARS CoV 2[tiab] OR 2019-nCoV[tiab] OR 2019 nCoV[tiab] OR \"coronavirus disease 2019\"[tiab:~2] OR \"2019 novel coronavirus\"[tiab:~2] OR \"novel coronavirus 2019\"[tiab:~2]) AND (Life Style[Mesh] OR Healthy Lifestyle[Mesh] OR Health Behavior[Mesh] OR Health Risk Behaviors[Mesh] OR Exercise[Mesh] OR Motor Activity[Mesh] OR Sedentary Behavior[Mesh] OR Diet[Mesh] OR Feeding Behavior[Mesh] OR Sleep[Mesh] OR Mental Health[Mesh] OR Psychological Well-Being[Mesh] OR Quality of Life[Mesh] OR Personal Satisfaction[Mesh] OR Social Isolation[Mesh] OR Stress, Psychological[Mesh] OR Anxiety[Mesh] OR Depression[Mesh] OR Life Style[tiab] OR Lifestyle[tiab] OR lifestyle*[tiab] OR behavior*[tiab] OR behaviour*[tiab] OR Health Behavior[tiab] OR Health Behaviour[tiab] OR health behaviors[tiab] OR health behaviours[tiab] OR Physical Activity[tiab] OR Physical Activities[tiab] OR Exercise[tiab] OR Sedentary[tiab] OR Inactive[tiab] OR Inactivity[tiab] OR Diet[tiab] OR Dietary[tiab] OR Nutrition[tiab] OR Eating[tiab] OR Food intake[tiab] OR Sleep[tiab] OR Sleeping[tiab] OR Insomnia[tiab] OR Alcohol[tiab] OR Drinking[tiab] OR Smoking[tiab] OR Tobacco[tiab] OR Substance Use[tiab] OR Wellbeing[tiab] OR Well-being[tiab] OR Well being[tiab] OR Wellness[tiab] OR Mental Health[tiab] OR Psychological[tiab] OR Emotional[tiab] OR Quality of Life[tiab] OR Life Satisfaction[tiab] OR Personal Satisfaction[tiab] OR Social Isolation[tiab] OR Social Participation[tiab] OR Social Activity[tiab] OR Anxiety[tiab] OR Depression[tiab] OR Distress[tiab] OR Stress[tiab] OR Loneliness[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-11-22",
+  "count": 13793,
+  "gold_scored": 53,
+  "gold_reachable": 53,
+  "retrieved": 48,
+  "recall_percent": 90.6,
+  "missed": [
+    "32227671",
+    "32242089",
+    "32640077",
+    "33105275",
+    "33181369"
+  ],
+  "nnr": 287.4,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 47,
+  "unseen_recall_percent": 90.4,
+  "leakage": [],
+  "valid": true
+}

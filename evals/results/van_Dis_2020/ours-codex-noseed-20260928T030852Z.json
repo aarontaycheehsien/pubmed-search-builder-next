@@ -1,0 +1,38 @@
+{
+  "topic": "van_Dis_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T030852Z",
+  "scored": "20260928T032134Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 762
+  },
+  "final_message": "tiab] OR PTSD[tiab] OR posttraumatic stress disorder*[tiab] OR post-traumatic stress disorder*[tiab] OR post traumatic stress disorder*[tiab] OR stress disorder* post-traumatic[tiab]) AND (Cognitive Behavioral Therapy[Mesh] OR Behavior Therapy[Mesh] OR cognitive behavio* therap*[tiab] OR cognitive behavio* treatment*[tiab] OR cognitive behavio* intervention*[tiab] OR cognitive behavio* psychotherap*[tiab] OR cognitive therap*[tiab] OR cognitive psychotherap*[tiab] OR CBT[tiab] OR exposure-based CBT[tiab] OR exposure based CBT[tiab] OR cognitive restructuring[tiab] OR exposure therap*[tiab] OR \"exposure and response prevention\"[tiab] OR exposure-response prevention[tiab] OR response prevention[tiab])) AND (\"1800/01/01\"[edat] : \"2017/08/24\"[edat])\n```\n\nThe final search returned **16,407 records**. The audit contains the full numbered strategy with counts: the anxiety block returned 232,134; the CBT block returned 74,766; the combined search returned 16,407.\n\nNo user-supplied articles were available. Relative recall was **8/8 (100%)** against a small benchmark of studies screened from prior reviews; this is not an estimate of absolute sensitivity. I assumed “long-term” means follow-up at least six months after treatment. OCD and trauma-related studies were searched broadly, with their fit left to screening.\n\nFiles: [final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-62327eccbc31903b/ours-codex-noseed-20260928T030852Z/work/final-query.txt), [audit with line counts](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-62327eccbc31903b/ours-codex-noseed-20260928T030852Z/work/audit.md), [validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-62327eccbc31903b/ours-codex-noseed-20260928T030852Z/work/validation-manifest.json), and [assumptions and rationale](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-62327eccbc31903b/ours-codex-noseed-20260928T030852Z/work/narrative.md).\n\nThis draft still needs PRESS peer review by an information specialist before use.",
+  "strategy": "((Anxiety Disorders[Mesh] OR Obsessive-Compulsive Disorder[Mesh] OR Stress Disorders, Post-Traumatic[Mesh] OR anxiety[tiab] OR anxious[tiab] OR anxiety disorder*[tiab] OR anxiety-related[tiab] OR anxiety related[tiab] OR generalized anxiety[tiab] OR generalised anxiety[tiab] OR panic disorder*[tiab] OR panic attack*[tiab] OR agoraphobia[tiab] OR social phobia[tiab] OR social anxi*[tiab] OR specific phobia*[tiab] OR simple phobia*[tiab] OR separation anxi*[tiab] OR obsessive-compulsive disorder*[tiab] OR obsessive compulsive disorder*[tiab] OR OCD[tiab] OR PTSD[tiab] OR posttraumatic stress disorder*[tiab] OR post-traumatic stress disorder*[tiab] OR post traumatic stress disorder*[tiab] OR stress disorder* post-traumatic[tiab]) AND (Cognitive Behavioral Therapy[Mesh] OR Behavior Therapy[Mesh] OR cognitive behavio* therap*[tiab] OR cognitive behavio* treatment*[tiab] OR cognitive behavio* intervention*[tiab] OR cognitive behavio* psychotherap*[tiab] OR cognitive therap*[tiab] OR cognitive psychotherap*[tiab] OR CBT[tiab] OR exposure-based CBT[tiab] OR exposure based CBT[tiab] OR cognitive restructuring[tiab] OR exposure therap*[tiab] OR \"exposure and response prevention\"[tiab] OR exposure-response prevention[tiab] OR response prevention[tiab])) AND (\"1800/01/01\"[edat] : \"2017/08/24\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-08-24",
+  "count": 16407,
+  "gold_scored": 61,
+  "gold_reachable": 61,
+  "retrieved": 57,
+  "recall_percent": 93.4,
+  "missed": [
+    "10838679",
+    "10883554",
+    "21644186",
+    "27459503"
+  ],
+  "nnr": 287.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 57,
+  "unseen_recall_percent": 93.4,
+  "leakage": [],
+  "valid": true
+}
