@@ -1,0 +1,28 @@
+{
+  "id": "housing-first-criminal-justice",
+  "suite": "frozen",
+  "question": "Among people experiencing homelessness and serious mental illness, what are the effects of Housing First on criminal justice outcomes?",
+  "eligibility": [
+    "Homeless or precariously housed people with mental illness.",
+    "Housing First intervention.",
+    "Reports criminal justice outcomes.",
+    "Randomized and non-randomized comparative studies included by the review."
+  ],
+  "as_of": "2018-08-01",
+  "as_of_source": "Review search cutoff: July 2018; set to the first day after the reported month.",
+  "seeds": [
+    "21829324",
+    "25734732",
+    "26438288"
+  ],
+  "gold_pmids": [
+    "21829324",
+    "25734732",
+    "26438288",
+    "26620289",
+    "27247176"
+  ],
+  "source": "Aubry et al. 2019, The impact of Housing First on criminal justice outcomes. PMID 30612450; PMCID PMC6659163. https://pmc.ncbi.nlm.nih.gov/articles/PMC6659163/",
+  "naive_blocks": null,
+  "notes": "All 5 included table records resolved to PubMed PMIDs."
+}

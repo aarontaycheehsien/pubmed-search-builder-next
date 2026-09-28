@@ -1,0 +1,29 @@
+{
+  "id": "school-restorative-practice",
+  "suite": "frozen",
+  "question": "What effects do restorative justice and restorative practices have in school settings?",
+  "eligibility": [
+    "School-aged students and school settings.",
+    "Restorative justice or restorative practices.",
+    "Empirical designs represented in Table A2, including evaluations and implementation studies.",
+    "Gold is restricted to studies with PubMed records."
+  ],
+  "as_of": "2020-06-03",
+  "as_of_source": "Day after latest Entrez date among included PubMed records (lower bound; source review covered literature through 2021).",
+  "seeds": [
+    "20639403",
+    "25269491",
+    "28545574"
+  ],
+  "gold_pmids": [
+    "20639403",
+    "25269491",
+    "28545574",
+    "30473366",
+    "30900083",
+    "32479366"
+  ],
+  "source": "Graziano et al. 2022, Use of restorative justice and restorative practices at school: a systematic literature review. PMID 35010355; PMCID PMC8751228. https://pmc.ncbi.nlm.nih.gov/articles/PMC8751228/",
+  "naive_blocks": null,
+  "notes": "Gold contains 6 PubMed-indexed records among 34 included-study table entries; non-indexed records are outside this PubMed-retrieval fixture."
+}

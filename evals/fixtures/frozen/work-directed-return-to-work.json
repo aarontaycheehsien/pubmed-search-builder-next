@@ -1,0 +1,34 @@
+{
+  "id": "work-directed-return-to-work",
+  "suite": "frozen",
+  "question": "For working-age adults on sick leave due to common mental disorders, how do work-directed interventions affect return to work and related outcomes?",
+  "eligibility": [
+    "Working-age adults (18-64) on sick leave because of mild to moderate depression, anxiety, adjustment disorders, or reactions to severe stress.",
+    "Interventions involving the workplace or employer representative.",
+    "Comparator may be absent, usual care, or another intervention.",
+    "Outcomes include return to work, sick-leave days, or income."
+  ],
+  "as_of": "2021-12-18",
+  "as_of_source": "Day after latest Entrez date among included PubMed records (lower bound; source review covered records published 2015-2021).",
+  "seeds": [
+    "26251065",
+    "27571387",
+    "27723546"
+  ],
+  "gold_pmids": [
+    "26251065",
+    "27571387",
+    "27723546",
+    "28546319",
+    "28650513",
+    "28756415",
+    "28830555",
+    "28956942",
+    "30032103",
+    "31691305",
+    "34916330"
+  ],
+  "source": "Fisker et al. 2024, Effects of work-directed interventions on return-to-work in people on sick-leave for common mental disorders. PMID 38710801; PMCID PMC11245426. https://pmc.ncbi.nlm.nih.gov/articles/PMC11245426/",
+  "naive_blocks": null,
+  "notes": "All 11 included articles (8 RCTs) resolved to PubMed PMIDs."
+}
