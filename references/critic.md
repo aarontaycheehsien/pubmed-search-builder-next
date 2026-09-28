@@ -70,5 +70,7 @@ When the revision rounds are used, `psb critic packet` issues a closing round (`
 Its reviewer verifies how each earlier finding was handled in the current strategy: resolved,
 rejected or accepted-risk with a response, or still open with the domain at `revise`. It may not
 raise a new `must-fix` or `should-fix` finding (`psb critic check` rejects one); a new concern is
-recorded as `document`. A closing round must be the last round. If it still asks for revision,
-deliver the diagnostic handoff. Historical unbound rounds remain readable but do not authorize delivery.
+recorded as `document`. A closing round must be the last round. After it, only an open `must-fix`
+finding blocks delivery: an open `should-fix` finding is delivered as a documented open concern
+(list it in `narrative.md` for the peer reviewer). If a `must-fix` finding stays open, deliver the
+diagnostic handoff. Historical unbound rounds remain readable but do not authorize delivery.

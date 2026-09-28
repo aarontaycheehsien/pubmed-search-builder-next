@@ -121,3 +121,13 @@ def test_every_searched_concept_must_declare_whether_it_is_a_category(make_ws):
     write_json(ws.root / "protocol.json", protocol)
     issues = {i["code"]: i for i in evaluate(ws)["validation"]["issues"]}
     assert issues["category_undeclared"]["blocking"] and issues["category_undeclared"]["location"] == "concept:reviews"
+
+
+def test_stale_probe_after_the_budget_is_a_review_item_not_a_dead_end(make_ws):
+    ws = build(make_ws)
+    for _ in range(2):
+        probe.draw_probe(ws, "env", "exposure*[tiab]", n=30)
+        probe.record_probe(ws, "env", [])
+    write_json(ws.root / "strategy.json", {"blocks": [SR, {**ENV, "terms": ["pollut*[tiab]"]}]})
+    issues = {i["code"]: i for i in evaluate(ws)["validation"]["issues"]}
+    assert issues["category_probe_stale_budget_spent"]["requires_review"] and "category_probe_stale" not in issues

@@ -165,7 +165,12 @@ def issues(rows: list[dict], protocol: dict) -> list[dict]:
                 location=f"concept:{concept.get('id')}"))
     for row in rows:
         location = f"concept:{row['concept']}"
-        if row["status"] in {"unprobed", "stale"}:
+        if row["status"] == "stale" and row["probes"] >= row["budget"]:
+            # A late edit made the last probe stale and no probe is left: the critic weighs it.
+            found.append(validation.issue("category_probe_stale_budget_spent",
+                                          "The block changed after the last probe and the probe budget is spent",
+                                          severity="warning", location=location))
+        elif row["status"] in {"unprobed", "stale"}:
             found.append(validation.issue(
                 "category_unprobed" if row["status"] == "unprobed" else "category_probe_stale",
                 "Category concept needs a screened probe on its current block (psb probe draw / record)", location=location))

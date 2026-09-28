@@ -1,0 +1,57 @@
+{
+  "topic": "Menon_2022",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T190238Z",
+  "scored": "20260928T194836Z",
+  "skill": {
+    "name": "ours",
+    "hash": "a5c4bf62c51db6f93af067498e42cd657b7b25fa411013497d2740095c441845",
+    "commit": "a1282c4a575759a085a9f85a902073d32a2c977f",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "a1282c4a575759a085a9f85a902073d32a2c977f",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2758
+  },
+  "final_message": "The search build is **unfinished**. The skill’s closing critic left finding R1-4 open and marked translation for revision, so `report --diagnostic` did not issue a protected final query. I did not substitute a hand-written query.\n\nThe diagnostic audit records a count of **4,402** under the PubMed entry-date snapshot through 2020-07-20. The three known relevant records are all development records; their retrieval does not establish independent sensitivity. No `[dp]` publication-date cutoff was used.\n\nThe diagnostic audit is at [diagnostic-audit.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-37e3fa46fd7e2f7f/ours-codex-noseed-20260928T190238Z/work/diagnostic-audit.md), and the limitation is recorded in [narrative.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-37e3fa46fd7e2f7f/ours-codex-noseed-20260928T190238Z/work/narrative.md). The critic’s unresolved finding is in [round-3.json](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-37e3fa46fd7e2f7f/ours-codex-noseed-20260928T190238Z/work/critic/round-3.json). No protected `final-query.txt`, `audit.md`, or validation manifest was generated.",
+  "error": "no current protected delivery",
+  "unfinished": {
+    "blockers": [
+      "critic_open",
+      "critic_revise"
+    ],
+    "count": 4402,
+    "gold_reachable": 74,
+    "retrieved": 24,
+    "recall_percent": 32.4
+  },
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "environmental_health",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "no-delivery",
+  "valid": false,
+  "split": "dev"
+}

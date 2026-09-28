@@ -107,7 +107,10 @@ another AND-ed block restricts them; check the final count, not the line count.
 
 A concept is a category when relevant records often name one of its members and never the
 category: "chronic conditions" (type 1 diabetes, asthma, epilepsy), "psychotropic drugs"
-(sertraline, lithium), "complementary therapies" (acupuncture, yoga), "vulnerable groups". A block of the
+(sertraline, lithium), "complementary therapies" (acupuncture, yoga), "vulnerable groups".
+Only topic concepts are categories: a condition, exposure, intervention, population or setting.
+A report type (systematic reviews, trials) or a method is not; probing one spends the budget on
+records its own filter already handles. A block of the
 category's own words misses them, and its seeds rarely show it, because the records you find
 first are the ones that use the category's words.
 

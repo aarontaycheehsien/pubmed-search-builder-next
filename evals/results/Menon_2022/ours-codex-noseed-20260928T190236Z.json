@@ -1,0 +1,63 @@
+{
+  "topic": "Menon_2022",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T190236Z",
+  "scored": "20260928T200450Z",
+  "skill": {
+    "name": "ours",
+    "hash": "a5c4bf62c51db6f93af067498e42cd657b7b25fa411013497d2740095c441845",
+    "commit": "a1282c4a575759a085a9f85a902073d32a2c977f",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "a1282c4a575759a085a9f85a902073d32a2c977f",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 3733
+  },
+  "final_message": "## Unfinished: no final query\n\nThe skill’s report found a blocking validation issue: the `systematic_reviews` category probe became stale after the environmental block changed, and the two-probe standard-depth budget was exhausted. The closing critic confirmed that another probe was refused. I left the search unfinished and did not hand-author a substitute query.\n\nThe final evaluation retrieved both identified relevant development records (2/2) and returned 4,495 records at the **2020-07-20 Entrez-date cutoff**. That is development-set retrieval, not independent validation.\n\nThe diagnostic and build notes are in [diagnostic-audit.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-37e3fa46fd7e2f7f/ours-codex-noseed-20260928T190236Z/work/diagnostic-audit.md) and [narrative.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-37e3fa46fd7e2f7f/ours-codex-noseed-20260928T190236Z/work/narrative.md). No protected final query or validation manifest was generated.",
+  "error": "no current protected delivery",
+  "unfinished": {
+    "blockers": [
+      "category_probe_stale",
+      "critic_open"
+    ],
+    "count": 4495,
+    "gold_reachable": 74,
+    "retrieved": 18,
+    "recall_percent": 24.3
+  },
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "environmental_health",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "methodological_rigour",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "no-delivery",
+  "valid": false,
+  "split": "dev"
+}

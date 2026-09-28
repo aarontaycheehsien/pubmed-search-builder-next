@@ -1,6 +1,6 @@
 # Evaluation results
 
-Generated 20260928T190226Z by `python evals/run.py report`.
+Generated 20260928T200622Z by `python evals/run.py report`.
 
 Recall is over gold records in PubMed on or before `as_of`; in the seeded condition the three seeds are excluded. `unseen` recall leaves out gold records the agent itself screened into its sets. NNR is total results divided by gold retrieved: a workload proxy, not precision. Generated rows show the mean (min-max) over `ok` runs.
 
@@ -34,7 +34,7 @@ Skill changes may be motivated only by these topics.
 | Medeiros-2022-School-based food and nutr | naive | seeded | baseline | 1/1 | 16.7 | n/a | 767 | 767.0 | n/a |
 | Medeiros-2022-School-based food and nutr | reference | noseed | baseline | 1/1 | 88.9 | n/a | 24320 | 3040.0 | n/a |
 | Medeiros-2022-School-based food and nutr | reference | seeded | baseline | 1/1 | 83.3 | n/a | 24320 | 4864.0 | n/a |
-| Menon_2022 | generated:ours (codex) | noseed | a5a5d9f84b | 1/1 † | 66.2 | 63.8 | 5267 | 107.5 | n/a |
+| Menon_2022 | generated:ours (codex) | noseed | a5c4bf62c5 | 1/3 † | 56.8 | 56.2 | 5600 | 133.3 | n/a |
 | Muthu_2022 | generated:quota-check (codex) | noseed | legacy | 0/1 † | n/a | n/a | n/a | n/a | n/a |
 | Muthu_2022 | naive | noseed | baseline | 1/1 | 100.0 | n/a | 505 | 84.2 | n/a |
 | Smid_2020 | naive | noseed | baseline | 1/1 | 78.6 | n/a | 1369 | 124.5 | n/a |

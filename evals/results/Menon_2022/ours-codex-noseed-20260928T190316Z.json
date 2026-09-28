@@ -1,0 +1,100 @@
+{
+  "topic": "Menon_2022",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T190316Z",
+  "scored": "20260928T193317Z",
+  "skill": {
+    "name": "ours",
+    "hash": "a5c4bf62c51db6f93af067498e42cd657b7b25fa411013497d2740095c441845",
+    "commit": "94c3060c0510b9cae878cad02379cf42081c3234",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "94c3060c0510b9cae878cad02379cf42081c3234",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1800
+  },
+  "final_message": "ogy[tiab] OR built environment[tiab] OR activity space*[tiab] OR environmental determinant*[tiab])) AND (\"1800/01/01\"[edat] : \"2020/07/20\"[edat])\n```\n\nThe final count was **5,600**. The audit contains counts for every numbered search line and both OR blocks: the review block returned **303,826** records, and the environmental-health block returned **495,964**.\n\nThe cutoff is an Entrez entry-date bound through 2020-07-20. No publication-date, language, or other limits were applied.\n\n## Validation and assumptions\n\nAll **28/28** screened development records were retrieved. This is development relative recall, not independent validation; no user-supplied seeds, held-out validation set, or benchmark set were available. Overall recall was not estimated, so the strategy remains empirically unvalidated.\n\nI treated the review as assessing methods across a corpus of environmental-health systematic reviews. Methodological rigor terms were tested and left out because their requirement would lose relevant reviews that do not name rigor or quality in searchable metadata. The environmental-health category probe found one relevant review on activity spaces; I widened that block and screened a second probe with no additional relevant records.\n\nBoth PRESS-structured internal critic rounds passed without findings. **PRESS peer review by an information specialist is still needed before use.**\n\n## Files\n\n- [Generated query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-37e3fa46fd7e2f7f/ours-codex-noseed-20260928T190316Z/work/final-query.txt)\n- [Audit with line-by-line counts](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-37e3fa46fd7e2f7f/ours-codex-noseed-20260928T190316Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-37e3fa46fd7e2f7f/ours-codex-noseed-20260928T190316Z/work/validation-manifest.json)\n- [Supplementary narrative](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-37e3fa46fd7e2f7f/ours-codex-noseed-20260928T190316Z/work/narrative.md)",
+  "strategy": "((Systematic Reviews as Topic[Mesh] OR Review Literature as Topic[Mesh] OR Meta-Analysis[Mesh] OR Meta-Analysis as Topic[Mesh] OR systematic review[tiab] OR systematic reviews[tiab] OR systematic literature review[tiab] OR systematic literature reviews[tiab] OR umbrella review[tiab] OR umbrella reviews[tiab] OR overview of reviews[tiab] OR overviews of reviews[tiab] OR scoping review[tiab] OR scoping reviews[tiab] OR systematic map[tiab] OR systematic maps[tiab] OR systematic mapping[tiab] OR meta-analysis[tiab] OR meta-analyses[tiab] OR meta-analy*[tiab] OR evidence synthesis[tiab] OR evidence syntheses[tiab] OR research synthesis[tiab] OR research syntheses[tiab]) AND (Environment Design[Mesh] OR Environmental Health[Mesh] OR Environmental Exposure[Mesh] OR Occupational Health[Mesh] OR Air Pollution[Mesh] OR Water Pollution[Mesh] OR environmental health[tiab] OR environmental exposure[tiab] OR environmental exposures[tiab] OR environmental epidemiology[tiab] OR environmental toxicology[tiab] OR environmental health science*[tiab] OR exposure science[tiab] OR exposure sciences[tiab] OR environmental medicine[tiab] OR \"occupational and environmental health\"[tiab] OR occupational health[tiab] OR air pollution[tiab] OR water pollution[tiab] OR chemical exposure[tiab] OR chemical exposures[tiab] OR environmental contaminant*[tiab] OR environmental pollutant*[tiab] OR environmental hazard*[tiab] OR pesticide exposure[tiab] OR toxicology[tiab] OR built environment[tiab] OR activity space*[tiab] OR environmental determinant*[tiab])) AND (\"1800/01/01\"[edat] : \"2020/07/20\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-07-20",
+  "count": 5600,
+  "gold_scored": 74,
+  "gold_reachable": 74,
+  "retrieved": 42,
+  "recall_percent": 56.8,
+  "missed": [
+    "30696940",
+    "30884495",
+    "31692109",
+    "31711095",
+    "31727405",
+    "31734383",
+    "31767045",
+    "31809833",
+    "31884209",
+    "31899558",
+    "31932956",
+    "32026567",
+    "32048436",
+    "32059156",
+    "32091510",
+    "32108942",
+    "32169997",
+    "32246781",
+    "32248699",
+    "32252671",
+    "32272785",
+    "32313524",
+    "32325560",
+    "32325616",
+    "32343457",
+    "32354630",
+    "32361950",
+    "32438096",
+    "32473798",
+    "32474653",
+    "32516633",
+    "32666031"
+  ],
+  "nnr": 133.3,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 41,
+  "unseen_recall_percent": 56.2,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 2,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "methodological_rigour",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 11
+      },
+      {
+        "id": "environmental_health",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}
