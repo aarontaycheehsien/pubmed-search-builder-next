@@ -90,3 +90,12 @@ def test_log_write_is_one_os_level_call(tmp_path, monkeypatch):
     monkeypatch.setattr(os, "write", lambda fd, data: calls.append(data) or real_write(fd, data))
     ws.log({"type": "command", "argv": ["x"]})
     assert len(calls) == 1
+
+
+def test_read_json_accepts_a_byte_order_mark(tmp_path):
+    # Windows PowerShell's Out-File/Set-Content write UTF-8 with a BOM; an agent saving a critic
+    # round that way must not turn a passing report into finalization_failed.
+    from psb.workspace import read_json
+    path = tmp_path / "round-1.json"
+    path.write_bytes(b"\xef\xbb\xbf" + b'{"round": 1}')
+    assert read_json(path) == {"round": 1}

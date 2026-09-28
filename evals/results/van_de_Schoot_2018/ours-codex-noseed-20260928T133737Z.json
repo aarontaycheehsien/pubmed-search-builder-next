@@ -1,0 +1,73 @@
+{
+  "topic": "van_de_Schoot_2018",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T133737Z",
+  "scored": "20260928T142552Z",
+  "skill": {
+    "name": "ours",
+    "hash": "05cb87e61fe7ba360ec3cc7eac265374ead3c97befff272c330ff14c12ae7409",
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2894
+  },
+  "final_message": "st traumatic stress symptom*\"[tiab] OR \"posttraumatic stress symptom*\"[tiab]) AND (\"Longitudinal Studies\"[Mesh] OR \"Follow-Up Studies\"[Mesh] OR \"Disease Progression\"[Mesh] OR \"Time Factors\"[Mesh] OR trajectory[tiab] OR trajectories[tiab] OR longitudinal[tiab] OR course[tiab] OR courses[tiab] OR \"natural course\"[tiab] OR \"natural history\"[tiab] OR \"follow-up\"[tiab] OR followup[tiab] OR \"follow up\"[tiab] OR \"symptom trajectory\"[tiab:~2] OR \"symptom course\"[tiab:~2] OR \"change over time\"[tiab:~2] OR recovery[tiab] OR remission[tiab] OR chronicity[tiab] OR persistence[tiab] OR \"delayed onset\"[tiab:~2] OR change*[tiab] OR evolution[tiab] OR improvement[tiab] OR worsen*[tiab] OR decrease*[tiab] OR pattern[tiab] OR patterns[tiab] OR decreasing[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])\n```\n\nThe search returned **11,779 records** using the Entrez-date cutoff of January 24, 2016; it has no publication-date limit. It retrieved all **14/14 development** and **4/4 held-out** records. That is relative recall against a small, internally assembled set, not an estimate of sensitivity across the literature.\n\nI tested a traumatic-event block, but requiring it would lose a held-out record and three relevant records, so it was left out. The final count exceeds the 10,000-record workload budget; that trade-off is documented in the audit.\n\nThe protected query, audit, and validation manifest are in [`work`](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20260928T133737Z/work): [final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20260928T133737Z/work/final-query.txt), [audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20260928T133737Z/work/audit.md), and [assumptions and search narrative](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20260928T133737Z/work/narrative.md). The audit marks external PRESS peer review as pending.",
+  "strategy": "((\"Stress Disorders, Post-Traumatic\"[Mesh] OR PTSD[tiab] OR \"post-traumatic stress disorder\"[tiab] OR \"post traumatic stress disorder\"[tiab] OR \"posttraumatic stress disorder\"[tiab] OR \"post-traumatic stress\"[tiab] OR \"post traumatic stress\"[tiab] OR \"posttraumatic stress\"[tiab] OR \"post-traumatic stress symptom*\"[tiab] OR \"post traumatic stress symptom*\"[tiab] OR \"posttraumatic stress symptom*\"[tiab]) AND (\"Longitudinal Studies\"[Mesh] OR \"Follow-Up Studies\"[Mesh] OR \"Disease Progression\"[Mesh] OR \"Time Factors\"[Mesh] OR trajectory[tiab] OR trajectories[tiab] OR longitudinal[tiab] OR course[tiab] OR courses[tiab] OR \"natural course\"[tiab] OR \"natural history\"[tiab] OR \"follow-up\"[tiab] OR followup[tiab] OR \"follow up\"[tiab] OR \"symptom trajectory\"[tiab:~2] OR \"symptom course\"[tiab:~2] OR \"change over time\"[tiab:~2] OR recovery[tiab] OR remission[tiab] OR chronicity[tiab] OR persistence[tiab] OR \"delayed onset\"[tiab:~2] OR change*[tiab] OR evolution[tiab] OR improvement[tiab] OR worsen*[tiab] OR decrease*[tiab] OR pattern[tiab] OR patterns[tiab] OR decreasing[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2016-01-24",
+  "count": 11779,
+  "gold_scored": 38,
+  "gold_reachable": 38,
+  "retrieved": 34,
+  "recall_percent": 89.5,
+  "missed": [
+    "20061839",
+    "20836603",
+    "25461873",
+    "26412244"
+  ],
+  "nnr": 346.4,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 33,
+  "unseen_recall_percent": 89.2,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "screen": 1,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "trajectory",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "trauma",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 3
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

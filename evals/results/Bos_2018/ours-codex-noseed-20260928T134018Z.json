@@ -1,0 +1,68 @@
+{
+  "topic": "Bos_2018",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T134018Z",
+  "scored": "20260928T141402Z",
+  "skill": {
+    "name": "ours",
+    "hash": "05cb87e61fe7ba360ec3cc7eac265374ead3c97befff272c330ff14c12ae7409",
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2023
+  },
+  "final_message": "itive impairment\"[tiab] OR \"neurocognitive decline\"[tiab] OR \"neurocognitive disorder\"[tiab] OR \"cognitive test\"[tiab] OR \"cognitive tests\"[tiab] OR \"cognitive testing\"[tiab] OR \"neuropsychological test\"[tiab] OR \"neuropsychological tests\"[tiab]) AND (\"Cohort Studies\"[Mesh] OR \"Longitudinal Studies\"[Mesh] OR \"Prospective Studies\"[Mesh] OR \"community-based\"[tiab] OR \"community based\"[tiab] OR \"community-dwelling\"[tiab] OR \"community dwelling\"[tiab] OR \"population-based\"[tiab] OR \"population based\"[tiab] OR \"population-based study\"[tiab] OR \"general population\"[tiab] OR \"population cohort\"[tiab] OR \"community cohort\"[tiab] OR \"community cohorts\"[tiab] OR \"population cohorts\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/05/06\"[edat])\n```\n\nThe search combines CSVD and MRI-marker terms with dementia/cognitive outcomes and cohort, longitudinal, prospective, and population/community terms. The 90-line audit records the individual term counts and block totals. Optional-block checks retained all five benchmark records when the outcome and population blocks were added.\n\nThat **5/5 is relative recall against a small benchmark**, not a sensitivity estimate. The benchmark came from a related white matter hyperintensity review; independent validation was not available. Human PRESS review remains pending. Broad terms such as `injur*[tiab]` are included for recall and may add noise.\n\n## Files\n\n- [Final PubMed query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-535fe3dc7ca88971/ours-codex-noseed-20260928T134018Z/work/final-query.txt)\n- [Audit with term-by-term counts and assumptions](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-535fe3dc7ca88971/ours-codex-noseed-20260928T134018Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-535fe3dc7ca88971/ours-codex-noseed-20260928T134018Z/work/validation-manifest.json)\n- [Narrative notes](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-535fe3dc7ca88971/ours-codex-noseed-20260928T134018Z/work/narrative.md)",
+  "strategy": "((\"Cerebral Small Vessel Diseases\"[Mesh] OR \"Cerebrovascular Disorders\"[Mesh] OR \"Leukoaraiosis\"[Mesh] OR \"Stroke, Lacunar\"[Mesh] OR \"Cerebral Infarction\"[Mesh] OR \"Cerebral Hemorrhage\"[Mesh] OR \"cerebral small vessel disease\"[tiab] OR \"cerebral small vessel diseases\"[tiab] OR \"small vessel disease\"[tiab] OR \"small vessel diseases\"[tiab] OR \"small vessel ischemic disease\"[tiab] OR \"small vessel ischaemic disease\"[tiab] OR microangiopath*[tiab] OR \"subcortical ischemic vascular disease\"[tiab] OR \"subcortical ischaemic vascular disease\"[tiab] OR Binswanger*[tiab] OR leukoaraiosis[tiab] OR leukoencephalopath*[tiab] OR \"white matter hyperintens*\"[tiab] OR hyperintens*[tiab] OR \"white matter lesion*\"[tiab] OR \"white matter change*\"[tiab] OR \"white matter abnormalit*\"[tiab] OR \"white matter disease\"[tiab] OR \"white matter diseases\"[tiab] OR \"silent brain infarct*\"[tiab] OR \"silent cerebral infarct*\"[tiab] OR \"asymptomatic brain infarct*\"[tiab] OR \"asymptomatic cerebral infarct*\"[tiab] OR \"lacunar infarct*\"[tiab] OR lacune*[tiab] OR \"cerebral microbleed*\"[tiab] OR \"brain microbleed*\"[tiab] OR \"cerebral microhemorrhag*\"[tiab] OR \"cerebral microhaemorrhag*\"[tiab] OR \"vascular brain injur*\"[tiab] OR injur*[tiab] OR \"vascular brain lesion*\"[tiab] OR \"cerebral small vessel\"[tiab:~2]) AND (\"Dementia\"[Mesh] OR \"Alzheimer Disease\"[Mesh] OR \"Cognitive Dysfunction\"[Mesh] OR \"Cognition Disorders\"[Mesh] OR \"Neuropsychological Tests\"[Mesh] OR dementia[tiab] OR dementias[tiab] OR \"Alzheimer disease\"[tiab] OR \"Alzheimer's disease\"[tiab] OR \"Alzheimer dementia\"[tiab] OR \"vascular dementia\"[tiab] OR \"cognitive decline\"[tiab] OR \"cognitive deterioration\"[tiab] OR \"cognitive impairment\"[tiab] OR \"cognitive dysfunction\"[tiab] OR \"cognitive disorder\"[tiab] OR \"cognitive disorders\"[tiab] OR \"cognitive function\"[tiab] OR \"cognitive functioning\"[tiab] OR \"cognitive performance\"[tiab] OR \"cognitive change\"[tiab] OR \"cognitive changes\"[tiab] OR \"cognitive trajectory\"[tiab] OR \"cognitive trajectories\"[tiab] OR \"mild cognitive impairment\"[tiab] OR \"neurocognitive decline\"[tiab] OR \"neurocognitive disorder\"[tiab] OR \"cognitive test\"[tiab] OR \"cognitive tests\"[tiab] OR \"cognitive testing\"[tiab] OR \"neuropsychological test\"[tiab] OR \"neuropsychological tests\"[tiab]) AND (\"Cohort Studies\"[Mesh] OR \"Longitudinal Studies\"[Mesh] OR \"Prospective Studies\"[Mesh] OR \"community-based\"[tiab] OR \"community based\"[tiab] OR \"community-dwelling\"[tiab] OR \"community dwelling\"[tiab] OR \"population-based\"[tiab] OR \"population based\"[tiab] OR \"population-based study\"[tiab] OR \"general population\"[tiab] OR \"population cohort\"[tiab] OR \"community cohort\"[tiab] OR \"community cohorts\"[tiab] OR \"population cohorts\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/05/06\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-05-06",
+  "count": 8199,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 9,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 911.0,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 8,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "screen": 1,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "cognitive_outcomes",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "population",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

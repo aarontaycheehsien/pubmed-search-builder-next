@@ -1,0 +1,57 @@
+{
+  "topic": "Liu_2023_VR_nursing",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T134429Z",
+  "scored": "20260928T143130Z",
+  "skill": {
+    "name": "ours",
+    "hash": "05cb87e61fe7ba360ec3cc7eac265374ead3c97befff272c330ff14c12ae7409",
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2821
+  },
+  "final_message": "tiab] OR \"pre-licensure nursing\"[tiab] OR \"undergraduate nursing student*\"[tiab] OR \"postgraduate nursing student*\"[tiab] OR \"nursing education\"[tiab] OR \"undergraduate nursing\"[tiab] OR \"postgraduate nursing\"[tiab] OR \"graduate nursing\"[tiab]) AND (\"Virtual Reality\"[Mesh] OR \"Simulation Training\"[Mesh] OR \"Computer Simulation\"[Mesh] OR \"virtual reality\"[tiab] OR VR[tiab] OR \"immersive virtual reality\"[tiab] OR \"immersive simulation\"[tiab] OR \"virtual simulation\"[tiab] OR \"virtual simulations\"[tiab] OR \"virtual patient*\"[tiab] OR \"virtual environment*\"[tiab] OR \"virtual world*\"[tiab] OR \"virtual human*\"[tiab] OR \"computer-based simulation\"[tiab] OR \"computer-based simulations\"[tiab] OR \"computerized simulation\"[tiab] OR \"computerised simulation\"[tiab] OR \"screen-based simulation\"[tiab] OR \"screen based simulation\"[tiab] OR \"three-dimensional simulation\"[tiab] OR \"3D simulation\"[tiab])) AND (\"1800/01/01\"[edat] : \"2023/03/31\"[edat])\n```\n\n## Validation and scope\n\nThe strategy retrieved **all 14 unique screened relevant records** in the known-record sets: 100% relative recall for the development sets and for the three-record held-out validation set. The validation set was split from the pilot sample and repeatedly checked during evaluation, so it is **semi-independent**, not fully independent; this recall does not establish absolute sensitivity.\n\nThe outcomes block was tested and left out: it reduced retrieval by 25.9%, and none of its 30 sampled excluded records met the eligibility criteria. Comparator and controlled design were left for screening. I treated clinically oriented computer cases, screen-based simulations, and videodisc patient scenarios as potentially eligible virtual environments even when authors did not call them “VR.” That broad interpretation supports sensitivity but may add records for screening.\n\nThe protected report passed, and the internal critique closed its findings. **PRESS peer review by an information specialist is still needed before use.**",
+  "error": "no current protected delivery",
+  "unfinished": {
+    "blockers": [
+      "finalization_failed"
+    ],
+    "count": 2599,
+    "gold_reachable": 6,
+    "retrieved": 6,
+    "recall_percent": 100.0
+  },
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 2,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "learning_outcomes",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "no-delivery",
+  "valid": false,
+  "split": "dev"
+}

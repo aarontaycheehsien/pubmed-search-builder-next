@@ -1,0 +1,66 @@
+{
+  "topic": "van_de_Schoot_2018",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T132053Z",
+  "scored": "20260928T133736Z",
+  "skill": {
+    "name": "ours",
+    "hash": "05cb87e61fe7ba360ec3cc7eac265374ead3c97befff272c330ff14c12ae7409",
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1003
+  },
+  "final_message": " stress disorder\"[tiab] OR \"post traumatic stress disorder\"[tiab] OR \"post-traumatic stress\"[tiab] OR \"posttraumatic stress\"[tiab] OR \"post traumatic stress\"[tiab] OR \"post-traumatic neurosis\"[tiab] OR \"posttraumatic neurosis\"[tiab]) AND (\"Longitudinal Studies\"[Mesh] OR trajector*[tiab] OR longitudinal[tiab] OR follow-up[tiab] OR \"natural history\"[tiab] OR course[tiab] OR courses[tiab] OR \"symptom change\"[tiab] OR \"symptom changes\"[tiab] OR change[tiab] OR changes[tiab] OR \"symptom pattern\"[tiab] OR \"symptom patterns\"[tiab] OR pattern[tiab] OR patterns[tiab] OR chronicity[tiab] OR persistence[tiab] OR remission[tiab] OR recovery[tiab] OR remitting[tiab] OR \"over time\"[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])\n```\n\nThe trajectory/course block was AND-ed after testing: it reduced the count from 32,081 to 9,080; the refreshed loss sample had no clear eligible records among 30 screened, though one abstract remained uncertain. The four relevant studies found during the build were all retrieved (development relative recall **4/4**). This is not independent validation or absolute sensitivity; the draft remains empirically unvalidated beyond that development set.\n\nThe audit contains the line-by-line counts and critic findings. The generated files are intact:\n\n- [Final query](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20260928T132053Z/work/final-query.txt>)\n- [Audit](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20260928T132053Z/work/audit.md>)\n- [Validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20260928T132053Z/work/validation-manifest.json>)\n- [Assumptions and rationale](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20260928T132053Z/work/narrative.md>)\n\nThe search uses an Entrez-date cutoff, not a publication-date limit. It needs PRESS peer review by an information specialist before use.",
+  "strategy": "((\"Stress Disorders, Post-Traumatic\"[Mesh] OR PTSD[tiab] OR \"post-traumatic stress disorder\"[tiab] OR \"posttraumatic stress disorder\"[tiab] OR \"post traumatic stress disorder\"[tiab] OR \"post-traumatic stress\"[tiab] OR \"posttraumatic stress\"[tiab] OR \"post traumatic stress\"[tiab] OR \"post-traumatic neurosis\"[tiab] OR \"posttraumatic neurosis\"[tiab]) AND (\"Longitudinal Studies\"[Mesh] OR trajector*[tiab] OR longitudinal[tiab] OR follow-up[tiab] OR \"natural history\"[tiab] OR course[tiab] OR courses[tiab] OR \"symptom change\"[tiab] OR \"symptom changes\"[tiab] OR change[tiab] OR changes[tiab] OR \"symptom pattern\"[tiab] OR \"symptom patterns\"[tiab] OR pattern[tiab] OR patterns[tiab] OR chronicity[tiab] OR persistence[tiab] OR remission[tiab] OR recovery[tiab] OR remitting[tiab] OR \"over time\"[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2016-01-24",
+  "count": 9080,
+  "gold_scored": 38,
+  "gold_reachable": 38,
+  "retrieved": 35,
+  "recall_percent": 92.1,
+  "missed": [
+    "20061839",
+    "20836603",
+    "26412244"
+  ],
+  "nnr": 259.4,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 34,
+  "unseen_recall_percent": 91.9,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 1,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "trajectory",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

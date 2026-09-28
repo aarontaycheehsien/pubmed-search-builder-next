@@ -1,0 +1,100 @@
+{
+  "topic": "Menon_2022",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T144602Z",
+  "scored": "20260928T150154Z",
+  "skill": {
+    "name": "ours",
+    "hash": "05cb87e61fe7ba360ec3cc7eac265374ead3c97befff272c330ff14c12ae7409",
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 952
+  },
+  "final_message": "upational Health\"[Mesh] OR \"Toxicology\"[Mesh] OR \"environmental health\"[tiab] OR \"environmental medicine\"[tiab] OR \"environmental epidemiology\"[tiab] OR \"environmental exposure\"[tiab] OR \"environmental exposures\"[tiab] OR \"exposure science\"[tiab] OR \"exposure sciences\"[tiab] OR \"occupational health\"[tiab] OR \"occupational medicine\"[tiab] OR \"occupational exposure\"[tiab] OR \"occupational exposures\"[tiab] OR \"environmental toxicology\"[tiab] OR \"environmental and occupational\"[tiab])) AND (\"1800/01/01\"[edat] : \"2020/07/20\"[edat])\n```\n\nLine counts (PubMed, Entrez records through 2020-07-20):\n\n| Lines | Terms or combination | Count |\n|---|---|---:|\n| 1–6 | Systematic Reviews as Topic [Mesh]; `systematic[sb]`; systematic review phrase variants | 6,347; 165,969; 160,742; 30,250; 11,090; 505 |\n| 7–11 | Evidence synthesis; research synthesis; meta-analysis; umbrella review variants | 4,462; 540; 176,011; 410; 40 |\n| 12 | Systematic review block OR | 294,848 |\n| 13–16 | Environmental Health, Environmental Exposure, Occupational Health, Toxicology [Mesh] | 25,528; 309,210; 34,300; 33,562 |\n| 17–23 | Environmental health, medicine, epidemiology, exposure, and exposure-science terms | 9,584; 833; 721; 7,564; 6,391; 146; 19 |\n| 24–29 | Occupational health/medicine/exposure terms; environmental toxicology; environmental and occupational | 15,273; 3,906; 17,828; 4,329; 939; 1,418 |\n| 30 | Environmental-health context block OR | 420,548 |\n| 31 | Final AND combination | **4,184** |\n\nThe three screened development records were all retrieved: relative recall 3/3 (100%). This is not independent validation or an estimate of sensitivity; no seeds or independent benchmark set were available. The optional methods/quality block was left out after its 30-record loss sample contained no eligible records and it reduced retrieval by 26.2%.\n\nA fresh-context internal critic passed all six domains with no findings. **Human PRESS peer review by an information specialist is still needed before use.**",
+  "strategy": "((\"Systematic Reviews as Topic\"[Mesh] OR systematic[sb] OR \"systematic review\"[tiab] OR \"systematic reviews\"[tiab] OR \"systematic literature review\"[tiab] OR \"systematic literature reviews\"[tiab] OR \"evidence synthesis\"[tiab] OR \"research synthesis\"[tiab] OR meta-analy*[tiab] OR \"umbrella review\"[tiab] OR \"umbrella reviews\"[tiab]) AND (\"Environmental Health\"[Mesh] OR \"Environmental Exposure\"[Mesh] OR \"Occupational Health\"[Mesh] OR \"Toxicology\"[Mesh] OR \"environmental health\"[tiab] OR \"environmental medicine\"[tiab] OR \"environmental epidemiology\"[tiab] OR \"environmental exposure\"[tiab] OR \"environmental exposures\"[tiab] OR \"exposure science\"[tiab] OR \"exposure sciences\"[tiab] OR \"occupational health\"[tiab] OR \"occupational medicine\"[tiab] OR \"occupational exposure\"[tiab] OR \"occupational exposures\"[tiab] OR \"environmental toxicology\"[tiab] OR \"environmental and occupational\"[tiab])) AND (\"1800/01/01\"[edat] : \"2020/07/20\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-07-20",
+  "count": 4184,
+  "gold_scored": 74,
+  "gold_reachable": 74,
+  "retrieved": 36,
+  "recall_percent": 48.6,
+  "missed": [
+    "30696940",
+    "30884495",
+    "31692109",
+    "31711095",
+    "31727405",
+    "31734383",
+    "31761290",
+    "31767045",
+    "31809833",
+    "31884209",
+    "31899558",
+    "31932956",
+    "32026567",
+    "32044481",
+    "32048436",
+    "32059156",
+    "32091510",
+    "32108942",
+    "32143119",
+    "32246781",
+    "32248699",
+    "32252671",
+    "32272785",
+    "32283742",
+    "32313524",
+    "32325560",
+    "32325616",
+    "32343457",
+    "32354630",
+    "32361950",
+    "32387882",
+    "32398147",
+    "32438096",
+    "32446663",
+    "32473798",
+    "32497902",
+    "32516633",
+    "32666031"
+  ],
+  "nnr": 116.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 36,
+  "unseen_recall_percent": 48.6,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "methodological_rigour",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

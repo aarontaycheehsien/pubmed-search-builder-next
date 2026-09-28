@@ -1,0 +1,71 @@
+{
+  "topic": "van_de_Schoot_2018",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T130245Z",
+  "scored": "20260928T132050Z",
+  "skill": {
+    "name": "ours",
+    "hash": "05cb87e61fe7ba360ec3cc7eac265374ead3c97befff272c330ff14c12ae7409",
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1084
+  },
+  "final_message": "ext\n((Stress Disorders, Post-Traumatic[Mesh] OR PTSD[tiab] OR posttraumatic stress[tiab] OR post-traumatic stress[tiab] OR post traumatic stress[tiab] OR posttraumatic symptom*[tiab] OR post-traumatic symptom*[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])\n```\n\nThis uses the requested Entrez-date cutoff; it has no publication-date limit.\n\n| Line | Search | Results |\n|---:|---|---:|\n| 1 | `Stress Disorders, Post-Traumatic[Mesh]` | 25,369 |\n| 2 | `PTSD[tiab]` | 15,732 |\n| 3 | `posttraumatic stress[tiab]` | 14,174 |\n| 4 | `post-traumatic stress[tiab]` | 8,160 |\n| 5 | `post traumatic stress[tiab]` | 8,160 |\n| 6 | `posttraumatic symptom*[tiab]` | 403 |\n| 7 | `post-traumatic symptom*[tiab]` | 236 |\n| 8 | `#1 OR #2 OR #3 OR #4 OR #5 OR #6 OR #7` | **32,155** |\n\n## Validation and limitations\n\nThe search retrieved all 9 records in the screened prior-review benchmark and all 3 records screened in during development. Those figures are **relative recall**, not sensitivity; the benchmark covers only references from one prior review, and no user-supplied articles were available.\n\nI tested optional trajectory and trauma-event blocks and left both out because they would miss screened relevant records. The resulting 32,155-record count exceeds the standard 10,000-record workload budget. The second internal critic accepted the search wording but rejected treating that workload warning as resolved because the scope was not confirmed by you. The protected report nevertheless passed; this remains a substantial screening and scope risk.\n\nThe audit records the assumptions, optional-block tests, and critique: [audit.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20260928T130245Z/work/audit.md). The generated query and validation manifest are preserved in [work](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20260928T130245Z/work).\n\nThis draft needs PRESS peer review by an information specialist before use.",
+  "strategy": "((Stress Disorders, Post-Traumatic[Mesh] OR PTSD[tiab] OR posttraumatic stress[tiab] OR post-traumatic stress[tiab] OR post traumatic stress[tiab] OR posttraumatic symptom*[tiab] OR post-traumatic symptom*[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2016-01-24",
+  "count": 32155,
+  "gold_scored": 38,
+  "gold_reachable": 38,
+  "retrieved": 35,
+  "recall_percent": 92.1,
+  "missed": [
+    "20061839",
+    "20836603",
+    "26412244"
+  ],
+  "nnr": 918.7,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 35,
+  "unseen_recall_percent": 92.1,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "trajectory",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 3
+      },
+      {
+        "id": "traumatic_event",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

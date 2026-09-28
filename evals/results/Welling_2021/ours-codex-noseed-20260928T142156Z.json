@@ -1,0 +1,67 @@
+{
+  "topic": "Welling_2021",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T142156Z",
+  "scored": "20260928T144804Z",
+  "skill": {
+    "name": "ours",
+    "hash": "05cb87e61fe7ba360ec3cc7eac265374ead3c97befff272c330ff14c12ae7409",
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1568
+  },
+  "final_message": "R Alcohol Drinking[Mesh] OR Mental Health[Mesh] OR Psychological Distress[Mesh] OR Adaptation, Psychological[Mesh] OR Quality of Life[Mesh] OR Anxiety[Mesh] OR Depression[Mesh] OR Stress, Psychological[Mesh] OR lifestyle[tiab] OR life style[tiab] OR health behavio*[tiab] OR physical activit*[tiab] OR exercise[tiab] OR physical inactiv*[tiab] OR sedentary[tiab] OR \"screen time\"[tiab:~1] OR sleep[tiab] OR \"sleep quality\"[tiab:~1] OR diet[tiab] OR nutrition[tiab] OR eating behavio*[tiab] OR \"food consumption\"[tiab:~1] OR alcohol consum*[tiab] OR smoking[tiab] OR \"tobacco use\"[tiab:~1] OR \"mental health\"[tiab:~1] OR psychological[tiab] OR wellbeing[tiab] OR well-being[tiab] OR \"psychological well-being\"[tiab:~1] OR \"quality of life\"[tiab:~2] OR \"life satisfaction\"[tiab:~1] OR \"psychological distress\"[tiab:~1] OR depress*[tiab] OR anxiet*[tiab] OR stress[tiab] OR loneliness[tiab] OR happiness[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])\n```\n\nThe search returned **11,888 records** through the Entrez-date cutoff of 2020-11-22. The audit contains the full line-by-line counts. Nine screened development records were retrieved (9/9); this is development relative recall, not independent validation. The outcome block reduced the count from 102,080 to 11,888; its 30-record loss sample contained no eligible records. The final count exceeds the standard 10,000-record screening budget, a risk accepted in the internal critic rounds.\n\n- [Full audit with line-by-line counts](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260928T142156Z/work/audit.md>)\n- [Generated query](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260928T142156Z/work/final-query.txt>)\n- [Validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260928T142156Z/work/validation-manifest.json>)\n\nThis remains a draft for human PRESS peer review by an information specialist before use.",
+  "strategy": "((COVID-19[Mesh] OR Coronavirus Infections[Mesh] OR Pandemics[Mesh] OR SARS-CoV-2[Mesh] OR COVID-19[tiab] OR COVID19[tiab] OR SARS-CoV-2[tiab] OR 2019-nCoV[tiab] OR 2019 novel coronavirus[tiab] OR \"novel coronavirus\"[tiab:~1] OR \"coronavirus disease 2019\"[tiab:~1] OR \"coronavirus pandemic\"[tiab:~1] OR \"COVID-19 pandemic\"[tiab:~1] OR lockdown*[tiab] OR quarantin*[tiab] OR social distanc*[tiab] OR physical distanc*[tiab] OR \"home confinement\"[tiab:~1] OR \"stay at home\"[tiab:~1] OR \"shelter in place\"[tiab:~1] OR movement restriction*[tiab]) AND (Life Style[Mesh] OR Healthy Lifestyle[Mesh] OR Health Behavior[Mesh] OR Exercise[Mesh] OR Motor Activity[Mesh] OR Sedentary Behavior[Mesh] OR Sleep[Mesh] OR Diet[Mesh] OR Feeding Behavior[Mesh] OR food habit*[tiab] OR Smoking[Mesh] OR Alcohol Drinking[Mesh] OR Mental Health[Mesh] OR Psychological Distress[Mesh] OR Adaptation, Psychological[Mesh] OR Quality of Life[Mesh] OR Anxiety[Mesh] OR Depression[Mesh] OR Stress, Psychological[Mesh] OR lifestyle[tiab] OR life style[tiab] OR health behavio*[tiab] OR physical activit*[tiab] OR exercise[tiab] OR physical inactiv*[tiab] OR sedentary[tiab] OR \"screen time\"[tiab:~1] OR sleep[tiab] OR \"sleep quality\"[tiab:~1] OR diet[tiab] OR nutrition[tiab] OR eating behavio*[tiab] OR \"food consumption\"[tiab:~1] OR alcohol consum*[tiab] OR smoking[tiab] OR \"tobacco use\"[tiab:~1] OR \"mental health\"[tiab:~1] OR psychological[tiab] OR wellbeing[tiab] OR well-being[tiab] OR \"psychological well-being\"[tiab:~1] OR \"quality of life\"[tiab:~2] OR \"life satisfaction\"[tiab:~1] OR \"psychological distress\"[tiab:~1] OR depress*[tiab] OR anxiet*[tiab] OR stress[tiab] OR loneliness[tiab] OR happiness[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-11-22",
+  "count": 11888,
+  "gold_scored": 53,
+  "gold_reachable": 53,
+  "retrieved": 49,
+  "recall_percent": 92.5,
+  "missed": [
+    "32227671",
+    "32242089",
+    "32640077",
+    "33105275"
+  ],
+  "nnr": 242.6,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 49,
+  "unseen_recall_percent": 92.5,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 2,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "outcomes",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

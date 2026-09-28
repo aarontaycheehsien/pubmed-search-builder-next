@@ -1,0 +1,91 @@
+{
+  "topic": "Menon_2022",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T143246Z",
+  "scored": "20260928T144559Z",
+  "skill": {
+    "name": "ours",
+    "hash": "05cb87e61fe7ba360ec3cc7eac265374ead3c97befff272c330ff14c12ae7409",
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 793
+  },
+  "final_message": "re\"[Mesh] OR environmental health[tiab] OR environment*[tiab] OR \"environmental exposure\"[tiab] OR \"environmental exposures\"[tiab] OR \"exposure science\"[tiab] OR \"environmental epidemiology\"[tiab] OR \"environmental and occupational health\"[tiab] OR \"occupational and environmental health\"[tiab])) AND (\"1800/01/01\"[edat] : \"2020/07/20\"[edat])\n```\n\nThe PubMed count was **12,405** with the Entrez-date cutoff of 2020-07-20. The systematic-review block returned 289,919 records; the environmental-health block returned 1,258,854. The full audit lists every numbered term and its count.\n\n## Validation and limitations\n\nI screened in two records found during PubMed pilot searches. The strategy retrieved both: **2/2 (100% relative recall against this development set)**. This is not independent validation or a sensitivity estimate; no held-out set or prior-review benchmark was established.\n\nThe optional methodological-rigour block reduced the count by 24.2%. I left it out to preserve recall and screened its 30-record loss sample; none met the eligibility criteria. The resulting count exceeds the standard 10,000-record workload budget. The broad `environment*` term contributes to that screening burden.\n\nThe scope assumptions remain unconfirmed, as requested. The internal critic was same-context; **PRESS peer review by an information specialist is still needed before use**.\n\nFiles: [final query](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-37e3fa46fd7e2f7f/ours-codex-noseed-20260928T143246Z/work/final-query.txt>), [full audit and line-by-line counts](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-37e3fa46fd7e2f7f/ours-codex-noseed-20260928T143246Z/work/audit.md>), [validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-37e3fa46fd7e2f7f/ours-codex-noseed-20260928T143246Z/work/validation-manifest.json>), and [rationale and screening notes](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-37e3fa46fd7e2f7f/ours-codex-noseed-20260928T143246Z/work/narrative.md>).",
+  "strategy": "((\"Systematic Reviews as Topic\"[Mesh] OR \"Meta-Analysis as Topic\"[Mesh] OR \"systematic review\"[tiab] OR \"systematic reviews\"[tiab] OR \"systematic literature review\"[tiab] OR \"umbrella review\"[tiab] OR \"umbrella reviews\"[tiab] OR meta-analy*[tiab] OR \"meta analysis\"[tiab] OR \"evidence synthesis\"[tiab]) AND (\"Environmental Health\"[Mesh] OR \"Environmental Exposure\"[Mesh] OR environmental health[tiab] OR environment*[tiab] OR \"environmental exposure\"[tiab] OR \"environmental exposures\"[tiab] OR \"exposure science\"[tiab] OR \"environmental epidemiology\"[tiab] OR \"environmental and occupational health\"[tiab] OR \"occupational and environmental health\"[tiab])) AND (\"1800/01/01\"[edat] : \"2020/07/20\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-07-20",
+  "count": 12405,
+  "gold_scored": 74,
+  "gold_reachable": 74,
+  "retrieved": 45,
+  "recall_percent": 60.8,
+  "missed": [
+    "30696940",
+    "31692109",
+    "31711095",
+    "31734383",
+    "31761290",
+    "31767045",
+    "31809833",
+    "31932956",
+    "32044481",
+    "32048436",
+    "32091510",
+    "32108942",
+    "32143119",
+    "32169997",
+    "32246781",
+    "32248699",
+    "32252671",
+    "32272785",
+    "32313524",
+    "32325616",
+    "32343457",
+    "32354630",
+    "32361950",
+    "32387882",
+    "32446663",
+    "32473798",
+    "32474653",
+    "32497902",
+    "32516633"
+  ],
+  "nnr": 275.7,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 45,
+  "unseen_recall_percent": 60.8,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "methodological_rigour",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

@@ -1,0 +1,67 @@
+{
+  "topic": "Welling_2021",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T130245Z",
+  "scored": "20260928T134706Z",
+  "skill": {
+    "name": "ours",
+    "hash": "05cb87e61fe7ba360ec3cc7eac265374ead3c97befff272c330ff14c12ae7409",
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2660
+  },
+  "final_message": "iab:~1] OR \"social wellbeing\"[tiab:~1] OR psychosocial[tiab] OR distress[tiab] OR anxiet*[tiab] OR depress*[tiab] OR stress[tiab] OR loneliness[tiab] OR lonely[tiab] OR emotional[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])\n```\n\nThe generated query includes the required Entrez entry-date bound through **2020-11-22**; it has no publication-date (`[dp]`) limit.\n\n## Counts and validation\n\n- COVID and restriction terms combined: **340,954** records.\n- Lifestyle and well-being terms combined: **5,348,262** records.\n- Combined search: **82,131** records.\n- The optional outcome block reduced the exposure-only set by **75.9%**. None of 30 sampled records excluded by that block met the eligibility criteria; the sample is small and does not rule out missed eligible studies.\n- Relative recall was **7/7 (100%)** on the development set and **3/3 (100%)** on the held-out validation set. The ten records were discovered during this build; the held-out set came from the same discovery pool, so it is semi-independent. These figures are not sensitivity estimates.\n- The final count exceeds the standard **10,000-record** screening budget. The query passed the protected report and artifact integrity check. Human PRESS peer review remains pending.\n\nThe protected deliverables are [final-query.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260928T130245Z/work/final-query.txt), [audit.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260928T130245Z/work/audit.md), and [validation-manifest.json](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260928T130245Z/work/validation-manifest.json). The assumptions and critic dispositions are recorded in [narrative.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260928T130245Z/work/narrative.md).\n\nThis PubMed-only draft needs PRESS peer review by an information specialist before use.",
+  "strategy": "((\"COVID-19\"[Mesh] OR \"Coronavirus Infections\"[Mesh] OR \"SARS-CoV-2\"[Mesh] OR COVID-19[tiab] OR COVID19[tiab] OR SARS-CoV-2[tiab] OR SARS-CoV2[tiab] OR 2019-nCoV[tiab] OR coronavirus[tiab] OR pandemic*[tiab] OR restriction*[tiab] OR lockdown*[tiab] OR quarantin*[tiab] OR confinement[tiab] OR stay-at-home[tiab] OR \"social distancing\"[tiab:~1] OR \"physical distancing\"[tiab:~1] OR \"stay at home\"[tiab:~2] OR \"shelter in place\"[tiab:~2] OR \"movement restriction\"[tiab:~2] OR \"school closure\"[tiab:~1]) AND (\"Life Style\"[Mesh] OR \"Health Behavior\"[Mesh] OR \"Exercise\"[Mesh] OR \"Sedentary Behavior\"[Mesh] OR \"Screen Time\"[Mesh] OR \"Feeding Behavior\"[Mesh] OR \"Eating\"[Mesh] OR \"Alcohol Drinking\"[Mesh] OR \"Smoking\"[Mesh] OR \"Mental Health\"[Mesh] OR \"Stress, Psychological\"[Mesh] OR \"Anxiety Disorders\"[Mesh] OR \"Depressive Disorder\"[Mesh] OR \"Quality of Life\"[Mesh] OR lifestyle[tiab] OR \"life style\"[tiab] OR behavior*[tiab] OR behaviour*[tiab] OR \"health behavior\"[tiab:~1] OR \"health behaviour\"[tiab:~1] OR \"physical activity\"[tiab:~1] OR exercise*[tiab] OR \"sedentary behavior\"[tiab:~1] OR \"sedentary behaviour\"[tiab:~1] OR sedentar*[tiab] OR inactiv*[tiab] OR \"screen time\"[tiab:~1] OR \"television viewing\"[tiab:~1] OR \"dietary behavior\"[tiab:~1] OR \"dietary behaviour\"[tiab:~1] OR diet*[tiab] OR eating[tiab] OR eats[tiab] OR feeding[tiab] OR nutrition*[tiab] OR \"food consumption\"[tiab:~1] OR \"food intake\"[tiab:~1] OR sleep*[tiab] OR insomnia[tiab] OR \"sleep quality\"[tiab:~1] OR smok*[tiab] OR tobacco[tiab] OR alcohol[tiab] OR drinking[tiab] OR substance use[tiab] OR cannabis[tiab] OR wellbeing[tiab] OR \"well being\"[tiab:~1] OR \"mental health\"[tiab:~1] OR \"psychological health\"[tiab:~1] OR \"psychological well-being\"[tiab:~1] OR \"psychological wellbeing\"[tiab:~1] OR \"quality of life\"[tiab:~1] OR \"social well-being\"[tiab:~1] OR \"social wellbeing\"[tiab:~1] OR psychosocial[tiab] OR distress[tiab] OR anxiet*[tiab] OR depress*[tiab] OR stress[tiab] OR loneliness[tiab] OR lonely[tiab] OR emotional[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-11-22",
+  "count": 82131,
+  "gold_scored": 53,
+  "gold_reachable": 53,
+  "retrieved": 48,
+  "recall_percent": 90.6,
+  "missed": [
+    "32227671",
+    "32242089",
+    "32640077",
+    "32959000",
+    "33105275"
+  ],
+  "nnr": 1711.1,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 48,
+  "unseen_recall_percent": 90.6,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 1,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "lifestyle_wellbeing",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

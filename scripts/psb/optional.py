@@ -245,7 +245,7 @@ def decide(ws, concept_id: str, *, choice: str, reason: str, screened: list[str]
         raise StrategyError("choice must be 'and' or 'leave_out'")
     if screened is None:
         path = sample_path(ws, concept_id)
-        screened = json.loads(path.read_text(encoding="utf-8"))["pmids"] if path.exists() else []
+        screened = json.loads(path.read_text(encoding="utf-8-sig"))["pmids"] if path.exists() else []
     protocol = ws.protocol()
     concepts = protocol.get("concepts") or []
     concept = next((c for c in concepts if str(c.get("id")) == concept_id and c.get("role") == "optional"), None)

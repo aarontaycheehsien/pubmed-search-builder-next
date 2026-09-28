@@ -1,0 +1,67 @@
+{
+  "topic": "Bos_2018",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T141405Z",
+  "scored": "20260928T145011Z",
+  "skill": {
+    "name": "ours",
+    "hash": "05cb87e61fe7ba360ec3cc7eac265374ead3c97befff272c330ff14c12ae7409",
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2166
+  },
+  "final_message": "tudies[Mesh] OR Follow-Up Studies[Mesh] OR cohort*[tiab] OR prospective[tiab] OR longitudinal[tiab] OR follow-up[tiab] OR followup[tiab] OR population-based[tiab] OR \"population based\"[tiab:~1] OR community-based[tiab] OR \"community based\"[tiab:~1] OR community-dwelling[tiab] OR \"community dwelling\"[tiab:~1] OR \"general population\"[tiab:~1] OR \"population cohort\"[tiab:~1])) AND (\"1800/01/01\"[edat] : \"2017/05/06\"[edat])\n```\n\nThe final query returned **6,837 records** at the required Entrez-date cutoff. It uses an `[edat]` bound through 2017-05-06 and contains no publication-date `[dp]` limit.\n\nThe audit has the individual line counts. The exposure, outcome, and cohort-setting blocks returned **345,435**, **544,172**, and **2,581,241** records respectively before combination; the combined search returned 6,837. See [audit.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-535fe3dc7ca88971/ours-codex-noseed-20260928T141405Z/work/audit.md).\n\n## Validation and limitations\n\nFour eligible records, screened from the references of a prior systematic review, formed the external benchmark. The strategy retrieved **4/4**—100% relative recall against that small benchmark, not an estimate of sensitivity. No user-supplied seeds or held-out validation set were available.\n\nBoth optional blocks were tested with 30-record loss samples; neither sample contained an eligible record. Because each sample covers only a small part of the records excluded by its block, eligible studies that omit outcome or cohort labels may still be missed. The broad Cerebrovascular Disorders and Brain Infarction headings are retained for recall and contribute noise.\n\nThe protected delivery passed validation; the [validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-535fe3dc7ca88971/ours-codex-noseed-20260928T141405Z/work/validation-manifest.json) is intact. The internal PRESS-structured critique passed, but **human PRESS peer review by an information specialist is still pending before use**.",
+  "strategy": "((Cerebral Small Vessel Diseases[Mesh] OR Cerebrovascular Disorders[Mesh] OR Leukoaraiosis[Mesh] OR Stroke, Lacunar[Mesh] OR Brain Infarction[Mesh] OR \"cerebral small vessel disease\"[tiab:~1] OR \"small-vessel disease\"[tiab:~1] OR \"small vessel disease\"[tiab:~1] OR cerebral microangiopath*[tiab] OR leukoaraiosis[tiab] OR (white matter[tiab] AND hyperintens*[tiab]) OR (white matter[tiab] AND lesion*[tiab]) OR WMH[tiab] OR lacunar infarct*[tiab] OR lacune*[tiab] OR (silent[tiab] AND brain[tiab] AND infarct*[tiab]) OR (covert[tiab] AND brain[tiab] AND infarct*[tiab]) OR brain infarct*[tiab] OR cerebral infarct*[tiab] OR cerebral microbleed*[tiab] OR brain microbleed*[tiab] OR microbleed*[tiab] OR cerebral microhemorrhag*[tiab] OR cerebral microhaemorrhag*[tiab] OR \"vascular brain injury\"[tiab:~1] OR \"subcortical ischemic vascular disease\"[tiab:~1] OR \"subcortical ischaemic vascular disease\"[tiab:~1] OR SIVD[tiab]) AND (Dementia[Mesh] OR Alzheimer Disease[Mesh] OR Cognition[Mesh] OR Cognition Disorders[Mesh] OR Cognitive Dysfunction[Mesh] OR dementia*[tiab] OR Alzheimer*[tiab] OR cognit*[tiab] OR neurocognit*[tiab] OR \"cognitive dysfunction\"[tiab:~1] OR \"cognitive decline\"[tiab:~1] OR \"cognitive impairment\"[tiab:~1] OR \"cognitive deterioration\"[tiab:~1] OR \"cognitive function\"[tiab:~1] OR \"mental deterioration\"[tiab:~1]) AND (Cohort Studies[Mesh] OR Longitudinal Studies[Mesh] OR Prospective Studies[Mesh] OR Follow-Up Studies[Mesh] OR cohort*[tiab] OR prospective[tiab] OR longitudinal[tiab] OR follow-up[tiab] OR followup[tiab] OR population-based[tiab] OR \"population based\"[tiab:~1] OR community-based[tiab] OR \"community based\"[tiab:~1] OR community-dwelling[tiab] OR \"community dwelling\"[tiab:~1] OR \"general population\"[tiab:~1] OR \"population cohort\"[tiab:~1])) AND (\"1800/01/01\"[edat] : \"2017/05/06\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-05-06",
+  "count": 6837,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 9,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 759.7,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 8,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "outcome",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "cohort_setting",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

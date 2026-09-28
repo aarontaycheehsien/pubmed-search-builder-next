@@ -1,0 +1,66 @@
+{
+  "topic": "Welling_2021",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T134709Z",
+  "scored": "20260928T142155Z",
+  "skill": {
+    "name": "ours",
+    "hash": "05cb87e61fe7ba360ec3cc7eac265374ead3c97befff272c330ff14c12ae7409",
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2085
+  },
+  "final_message": "[tiab:~2] OR smoking[tiab] OR tobacco[tiab] OR alcohol[tiab] OR \"substance use\"[tiab:~2] OR wellbeing[tiab] OR \"well-being\"[tiab] OR \"well being\"[tiab] OR \"mental health\"[tiab] OR psychological[tiab] OR anxiety[tiab] OR depression[tiab] OR stress[tiab] OR distress[tiab] OR \"quality of life\"[tiab] OR loneliness[tiab] OR \"life satisfaction\"[tiab] OR \"health behavior\"[tiab:~1] OR \"health behaviors\"[tiab:~1] OR \"health behaviour\"[tiab:~1] OR \"health behaviours\"[tiab:~1] OR \"physical activity\"[tiab:~1] OR \"physical activities\"[tiab:~1] OR \"eating behavior\"[tiab:~1] OR \"eating behaviors\"[tiab:~1] OR \"eating behaviour\"[tiab:~1] OR \"eating behaviours\"[tiab:~1] OR insomnia[tiab] OR \"Anxiety\"[Mesh] OR \"Depression\"[Mesh] OR \"Stress, Psychological\"[Mesh] OR \"Sleep Initiation and Maintenance Disorders\"[Mesh] OR \"screen use\"[tiab:~1] OR \"use of screens\"[tiab:~1])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])\n```\n\nUnder the Entrez-date cutoff of 2020-11-22, the exposure block returned 115,041 records, the outcome block alone 3,839,121, and the combined search 15,792. The query uses an **Entrez entry-date** bound, not a publication-date limit. Counts use current PubMed indexing with that bound; they do not reconstruct the index as it existed in 2020.\n\nRelative recall was 9/9 (100%) against the screened development set. There was no independent held-out validation set, and the nine records were found through a pilot using overlapping topic terms, so this is not independent validation or a sensitivity estimate. The tested outcome block cut retrieval by 86.3%, with no known-record loss and 0 relevant records among 30 sampled records it excluded; the remaining count still exceeds the standard 10,000-record workload budget.\n\nThe scope assumptions and limitations are recorded in [narrative.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260928T134709Z/work/narrative.md). This draft needs PRESS peer review by an information specialist before use.",
+  "strategy": "((COVID-19[Mesh] OR Coronavirus Infections[Mesh] OR COVID-19[tiab] OR COVID19[tiab] OR \"COVID 19\"[tiab] OR SARS-CoV-2[tiab] OR SARS CoV 2[tiab] OR 2019-nCoV[tiab] OR 2019nCoV[tiab] OR \"novel coronavirus\"[tiab] OR \"coronavirus disease 2019\"[tiab] OR lockdown*[tiab] OR \"stay at home\"[tiab:~1] OR \"social distancing\"[tiab:~1] OR \"shelter in place\"[tiab:~1] OR \"movement restriction*\"[tiab] OR confinement[tiab] OR \"home confinement\"[tiab:~1] OR Quarantine[Mesh] OR quarantin*[tiab]) AND (Life Style[Mesh] OR Healthy Lifestyle[Mesh] OR Exercise[Mesh] OR Motor Activity[Mesh] OR Sedentary Behavior[Mesh] OR Feeding Behavior[Mesh] OR Food Preferences[Mesh] OR Mental Health[Mesh] OR Quality of Life[Mesh] OR Social Isolation[Mesh] OR Smoking[Mesh] OR Tobacco Use[Mesh] OR Alcohol Drinking[Mesh] OR lifestyle*[tiab] OR \"life style\"[tiab] OR exercis*[tiab] OR sedentary[tiab] OR sitting[tiab] OR diet*[tiab] OR \"food intake\"[tiab:~2] OR nutrition*[tiab] OR sleep*[tiab] OR \"screen time\"[tiab:~2] OR smoking[tiab] OR tobacco[tiab] OR alcohol[tiab] OR \"substance use\"[tiab:~2] OR wellbeing[tiab] OR \"well-being\"[tiab] OR \"well being\"[tiab] OR \"mental health\"[tiab] OR psychological[tiab] OR anxiety[tiab] OR depression[tiab] OR stress[tiab] OR distress[tiab] OR \"quality of life\"[tiab] OR loneliness[tiab] OR \"life satisfaction\"[tiab] OR \"health behavior\"[tiab:~1] OR \"health behaviors\"[tiab:~1] OR \"health behaviour\"[tiab:~1] OR \"health behaviours\"[tiab:~1] OR \"physical activity\"[tiab:~1] OR \"physical activities\"[tiab:~1] OR \"eating behavior\"[tiab:~1] OR \"eating behaviors\"[tiab:~1] OR \"eating behaviour\"[tiab:~1] OR \"eating behaviours\"[tiab:~1] OR insomnia[tiab] OR \"Anxiety\"[Mesh] OR \"Depression\"[Mesh] OR \"Stress, Psychological\"[Mesh] OR \"Sleep Initiation and Maintenance Disorders\"[Mesh] OR \"screen use\"[tiab:~1] OR \"use of screens\"[tiab:~1])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-11-22",
+  "count": 15792,
+  "gold_scored": 53,
+  "gold_reachable": 53,
+  "retrieved": 49,
+  "recall_percent": 92.5,
+  "missed": [
+    "32227671",
+    "32242089",
+    "32640077",
+    "33105275"
+  ],
+  "nnr": 322.3,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 49,
+  "unseen_recall_percent": 92.5,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "lifestyle_wellbeing",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

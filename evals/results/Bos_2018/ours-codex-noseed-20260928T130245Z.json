@@ -1,0 +1,67 @@
+{
+  "topic": "Bos_2018",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T130245Z",
+  "scored": "20260928T134015Z",
+  "skill": {
+    "name": "ours",
+    "hash": "05cb87e61fe7ba360ec3cc7eac265374ead3c97befff272c330ff14c12ae7409",
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2249
+  },
+  "final_message": "ognitive function\"[tiab] OR \"cognitive performance\"[tiab] OR \"cognitive change\"[tiab] OR \"mental decline\"[tiab] OR \"memory decline\"[tiab] OR \"executive function\"[tiab] OR \"processing speed\"[tiab] OR cognition[tiab] OR cognitive[tiab] OR \"incident dementia\"[tiab] OR \"conversion to dementia\"[tiab]) AND (Cohort Studies[Mesh] OR Longitudinal Studies[Mesh] OR Follow-Up Studies[Mesh] OR Prospective Studies[Mesh] OR cohort*[tiab] OR longitudinal[tiab] OR prospective[tiab] OR follow-up[tiab] OR follow up[tiab] OR population-based[tiab] OR population based[tiab] OR community-based[tiab] OR community based[tiab] OR community-dwelling[tiab] OR community dwelling[tiab] OR general population[tiab])) AND (\"1800/01/01\"[edat] : \"2017/05/06\"[edat])\n```\n\nThe three blocks contain **40 exposure terms**, **23 outcome terms**, and **16 cohort/design terms**. The outcome and cohort/design blocks were ANDed after optional-block checks each found 0 eligible records among 30 sampled exclusions. Those samples reduce concern but cannot rule out missed eligible studies, especially when abstracts omit outcome or cohort details.\n\nThe strategy retrieved **10/10** benchmark studies drawn from one prior review; that is not an independent estimate of sensitivity. No user-provided seed articles were available. The internal closing critique found no remaining must-fix issues; human PRESS review is still recommended.\n\n## Saved files\n\n- [Final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-535fe3dc7ca88971/ours-codex-noseed-20260928T130245Z/work/final-query.txt)\n- [Audit report](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-535fe3dc7ca88971/ours-codex-noseed-20260928T130245Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-535fe3dc7ca88971/ours-codex-noseed-20260928T130245Z/work/validation-manifest.json)\n- [Search narrative and assumptions](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-535fe3dc7ca88971/ours-codex-noseed-20260928T130245Z/work/narrative.md)",
+  "strategy": "((Cerebral Small Vessel Diseases[Mesh] OR Cerebrovascular Disorders[Mesh] OR Leukoaraiosis[Mesh] OR Stroke, Lacunar[Mesh] OR Cerebral Infarction[Mesh] OR Brain Infarction[Mesh] OR White Matter[Mesh] OR Cerebral Hemorrhage[Mesh] OR \"cerebral small vessel disease\"[tiab] OR \"small vessel disease\"[tiab] OR CSVD[tiab] OR \"cerebral microangiopath*\"[tiab] OR \"white matter hyperintens*\"[tiab] OR \"white matter lesion*\"[tiab] OR \"white matter change*\"[tiab] OR \"white matter abnormalit*\"[tiab] OR \"white matter disease\"[tiab] OR leukoaraios*[tiab] OR leucoaraios*[tiab] OR \"lacunar infarct*\"[tiab] OR \"lacunar stroke*\"[tiab] OR \"silent brain infarct*\"[tiab] OR \"silent cerebral infarct*\"[tiab] OR \"covert brain infarct*\"[tiab] OR \"asymptomatic brain infarct*\"[tiab] OR \"brain infarct*\"[tiab] OR \"cerebral microbleed*\"[tiab] OR \"brain microbleed*\"[tiab] OR \"cerebral microhemorrhag*\"[tiab] OR \"brain microhemorrhag*\"[tiab] OR \"vascular brain injury\"[tiab] OR \"vascular brain injur*\"[tiab] OR \"subcortical ischemic vascular disease\"[tiab] OR \"subcortical ischaemic vascular disease\"[tiab] OR perivascular space*[tiab] OR \"enlarged perivascular space*\"[tiab] OR \"dilated perivascular space*\"[tiab] OR \"Virchow-Robin space*\"[tiab] OR \"Virchow Robin space*\"[tiab] OR \"silent infarct*\"[tiab]) AND (Dementia[Mesh] OR Alzheimer Disease[Mesh] OR Cognition Disorders[Mesh] OR Cognitive Dysfunction[Mesh] OR Memory Disorders[Mesh] OR dementia*[tiab] OR Alzheimer*[tiab] OR \"mild cognitive impairment\"[tiab] OR \"cognitive impairment\"[tiab] OR \"cognitive decline\"[tiab] OR \"cognitive deterioration\"[tiab] OR \"cognitive dysfunction\"[tiab] OR \"cognitive function\"[tiab] OR \"cognitive performance\"[tiab] OR \"cognitive change\"[tiab] OR \"mental decline\"[tiab] OR \"memory decline\"[tiab] OR \"executive function\"[tiab] OR \"processing speed\"[tiab] OR cognition[tiab] OR cognitive[tiab] OR \"incident dementia\"[tiab] OR \"conversion to dementia\"[tiab]) AND (Cohort Studies[Mesh] OR Longitudinal Studies[Mesh] OR Follow-Up Studies[Mesh] OR Prospective Studies[Mesh] OR cohort*[tiab] OR longitudinal[tiab] OR prospective[tiab] OR follow-up[tiab] OR follow up[tiab] OR population-based[tiab] OR population based[tiab] OR community-based[tiab] OR community based[tiab] OR community-dwelling[tiab] OR community dwelling[tiab] OR general population[tiab])) AND (\"1800/01/01\"[edat] : \"2017/05/06\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-05-06",
+  "count": 6946,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 9,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 771.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 8,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 2,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "cognitive_outcome",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "population_design",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

@@ -1,0 +1,62 @@
+{
+  "topic": "Liu_2023_VR_nursing",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T132614Z",
+  "scored": "20260928T134426Z",
+  "skill": {
+    "name": "ours",
+    "hash": "05cb87e61fe7ba360ec3cc7eac265374ead3c97befff272c330ff14c12ae7409",
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "cd82ec30d0832c245bdbd099f49ae29d3598417c",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1092
+  },
+  "final_message": "ent*[tiab] OR postgraduat*[tiab] OR post-graduat*[tiab] OR post graduat*[tiab]) AND (\"Virtual Reality\"[Mesh] OR \"Simulation Training\"[Mesh] OR \"Computer Simulation\"[Mesh] OR virtual realit*[tiab] OR virtual simulation*[tiab] OR immersive simulation*[tiab] OR immersive technolog*[tiab] OR virtual patient*[tiab] OR virtual environment*[tiab] OR virtual world*[tiab] OR computer simulation*[tiab] OR computer-based simulation*[tiab] OR computer based simulation*[tiab] OR web-based simulation*[tiab] OR web based simulation*[tiab] OR 3D simulation*[tiab] OR three-dimensional simulation*[tiab] OR augmented realit*[tiab] OR mixed realit*[tiab] OR game-based virtual realit*[tiab] OR virtual gaming simulation*[tiab])) AND (\"1800/01/01\"[edat] : \"2023/03/31\"[edat])\n```\n\nThe query is also saved in [final-query.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3d10494d5653b6c0/ours-codex-noseed-20260928T132614Z/work/final-query.txt). The [audit](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3d10494d5653b6c0/ours-codex-noseed-20260928T132614Z/work/audit.md) gives all 45 lines with PubMed counts; the [narrative](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3d10494d5653b6c0/ours-codex-noseed-20260928T132614Z/work/narrative.md) records scope and decisions. The validation manifest passed.\n\nThe final search returned **3,197 records** with the Entrez-date cutoff of 2023-03-31. It retrieved **2/2 development records (100% relative recall)**, PMIDs 27537670 and 31102793. This is a small, non-independent set; recall on unseen records was not estimated. The outcomes block was tested and left out because it reduced the count by 21%, below the skill’s material-reduction threshold; outcomes remain for screening.\n\nThe internal PRESS-structured critic’s postgraduate-coverage finding was resolved. This draft still needs PRESS peer review by an information specialist before use. Broad simulation terms may add screening noise, and PubMed-only searching will miss records indexed elsewhere.",
+  "strategy": "((\"Students, Nursing\"[Mesh] OR \"Education, Nursing\"[Mesh] OR nursing student*[tiab] OR student nurse*[tiab] OR nurs* student*[tiab] OR nursing undergraduate*[tiab] OR undergraduate nursing[tiab] OR nursing graduate*[tiab] OR nursing education[tiab] OR prelicensure nurs*[tiab] OR pre-registration nurs*[tiab] OR pre registration nurs*[tiab] OR postgraduate nurs*[tiab] OR post-graduate nurs*[tiab] OR post graduate nurs*[tiab] OR postgraduate student*[tiab] OR graduate nursing student*[tiab] OR doctoral nursing student*[tiab] OR postgraduat*[tiab] OR post-graduat*[tiab] OR post graduat*[tiab]) AND (\"Virtual Reality\"[Mesh] OR \"Simulation Training\"[Mesh] OR \"Computer Simulation\"[Mesh] OR virtual realit*[tiab] OR virtual simulation*[tiab] OR immersive simulation*[tiab] OR immersive technolog*[tiab] OR virtual patient*[tiab] OR virtual environment*[tiab] OR virtual world*[tiab] OR computer simulation*[tiab] OR computer-based simulation*[tiab] OR computer based simulation*[tiab] OR web-based simulation*[tiab] OR web based simulation*[tiab] OR 3D simulation*[tiab] OR three-dimensional simulation*[tiab] OR augmented realit*[tiab] OR mixed realit*[tiab] OR game-based virtual realit*[tiab] OR virtual gaming simulation*[tiab])) AND (\"1800/01/01\"[edat] : \"2023/03/31\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2023-03-31",
+  "count": 3197,
+  "gold_scored": 6,
+  "gold_reachable": 6,
+  "retrieved": 6,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 532.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 6,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 2,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "learning_outcomes",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}
