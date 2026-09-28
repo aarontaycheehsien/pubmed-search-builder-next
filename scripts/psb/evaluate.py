@@ -6,6 +6,7 @@
 - for each missed known record, the blocks that fail to retrieve it
 - leave-one-block-out ablation
 - optional concepts: what AND-ing each candidate block would cost and save
+- category concepts: whether a screened probe covers the current block
 - the change since the previous evaluated version, including known records it lost
 
 The numbers are recomputed every time; nothing here is read back from an earlier report
@@ -15,7 +16,7 @@ except the previous version's retrieved PMIDs, used for the diff.
 from __future__ import annotations
 
 from .ncbi import NcbiError
-from . import validation, mesh, optional, syntax
+from . import validation, mesh, optional, probe, syntax
 from .strategy import block_query, core_query, full_query, lint, numbered_lines
 from .workspace import ROLES, Workspace, now
 
@@ -73,6 +74,8 @@ def evaluate(ws: Workspace, *, term_counts: bool = True) -> dict:
             collected.extend(vocabulary_issues)
             _measure(ws, result, term_counts=term_counts)
             collected.extend(optional.issues(ws.pubmed, result.get("optional", []), inputs["protocol"], result.get("count")))
+            result["categories"] = probe.measure(ws, ws.strategy(), inputs["protocol"])
+            collected.extend(probe.issues(result["categories"], inputs["protocol"]))
             complete = term_counts and not any(r.get("status") == "unverified" for r in result["vocabulary"])
     except (NcbiError, ValueError) as exc:
         collected.append(validation.issue("validation_unavailable", "Evaluation could not complete", evidence=str(exc)))

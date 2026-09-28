@@ -11,6 +11,7 @@ explicit effective `as_of` entry-date restriction. The audit includes:
 - the strategy line by line with counts, and as one line for copying into PubMed
 - recall on each known set with its role, missed records and the blocks that miss them
 - leave-one-block-out results
+- category probes: each broader query, records outside the block, relevant found / screened
 - tested optional concepts: records without and with each block, reduction, known records lost,
   loss sample (relevant/screened, with its upper bound when none were relevant), decision and reason
 - the development history (every evaluated version, its change, lost records, and note)

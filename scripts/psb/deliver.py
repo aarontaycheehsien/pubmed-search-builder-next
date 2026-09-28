@@ -142,6 +142,24 @@ def _optional_section(evaluation: dict) -> list[str]:
     return lines + [""]
 
 
+def _category_section(evaluation: dict) -> list[str]:
+    """Each category concept's probes: what the block missed among records naming only a member."""
+    rows = evaluation.get("categories") or []
+    if not rows:
+        return []
+    lines = ["### Category probes", "",
+             "Each probe sampled records that the rest of the strategy and a broader query retrieve but the "
+             "category block does not, and screened them against the eligibility criteria.", "",
+             "| Concept | Probe | Broader query | Records outside the block | Relevant / screened |", "|---|---:|---|---:|---|"]
+    for row in rows:
+        if not row["history"]:
+            lines.append(f"| {row['name']} | none | | | |")
+        for h in row["history"]:
+            screened = "not screened" if h["screened"] is None else f"{len(h['relevant'] or [])}/{h['screened']}"
+            lines.append(f"| {row['name']} | {h['number']} | `{h['broader'].replace('|', '/')}` | {h['outside_count']:,} | {screened} |")
+    return lines + [""]
+
+
 def _nonempty(value) -> bool:
     return isinstance(value, str) and bool(value.strip())
 
@@ -299,7 +317,7 @@ def critic_packet(ws: Workspace) -> Path:
              "Phrase warnings require clause-specific interpretation review. ~0 allows any order; no wildcards in proximity. "
              "Prefer explicit tested expressions; do not delete terms merely because seeds are already covered. "
              "A retained warning needs a reason and evidence. Rewrites/removals require another complete evaluation.", "",
-             *_scope_section(evaluation), *_line_table(evaluation), "", *_optional_section(evaluation), "## Complete evidence", "", "```json", json.dumps(evaluation, indent=2, ensure_ascii=False),
+             *_scope_section(evaluation), *_line_table(evaluation), "", *_optional_section(evaluation), *_category_section(evaluation), "## Complete evidence", "", "```json", json.dumps(evaluation, indent=2, ensure_ascii=False),
              "```", "", "## Earlier critic rounds", "", "```json", json.dumps(rounds, indent=2, ensure_ascii=False), "```", "",
              "## Response JSON", "", "```json", json.dumps(template, indent=2, ensure_ascii=False), "```"]
     path = ws.root / "critic" / f"packet-{number}.md"
@@ -482,6 +500,7 @@ def _audit(ws: Workspace, evaluation: dict, rounds: list[dict]) -> str:
     else:
         lines += ["No known relevant records were available, so recall was not estimated.", ""]
     lines += _optional_section(evaluation)
+    lines += _category_section(evaluation)
     if isinstance(evaluation.get("ablation"), list):
         lines += ["### Leave-one-block-out", "", "| Block dropped | Records | Known records gained |", "|---|---:|---:|"]
         lines += [f"| {a['drop']} | {a['count']:,} | {a['known_gained']} |" for a in evaluation["ablation"]]

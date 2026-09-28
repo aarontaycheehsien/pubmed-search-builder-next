@@ -9,7 +9,7 @@ import random
 import sys
 from pathlib import Path
 
-from . import config, deliver, mesh, optional, terms, validation
+from . import config, deliver, mesh, optional, probe, terms, validation
 from .evaluate import compare, evaluate
 from .ncbi import LINKNAMES, NcbiError, PubMed
 from .strategy import StrategyError, lint, numbered_lines, full_query
@@ -87,6 +87,9 @@ def cmd_status(args) -> dict:
             todo.append(f"add a candidate block for optional concept {concept.get('id')!r} to strategy.json candidates")
         elif concept.get("role") == "optional" and not concept.get("decision"):
             todo.append(f"sample and decide optional concept {concept.get('id')!r} (psb optional sample / decide)")
+    for concept in probe.category_concepts(protocol):
+        if not probe.probes(ws, str(concept.get("id"))):
+            todo.append(f"probe category concept {concept.get('id')!r} for records naming only a member (psb probe draw / record)")
     if not critic:
         todo.append("run a critic round (psb critic packet)")
     last = versions[-1]["evaluation"] if versions else {}
@@ -315,6 +318,14 @@ def cmd_optional(args) -> dict:
                                           screened=screened, relevant=normalize_pmids(args.relevant or []))}
 
 
+def cmd_probe(args) -> dict:
+    ws = workspace(args)
+    if args.probe_command == "draw":
+        broader = Path(args.file).read_text(encoding="utf-8").strip() if args.file else " ".join(args.broader or [])
+        return {"ok": True, **probe.draw_probe(ws, args.concept, broader, n=args.n, seed=args.seed)}
+    return {"ok": True, **probe.record_probe(ws, args.concept, normalize_pmids(args.relevant or []), note=args.note)}
+
+
 def cmd_doctor(args) -> dict:
     pm = PubMed()
     result = pm.search("asthma[tiab]", dated=False)
@@ -440,6 +451,20 @@ def build_parser() -> argparse.ArgumentParser:
     q.add_argument("--screened", nargs="*", help="PMIDs screened (default: the stored loss sample)")
     q.add_argument("--relevant", nargs="*", help="screened PMIDs that met the eligibility criteria")
     p.set_defaults(func=cmd_optional)
+
+    p = sub.add_parser("probe", help="category concepts: sample records the block misses because they name only a member")
+    psub = p.add_subparsers(dest="probe_command", required=True)
+    q = psub.add_parser("draw", help="sample (other blocks) AND (broader query) NOT (category block)")
+    q.add_argument("concept")
+    q.add_argument("broader", nargs="*", help="broader query: members, the MeSH tree, or generic wording")
+    q.add_argument("--file", help="read the broader query from a file")
+    q.add_argument("--n", type=int, help="records to draw (default: 30 standard, 60 thorough)")
+    q.add_argument("--seed", type=int, default=1)
+    q = psub.add_parser("record", help="record the screening of the latest probe")
+    q.add_argument("concept")
+    q.add_argument("--relevant", nargs="*", help="sampled PMIDs that met the eligibility criteria (add them to a set first)")
+    q.add_argument("--note", default="")
+    p.set_defaults(func=cmd_probe)
 
     p = sub.add_parser("critic", help="PRESS critic packet and round check")
     csub = p.add_subparsers(dest="critic_command", required=True)

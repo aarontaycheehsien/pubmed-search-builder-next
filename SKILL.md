@@ -63,6 +63,8 @@ not `screen`: test it before leaving it out. Comparators, severity and full-text
 are `screen`.
 A block that names one direction of a process (switching back) is fragile; search the process.
 Every member the criteria list for a concept is searched by its own name.
+A concept whose records often name only a member (chronic conditions: asthma, epilepsy)
+is a category: mark it `"category": true` and probe it (`references/scope.md`).
 Decide roles from the question before reading any seed record.
 
 Show the user a short table of concepts, roles and limits, and ask them to confirm. Set
@@ -112,6 +114,11 @@ records, leave-one-block-out ablation, and what changed since the previous versi
   and `psb sample` to find noisy terms. Recall comes first.
 - A block whose removal gains known records (ablation) is a sign of over-structuring:
   reconsider its role in `protocol.json`.
+- Probe every category concept (`references/scope.md`, "Category concepts"): `psb probe draw
+  <id> "<broader query>"`, screen the sample, add relevant records to a `relevant` set,
+  `psb probe record <id> --relevant ...`; widen the block and probe again while probes find any.
+- A recall risk you name in your notes or narrative is a test you still owe: run the probe,
+  sample or count that would show it, or say plainly in the audit that you could not.
 - Test every `optional` concept (`references/scope.md`, "Optional concepts"): put its block in
   `strategy.json` `candidates`; `psb eval` reports the count with it AND-ed, the reduction, and
   the known records it would lose. Run `psb optional sample <id>`, screen every drawn record,

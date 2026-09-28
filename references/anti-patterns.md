@@ -169,14 +169,26 @@ Better: `multilevel[tiab] OR "Multilevel Analysis"[Mesh] OR mediation[tiab] OR "
 
 ## Mistake 17: Screening a searchable, topic-defining concept without testing it
 
-Bad, for "Impact of the COVID-19 pandemic and lockdown on lifestyle behaviours and well-being":
-one COVID block, with "lifestyle behaviours and well-being" set to `screen` because outcome labels
-vary. The strategy returns 150,000 records.
+Bad, for "effects of hospital mergers on quality of care": one hospital-merger block, with
+"quality of care" set to `screen` because outcome labels vary. The strategy returns tens of
+thousands of records about mergers, finance and governance.
 
-Better: make the outcome `optional`, build its block (physical activity, diet, sleep, screen
-time, alcohol, smoking, well-being, mental health ...), put it in `candidates`, and let `psb eval`,
-a loss sample and `psb optional decide` show whether AND-ing it loses relevant records. Leaving
-it out can be right, but only as a recorded decision. See "Optional concepts" in `scope.md`.
+Better: make the outcome `optional`, build its block (mortality, readmission, patient safety,
+complications, patient experience, quality indicators ...), put it in `candidates`, and let
+`psb eval`, a loss sample and `psb optional decide` show whether AND-ing it loses relevant
+records. Leaving it out can be right, but only as a recorded decision. See "Optional concepts"
+in `scope.md`.
+
+## Mistake 18: Searching a category by its own name and naming the gap instead of testing it
+
+Bad, for "school interventions for adolescents with chronic conditions": a block of
+`"chronic condition*"`, `"chronic disease*"`, `"long-term condition*"`, then a narrative that says
+"studies named only by a specific condition may be missed". Trials in adolescents with type 1
+diabetes, asthma or epilepsy never say "chronic condition".
+
+Better: mark the concept `"category": true`, build it from its members as well as its name, and
+probe it (`psb probe draw chronic "disease*[tiab] OR disorder*[tiab] OR Chronic Disease[Mesh]"`).
+A risk you can name is a risk you can measure. See "Category concepts" in `scope.md`.
 
 ## References
 

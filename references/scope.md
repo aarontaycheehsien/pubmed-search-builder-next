@@ -35,7 +35,7 @@ If any answer is "no" or "unsure", the concept is not `search`. Choose between t
 
 - `optional` when authors usually name it in the title, abstract or MeSH but not reliably
   enough to require it (test 1 or 3 fails, test 2 is about its type): a topic-defining outcome
-  ("lifestyle behaviours", "symptom trajectories", "dementia"), a setting, or a design with
+  ("quality of care", "functional recovery", "school attendance"), a setting, or a design with
   recognisable labels. Optional concepts are tested, never dropped untested.
 - `screen` when it cannot be searched reliably at all: comparators, severity, subgroups,
   properties reported only in full text, and designs better handled by a validated filter.
@@ -102,6 +102,30 @@ member belongs in that concept's block, searched by its own bare name: `mediatio
 (`"mediation model*"`, `"multilevel structural equation"`): records about a member rarely also
 name the parent, which is why the criteria list it. The member terms are usually cheap because
 another AND-ed block restricts them; check the final count, not the line count.
+
+## Category concepts
+
+A concept is a category when relevant records often name one of its members and never the
+category: "chronic conditions" (type 1 diabetes, asthma, epilepsy), "psychotropic drugs"
+(sertraline, lithium), "complementary therapies" (acupuncture, yoga), "vulnerable groups". A block of the
+category's own words misses them, and its seeds rarely show it, because the records you find
+first are the ones that use the category's words.
+
+1. Mark the concept `"category": true` in `protocol.json`.
+2. Build the block from members as well as the category: its MeSH tree (`psb mesh show` lists
+   narrower headings; explode where the tree matches the concept), and the members the
+   question, the eligibility criteria and screened records name.
+3. Probe it: `psb probe draw <id> "<broader query>"` samples records that the other blocks and a
+   broader query retrieve but your block does not. The broader query is whatever a member-only
+   record would still say: generic wording (`disease*`, `therap*`, `risk factor*`), the
+   exploded MeSH trees of the category, or a longer list of members. Screen every sampled
+   record. Add relevant ones to a `relevant` set and run `psb probe record <id> --relevant ...`.
+4. If the probe found relevant records, add the members they name to the block, `psb eval`, and
+   probe again with a fresh draw. Delivery at `standard` and `thorough` needs, for each category
+   concept, a screened probe on the current block that found none, or the probe budget (2 at
+   `standard`, 3 at `thorough`) spent with the remaining finding reviewed by the critic.
+
+A probe stays valid while the block only gains terms and the other blocks are unchanged.
 
 ## Ambiguity check
 

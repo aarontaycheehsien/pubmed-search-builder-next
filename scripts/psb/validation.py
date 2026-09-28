@@ -61,8 +61,12 @@ def summarize(issues: list[dict], *, complete: bool) -> dict:
 
 
 def input_snapshot(ws) -> dict:
-    return {"strategy": ws.strategy().to_dict(), "protocol": ws.protocol(), "sets": ws.sets(),
-            "as_of": ws.pubmed.as_of, "policy_version": POLICY_VERSION}
+    snapshot = {"strategy": ws.strategy().to_dict(), "protocol": ws.protocol(), "sets": ws.sets(),
+                "as_of": ws.pubmed.as_of, "policy_version": POLICY_VERSION}
+    folder = ws.root / "probes"
+    if folder.is_dir():  # absent when unused, so older workspaces keep their fingerprints
+        snapshot["probes"] = {p.name: json.loads(p.read_text(encoding="utf-8-sig")) for p in sorted(folder.glob("*.json"))}
+    return snapshot
 
 
 def review_fingerprint(evaluation: dict) -> str:
