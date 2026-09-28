@@ -129,8 +129,15 @@ def tree_hash(root: Path) -> str:
     return digest.hexdigest()
 
 
+EVAL_OUTPUTS = ("results", "RESULTS.md", "heldout-ledger.jsonl", ".cache")
+
+
 def git_state(path: Path) -> dict:
-    """Commit and dirty flag of the git checkout containing ``path`` (scoped to ``path``)."""
+    """Commit and dirty flag of the git checkout containing ``path`` (scoped to ``path``).
+
+    The eval harness's own directories are left out: runs write scorecards and the held-out ledger
+    there, which says nothing about whether the skill had uncommitted edits.
+    """
     def git(*args: str) -> str | None:
         try:
             done = subprocess.run(["git", "-C", str(path), *args], capture_output=True, text=True, timeout=30)
@@ -141,7 +148,11 @@ def git_state(path: Path) -> dict:
     commit = git("rev-parse", "HEAD")
     if not commit:
         return {"commit": None, "dirty": None}
-    status = git("status", "--porcelain", "--", ".")
+    top = git("rev-parse", "--show-toplevel")
+    excluded = [":(exclude,top)evals/" + name for name in EVAL_OUTPUTS] if top else []
+    if top and Path(top).resolve() == path.resolve():  # a skill at the repository root
+        excluded += [":(exclude,top)evals", ":(exclude,top)tests"]
+    status = git("status", "--porcelain", "--", ".", *excluded)
     return {"commit": commit, "dirty": bool(status)}
 
 

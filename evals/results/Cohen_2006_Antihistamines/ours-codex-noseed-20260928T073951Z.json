@@ -1,0 +1,45 @@
+{
+  "topic": "Cohen_2006_Antihistamines",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T073951Z",
+  "scored": "20260928T075842Z",
+  "skill": {
+    "name": "ours",
+    "hash": "49fa7fd0b4d8465a17edf4c04050fca9e17c15fcd601f3be27462d4253786e26",
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1131
+  },
+  "strategy": "((\"Rhinitis, Allergic\"[Mesh] OR \"Rhinitis, Allergic, Seasonal\"[Mesh] OR \"Rhinitis, Allergic, Perennial\"[Mesh] OR \"Urticaria\"[Mesh] OR \"allergic rhinitis\"[tiab] OR \"allergic rhin*\"[tiab] OR \"hay fever\"[tiab] OR hayfever[tiab] OR pollinosis[tiab] OR \"pollen allergy\"[tiab] OR \"seasonal rhinitis\"[tiab] OR \"perennial rhinitis\"[tiab] OR \"rhinitis allerg*\"[tiab] OR urticaria[tiab] OR hives[tiab] OR \"urticarial wheal*\"[tiab] OR \"acute urticaria\"[tiab] OR \"chronic urticaria\"[tiab] OR \"chronic idiopathic urticaria\"[tiab]) AND (\"Cetirizine\"[Mesh] OR \"Loratadine\"[Mesh] OR \"Terfenadine\"[Mesh] OR \"Astemizole\"[Mesh] OR fexofenadine[nm] OR desloratadine[nm] OR acrivastine[nm] OR ebastine[nm] OR mizolastine[nm] OR azelastine[nm] OR epinastine[nm] OR antihistamine*[tiab] OR \"histamine H1 antagonist*\"[tiab] OR \"H1 receptor antagonist*\"[tiab] OR \"H1 antihistamine*\"[tiab] OR \"second generation antihistamine*\"[tiab] OR \"second-generation antihistamine*\"[tiab] OR \"newer antihistamine*\"[tiab] OR \"non-sedating antihistamine*\"[tiab] OR \"nonsedating antihistamine*\"[tiab] OR \"non sedating antihistamine*\"[tiab] OR cetirizine[tiab] OR levocetirizine[tiab] OR loratadine[tiab] OR desloratadine[tiab] OR fexofenadine[tiab] OR terfenadine[tiab] OR astemizole[tiab] OR acrivastine[tiab] OR ebastine[tiab] OR mizolastine[tiab] OR azelastine[tiab] OR epinastine[tiab])) AND (\"1800/01/01\"[edat] : \"2002/05/26\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2002-05-26",
+  "count": 1719,
+  "gold_scored": 16,
+  "gold_reachable": 16,
+  "retrieved": 13,
+  "recall_percent": 81.2,
+  "nnr": 132.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 13,
+  "unseen_recall_percent": 81.2,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

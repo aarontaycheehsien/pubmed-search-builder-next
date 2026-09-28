@@ -1,0 +1,45 @@
+{
+  "topic": "Cohen_2006_Estrogens",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T071840Z",
+  "scored": "20260928T074148Z",
+  "skill": {
+    "name": "ours",
+    "hash": "49fa7fd0b4d8465a17edf4c04050fca9e17c15fcd601f3be27462d4253786e26",
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1388
+  },
+  "strategy": "((\"Menopause\"[Mesh] OR \"Postmenopause\"[Mesh] OR \"Menopause, Premature\"[Mesh] OR \"Climacteric\"[Mesh] OR menopaus*[tiab] OR perimenopaus*[tiab] OR peri-menopaus*[tiab] OR postmenopaus*[tiab] OR post-menopaus*[tiab] OR climacteric[tiab] OR climacterics[tiab] OR climacterium[tiab] OR \"change of life\"[tiab] OR \"surgical menopause\"[tiab] OR \"induced menopause\"[tiab] OR ovariectom*[tiab] OR oophorectom*[tiab]) AND (\"Estrogen Replacement Therapy\"[Mesh] OR \"Estradiol\"[Mesh] OR \"Estradiol Congeners\"[Mesh] OR \"Estrogens, Conjugated (USP)\"[Mesh] OR \"Hormone Replacement Therapy\"[Mesh] OR estrogen*[tiab] OR oestrogen*[tiab] OR \"hormone replacement therap*\"[tiab] OR \"hormone therap*\"[tiab] OR \"menopausal hormone therap*\"[tiab] OR \"estrogen replacement therap*\"[tiab] OR \"oestrogen replacement therap*\"[tiab] OR estradiol[tiab] OR oestradiol[tiab] OR estriol[tiab] OR oestriol[tiab] OR estrone[tiab] OR oestrone[tiab] OR \"conjugated estrogen*\"[tiab] OR \"conjugated oestrogen*\"[tiab] OR \"conjugated equine estrogen*\"[tiab] OR \"conjugated equine oestrogen*\"[tiab] OR \"estradiol valerate\"[tiab] OR \"17 beta estradiol\"[tiab] OR \"17beta estradiol\"[tiab] OR \"ethinyl estradiol\"[tiab] OR \"ethinyl oestradiol\"[tiab] OR mestranol[tiab] OR Premarin[tiab] OR \"vaginal estrogen\"[tiab] OR \"vaginal oestrogen\"[tiab])) AND (\"1800/01/01\"[edat] : \"2003/10/12\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2003-10-12",
+  "count": 30406,
+  "gold_scored": 80,
+  "gold_reachable": 80,
+  "retrieved": 77,
+  "recall_percent": 96.2,
+  "nnr": 394.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 76,
+  "unseen_recall_percent": 96.2,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

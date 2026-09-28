@@ -1,0 +1,55 @@
+{
+  "topic": "housing-first-criminal-justice",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260928T092049Z",
+  "scored": "20260928T094536Z",
+  "skill": {
+    "name": "lean-optimal",
+    "hash": "b2569259e8a0658dd10bae3023147f2090fc75073a5bd07f9ebc1c23cc887486",
+    "commit": null,
+    "dirty": null,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": true
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1486
+  },
+  "strategy": "( \"Ill-Housed Persons\"[Mesh] OR \"Homeless Persons\"[Mesh] OR \"Ill-Housed Persons\"[tiab] OR \"Ill-Housed Person\"[tiab] OR \"Ill Housed Persons\"[tiab] OR \"Person, Ill-Housed\"[tiab] OR \"Persons, Ill-Housed\"[tiab] OR \"Shelterless Persons\"[tiab] OR \"Person, Shelterless\"[tiab] OR \"Persons, Shelterless\"[tiab] OR \"Shelterless Person\"[tiab] OR \"Homeless Persons\"[tiab] OR \"Homeless Person\"[tiab] OR \"Person, Homeless\"[tiab] OR \"Persons, Homeless\"[tiab] OR \"Unhoused Persons\"[tiab] OR \"Persons, Unhoused\"[tiab] OR \"Person, Unhoused\"[tiab] OR \"Unhoused Person\"[tiab] OR \"Street People\"[tiab] OR \"People, Street\"[tiab] OR Homelessness[tiab] OR \"Homeless Shelters\"[tiab] OR \"Homeless Shelter\"[tiab] OR \"Shelter, Homeless\"[tiab] OR \"Shelters, Homeless\"[tiab] OR \"Shelters for Homeless Persons\"[tiab] OR homeless*[tiab] OR unhoused[tiab] OR \"precariously housed\"[tiab] OR \"housing instability\"[tiab] OR \"unstably housed\"[tiab] OR \"marginally housed\"[tiab] OR \"street homeless\"[tiab] ) AND ( \"Housing First\"[tiab] OR \"housing-first\"[tiab] OR \"Pathways to Housing\"[tiab] OR \"supportive housing\"[tiab] OR \"permanent supportive housing\"[tiab] ) AND (0001/01/01:2018/08/01[edat])",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2018-08-01",
+  "count": 361,
+  "gold_scored": 5,
+  "gold_reachable": 5,
+  "retrieved": 4,
+  "recall_percent": 80.0,
+  "nnr": 90.2,
+  "translation_issues": [
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 4,
+  "unseen_recall_percent": 80.0,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

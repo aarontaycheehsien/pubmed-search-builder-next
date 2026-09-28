@@ -1,0 +1,45 @@
+{
+  "topic": "healthcare-nudging",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T084722Z",
+  "scored": "20260928T091026Z",
+  "skill": {
+    "name": "ours",
+    "hash": "49fa7fd0b4d8465a17edf4c04050fca9e17c15fcd601f3be27462d4253786e26",
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": true
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1384
+  },
+  "strategy": "((\"Choice Behavior\"[Mesh] OR \"Decision Support Techniques\"[Mesh] OR \"Decision Support Systems, Clinical\"[Mesh] OR \"Reminder Systems\"[Mesh] OR nudg*[tiab] OR \"choice architecture\"[tiab] OR \"behavioral economics\"[tiab] OR \"behavioural economics\"[tiab] OR \"behavioral science\"[tiab] OR \"behavioural science\"[tiab] OR \"clinical decision support\"[tiab] OR \"computerized decision support\"[tiab] OR \"computerised decision support\"[tiab] OR framing[tiab] OR salien*[tiab] OR feedback[tiab] OR \"social comparison\"[tiab] OR \"peer comparison\"[tiab] OR default*[tiab] OR \"active choice\"[tiab] OR prompt*[tiab] OR reminder*[tiab] OR alert*[tiab] OR preselect*[tiab] OR \"opt out\"[tiab] OR \"opt-out\"[tiab] OR \"opt in\"[tiab] OR \"opt-in\"[tiab] OR \"social norm*\"[tiab] OR \"commitment letter*\"[tiab]) AND (\"Evidence-Based Medicine\"[Mesh] OR \"Evidence-Based Practice\"[Mesh] OR \"Guideline Adherence\"[Mesh] OR \"Practice Guidelines as Topic\"[Mesh] OR \"evidence-based medicine\"[tiab] OR \"evidence based medicine\"[tiab] OR \"evidence-based practice\"[tiab] OR \"evidence based practice\"[tiab] OR \"evidence-based health care\"[tiab] OR \"evidence based health care\"[tiab] OR \"evidence-based healthcare\"[tiab] OR \"evidence based healthcare\"[tiab] OR \"evidence-informed practice\"[tiab] OR \"evidence informed practice\"[tiab] OR \"guideline adherence\"[tiab] OR \"guideline compliance\"[tiab] OR \"guideline-concordant\"[tiab] OR \"guideline concordant\"[tiab] OR \"guideline compliant\"[tiab] OR \"guideline-compliant\"[tiab] OR \"clinical guideline*\"[tiab] OR \"practice guideline*\"[tiab] OR \"best practice\"[tiab] OR \"appropriate prescribing\"[tiab] OR \"inappropriate prescribing\"[tiab] OR \"recommended care\"[tiab] OR \"evidence into practice\"[tiab] OR \"high-value care\"[tiab] OR \"high value care\"[tiab] OR \"low-value care\"[tiab] OR \"low value care\"[tiab] OR \"high-value screening\"[tiab] OR \"high value screening\"[tiab] OR \"lung-protective ventilation\"[tiab] OR \"lung protective ventilation\"[tiab] OR \"low tidal volume ventilation\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/18\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-18",
+  "count": 12345,
+  "gold_scored": 86,
+  "gold_reachable": 86,
+  "retrieved": 36,
+  "recall_percent": 41.9,
+  "nnr": 342.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 4,
+  "unseen_retrieved": 32,
+  "unseen_recall_percent": 39.0,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

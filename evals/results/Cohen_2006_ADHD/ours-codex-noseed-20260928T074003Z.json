@@ -1,0 +1,45 @@
+{
+  "topic": "Cohen_2006_ADHD",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T074003Z",
+  "scored": "20260928T082221Z",
+  "skill": {
+    "name": "ours",
+    "hash": "49fa7fd0b4d8465a17edf4c04050fca9e17c15fcd601f3be27462d4253786e26",
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2538
+  },
+  "strategy": "((\"Attention Deficit Disorder with Hyperactivity\"[Mesh] OR ADHD[tiab] OR ADDH[tiab] OR ADD[tiab] OR (attention[tiab] AND deficit[tiab]) OR hyperkinetic[tiab] OR (minimal[tiab] AND brain[tiab] AND dysfunction[tiab])) AND (\"Drug Therapy\"[Mesh] OR \"Methylphenidate\"[Mesh] OR \"Amphetamines\"[Mesh] OR \"Pemoline\"[Mesh] OR \"Bupropion\"[Mesh] OR \"Atomoxetine Hydrochloride\"[Mesh] OR \"Modafinil\"[Mesh] OR \"Clonidine\"[Mesh] OR \"Guanfacine\"[Mesh] OR \"Imipramine\"[Mesh] OR \"Desipramine\"[Mesh] OR \"Nortriptyline\"[Mesh] OR \"Amitriptyline\"[Mesh] OR \"Venlafaxine Hydrochloride\"[Mesh] OR \"Viloxazine\"[Mesh] OR \"Selegiline\"[Mesh] OR methylphenidate[tiab] OR dexmethylphenidate[tiab] OR amphetamine*[tiab] OR dextroamphetamine[tiab] OR pemoline[tiab] OR atomoxetine[tiab] OR tomoxetine[tiab] OR bupropion[tiab] OR modafinil[tiab] OR stimulant*[tiab] OR psychostimulant*[tiab] OR pharmacotherap*[tiab] OR pharmacolog*[tiab] OR medication*[tiab] OR drug therapy[tiab] OR antidepressant*[tiab] OR antihypertensive*[tiab] OR tricyclic*[tiab] OR clonidine[tiab] OR guanfacine[tiab] OR imipramine[tiab] OR desipramine[tiab] OR nortriptyline[tiab] OR amitriptyline[tiab] OR venlafaxine[tiab] OR viloxazine[tiab] OR selegiline[tiab] OR deprenyl[tiab] OR nicotine[tiab] OR tryptophan[tiab] OR phenylalanine[tiab] OR Ritalin[tiab] OR Adderall[tiab] OR Dexedrine[tiab] OR Cylert[tiab] OR Wellbutrin[tiab] OR Provigil[tiab])) AND (\"1800/01/01\"[edat] : \"2003/08/06\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2003-08-06",
+  "count": 5145,
+  "gold_scored": 20,
+  "gold_reachable": 20,
+  "retrieved": 19,
+  "recall_percent": 95.0,
+  "nnr": 270.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 5,
+  "unseen_retrieved": 14,
+  "unseen_recall_percent": 93.3,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

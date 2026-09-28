@@ -1,0 +1,49 @@
+{
+  "topic": "Cohen_2006_ADHD",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260928T082120Z",
+  "scored": "20260928T083812Z",
+  "skill": {
+    "name": "lean-optimal",
+    "hash": "b2569259e8a0658dd10bae3023147f2090fc75073a5bd07f9ebc1c23cc887486",
+    "commit": null,
+    "dirty": null,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1011
+  },
+  "strategy": "(\"Attention Deficit Disorder with Hyperactivity\"[Mesh] OR \"Attention Deficit Hyperactivity Disorders\"[tiab] OR \"Hyperkinetic Syndrome\"[tiab] OR \"Syndromes, Hyperkinetic\"[tiab] OR \"Attention Deficit-Hyperactivity Disorder\"[tiab] OR \"Attention Deficit-Hyperactivity Disorders\"[tiab] OR \"Deficit-Hyperactivity Disorder, Attention\"[tiab] OR \"Deficit-Hyperactivity Disorders, Attention\"[tiab] OR \"Disorder, Attention Deficit-Hyperactivity\"[tiab] OR \"Disorders, Attention Deficit-Hyperactivity\"[tiab] OR ADDH[tiab] OR \"Attention Deficit Disorders with Hyperactivity\"[tiab] OR ADHD[tiab] OR \"Attention Deficit Hyperactivity Disorder\"[tiab] OR \"Attention Deficit Disorder\"[tiab] OR \"Attention Deficit Disorders\"[tiab] OR \"Deficit Disorder, Attention\"[tiab] OR \"Deficit Disorders, Attention\"[tiab] OR \"Disorder, Attention Deficit\"[tiab] OR \"Disorders, Attention Deficit\"[tiab] OR \"Brain Dysfunction, Minimal\"[tiab] OR \"Dysfunction, Minimal Brain\"[tiab] OR \"Minimal Brain Dysfunction\"[tiab]) AND (\"Attention Deficit Disorder with Hyperactivity/drug therapy\"[Mesh] OR \"Atomoxetine\"[Supplementary Concept] OR \"Modafinil\"[Supplementary Concept] OR methylphenidat*[tiab] OR Ritalin[tiab] OR Concerta[tiab] OR Metadate[tiab] OR Methylin[tiab] OR amphetamin*[tiab] OR dextroamphetamine[tiab] OR dexamphetamine[tiab] OR Dexedrine[tiab] OR Adderall[tiab] OR pemolin*[tiab] OR Cylert[tiab] OR atomoxetine[tiab] OR tomoxetine[tiab] OR Strattera[tiab] OR bupropion[tiab] OR amfebutamone[tiab] OR Wellbutrin[tiab] OR modafinil[tiab] OR Provigil[tiab] OR clonidine[tiab] OR guanfacine[tiab] OR imipramine[tiab] OR desipramine[tiab] OR nortriptyline[tiab] OR amitriptyline[tiab] OR venlafaxine[tiab] OR amantadine[tiab] OR selegiline[tiab] OR stimulant*[tiab] OR psychostimulant*[tiab] OR pharmacotherap*[tiab] OR medication*[tiab] OR \"drug treatment\"[tiab] OR \"drug therapy\"[tiab]) AND (\"1800/01/01\"[edat] : \"2003/08/06\"[edat])",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2003-08-06",
+  "count": 2729,
+  "gold_scored": 20,
+  "gold_reachable": 20,
+  "retrieved": 19,
+  "recall_percent": 95.0,
+  "nnr": 143.6,
+  "translation_issues": [
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 19,
+  "unseen_recall_percent": 95.0,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

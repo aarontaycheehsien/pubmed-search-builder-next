@@ -1,0 +1,45 @@
+{
+  "topic": "Cohen_2006_Estrogens",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T074150Z",
+  "scored": "20260928T080444Z",
+  "skill": {
+    "name": "ours",
+    "hash": "49fa7fd0b4d8465a17edf4c04050fca9e17c15fcd601f3be27462d4253786e26",
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1374
+  },
+  "strategy": "((Menopause[Mesh] OR Climacteric[Mesh] OR Premenopause[Mesh] OR Postmenopause[Mesh] OR Perimenopause[Mesh] OR menopaus*[tiab] OR climacteric*[tiab] OR perimenopaus*[tiab] OR peri-menopaus*[tiab] OR premenopaus*[tiab] OR pre-menopaus*[tiab] OR postmenopaus*[tiab] OR post-menopaus*[tiab] OR \"surgical menopause\"[tiab] OR surgically menopaus*[tiab] OR \"induced menopause\"[tiab] OR ovariectom*[tiab] OR oophorectom*[tiab]) AND (Estrogen Replacement Therapy[Mesh] OR Hormone Replacement Therapy[Mesh] OR Estradiol[Mesh] OR Estriol[Mesh] OR Estrone[Mesh] OR estrogen*[tiab] OR oestrogen*[tiab] OR estradiol*[tiab] OR oestradiol*[tiab] OR estriol*[tiab] OR oestriol*[tiab] OR estrone*[tiab] OR oestrone*[tiab] OR estrogenic*[tiab] OR oestrogenic*[tiab] OR \"conjugated estrogen\"[tiab] OR \"conjugated estrogens\"[tiab] OR \"conjugated oestrogen\"[tiab] OR \"conjugated oestrogens\"[tiab] OR \"ethinyl estradiol\"[tiab] OR \"ethinyl oestradiol\"[tiab] OR \"hormone replacement therapy\"[tiab] OR \"postmenopausal hormone therapy\"[tiab] OR \"post-menopausal hormone therapy\"[tiab] OR \"menopausal hormone therapy\"[tiab] OR Premarin[tiab] OR Estrace[tiab] OR Vagifem[tiab] OR Ovestin[tiab])) AND (\"1800/01/01\"[edat] : \"2003/10/12\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2003-10-12",
+  "count": 30474,
+  "gold_scored": 80,
+  "gold_reachable": 80,
+  "retrieved": 77,
+  "recall_percent": 96.2,
+  "nnr": 395.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 76,
+  "unseen_recall_percent": 96.2,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

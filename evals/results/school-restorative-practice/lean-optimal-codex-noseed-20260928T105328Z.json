@@ -1,0 +1,52 @@
+{
+  "topic": "school-restorative-practice",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260928T105328Z",
+  "scored": "20260928T111121Z",
+  "skill": {
+    "name": "lean-optimal",
+    "hash": "b2569259e8a0658dd10bae3023147f2090fc75073a5bd07f9ebc1c23cc887486",
+    "commit": null,
+    "dirty": null,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": true
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1073
+  },
+  "strategy": "((\"restorative justice\"[tiab] OR \"restorative-justice\"[tiab] OR \"restorative practice\"[tiab] OR \"restorative practices\"[tiab] OR \"restorative-practice\"[tiab] OR \"restorative-practices\"[tiab] OR \"restorative approach\"[tiab] OR \"restorative approaches\"[tiab] OR \"restorative circle\"[tiab] OR \"restorative circles\"[tiab] OR \"restorative conference\"[tiab] OR \"restorative conferences\"[tiab] OR \"restorative conferencing\"[tiab] OR \"restorative discipline\"[tiab] OR \"restorative program\"[tiab] OR \"restorative programs\"[tiab] OR (restorat*[tiab] AND (justice[tiab] OR practice*[tiab] OR approach*[tiab] OR circle*[tiab] OR conference*[tiab] OR discipline*[tiab] OR program*[tiab])))) AND ((\"Schools\"[Mesh:noexp] OR \"School Health Services\"[Mesh] OR \"Education\"[Mesh:noexp] OR \"Schools\"[tiab] OR \"School\"[tiab] OR \"Primary Schools\"[tiab] OR \"Primary School\"[tiab] OR \"School, Primary\"[tiab] OR \"Schools, Primary\"[tiab] OR \"Schools, Secondary\"[tiab] OR \"School, Secondary\"[tiab] OR \"Secondary School\"[tiab] OR \"Secondary Schools\"[tiab] OR \"School Health Services\"[tiab] OR \"Health Service, School\"[tiab] OR \"School Health Service\"[tiab] OR \"Service, School Health\"[tiab] OR \"School-Based Health Services\"[tiab] OR \"Health Service, School-Based\"[tiab] OR \"Health Services, School-Based\"[tiab] OR \"School-Based Health Service\"[tiab] OR \"School Based Health Services\"[tiab] OR \"Service, School-Based Health\"[tiab] OR \"Services, School-Based Health\"[tiab] OR \"Health Services, School\"[tiab] OR \"Services, School Health\"[tiab] OR \"School-Based Services\"[tiab] OR \"School-Based Service\"[tiab] OR \"School Based Services\"[tiab] OR \"Service, School-Based\"[tiab] OR \"Services, School-Based\"[tiab] OR \"School Health Promotion\"[tiab] OR \"Health Promotion, School\"[tiab] OR \"Health Promotions, School\"[tiab] OR \"Promotion, School Health\"[tiab] OR \"Promotions, School Health\"[tiab] OR \"School Health Promotions\"[tiab] OR \"Educational Activities\"[tiab] OR \"Activities, Educational\"[tiab] OR \"Activity, Educational\"[tiab] OR \"Educational Activity\"[tiab] OR \"Literacy Programs\"[tiab] OR \"Literacy Program\"[tiab] OR \"Program, Literacy\"[tiab] OR \"Programs, Literacy\"[tiab] OR \"Training Programs\"[tiab] OR \"Programs, Training\"[tiab] OR \"Program, Training\"[tiab] OR \"Training Program\"[tiab] OR \"Workshops\"[tiab] OR \"Workshop\"[tiab] OR school*[tiab] OR \"school-based\"[tiab] OR \"school based\"[tiab] OR \"elementary school\"[tiab] OR \"elementary schools\"[tiab] OR \"middle school\"[tiab] OR \"middle schools\"[tiab] OR \"high school\"[tiab] OR \"high schools\"[tiab] OR \"K-12\"[tiab] OR kindergarten[tiab] OR classroom*[tiab] OR pupil*[tiab] OR student*[tiab] OR teacher*[tiab])) AND (\"1800/01/01\"[edat] : \"2020/06/03\"[edat])",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2020-06-03",
+  "count": 940,
+  "gold_scored": 6,
+  "gold_reachable": 6,
+  "retrieved": 6,
+  "recall_percent": 100.0,
+  "nnr": 156.7,
+  "translation_issues": [
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 6,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

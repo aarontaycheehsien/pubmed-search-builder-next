@@ -1,0 +1,52 @@
+{
+  "topic": "Cohen_2006_Antihistamines",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260928T090335Z",
+  "scored": "20260928T092403Z",
+  "skill": {
+    "name": "lean-optimal",
+    "hash": "b2569259e8a0658dd10bae3023147f2090fc75073a5bd07f9ebc1c23cc887486",
+    "commit": null,
+    "dirty": null,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": true
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1227
+  },
+  "strategy": "﻿((\"Rhinitis, Allergic, Seasonal\"[Mesh] OR \"Rhinitis, Allergic, Perennial\"[Mesh] OR \"Urticaria\"[Mesh] OR \"allergic rhinitis\"[tiab] OR \"allergic rhinitides\"[tiab] OR \"rhinitis allergic\"[tiab] OR \"rhinitides allergic\"[tiab] OR \"rhinitis allergic seasonal\"[tiab] OR \"hay fever\"[tiab] OR \"fever hay\"[tiab] OR \"hayfever\"[tiab] OR \"pollen allergy\"[tiab] OR \"allergies pollen\"[tiab] OR \"allergy pollen\"[tiab] OR \"pollen allergies\"[tiab] OR \"pollinosis\"[tiab] OR \"pollinoses\"[tiab] OR \"seasonal allergic rhinitis\"[tiab] OR \"allergic rhinitides seasonal\"[tiab] OR \"allergic rhinitis seasonal\"[tiab] OR \"rhinitides seasonal allergic\"[tiab] OR \"rhinitis seasonal allergic\"[tiab] OR \"seasonal allergic rhinitides\"[tiab] OR \"rhinitis allergic perennial\"[tiab] OR \"rhinitis allergic nonseasonal\"[tiab] OR \"perennial allergic rhinitis\"[tiab] OR \"urticaria\"[tiab] OR \"urticarias\"[tiab] OR \"hives\"[tiab] OR \"urticarial wheals\"[tiab] OR \"urticarial wheal\"[tiab] OR \"wheals urticarial\"[tiab] OR \"wheal urticarial\"[tiab] OR \"acute urticaria\"[tiab] OR \"chronic urticaria\"[tiab] OR \"chronic hives\"[tiab] OR urticaria*[tiab] OR rhinit*[tiab])) AND ((\"Histamine H1 Antagonists, Non-Sedating\"[Pharmacological Action] OR \"Histamine H1 Antagonists, Non-Sedating\"[tiab] OR \"acrivastine\"[Supplementary Concept] OR \"desloratadine\"[Supplementary Concept] OR \"fexofenadine\"[Supplementary Concept] OR \"ebastine\"[Supplementary Concept] OR \"mizolastine\"[Supplementary Concept] OR \"azelastine\"[Supplementary Concept] OR \"emedastine\"[Supplementary Concept] OR \"levocetirizine\"[Supplementary Concept] OR \"cetirizine\"[tiab] OR \"loratadine\"[tiab] OR \"astemizole\"[tiab] OR \"terfenadine\"[tiab] OR \"ketotifen\"[tiab] OR \"acrivastine\"[tiab] OR \"desloratadine\"[tiab] OR \"fexofenadine\"[tiab] OR \"ebastine\"[tiab] OR \"mizolastine\"[tiab] OR \"azelastine\"[tiab] OR \"emedastine\"[tiab] OR \"levocetirizine\"[tiab] OR \"Zyrtec\"[tiab] OR \"Zirtek\"[tiab] OR \"Reactine\"[tiab] OR \"Claritin\"[tiab] OR \"Alavert\"[tiab] OR \"Hismanal\"[tiab] OR \"Seldane\"[tiab] OR \"Semprex\"[tiab] OR \"Kestin\"[tiab] OR \"Zaditen\"[tiab] OR \"Clarinex\"[tiab] OR \"Aerius\"[tiab] OR \"second generation antihistamine\"[tiab] OR \"second-generation antihistamine\"[tiab] OR \"non-sedating antihistamine\"[tiab] OR \"nonsedating antihistamine\"[tiab] OR \"newer antihistamine\"[tiab] OR \"non sedating antihistamine\"[tiab] OR antihistamin*[tiab] OR non-sedat*[tiab] OR nonsedat*[tiab] OR second-generation antihistamin*[tiab] OR second generation antihistamin*[tiab])) AND (\"1900/01/01\"[edat] : \"2002/05/26\"[edat])",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2002-05-26",
+  "count": 2153,
+  "gold_scored": 16,
+  "gold_reachable": 16,
+  "retrieved": 13,
+  "recall_percent": 81.2,
+  "nnr": 165.6,
+  "translation_issues": [
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 13,
+  "unseen_recall_percent": 81.2,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}
