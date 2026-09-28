@@ -25,6 +25,20 @@ python evals/run.py report                        # writes evals/RESULTS.md
 | `gold_pmids` | never | the review's included studies |
 | `naive_blocks`, `reference_strategy` | never | baselines |
 
+## Splits
+
+`splits.json` puts every fixture in one split:
+
+- `dev`: the topics the skill is tuned on. A skill change may only be motivated by these.
+- `heldout`: topics frozen with `python evals/run.py freeze TOPIC ...` before their first run
+  (freezing refuses a topic that already has results). The freeze stores a hash of the fixture;
+  a later edit makes it fail to load. `generate`, `score` and `baselines` refuse a held-out
+  topic without `--heldout`, log every use in `heldout-ledger.jsonl`, and never keep the missed
+  records, the agent's final message or its audit.
+- `retired`: fixtures that cannot be scored fairly, with the reason.
+
+A topic in no split cannot be run: assign it to dev or freeze it first.
+
 ## Isolation
 
 - Each generated run happens in a new directory outside the repository (default
@@ -47,6 +61,13 @@ python evals/run.py report                        # writes evals/RESULTS.md
 - **Results** (the count on or before `as_of`) and **NNR** (results per gold record retrieved), a
   workload proxy rather than precision.
 - **Cost and time** from the driver.
+- **Version**: a hash of the skill as staged into the run, with its git commit and dirty flag,
+  the harness commit, and the driver version. `report` shows only the latest version of each
+  skill and driver (`--all-versions` for all), and a paired table of two sources (`--pair A B`,
+  default ours against lean-optimal): recall win/tie/loss per topic and the ratio of result counts.
+- **Status**: `ok`, `leakage`, `no-delivery`, `timeout` or `infra`. An infra failure (non-zero exit
+  within a minute, or a quota/rate-limit message, with nothing delivered) is not counted as an
+  attempt; `generate --retry-infra N --retry-wait S` retries it.
 
 ## Baselines
 

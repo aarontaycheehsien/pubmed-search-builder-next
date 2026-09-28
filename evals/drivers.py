@@ -108,6 +108,24 @@ def run_codex(prompt: str, run_dir: Path, *, env: dict, timeout: int, model: str
 DRIVERS = {"claude": run_claude, "codex": run_codex}
 
 
+def driver_version(name: str) -> str | None:
+    """``claude --version`` / ``codex --version``, for the scorecard's provenance."""
+    try:
+        done = subprocess.run([find(name), "--version"], capture_output=True, text=True, timeout=60)
+    except (OSError, subprocess.SubprocessError):
+        return None
+    return (done.stdout or done.stderr).strip().splitlines()[0] if done.returncode == 0 and (done.stdout or done.stderr).strip() else None
+
+
+def error_text(run_dir: Path, tail_bytes: int = 4000) -> str:
+    """The end of the transcript plus stderr: where a quota or rate-limit failure is reported."""
+    parts = []
+    for path in (run_dir / "transcript.jsonl", run_dir / "transcript.json", run_dir.parent / f"{run_dir.name}.stderr.txt"):
+        if path.exists():
+            parts.append(path.read_bytes()[-tail_bytes:].decode("utf-8", errors="replace"))
+    return "\n".join(parts)
+
+
 def prompt_for(fixture: dict, *, seeds: list[str], depth: str) -> str:
     eligibility = ""
     if fixture.get("eligibility"):

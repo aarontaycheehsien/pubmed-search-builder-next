@@ -1,0 +1,27 @@
+{
+  "dev": [
+    "Appenzeller-Herzog_2019",
+    "Bos_2018",
+    "Brouwer_2019",
+    "CD010657",
+    "CD011431",
+    "CD011926",
+    "Donners_2021",
+    "Kwok_2020",
+    "Liu_2023_VR_nursing",
+    "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+    "Meijboom_2021",
+    "Menon_2022",
+    "Muthu_2022",
+    "Oud_2018",
+    "Smid_2020",
+    "Welling_2021",
+    "gao-2026-Immune checkpoint inhibitors",
+    "van_Dis_2020",
+    "van_de_Schoot_2018"
+  ],
+  "heldout": {},
+  "retired": {
+    "Jeyaraman_2020": "gold set is mostly chondrocyte-implantation and microfracture trials outside the question (mesenchymal stem cells for knee osteoarthritis)"
+  }
+}
