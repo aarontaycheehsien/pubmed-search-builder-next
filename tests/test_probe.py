@@ -73,6 +73,26 @@ def test_probe_stays_valid_while_the_block_only_grows(make_ws):
     assert "category_probe_stale" in codes(ws)
 
 
+def test_draws_need_the_previous_probe_screened_and_stop_at_the_budget(make_ws):
+    ws = build(make_ws)
+    probe.draw_probe(ws, "env", "exposure*[tiab]", n=30)
+    with pytest.raises(StrategyError, match="not screened yet"):
+        probe.draw_probe(ws, "env", "exposure*[tiab]", n=30)
+    probe.record_probe(ws, "env", [])
+    probe.draw_probe(ws, "env", "exposure*[tiab]", n=30)
+    probe.record_probe(ws, "env", [])
+    with pytest.raises(StrategyError, match="budget spent"):
+        probe.draw_probe(ws, "env", "exposure*[tiab]", n=30)
+
+
+def test_dense_finds_redirect_to_a_generic_layer(make_ws):
+    ws = build(make_ws)
+    ws.save_set("relevant", "relevant", ["5", "7"])
+    probe.draw_probe(ws, "env", "exposure*[tiab]", n=30)
+    result = probe.record_probe(ws, "env", ["5", "7"])
+    assert result["estimated_relevant_outside"] == 2 and "generic layer" in result["next"]
+
+
 def test_spent_probe_budget_turns_into_a_review_item(make_ws):
     ws = build(make_ws)
     ws.save_set("relevant", "relevant", ["5", "7"])

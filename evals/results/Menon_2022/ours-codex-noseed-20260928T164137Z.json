@@ -1,0 +1,53 @@
+{
+  "topic": "Menon_2022",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T164137Z",
+  "scored": "20260928T181138Z",
+  "skill": {
+    "name": "ours",
+    "hash": "472d3efba02414eda1704da54de0c110fa1870a29acc44d6e4509d385bd8d24e",
+    "commit": "b763d23f1d41154f170253203b4e0a886265f049",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b763d23f1d41154f170253203b4e0a886265f049",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 1,
+    "timed_out": true,
+    "seconds": 5401
+  },
+  "final_message": "",
+  "error": "no current protected delivery",
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "environmental_health",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "methodological_rigour",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 8
+      }
+    ]
+  },
+  "status": "timeout",
+  "valid": false,
+  "split": "dev"
+}

@@ -22,6 +22,7 @@ from .optional import SAMPLE_SIZE, draw, validation_now
 from .strategy import Block, Strategy, StrategyError, apply_limits, block_query, core_query
 
 PROBE_BUDGET = {"quick": 0, "standard": 2, "thorough": 3}
+DENSE_FINDS = 2  # relevant records in one sample above which member-by-member repair cannot keep up
 
 
 def category_concepts(protocol: dict) -> list[dict]:
@@ -72,6 +73,12 @@ def draw_probe(ws, concept_id: str, broader: str, *, n: int | None = None, seed:
         raise StrategyError(f"{concept_id!r} is not a category concept (\"category\": true) in protocol.json")
     if not broader.strip():
         raise StrategyError("give a broader query: the category's members, its MeSH tree, or generic wording for it")
+    earlier = probes(ws, concept_id)
+    if earlier and earlier[-1].get("screened") is None:
+        raise StrategyError(f"probe {earlier[-1]['number']} is not screened yet: screen it and run psb probe record first")
+    budget = PROBE_BUDGET.get(protocol.get("depth") or "standard", 2) or 1
+    if len(earlier) >= budget:
+        raise StrategyError(f"probe budget spent ({budget} at this depth): add the finding to the audit and let the critic review it")
     strategy = ws.strategy()
     query = probe_query(strategy, concept_id, broader)
     size = n or SAMPLE_SIZE.get(protocol.get("depth") or "standard") or SAMPLE_SIZE["standard"]
@@ -105,9 +112,18 @@ def record_probe(ws, concept_id: str, relevant: list[str], *, note: str = "") ->
     probe.update(screened=list(probe["sample"]), relevant=relevant, note=note.strip(), recorded=validation_now())
     path = ws.root / "probes" / f"{concept_id}-{probe['number']}.json"
     path.write_text(json.dumps(probe, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    return {"concept": concept_id, "probe": probe["number"], "screened": len(probe["screened"]), "relevant": relevant,
-            "next": ("add the members these records name to the block, psb eval, then draw another probe"
-                     if relevant else "the current block passed this probe")}
+    screened = len(probe["screened"])
+    estimate = round(len(relevant) / screened * probe["outside_count"]) if screened else None
+    if len(relevant) >= DENSE_FINDS:
+        advice = (f"about {estimate:,} relevant records may lie outside the block: too many to recover member by member. "
+                  "Add the broader query's wording to the block as a generic layer, psb eval to see the count, "
+                  "then draw another probe")
+    elif relevant:
+        advice = "add the members these records name to the block, psb eval, then draw another probe"
+    else:
+        advice = "the current block passed this probe"
+    return {"concept": concept_id, "probe": probe["number"], "screened": screened, "relevant": relevant,
+            "outside_count": probe["outside_count"], "estimated_relevant_outside": estimate, "next": advice}
 
 
 def measure(ws, strategy: Strategy, protocol: dict) -> list[dict]:

@@ -122,8 +122,12 @@ first are the ones that use the category's words.
    record would still say: generic wording (`disease*`, `therap*`, `risk factor*`), the
    exploded MeSH trees of the category, or a longer list of members. Screen every sampled
    record. Add relevant ones to a `relevant` set and run `psb probe record <id> --relevant ...`.
-4. If the probe found relevant records, add the members they name to the block, `psb eval`, and
-   probe again with a fresh draw. Delivery at `standard` and `thorough` needs, for each category
+4. If the probe found one relevant record, add the member it names to the block, `psb eval`,
+   and probe again with a fresh draw. If it found two or more, `psb probe record` estimates how
+   many relevant records lie outside the block; that is too many to recover member by member.
+   Add the broader query's own wording to the block as a generic layer (`exposure*`,
+   `risk factor*`, the exploded MeSH tree), `psb eval` to see the count, then probe again.
+   A new probe can be drawn only after the previous one is screened and recorded. Delivery at `standard` and `thorough` needs, for each category
    concept, a screened probe on the current block that found none, or the probe budget (2 at
    `standard`, 3 at `thorough`) spent with the remaining finding reviewed by the critic.
 

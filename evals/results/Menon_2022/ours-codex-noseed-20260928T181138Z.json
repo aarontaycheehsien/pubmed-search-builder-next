@@ -1,0 +1,88 @@
+{
+  "topic": "Menon_2022",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T181138Z",
+  "scored": "20260928T190115Z",
+  "skill": {
+    "name": "ours",
+    "hash": "a5a5d9f84be7a62a5c315ed836ecc28519ec3ca1875b67839ddafd9485a37631",
+    "commit": "b763d23f1d41154f170253203b4e0a886265f049",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b763d23f1d41154f170253203b4e0a886265f049",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2977
+  },
+  "final_message": "] OR \"neighborhood environment\"[tiab] OR \"neighbourhood environment\"[tiab] OR workplace[tiab] OR working condition*[tiab] OR \"workplace polic*\"[tiab] OR \"workplace environment\"[tiab] OR \"noise exposure\"[tiab] OR \"ambient temperature\"[tiab] OR \"high ambient temperature\"[tiab] OR \"low ambient temperature\"[tiab] OR temperature exposure*[tiab] OR \"environment-based\"[tiab] OR \"environment based\"[tiab] OR \"environmental design\"[tiab] OR \"home environment\"[tiab] OR \"noise regulation\"[tiab] OR \"climate change\"[tiab])) AND (\"1800/01/01\"[edat] : \"2020/07/20\"[edat])\n```\n\n## Counts and validation\n\nThe generated query and audit are in [final-query.txt](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-37e3fa46fd7e2f7f/ours-codex-noseed-20260928T181138Z/work/final-query.txt), [audit.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-37e3fa46fd7e2f7f/ours-codex-noseed-20260928T181138Z/work/audit.md), and [validation-manifest.json](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-37e3fa46fd7e2f7f/ours-codex-noseed-20260928T181138Z/work/validation-manifest.json).\n\n- Systematic-review block: **203,175** records.\n- Environmental-health block: **891,547** records.\n- Combined query: **5,267** records, using the required Entrez-date cutoff of July 20, 2020.\n- Development set: **18/18 retrieved (100%)**. Held-out set: **4/4 retrieved (100%)**. These are relative recall checks, not estimates of absolute sensitivity; the held-out set is semi-independent.\n- `Working Conditions[Mesh]` is authority-valid but has zero hits by itself at this cutoff; it remains an OR alternative, and the warning is documented in the audit.\n\nThe scope assumption is that the reviews being appraised are systematic reviews of human health effects related to environmental exposures or determinants. Category probes found member-only records, so unrecognized environmental-health topics may still be missed by the required context block. This draft needs independent PRESS peer review by an information specialist before use.",
+  "strategy": "((Systematic Reviews as Topic[Mesh] OR systematic[sb] OR \"systematic review\"[tiab] OR \"systematic reviews\"[tiab] OR \"systematic literature review\"[tiab] OR \"systematic literature reviews\"[tiab] OR \"umbrella review\"[tiab] OR \"umbrella reviews\"[tiab] OR \"review of reviews\"[tiab] OR \"evidence synthesis\"[tiab] OR \"evidence syntheses\"[tiab]) AND (Environmental Health[Mesh] OR Environmental Exposure[Mesh] OR Occupational Exposure[Mesh] OR Occupational Health[Mesh] OR Occupational Diseases[Mesh] OR Working Conditions[Mesh] OR Workplace[Mesh] OR Dermatitis, Occupational[Mesh] OR Shift Work Schedule[Mesh] OR Air Pollution[Mesh] OR Air Pollution, Indoor[Mesh] OR Particulate Matter[Mesh] OR Radon[Mesh] OR Water Pollution[Mesh] OR Water Supply[Mesh] OR Water Microbiology[Mesh] OR Vehicle Emissions[Mesh] OR Cold Climate[Mesh] OR Hot Temperature[Mesh] OR \"environmental health\"[tiab] OR environmental exposure*[tiab] OR environmental toxicant*[tiab] OR environmental pollut*[tiab] OR environmental determinant*[tiab] OR environmental epidemiolog*[tiab] OR \"air pollution\"[tiab] OR air pollutant*[tiab] OR \"water pollution\"[tiab] OR water distribution system*[tiab] OR water supply[tiab] OR waterborne[tiab] OR \"water borne\"[tiab] OR pesticide*[tiab] OR radon[tiab] OR diesel[tiab] OR \"diesel exhaust\"[tiab] OR \"chemical exposure*\"[tiab] OR \"occupational exposure*\"[tiab] OR \"shift work\"[tiab] OR \"night shift\"[tiab] OR \"contact dermatitis\"[tiab] OR \"occupational dermatitis\"[tiab] OR \"built environment\"[tiab] OR \"neighborhood environment\"[tiab] OR \"neighbourhood environment\"[tiab] OR workplace[tiab] OR working condition*[tiab] OR \"workplace polic*\"[tiab] OR \"workplace environment\"[tiab] OR \"noise exposure\"[tiab] OR \"ambient temperature\"[tiab] OR \"high ambient temperature\"[tiab] OR \"low ambient temperature\"[tiab] OR temperature exposure*[tiab] OR \"environment-based\"[tiab] OR \"environment based\"[tiab] OR \"environmental design\"[tiab] OR \"home environment\"[tiab] OR \"noise regulation\"[tiab] OR \"climate change\"[tiab])) AND (\"1800/01/01\"[edat] : \"2020/07/20\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-07-20",
+  "count": 5267,
+  "gold_scored": 74,
+  "gold_reachable": 74,
+  "retrieved": 49,
+  "recall_percent": 66.2,
+  "missed": [
+    "30696940",
+    "30884495",
+    "31692109",
+    "31711095",
+    "31727405",
+    "31734383",
+    "31767045",
+    "31809833",
+    "31899558",
+    "32026567",
+    "32048436",
+    "32091510",
+    "32108942",
+    "32246781",
+    "32252671",
+    "32272785",
+    "32283742",
+    "32313524",
+    "32325560",
+    "32325616",
+    "32343457",
+    "32361950",
+    "32473798",
+    "32497902",
+    "32666031"
+  ],
+  "nnr": 107.5,
+  "translation_issues": [],
+  "gold_seen_by_agent": 5,
+  "unseen_retrieved": 44,
+  "unseen_recall_percent": 63.8,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 1,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "environmental_health",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}
