@@ -334,3 +334,18 @@ def gold_seen(fixture: dict, run_dir: Path) -> set[str]:
         except ValueError:
             continue
     return seen & set(fixture["gold_pmids"])
+
+
+def diagnostic_handoff(run_dir: Path) -> dict | None:
+    """The query and blocker codes of an undelivered run's ``diagnostic-audit.md`` (psb report
+    --diagnostic, or a gate refusal). None when there is no parseable handoff."""
+    path = run_dir / "work" / "diagnostic-audit.md"
+    try:
+        text = path.read_text(encoding="utf-8")
+        data = json.loads(text[text.index("```json") + len("```json"):text.rindex("```")])
+    except (OSError, ValueError):
+        return None
+    query = (data.get("evaluation") or {}).get("query") if isinstance(data, dict) else None
+    if not isinstance(query, str) or not query.strip():
+        return None
+    return {"query": query, "blockers": sorted({str(b.get("code")) for b in data.get("blockers") or [] if isinstance(b, dict)})}
