@@ -15,7 +15,7 @@ python scripts/psb.py --workspace <run-dir> <command> ...
 ```
 
 Every command prints JSON. Every NCBI request is logged in the workspace automatically, and
-`psb report` builds the audit from the workspace. **Only report counts, PMIDs, MeSH headings
+`psb report` validates live and generates the query, audit and validation manifest. **Only report counts, PMIDs, MeSH headings
 and recall figures that a `psb` command returned.** If you did not run it, do not claim it.
 
 ## Workflow
@@ -57,6 +57,8 @@ Read `references/scope.md`. Fill `protocol.json`:
 
 Only AND a concept that passes the admission test in `references/scope.md`; when in doubt, do
 not AND it. Outcomes, comparators, settings and study designs are usually `screen`.
+A block that names one direction of a process (switching back) is fragile; search the process.
+Every member the criteria list for a concept is searched by its own name.
 Decide roles from the question before reading any seed record.
 
 Show the user a short table of concepts, roles and limits, and ask them to confirm. Set
@@ -108,19 +110,29 @@ records, leave-one-block-out ablation, and what changed since the previous versi
   reconsider its role in `protocol.json`.
 - Recovering a held-out validation miss makes that set part of development. Say so.
 
+A phrase-index warning is a mandatory review, not proof of zero hits. Read the phrase decision
+tree in `references/validation.md`. Inspect the individual clause's translation; test a justified
+rewrite or removal, or record a clause-specific acceptance. Never silently change word-order,
+proximity, or morphology requirements to make a warning disappear.
+
 ### 6. Critic
 
 Read `references/critic.md`. Run `psb critic packet` and give only that packet to a
 fresh-context reviewer (a subagent, if your host has one). Save its JSON as
 `critic/round-N.json`, then run `psb critic check`. Answer every finding: change the strategy
 and re-run `psb eval`, or set `status` to `rejected` or `accepted-risk` with a `response`.
-Stop when no `must-fix` finding is open (at most two rounds at `standard`, three at `thorough`).
+Every depth requires a current critic: one round at `quick`, at most two at `standard`, three at `thorough`.
+Close substantive findings with explanations and supply the packet's evidence-bound issue dispositions.
+Technical blockers cannot be accepted as risks. If the budget is exhausted, produce diagnostic output.
 If no fresh context is available, review the packet yourself and say so in the audit.
 
 ### 7. Deliver
 
-Run `psb report --fresh`. It re-runs the counts live and writes `audit.md`. Read
-`references/reporting.md`, add the narrative sections it lists, and give the user:
+Read `references/reporting.md` and `references/validation.md`. Run `psb report` (`--fresh` is
+an equivalent spelling). It revalidates every line and heading live, checks the current critic,
+and writes `final-query.txt`, `audit.md`, and `validation-manifest.json` only if the gate passes.
+Deliver the generated query verbatim; do not reconstruct or edit it. Keep narrative additions
+in `narrative.md`, because changing the generated audit invalidates its manifest. Give the user:
 
 - the strategy (single line and line by line with counts),
 - recall on each known set, with how independent each set is,
@@ -138,6 +150,9 @@ Run `psb report --fresh`. It re-runs the counts live and writes `audit.md`. Read
 6. Label evidence honestly: development recall is not independent validation, relative recall
    is not sensitivity, and the internal critic is not PRESS peer review.
 7. Read `references/anti-patterns.md` before you finalise the scope and again before you deliver.
+8. Deliver a final query only after `psb report` returns `ok: true`. Otherwise fix the named
+   blockers and re-evaluate, or give `psb report --diagnostic` output explicitly labelled unfinished.
+   Do not hand-author a final query file or bypass the gate because retrieval counts look plausible.
 
 ## Other modes
 
@@ -154,4 +169,4 @@ Run `psb report --fresh`. It re-runs the counts live and writes `audit.md`. Read
 |---|---|---|---|
 | Known records | seeds if given | seeds + discovery or a prior-review benchmark | both, larger screening budget |
 | Term mining | if seeds | yes | yes, plus `psb terms miss` on every miss |
-| Critic rounds | 0-1 | 1-2 | up to 3 |
+| Critic rounds | 1 | 1-2 | 1-3 |

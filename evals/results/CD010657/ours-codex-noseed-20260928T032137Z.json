@@ -1,0 +1,33 @@
+{
+  "topic": "CD010657",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T032137Z",
+  "scored": "20260928T033030Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 533
+  },
+  "final_message": "h] OR vesicoureteral reflux[tiab] OR vesicoureteric reflux[tiab] OR vesico-ureteral reflux[tiab] OR VUR[tiab]) AND (\"Technetium Tc 99m Dimercaptosuccinic Acid\"[Mesh] OR \"Ultrasonography\"[Mesh] OR DMSA[tiab] OR \"DMSA scan\"[tiab] OR dimercaptosuccinic[tiab] OR dimercaptosuccinate[tiab] OR 99mTc[tiab] OR 99m-Tc[tiab] OR technetium-99m[tiab] OR renal scintigraphy[tiab] OR renal scan[tiab] OR renal ultrasound[tiab] OR urinary ultrasound[tiab] OR ultrasound[tiab] OR ultrasonography[tiab] OR sonography[tiab] OR echography[tiab])) AND (\"1800/01/01\"[edat] : \"2013/01/30\"[edat])\n```\n\nThe final query returned **1,783 records**. Line counts are in the generated [audit](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-01491638976b58ef\\ours-codex-noseed-20260928T032137Z\\work\\audit.md). The target-condition block returned 8,917 records; the combined DMSA-or-ultrasound block returned 429,684. Individual counts for lines 1–5 were 7,234; 3,780; 819; 1,021; and 1,500. For lines 7–23, counts were 1,153; 319,531; 1,948; 243; 1,632; 154; 18,377; 5,947; 8,740; 989; 579; 814; 9; 141,762; 60,748; 25,960; and 5,260.\n\n## Validation and handoff\n\nNo known articles were supplied. Four relevant records found in PubMed pilots were screened into a **development set**; the strategy retrieved all four (100% relative recall against that set). This is not independent validation or absolute sensitivity. The [critic round](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-01491638976b58ef\\ours-codex-noseed-20260928T032137Z\\work\\critic\\round-1.json) passed all six PRESS domains with no findings. The protocol and rationale are in [narrative.md](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-01491638976b58ef\\ours-codex-noseed-20260928T032137Z\\work\\narrative.md), and the [validation manifest](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-01491638976b58ef\\ours-codex-noseed-20260928T032137Z\\work\\validation-manifest.json) passed.\n\nThis is a draft for **PRESS peer review by an information specialist before use**.",
+  "strategy": "((\"Vesico-Ureteral Reflux\"[Mesh] OR vesicoureteral reflux[tiab] OR vesicoureteric reflux[tiab] OR vesico-ureteral reflux[tiab] OR VUR[tiab]) AND (\"Technetium Tc 99m Dimercaptosuccinic Acid\"[Mesh] OR \"Ultrasonography\"[Mesh] OR DMSA[tiab] OR \"DMSA scan\"[tiab] OR dimercaptosuccinic[tiab] OR dimercaptosuccinate[tiab] OR 99mTc[tiab] OR 99m-Tc[tiab] OR technetium-99m[tiab] OR renal scintigraphy[tiab] OR renal scan[tiab] OR renal ultrasound[tiab] OR urinary ultrasound[tiab] OR ultrasound[tiab] OR ultrasonography[tiab] OR sonography[tiab] OR echography[tiab])) AND (\"1800/01/01\"[edat] : \"2013/01/30\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2013-01-30",
+  "count": 1783,
+  "gold_scored": 35,
+  "gold_reachable": 35,
+  "retrieved": 35,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 50.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 33,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "valid": true
+}

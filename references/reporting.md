@@ -1,6 +1,9 @@
 # Reporting
 
-`psb report --fresh` re-runs every count live and writes `audit.md` with:
+`psb report` always runs complete live validation, including vocabulary and the current critic.
+`--fresh` remains a compatible alias. On success it publishes `final-query.txt`, `audit.md`, and
+`validation-manifest.json` from the same evaluated snapshot. The exported query includes any
+explicit effective `as_of` entry-date restriction. The audit includes:
 
 - question, framework, concept roles, and whether the user confirmed the scope
 - PRISMA-S search details: database and platform, date the counts were run, `as_of` bound,
@@ -12,10 +15,10 @@
 - critic rounds and finding status
 - standard limitations and the provenance line (NCBI requests, cache use, strategy hash)
 
-Do not edit the numbers in `audit.md`. If something is wrong, fix the workspace and run
+Do not edit `audit.md` or `final-query.txt`; their bytes are verified by the manifest. If something is wrong, fix the workspace and run
 `psb report` again.
 
-## Add these sections by hand, below the generated ones
+## Add these sections separately in `narrative.md`
 
 1. **Rationale.** Why each concept is searched or screened; key MeSH decisions (explosion,
    `:noexp`, supplementary concepts); notable text-word choices; why limits were used.
@@ -38,3 +41,17 @@ registries, citation searching and deduplication are outside this skill.
 - "development set (used to build the strategy)" versus "held-out validation set"
 - "PRESS-structured internal critique", never "PRESS peer reviewed"
 - If no known records existed: "Recall was not estimated; the strategy is empirically unvalidated."
+
+## Failed or interrupted finalization
+
+Read `validation.md`. Any technical blocker, incomplete check, missing/stale critic, or mandatory
+review without a disposition prevents final delivery. `report --diagnostic` writes
+`diagnostic-audit.md`, returns `ok: false`, and does not issue a protected query. The nonzero status
+is intentional. Prior delivery files are preserved under `history/deliveries/`; they are historical,
+not current outputs. Every attempt, including failures and identical counts, is kept under `attempts/`.
+
+The manifest is published last. `psb status` checks its input, critic, and artifact hashes; missing,
+stale or interrupted receipts are not valid delivery. After a process crash, inspect `.report.lock`
+and confirm the recorded process has stopped before removing that lock and retrying. Do not copy
+an orphaned query file as a final result. Counts can change without a new strategy version.
+Legacy workspaces need a new complete evaluation and a current bound critic before final delivery.

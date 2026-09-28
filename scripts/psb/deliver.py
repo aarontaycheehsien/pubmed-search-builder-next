@@ -1,49 +1,102 @@
-"""Critic packets, critic-round checks, and the audit report, all rendered from the workspace.
-
-The report reads only workspace files (protocol, the latest evaluated version, sets, critic
-rounds, log), so every number in it comes from a `psb` command rather than from prose.
-"""
-
+"""Evidence-bound critic review and fail-closed publication at the library boundary."""
 from __future__ import annotations
 
 import json
+import os
+import re
+import time
+from contextlib import contextmanager
 from pathlib import Path
 
-from .strategy import full_query
-from .workspace import ROLES, Workspace, WorkspaceError, now, read_json, sha256_text
+from . import validation
+from .evaluate import evaluate, compare
+from .strategy import Strategy
+from .workspace import Workspace, WorkspaceError, ROLES, now, read_json, write_json, sha256_text
 
-DOMAINS = [
-    "translation",       # PRESS 1: translation of the research question
-    "operators",         # PRESS 2: Boolean and proximity operators
-    "subject_headings",  # PRESS 3
-    "text_words",        # PRESS 4
-    "syntax",            # PRESS 5: spelling, syntax, line numbers
-    "limits_filters",    # PRESS 6
-]
+DOMAINS = ["translation", "operators", "subject_headings", "text_words", "syntax", "limits_filters"]
 SEVERITIES = {"must-fix", "should-fix", "document"}
 KINDS = {"lexical", "structural", "scope", "filter", "syntax", "reporting"}
 STATUSES = {"open", "resolved", "rejected", "accepted-risk"}
+ARTIFACTS = ("validation-manifest.json", "final-query.txt", "audit.md")
 
 
-def latest_version(ws: Workspace) -> dict:
+def record_evaluation(ws: Workspace, evaluation: dict, *, note: str = "") -> None:
     versions = ws.versions()
-    if not versions:
-        raise WorkspaceError("run psb eval first")
-    current = sha256_text(json.dumps(ws.strategy().to_dict(), sort_keys=True))
-    if versions[-1]["strategy_sha256"] != current:
-        raise WorkspaceError("strategy.json changed since the last psb eval; run psb eval first")
-    return versions[-1]
+    previous = versions[-1] if versions else None
+    attempts = ws.attempts()
+    last_eval = next((a["evaluation"] for a in reversed(attempts) if a.get("evaluation", {}).get("count") is not None), None)
+    comparison = ({"evaluation": last_eval, "strategy": last_eval["inputs"]["strategy"],
+                   "version": last_eval.get("version")} if last_eval and last_eval.get("inputs") else previous)
+    diff = compare(comparison, evaluation, evaluation["inputs"]["strategy"])
+    if diff:
+        evaluation["since_previous"] = diff
+    strategy_hash = sha256_text(json.dumps(evaluation["inputs"]["strategy"], sort_keys=True))
+    if previous is None or previous["strategy_sha256"] != strategy_hash:
+        saved = ws.save_version(evaluation, note)
+        evaluation["version"] = saved["version"]
+    else:
+        evaluation["version"] = previous["version"]
+        evaluation["saved"] = "identical strategy; evaluation recorded as a separate attempt"
+
+
+def round_paths(ws: Workspace) -> list[Path]:
+    def number(path):
+        match = re.fullmatch(r"round-(\d+)\.json", path.name)
+        if not match:
+            raise WorkspaceError(f"invalid critic filename: {path.name}")
+        return int(match[1])
+    return sorted((ws.root / "critic").glob("round-*.json"), key=number)
 
 
 def critic_rounds(ws: Workspace) -> list[dict]:
-    return [read_json(p) for p in sorted((ws.root / "critic").glob("round-*.json"))]  # type: ignore[misc]
+    rounds = []
+    seen = set()
+    for path in round_paths(ws):
+        data = read_json(path)
+        expected = int(path.stem.split("-")[1])
+        if not isinstance(data, dict) or type(data.get("round")) is not int or data["round"] != expected or expected in seen:
+            raise WorkspaceError(f"invalid or duplicate critic round: {path.name}")
+        seen.add(expected)
+        rounds.append(data)
+    return rounds
+
+
+def latest_evaluation(ws: Workspace) -> dict:
+    attempts = ws.attempts()
+    if not attempts:
+        raise WorkspaceError("run psb eval: legacy evaluations need fresh validation")
+    evaluation = attempts[-1]["evaluation"]
+    if evaluation.get("input_sha256") != validation.digest(validation.input_snapshot(ws)):
+        raise WorkspaceError("workspace changed since the last psb eval; run psb eval first")
+    return evaluation
 
 
 def _line_table(evaluation: dict) -> list[str]:
-    rows = ["| # | Search | Results |", "|---:|---|---:|"]
+    rows = ["| # | Search | Results | Diagnostics |", "|---:|---|---:|---|"]
     for line in evaluation.get("lines", []):
         text = line["text"].replace("|", "\\|")
-        rows.append(f"| {line['n']} | `{text}` | {line['count']:,} |")
+        issues = "; ".join(f"{i['severity']}: {i['code']}" for i in line.get("issues", [])) or "none"
+        rows.append(f"| {line['n']} | `{text}` | {line['count']:,} | {issues} |")
+    return rows
+
+
+def _scope_section(evaluation: dict) -> list[str]:
+    protocol = (evaluation.get("inputs") or {}).get("protocol") or {}
+    eligibility = protocol.get("eligibility") or {}
+    rows = ["## Scope", "", f"Question: {protocol.get('question') or '(none)'}", "",
+            "| Concept | Role | Rationale |", "|---|---|---|"]
+    for concept in protocol.get("concepts") or []:
+        rows.append(f"| {concept.get('name') or concept.get('id')} | {concept.get('role')} | "
+                    f"{str(concept.get('rationale') or '').replace('|', '/')} |")
+    for label in ("include", "exclude"):
+        items = eligibility.get(label) if isinstance(eligibility, dict) else None
+        if items:
+            rows += ["", f"Eligibility ({label}):", *[f"- {item}" for item in items]]
+    rows += ["", "Translation checks: (1) every member that the question or eligibility names for a searched "
+             "concept is covered by its own bare name, not only by a phrase narrowed with the parent's wording "
+             "(`mediation`, not only `\"mediation model*\"`); (2) a searched block that names one direction or step "
+             "of a process, or an event in some participants (switching back, discontinuation), is fragile: "
+             "recommend searching the process in either direction and screening the direction.", ""]
     return rows
 
 
@@ -55,120 +108,256 @@ def _recall_table(evaluation: dict) -> list[str]:
     return rows
 
 
-def critic_packet(ws: Workspace) -> Path:
-    version = latest_version(ws)
-    evaluation = version["evaluation"]
-    protocol = ws.protocol()
-    rounds = critic_rounds(ws)
-    open_findings = [f for r in rounds for f in r.get("findings", []) if f.get("status") == "open"]
-    number = len(rounds) + 1
-    lines = [
-        f"# Critic packet, round {number}",
-        "",
-        "You are an experienced information specialist doing a PRESS 2015 review of a draft PubMed "
-        "search for an evidence synthesis. Use only this packet. Judge whether the strategy will find "
-        "the relevant records; do not answer the review question.",
-        "",
-        "## Review question and scope",
-        "",
-        f"Question: {protocol.get('question')}",
-        "",
-        "| Concept | Role | Rationale |",
-        "|---|---|---|",
-        *[f"| {c.get('name') or c.get('id')} (`{c.get('id')}`) | {c.get('role')} | {c.get('rationale', '')} |" for c in protocol.get("concepts", [])],
-        "",
-        f"Eligibility (screening, not searched): include {protocol.get('eligibility', {}).get('include')}; "
-        f"exclude {protocol.get('eligibility', {}).get('exclude')}",
-        f"Limits: {protocol.get('limits') or 'none'}",
-        "",
-        f"## Strategy (version {version['version']}, total {evaluation.get('count'):,})",
-        "",
-        *_line_table(evaluation),
-        "",
-        "PubMed translation issues: " + (", ".join(i["code"] for i in evaluation.get("translation_issues", [])) or "none"),
-        "",
-        "## Known relevant records",
-        "",
-        *_recall_table(evaluation),
-        "",
-        "Missed records and the blocks that fail them: "
-        + (json.dumps(evaluation.get("misses", []), ensure_ascii=False) if evaluation.get("misses") else "none"),
-        "",
-        "Leave-one-block-out: " + json.dumps(evaluation.get("ablation"), ensure_ascii=False),
-        "",
-    ]
-    if open_findings:
-        lines += ["## Findings still open from earlier rounds", "", "```json", json.dumps(open_findings, indent=2, ensure_ascii=False), "```", ""]
-    lines += [
-        "## What to return",
-        "",
-        f"Return only JSON saved as `critic/round-{number}.json`:",
-        "",
-        "```json",
-        json.dumps(
-            {
-                "round": number,
-                "strategy_version": version["version"],
-                "domains": {d: {"verdict": "pass | revise", "note": "..."} for d in DOMAINS},
-                "findings": [
-                    {"id": "F1", "domain": "text_words", "severity": "must-fix | should-fix | document",
-                     "kind": "lexical | structural | scope | filter | syntax | reporting",
-                     "block": "block id or null", "finding": "...", "recommendation": "...", "status": "open"}
-                ],
-            },
-            indent=2,
-        ),
-        "```",
-        "",
-        "Keep IDs of earlier findings. Every domain needs a verdict. Only raise findings you can tie to "
-        "something in this packet.",
-    ]
-    path = ws.root / "critic" / f"packet-{number}.md"
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    ws.log({"type": "critic_packet", "round": number, "version": version["version"]})
-    return path
+def _nonempty(value) -> bool:
+    return isinstance(value, str) and bool(value.strip())
+
+
+def _round_problems(data: dict) -> list[str]:
+    problems = []
+    domains = data.get("domains")
+    if not isinstance(domains, dict):
+        return ["domains must be an object"]
+    for domain in DOMAINS:
+        row = domains.get(domain)
+        if not isinstance(row, dict) or not isinstance(row.get("verdict"), str) or row.get("verdict") not in {"pass", "revise"}:
+            problems.append(f"domain {domain!r} needs a verdict of pass or revise")
+    findings = data.get("findings")
+    if not isinstance(findings, list):
+        return problems + ["findings must be a list"]
+    ids = set()
+    for f in findings:
+        if not isinstance(f, dict):
+            problems.append("finding must be an object")
+            continue
+        fid = f.get("id")
+        if not _nonempty(fid) or fid in ids:
+            problems.append("finding id missing or duplicated")
+        else:
+            ids.add(fid)
+        if any(not isinstance(f.get(k), str) or f.get(k) not in allowed for k, allowed in (("domain", DOMAINS), ("severity", SEVERITIES), ("kind", KINDS), ("status", STATUSES))):
+            problems.append(f"{fid}: invalid domain, severity, kind or status")
+        if not _nonempty(f.get("finding")):
+            problems.append(f"{fid}: finding explanation required")
+        if f.get("status") != "open" and not _nonempty(f.get("response")):
+            problems.append(f"{fid}: disposition needs a response explaining why")
+    return problems
+
+
+def review_gate(ws: Workspace, evaluation: dict, *, rounds: list[dict] | None = None) -> dict:
+    blockers = []
+    rounds = critic_rounds(ws) if rounds is None else rounds
+    if not rounds:
+        return {"blockers": [validation.issue("critic_missing", "A current internal critic is required at every depth")], "findings": []}
+    latest = rounds[-1]
+    active = {}
+    for r in rounds:
+        problems = _round_problems(r)
+        if problems:
+            blockers.append(validation.issue("critic_invalid", "Invalid critic round", location=f"critic:{r.get('round')}", evidence=problems))
+            continue
+        for f in r["findings"]:
+            active[f["id"]] = f
+    if blockers:
+        return {"blockers": blockers, "findings": list(active.values())}
+    if latest.get("review_sha256") != evaluation.get("review_sha256"):
+        blockers.append(validation.issue("critic_stale", "Critic must review the current inputs, translation and known-record retrieval"))
+    budget = {"quick": 1, "standard": 2, "thorough": 3}.get(evaluation["inputs"]["protocol"].get("depth"), 2)
+    if sum(bool(r.get("review_sha256")) for r in rounds) > budget:
+        blockers.append(validation.issue("critic_budget", "Critic round budget exhausted; deliver a diagnostic handoff"))
+    for fid, f in active.items():
+        if f["status"] == "open" and f["severity"] in {"must-fix", "should-fix"}:
+            blockers.append(validation.issue("critic_open", "Finding needs a disposition", location=f"critic:{fid}", evidence=f))
+    # An omitted finding must be explicitly carried forward, even if its old status was open.
+    current_ids = {f.get("id") for f in latest.get("findings", []) if isinstance(f, dict)} if isinstance(latest.get("findings"), list) else set()
+    for fid, f in active.items():
+        if f["status"] == "open" and fid not in current_ids:
+            blockers.append(validation.issue("critic_dropped", "Earlier open finding was omitted", location=f"critic:{fid}"))
+    dispositions = latest.get("issue_dispositions", [])
+    if not isinstance(dispositions, list) or any(not isinstance(d, dict) for d in dispositions):
+        dispositions = []
+        blockers.append(validation.issue("critic_invalid", "issue_dispositions must be a list of objects"))
+    by_id = {}
+    for d in dispositions:
+        iid = d.get("issue_id")
+        if not isinstance(iid, str) or iid in by_id:
+            blockers.append(validation.issue("critic_invalid", "Missing or duplicate issue disposition ID"))
+        else:
+            by_id[iid] = d
+    for item in evaluation["validation"]["review_required"]:
+        d = by_id.get(item["id"], {})
+        valid = isinstance(d.get("status"), str) and d.get("status") in {"accepted-risk", "rejected"} and _nonempty(d.get("response")) and _nonempty(d.get("evidence"))
+        if item["code"] in validation.PHRASE_CODES:
+            valid = valid and d.get("query") == item.get("query") and d.get("translation") == item.get("translation")
+        if not valid:
+            blockers.append(validation.issue("review_unresolved", "Mandatory issue review is incomplete", location=item["location"], issue_id=item["id"], evidence=item))
+    for domain, row in (latest.get("domains") or {}).items():
+        if isinstance(row, dict) and row.get("verdict") == "revise":
+            explained = any(f.get("domain") == domain and f.get("status") in {"accepted-risk", "rejected", "resolved"} and _nonempty(f.get("response")) for f in active.values())
+            if not explained:
+                blockers.append(validation.issue("critic_revise", "Domain still requires revision", location=f"critic:{domain}"))
+    return {"blockers": blockers, "findings": list(active.values()), "issue_dispositions": dispositions}
 
 
 def check_round(ws: Workspace, path: Path) -> dict:
     data = read_json(path)
-    problems = []
-    if not isinstance(data, dict):
-        return {"ok": False, "problems": ["round must be a JSON object"]}
-    domains = data.get("domains") or {}
-    for domain in DOMAINS:
-        verdict = (domains.get(domain) or {}).get("verdict")
-        if verdict not in {"pass", "revise"}:
-            problems.append(f"domain {domain!r} needs a verdict of pass or revise")
-    ids = set()
-    for finding in data.get("findings") or []:
-        fid = finding.get("id")
-        if not fid or fid in ids:
-            problems.append(f"finding id missing or duplicated: {fid!r}")
-        ids.add(fid)
-        if finding.get("severity") not in SEVERITIES:
-            problems.append(f"{fid}: severity must be one of {sorted(SEVERITIES)}")
-        if finding.get("kind") not in KINDS:
-            problems.append(f"{fid}: kind must be one of {sorted(KINDS)}")
-        if finding.get("status") not in STATUSES:
-            problems.append(f"{fid}: status must be one of {sorted(STATUSES)}")
-        if finding.get("status") in {"rejected", "accepted-risk"} and not finding.get("response"):
-            problems.append(f"{fid}: a {finding.get('status')} finding needs a response explaining why")
-    earlier = {f.get("id") for r in critic_rounds(ws) if r.get("round", 0) < data.get("round", 0)
-               for f in r.get("findings", []) if f.get("status") == "open"}
-    dropped = sorted(i for i in earlier - ids if i)
-    if dropped:
-        problems.append(f"earlier open findings are missing from this round: {', '.join(dropped)}")
-    open_must = [f.get("id") for f in data.get("findings") or [] if f.get("status") == "open" and f.get("severity") == "must-fix"]
-    return {"ok": not problems, "problems": problems, "open_must_fix": open_must}
+    if not isinstance(data, dict) or type(data.get("round")) is not int or data["round"] < 1:
+        return {"ok": False, "problems": ["round must be an object with a positive integer round number"], "open_must_fix": []}
+    evaluation = latest_evaluation(ws)
+    rounds = [r for r in critic_rounds(ws) if r["round"] < data["round"]] + [data]
+    result = review_gate(ws, evaluation, rounds=rounds)
+    return {"ok": not result["blockers"], "problems": [b["message"] for b in result["blockers"]],
+            "blockers": result["blockers"], "open_must_fix": [f["id"] for f in result["findings"] if f["status"] == "open" and f["severity"] == "must-fix"]}
 
 
-def report(ws: Workspace) -> Path:
-    version = latest_version(ws)
-    evaluation = version["evaluation"]
-    protocol = ws.protocol()
-    strategy = ws.strategy()
-    versions = ws.versions()
+def critic_packet(ws: Workspace) -> Path:
+    evaluation = latest_evaluation(ws)
+    if not evaluation["validation"]["complete"]:
+        raise WorkspaceError("run a complete psb eval before requesting critique")
     rounds = critic_rounds(ws)
+    number = max((r["round"] for r in rounds), default=0) + 1
+    budget = {"quick": 1, "standard": 2, "thorough": 3}.get(ws.protocol().get("depth"), 2)
+    if sum(bool(r.get("review_sha256")) for r in rounds) >= budget:
+        raise WorkspaceError("critic budget exhausted; use report --diagnostic for the handoff")
+    template = {"round": number, "strategy_version": evaluation.get("version"), "review_sha256": evaluation["review_sha256"],
+                "domains": {d: {"verdict": "pass | revise", "note": "explanation"} for d in DOMAINS}, "findings": [],
+                "issue_dispositions": [{"issue_id": i["id"], "status": "accepted-risk | rejected", "response": "reason", "evidence": "observations", **({"query": i.get("query"), "translation": i.get("translation")} if i["code"] in validation.PHRASE_CODES else {})} for i in evaluation["validation"]["review_required"]]}
+    lines = [f"# Critic packet, round {number}", "", "Review this draft as an information specialist using the six PRESS domains. "
+             "Use only the packet. Do not answer the evidence question. Technical errors cannot be waived. "
+             "Carry earlier finding IDs forward with explicit dispositions. For each finding provide id, domain, severity "
+             "(must-fix/should-fix/document), kind (lexical/structural/scope/filter/syntax/reporting), finding, "
+             "recommendation, status (open/resolved/rejected/accepted-risk), and response for a closed finding.", "",
+             "Phrase warnings require clause-specific interpretation review. ~0 allows any order; no wildcards in proximity. "
+             "Prefer explicit tested expressions; do not delete terms merely because seeds are already covered. "
+             "A retained warning needs a reason and evidence. Rewrites/removals require another complete evaluation.", "",
+             *_scope_section(evaluation), *_line_table(evaluation), "", "## Complete evidence", "", "```json", json.dumps(evaluation, indent=2, ensure_ascii=False),
+             "```", "", "## Earlier critic rounds", "", "```json", json.dumps(rounds, indent=2, ensure_ascii=False), "```", "",
+             "## Response JSON", "", "```json", json.dumps(template, indent=2, ensure_ascii=False), "```"]
+    path = ws.root / "critic" / f"packet-{number}.md"
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return path
+
+
+@contextmanager
+def _publication_lock(ws: Workspace):
+    path = ws.root / ".report.lock"
+    try:
+        fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+    except FileExistsError as exc:
+        raise WorkspaceError("report already running or interrupted; inspect .report.lock before retrying") from exc
+    try:
+        os.write(fd, f"pid={os.getpid()} started={now()}".encode())
+        os.close(fd)
+        yield
+    finally:
+        path.unlink(missing_ok=True)
+
+
+def _archive(ws: Workspace) -> None:
+    existing = [ws.root / name for name in ARTIFACTS if (ws.root / name).exists()]
+    if existing:
+        target = ws.root / "history" / "deliveries" / str(time.time_ns())
+        target.mkdir(parents=True)
+        for path in existing:
+            path.replace(target / path.name)
+
+
+def _diagnostic(ws: Workspace, evaluation: dict, blockers: list[dict]) -> Path:
+    path = ws.root / "diagnostic-audit.md"
+    path.write_text("# Diagnostic audit - unfinished; not a protected final query\n\n```json\n" +
+                    json.dumps({"blockers": blockers, "evaluation": evaluation}, indent=2, ensure_ascii=False) + "\n```\n", encoding="utf-8")
+    return path
+
+
+def report(ws: Workspace, *, diagnostic: bool = False, note: str = "") -> dict:
+    with _publication_lock(ws):
+        _archive(ws)
+        cache = ws.pubmed.cache
+        enabled = cache.enabled
+        cache.enabled = False
+        evaluation = {}
+        rounds = []
+        try:
+            evaluation = evaluate(ws, term_counts=True)
+            evaluation["fresh"] = True
+            record_evaluation(ws, evaluation, note=note or "live finalization attempt")
+            blockers = list(evaluation["validation"]["blockers"])
+            if not evaluation["validation"]["complete"]:
+                blockers.append(validation.issue("validation_incomplete", "All final validation checks must complete"))
+            rounds = critic_rounds(ws)
+            critic_hash = validation.digest(rounds)
+            review = review_gate(ws, evaluation, rounds=rounds)
+            blockers.extend(review["blockers"])
+        except (ValueError, OSError, WorkspaceError) as exc:
+            blockers = [validation.issue("finalization_failed", "Finalization could not complete", evidence=str(exc))]
+        finally:
+            cache.enabled = enabled
+        evaluation["delivery_blockers"] = blockers
+        attempt = ws.save_attempt(evaluation, purpose="diagnostic" if diagnostic else "report")
+        if blockers or diagnostic:
+            path = _diagnostic(ws, evaluation, blockers)
+            return {"ok": False, "diagnostic": str(path), "attempt_id": attempt["attempt_id"], "blockers": blockers,
+                    "message": "Diagnostic output only; no protected final query was issued"}
+        stage = ws.root / "attempts" / (attempt["attempt_id"] + "-delivery")
+        stage.mkdir()
+        query_bytes = (evaluation["query"] + "\n").encode("utf-8")
+        audit_bytes = _audit(ws, evaluation, rounds).encode("utf-8")
+        import hashlib
+        hashes = {"final-query.txt": hashlib.sha256(query_bytes).hexdigest(), "audit.md": hashlib.sha256(audit_bytes).hexdigest()}
+        manifest = {"status": "passed", "policy_version": validation.POLICY_VERSION, "attempt_id": attempt["attempt_id"],
+                    "input_sha256": evaluation["input_sha256"], "review_sha256": evaluation["review_sha256"], "critic_sha256": critic_hash,
+                    "created": now(), "query": evaluation["query"], "artifacts": hashes, "human_press_review": "pending"}
+        try:
+            (stage / "final-query.txt").write_bytes(query_bytes)
+            (stage / "audit.md").write_bytes(audit_bytes)
+            write_json(stage / "validation-manifest.json", manifest)
+            if validation.digest(validation.input_snapshot(ws)) != evaluation["input_sha256"] or validation.digest(critic_rounds(ws)) != critic_hash:
+                raise WorkspaceError("inputs or critic changed during finalization")
+            for name in ("final-query.txt", "audit.md", "validation-manifest.json"):
+                (stage / name).replace(ws.root / name)
+        except (OSError, WorkspaceError) as exc:
+            _archive(ws)
+            blockers = [validation.issue("publication_failed", "Artifact publication failed", evidence=str(exc))]
+            evaluation["delivery_blockers"] = blockers
+            failure = ws.save_attempt(evaluation, purpose="publication-failed")
+            path = _diagnostic(ws, evaluation, blockers)
+            return {"ok": False, "blockers": blockers, "diagnostic": str(path), "attempt_id": failure["attempt_id"]}
+        except BaseException:
+            _archive(ws)
+            raise
+        ws.log({"type": "report", "attempt_id": attempt["attempt_id"], "status": "passed"})
+        return {"ok": True, "report": str(ws.root / "audit.md"), "query_file": str(ws.root / "final-query.txt"),
+                "manifest": str(ws.root / "validation-manifest.json"), "attempt_id": attempt["attempt_id"]}
+
+
+def verify_delivery(ws: Workspace) -> dict:
+    """Read-only receipt check for consumers; never trust an orphaned or stale query file."""
+    import hashlib
+    try:
+        manifest = read_json(ws.root / "validation-manifest.json")
+        if not isinstance(manifest, dict) or manifest.get("status") != "passed" or manifest.get("policy_version") != validation.POLICY_VERSION:
+            raise WorkspaceError("missing current validation receipt")
+        if (ws.root / ".report.lock").exists():
+            raise WorkspaceError("publication is in progress or was interrupted")
+        if manifest.get("input_sha256") != validation.digest(validation.input_snapshot(ws)):
+            raise WorkspaceError("delivery inputs have changed")
+        if manifest.get("critic_sha256") != validation.digest(critic_rounds(ws)):
+            raise WorkspaceError("critic evidence has changed")
+        for name in ("final-query.txt", "audit.md"):
+            expected = manifest.get("artifacts", {}).get(name)
+            if hashlib.sha256((ws.root / name).read_bytes()).hexdigest() != expected:
+                raise WorkspaceError(f"{name} is incomplete or changed")
+        if (ws.root / "final-query.txt").read_text(encoding="utf-8").strip() != manifest.get("query"):
+            raise WorkspaceError("query does not match the validated receipt")
+        return {"ok": True, "query_file": str(ws.root / "final-query.txt"), "manifest": manifest}
+    except (WorkspaceError, OSError, ValueError, TypeError, AttributeError) as exc:
+        return {"ok": False, "error": str(exc)}
+
+
+def _audit(ws: Workspace, evaluation: dict, rounds: list[dict]) -> str:
+    protocol = evaluation["inputs"]["protocol"]
+    strategy = Strategy.from_dict(evaluation["inputs"]["strategy"])
+    versions = ws.versions()
+    version = {"created": evaluation["run_date"], "strategy_sha256": validation.digest(strategy.to_dict())}
     log = ws.log_entries()
     ncbi = [e for e in log if e.get("type") == "ncbi"]
     concepts = protocol.get("concepts", [])
@@ -191,9 +380,9 @@ def report(ws: Workspace) -> Path:
         "",
         "## Search details (PRISMA-S)",
         "",
-        "- Database and platform: MEDLINE via PubMed (NCBI E-utilities)",
+        "- Database and platform: PubMed (NCBI E-utilities; includes MEDLINE and non-MEDLINE records)",
         f"- Date the final counts were run: {evaluation.get('run_date') or version['created'][:10]}",
-        f"- Records added to PubMed up to: {protocol.get('as_of') or 'search date (no as-of bound)'}",
+        f"- Records added to PubMed up to: {evaluation.get('as_of') or 'search date (no as-of bound)'}",
         f"- Total records: {evaluation.get('count'):,}"
         + (f" ({evaluation.get('count_without_limits'):,} before limits)" if evaluation.get("count_without_limits") is not None else ""),
         "- Limits and filters: " + ("; ".join(f"`{l.clause}` ({l.rationale or 'no rationale recorded'})" for l in strategy.limits) or "none"),
@@ -205,7 +394,7 @@ def report(ws: Workspace) -> Path:
         "### Strategy (single line, for copying into PubMed)",
         "",
         "```text",
-        full_query(strategy),
+        evaluation["query"],
         "```",
         "",
         "## Validation against known relevant records",
@@ -255,7 +444,7 @@ def report(ws: Workspace) -> Path:
         f"_Provenance: {len(ncbi)} NCBI requests logged ({sum(1 for e in ncbi if e.get('cache'))} from cache); "
         f"strategy sha256 {version['strategy_sha256'][:12]}._",
     ]
-    path = ws.root / "audit.md"
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    ws.log({"type": "report", "version": version["version"]})
-    return path
+    lines += ["", "## Validation evidence and dispositions", "", "```json",
+              json.dumps({"validation": evaluation["validation"], "vocabulary": evaluation["vocabulary"],
+                          "translation": evaluation.get("translation"), "critic": rounds}, indent=2, ensure_ascii=False), "```", ""]
+    return "\n".join(lines) + "\n"

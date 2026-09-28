@@ -46,4 +46,6 @@ def test_note_alone_still_saves_when_result_actually_differs(ws, monkeypatch):
     # Same strategy text, but the live PubMed answer drifted (e.g. a record was reindexed).
     monkeypatch.setitem(ws.pubmed.atoms, ws.pubmed._key('"Asthma"[Mesh]'), {"1", "2", "9"})
     drifted = cli.cmd_eval(eval_args(note="final counts, run live"))
-    assert drifted["version"] == 2
+    assert drifted["version"] == 1
+    assert len(ws.attempts()) == 2
+    assert ws.attempts()[-1]["evaluation"]["count"] == drifted["count"]

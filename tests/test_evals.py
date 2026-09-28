@@ -50,6 +50,22 @@ def test_leakage_flags_answer_key_mentions_and_undated_searches(tmp_path):
     assert harness.leakage(FIXTURE, tmp_path / "nowhere", "clean transcript") == []
 
 
+def test_leakage_accepts_the_evaluators_inline_as_of_bound(tmp_path):
+    from psb.evaluate import effective_query
+    work = tmp_path / "work"
+    work.mkdir()
+    bounded = effective_query('asthma[tiab] OR "wheezing disorder"[tiab]', FIXTURE["as_of"])
+    evasions = [
+        effective_query("asthma[tiab]", "2020-01-01"),  # bound later than as_of
+        'asthma[tiab] OR child[tiab] AND ("1800/01/01"[edat] : "2015/01/01"[edat])',  # binds one operand only
+        '(asthma[tiab]) OR (child[tiab]) AND ("1800/01/01"[edat] : "2015/01/01"[edat])',
+        'asthma[tiab] OR ("1800/01/01"[edat] : "2015/01/01"[edat])',
+    ]
+    entries = [{"endpoint": "esearch.fcgi", "params": {"db": "pubmed", "term": t}} for t in [bounded, *evasions]]
+    (work / "log.jsonl").write_text("\n".join(json.dumps(e) for e in entries), encoding="utf-8")
+    assert harness.leakage(FIXTURE, tmp_path, "clean transcript") == [f"{len(evasions)} PubMed searches ran without the as_of bound"]
+
+
 def test_leakage_skips_a_log_line_torn_by_a_concurrent_writer(tmp_path):
     work = tmp_path / "work"
     work.mkdir()

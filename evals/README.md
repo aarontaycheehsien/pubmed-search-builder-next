@@ -56,7 +56,9 @@ python evals/run.py report                        # writes evals/RESULTS.md
 - `reference`: the hand-authored strategies that two fixtures carry.
 - Another skill (for example the lean `creating-high-sensitivity-pubmed-searches-optimal`) can be
   run through `generate --skill`, since the prompt only asks the agent to follow `skill/SKILL.md`
-  and write `final_strategy.txt`.
+  and finish its final delivery. For protected-delivery versions of this skill, the harness
+  verifies `work/validation-manifest.json` and consumes `work/final-query.txt`; it does not fall
+  back to a handwritten query. Other skills can continue to write `final_strategy.txt`.
 
 ## Reading results
 

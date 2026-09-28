@@ -1,0 +1,33 @@
+{
+  "topic": "Meijboom_2021",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260927T222407Z",
+  "scored": "20260927T223623Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 736
+  },
+  "final_message": "r-alpha[Mesh] OR Infliximab[Mesh] OR Adalimumab[Mesh] OR Etanercept[Mesh] OR Certolizumab Pegol[Mesh] OR infliximab[tiab] OR adalimumab[tiab] OR etanercept[tiab] OR golimumab[tiab] OR certolizumab[tiab] OR anti-TNF[tiab] OR TNF inhibitor*[tiab] OR tumor necrosis factor inhibitor*[tiab] OR tumour necrosis factor inhibitor*[tiab]) AND (Drug Substitution[Mesh] OR switch*[tiab] OR transition*[tiab] OR substitut*[tiab] OR interchangeab*[tiab] OR interchang*[tiab] OR switchback[tiab] OR switch-back[tiab])) AND (\"1800/01/01\"[edat] : \"2021/02/12\"[edat])\n```\n\nThe evaluated block counts were **611,075** for biosimilars, **149,237** for TNF inhibitors, and **932,982** for switching; the combined search returned **658** records. The audit contains each term’s count.\n\nThe two-record benchmark came from screening references to a prior switching review. The search retrieved **2/2 (100%)**, which is relative recall against a small benchmark, not a sensitivity estimate. There were no user-supplied seeds, so the strategy remains empirically limited. PubMed was bounded by Entrez date **2021-02-12**; no publication-date limit was applied. Direction, indication, outcomes, and study design are screening assumptions.\n\nTwo rounds of the internal PRESS-structured critic are complete. The draft still needs PRESS peer review by an information specialist before use.\n\nFiles in `./work`: [audit.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1b21fe8244224b90/ours-codex-noseed-20260927T222407Z/work/audit.md), [final-query.txt](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1b21fe8244224b90/ours-codex-noseed-20260927T222407Z/work/final-query.txt), [validation-manifest.json](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1b21fe8244224b90/ours-codex-noseed-20260927T222407Z/work/validation-manifest.json), and [narrative.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1b21fe8244224b90/ours-codex-noseed-20260927T222407Z/work/narrative.md). `psb status` confirmed the protected delivery passed.",
+  "strategy": "((Biosimilar Pharmaceuticals[Mesh] OR Biological Products[Mesh] OR biosimilar*[tiab] OR follow-on biologic*[tiab] OR follow on biologic*[tiab] OR subsequent entry biologic*[tiab] OR CT-P13[tiab] OR Remsima[tiab] OR Inflectra[tiab] OR SB2[tiab] OR Flixabi[tiab] OR Renflexis[tiab] OR SB4[tiab] OR Benepali[tiab] OR GP2015[tiab] OR Erelzi[tiab] OR ABP 501[tiab] OR Amgevita[tiab] OR Imraldi[tiab]) AND (Tumor Necrosis Factor-alpha[Mesh] OR Infliximab[Mesh] OR Adalimumab[Mesh] OR Etanercept[Mesh] OR Certolizumab Pegol[Mesh] OR infliximab[tiab] OR adalimumab[tiab] OR etanercept[tiab] OR golimumab[tiab] OR certolizumab[tiab] OR anti-TNF[tiab] OR TNF inhibitor*[tiab] OR tumor necrosis factor inhibitor*[tiab] OR tumour necrosis factor inhibitor*[tiab]) AND (Drug Substitution[Mesh] OR switch*[tiab] OR transition*[tiab] OR substitut*[tiab] OR interchangeab*[tiab] OR interchang*[tiab] OR switchback[tiab] OR switch-back[tiab])) AND (\"1800/01/01\"[edat] : \"2021/02/12\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2021-02-12",
+  "count": 658,
+  "gold_scored": 35,
+  "gold_reachable": 35,
+  "retrieved": 35,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 18.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 33,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "valid": true
+}

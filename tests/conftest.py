@@ -25,6 +25,26 @@ class FakePubMed(PubMed):
         self.universe = set().union(*self.atoms.values(), self.records.keys()) if self.atoms else set(self.records)
         self.queries: list[str] = []
 
+    mesh_records = {
+        "asthma": {"ds_meshui": "D001249", "ds_meshterms": ["Asthma", "Bronchial Asthma"]},
+        "child": {"ds_meshui": "D002648", "ds_meshterms": ["Child", "Children"]},
+        "therapy": {"ds_meshui": "Q000628", "ds_meshterms": ["therapy"]},
+        "drug therapy": {"ds_meshui": "Q000188", "ds_meshterms": ["drug therapy"]},
+    }
+
+    def mesh_search(self, term, *, retmax=10):
+        name = term.split("[")[0].strip('"').casefold()
+        return [key for key, row in self.mesh_records.items() if name in [n.casefold() for n in row["ds_meshterms"]]]
+
+    def mesh_summary(self, uids):
+        return [self.mesh_records[uid] for uid in uids]
+
+    def mesh_descriptor(self, ui):
+        return {"identifier": ui, "allowableQualifier": ["http://id.nlm.nih.gov/mesh/Q000628", "http://id.nlm.nih.gov/mesh/Q000188"]}
+
+    def field_names(self):
+        return {"tiab", "title/abstract", "newfield"}
+
     @staticmethod
     def _key(atom: str) -> str:
         return " ".join(atom.split()).lower()
@@ -51,6 +71,8 @@ class FakePubMed(PubMed):
                 else:
                     words.append(token)
             text = " ".join(words)
+            if text.lower().endswith("[edat]"):
+                return set(self.universe)
             if text.lower().endswith("[uid]"):
                 pmid = text[:-5]
                 return {pmid} if pmid in self.universe else set()

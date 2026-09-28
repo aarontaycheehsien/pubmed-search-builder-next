@@ -15,21 +15,11 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass, field
 
-from . import wildcards
+from . import wildcards, syntax
 
 ID_PATTERN = re.compile(r"^[A-Za-z][A-Za-z0-9_]*$")
 OPERATORS = {"AND", "OR", "NOT"}
-KNOWN_TAGS = {
-    "mesh", "mh", "mesh:noexp", "mh:noexp", "majr", "majr:noexp", "mesh terms", "mesh terms:noexp",
-    "tiab", "ti", "ab", "tw", "ot", "kw", "nm", "rn", "pt", "sh", "sb", "la", "dp", "edat", "crdt",
-    "pdat", "au", "ta", "uid", "pmid", "all", "all fields", "title", "title/abstract", "text word",
-    "publication type", "supplementary concept", "affiliation", "ad", "doi", "aid", "lang", "filter",
-    "sh:noexp", "tt", "jour", "ps", "pa", "si", "gr",
-}
-MESH_TAGS = {"mesh", "mh", "mesh:noexp", "mh:noexp", "majr", "majr:noexp", "mesh terms", "mesh terms:noexp", "nm", "supplementary concept"}
-TEXT_TAGS = {"tiab", "ti", "ab", "tw", "ot", "kw", "title", "title/abstract", "text word"}
 _TAG = re.compile(r"\[([^\]]+)\]")
-_PROXIMITY = re.compile(r'"([^"]*)"\s*\[([A-Za-z/]+):~(\d+)\]')
 
 
 class StrategyError(ValueError):
@@ -100,6 +90,7 @@ class Strategy:
             if not block.terms:
                 errors.append(f"block {block.id!r} has no terms")
         if self.combine:
+            errors.extend(message for _, message in syntax.problems(self.combine, combination=True))
             words = set(re.findall(r"[A-Za-z][A-Za-z0-9_]*", self.combine)) - OPERATORS
             unknown = sorted(words - seen)
             if unknown:
@@ -193,40 +184,9 @@ def numbered_lines(strategy: Strategy) -> list[dict]:
 
 # -- lint ------------------------------------------------------------------------------------
 
-def _balanced(text: str) -> str | None:
-    if text.count('"') % 2:
-        return "unbalanced double quotes"
-    depth = 0
-    for char in re.sub(r'"[^"]*"', "", text):
-        depth += char == "("
-        depth -= char == ")"
-        if depth < 0:
-            return "closing parenthesis without an opening one"
-    return "unbalanced parentheses" if depth else None
-
-
 def untagged_segments(text: str) -> list[str]:
-    """Words or phrases with no field tag. Unquoted words directly before a tag share it."""
-    untagged: list[str] = []
-    pending: list[str] = []
-    for token in wildcards._TOKEN.findall(text):
-        if token.startswith("["):
-            pending = []
-            continue
-        if token in "()" or token.upper() in OPERATORS:
-            untagged.extend(pending)
-            pending = []
-            continue
-        if token.startswith('"'):
-            untagged.extend(pending)
-            pending = [token]
-            continue
-        if pending and pending[-1].startswith('"'):
-            untagged.extend(pending)
-            pending = []
-        pending.append(token)
-    untagged.extend(pending)
-    return untagged
+    """Compatibility entry point for the shared tokenizer's field-aware scan."""
+    return syntax.untagged(text)
 
 
 def term_issues(term: str) -> list[dict]:
@@ -235,29 +195,23 @@ def term_issues(term: str) -> list[dict]:
     def add(severity: str, code: str, message: str) -> None:
         issues.append({"severity": severity, "code": code, "message": message, "term": term})
 
-    problem = _balanced(term)
-    if problem:
-        add("error", "syntax", problem)
+    for code, message in syntax.problems(term):
+        add("error", code, message)
     tags = [tag.strip().lower() for tag in _TAG.findall(term)]
     for tag in tags:
-        base = tag.split(":~")[0]
-        if base not in KNOWN_TAGS:
-            add("warning", "unknown_tag", f"field tag [{tag}] is not a recognised PubMed tag")
-    masked = _mask_groups(term)
-    if re.search(r"\s(and|or|not)\s", masked):
-        add("error", "lowercase_operator", "Boolean operators must be uppercase; lowercase ones are searched as words")
-    if untagged_segments(term):
+        base = tag.split(":")[0]
+        modifier = tag[len(base):]
+        if base not in syntax.ALIASES:
+            add("warning", "unknown_tag", f"field tag [{tag}] needs authoritative verification")
+        if modifier and not modifier.startswith(":~") and not (
+            modifier == ":noexp" and syntax.field(base) in {"mh", "majr", "sh", "pt"}
+        ):
+            add("error", "field_modifier", f"unsupported modifier in [{tag}]")
+    masked = " ".join(t for t in syntax.tokens(term) if not t.startswith(('"', '[')))
+    if syntax.untagged(term):
         add("warning", "untagged", "untagged text relies on Automatic Term Mapping; add a field tag")
     for short in wildcards.short_truncations(term):
         add("error", "short_truncation", f"'{short}': PubMed ignores truncation with fewer than 4 leading characters")
-    for match in _PROXIMITY.finditer(term):
-        phrase, tag, _ = match.groups()
-        if "*" in phrase:
-            add("error", "proximity_wildcard", "wildcards are not allowed inside a proximity search")
-        if tag.lower() not in {"tiab", "ti", "ad", "title", "title/abstract"}:
-            add("error", "proximity_field", f"proximity works only with [tiab], [ti] or [ad], not [{tag}]")
-        if len(phrase.split()) < 2:
-            add("warning", "proximity_single_word", "proximity needs at least two words")
     if any(tag.startswith("majr") for tag in tags):
         add("warning", "major_topic", "[majr] restricts to major-topic indexing and lowers recall")
     if any(tag.endswith(":noexp") for tag in tags):
@@ -282,9 +236,9 @@ def lint(strategy: Strategy, *, concepts: list[dict] | None = None) -> list[dict
             for issue in term_issues(term):
                 issue["block"] = block.id
                 issues.append(issue)
-            tags = {tag.strip().lower().split(":~")[0] for tag in _TAG.findall(term)}
-            mesh = mesh or bool(tags & MESH_TAGS)
-            text = text or bool(tags & TEXT_TAGS)
+            tags = {syntax.field(tag) for tag in _TAG.findall(term)}
+            mesh = mesh or bool(tags & {"mh", "majr", "nm"})
+            text = text or bool(tags & {"tiab", "ti", "ab", "tw", "ot", "kw"})
         if block.terms and not text:
             issues.append({"severity": "warning", "code": "no_text_layer", "block": block.id,
                            "message": "no title/abstract layer: records not yet MeSH-indexed will be missed"})
@@ -295,7 +249,13 @@ def lint(strategy: Strategy, *, concepts: list[dict] | None = None) -> list[dict
     if full.count("*") > wildcards.MAX_WILDCARDS:
         issues.append({"severity": "error", "code": "too_many_wildcards",
                        "message": f"{full.count('*')} wildcards; PubMed rejects more than {wildcards.MAX_WILDCARDS}"})
-    for limit in strategy.limits:
+    if full:
+        for code, message in syntax.problems(full):
+            issues.append({"severity": "error", "code": code, "message": message, "location": "final"})
+    for index, limit in enumerate(strategy.limits):
+        clause = limit.clause[4:] if limit.clause.startswith("NOT ") else limit.clause
+        for item in term_issues(clause):
+            issues.append({**item, "location": f"limit:{index + 1}"})
         if not limit.rationale:
             issues.append({"severity": "warning", "code": "limit_without_rationale", "message": f"limit has no rationale: {limit.clause}"})
     if concepts is not None:

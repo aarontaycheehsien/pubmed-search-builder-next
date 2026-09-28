@@ -1,0 +1,35 @@
+{
+  "topic": "Smid_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260927T221214Z",
+  "scored": "20260927T222439Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 745
+  },
+  "final_message": " | 1,734 |\n| 18 | `\"growth curve\"[tiab]` | 6,069 |\n| 19 | `mediation[tiab]` | 22,917 |\n| 20 | `multilevel[tiab]` | 25,930 |\n| 21 | `multi-level[tiab]` | 4,831 |\n| 22 | `\"hierarchical linear model\"[tiab]` | 219 |\n| 23 | `\"hierarchical model\"[tiab]` | 1,993 |\n| 24 | Model-family block (lines 1–23 OR) | 207,349 |\n| 25 | `\"Bayes Theorem\"[Mesh]` | 28,985 |\n| 26 | `Bayesian[tiab]` | 35,533 |\n| 27 | `Bayes[tiab]` | 5,705 |\n| 28 | `\"Bayesian estimation\"[tiab]` | 966 |\n| 29 | `\"Bayesian approach\"[tiab]` | 3,278 |\n| 30 | `\"Bayesian method\"[tiab]` | 1,320 |\n| 31 | `\"Bayesian analysis\"[tiab]` | 2,540 |\n| 32 | `\"Bayesian inference\"[tiab]` | 3,376 |\n| 33 | `\"Bayesian model\"[tiab]` | 2,344 |\n| 34 | `\"Bayesian structural equation\"[tiab]` | 46 |\n| 35 | `\"Bayesian SEM\"[tiab]` | 4 |\n| 36 | `MCMC[tiab]` | 1,577 |\n| 37 | `\"Markov chain Monte Carlo\"[tiab]` | 3,122 |\n| 38 | Bayesian block (lines 25–37 OR) | 47,661 |\n| 39 | Lines 24 AND 38 | **2,184** |\n\n## Validation and limitations\n\nThe search retrieved **4/4 (100.0%)** records in the development set discovered during the build. That is relative recall against a small, non-independent set—not an estimate of absolute sensitivity. There was no held-out validation set or prior-review benchmark.\n\nThe strategy is deliberately broad; expect substantial screening. PubMed’s coverage of social and behavioural science methods is limited, and this search does not cover records indexed only in other databases. Human PRESS peer review by an information specialist is still needed before use.\n\nThe protected artifacts are [final-query.txt](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260927T221214Z/work/final-query.txt>), [audit.md](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260927T221214Z/work/audit.md>), and [validation-manifest.json](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260927T221214Z/work/validation-manifest.json>).",
+  "strategy": "((\"Factor Analysis, Statistical\"[Mesh] OR \"Latent Class Analysis\"[Mesh] OR \"Multilevel Analysis\"[Mesh] OR \"structural equation model*\"[tiab] OR \"structural equation modeling\"[tiab] OR \"structural equation modelling\"[tiab] OR \"structural equation analysis\"[tiab] OR \"path analysis\"[tiab] OR SEM[tiab] OR BSEM[tiab] OR CFA[tiab] OR \"confirmatory factor analysis\"[tiab] OR \"exploratory factor analysis\"[tiab] OR \"factor analysis\"[tiab] OR \"latent variable\"[tiab] OR \"latent class\"[tiab] OR \"latent growth\"[tiab] OR \"growth curve\"[tiab] OR mediation[tiab] OR multilevel[tiab] OR multi-level[tiab] OR \"hierarchical linear model\"[tiab] OR \"hierarchical model\"[tiab]) AND (\"Bayes Theorem\"[Mesh] OR Bayesian[tiab] OR Bayes[tiab] OR \"Bayesian estimation\"[tiab] OR \"Bayesian approach\"[tiab] OR \"Bayesian method\"[tiab] OR \"Bayesian analysis\"[tiab] OR \"Bayesian inference\"[tiab] OR \"Bayesian model\"[tiab] OR \"Bayesian structural equation\"[tiab] OR \"Bayesian SEM\"[tiab] OR MCMC[tiab] OR \"Markov chain Monte Carlo\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/11/29\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-11-29",
+  "count": 2184,
+  "gold_scored": 14,
+  "gold_reachable": 14,
+  "retrieved": 13,
+  "recall_percent": 92.9,
+  "missed": [
+    "25765534"
+  ],
+  "nnr": 168.0,
+  "translation_issues": [],
+  "gold_seen_by_agent": 4,
+  "unseen_retrieved": 9,
+  "unseen_recall_percent": 90.0,
+  "leakage": [],
+  "valid": true
+}

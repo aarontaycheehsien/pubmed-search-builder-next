@@ -75,7 +75,11 @@ def short_truncations(query: str) -> list[str]:
 
 
 def dropped_truncations(query: str, translation: str) -> list[str]:
-    """Words whose truncation is missing from PubMed's translation of the query."""
+    """A missing asterisk alone is not proof: expansion to variants is legitimate.
+
+    Flag a missing truncation only when the translation actually contains its bare stem.
+    Phrase review and full translation evidence handle other interpretation differences.
+    """
     translated = (translation or "").casefold()
     if not translated.strip():
         return []
@@ -84,5 +88,6 @@ def dropped_truncations(query: str, translation: str) -> list[str]:
             f"{item['word']}*"
             for item in wildcard_terms(query)
             if item["word_final"] and item["word"] and f"{item['word']}*".casefold() not in translated
+            and re.search(r"(?<![\w'-])" + re.escape(item["word"].casefold()) + r"(?![\w*'-])", translated)
         }
     )

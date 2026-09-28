@@ -18,6 +18,8 @@ import datetime as dt
 import hashlib
 import json
 import os
+import time
+import uuid
 from pathlib import Path
 
 from .cache import Cache
@@ -176,6 +178,7 @@ class Workspace:
             as_of = os.environ.get("PSB_AS_OF") or self.protocol().get("as_of") or None
             cache = Cache(self.root / ".cache", enabled=self.use_cache)
             self._pubmed = PubMed(cache=cache, log=self.log, as_of=as_of)
+        self._pubmed.as_of = os.environ.get("PSB_AS_OF") or self.protocol().get("as_of") or None
         return self._pubmed
 
     @pubmed.setter
@@ -267,3 +270,14 @@ class Workspace:
         write_json(self.root / "history" / f"v{number:03d}.json", entry)
         self.log({"type": "version", "version": number, "note": note})
         return entry
+
+
+    def save_attempt(self, evaluation: dict, *, purpose: str = "eval") -> dict:
+        attempt_id = f"{time.time_ns()}-{uuid.uuid4().hex[:8]}"
+        entry = {"attempt_id": attempt_id, "created": now(), "purpose": purpose, "evaluation": evaluation}
+        write_json(self.root / "attempts" / f"{attempt_id}.json", entry)
+        self.log({"type": "evaluation_attempt", "attempt_id": attempt_id, "ok": evaluation.get("ok")})
+        return entry
+
+    def attempts(self) -> list[dict]:
+        return [read_json(p) for p in sorted((self.root / "attempts").glob("*.json"))]

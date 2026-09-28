@@ -63,6 +63,8 @@ Avoid default limits for:
 
 Use limits only when essential and justified. Each limit is a potential source of bias and missed records. When a methodological filter (study design, age group, etc.) is required, use a validated filter from `filters.md` rather than an ad hoc block.
 
+A search cutoff ("what PubMed held on date X", an update's previous search date) belongs in `protocol.json` `as_of`, which bounds on Entrez date. Do not add a `[dp]` or `[Date - Publication]` limit for it: an article in PubMed before the cutoff can carry a later publication date (epub ahead of print, a later issue), and a publication-date limit drops it.
+
 ## Mistake 5: Overfitting to seed studies
 
 Seed PMIDs are validation aids, not the whole target set. Do not narrow the strategy to retrieve only the wording used in a small seed set. Maintain breadth so the search retrieves unknown relevant studies.
@@ -138,6 +140,32 @@ High-precision pilot hits, similar articles, citations, and high-overlap neighbo
 ## Mistake 14: Calling automated QA PRESS peer review
 
 Mapping a draft to PRESS elements or asking another model pass to criticize it is PRESS-informed internal QA. It does not become PRESS peer review without an independent information specialist. Preserve the human handoff and report the automated critic rounds separately.
+
+## Mistake 15: A block for one direction of a process
+
+Bad, for "patients switched from a biosimilar back to the originator":
+
+```text
+Biosimilar AND ("switching back"[tiab] OR "reverse switch"[tiab] OR "back to originator"[tiab:~2])
+```
+
+Most studies that report a switch back are cohorts of the forward switch, and say so in one sentence ("19 patients switched back") or only in the full text. A phrase list also misses inflections ("switched back"). Better:
+
+```text
+Biosimilar AND ("Drug Substitution"[Mesh] OR switch*[tiab] OR transition*[tiab] OR substitut*[tiab])
+```
+
+with the direction screened. See "Direction, sequence and events in a subset" in `scope.md`.
+
+## Mistake 16: Narrowing the members the criteria name
+
+Bad, when eligibility says "SEM-family models (CFA, latent growth, multilevel, mediation)":
+
+```text
+"multilevel structural equation"[tiab] OR "mediation model*"[tiab]
+```
+
+Better: `multilevel[tiab] OR "Multilevel Analysis"[Mesh] OR mediation[tiab] OR "indirect effect*"[tiab]`. A paper on Bayesian multilevel models seldom says "structural equation"; that is why the criteria list multilevel models separately. See "Named members of a concept" in `scope.md`.
 
 ## References
 

@@ -1,0 +1,33 @@
+{
+  "topic": "Donners_2021",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T032644Z",
+  "scored": "20260928T033918Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 753
+  },
+  "final_message": "h | Results |\n|---:|---|---:|\n| 1 | `emicizumab[nm]` | 161 |\n| 2 | `emicizumab[tiab]` | 193 |\n| 3 | `ACE910[tiab]` | 29 |\n| 4 | `\"ACE-910\"[tiab]` | 1 |\n| 5 | `Hemlibra[tiab]` | 13 |\n| 6 | `\"factor VIII mimetic bispecific antibody\"[tiab:~2]` | 2 |\n| 7 | `(\"factor VIII\"[tiab] AND bispecific[tiab] AND (mimetic[tiab] OR mimic*[tiab]))` | 51 |\n| 8 | `(FVIII[tiab] AND bispecific[tiab] AND (mimetic[tiab] OR mimic*[tiab]))` | 44 |\n| 9 | OR of lines 1–8 | **242** |\n\nThe search requires only the emicizumab concept. Human status, PK/exposure, bleeding efficacy, and study design are left for screening so the search can include healthy-volunteer studies and reports that describe outcomes inconsistently.\n\n## Validation and review\n\nI screened 12 candidate records: eight in the development set and four held out from term mining. Relative recall was **100%** in both sets. These were found through focused searches on the same topic, so the held-out check is semi-independent; it is not an estimate of sensitivity. No matching systematic-review benchmark was found.\n\nA PRESS-structured internal critique identified a missing `FVIII` spelling; I added it and re-evaluated. The count rose from 241 to 242, with no known records lost. The internal critique is not PRESS peer review. **Have an information specialist peer review the draft before use.**\n\nThe report passed the protected validation gate. Files are in `./work`:\n\n- [Generated query](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-86f1a115e64cced2/ours-codex-noseed-20260928T032644Z/work/final-query.txt>)\n- [Audit](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-86f1a115e64cced2/ours-codex-noseed-20260928T032644Z/work/audit.md>)\n- [Validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-86f1a115e64cced2/ours-codex-noseed-20260928T032644Z/work/validation-manifest.json>)\n- [Build rationale and risks](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-86f1a115e64cced2/ours-codex-noseed-20260928T032644Z/work/narrative.md>)",
+  "strategy": "((emicizumab[nm] OR emicizumab[tiab] OR ACE910[tiab] OR \"ACE-910\"[tiab] OR Hemlibra[tiab] OR \"factor VIII mimetic bispecific antibody\"[tiab:~2] OR (\"factor VIII\"[tiab] AND bispecific[tiab] AND (mimetic[tiab] OR mimic*[tiab])) OR (FVIII[tiab] AND bispecific[tiab] AND (mimetic[tiab] OR mimic*[tiab])))) AND (\"1800/01/01\"[edat] : \"2020/10/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-10-22",
+  "count": 242,
+  "gold_scored": 15,
+  "gold_reachable": 15,
+  "retrieved": 15,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 16.1,
+  "translation_issues": [],
+  "gold_seen_by_agent": 12,
+  "unseen_retrieved": 3,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "valid": true
+}

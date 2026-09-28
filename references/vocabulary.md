@@ -44,7 +44,8 @@ phrase; quote phrases to be explicit.
 
 `"shared decision making"[tiab:~2]` finds the words within 2 words of each other, in any order.
 
-- Fields: `[tiab]`, `[ti]` or `[ad]` only.
+- Fields: `[tiab]`, `[ti]` or `[ad]` (and their documented full names) only.
+- `~0` means adjacency in any order, not exact ordered phrase matching.
 - No wildcards inside a proximity phrase (PubMed ignores the proximity if you add them).
 - Test a few values of N; larger N adds recall and noise.
 - Use proximity for multi-word concepts whose wording varies, truncation for single-word
@@ -57,7 +58,12 @@ count; pair the acronym with a context term, or drop it if the spelled-out forms
 
 ## Reading `psb eval` and `psb count`
 
-- `phrase_not_found`: PubMed has no records with that term. Check spelling and hyphenation first.
+- `phrase_not_found` / `quoted_phrase_not_found`: inspect the affected clause's actual translation.
+  Phrase-index absence is different from zero hits. Use the decision tree in `validation.md`;
+  a retained warning needs an evidence-bound disposition, while a rewrite/removal needs re-evaluation.
+- `zero_hits`: check spelling, effective date restrictions and Boolean role. A zero-hit OR
+  alternative differs from a zero-hit required clause; neither seed coverage nor zero hits alone
+  justifies removing vocabulary.
 - `automatic_term_mapping` / `all_fields` / `untagged`: add field tags.
 - `truncation_dropped`: the stem is too short; lengthen it or list the variants.
 - A line with a very large count inside an AND-ed block is usually fine; a large count in the

@@ -13,13 +13,13 @@ drops its bookkeeping machinery.
 
 - **One tool, one workspace.** `scripts/psb.py` does all PubMed and MeSH work. A run workspace
   holds `protocol.json` (scope), `strategy.json` (blocks), `sets/` (known PMIDs with roles),
-  `history/` (every evaluated version) and `log.jsonl`.
+  `history/` (strategy versions), `attempts/` (every evaluation), and `log.jsonl`.
 - **Provenance as a side effect.** Every NCBI request is logged automatically. `psb report`
   builds the audit from workspace files, so reported numbers come from the tool, not from prose.
 - **One key per concept.** A block `id` in the strategy is the concept `id` in the protocol and
   in every report.
-- **Soft checklists, hard facts.** `psb status` lists what is missing but never blocks; counts
-  and recall are recomputed each time.
+- **Protected delivery.** `psb report` validates live and blocks technical defects and unfinished
+  review. `psb status` verifies the current delivery manifest. Counts and recall are recomputed.
 - **Standard library only.** Python 3.10+, no dependencies, no hooks.
 
 ## Quick start
@@ -32,7 +32,9 @@ python scripts/psb.py --workspace runs/demo mesh lookup vesicoureteral reflux
 # edit runs/demo/protocol.json and runs/demo/strategy.json
 python scripts/psb.py --workspace runs/demo set add seeds 12345678 23456789 --role seed
 python scripts/psb.py --workspace runs/demo eval --note "first draft"
-python scripts/psb.py --workspace runs/demo report --fresh
+python scripts/psb.py --workspace runs/demo critic packet
+# Save the reviewer's response as critic/round-1.json, then run critic check.
+python scripts/psb.py --workspace runs/demo report
 ```
 
 ## Commands
@@ -48,7 +50,7 @@ python scripts/psb.py --workspace runs/demo report --fresh
 | `eval` | counts per line, recall per set, failing blocks, ablation, change since last version |
 | `terms rank`, `terms miss` | objective term candidates; vocabulary of missed records |
 | `critic packet`, `critic check` | PRESS critic input; validate a critic round |
-| `report` | render `audit.md` (`--fresh` re-runs counts live) |
+| `report` | live validation and protected query/audit/manifest; `--diagnostic` emits unfinished output |
 | `log`, `cache`, `doctor` | provenance summary, cache, configuration check |
 
 ## Tests
@@ -73,3 +75,6 @@ Tests run offline against a fake PubMed that evaluates Boolean queries over a sm
 ## Licence
 
 MIT
+
+Delivery policy and phrase-warning handling: [references/validation.md](references/validation.md).
+Opt-in live smoke check: set `PSB_LIVE_TESTS=1` and run `python -m pytest tests/test_guardrails.py -q`.

@@ -13,9 +13,10 @@ except the previous version's retrieved PMIDs, used for the diff.
 
 from __future__ import annotations
 
-from .ncbi import PubMed
-from .strategy import Strategy, block_query, core_query, full_query, lint, numbered_lines
-from .workspace import ROLES, Workspace
+from .ncbi import NcbiError
+from . import validation, mesh, syntax
+from .strategy import block_query, core_query, full_query, lint, numbered_lines
+from .workspace import ROLES, Workspace, now
 
 
 def _recall(retrieved: int, total: int) -> float | None:
@@ -42,47 +43,84 @@ def _term_diff(old: dict, new: dict) -> dict:
     return changes
 
 
-def evaluate(ws: Workspace, *, term_counts: bool = True) -> dict:
-    strategy: Strategy = ws.strategy()
-    protocol = ws.protocol()
-    issues = lint(strategy, concepts=protocol.get("concepts") or [])
-    result: dict = {"lint": issues}
-    if strategy.structural_errors():
-        result["ok"] = False
-        result["message"] = "fix the structural errors before evaluating"
-        return result
+def effective_query(query: str, as_of: str | None) -> str:
+    if not as_of:
+        return query
+    import datetime
+    bound = datetime.date.fromisoformat(as_of).strftime("%Y/%m/%d")
+    return f'({query}) AND ("1800/01/01"[edat] : "{bound}"[edat])'
 
-    pm: PubMed = ws.pubmed
-    full = full_query(strategy)
+
+def evaluate(ws: Workspace, *, term_counts: bool = True) -> dict:
+    inputs = validation.input_snapshot(ws)
+    result = {"inputs": inputs, "input_sha256": validation.digest(inputs), "run_date": now(),
+              "lint": lint(ws.strategy(), concepts=inputs["protocol"].get("concepts") or []),
+              "lines": [], "vocabulary": [], "ok": False}
+    collected = []
+    complete = False
+    try:
+        unknowns = [i for i in result["lint"] if i["code"] == "unknown_tag"]
+        if unknowns and not any(i["severity"] == "error" for i in result["lint"]):
+            names = ws.pubmed.field_names()
+            result["lint"] = [i for i in result["lint"] if not (
+                i["code"] == "unknown_tag" and all(a["tag"].split(":")[0].casefold() in names
+                    or a["tag"].split(":")[0].casefold() in syntax.ALIASES for a in syntax.atoms(i["term"]))) ]
+        collected.extend(validation.identify(i, i.get("location") or "block:" + i.get("block", "strategy")) for i in result["lint"])
+        if not any(i["blocking"] for i in collected):
+            result["query"] = effective_query(full_query(ws.strategy()), ws.pubmed.as_of)
+            result["vocabulary"], vocabulary_issues = mesh.validate_query(ws.pubmed, result["query"], result["run_date"])
+            collected.extend(vocabulary_issues)
+            _measure(ws, result, term_counts=term_counts)
+            complete = term_counts and not any(r.get("status") == "unverified" for r in result["vocabulary"])
+    except (NcbiError, ValueError) as exc:
+        collected.append(validation.issue("validation_unavailable", "Evaluation could not complete", evidence=str(exc)))
+    collected.extend(validation.identify(i, "final") for i in result.get("translation_issues", []))
+    for line in result["lines"]:
+        collected.extend(validation.identify(i, f"line:{line['n']}") for i in line.get("issues", []))
+    if result.get("misses"):
+        collected.append(validation.issue("known_records_missed", "Investigate missed known records and explain any retained misses",
+                                         severity="warning", evidence=result["misses"]))
+    if validation.digest(validation.input_snapshot(ws)) != result["input_sha256"]:
+        collected.append(validation.issue("inputs_changed", "Workspace inputs changed during evaluation"))
+        complete = False
+    result["validation"] = validation.summarize(collected, complete=complete)
+    result["ok"] = not result["validation"]["blockers"]
+    result["review_sha256"] = validation.review_fingerprint(result)
+    return result
+
+
+def _measure(ws: Workspace, result: dict, *, term_counts: bool) -> None:
+    strategy = ws.strategy()
+    pm = ws.pubmed
+    full = result["query"]
     core = core_query(strategy)
-    search = pm.search(full)
-    result.update(
-        ok=True,
-        as_of=pm.as_of,
-        query=full,
-        count=search["count"],
-        translation_issues=search["issues"],
-    )
+    search = pm.search(full, dated=False)
+    if search["count"] and not search.get("translation", "").strip():
+        raise NcbiError("PubMed returned hits without a query translation")
+    result.update(as_of=pm.as_of, count=search["count"], translation=search["translation"],
+                  raw_diagnostics=search.get("raw_diagnostics"), translation_issues=search["issues"])
     if strategy.limits:
         result["count_without_limits"] = pm.count(core)
 
-    lines = []
+    lines = result["lines"]
     for line in numbered_lines(strategy):
         if line["kind"] == "term" and not term_counts:
             continue
-        found = pm.search(line["query"])
-        entry = {"n": line["n"], "text": line["text"], "kind": line["kind"], "block": line["block"], "count": found["count"]}
-        if found["issues"] and line["kind"] == "term":
-            entry["issues"] = [i["code"] + (f": {i['evidence']}" if i.get("evidence") else "") for i in found["issues"]]
+        query = effective_query(line["query"], pm.as_of)
+        found = pm.search(query, dated=False)
+        entry = {**line, "query": query, "count": found["count"], "translation": found["translation"],
+                 "raw_diagnostics": found.get("raw_diagnostics"), "issues": list(found["issues"])}
+        if found["count"] and not found.get("translation", "").strip():
+            entry["issues"].append({"severity": "error", "code": "translation_missing", "message": "Hits returned without translation"})
+        if not found["count"] and line["kind"] == "term":
+            entry["issues"].append({"severity": "warning", "code": "zero_hits", "message": "Zero hits: inspect spelling, restrictions and Boolean role; do not infer redundancy from seeds", "query": query, "translation": found["translation"]})
         lines.append(entry)
-    result["lines"] = lines
-
     sets = ws.sets()
     known = sorted({p for data in sets.values() for p in data.get("pmids", [])})
     if not known:
         result["sets"] = {}
         result["note"] = "no PMID sets: recall not measured (add seeds, relevant, validation or benchmark sets)"
-        return result
+        return
 
     in_pubmed = pm.existing(known)
     hit_full = pm.among(full, in_pubmed)
@@ -134,7 +172,7 @@ def evaluate(ws: Workspace, *, term_counts: bool = True) -> dict:
         result["ablation"] = ablation
     elif strategy.combine:
         result["ablation"] = "skipped: ablation needs the default AND combination"
-    return result
+    return
 
 
 def compare(previous: dict | None, current: dict, strategy: dict) -> dict | None:

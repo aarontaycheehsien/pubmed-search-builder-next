@@ -1,0 +1,33 @@
+{
+  "topic": "gao-2026-Immune checkpoint inhibitors",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T030852Z",
+  "scored": "20260928T032641Z",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1069
+  },
+  "final_message": "emiplimab[tiab] OR Libtayo[tiab] OR dostarlimab[tiab] OR Jemperli[tiab] OR tremelimumab[tiab] OR Imjudo[tiab]) AND (\"Antineoplastic Combined Chemotherapy Protocols\"[Mesh] OR chemotherap*[tiab] OR chemo[tiab] OR chemoimmunotherap*[tiab])) AND (\"1800/01/01\"[edat] : \"2025/01/31\"[edat])\n```\n\nThe final query passed the skill’s report validation. PubMed returned **785 records**, bounded by Entrez date through 2025-01-31; no publication-date (`[dp]`) limit was used. The detailed line-by-line strategy and counts are in the [audit](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-dc89f4701b07ff28/ours-codex-noseed-20260928T030852Z/work/audit.md>), and the protected [query file](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-dc89f4701b07ff28/ours-codex-noseed-20260928T030852Z/work/final-query.txt>) and [validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-dc89f4701b07ff28/ours-codex-noseed-20260928T030852Z/work/validation-manifest.json>) remain in `./work`.\n\n| Search line group | Results |\n|---|---:|\n| TNBC block, lines 1–9 | 27,932 |\n| Checkpoint inhibitor block, lines 10–48 | 69,681 |\n| Chemotherapy block, lines 49–53 | 637,979 |\n| Combined search, line 54 | 785 |\n\n## Recall and limitations\n\nAll **6 of 6** screened, prior-review-referenced benchmark records were retrieved: **100% relative recall against that benchmark**. This small, reference-derived set is not independent validation and does not establish sensitivity across all relevant studies. “Early” was interpreted as nonmetastatic stage I–III, including neoadjuvant and adjuvant treatment; stage remains a screening criterion.\n\nThe independent PRESS-structured internal critic passed all six domains. This draft still needs **PRESS peer review by an information specialist before use**. The scope assumptions, benchmark provenance, and remaining risks are recorded in [narrative.md](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-dc89f4701b07ff28/ours-codex-noseed-20260928T030852Z/work/narrative.md>).",
+  "strategy": "((\"Triple Negative Breast Neoplasms\"[Mesh] OR \"triple negative breast cancer\"[tiab] OR \"triple-negative breast cancer\"[tiab] OR \"triple negative breast neoplasm*\"[tiab] OR \"triple-negative breast neoplasm*\"[tiab] OR (TNBC[tiab] AND breast[tiab]) OR (\"triple-negative\"[tiab] AND breast[tiab]) OR (\"ER negative\"[tiab] AND \"PR negative\"[tiab] AND \"HER2 negative\"[tiab])) AND (pembrolizumab[nm] OR atezolizumab[nm] OR durvalumab[nm] OR avelumab[nm] OR cemiplimab[nm] OR dostarlimab[nm] OR tremelimumab[nm] OR Nivolumab[Mesh] OR Ipilimumab[Mesh] OR \"immune checkpoint inhibitor*\"[tiab] OR \"immune checkpoint blockade\"[tiab] OR \"checkpoint inhibitor*\"[tiab] OR \"checkpoint blockade\"[tiab] OR \"PD-1 inhibitor*\"[tiab] OR \"PD-L1 inhibitor*\"[tiab] OR \"PD1 inhibitor*\"[tiab] OR \"PDL1 inhibitor*\"[tiab] OR \"anti-PD-1\"[tiab] OR \"anti-PD-L1\"[tiab] OR \"anti-CTLA-4\"[tiab] OR pembrolizumab[tiab] OR Keytruda[tiab] OR atezolizumab[tiab] OR Tecentriq[tiab] OR durvalumab[tiab] OR Imfinzi[tiab] OR nivolumab[tiab] OR Opdivo[tiab] OR ipilimumab[tiab] OR Yervoy[tiab] OR avelumab[tiab] OR Bavencio[tiab] OR cemiplimab[tiab] OR Libtayo[tiab] OR dostarlimab[tiab] OR Jemperli[tiab] OR tremelimumab[tiab] OR Imjudo[tiab]) AND (\"Antineoplastic Combined Chemotherapy Protocols\"[Mesh] OR chemotherap*[tiab] OR chemo[tiab] OR chemoimmunotherap*[tiab])) AND (\"1800/01/01\"[edat] : \"2025/01/31\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2025-01-31",
+  "count": 785,
+  "gold_scored": 11,
+  "gold_reachable": 11,
+  "retrieved": 11,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 71.4,
+  "translation_issues": [],
+  "gold_seen_by_agent": 6,
+  "unseen_retrieved": 5,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "valid": true
+}

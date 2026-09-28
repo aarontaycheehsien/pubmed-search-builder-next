@@ -205,7 +205,11 @@ class PubMed:
         if dated and self.as_of:
             params.update({"datetype": "edat", "mindate": "1800/01/01", "maxdate": self.as_of.replace("-", "/")})
         data = self._json("esearch.fcgi", params, method="POST" if len(query) > POST_THRESHOLD else "GET")
-        result = data.get("esearchresult", {})
+        result = data.get("esearchresult")
+        if (not isinstance(result, dict) or not str(result.get("count", "")).isdigit()
+                or not isinstance(result.get("idlist"), list)
+                or not isinstance(result.get("querytranslation"), str)):
+            raise NcbiError("malformed PubMed search response: count, idlist and querytranslation are required")
         translation = str(result.get("querytranslation", ""))
         stack = [
             {"term": item.get("term", ""), "field": item.get("field", ""), "count": int(item.get("count", 0) or 0)}
@@ -217,6 +221,7 @@ class PubMed:
             "count": int(result.get("count", 0) or 0),
             "pmids": [str(p) for p in result.get("idlist", [])],
             "translation": translation,
+            "raw_diagnostics": {k: result.get(k) for k in ("warninglist", "errorlist", "translationset")},
             "term_counts": stack,
             "issues": translation_issues(
                 query, translation, result.get("translationset"), result.get("warninglist"), result.get("errorlist")
@@ -307,11 +312,47 @@ class PubMed:
 
     def mesh_search(self, term: str, *, retmax: int = 10) -> list[str]:
         data = self._json("esearch.fcgi", {"db": "mesh", "term": term, "retmode": "json", "retmax": str(retmax)})
-        return [str(uid) for uid in data.get("esearchresult", {}).get("idlist", [])]
+        result = data.get("esearchresult")
+        if not isinstance(result, dict) or not isinstance(result.get("idlist"), list) or not str(result.get("count", "")).isdigit():
+            raise NcbiError("malformed MeSH search response")
+        if len(result["idlist"]) != min(retmax, int(result["count"])):
+            raise NcbiError("incomplete MeSH search response")
+        return [str(uid) for uid in result["idlist"]]
 
     def mesh_summary(self, uids: list[str]) -> list[dict]:
         if not uids:
             return []
         data = self._json("esummary.fcgi", {"db": "mesh", "id": ",".join(uids), "retmode": "json"})
         result = data.get("result", {})
-        return [result[uid] for uid in result.get("uids", []) if isinstance(result.get(uid), dict)]
+        if (not isinstance(result, dict) or not isinstance(result.get("uids"), list)
+                or set(map(str, result["uids"])) != set(map(str, uids))
+                or any(not isinstance(result.get(str(uid)), dict) or not result[str(uid)].get("ds_meshui")
+                       or not isinstance(result[str(uid)].get("ds_meshterms"), list)
+                       or not result[str(uid)]["ds_meshterms"]
+                       or not all(isinstance(t, str) and t.strip() for t in result[str(uid)]["ds_meshterms"])
+                       for uid in uids)):
+            raise NcbiError("incomplete MeSH summary response")
+        return [result[str(uid)] for uid in result["uids"]]
+
+    def field_names(self) -> set[str]:
+        data = self._json("einfo.fcgi", {"db": "pubmed", "retmode": "json"})
+        try:
+            rows = data["einforesult"]["dbinfo"][0]["fieldlist"]
+            names = {str(row[k]).casefold() for row in rows for k in ("name", "fullname")}
+        except (KeyError, TypeError, IndexError) as exc:
+            raise NcbiError("malformed PubMed field information") from exc
+        if not names:
+            raise NcbiError("empty PubMed field information")
+        return names
+
+    def mesh_descriptor(self, ui: str) -> dict:
+        if not re.fullmatch(r"D\d+", ui):
+            raise NcbiError("descriptor authority requires a D identifier")
+        raw = self.request("mesh-descriptor", {"ui": ui}, url=f"https://id.nlm.nih.gov/mesh/{ui}.json")
+        try:
+            data = json.loads(raw)
+        except ValueError as exc:
+            raise NcbiError("malformed descriptor authority response") from exc
+        if not isinstance(data, dict) or data.get("identifier") != ui:
+            raise NcbiError("descriptor authority identity mismatch")
+        return data
