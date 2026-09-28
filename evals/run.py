@@ -195,7 +195,11 @@ def child_env(skill_dir: Path, as_of: str | None) -> dict:
 
 def generate_once(args, fixture: dict, split: str, *, skill_dir: Path, skill_name: str, seeds: list[str],
                   provenance: dict) -> dict:
-    label = f"{skill_name}-{args.driver}-{args.condition}-{stamp()}"
+    base = f"{skill_name}-{args.driver}-{args.condition}-{stamp()}"
+    label, suffix = base, 1
+    while (Path(args.runs_root) / anon_dir(fixture["id"]) / label).exists():  # parallel runs started in the same second
+        suffix += 1
+        label = f"{base}-{suffix}"
     run_dir = Path(args.runs_root) / anon_dir(fixture["id"]) / label
     run_dir.mkdir(parents=True)
     staged = drivers.stage_skill(skill_dir, run_dir)
