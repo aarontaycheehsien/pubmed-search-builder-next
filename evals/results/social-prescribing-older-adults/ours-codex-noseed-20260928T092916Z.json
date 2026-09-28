@@ -1,0 +1,45 @@
+{
+  "topic": "social-prescribing-older-adults",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T092916Z",
+  "scored": "20260928T095907Z",
+  "skill": {
+    "name": "ours",
+    "hash": "49fa7fd0b4d8465a17edf4c04050fca9e17c15fcd601f3be27462d4253786e26",
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": true
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1790
+  },
+  "strategy": "((\"Community Health Workers\"[Mesh] OR \"social prescribing\"[tiab] OR \"social prescription\"[tiab] OR social prescrib*[tiab] OR \"link worker\"[tiab:~1] OR \"link practitioner\"[tiab:~1] OR (link[tiab] AND worker*[tiab]) OR \"community link\"[tiab:~1] OR \"community navigator\"[tiab:~1] OR \"community connector\"[tiab:~1] OR \"community referral\"[tiab:~1] OR \"link scheme\"[tiab:~1] OR \"voluntary sector\"[tiab:~1] OR \"community resource\"[tiab:~1] OR \"referral facilitator\"[tiab:~1] OR \"Social Participation\"[Mesh] OR \"community activity\"[tiab] OR \"community activities\"[tiab] OR \"community-based activity\"[tiab] OR \"community-based activities\"[tiab] OR \"social activity\"[tiab] OR \"social activities\"[tiab])) AND (\"1800/01/01\"[edat] : \"2019/12/30\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2019-12-30",
+  "count": 17321,
+  "gold_scored": 10,
+  "gold_reachable": 10,
+  "retrieved": 10,
+  "recall_percent": 100.0,
+  "nnr": 1732.1,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 9,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

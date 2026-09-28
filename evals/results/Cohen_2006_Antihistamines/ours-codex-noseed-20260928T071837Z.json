@@ -1,0 +1,45 @@
+{
+  "topic": "Cohen_2006_Antihistamines",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T071837Z",
+  "scored": "20260928T073949Z",
+  "skill": {
+    "name": "ours",
+    "hash": "49fa7fd0b4d8465a17edf4c04050fca9e17c15fcd601f3be27462d4253786e26",
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1271
+  },
+  "strategy": "((\"Rhinitis, Allergic, Seasonal\"[Mesh] OR \"Rhinitis, Allergic, Perennial\"[Mesh] OR \"Urticaria\"[Mesh] OR allergic rhinit*[tiab] OR rhinit*[tiab] OR \"hay fever\"[tiab] OR hayfever[tiab] OR pollinosis[tiab] OR rhinoconjunctivitis[tiab] OR urticari*[tiab] OR hive*[tiab] OR wheal*[tiab]) AND (\"Cetirizine\"[Mesh] OR \"Loratadine\"[Mesh] OR \"Terfenadine\"[Mesh] OR \"Astemizole\"[Mesh] OR antihistamine*[tiab] OR antihistaminic*[tiab] OR \"H1 antagonist*\"[tiab] OR \"H1 receptor antagonist*\"[tiab] OR \"second generation\"[tiab] OR second-generation[tiab] OR \"non sedating\"[tiab] OR \"non-sedating\"[tiab] OR nonsedating[tiab] OR \"non sedative\"[tiab] OR \"non-sedative\"[tiab] OR cetirizine[tiab] OR levocetirizine[tiab] OR loratadine[tiab] OR desloratadine[tiab] OR fexofenadine[tiab] OR terfenadine[tiab] OR astemizole[tiab] OR acrivastine[tiab] OR ebastine[tiab] OR mizolastine[tiab] OR azelastine[tiab] OR emedastine[tiab])) AND (\"1800/01/01\"[edat] : \"2002/05/26\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2002-05-26",
+  "count": 2241,
+  "gold_scored": 16,
+  "gold_reachable": 16,
+  "retrieved": 14,
+  "recall_percent": 87.5,
+  "nnr": 160.1,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 14,
+  "unseen_recall_percent": 87.5,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

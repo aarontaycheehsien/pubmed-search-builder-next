@@ -1,0 +1,52 @@
+{
+  "topic": "Cohen_2006_UrinaryIncontinence",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260928T100513Z",
+  "scored": "20260928T103847Z",
+  "skill": {
+    "name": "lean-optimal",
+    "hash": "b2569259e8a0658dd10bae3023147f2090fc75073a5bd07f9ebc1c23cc887486",
+    "commit": null,
+    "dirty": null,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": true
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2014
+  },
+  "strategy": "((\"Urination Disorders\"[Mesh:noexp] OR \"Urinary Incontinence\"[Mesh] OR \"Urinary Bladder Diseases\"[tiab] OR \"Urinary Bladder Disease\"[tiab] OR \"Bladder Diseases\"[tiab] OR \"Bladder Disease\"[tiab] OR \"Urination Disorders\"[tiab] OR \"Disorders, Urination\"[tiab] OR \"Disorder, Urination\"[tiab] OR \"Urination Disorder\"[tiab] OR \"Urinary Incontinence\"[tiab] OR \"Incontinence, Urinary\"[tiab] OR \"overactive bladder\"[tiab] OR OAB[tiab] OR \"overactive urinary bladder\"[tiab] OR \"bladder, overactive\"[tiab] OR \"overactive detrusor\"[tiab] OR \"detrusor, overactive\"[tiab] OR \"overactive detrusor function\"[tiab] OR \"detrusor function, overactive\"[tiab] OR \"hyperactive bladder\"[tiab] OR \"bladder instability\"[tiab] OR \"bladder overactivity\"[tiab] OR \"detrusor overactivity\"[tiab] OR \"detrusor instability\"[tiab] OR \"detrusor hyperreflexia\"[tiab] OR \"urge incontinence\"[tiab] OR \"incontinence, urge\"[tiab] OR \"urge urinary incontinence\"[tiab] OR \"urinary urge incontinence\"[tiab] OR \"urinary reflex incontinence\"[tiab] OR \"incontinence, urinary reflex\"[tiab] OR \"mixed urinary incontinence\"[tiab] OR \"urinary urgency\"[tiab] OR \"urinary frequency\"[tiab] OR \"urinary urgency\"[tiab:~2] OR \"urinary frequency\"[tiab:~2] OR pollakiuria[tiab] OR pollakisuria[tiab])) AND ((\"Urinary Incontinence/drug therapy\"[Mesh] OR \"Urinary Bladder Diseases/drug therapy\"[Mesh] OR \"Cholinergic Antagonists\"[Pharmacological Action] OR \"Muscarinic Antagonists\"[Pharmacological Action] OR \"Propantheline\"[Mesh] OR \"Emepronium\"[Mesh] OR \"Flavoxate\"[Mesh] OR \"oxybutynin\"[Supplementary Concept] OR \"tolterodine tartrate\"[Supplementary Concept] OR \"trospium chloride\"[Supplementary Concept] OR \"darifenacin\"[Supplementary Concept] OR \"solifenacin succinate\"[Supplementary Concept] OR \"propiverine\"[Supplementary Concept] OR \"terodiline\"[Supplementary Concept] OR \"Cholinergic Antagonists\"[tiab] OR \"Muscarinic Antagonists\"[tiab] OR oxybutynin[tiab] OR Ditropan[tiab] OR Oxytrol[tiab] OR tolterodine[tiab] OR Detrol[tiab] OR Detrusitol[tiab] OR trospium[tiab] OR Spasmex[tiab] OR Uraplex[tiab] OR darifenacin[tiab] OR Enablex[tiab] OR Emselex[tiab] OR solifenacin[tiab] OR Vesicare[tiab] OR propiverine[tiab] OR Mictonorm[tiab] OR Detrunorm[tiab] OR flavoxate[tiab] OR Urispas[tiab] OR \"Hydrochloride, Flavoxate\"[tiab] OR Bladuril[tiab] OR Spasuret[tiab] OR Uronid[tiab] OR emepronium[tiab] OR Cetiprin[tiab] OR \"Emepronium Bromide\"[tiab] OR \"Bromide, Emepronium\"[tiab] OR propantheline[tiab] OR Probanthine[tiab] OR \"Pro-Banthine\"[tiab] OR \"Pro Banthine\"[tiab] OR \"Bromide, Propantheline\"[tiab] OR \"Propantheline Bromide\"[tiab] OR terodiline[tiab] OR imipramine[tiab] OR antimuscarinic*[tiab] OR anticholinergic*[tiab] OR antispasmodic*[tiab] OR oxybutynin*[tiab] OR tolterodin*[tiab] OR trospium*[tiab] OR darifenacin*[tiab] OR solifenacin*[tiab] OR propiverin*[tiab] OR flavoxat*[tiab] OR emeproni*[tiab] OR propantheline*[tiab] OR terodilin*[tiab]))",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2003-09-11",
+  "count": 1841,
+  "gold_scored": 40,
+  "gold_reachable": 40,
+  "retrieved": 32,
+  "recall_percent": 80.0,
+  "nnr": 57.5,
+  "translation_issues": [
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "phrase_not_found"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 32,
+  "unseen_recall_percent": 80.0,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

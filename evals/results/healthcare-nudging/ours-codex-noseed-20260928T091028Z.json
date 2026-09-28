@@ -1,0 +1,45 @@
+{
+  "topic": "healthcare-nudging",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T091028Z",
+  "scored": "20260928T092954Z",
+  "skill": {
+    "name": "ours",
+    "hash": "49fa7fd0b4d8465a17edf4c04050fca9e17c15fcd601f3be27462d4253786e26",
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": true
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1166
+  },
+  "strategy": "((\"Economics, Behavioral\"[Mesh] OR \"Reminder Systems\"[Mesh] OR \"Decision Support Systems, Clinical\"[Mesh] OR \"Social Norms\"[Mesh] OR \"Choice Behavior\"[Mesh:noexp] OR nudg*[tiab] OR \"choice architecture\"[tiab] OR \"choice architect*\"[tiab] OR \"active choice\"[tiab] OR \"behavioral economics\"[tiab] OR \"behavioural economics\"[tiab] OR default*[tiab] OR \"social norm*\"[tiab] OR \"social comparison*\"[tiab] OR \"peer comparison*\"[tiab] OR remind*[tiab] OR \"clinical decision support\"[tiab] OR \"accountable justification*\"[tiab] OR \"suggested alternative*\"[tiab]) AND (\"Health Personnel\"[Mesh] OR \"healthcare worker*\"[tiab] OR \"health care worker*\"[tiab] OR \"healthcare professional*\"[tiab] OR \"health care professional*\"[tiab] OR \"health professional*\"[tiab] OR \"healthcare provider*\"[tiab] OR \"health care provider*\"[tiab] OR clinician*[tiab] OR physician*[tiab] OR doctor*[tiab] OR nurse*[tiab] OR pharmacist*[tiab] OR dentist*[tiab] OR therapist*[tiab] OR practitioner*[tiab] OR anesthetist*[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/18\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-18",
+  "count": 15025,
+  "gold_scored": 86,
+  "gold_reachable": 86,
+  "retrieved": 49,
+  "recall_percent": 57.0,
+  "nnr": 306.6,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 48,
+  "unseen_recall_percent": 56.5,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

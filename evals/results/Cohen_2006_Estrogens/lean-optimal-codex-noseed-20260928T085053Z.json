@@ -1,0 +1,55 @@
+{
+  "topic": "Cohen_2006_Estrogens",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260928T085053Z",
+  "scored": "20260928T090348Z",
+  "skill": {
+    "name": "lean-optimal",
+    "hash": "b2569259e8a0658dd10bae3023147f2090fc75073a5bd07f9ebc1c23cc887486",
+    "commit": null,
+    "dirty": null,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": true
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 774
+  },
+  "strategy": "(\"Menopause\"[Mesh] OR \"Postmenopause\"[Mesh] OR menopaus*[tiab] OR climacteric[tiab] OR perimenopaus*[tiab] OR postmenopaus*[tiab] OR \"Change of Life, Female\"[tiab] OR \"Post-menopausal Period\"[tiab] OR \"Period, Post-menopausal\"[tiab] OR \"Post menopausal Period\"[tiab] OR \"Post-Menopause\"[tiab] OR \"Post Menopause\"[tiab] OR \"Post-Menopauses\"[tiab] OR \"Postmenopausal Period\"[tiab] OR \"Period, Postmenopausal\"[tiab] OR \"surgical menopause\"[tiab] OR ovariectom*[tiab] OR oophorectom*[tiab]) AND (\"Estrogens\"[Mesh] OR \"Estrogen Replacement Therapy\"[Mesh] OR estrogen*[tiab] OR estrogen[tiab] OR \"Estrogen Receptor Agonists\"[tiab] OR \"Agonists, Estrogen Receptor\"[tiab] OR \"Receptor Agonists, Estrogen\"[tiab] OR \"Estrogenic Agents\"[tiab] OR \"Agents, Estrogenic\"[tiab] OR \"Estrogenic Compounds\"[tiab] OR \"Compounds, Estrogenic\"[tiab] OR \"Estrogen Effect\"[tiab] OR \"Estrogen Effects\"[tiab] OR \"Effects, Estrogen\"[tiab] OR \"Estrogenic Effect\"[tiab] OR \"Estrogenic Effects\"[tiab] OR \"Effects, Estrogenic\"[tiab] OR oestrogen*[tiab] OR estradiol[tiab] OR oestradiol[tiab] OR estriol[tiab] OR oestriol[tiab] OR estrone[tiab] OR \"hormone replacement therapy\"[tiab] OR \"Hormone Replacement Therapy\"[tiab] OR \"Replacement Therapy, Hormone\"[tiab] OR \"Therapy, Hormone Replacement\"[tiab] OR \"Hormone Replacement Therapies\"[tiab] OR \"Replacement Therapies, Hormone\"[tiab] OR \"Therapies, Hormone Replacement\"[tiab] OR \"Estrogen Replacement Therapy\"[tiab] OR \"Estrogen Replacement Therapies\"[tiab] OR \"Replacement Therapies, Estrogen\"[tiab] OR \"Therapies, Estrogen Replacement\"[tiab] OR \"Replacement Therapy, Estrogen\"[tiab] OR \"Therapy, Estrogen Replacement\"[tiab] OR \"Postmenopausal Hormone Replacement Therapy\"[tiab] OR \"Hormone Replacement Therapy, Post-Menopausal\"[tiab] OR \"Hormone Replacement Therapy, Post Menopausal\"[tiab] OR \"Estrogen Replacement\"[tiab] OR \"Estrogen Replacements\"[tiab] OR \"Replacements, Estrogen\"[tiab] OR \"Replacement, Estrogen\"[tiab] OR \"Estrogen Progestin Replacement Therapy\"[tiab] OR \"Estrogen Progestin Combination Therapy\"[tiab] OR HRT[tiab] OR ERT[tiab] OR Premarin[tiab] OR \"conjugated estrogens\"[tiab]) AND (\"1900/01/01\"[edat] : \"2003/10/12\"[edat])",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2003-10-12",
+  "count": 30011,
+  "gold_scored": 80,
+  "gold_reachable": 80,
+  "retrieved": 77,
+  "recall_percent": 96.2,
+  "nnr": 389.8,
+  "translation_issues": [
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 77,
+  "unseen_recall_percent": 96.2,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

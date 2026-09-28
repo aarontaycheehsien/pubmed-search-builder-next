@@ -1,0 +1,45 @@
+{
+  "topic": "Cohen_2006_UrinaryIncontinence",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T091231Z",
+  "scored": "20260928T093300Z",
+  "skill": {
+    "name": "ours",
+    "hash": "49fa7fd0b4d8465a17edf4c04050fca9e17c15fcd601f3be27462d4253786e26",
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": true
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1229
+  },
+  "strategy": "((\"detrusor overactivity\"[tiab] OR \"Urinary Incontinence\"[Mesh] OR \"Urination Disorders\"[Mesh] OR \"Urinary Bladder Diseases\"[Mesh] OR \"overactive bladder\"[tiab] OR \"overactive urinary bladder\"[tiab] OR \"overactive detrusor\"[tiab] OR OAB[tiab] OR \"urge incontinence\"[tiab] OR \"urinary urge incontinence\"[tiab] OR \"urge urinary incontinence\"[tiab] OR \"urinary incontinence, urge\"[tiab] OR \"mixed urinary incontinence\"[tiab] OR \"mixed incontinence\"[tiab] OR \"detrusor instability\"[tiab] OR \"unstable bladder\"[tiab] OR \"detrusor hyperreflexia\"[tiab] OR \"bladder instability\"[tiab] OR \"urinary urgency\"[tiab] OR \"urgency urinary\"[tiab:~2] OR \"urinary frequency\"[tiab] OR \"frequency of urination\"[tiab]) AND (oxybutynin[nm] OR \"Tolterodine Tartrate\"[Mesh] OR trospium chloride[nm] OR propiverine[nm] OR \"Flavoxate\"[Mesh] OR oxybutynin[tiab] OR Ditropan[tiab] OR Oxytrol[tiab] OR tolterodine[tiab] OR Detrol[tiab] OR Detrusitol[tiab] OR trospium[tiab] OR Spasmex[tiab] OR propiverine[tiab] OR Mictonorm[tiab] OR flavoxate[tiab] OR Urispas[tiab] OR darifenacin[tiab] OR solifenacin[tiab] OR antimuscarinic*[tiab] OR anticholinergic*[tiab] OR muscarinic antagonist*[tiab] OR bladder anticholinergic*[tiab] OR propantheline[tiab] OR dicyclomine[tiab] OR imipramine[tiab] OR cholinergic antagonist*[tiab])) AND (\"1800/01/01\"[edat] : \"2003/09/11\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2003-09-11",
+  "count": 1254,
+  "gold_scored": 40,
+  "gold_reachable": 40,
+  "retrieved": 32,
+  "recall_percent": 80.0,
+  "nnr": 39.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 4,
+  "unseen_retrieved": 28,
+  "unseen_recall_percent": 77.8,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

@@ -1,0 +1,52 @@
+{
+  "topic": "Cohen_2006_ADHD",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260928T075606Z",
+  "scored": "20260928T082118Z",
+  "skill": {
+    "name": "lean-optimal",
+    "hash": "b2569259e8a0658dd10bae3023147f2090fc75073a5bd07f9ebc1c23cc887486",
+    "commit": null,
+    "dirty": null,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1512
+  },
+  "strategy": "﻿((\"Attention Deficit Disorder with Hyperactivity\"[Mesh] OR \"Attention Deficit Disorder with Hyperactivity\"[tiab] OR \"Attention Deficit Hyperactivity Disorders\"[tiab] OR \"Hyperkinetic Syndrome\"[tiab] OR \"Syndromes, Hyperkinetic\"[tiab] OR \"Attention Deficit-Hyperactivity Disorder\"[tiab] OR \"Attention Deficit-Hyperactivity Disorders\"[tiab] OR \"Deficit-Hyperactivity Disorder, Attention\"[tiab] OR \"Deficit-Hyperactivity Disorders, Attention\"[tiab] OR \"Disorder, Attention Deficit-Hyperactivity\"[tiab] OR \"Disorders, Attention Deficit-Hyperactivity\"[tiab] OR ADDH[tiab] OR \"Attention Deficit Disorders with Hyperactivity\"[tiab] OR ADHD[tiab] OR \"Attention Deficit Hyperactivity Disorder\"[tiab] OR \"Attention Deficit Disorder\"[tiab] OR \"Attention Deficit Disorders\"[tiab] OR \"Deficit Disorder, Attention\"[tiab] OR \"Deficit Disorders, Attention\"[tiab] OR \"Disorder, Attention Deficit\"[tiab] OR \"Disorders, Attention Deficit\"[tiab] OR \"Brain Dysfunction, Minimal\"[tiab] OR \"Dysfunction, Minimal Brain\"[tiab] OR \"Minimal Brain Dysfunction\"[tiab] OR ADD[ti])) AND ((\"Drug Therapy\"[Mesh] OR \"Central Nervous System Stimulants\"[Mesh:noexp] OR \"Central Nervous System Stimulants\"[tiab] OR \"Central Stimulant\"[tiab] OR \"Stimulant, Central\"[tiab] OR \"CNS Stimulant\"[tiab] OR \"Stimulant, CNS\"[tiab] OR \"CNS Stimulants\"[tiab] OR \"Stimulants, CNS\"[tiab] OR \"Central Stimulants\"[tiab] OR \"Stimulants, Central\"[tiab] OR \"Central Nervous System Stimulant\"[tiab] OR Analeptics[tiab] OR \"Analeptic Agents\"[tiab] OR \"Agents, Analeptic\"[tiab] OR \"Analeptic Drugs\"[tiab] OR \"Drugs, Analeptic\"[tiab] OR Analeptic[tiab] OR \"Analeptic Agent\"[tiab] OR \"Agent, Analeptic\"[tiab] OR \"Analeptic Drug\"[tiab] OR \"Drug, Analeptic\"[tiab] OR \"Drug Therapy\"[tiab] OR \"Chemotherapy\"[tiab] OR \"Chemotherapies\"[tiab] OR Pharmacotherapy[tiab] OR Pharmacotherapies[tiab] OR \"Therapy, Drug\"[tiab] OR \"Drug Therapies\"[tiab] OR \"Therapies, Drug\"[tiab] OR medication*[tiab] OR medicat*[tiab] OR pharmacolog*[tiab] OR pharmacotherap*[tiab] OR stimulant*[tiab] OR \"drug treatment\"[tiab] OR \"drug treatments\"[tiab] OR \"pharmacological treatment\"[tiab] OR \"pharmacological treatments\"[tiab] OR methylphenidate[tiab] OR dexmethylphenidate[tiab] OR amphetamine*[tiab] OR dextroamphetamine[tiab] OR dexamphetamine[tiab] OR dexamfetamine[tiab] OR pemoline[tiab] OR atomoxetine[tiab] OR bupropion[tiab] OR modafinil[tiab] OR clonidine[tiab] OR guanfacine[tiab] OR desipramine[tiab] OR imipramine[tiab] OR nortriptyline[tiab] OR venlafaxine[tiab] OR \"Methylphenidate\"[Supplementary Concept] OR \"Amphetamine\"[Supplementary Concept] OR \"Dextroamphetamine\"[Supplementary Concept] OR \"Pemoline\"[Supplementary Concept] OR \"Atomoxetine Hydrochloride\"[Supplementary Concept] OR \"Bupropion\"[Supplementary Concept] OR \"Modafinil\"[Supplementary Concept])) AND (\"1800/01/01\"[EDAT] : \"2003/08/06\"[EDAT])",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2003-08-06",
+  "count": 2960,
+  "gold_scored": 20,
+  "gold_reachable": 20,
+  "retrieved": 19,
+  "recall_percent": 95.0,
+  "nnr": 155.8,
+  "translation_issues": [
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 19,
+  "unseen_recall_percent": 95.0,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

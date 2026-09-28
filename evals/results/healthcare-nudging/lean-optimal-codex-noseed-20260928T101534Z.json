@@ -1,0 +1,54 @@
+{
+  "topic": "healthcare-nudging",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260928T101534Z",
+  "scored": "20260928T103617Z",
+  "skill": {
+    "name": "lean-optimal",
+    "hash": "b2569259e8a0658dd10bae3023147f2090fc75073a5bd07f9ebc1c23cc887486",
+    "commit": null,
+    "dirty": null,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": true
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1243
+  },
+  "strategy": "(\"Economics, Behavioral\"[Mesh] OR \"Behavioral Economics\"[tiab] OR \"Economics, Behavioral\"[tiab] OR \"Reminder Systems\"[Mesh] OR \"Social Norms\"[Mesh:noexp] OR \"Social Norms\"[tiab] OR \"Norm, Social\"[tiab] OR \"Norms, Social\"[tiab] OR \"Social Norm\"[tiab] OR \"Societal Norms\"[tiab] OR \"Norm, Societal\"[tiab] OR \"Norms, Societal\"[tiab] OR \"Societal Norm\"[tiab] OR \"Reminder System\"[tiab] OR \"Reminder Systems\"[tiab] OR \"System, Reminder\"[tiab] OR \"Systems, Reminder\"[tiab] OR \"Decision Support Systems, Clinical\"[Mesh] OR \"Clinical Decision Support System\"[tiab] OR \"Clinical Decision Support Systems\"[tiab] OR \"Clinical Decision Support\"[tiab] OR \"Clinical Decision Supports\"[tiab] OR \"Decision Supports, Clinical\"[tiab] OR \"Support, Clinical Decision\"[tiab] OR \"Supports, Clinical Decision\"[tiab] OR \"Decision Support, Clinical\"[tiab] OR CDSS[tiab] OR CDSSs[tiab] OR nudge*[tiab] OR \"choice architecture\"[tiab] OR \"choice architectures\"[tiab] OR \"libertarian paternalism\"[tiab] OR \"behavioral economics\"[tiab] OR \"behavioural economics\"[tiab] OR default*[tiab] OR remind*[tiab] OR prompt*[tiab] OR \"social norm\"[tiab] OR \"social norms\"[tiab] OR \"social norm*\"[tiab] OR \"social comparison\"[tiab] OR \"peer comparison\"[tiab] OR \"comparative feedback\"[tiab] OR \"audit and feedback\"[tiab] OR \"audit feedback\"[tiab] OR \"framing effect\"[tiab] OR \"framing effects\"[tiab] OR \"opt out\"[tiab] OR \"opt-out\"[tiab] OR \"optout\"[tiab] OR salien*[tiab]) AND (\"Evidence-Based Medicine\"[Mesh] OR \"Evidence-Based Practice\"[Mesh] OR \"Practice Guidelines as Topic\"[Mesh] OR \"Guideline Adherence\"[Mesh] OR \"Evidence-Based Medicine\"[tiab] OR \"Evidence Based Medicine\"[tiab] OR \"Medicine, Evidence-Based\"[tiab] OR \"Medicine, Evidence Based\"[tiab] OR \"Evidence-Based Practice\"[tiab] OR \"Evidence Based Practice\"[tiab] OR \"Evidence-Based Health Care\"[tiab] OR \"Evidence Based Health Care\"[tiab] OR \"Evidence-Based Health Cares\"[tiab] OR \"Health Care, Evidence-Based\"[tiab] OR \"Health Cares, Evidence-Based\"[tiab] OR \"Evidence-Based Healthcare\"[tiab] OR \"Evidence Based Healthcare\"[tiab] OR \"Evidence-Based Healthcares\"[tiab] OR \"Healthcare, Evidence-Based\"[tiab] OR \"Healthcares, Evidence-Based\"[tiab] OR \"Evidence Based Management, Healthcare\"[tiab] OR \"Evidence Based Management, Health Care\"[tiab] OR \"Evidence Based Health Care Management\"[tiab] OR \"Evidence Based Healthcare Management\"[tiab] OR \"Practice Guidelines as Topic\"[tiab] OR \"Clinical Guidelines as Topic\"[tiab] OR \"Best Practices\"[tiab] OR \"Best Practice\"[tiab] OR \"Guideline Adherence\"[tiab] OR \"Adherence, Guideline\"[tiab] OR \"Institutional Adherence\"[tiab] OR \"Adherence, Institutional\"[tiab] OR \"Policy Compliance\"[tiab] OR \"Compliance, Policy\"[tiab] OR \"Protocol Compliance\"[tiab] OR \"Compliance, Protocol\"[tiab] OR \"Clinical Practice Guideline\"[tiab] OR \"Clinical Practice Guidelines\"[tiab] OR \"Clinical Guideline\"[tiab] OR \"Clinical Guidelines\"[tiab] OR \"Treatment Guideline\"[tiab] OR \"Intervention Guideline\"[tiab] OR \"Therapeutic Guideline\"[tiab] OR EBM[tiab] OR EBP[tiab] OR guideline*[tiab] OR \"guideline concordance\"[tiab] OR \"guideline concordant\"[tiab] OR \"guideline compliance\"[tiab] OR \"guideline compliant\"[tiab] OR \"evidence-based\"[tiab] OR \"evidence based\"[tiab] OR \"evidence-informed\"[tiab] OR \"evidence informed\"[tiab] OR \"evidence-based care\"[tiab] OR \"evidence-based clinical practice\"[tiab] OR \"evidence based clinical practice\"[tiab] OR \"evidence based medicine\"[tiab] OR \"evidence-based medicine\"[tiab] OR \"evidence-informed practice\"[tiab] OR \"evidence informed practice\"[tiab] OR \"evidence-based healthcare\"[tiab] OR \"evidence-based health care\"[tiab] OR \"evidence-based practice\"[tiab] OR \"evidence based practice\"[tiab] OR \"recommended care\"[tiab]) AND (\"Health Personnel\"[Mesh] OR \"Health Personnel\"[tiab] OR \"Personnel, Health\"[tiab] OR \"Healthcare Workers\"[tiab] OR \"Healthcare Worker\"[tiab] OR \"Health Care Providers\"[tiab] OR \"Health Care Provider\"[tiab] OR \"Provider, Health Care\"[tiab] OR \"Healthcare Providers\"[tiab] OR \"Healthcare Provider\"[tiab] OR \"Provider, Healthcare\"[tiab] OR \"Health Care Professionals\"[tiab] OR \"Health Care Professional\"[tiab] OR \"Professional, Health Care\"[tiab] OR clinician*[tiab] OR provider*[tiab] OR physician*[tiab] OR doctor*[tiab] OR nurs*[tiab] OR dentist*[tiab] OR pharmacist*[tiab] OR therapist*[tiab] OR practitioner*[tiab] OR surgeon*[tiab] OR midwi*[tiab] OR \"medical staff\"[tiab] OR \"allied health\"[tiab] OR paramedic*[tiab]) AND (\"0001/01/01\"[EDAT] : \"2017/12/18\"[EDAT])",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2017-12-18",
+  "count": 5323,
+  "gold_scored": 86,
+  "gold_reachable": 86,
+  "retrieved": 38,
+  "recall_percent": 44.2,
+  "nnr": 140.1,
+  "translation_issues": [
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 38,
+  "unseen_recall_percent": 44.2,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

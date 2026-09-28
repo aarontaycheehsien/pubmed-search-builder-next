@@ -199,6 +199,7 @@ def generate_once(args, fixture: dict, split: str, *, skill_dir: Path, skill_nam
     run_dir = Path(args.runs_root) / anon_dir(fixture["id"]) / label
     run_dir.mkdir(parents=True)
     staged = drivers.stage_skill(skill_dir, run_dir)
+    skill_hash = harness.tree_hash(staged)  # before the run: an agent may write inside its skill copy
     (run_dir / "work").mkdir()
     prompt = drivers.prompt_for(fixture, seeds=seeds, depth=args.depth)
     (run_dir / "prompt.txt").write_text(prompt, encoding="utf-8")
@@ -212,7 +213,7 @@ def generate_once(args, fixture: dict, split: str, *, skill_dir: Path, skill_nam
             transcript = (run_dir / name).read_text(encoding="utf-8", errors="replace")
     card = {"topic": fixture["id"], "source": f"generated:{skill_name}", "driver": args.driver,
             "model": args.model, "effort": args.effort, "condition": args.condition, "depth": args.depth, "run_label": label,
-            "scored": stamp(), "skill": {"name": skill_name, "hash": harness.tree_hash(staged), **provenance["skill"]},
+            "scored": stamp(), "skill": {"name": skill_name, "hash": skill_hash, **provenance["skill"]},
             "harness": provenance["harness"], "driver_version": provenance["driver_version"],
             "run": {k: v for k, v in run.items() if k != "final_message"},
             "final_message": run.get("final_message", "")}

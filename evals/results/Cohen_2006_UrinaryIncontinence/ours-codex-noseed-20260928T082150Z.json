@@ -1,0 +1,45 @@
+{
+  "topic": "Cohen_2006_UrinaryIncontinence",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T082150Z",
+  "scored": "20260928T084132Z",
+  "skill": {
+    "name": "ours",
+    "hash": "49fa7fd0b4d8465a17edf4c04050fca9e17c15fcd601f3be27462d4253786e26",
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": true
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1182
+  },
+  "strategy": "((\"Urinary Incontinence\"[Mesh] OR \"Urinary Bladder Diseases\"[Mesh] OR \"Urination Disorders\"[Mesh] OR \"Urinary Bladder, Neurogenic\"[Mesh] OR \"overactive bladder\"[tiab] OR \"overactive urinary bladder\"[tiab] OR OAB[tiab] OR \"urge incontinence\"[tiab] OR \"urinary urge incontinence\"[tiab] OR \"urge urinary incontinence\"[tiab] OR \"mixed urinary incontinence\"[tiab] OR \"mixed incontinence\"[tiab] OR \"detrusor instability\"[tiab] OR \"detrusor overactivity\"[tiab] OR \"detrusor hyperreflexia\"[tiab] OR \"unstable bladder\"[tiab] OR \"bladder instability\"[tiab] OR \"bladder overactivity\"[tiab] OR \"urinary urgency\"[tiab] OR \"urinary frequency\"[tiab]) AND (\"Propantheline\"[Mesh] OR \"Emepronium\"[Mesh] OR \"Flavoxate\"[Mesh] OR \"Tolterodine Tartrate\"[Mesh] OR \"Solifenacin Succinate\"[Mesh] OR oxybutynin[nm] OR trospium chloride[nm] OR darifenacin[nm] OR propiverine[nm] OR \"anticholinergic*\"[tiab] OR \"antimuscarinic*\"[tiab] OR \"muscarinic antagonist*\"[tiab] OR \"parasympatholytic*\"[tiab] OR \"oxybutynin\"[tiab] OR \"tolterodine\"[tiab] OR \"trospium\"[tiab] OR \"darifenacin\"[tiab] OR \"solifenacin\"[tiab] OR \"propiverine\"[tiab] OR \"flavoxate\"[tiab] OR \"propantheline\"[tiab] OR \"emepronium\"[tiab] OR \"terodiline\"[tiab] OR \"propantheline bromide\"[tiab] OR \"emepronium bromide\"[tiab] OR \"extended release\"[tiab] OR \"extended-release\"[tiab] OR \"slow release\"[tiab] OR \"modified release\"[tiab] OR \"transdermal\"[tiab] OR \"Ditropan\"[tiab] OR \"Oxytrol\"[tiab] OR \"Detrol\"[tiab] OR \"Detrusitol\"[tiab] OR \"Spasmex\"[tiab] OR \"Mictonorm\"[tiab] OR \"Urispas\"[tiab] OR \"Pro-Banthine\"[tiab] OR \"Cetiprin\"[tiab])) AND (\"1800/01/01\"[edat] : \"2003/09/11\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2003-09-11",
+  "count": 1194,
+  "gold_scored": 40,
+  "gold_reachable": 40,
+  "retrieved": 32,
+  "recall_percent": 80.0,
+  "nnr": 37.3,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 30,
+  "unseen_recall_percent": 78.9,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

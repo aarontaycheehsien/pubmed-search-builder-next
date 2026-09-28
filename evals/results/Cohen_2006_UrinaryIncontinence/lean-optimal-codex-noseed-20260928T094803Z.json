@@ -1,0 +1,54 @@
+{
+  "topic": "Cohen_2006_UrinaryIncontinence",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260928T094803Z",
+  "scored": "20260928T100511Z",
+  "skill": {
+    "name": "lean-optimal",
+    "hash": "b2569259e8a0658dd10bae3023147f2090fc75073a5bd07f9ebc1c23cc887486",
+    "commit": null,
+    "dirty": null,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": true
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1028
+  },
+  "strategy": "(\"Urinary Incontinence\"[Mesh] OR \"Urinary Incontinence\"[tiab] OR \"Incontinence, Urinary\"[tiab] OR \"overactive bladder\"[tiab] OR \"over-active bladder\"[tiab] OR \"overactive urinary bladder\"[tiab] OR \"overactive bladder syndrome\"[tiab] OR \"hyperactive bladder\"[tiab] OR \"overactive detrusor\"[tiab] OR \"detrusor overactivity\"[tiab] OR \"urge incontinence\"[tiab] OR \"Incontinence, Urge\"[tiab] OR \"urinary urge incontinence\"[tiab] OR \"urge urinary incontinence\"[tiab] OR \"mixed urinary incontinence\"[tiab] OR \"mixed incontinence\"[tiab] OR \"urinary reflex incontinence\"[tiab] OR \"detrusor instability\"[tiab] OR \"bladder instability\"[tiab] OR \"unstable bladder\"[tiab] OR \"detrusor hyperreflexia\"[tiab] OR \"urinary urgency\"[tiab] OR \"micturition urgency\"[tiab] OR \"urgency-frequency\"[tiab] OR \"frequency-urgency\"[tiab] OR \"urinary frequency\"[tiab] OR \"micturition frequency\"[tiab] OR OAB[ti] OR (\"detrusor\"[tiab] AND (instabil*[tiab] OR overactiv*[tiab] OR hyperreflex*[tiab]))) AND (\"Muscarinic Antagonists\"[Mesh] OR \"Muscarinic Antagonists\"[tiab] OR \"Antagonists, Muscarinic\"[tiab] OR Antimuscarinics[tiab] OR \"Cholinergic Muscarinic Antagonist\"[tiab] OR \"Antagonist, Cholinergic Muscarinic\"[tiab] OR \"Muscarinic Antagonist, Cholinergic\"[tiab] OR \"Cholinergic Muscarinic Antagonists\"[tiab] OR \"Antagonists, Cholinergic Muscarinic\"[tiab] OR \"Muscarinic Antagonists, Cholinergic\"[tiab] OR antimuscarinic[tiab] OR \"anti-muscarinic\"[tiab] OR \"anti muscarinic\"[tiab] OR \"Muscarinic Antagonist\"[tiab] OR \"Antagonist, Muscarinic\"[tiab] OR \"Antimuscarinic Agents\"[tiab] OR \"Agents, Antimuscarinic\"[tiab] OR \"Antimuscarinic Agent\"[tiab] OR \"Agent, Antimuscarinic\"[tiab] OR antimuscarinic*[tiab] OR anticholinergic*[tiab] OR oxybutynin[tiab] OR tolterodine[tiab] OR trospium[tiab] OR \"trospium chloride\"[tiab] OR darifenacin[tiab] OR solifenacin[tiab] OR propiverine[tiab] OR flavoxate[tiab] OR propantheline[tiab] OR imipramine[tiab] OR dicyclomine[tiab] OR dicycloverine[tiab] OR hyoscyamine[tiab] OR terodiline[tiab] OR \"oxybutynin\"[Supplementary Concept] OR \"Tolterodine Tartrate\"[Supplementary Concept] OR \"trospium chloride\"[Supplementary Concept] OR \"darifenacin\"[Supplementary Concept] OR \"Solifenacin Succinate\"[Supplementary Concept] OR \"propiverine\"[Supplementary Concept] OR \"Flavoxate\"[Supplementary Concept] OR Ditropan[tiab] OR Cystrin[tiab] OR Dridase[tiab] OR Oxytrol[tiab] OR Detrol[tiab] OR Detrusitol[tiab] OR Spasmex[tiab] OR Mictonorm[tiab] OR Urispas[tiab]) AND (\"1800/01/01\"[crdt] : \"2003/09/11\"[crdt])",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2003-09-11",
+  "count": 849,
+  "gold_scored": 40,
+  "gold_reachable": 40,
+  "retrieved": 32,
+  "recall_percent": 80.0,
+  "nnr": 26.5,
+  "translation_issues": [
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "phrase_not_found",
+    "phrase_not_found"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 32,
+  "unseen_recall_percent": 80.0,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

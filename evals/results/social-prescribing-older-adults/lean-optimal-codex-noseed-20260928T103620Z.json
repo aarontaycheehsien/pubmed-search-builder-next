@@ -1,0 +1,59 @@
+{
+  "topic": "social-prescribing-older-adults",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260928T103620Z",
+  "scored": "20260928T105915Z",
+  "skill": {
+    "name": "lean-optimal",
+    "hash": "b2569259e8a0658dd10bae3023147f2090fc75073a5bd07f9ebc1c23cc887486",
+    "commit": null,
+    "dirty": null,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": true
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1375
+  },
+  "strategy": "((\"Aged\"[Mesh] OR aged[tiab] OR elderly[tiab] OR \"older adult\"[tiab] OR \"older adults\"[tiab] OR \"older-adult\"[tiab] OR \"older-adults\"[tiab] OR \"older person\"[tiab] OR \"older people\"[tiab] OR \"older persons\"[tiab] OR \"old person\"[tiab] OR \"old people\"[tiab] OR \"older men\"[tiab] OR \"older women\"[tiab] OR senior[tiab] OR seniors[tiab] OR \"senior citizen\"[tiab] OR \"senior citizens\"[tiab] OR geriatric*[tiab] OR \"later life\"[tiab] OR \"late life\"[tiab])) AND ((\"social prescribing\"[tiab] OR \"social-prescribing\"[tiab] OR social prescrib*[tiab] OR \"social prescription\"[tiab] OR \"social prescriptions\"[tiab] OR \"social-prescription\"[tiab] OR \"social-prescriptions\"[tiab] OR \"link worker\"[tiab] OR \"link workers\"[tiab] OR \"link-worker\"[tiab] OR \"link-workers\"[tiab] OR linkworker*[tiab] OR \"community link worker\"[tiab] OR \"community link workers\"[tiab] OR \"community-links worker\"[tiab] OR \"community-links workers\"[tiab] OR \"community connector\"[tiab] OR \"community connectors\"[tiab] OR \"community navigator\"[tiab] OR \"community navigators\"[tiab] OR \"community navigation\"[tiab] OR \"community referral\"[tiab] OR \"community referrals\"[tiab] OR \"social referral\"[tiab] OR \"social referrals\"[tiab] OR \"arts on prescription\"[tiab] OR \"arts on referral\"[tiab] OR \"exercise on prescription\"[tiab] OR \"exercise referral\"[tiab] OR \"exercise on referral\"[tiab] OR \"green prescription\"[tiab] OR \"community-links practitioner\"[tiab] OR \"community-links practitioners\"[tiab] OR \"community link practitioner\"[tiab] OR \"community link practitioners\"[tiab] OR \"Community Health Workers\"[Mesh] OR \"Community Health Workers\"[tiab] OR \"Community Health Worker\"[tiab] OR \"Health Worker, Community\"[tiab] OR \"Health Workers, Community\"[tiab] OR \"Worker, Community Health\"[tiab] OR \"Workers, Community Health\"[tiab] OR \"Community Health Aides\"[tiab] OR \"Aide, Community Health\"[tiab] OR \"Aides, Community Health\"[tiab] OR \"Community Health Aide\"[tiab] OR \"Health Aide, Community\"[tiab] OR \"Health Aides, Community\"[tiab] OR \"Barefoot Doctors\"[tiab] OR \"Barefoot Doctor\"[tiab] OR \"Doctor, Barefoot\"[tiab] OR \"Doctors, Barefoot\"[tiab] OR \"Family Planning Personnel\"[tiab] OR \"Personnel, Family Planning\"[tiab] OR \"Planning Personnel, Family\"[tiab] OR \"Family Planning Personnel Characteristics\"[tiab] OR \"Village Health Workers\"[tiab] OR \"Health Workers, Village\"[tiab] OR \"Health Worker, Village\"[tiab] OR \"Workers, Village Health\"[tiab] OR \"Worker, Village Health\"[tiab] OR \"Village Health Worker\"[tiab])) AND (\"0001/01/01\"[EDAT] : \"2019/12/30\"[EDAT])",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2019-12-30",
+  "count": 1378,
+  "gold_scored": 10,
+  "gold_reachable": 10,
+  "retrieved": 4,
+  "recall_percent": 40.0,
+  "nnr": 344.5,
+  "translation_issues": [
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 4,
+  "unseen_recall_percent": 40.0,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

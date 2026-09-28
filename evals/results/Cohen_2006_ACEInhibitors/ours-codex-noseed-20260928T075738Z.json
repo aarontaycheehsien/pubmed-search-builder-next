@@ -1,0 +1,45 @@
+{
+  "topic": "Cohen_2006_ACEInhibitors",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T075738Z",
+  "scored": "20260928T081638Z",
+  "skill": {
+    "name": "ours",
+    "hash": "49fa7fd0b4d8465a17edf4c04050fca9e17c15fcd601f3be27462d4253786e26",
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1140
+  },
+  "strategy": "((\"Captopril\"[Mesh] OR \"Enalapril\"[Mesh] OR \"Enalaprilat\"[Mesh] OR \"Lisinopril\"[Mesh] OR \"Ramipril\"[Mesh] OR \"Perindopril\"[Mesh] OR \"Fosinopril\"[Mesh] OR \"Cilazapril\"[Mesh] OR \"Quinapril\"[Mesh] OR \"angiotensin converting enzyme inhibitor\"[tiab] OR \"angiotensin converting enzyme inhibitors\"[tiab] OR \"angiotensin-converting enzyme inhibitor\"[tiab] OR \"angiotensin-converting enzyme inhibitors\"[tiab] OR \"angiotensin-converting-enzyme inhibitor\"[tiab] OR \"angiotensin-converting-enzyme inhibitors\"[tiab] OR \"ACE inhibitor\"[tiab] OR \"ACE inhibitors\"[tiab] OR \"ACE-inhibitor\"[tiab] OR \"ACE-inhibitors\"[tiab] OR ACEI[tiab] OR captopril[tiab] OR Capoten[tiab] OR enalapril[tiab] OR enalaprilat[tiab] OR Vasotec[tiab] OR lisinopril[tiab] OR Prinivil[tiab] OR Zestril[tiab] OR benazepril[tiab] OR Lotensin[tiab] OR fosinopril[tiab] OR Monopril[tiab] OR moexipril[tiab] OR Univasc[tiab] OR perindopril[tiab] OR Aceon[tiab] OR quinapril[tiab] OR Accupril[tiab] OR ramipril[tiab] OR Altace[tiab] OR trandolapril[tiab] OR Mavik[tiab] OR cilazapril[tiab] OR zofenopril[tiab] OR imidapril[tiab] OR temocapril[tiab] OR delapril[tiab] OR alacepril[tiab] OR spirapril[tiab] OR ceronapril[tiab])) AND (\"1800/01/01\"[edat] : \"2003/03/15\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2003-03-15",
+  "count": 26424,
+  "gold_scored": 41,
+  "gold_reachable": 41,
+  "retrieved": 41,
+  "recall_percent": 100.0,
+  "nnr": 644.5,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 39,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

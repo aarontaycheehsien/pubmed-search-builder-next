@@ -1,0 +1,45 @@
+{
+  "topic": "healthcare-nudging",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T082610Z",
+  "scored": "20260928T084719Z",
+  "skill": {
+    "name": "ours",
+    "hash": "49fa7fd0b4d8465a17edf4c04050fca9e17c15fcd601f3be27462d4253786e26",
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": true
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1269
+  },
+  "strategy": "((\"Choice Behavior\"[Mesh] OR \"Economics, Behavioral\"[Mesh] OR \"Reminder Systems\"[Mesh] OR \"Decision Support Systems, Clinical\"[Mesh] OR \"Clinical Alarms\"[Mesh] OR \"Feedback, Psychological\"[Mesh] OR nudge*[tiab] OR \"choice architecture\"[tiab] OR \"choice architect*\"[tiab] OR \"behavioral economics\"[tiab] OR \"behavioural economics\"[tiab] OR \"behavioral science\"[tiab] OR \"behavioural science\"[tiab] OR \"behavioral intervention\"[tiab] OR \"behavioral interventions\"[tiab] OR \"behavioural intervention\"[tiab] OR \"behavioural interventions\"[tiab] OR default*[tiab] OR \"active choice\"[tiab] OR reminder*[tiab] OR \"clinical prompt\"[tiab] OR \"clinical prompts\"[tiab] OR \"clinical alert\"[tiab] OR \"clinical alerts\"[tiab] OR dashboard*[tiab] OR \"peer comparison\"[tiab] OR \"social norm\"[tiab] OR \"social norms\"[tiab] OR \"audit and feedback\"[tiab] OR \"accountable justification\"[tiab] OR \"accountable justifications\"[tiab] OR \"suggested alternative\"[tiab] OR \"suggested alternatives\"[tiab] OR \"clinical decision support\"[tiab] OR \"decision support\"[tiab] OR \"clinical reminder\"[tiab] OR \"clinical reminders\"[tiab] OR \"computerized reminder\"[tiab] OR \"computerized reminders\"[tiab] OR framing[tiab] OR salien*[tiab] OR \"opt-out\"[tiab] OR preselect*[tiab]) AND (\"Health Personnel\"[Mesh] OR healthcare professional*[tiab] OR health care professional*[tiab] OR healthcare provider*[tiab] OR health care provider*[tiab] OR health personnel[tiab] OR clinician*[tiab] OR physician*[tiab] OR doctor*[tiab] OR nurse*[tiab] OR dentist*[tiab] OR pharmacist*[tiab] OR practitioner*[tiab] OR midwi*[tiab] OR dietitian*[tiab] OR therapist*[tiab] OR paramedic*[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/18\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-18",
+  "count": 32335,
+  "gold_scored": 86,
+  "gold_reachable": 86,
+  "retrieved": 54,
+  "recall_percent": 62.8,
+  "nnr": 598.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 53,
+  "unseen_recall_percent": 62.4,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}
