@@ -18,3 +18,20 @@ This directory contains ten runnable fixtures. Gold sets include only included r
 Each JSON fixture records its question, eligibility criteria, source provenance, three deterministic seeds, and gold PMIDs. When a review's exact search date was unavailable, `as_of` uses the day after the latest PubMed Entrez date in its gold set, as allowed by the evaluation schema. The SYNERGY topic questions are plain-language frames inferred from subset labels; their answer keys use only rows labelled `label_included=1`.
 
 The candidate PMID sets were checked for duplicates within the new fixtures and against all existing fixture gold sets. No overlaps were found.
+
+## Revisions before freezing
+
+Before any run, the questions and eligibility criteria the agent sees were revised so they neither
+name the answer key's source nor hint that a source review exists:
+
+- The five Cohen subsets had eligibility that restated the answer key ("records labelled included
+  in the Cohen 2006 SYNERGY dataset", `label_included=1`), which also trips the harness's leakage
+  check. Their questions and criteria were rewritten as plain drug-class review scopes
+  (populations, drugs, outcomes, designs), reconstructed from the Drug Effectiveness Review
+  Project reports the subsets came from rather than from the original protocols. The Cohen
+  collection drew citations from a 1994-2003 MEDLINE subset, so gold covers only those years.
+- Four review-based fixtures referred to "the review", its "Table A2" or its included-study table;
+  those criteria now describe the eligible designs directly. The school fixture no longer states
+  that gold is restricted to PubMed records (that remains in its `notes`, which the agent never sees).
+
+The fixtures were then frozen with `python evals/run.py freeze`; `evals/splits.json` holds their hashes.

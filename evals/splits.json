@@ -20,7 +20,48 @@
     "van_Dis_2020",
     "van_de_Schoot_2018"
   ],
-  "heldout": {},
+  "heldout": {
+    "Cohen_2006_ACEInhibitors": {
+      "sha256": "ab66d40e3c471c65171bdf2741a6ef63a5159cfb2ea1bac0981f9fcb390f753f",
+      "frozen": "20260928T065549Z"
+    },
+    "Cohen_2006_ADHD": {
+      "sha256": "46c7de967fac74e1d63951686e211b872aa453af4a705f7a0aafca947e0112bd",
+      "frozen": "20260928T065549Z"
+    },
+    "Cohen_2006_Antihistamines": {
+      "sha256": "fa470d54f2b8f408c6b266d5eeb9029d1a4a56f1d581a0483f87bc5251ff6b61",
+      "frozen": "20260928T065549Z"
+    },
+    "Cohen_2006_Estrogens": {
+      "sha256": "145998a9ef226fce7c420ab60737eb65830ac4efd00261e4c8ba4f49f9bf8824",
+      "frozen": "20260928T065549Z"
+    },
+    "Cohen_2006_UrinaryIncontinence": {
+      "sha256": "48f513a1a1af3d591703e05b08226d5498f99c1d0bf847f75b84e79d53bbb827",
+      "frozen": "20260928T065549Z"
+    },
+    "healthcare-nudging": {
+      "sha256": "ed808b7c4c87e68e516979137b11d9aa1eabe05fcc87639d8e9a59d1bec28a84",
+      "frozen": "20260928T065549Z"
+    },
+    "housing-first-criminal-justice": {
+      "sha256": "75425376ee57f301a7a3b6cebedb0416871a985c68720085319796716b8180fa",
+      "frozen": "20260928T065549Z"
+    },
+    "school-restorative-practice": {
+      "sha256": "a92cb9600100753f946aaf865c6d1a4229c81605db6a36c496fb47e56cac2c23",
+      "frozen": "20260928T065549Z"
+    },
+    "social-prescribing-older-adults": {
+      "sha256": "1c26c1348d678ae08c580f9727c5105fd64f549930e21f953269f5217c65ea1e",
+      "frozen": "20260928T065549Z"
+    },
+    "work-directed-return-to-work": {
+      "sha256": "71f4858ef502b38828425fdc28c2f64fe83bb6039a06f698614ff63b3871cf5c",
+      "frozen": "20260928T065549Z"
+    }
+  },
   "retired": {
     "Jeyaraman_2020": "gold set is mostly chondrocyte-implantation and microfracture trials outside the question (mesenchymal stem cells for knee osteoarthritis)"
   }

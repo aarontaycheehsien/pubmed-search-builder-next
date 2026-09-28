@@ -1,10 +1,12 @@
 {
   "id": "Cohen_2006_Estrogens",
   "suite": "frozen",
-  "question": "What is the efficacy and safety of estrogen therapy?",
+  "question": "In perimenopausal and postmenopausal women, how do estrogen preparations compare with each other and with placebo in relieving menopausal symptoms, and in harms?",
   "eligibility": [
-    "Estrogen-related records labelled included in the Cohen 2006 SYNERGY dataset.",
-    "PubMed-indexed records with label_included=1."
+    "Perimenopausal or postmenopausal women, including after surgical menopause.",
+    "An estrogen preparation by any route (oral, transdermal, vaginal, intranasal or other), with or without a progestin, compared with another estrogen preparation or placebo.",
+    "Vasomotor symptoms (hot flushes), urogenital symptoms or atrophy, quality of life, or adverse events.",
+    "Randomized controlled trials; controlled observational studies for harms."
   ],
   "as_of": "2003-10-12",
   "as_of_source": "Day after latest Entrez date among included SYNERGY records (lower bound).",
@@ -97,5 +99,5 @@
   ],
   "source": "Cohen et al. 2006 screening collection, Estrogens SYNERGY subset (80 included PubMed IDs): https://raw.githubusercontent.com/asreview/systematic-review-datasets/metadata-v1-final/datasets/Cohen_2006/output/online/Estrogens.csv; source paper DOI https://doi.org/10.1197/jamia.M1929",
   "naive_blocks": null,
-  "notes": "Topic scope is inferred from the dataset subset name; the answer key uses label_included PubMed IDs."
+  "notes": "Question and eligibility reconstructed from the Drug Effectiveness Review Project (Oregon EPC) drug-class review this subset came from, not from its original protocol. The Cohen 2006 collection drew citations from a 1994-2003 MEDLINE subset (TREC 2004 Genomics), so gold covers 1994-2003 only: recall is valid, but result counts include earlier literature. The answer key uses label_included PubMed IDs (article-level inclusion)."
 }
