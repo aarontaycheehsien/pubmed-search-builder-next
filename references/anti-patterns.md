@@ -190,6 +190,19 @@ Better: mark the concept `"category": true`, build it from its members as well a
 probe it (`psb probe draw chronic "disease*[tiab] OR disorder*[tiab] OR Chronic Disease[Mesh]"`).
 A risk you can name is a risk you can measure. See "Category concepts" in `scope.md`.
 
+## Mistake 19: Two ideas in one block
+
+Bad, for "microbiome sequencing in hospital wastewater":
+
+```text
+(microbiom*[tiab] AND sequenc*[tiab]) OR ("Microbiota"[Mesh] AND "Sequence Analysis"[Mesh]) OR metagenom*[tiab]
+```
+
+Every term has to carry both ideas, so neither gets its vocabulary: no `16S`, `amplicon`,
+`shotgun`, `NGS`, `high-throughput sequencing`, `bacterial community`. Better: a microbiome block
+and a sequencing block, each with MeSH and full free text, AND-ed. `psb lint` warns
+(`compound_block`) when most of a block's terms AND two ideas.
+
 ## References
 
 - Adam GP, et al. Literature search sandbox: a large language model that generates search queries for systematic reviews. *JAMIA Open* 2024. [doi:10.1093/jamiaopen/ooae098](https://doi.org/10.1093/jamiaopen/ooae098).

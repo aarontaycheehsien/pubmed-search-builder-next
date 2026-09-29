@@ -162,6 +162,13 @@ def issues(pm, rows: list[dict], protocol: dict, count: int | None) -> list[dict
                 if outside:
                     found.append(validation.issue("loss_sample_invalid", "Loss sample includes records the block does not remove",
                                                   location=location, pmids=outside))
+        if (over and row["status"] == "current" and decision.get("choice") == "leave_out"
+                and row.get("known_in_base", 0) < MIN_KNOWN_FOR_AND):
+            found.append(validation.issue(
+                "optional_left_out_underpowered",
+                f"Left out over the workload budget with fewer than {MIN_KNOWN_FOR_AND} known records: the critic checks "
+                "that finding more known records was tried (prior review, neighbours, pilot searches)",
+                severity="warning", location=location))
         if row["status"] == "current" and decision.get("choice") == "and" and row.get("known_in_base", 0) < MIN_KNOWN_FOR_AND:
             found.append(validation.issue(
                 "optional_and_underpowered",
@@ -272,7 +279,9 @@ def decide(ws, concept_id: str, *, choice: str, reason: str, screened: list[str]
         in_base = ws.pubmed.among(apply_limits(base, strategy.limits), ws.pubmed.existing(known)) if known else set()
         if len(in_base) < MIN_KNOWN_FOR_AND:
             raise StrategyError(f"only {len(in_base)} known records sit in the strategy without {concept_id!r}; AND-ing "
-                                f"it needs at least {MIN_KNOWN_FOR_AND} (none lost). Find more known records or leave it out")
+                                f"it needs at least {MIN_KNOWN_FOR_AND} (none lost). Over the workload budget, find more "
+                                "first: a prior review's included studies, psb neighbors of known records, precise pilot "
+                                "searches (references/known-records.md). Otherwise leave it out and record what you tried")
         lost = in_base - ws.pubmed.among(apply_limits(f"({base}) AND {block_query(block)}", strategy.limits), in_base)
         if lost:
             raise StrategyError(f"AND-ing {concept_id!r} loses known records {', '.join(sorted(lost, key=int))}; leave it out")

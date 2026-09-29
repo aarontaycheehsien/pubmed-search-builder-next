@@ -207,3 +207,11 @@ def test_draw_samples_beyond_the_esearch_window_through_date_bins():
     assert drawn["count"] == 25_000 and len(drawn["pmids"]) == 40 and "bins" in drawn["frame"]
     years = sorted(int(p[:4]) for p in drawn["pmids"])
     assert years[0] < 2000 and years[-1] > 2010  # spread over the whole range, not the newest 9,999
+
+
+def test_leaving_out_over_budget_with_few_known_records_goes_to_the_critic(make_ws):
+    ws, _ = build(make_ws, budget=5)
+    optional.sample(ws, "lifestyle", n=30)
+    optional.decide(ws, "lifestyle", choice="leave_out", reason="too few known records to AND", screened=None, relevant=[])
+    found = codes(evaluate(ws))
+    assert found["optional_left_out_underpowered"]["requires_review"]

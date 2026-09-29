@@ -23,6 +23,10 @@ excluded from the denominator and listed.
 
 Budget: screen at most about 150 candidates at `standard` and 400 at `thorough`.
 
+Aim for at least 15 known records in the strategy. Fewer cannot show that an optional block is
+safe to AND (`references/scope.md`), and over the workload budget a block left out for that
+reason goes to the critic with a record of what you tried.
+
 1. **Prior reviews.** Search for systematic reviews on the topic (a precise topic query AND
    `systematic[sb]`). If one matches your scope, its included studies are the strongest benchmark.
    Get them from the user, the review's reference list (`psb neighbors <review PMID> --links refs`),
