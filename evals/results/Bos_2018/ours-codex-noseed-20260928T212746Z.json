@@ -1,0 +1,68 @@
+{
+  "topic": "Bos_2018",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T212746Z",
+  "scored": "20260928T215454Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1628
+  },
+  "final_message": " microbleed*\"[tiab] OR \"cerebral microhemorrhag*\"[tiab] OR \"brain microhemorrhag*\"[tiab] OR \"vascular brain injur*\"[tiab] OR \"vascular brain lesion*\"[tiab] OR \"subcortical vascular disease\"[tiab] OR \"small vessel ischemic\"[tiab] OR \"small vessel ischaemic\"[tiab]) AND (\"Dementia\"[Mesh] OR \"Alzheimer Disease\"[Mesh] OR \"Cognitive Dysfunction\"[Mesh] OR \"Cognition Disorders\"[Mesh] OR dementia*[tiab] OR Alzheimer*[tiab] OR \"cognitive decline\"[tiab] OR \"cognitive deteriorat*\"[tiab] OR \"cognitive impair*\"[tiab] OR \"cognitive dysfunction\"[tiab] OR \"cognitive function\"[tiab] OR \"cognitive change*\"[tiab] OR \"cognitive performance\"[tiab] OR \"memory decline\"[tiab] OR \"memory impair*\"[tiab] OR \"Cognition\"[Mesh] OR cognition[tiab])) AND (\"1800/01/01\"[edat] : \"2017/05/06\"[edat])\n```\n\nThe audit contains the **line-by-line counts** and optional-block decisions. The outcome block was AND-ed after its loss sample found no eligible studies; population/cohort terms were tested and left out to avoid relying on inconsistently reported setting labels.\n\n- [Full audit and line-by-line counts](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-535fe3dc7ca88971\\ours-codex-noseed-20260928T212746Z\\work\\audit.md)\n- [Generated query file](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-535fe3dc7ca88971\\ours-codex-noseed-20260928T212746Z\\work\\final-query.txt)\n- [Validation manifest](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-535fe3dc7ca88971\\ours-codex-noseed-20260928T212746Z\\work\\validation-manifest.json)\n- [Rationale and limitations](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-535fe3dc7ca88971\\ours-codex-noseed-20260928T212746Z\\work\\narrative.md)\n\nNo known relevant records were available, so **recall was not estimated; the strategy is empirically unvalidated**. The audit also documents a stale exposure-category probe. The critique was a same-context PRESS-structured review, not independent peer review. Please have an information specialist conduct PRESS peer review before using the strategy.",
+  "strategy": "((\"Cerebral Small Vessel Diseases\"[Mesh] OR \"Leukoaraiosis\"[Mesh] OR \"Stroke, Lacunar\"[Mesh] OR \"Cerebral Infarction\"[Mesh] OR \"cerebral small vessel disease\"[tiab] OR \"cerebral small vessel diseases\"[tiab] OR \"small vessel disease\"[tiab] OR \"small vessel diseases\"[tiab] OR \"cerebral microangiopath*\"[tiab] OR CSVD[tiab] OR leukoaraiosis[tiab] OR \"white matter hyperintens*\"[tiab] OR \"white matter lesion*\"[tiab] OR \"white matter change*\"[tiab] OR \"white matter abnormalit*\"[tiab] OR \"white matter signal\"[tiab:~2] OR \"periventricular hyperintens*\"[tiab] OR \"lacunar infarct*\"[tiab] OR \"lacunar stroke*\"[tiab] OR \"silent infarct*\"[tiab] OR \"silent brain infarct*\"[tiab] OR \"silent cerebral infarct*\"[tiab] OR \"covert brain infarct*\"[tiab] OR \"asymptomatic brain infarct*\"[tiab] OR \"cerebral microbleed*\"[tiab] OR \"brain microbleed*\"[tiab] OR \"cerebral microhemorrhag*\"[tiab] OR \"brain microhemorrhag*\"[tiab] OR \"vascular brain injur*\"[tiab] OR \"vascular brain lesion*\"[tiab] OR \"subcortical vascular disease\"[tiab] OR \"small vessel ischemic\"[tiab] OR \"small vessel ischaemic\"[tiab]) AND (\"Dementia\"[Mesh] OR \"Alzheimer Disease\"[Mesh] OR \"Cognitive Dysfunction\"[Mesh] OR \"Cognition Disorders\"[Mesh] OR dementia*[tiab] OR Alzheimer*[tiab] OR \"cognitive decline\"[tiab] OR \"cognitive deteriorat*\"[tiab] OR \"cognitive impair*\"[tiab] OR \"cognitive dysfunction\"[tiab] OR \"cognitive function\"[tiab] OR \"cognitive change*\"[tiab] OR \"cognitive performance\"[tiab] OR \"memory decline\"[tiab] OR \"memory impair*\"[tiab] OR \"Cognition\"[Mesh] OR cognition[tiab])) AND (\"1800/01/01\"[edat] : \"2017/05/06\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-05-06",
+  "count": 7952,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 9,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 883.6,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 9,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 2,
+      "screen": 2,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "outcome",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "population_setting",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

@@ -1,0 +1,67 @@
+{
+  "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T230421Z",
+  "scored": "20260928T234733Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2592
+  },
+  "final_message": "The strategy is ready in the protected [final query](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260928T230421Z/work/final-query.txt>). The [audit](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260928T230421Z/work/audit.md>), [narrative](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8f2f6f5e/ours-codex-noseed-20260928T230421Z/work/narrative.md>) and [validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8f2f6f5e/ours-codex-noseed-20260928T230421Z/work/validation-manifest.json>) are also in `./work`.\n\nThe final search returns **4,622 records** through the required **2017-12-14 Entrez-date boundary**; it uses no publication-date limit. It retrieves all six eligible development records, but there is no independent validation set, so that result should not be read as an independent sensitivity estimate. The internal PRESS-structured critique is complete; independent PRESS peer review remains pending.",
+  "strategy": "((\"Health Education\"[Mesh] OR nutrition education[tiab] OR nutritional education[tiab] OR food education[tiab] OR \"food and nutrition education\"[tiab] OR nutrition instruction[tiab] OR nutrition teaching[tiab] OR \"nutrition program*\"[tiab] OR \"nutrition intervention*\"[tiab] OR healthy eating education[tiab] OR diet education[tiab] OR nutrition counseling[tiab] OR \"Health Promotion\"[Mesh] OR \"Cooking\"[Mesh] OR \"Gardening\"[Mesh] OR nutrition curriculum[tiab] OR nutrition curricula[tiab] OR food literacy[tiab] OR nutrition literacy[tiab] OR nutrition knowledge[tiab] OR cooking class*[tiab] OR cooking lesson*[tiab] OR garden-based[tiab] OR intervention*[tiab]) AND (\"Adolescent\"[Mesh] OR \"Students\"[Mesh] OR \"Child\"[Mesh] OR adolescen*[tiab] OR teen*[tiab] OR youth[tiab] OR youths[tiab] OR teenager*[tiab] OR student*[tiab] OR pupil*[tiab] OR schoolchild*[tiab]) AND (\"Eating\"[Mesh] OR \"Feeding Behavior\"[Mesh] OR \"Food Preferences\"[Mesh] OR \"Diet\"[Mesh] OR \"Drinking\"[Mesh] OR \"Fruit\"[Mesh] OR \"Vegetables\"[Mesh] OR food consumption[tiab] OR food intake[tiab] OR dietary intake[tiab] OR dietary behavio*[tiab] OR eating behavio*[tiab] OR food habit*[tiab] OR dietary habit*[tiab] OR healthy eating[tiab] OR fruit intake[tiab] OR vegetable intake[tiab] OR (fruit[tiab] AND vegetable*[tiab]) OR sugar-sweetened beverage*[tiab] OR beverage consumption[tiab] OR food selection[tiab] OR food choice*[tiab] OR plate waste[tiab] OR diet quality[tiab]) AND (\"School Health Services\"[Mesh] OR school*[tiab] OR classroom*[tiab] OR \"class room\"[tiab] OR \"Schools\"[Mesh] OR grade*[tiab] OR grader*[tiab] OR campus[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-14",
+  "count": 4622,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 9,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 513.6,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 9,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "school",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "consumption",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

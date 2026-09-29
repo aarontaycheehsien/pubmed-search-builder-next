@@ -1,0 +1,61 @@
+{
+  "topic": "Meijboom_2021",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T220938Z",
+  "scored": "20260928T222952Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1213
+  },
+  "final_message": "terchangeab*[tiab] OR \"switch back\"[tiab:~2] OR \"reverse switch*\"[tiab] OR \"back-switch*\"[tiab] OR revert*[tiab] OR resum*[tiab] OR re-establish*[tiab])) AND (\"1800/01/01\"[edat] : \"2021/02/12\"[edat])\n```\n\nThe final count was **400 records**, with the PubMed Entrez-entry-date cutoff set to **2021-02-12**. The optional parent-switch block reduced the count from 1,046 to 400; switch-back direction remains for screening.\n\nBlock totals: biosimilar medicines **6,369** (line 24); TNF-alpha inhibitors **34,017** (line 39); switching process **988,478** (line 51); combined strategy **400** (line 52). The full numbered line-by-line terms and counts are in the [audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1b21fe8244224b90/ours-codex-noseed-20260928T220938Z/work/audit.md).\n\n## Validation and limits\n\nI screened 45 unique candidate records and included 10 in the development set. The strategy retrieved all 10: **100% relative recall against the development set**. This is not an independent validation result: terms were mined from these records, and no held-out set was used. The category probes and optional-block loss sample found no additional eligible records in their screened samples.\n\nThe internal PRESS-structured critique was completed in the same context; it is not human PRESS peer review. This draft needs review by an information specialist before use.\n\nThe protected report passed validation. Workspace files: [final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1b21fe8244224b90/ours-codex-noseed-20260928T220938Z/work/final-query.txt), [audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1b21fe8244224b90/ours-codex-noseed-20260928T220938Z/work/audit.md), [validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1b21fe8244224b90/ours-codex-noseed-20260928T220938Z/work/validation-manifest.json), and [assumptions and rationale](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1b21fe8244224b90/ours-codex-noseed-20260928T220938Z/work/narrative.md).",
+  "strategy": "((\"Biosimilar Pharmaceuticals\"[Mesh] OR biosimilar*[tiab] OR \"follow-on biologic*\"[tiab] OR \"subsequent entry biologic*\"[tiab] OR \"similar biologic*\"[tiab] OR \"similar biological medicinal product*\"[tiab] OR \"bio-originator*\"[tiab] OR CT-P13[tiab] OR Remsima[tiab] OR Inflectra[tiab] OR Renflexis[tiab] OR SB2[tiab] OR GP1111[tiab] OR PF-06438179[tiab] OR SB4[tiab] OR Benepali[tiab] OR GP2015[tiab] OR Erelzi[tiab] OR ABP 501[tiab] OR Amjevita[tiab] OR Cyltezo[tiab] OR Hyrimoz[tiab] OR Imraldi[tiab]) AND (\"Infliximab\"[Mesh] OR \"Etanercept\"[Mesh] OR \"Adalimumab\"[Mesh] OR \"Certolizumab Pegol\"[Mesh] OR \"tumor necrosis factor inhibitor*\"[tiab] OR \"tumour necrosis factor inhibitor*\"[tiab] OR \"TNF inhibitor*\"[tiab] OR \"TNF-alpha inhibitor*\"[tiab] OR anti-TNF[tiab] OR infliximab[tiab] OR etanercept[tiab] OR adalimumab[tiab] OR certolizumab[tiab] OR golimumab[tiab]) AND (\"Drug Substitution\"[Mesh] OR switch*[tiab] OR transition*[tiab] OR substitut*[tiab] OR interchangeab*[tiab] OR \"switch back\"[tiab:~2] OR \"reverse switch*\"[tiab] OR \"back-switch*\"[tiab] OR revert*[tiab] OR resum*[tiab] OR re-establish*[tiab])) AND (\"1800/01/01\"[edat] : \"2021/02/12\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2021-02-12",
+  "count": 400,
+  "gold_scored": 35,
+  "gold_reachable": 35,
+  "retrieved": 35,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 11.4,
+  "translation_issues": [],
+  "gold_seen_by_agent": 8,
+  "unseen_retrieved": 27,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "switch_process",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

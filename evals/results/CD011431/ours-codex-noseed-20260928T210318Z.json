@@ -1,0 +1,62 @@
+{
+  "topic": "CD011431",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T210318Z",
+  "scored": "20260928T213319Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1801
+  },
+  "final_message": "agent Kits, Diagnostic\"[Mesh] OR \"rapid diagnostic test\"[tiab] OR \"rapid diagnostic tests\"[tiab] OR \"rapid test\"[tiab] OR \"rapid tests\"[tiab] OR \"rapid malaria test\"[tiab] OR \"rapid malaria tests\"[tiab] OR immunochromatograph*[tiab] OR \"rapid antigen test\"[tiab] OR \"rapid antigen tests\"[tiab] OR dipstick*[tiab] OR RDT[tiab] OR RDTs[tiab] OR CareStart[tiab] OR \"SD Bioline\"[tiab] OR OptiMAL[tiab] OR OnSite[tiab] OR \"First Response\"[tiab] OR ParaHIT[tiab])) AND (\"1800/01/01\"[edat] : \"2013/06/09\"[edat])\n```\n\nThe search covers malaria species and rapid-test concepts. I left endemic-setting terms out: the optional setting block reduced the count by 84.7% but excluded records screened as relevant. “Rapid Diagnostic Tests” and “Point-of-Care Testing” were also omitted because those MeSH headings were introduced after the cutoff.\n\n## Validation and limits\n\nThe search retrieved all **6 of 6** records screened in as relevant during the workflow. This is a development-set relative-recall result, **not** a sensitivity estimate or independent validation: you had no known relevant articles to use as seeds, and no held-out set was available. The malaria category probe also became stale after later rapid-test terms were added; this was recorded in the audit and accepted in the critic review.\n\nThe generated report passed, with independent human PRESS review still pending. The final artifacts are:\n\n- [Final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-codex-noseed-20260928T210318Z/work/final-query.txt)\n- [Audit and line-by-line counts](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-codex-noseed-20260928T210318Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-codex-noseed-20260928T210318Z/work/validation-manifest.json)\n- [Search rationale and limitations](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-codex-noseed-20260928T210318Z/work/narrative.md)",
+  "strategy": "((\"Malaria\"[Mesh] OR \"Malaria, Vivax\"[Mesh] OR \"Plasmodium vivax\"[Mesh] OR malaria*[tiab] OR plasmodium[tiab] OR plasmodia[tiab] OR \"P. vivax\"[tiab] OR \"Plasmodium vivax\"[tiab] OR \"vivax malaria\"[tiab] OR \"non-falciparum\"[tiab] OR \"non falciparum\"[tiab] OR \"Plasmodium ovale\"[tiab] OR \"P. ovale\"[tiab] OR \"Plasmodium malariae\"[tiab] OR \"P. malariae\"[tiab] OR \"Plasmodium knowlesi\"[tiab] OR \"P. knowlesi\"[tiab]) AND (\"Immunologic Tests\"[Mesh] OR \"Immunoassay\"[Mesh] OR \"Reagent Kits, Diagnostic\"[Mesh] OR \"rapid diagnostic test\"[tiab] OR \"rapid diagnostic tests\"[tiab] OR \"rapid test\"[tiab] OR \"rapid tests\"[tiab] OR \"rapid malaria test\"[tiab] OR \"rapid malaria tests\"[tiab] OR immunochromatograph*[tiab] OR \"rapid antigen test\"[tiab] OR \"rapid antigen tests\"[tiab] OR dipstick*[tiab] OR RDT[tiab] OR RDTs[tiab] OR CareStart[tiab] OR \"SD Bioline\"[tiab] OR OptiMAL[tiab] OR OnSite[tiab] OR \"First Response\"[tiab] OR ParaHIT[tiab])) AND (\"1800/01/01\"[edat] : \"2013/06/09\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2013-06-09",
+  "count": 5899,
+  "gold_scored": 26,
+  "gold_reachable": 26,
+  "retrieved": 26,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 226.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 25,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 1,
+      "screen": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "clinical_context",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

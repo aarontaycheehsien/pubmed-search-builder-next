@@ -1,0 +1,47 @@
+{
+  "topic": "Oud_2018",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T230641Z",
+  "scored": "20260928T232628Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1187
+  },
+  "final_message": "rap*[tiab] OR schema focused therap*[tiab] OR schema-focused therap*[tiab] OR schema therap*[tiab] OR \"Systems Training for Emotional Predictability and Problem Solving\"[tiab] OR STEPPS[tiab] OR dynamic deconstructive psychotherap*[tiab] OR DDP[tiab] OR cognitive analytic therap*[tiab] OR cognitive-analytic therap*[tiab] OR manual assisted cognitive therap*[tiab] OR emotion regulation group therap*[tiab] OR general psychiatric management[tiab] OR good psychiatric management[tiab] OR structured clinical management[tiab] OR supportive psychotherap*[tiab] OR interpersonal psychotherap*[tiab] OR MBT[tiab] OR TFP[tiab])) AND (\"1800/01/01\"[edat] : \"2015/03/27\"[edat])\n```\n\nThe final query returned **5,065 records**. The BPD block returned 10,827; the psychotherapy block returned 5,490,645. The full term-by-term counts are in [audit.md](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-f0c52b41b3ed9d0d/ours-codex-noseed-20260928T230641Z/work/audit.md>).\n\nThere were no user-supplied seeds. The strategy retrieved **23/23** records screened into the development set (100% development relative recall), drawn from one prior review’s cited literature. That is not independent validation, and recall against unseen studies was not estimated. The intervention category probe found **0 relevant records among 30 screened** from 617 records outside that block. Adult age and whether a therapy meets the “specialized” criterion remain screening decisions.\n\nThe generated [final query](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-f0c52b41b3ed9d0d/ours-codex-noseed-20260928T230641Z/work/final-query.txt>), [audit](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-f0c52b41b3ed9d0d/ours-codex-noseed-20260928T230641Z/work/audit.md>), and [validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-f0c52b41b3ed9d0d/ours-codex-noseed-20260928T230641Z/work/validation-manifest.json>) are intact in `./work`. The draft still needs PRESS peer review by an information specialist before use.",
+  "strategy": "((Borderline Personality Disorder[Mesh] OR borderline personality disorder[tiab] OR borderline personality disorders[tiab] OR borderline personality[tiab] OR borderline personality pathology[tiab] OR emotionally unstable personality disorder[tiab] OR emotionally unstable personality[tiab] OR BPD[tiab]) AND (Psychotherapy[Mesh] OR Psychotherapy, Group[Mesh] OR Behavior Therapy[Mesh] OR Cognitive Behavioral Therapy[Mesh] OR Psychoanalytic Therapy[Mesh] OR Psychotherapy, Psychodynamic[Mesh] OR psychotherap*[tiab] OR psychological therap*[tiab] OR psychological treatment*[tiab] OR therapy[tiab] OR therap*[tiab] OR treatment[tiab] OR treat*[tiab] OR intervention*[tiab] OR cognitive therap*[tiab] OR behavior therap*[tiab] OR behaviour therap*[tiab] OR dialectical behavior therap*[tiab] OR dialectical behaviour therap*[tiab] OR DBT[tiab] OR mentalization based therap*[tiab] OR mentalisation based therap*[tiab] OR mentalization-based therap*[tiab] OR mentalisation-based therap*[tiab] OR transference focused psychotherap*[tiab] OR transference-focused psychotherap*[tiab] OR schema focused therap*[tiab] OR schema-focused therap*[tiab] OR schema therap*[tiab] OR \"Systems Training for Emotional Predictability and Problem Solving\"[tiab] OR STEPPS[tiab] OR dynamic deconstructive psychotherap*[tiab] OR DDP[tiab] OR cognitive analytic therap*[tiab] OR cognitive-analytic therap*[tiab] OR manual assisted cognitive therap*[tiab] OR emotion regulation group therap*[tiab] OR general psychiatric management[tiab] OR good psychiatric management[tiab] OR structured clinical management[tiab] OR supportive psychotherap*[tiab] OR interpersonal psychotherap*[tiab] OR MBT[tiab] OR TFP[tiab])) AND (\"1800/01/01\"[edat] : \"2015/03/27\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2015-03-27",
+  "count": 5065,
+  "gold_scored": 17,
+  "gold_reachable": 17,
+  "retrieved": 17,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 297.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 6,
+  "unseen_retrieved": 11,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": null,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

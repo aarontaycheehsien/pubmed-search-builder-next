@@ -1,0 +1,47 @@
+{
+  "topic": "gao-2026-Immune checkpoint inhibitors",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T001615Z",
+  "scored": "20260929T005611Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2396
+  },
+  "final_message": "lizumab[tiab] OR atezolizumab[tiab] OR nivolumab[tiab] OR durvalumab[tiab] OR avelumab[tiab] OR cemiplimab[tiab] OR ipilimumab[tiab] OR tislelizumab[tiab] OR toripalimab[tiab] OR sintilimab[tiab] OR camrelizumab[tiab] OR dostarlimab[tiab] OR retifanlimab[tiab] OR spartalizumab[tiab] OR envafolimab[tiab] OR (\"PD-1\"[tiab] AND (block*[tiab] OR inhibit*[tiab] OR antibod*[tiab])) OR (\"PD-L1\"[tiab] AND (block*[tiab] OR inhibit*[tiab] OR antibod*[tiab])) OR (\"CTLA-4\"[tiab] AND (block*[tiab] OR inhibit*[tiab] OR antibod*[tiab])))) AND (\"1800/01/01\"[edat] : \"2025/01/31\"[edat])\n```\n\nThe search returned **1,897 records**, using a PubMed **Entry Date** cutoff of 2025-01-31. The audit has individual line counts; the TNBC block returned 28,601 records, the checkpoint-inhibitor block 81,678, and their combination 1,897.\n\nRelative recall was **7/7 (100%)** against the screened development set. That set was used to build the strategy, so this is not independent validation or sensitivity. Two category probes found no eligible records in their samples (0/30 each).\n\nThe general “Immune Checkpoint Inhibitors” MeSH heading was omitted because its authority lookup returned duplicate records that the validator could not distinguish; the closing critic accepted this documented residual risk. This draft still needs PRESS peer review by an information specialist before use.\n\n- [Final query](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-dc89f4701b07ff28/ours-codex-noseed-20260929T001615Z/work/final/final-query.txt>)\n- [Audit with line-by-line counts](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-dc89f4701b07ff28/ours-codex-noseed-20260929T001615Z/work/final/audit.md>)\n- [Validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-dc89f4701b07ff28/ours-codex-noseed-20260929T001615Z/work/final/validation-manifest.json>)\n- [Build notes and assumptions](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-dc89f4701b07ff28/ours-codex-noseed-20260929T001615Z/work/final/narrative.md>)",
+  "error": "no current protected delivery",
+  "unfinished": {
+    "blockers": [],
+    "count": 2870,
+    "gold_reachable": 11,
+    "retrieved": 11,
+    "recall_percent": 100.0
+  },
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "screen": 1,
+      "search": 2
+    },
+    "optional": []
+  },
+  "status": "no-delivery",
+  "valid": false,
+  "split": "dev"
+}

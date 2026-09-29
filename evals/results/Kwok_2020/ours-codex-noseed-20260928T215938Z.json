@@ -1,0 +1,71 @@
+{
+  "topic": "Kwok_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T215938Z",
+  "scored": "20260928T222501Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1522
+  },
+  "final_message": "ffaloes\"[Mesh] OR \"Camelus\"[Mesh] OR \"Animals, Domestic\"[Mesh] OR livestock[tiab] OR \"farm animal\"[tiab] OR \"farm animals\"[tiab] OR \"domestic animal\"[tiab] OR \"domestic animals\"[tiab] OR cattle[tiab] OR bovine[tiab] OR cow[tiab] OR cows[tiab] OR calf[tiab] OR calves[tiab] OR swine[tiab] OR pig[tiab] OR pigs[tiab] OR piglet*[tiab] OR porcine[tiab] OR sheep[tiab] OR ovine[tiab] OR goat*[tiab] OR caprine[tiab] OR poultry[tiab] OR chicken*[tiab] OR hen[tiab] OR hens[tiab] OR broiler*[tiab] OR turkey*[tiab] OR duck*[tiab] OR goose[tiab] OR geese[tiab] OR horse*[tiab] OR equine[tiab] OR rabbit*[tiab] OR buffalo*[tiab] OR camel*[tiab])) AND (\"1800/01/01\"[edat] : \"2019/02/22\"[edat])\n```\n\nRelative recall was 19/19 (100%) on the development set and 8/8 (100%) on the validation set. Treat the validation result cautiously: its split was made after a term-ranking diagnostic, though no ranked term was adopted. The farm-animal category probe screened 30 records and found none relevant outside the population block. These figures are relative recall against records discovered during this build, not absolute sensitivity; no user-supplied seeds or matching review benchmark were available.\n\nThe working scope assumes **terrestrial livestock and poultry**; aquaculture is excluded pending protocol confirmation. This draft still needs PRESS peer review by an information specialist before use.\n\n- [Generated query](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-def605b9b5df8f15\\ours-codex-noseed-20260928T215938Z\\work\\final-query.txt)\n- [Audit with the full line-by-line counts](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-def605b9b5df8f15\\ours-codex-noseed-20260928T215938Z\\work\\audit.md)\n- [Assumptions and review notes](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-def605b9b5df8f15\\ours-codex-noseed-20260928T215938Z\\work\\narrative.md)\n- [Validation manifest](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-def605b9b5df8f15\\ours-codex-noseed-20260928T215938Z\\work\\validation-manifest.json)",
+  "strategy": "(((\"Metagenomics\"[Mesh] AND \"Viruses\"[Mesh]) OR (metagenom*[tiab] AND (virus*[tiab] OR viral[tiab] OR virom*[tiab] OR phage*[tiab] OR bacteriophag*[tiab])) OR virom*[tiab] OR (\"metagenomic sequencing\"[tiab] AND (virus*[tiab] OR viral[tiab] OR virom*[tiab] OR phage*[tiab])) OR (\"shotgun sequencing\"[tiab] AND (virus*[tiab] OR viral[tiab] OR virom*[tiab] OR phage*[tiab])) OR (\"high-throughput sequencing\"[tiab] AND (virus*[tiab] OR viral[tiab] OR virom*[tiab] OR phage*[tiab])) OR (\"next-generation sequencing\"[tiab] AND (virus*[tiab] OR viral[tiab] OR virom*[tiab] OR phage*[tiab])) OR (\"deep sequencing\"[tiab] AND (virus*[tiab] OR viral[tiab] OR virom*[tiab] OR phage*[tiab]))) AND (\"Livestock\"[Mesh] OR \"Poultry\"[Mesh] OR \"Cattle\"[Mesh] OR \"Swine\"[Mesh] OR \"Sheep\"[Mesh] OR \"Goats\"[Mesh] OR \"Horses\"[Mesh] OR \"Rabbits\"[Mesh] OR \"Buffaloes\"[Mesh] OR \"Camelus\"[Mesh] OR \"Animals, Domestic\"[Mesh] OR livestock[tiab] OR \"farm animal\"[tiab] OR \"farm animals\"[tiab] OR \"domestic animal\"[tiab] OR \"domestic animals\"[tiab] OR cattle[tiab] OR bovine[tiab] OR cow[tiab] OR cows[tiab] OR calf[tiab] OR calves[tiab] OR swine[tiab] OR pig[tiab] OR pigs[tiab] OR piglet*[tiab] OR porcine[tiab] OR sheep[tiab] OR ovine[tiab] OR goat*[tiab] OR caprine[tiab] OR poultry[tiab] OR chicken*[tiab] OR hen[tiab] OR hens[tiab] OR broiler*[tiab] OR turkey*[tiab] OR duck*[tiab] OR goose[tiab] OR geese[tiab] OR horse*[tiab] OR equine[tiab] OR rabbit*[tiab] OR buffalo*[tiab] OR camel*[tiab])) AND (\"1800/01/01\"[edat] : \"2019/02/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2019-02-22",
+  "count": 734,
+  "gold_scored": 116,
+  "gold_reachable": 116,
+  "retrieved": 99,
+  "recall_percent": 85.3,
+  "missed": [
+    "22376991",
+    "22821184",
+    "24672039",
+    "25918239",
+    "26646894",
+    "26914580",
+    "26940636",
+    "27314580",
+    "27329081",
+    "27353186",
+    "28495761",
+    "28653486",
+    "29027372",
+    "29143492",
+    "29677111",
+    "29700160",
+    "30473342"
+  ],
+  "nnr": 7.4,
+  "translation_issues": [],
+  "gold_seen_by_agent": 22,
+  "unseen_retrieved": 77,
+  "unseen_recall_percent": 81.9,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "search": 2
+    },
+    "optional": []
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

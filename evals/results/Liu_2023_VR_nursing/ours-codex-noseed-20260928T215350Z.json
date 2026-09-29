@@ -1,0 +1,47 @@
+{
+  "topic": "Liu_2023_VR_nursing",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T215350Z",
+  "scored": "20260928T221328Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1178
+  },
+  "final_message": " `virtual patient*[tiab]` | 1,492 |\n| 25 | `virtual environment*[tiab]` | 4,386 |\n| 26 | `virtual world*[tiab]` | 1,003 |\n| 27 | `computer simulat*[tiab]` | 28,280 |\n| 28 | `3D simulat*[tiab]` | 791 |\n| 29 | `three-dimensional simulat*[tiab]` | 666 |\n| 30 | `head-mounted display*[tiab]` | 1,487 |\n| 31 | `head mounted display*[tiab]` | 1,487 |\n| 32 | `immersive learning[tiab]` | 80 |\n| 33 | `serious game*[tiab]` | 1,346 |\n| 34 | `virtual gam* simulat*[tiab]` | 5 |\n| 35 | **Intervention block OR** | **339,900** |\n| 36 | **Population AND intervention** | **2,645** |\n\n## Evaluation and handoff\n\n- Relative recall was **23/23 (100%)** against the screened development set. This is not independent validation or an estimate of sensitivity; no independent validation or confirmed review-inclusion benchmark set was available.\n- Two category probes screened one eligible record in the first sample and none in the follow-up sample. The first led to adding serious-game and virtual-gaming terms.\n- Outcomes, comparators, and study design are screened rather than required search blocks.\n- The internal PRESS-structured critic passed its six review domains. Its closing round left one documentation note: self-efficacy appears in the eligibility criteria but not in the question’s outcome list. The strategy follows the explicit eligibility criteria; align the question and protocol on self-efficacy before finalizing the review protocol.\n- **Human PRESS peer review by an information specialist remains pending before use.**\n\nProtected outputs are in [`work/final-query.txt`](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3d10494d5653b6c0/ours-codex-noseed-20260928T215350Z/work/final-query.txt), [`work/audit.md`](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3d10494d5653b6c0/ours-codex-noseed-20260928T215350Z/work/audit.md), and [`work/validation-manifest.json`](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3d10494d5653b6c0/ours-codex-noseed-20260928T215350Z/work/validation-manifest.json).",
+  "strategy": "((\"Students, Nursing\"[Mesh] OR \"Education, Nursing\"[Mesh] OR \"Education, Nursing, Baccalaureate\"[Mesh] OR \"Education, Nursing, Associate\"[Mesh] OR \"Education, Nursing, Diploma Programs\"[Mesh] OR \"Education, Nursing, Graduate\"[Mesh] OR nursing student*[tiab] OR student nurse*[tiab] OR students of nursing[tiab] OR nursing undergraduate*[tiab] OR undergraduate nursing[tiab] OR pre-registration nursing[tiab] OR preregistration nursing[tiab] OR nursing education[tiab]) AND (\"Virtual Reality\"[Mesh] OR \"Simulation Training\"[Mesh] OR \"High Fidelity Simulation Training\"[Mesh] OR \"Computer Simulation\"[Mesh] OR virtual realit*[tiab] OR VR[tiab] OR immersive simulat*[tiab] OR virtual simulat*[tiab] OR virtual patient*[tiab] OR virtual environment*[tiab] OR virtual world*[tiab] OR computer simulat*[tiab] OR 3D simulat*[tiab] OR three-dimensional simulat*[tiab] OR head-mounted display*[tiab] OR head mounted display*[tiab] OR immersive learning[tiab] OR serious game*[tiab] OR virtual gam* simulat*[tiab])) AND (\"1800/01/01\"[edat] : \"2023/03/31\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2023-03-31",
+  "count": 2645,
+  "gold_scored": 6,
+  "gold_reachable": 6,
+  "retrieved": 6,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 440.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 4,
+  "unseen_retrieved": 2,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": null,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

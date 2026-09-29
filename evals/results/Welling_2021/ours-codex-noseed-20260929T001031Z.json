@@ -1,0 +1,69 @@
+{
+  "topic": "Welling_2021",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T001031Z",
+  "scored": "20260929T012605Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 4533
+  },
+  "final_message": "ell-being[tiab] OR subjective wellbeing[tiab] OR mental health[tiab] OR psychological distress[tiab] OR depression[tiab] OR anxiety[tiab] OR stress[tiab] OR quality of life[tiab] OR life satisfaction[tiab] OR happiness[tiab] OR loneliness[tiab] OR social support[tiab] OR mobility[tiab] OR \"distance traveled\"[tiab] OR \"distance travelled\"[tiab] OR \"home time\"[tiab] OR \"time at home\"[tiab] OR \"time spent at home\"[tiab]))) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])\n```\n\n### Counts and validation\n\n| Search line | Results |\n|---|---:|\n| COVID-19 and restriction terms | 102,790 |\n| Outcome terms | 5,417,125 |\n| Combined strategy | 16,619 |\n\nThe strategy retrieved **16 of 16** screened relevant development records (100% relative recall against that development set; this is not an estimate of sensitivity). There was no independent validation or benchmark set. An initial optional-block sample revealed a relevant mobility study; I added mobility, home-time, and travel wording, then screened a fresh loss sample with **0 relevant among 30**.\n\nThe final count exceeds the standard 10,000-record workload budget. The internal critic accepted that as a documented risk. Counts were run in 2026 against PubMed records with Entrez dates through 2020-11-22; this is not a reconstruction of PubMed’s historical index.\n\nThe protected delivery passed validation. Files are in [work](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260929T001031Z/work>): [final query](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260929T001031Z/work/final-query.txt>), [audit](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260929T001031Z/work/audit.md>), and [validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260929T001031Z/work/validation-manifest.json>). This draft still needs PRESS peer review by an information specialist before use.",
+  "strategy": "(((\"COVID-19\"[Mesh] OR \"SARS-CoV-2\"[Mesh] OR \"Coronavirus Infections\"[Mesh] OR \"Pandemics\"[Mesh] OR \"Quarantine\"[Mesh] OR COVID-19[tiab] OR COVID19[tiab] OR COVID[tiab] OR SARS-CoV-2[tiab] OR SARS CoV 2[tiab] OR 2019-nCoV[tiab] OR 2019 novel coronavirus[tiab] OR novel coronavirus 2019[tiab] OR coronavirus disease 2019[tiab] OR coronavirus pandemic[tiab] OR pandemic lockdown*[tiab] OR lockdown*[tiab] OR lock-down*[tiab] OR quarantine*[tiab] OR social distanc*[tiab] OR physical distanc*[tiab] OR stay-at-home[tiab] OR stay at home[tiab] OR shelter-in-place[tiab] OR shelter in place[tiab] OR movement restriction*[tiab])) AND ((\"Life Style\"[Mesh] OR \"Health Behavior\"[Mesh] OR \"Behavior\"[Mesh] OR \"Health Promotion\"[Mesh] OR \"Sedentary Behavior\"[Mesh] OR \"Motor Activity\"[Mesh] OR \"Exercise\"[Mesh] OR \"Sleep\"[Mesh] OR \"Diet\"[Mesh] OR \"Feeding Behavior\"[Mesh] OR \"Mental Health\"[Mesh] OR \"Psychological Well-Being\"[Mesh] OR \"Quality of Life\"[Mesh] OR \"Stress, Psychological\"[Mesh] OR \"Psychological Distress\"[Mesh] OR \"Smoking\"[Mesh] OR \"Alcohol Drinking\"[Mesh] OR \"Loneliness\"[Mesh] OR \"Anxiety\"[Mesh] OR \"Depression\"[Mesh] OR lifestyle[tiab] OR life style[tiab] OR health behavior*[tiab] OR health behaviour*[tiab] OR behavior*[tiab] OR behaviour*[tiab] OR lifestyle behavior*[tiab] OR lifestyle behaviour*[tiab] OR physical activit*[tiab] OR exercise[tiab] OR sedentary[tiab] OR sitting time[tiab] OR sleep[tiab] OR diet*[tiab] OR nutrition*[tiab] OR eating behavior*[tiab] OR eating behaviour*[tiab] OR smoking[tiab] OR tobacco[tiab] OR alcohol[tiab] OR substance use[tiab] OR well-being[tiab] OR wellbeing[tiab] OR subjective well-being[tiab] OR subjective wellbeing[tiab] OR mental health[tiab] OR psychological distress[tiab] OR depression[tiab] OR anxiety[tiab] OR stress[tiab] OR quality of life[tiab] OR life satisfaction[tiab] OR happiness[tiab] OR loneliness[tiab] OR social support[tiab] OR mobility[tiab] OR \"distance traveled\"[tiab] OR \"distance travelled\"[tiab] OR \"home time\"[tiab] OR \"time at home\"[tiab] OR \"time spent at home\"[tiab]))) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-11-22",
+  "count": 16619,
+  "gold_scored": 53,
+  "gold_reachable": 53,
+  "retrieved": 47,
+  "recall_percent": 88.7,
+  "missed": [
+    "32227671",
+    "32242089",
+    "32640077",
+    "32959000",
+    "33105275",
+    "33181369"
+  ],
+  "nnr": 353.6,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 47,
+  "unseen_recall_percent": 88.7,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 1,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "lifestyle_wellbeing",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

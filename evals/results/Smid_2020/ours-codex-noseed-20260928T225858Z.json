@@ -1,0 +1,70 @@
+{
+  "topic": "Smid_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T225858Z",
+  "scored": "20260928T232405Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1506
+  },
+  "final_message": "] OR Multilevel Analysis[Mesh] OR structural equation[tiab] OR structural equation model[tiab] OR structural equation modeling[tiab] OR structural equation modelling[tiab] OR SEM[tiab] OR confirmatory factor analysis[tiab] OR CFA[tiab] OR latent growth[tiab] OR growth curve model[tiab] OR latent class[tiab] OR latent variable[tiab] OR multilevel[tiab] OR mediation[tiab] OR factor analysis[tiab]) AND (Bayes Theorem[Mesh] OR bayesian[tiab] OR bayes[tiab] OR Bayesian estimation[tiab] OR Bayesian approach[tiab] OR MCMC[tiab] OR Markov chain Monte Carlo[tiab] OR Gibbs sampling[tiab]) AND (Monte Carlo Method[Mesh] OR Computer Simulation[Mesh] OR simulation[tiab] OR simulations[tiab] OR simulat*[tiab] OR Monte Carlo[tiab])) AND (\"1800/01/01\"[edat] : \"2017/11/29\"[edat])\n```\n\nThe final count is **9,394 records** with the PubMed Entry Date cutoff of 2017-11-29. The small-sample block was left out to favor recall; simulation terms remain required. The full line-by-line strategy with PubMed counts is in the [audit](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260928T225858Z/work/audit.md>).\n\nThree screened-in records were found during development. Relative recall against that development set is **3/3 (100%)**; there was no independent validation set, so this does not establish overall sensitivity. No publication-date filter was used.\n\nThe protected [final query](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260928T225858Z/work/final-query.txt>), [validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260928T225858Z/work/validation-manifest.json>), and [search narrative](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260928T225858Z/work/narrative.md>) are saved under `./work`. The internal PRESS-structured critique passed; **human PRESS peer review by an information specialist is still needed before use**.",
+  "strategy": "((Statistics as Topic[Mesh] OR Factor Analysis, Statistical[Mesh] OR Multilevel Analysis[Mesh] OR structural equation[tiab] OR structural equation model[tiab] OR structural equation modeling[tiab] OR structural equation modelling[tiab] OR SEM[tiab] OR confirmatory factor analysis[tiab] OR CFA[tiab] OR latent growth[tiab] OR growth curve model[tiab] OR latent class[tiab] OR latent variable[tiab] OR multilevel[tiab] OR mediation[tiab] OR factor analysis[tiab]) AND (Bayes Theorem[Mesh] OR bayesian[tiab] OR bayes[tiab] OR Bayesian estimation[tiab] OR Bayesian approach[tiab] OR MCMC[tiab] OR Markov chain Monte Carlo[tiab] OR Gibbs sampling[tiab]) AND (Monte Carlo Method[Mesh] OR Computer Simulation[Mesh] OR simulation[tiab] OR simulations[tiab] OR simulat*[tiab] OR Monte Carlo[tiab])) AND (\"1800/01/01\"[edat] : \"2017/11/29\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-11-29",
+  "count": 9394,
+  "gold_scored": 14,
+  "gold_reachable": 14,
+  "retrieved": 13,
+  "recall_percent": 92.9,
+  "missed": [
+    "25765534"
+  ],
+  "nnr": 722.6,
+  "translation_issues": [],
+  "gold_seen_by_agent": 3,
+  "unseen_retrieved": 10,
+  "unseen_recall_percent": 90.9,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "screen": 3,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "small_sample",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "simulation",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

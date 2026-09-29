@@ -1,0 +1,70 @@
+{
+  "topic": "van_de_Schoot_2018",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T001038Z",
+  "scored": "20260929T004218Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1901
+  },
+  "final_message": "## Search strategy\n\nThe protected PubMed query is in [final-query.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20260929T001038Z/work/final-query.txt). It searches PTSD and post-traumatic stress symptom terms, including PTSS. The trajectory and trauma-event blocks were tested but left out because each would exclude known relevant studies.\n\nUnder the harness cutoff, the query retrieved **32,186 records**. It found all 9 development records and all 3 held-out validation records. Those figures are relative recall against a small, pilot-derived set—not an estimate of total sensitivity. The query includes the required Entrez entry-date bound through **2016-01-24**; it has no publication-date (`[dp]`) limit.\n\nThe audit and validation manifest are [audit.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20260929T001038Z/work/audit.md) and [validation-manifest.json](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20260929T001038Z/work/validation-manifest.json). Delivery passed. The audit records the stale trauma-event probe as a limitation and notes that human PRESS peer review is pending.",
+  "strategy": "((\"Stress Disorders, Post-Traumatic\"[Mesh] OR \"Stress Disorders, Traumatic, Acute\"[Mesh] OR \"PTSD\"[tiab] OR \"posttraumatic stress disorder*\"[tiab] OR \"post-traumatic stress disorder*\"[tiab] OR \"post traumatic stress disorder*\"[tiab] OR \"posttraumatic stress symptom*\"[tiab] OR \"post-traumatic stress symptom*\"[tiab] OR \"post traumatic stress symptom*\"[tiab] OR \"PTSD symptom*\"[tiab] OR \"acute stress disorder\"[tiab] OR PTSS[tiab] OR posttraumatic stress[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2016-01-24",
+  "count": 32186,
+  "gold_scored": 38,
+  "gold_reachable": 38,
+  "retrieved": 36,
+  "recall_percent": 94.7,
+  "missed": [
+    "20061839",
+    "20836603"
+  ],
+  "nnr": 894.1,
+  "translation_issues": [],
+  "gold_seen_by_agent": 3,
+  "unseen_retrieved": 33,
+  "unseen_recall_percent": 94.3,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 2,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "trajectory",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "trauma_event",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

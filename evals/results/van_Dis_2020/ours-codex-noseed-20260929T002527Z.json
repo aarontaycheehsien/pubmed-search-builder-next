@@ -1,0 +1,73 @@
+{
+  "topic": "van_Dis_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T002527Z",
+  "scored": "20260929T010345Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2298
+  },
+  "final_message": "|\n| 28 | `cognitive behavio* treatment*[tiab]` | 1,786 |\n| 29 | `CBT[tiab]` | 8,158 |\n| 30 | `exposure therap*[tiab]` | 1,294 |\n| 31 | CBT terms combined with `OR` | 74,708 |\n| 32 | `Follow-Up Studies[Mesh]` | 594,219 |\n| 33 | `long-term[tiab]` | 661,989 |\n| 34 | `long term[tiab]` | 661,989 |\n| 35 | `follow-up[tiab]` | 788,429 |\n| 36 | `followup[tiab]` | 751,136 |\n| 37 | `longitudinal[tiab]` | 194,058 |\n| 38 | `maintenance[tiab]` | 234,429 |\n| 39 | `sustained[tiab]` | 189,388 |\n| 40 | `durability[tiab]` | 14,752 |\n| 41 | `month*[tiab]` | 1,370,657 |\n| 42 | `year*[tiab]` | 3,027,986 |\n| 43 | Follow-up terms combined with `OR` | 4,864,862 |\n| 44 | Anxiety AND CBT AND follow-up blocks | **6,812** |\n\n## Validation and assumptions\n\nThe strategy retrieved **4 of 4** screened relevant development records (100% relative recall in that small set). These records informed the build, so this is **not** an independent sensitivity estimate. A revised 30-record loss sample for the follow-up block found no eligible records; the block reduced the result count from 16,411 to 6,812. Follow-up reported only in full text remains a risk.\n\nI assumed “long-term” means at least six months after treatment ends, and interpreted “anxiety-related disorders” to include classic anxiety disorders plus OCD and PTSD. Both assumptions need checking against your protocol. The category probes are stale for the final strategy and provide limited sensitivity evidence. Human information-specialist PRESS review is pending.\n\nThe generated [final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-62327eccbc31903b/ours-codex-noseed-20260929T002527Z/work/final-query.txt), [audit with full line-by-line strategy and counts](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-62327eccbc31903b/ours-codex-noseed-20260929T002527Z/work/audit.md), and [validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-62327eccbc31903b/ours-codex-noseed-20260929T002527Z/work/validation-manifest.json) are in `./work`.",
+  "strategy": "((Anxiety Disorders[Mesh] OR Phobic Disorders[Mesh] OR Panic Disorder[Mesh] OR Anxiety, Separation[Mesh] OR Obsessive-Compulsive Disorder[Mesh] OR Stress Disorders, Post-Traumatic[Mesh] OR anxiety[tiab] OR anxiet*[tiab] OR generalized anxiety disorder[tiab] OR social anxiety[tiab] OR social phobia[tiab] OR panic[tiab] OR agoraphob*[tiab] OR phobi*[tiab] OR obsessive-compulsive[tiab] OR obsessive compulsive[tiab] OR OCD[tiab] OR PTSD[tiab] OR posttraumatic stress[tiab] OR post-traumatic stress[tiab] OR separation anxiety[tiab]) AND (Behavior Therapy[Mesh] OR cognitive behavio* therap*[tiab] OR cognitive therap*[tiab] OR behavior therap*[tiab] OR behaviour therap*[tiab] OR cognitive behavio* treatment*[tiab] OR CBT[tiab] OR exposure therap*[tiab]) AND (Follow-Up Studies[Mesh] OR long-term[tiab] OR long term[tiab] OR follow-up[tiab] OR followup[tiab] OR longitudinal[tiab] OR maintenance[tiab] OR sustained[tiab] OR durability[tiab] OR month*[tiab] OR year*[tiab])) AND (\"1800/01/01\"[edat] : \"2017/08/24\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-08-24",
+  "count": 6812,
+  "gold_scored": 61,
+  "gold_reachable": 61,
+  "retrieved": 51,
+  "recall_percent": 83.6,
+  "missed": [
+    "7962886",
+    "10838679",
+    "10883554",
+    "15274171",
+    "17032094",
+    "18292398",
+    "21644186",
+    "22863540",
+    "27348462",
+    "27459503"
+  ],
+  "nnr": 133.6,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 51,
+  "unseen_recall_percent": 83.6,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "long_term",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

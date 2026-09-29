@@ -1,0 +1,70 @@
+{
+  "topic": "Smid_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T232408Z",
+  "scored": "20260928T234933Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1524
+  },
+  "final_message": "iab] OR \"hierarchical model*\"[tiab] OR \"hierarchical linear model*\"[tiab]) AND (\"Bayes Theorem\"[Mesh] OR Bayesian[tiab] OR Bayes[tiab] OR \"Markov chain Monte Carlo\"[tiab] OR MCMC[tiab]) AND (\"Monte Carlo Method\"[Mesh] OR simulation[tiab] OR simulations[tiab] OR simulated[tiab] OR \"Monte Carlo\"[tiab] OR \"Computer Simulation\"[Mesh])) AND (\"1800/01/01\"[edat] : \"2017/11/29\"[edat])\n```\n\nThe query returned **4,623 records** with the required Entrez entry-date cutoff of November 29, 2017. The [audit](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-1ea9c6b0d2472c4a\\ours-codex-noseed-20260928T232408Z\\work\\audit.md) contains line-by-line counts and PubMed translations.\n\nSix records found during the build were screened into the development set; the query retrieved all six (100% relative recall against that set). This is not independent validation: no held-out set or external benchmark was available.\n\nThe simulation block was tested and retained: its loss sample had 0 eligible records out of 30, and it reduced the uncapped count by 62.5%. Small-sample wording was tested but left out to preserve sensitivity; it would reduce the count from 4,623 to 287, but sample-size context may only be clear in full text.\n\n## Files\n\n- [Protected final query](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-1ea9c6b0d2472c4a\\ours-codex-noseed-20260928T232408Z\\work\\final-query.txt)\n- [Audit with line-by-line counts](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-1ea9c6b0d2472c4a\\ours-codex-noseed-20260928T232408Z\\work\\audit.md)\n- [Validation manifest](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-1ea9c6b0d2472c4a\\ours-codex-noseed-20260928T232408Z\\work\\validation-manifest.json)\n- [Build rationale and handoff notes](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-1ea9c6b0d2472c4a\\ours-codex-noseed-20260928T232408Z\\work\\narrative.md)\n\nThe internal PRESS-structured critique was same-context, not independent peer review. Please have an information specialist PRESS peer review this draft before use.",
+  "strategy": "((\"Factor Analysis, Statistical\"[Mesh] OR \"Latent Class Analysis\"[Mesh] OR \"Multilevel Analysis\"[Mesh] OR \"Mediation Analysis\"[Mesh] OR \"Models, Statistical\"[Mesh] OR \"structural equation model*\"[tiab] OR \"structural equation modeling\"[tiab] OR \"structural equation modelling\"[tiab] OR \"confirmatory factor analysis\"[tiab] OR CFA[tiab] OR \"factor analysis\"[tiab] OR \"latent variable*\"[tiab] OR \"latent class\"[tiab] OR \"latent growth\"[tiab] OR \"growth curve model*\"[tiab] OR multilevel[tiab] OR \"multi-level\"[tiab] OR mediation[tiab] OR \"path analysis\"[tiab] OR \"hierarchical model*\"[tiab] OR \"hierarchical linear model*\"[tiab]) AND (\"Bayes Theorem\"[Mesh] OR Bayesian[tiab] OR Bayes[tiab] OR \"Markov chain Monte Carlo\"[tiab] OR MCMC[tiab]) AND (\"Monte Carlo Method\"[Mesh] OR simulation[tiab] OR simulations[tiab] OR simulated[tiab] OR \"Monte Carlo\"[tiab] OR \"Computer Simulation\"[Mesh])) AND (\"1800/01/01\"[edat] : \"2017/11/29\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-11-29",
+  "count": 4623,
+  "gold_scored": 14,
+  "gold_reachable": 14,
+  "retrieved": 13,
+  "recall_percent": 92.9,
+  "missed": [
+    "25765534"
+  ],
+  "nnr": 355.6,
+  "translation_issues": [],
+  "gold_seen_by_agent": 5,
+  "unseen_retrieved": 8,
+  "unseen_recall_percent": 88.9,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "screen": 3,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "small_sample",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "simulation",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

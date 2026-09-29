@@ -1,0 +1,51 @@
+{
+  "topic": "CD011926",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T204057Z",
+  "scored": "20260928T210932Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1714
+  },
+  "final_message": "/Local/Temp/psb-evals/run-a01e5029fcbb87a3/ours-codex-noseed-20260928T204057Z/work/narrative.md)\n\n```text\n((\"Infant, Newborn\"[Mesh] OR neonat*[tiab] OR newborn*[tiab] OR infant*[tiab] OR \"newborn infant\"[tiab:~0] OR \"premature infant\"[tiab:~1] OR \"preterm infant\"[tiab:~1] OR \"low birth weight\"[tiab:~2] OR premature*[tiab] OR preterm*[tiab]) AND (\"Sepsis\"[Mesh] OR \"Bacteremia\"[Mesh] OR sepsis[tiab] OR septicemia[tiab] OR septicem*[tiab] OR bacteremia[tiab] OR bacteraemia[tiab] OR bacterem*[tiab] OR bacteraem*[tiab] OR \"bloodstream infection\"[tiab:~0] OR \"blood stream infection\"[tiab:~0] OR \"systemic infection\"[tiab:~1] OR fungemia*[tiab] OR fungaemia*[tiab] OR candidemia*[tiab] OR candidaemia*[tiab] OR viremia[tiab] OR viraemia[tiab] OR BSI[tiab] OR \"bloodstream infections\"[tiab:~0] OR \"blood stream infections\"[tiab:~0]) AND (\"Molecular Diagnostic Techniques\"[Mesh] OR \"Nucleic Acid Amplification Techniques\"[Mesh] OR \"Polymerase Chain Reaction\"[Mesh] OR \"Real-Time Polymerase Chain Reaction\"[Mesh] OR \"Multiplex Polymerase Chain Reaction\"[Mesh] OR \"Reverse Transcriptase Polymerase Chain Reaction\"[Mesh] OR \"In Situ Hybridization\"[Mesh] OR \"RNA, Ribosomal, 16S\"[Mesh] OR \"Sequence Analysis, DNA\"[Mesh] OR molecul*[tiab] OR PCR[tiab] OR qPCR[tiab] OR \"polymerase chain reaction\"[tiab:~0] OR \"real time PCR\"[tiab:~1] OR \"real time polymerase chain reaction\"[tiab:~1] OR \"reverse transcriptase PCR\"[tiab:~1] OR \"nucleic acid amplification\"[tiab:~1] OR \"nucleic acid test\"[tiab:~1] OR \"gene amplification\"[tiab:~1] OR \"16S rRNA\"[tiab:~0] OR \"16S ribosomal RNA\"[tiab:~0] OR \"16S rDNA\"[tiab:~0] OR \"in situ hybridization\"[tiab:~1] OR \"fluorescence in situ hybridization\"[tiab:~1] OR \"DNA probe\"[tiab:~1] OR \"DNA sequencing\"[tiab:~0] OR \"RNA sequencing\"[tiab:~0] OR \"oligonucleotide array\"[tiab:~1] OR FISH[tiab] OR LAMP[tiab] OR \"loop mediated isothermal amplification\"[tiab:~1] OR \"transcription mediated amplification\"[tiab:~1] OR TMA[tiab])) AND (\"1800/01/01\"[edat] : \"2014/08/09\"[edat])\n```",
+  "strategy": "((\"Infant, Newborn\"[Mesh] OR neonat*[tiab] OR newborn*[tiab] OR infant*[tiab] OR \"newborn infant\"[tiab:~0] OR \"premature infant\"[tiab:~1] OR \"preterm infant\"[tiab:~1] OR \"low birth weight\"[tiab:~2] OR premature*[tiab] OR preterm*[tiab]) AND (\"Sepsis\"[Mesh] OR \"Bacteremia\"[Mesh] OR sepsis[tiab] OR septicemia[tiab] OR septicem*[tiab] OR bacteremia[tiab] OR bacteraemia[tiab] OR bacterem*[tiab] OR bacteraem*[tiab] OR \"bloodstream infection\"[tiab:~0] OR \"blood stream infection\"[tiab:~0] OR \"systemic infection\"[tiab:~1] OR fungemia*[tiab] OR fungaemia*[tiab] OR candidemia*[tiab] OR candidaemia*[tiab] OR viremia[tiab] OR viraemia[tiab] OR BSI[tiab] OR \"bloodstream infections\"[tiab:~0] OR \"blood stream infections\"[tiab:~0]) AND (\"Molecular Diagnostic Techniques\"[Mesh] OR \"Nucleic Acid Amplification Techniques\"[Mesh] OR \"Polymerase Chain Reaction\"[Mesh] OR \"Real-Time Polymerase Chain Reaction\"[Mesh] OR \"Multiplex Polymerase Chain Reaction\"[Mesh] OR \"Reverse Transcriptase Polymerase Chain Reaction\"[Mesh] OR \"In Situ Hybridization\"[Mesh] OR \"RNA, Ribosomal, 16S\"[Mesh] OR \"Sequence Analysis, DNA\"[Mesh] OR molecul*[tiab] OR PCR[tiab] OR qPCR[tiab] OR \"polymerase chain reaction\"[tiab:~0] OR \"real time PCR\"[tiab:~1] OR \"real time polymerase chain reaction\"[tiab:~1] OR \"reverse transcriptase PCR\"[tiab:~1] OR \"nucleic acid amplification\"[tiab:~1] OR \"nucleic acid test\"[tiab:~1] OR \"gene amplification\"[tiab:~1] OR \"16S rRNA\"[tiab:~0] OR \"16S ribosomal RNA\"[tiab:~0] OR \"16S rDNA\"[tiab:~0] OR \"in situ hybridization\"[tiab:~1] OR \"fluorescence in situ hybridization\"[tiab:~1] OR \"DNA probe\"[tiab:~1] OR \"DNA sequencing\"[tiab:~0] OR \"RNA sequencing\"[tiab:~0] OR \"oligonucleotide array\"[tiab:~1] OR FISH[tiab] OR LAMP[tiab] OR \"loop mediated isothermal amplification\"[tiab:~1] OR \"transcription mediated amplification\"[tiab:~1] OR TMA[tiab])) AND (\"1800/01/01\"[edat] : \"2014/08/09\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2014-08-09",
+  "count": 1565,
+  "gold_scored": 29,
+  "gold_reachable": 29,
+  "retrieved": 28,
+  "recall_percent": 96.6,
+  "missed": [
+    "19279393"
+  ],
+  "nnr": 55.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 4,
+  "unseen_retrieved": 24,
+  "unseen_recall_percent": 96.0,
+  "leakage": [
+    "transcript mentions 'cd011926'"
+  ],
+  "concepts": null,
+  "status": "leakage",
+  "valid": false,
+  "split": "dev"
+}

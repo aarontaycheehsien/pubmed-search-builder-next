@@ -1,0 +1,68 @@
+{
+  "topic": "Welling_2021",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T234132Z",
+  "scored": "20260929T001029Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1736
+  },
+  "final_message": " sitting[tiab] OR sleep[tiab] OR diet*[tiab] OR eating[tiab] OR nutrition[tiab] OR food intake[tiab] OR alcohol[tiab] OR drinking[tiab] OR smoking[tiab] OR tobacco[tiab] OR lifestyle[tiab] OR life style[tiab] OR health behavior*[tiab] OR health behaviour*[tiab] OR well-being[tiab] OR wellbeing[tiab] OR psychological well-being[tiab] OR mental health[tiab] OR depress*[tiab] OR anxiet*[tiab] OR psychological distress[tiab] OR stress[tiab] OR quality of life[tiab] OR life satisfaction[tiab] OR happiness[tiab] OR Psychological Distress[Mesh] OR Loneliness[Mesh] OR loneliness[tiab] OR lonely[tiab] OR mental well-being[tiab] OR mental wellbeing[tiab] OR social well-being[tiab] OR social wellbeing[tiab] OR subjective well-being[tiab] OR subjective wellbeing[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])\n```\n\n| Search line | Records |\n|---|---:|\n| COVID-19, pandemic, and containment exposure block | 128,132 |\n| Lifestyle behavior or well-being outcome block | 3,830,750 |\n| Combined strategy | 12,650 |\n\nThe outcome block was tested as optional and retained: it reduced results by 90.1%; none of the 30 sampled excluded records met the stated eligibility criteria. The full audit lists each term’s count.\n\n## Validation and limitations\n\nThe strategy retrieved 8/8 development records and 3/3 held-out records. The held-out set is semi-independent, but both sets came from a sample of this strategy’s pilot retrieval; these figures are relative recall checks, not sensitivity estimates. The draft returns 12,650 records, above the standard 10,000-record workload budget. That risk is documented in the audit.\n\nThe requested 2020-11-22 cutoff is applied as an Entrez entry-date bound, with no publication-date limit. Scope and outcome eligibility reflect the assumptions recorded in the audit because you asked me not to pause for questions. Three rounds of PRESS-structured internal critique were completed; independent information-specialist PRESS peer review is still needed before use.",
+  "strategy": "((COVID-19[Mesh] OR Coronavirus Infections[Mesh] OR Pandemics[Mesh] OR Quarantine[Mesh] OR COVID-19[tiab] OR COVID19[tiab] OR coronavirus disease 2019[tiab] OR 2019 novel coronavirus[tiab] OR 2019-nCoV[tiab] OR SARS-CoV-2[tiab] OR SARS CoV 2[tiab] OR severe acute respiratory syndrome coronavirus 2[tiab] OR coronavirus*[tiab] OR pandemic*[tiab] OR lockdown*[tiab] OR lock down[tiab] OR stay-at-home[tiab] OR stay at home[tiab] OR quarantine*[tiab] OR social distanc*[tiab]) AND (Life Style[Mesh] OR Healthy Lifestyle[Mesh] OR Sedentary Behavior[Mesh] OR Motor Activity[Mesh] OR Exercise[Mesh] OR Physical Fitness[Mesh] OR Sleep[Mesh] OR Sleep Wake Disorders[Mesh] OR Feeding Behavior[Mesh] OR Diet[Mesh] OR Eating[Mesh] OR Alcohol Drinking[Mesh] OR Smoking[Mesh] OR Tobacco Use[Mesh] OR Mental Health[Mesh] OR Depression[Mesh] OR Anxiety[Mesh] OR Stress, Psychological[Mesh] OR Quality of Life[Mesh] OR physical activ*[tiab] OR exercise[tiab] OR sedentary[tiab] OR sitting[tiab] OR sleep[tiab] OR diet*[tiab] OR eating[tiab] OR nutrition[tiab] OR food intake[tiab] OR alcohol[tiab] OR drinking[tiab] OR smoking[tiab] OR tobacco[tiab] OR lifestyle[tiab] OR life style[tiab] OR health behavior*[tiab] OR health behaviour*[tiab] OR well-being[tiab] OR wellbeing[tiab] OR psychological well-being[tiab] OR mental health[tiab] OR depress*[tiab] OR anxiet*[tiab] OR psychological distress[tiab] OR stress[tiab] OR quality of life[tiab] OR life satisfaction[tiab] OR happiness[tiab] OR Psychological Distress[Mesh] OR Loneliness[Mesh] OR loneliness[tiab] OR lonely[tiab] OR mental well-being[tiab] OR mental wellbeing[tiab] OR social well-being[tiab] OR social wellbeing[tiab] OR subjective well-being[tiab] OR subjective wellbeing[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-11-22",
+  "count": 12650,
+  "gold_scored": 53,
+  "gold_reachable": 53,
+  "retrieved": 47,
+  "recall_percent": 88.7,
+  "missed": [
+    "32227671",
+    "32242089",
+    "32640077",
+    "32959000",
+    "33105275",
+    "33181369"
+  ],
+  "nnr": 269.1,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 47,
+  "unseen_recall_percent": 88.7,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "outcomes",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

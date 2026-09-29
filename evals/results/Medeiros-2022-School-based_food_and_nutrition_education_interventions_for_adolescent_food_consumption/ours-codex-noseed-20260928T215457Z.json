@@ -1,0 +1,70 @@
+{
+  "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T215457Z",
+  "scored": "20260928T223026Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2129
+  },
+  "final_message": " fruit*[tiab] OR vegetable*[tiab] OR beverage*[tiab] OR sugar-sweetened beverage*[tiab] OR sugar sweetened beverage*[tiab] OR diet quality[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])\n```\n\nPubMed returned **5,861 records** with the Entrez-date cutoff of 2017-12-14. The generated audit contains the complete numbered strategy with counts for each line; it has 74 numbered lines, with the final combination on line 74.\n\n- [Generated query](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260928T215457Z/work/final-query.txt)\n- [Audit and line counts](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260928T215457Z/work/audit.md)\n- [Build rationale and limitations](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260928T215457Z/work/narrative.md)\n- [Validation manifest](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260928T215457Z/work/validation-manifest.json)\n\n## Validation and limitations\n\nSeven records screened during development were all retrieved: **100% relative recall against the development set**. This is not independent validation or sensitivity; there were no user-supplied seeds, held-out records, or matching-review benchmark.\n\nThe optional school-setting and food-consumption blocks each retained all known records and had 0 relevant records in their refreshed 30-record loss samples. Category probes found wording gaps, which were addressed, but the standard probe budget was exhausted: education coverage remains uncertain after a later population-block change, and the population probe’s estimated residual risk was not checked with another sample. One likely relevant fifth-grade record has no abstract and remains provisional.\n\nThe internal PRESS-structured critic passed with no technical blockers, but it used the same context. **Human PRESS peer review by an information specialist is still needed before use.**",
+  "strategy": "((\"Health Education\"[Mesh] OR \"Health Promotion\"[Mesh] OR \"Counseling\"[Mesh] OR \"nutrition education\"[tiab] OR \"food education\"[tiab] OR \"nutrition instruction\"[tiab] OR \"nutrition counseling\"[tiab] OR \"nutrition counselling\"[tiab] OR \"nutrition program\"[tiab] OR \"nutrition programs\"[tiab] OR \"nutrition intervention\"[tiab] OR \"nutrition interventions\"[tiab] OR \"dietary education\"[tiab] OR \"food and nutrition\"[tiab:~2] OR \"nutrition behavior\"[tiab] OR \"nutrition behaviour\"[tiab] OR counsel*[tiab] OR nutritional[tiab]) AND (\"Adolescent\"[Mesh] OR \"Child\"[Mesh] OR \"Students\"[Mesh] OR adolescent*[tiab] OR teen*[tiab] OR youth[tiab] OR young people[tiab] OR student*[tiab] OR pupil*[tiab] OR schoolchild*[tiab] OR school children[tiab] OR school student*[tiab] OR child*[tiab] OR grade*[tiab]) AND (\"Schools\"[Mesh] OR school*[tiab] OR classroom*[tiab] OR high school*[tiab] OR secondary school*[tiab] OR elementary school*[tiab] OR primary school*[tiab] OR school-based[tiab] OR school based[tiab]) AND (\"Feeding Behavior\"[Mesh] OR \"Diet\"[Mesh] OR \"Eating\"[Mesh] OR \"Food Preferences\"[Mesh] OR diet*[tiab] OR eat[tiab] OR eating[tiab] OR ate[tiab] OR food*[tiab] OR breakfast*[tiab] OR fast food*[tiab] OR sugar*[tiab] OR dietary intake[tiab] OR food intake[tiab] OR food consumption[tiab] OR food eating[tiab] OR eating behavior[tiab] OR eating behaviour[tiab] OR feeding behavior[tiab] OR feeding behaviour[tiab] OR food choice*[tiab] OR dietary habit*[tiab] OR fruit*[tiab] OR vegetable*[tiab] OR beverage*[tiab] OR sugar-sweetened beverage*[tiab] OR sugar sweetened beverage*[tiab] OR diet quality[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-14",
+  "count": 5861,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 7,
+  "recall_percent": 77.8,
+  "missed": [
+    "22625222",
+    "25797051"
+  ],
+  "nnr": 837.3,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 7,
+  "unseen_recall_percent": 77.8,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "school",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "consumption",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

@@ -1,0 +1,62 @@
+{
+  "topic": "gao-2026-Immune checkpoint inhibitors",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T232332Z",
+  "scored": "20260928T235024Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1612
+  },
+  "final_message": " \"immune checkpoint inhibitor\"[tiab] OR \"immune checkpoint inhibitors\"[tiab] OR \"checkpoint inhibitor\"[tiab] OR \"checkpoint inhibitors\"[tiab] OR \"checkpoint blockade\"[tiab] OR \"immune checkpoint blockade\"[tiab] OR \"PD-1 inhibitor\"[tiab] OR \"PD-1 inhibitors\"[tiab] OR \"PD-L1 inhibitor\"[tiab] OR \"PD-L1 inhibitors\"[tiab] OR \"PD1 inhibitor\"[tiab] OR \"PDL1 inhibitor\"[tiab] OR \"programmed death-1\"[tiab] OR \"programmed death-ligand 1\"[tiab] OR \"programmed cell death protein 1\"[tiab] OR \"anti-PD-1\"[tiab] OR \"anti-PD-L1\"[tiab] OR pembrolizumab[tiab] OR atezolizumab[tiab] OR durvalumab[tiab] OR nivolumab[tiab] OR avelumab[tiab] OR cemiplimab[tiab] OR ipilimumab[tiab])) AND (\"1800/01/01\"[edat] : \"2025/01/31\"[edat])\n```\n\nThe [`audit.md`](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-dc89f4701b07ff28/ours-codex-noseed-20260928T232332Z/work/audit.md) has every search line with its count. The final combined line returned **2,029**. Relative recall was **6/6 (100%)** against screened trial reports cited by prior reviews; this is a benchmark check, not an independent sensitivity estimate. Chemotherapy co-administration and early-stage status are left for screening to protect recall. Early disease was assumed to mean non-metastatic stage I–III disease.\n\nThe internal critic passed, but an information specialist should still PRESS peer review the draft before use. One historical development note in the audit retains an earlier 46.6% figure; the measured reduction is 46.1%, and the [`narrative.md`](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-dc89f4701b07ff28/ours-codex-noseed-20260928T232332Z/work/narrative.md) records the discrepancy. The generated query and manifest remain intact: [`final-query.txt`](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-dc89f4701b07ff28/ours-codex-noseed-20260928T232332Z/work/final-query.txt) · [`validation-manifest.json`](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-dc89f4701b07ff28/ours-codex-noseed-20260928T232332Z/work/validation-manifest.json).",
+  "strategy": "((\"Triple Negative Breast Neoplasms\"[Mesh] OR \"triple negative breast cancer\"[tiab] OR \"triple-negative breast cancer\"[tiab] OR \"triple negative breast neoplasm\"[tiab] OR \"triple-negative breast neoplasm\"[tiab] OR TNBC[tiab] OR TNBCs[tiab] OR \"ER-negative PR-negative HER2-negative breast cancer\"[tiab] OR \"ER negative PR negative HER2 negative breast cancer\"[tiab] OR \"ER-/PR-/HER2-\"[tiab] OR \"triple negative\"[tiab:~2]) AND (\"Programmed Cell Death 1 Receptor\"[Mesh] OR \"B7-H1 Antigen\"[Mesh] OR \"immune checkpoint inhibitor\"[tiab] OR \"immune checkpoint inhibitors\"[tiab] OR \"checkpoint inhibitor\"[tiab] OR \"checkpoint inhibitors\"[tiab] OR \"checkpoint blockade\"[tiab] OR \"immune checkpoint blockade\"[tiab] OR \"PD-1 inhibitor\"[tiab] OR \"PD-1 inhibitors\"[tiab] OR \"PD-L1 inhibitor\"[tiab] OR \"PD-L1 inhibitors\"[tiab] OR \"PD1 inhibitor\"[tiab] OR \"PDL1 inhibitor\"[tiab] OR \"programmed death-1\"[tiab] OR \"programmed death-ligand 1\"[tiab] OR \"programmed cell death protein 1\"[tiab] OR \"anti-PD-1\"[tiab] OR \"anti-PD-L1\"[tiab] OR pembrolizumab[tiab] OR atezolizumab[tiab] OR durvalumab[tiab] OR nivolumab[tiab] OR avelumab[tiab] OR cemiplimab[tiab] OR ipilimumab[tiab])) AND (\"1800/01/01\"[edat] : \"2025/01/31\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2025-01-31",
+  "count": 2029,
+  "gold_scored": 11,
+  "gold_reachable": 11,
+  "retrieved": 11,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 184.5,
+  "translation_issues": [],
+  "gold_seen_by_agent": 6,
+  "unseen_retrieved": 5,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "chemotherapy",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

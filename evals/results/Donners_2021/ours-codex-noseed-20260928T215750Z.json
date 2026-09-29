@@ -1,0 +1,68 @@
+{
+  "topic": "Donners_2021",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T215750Z",
+  "scored": "20260928T221530Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1060
+  },
+  "final_message": "I-mimetic[tiab] OR (factor VIII[tiab] AND mimetic*[tiab] AND bispecific*[tiab]) OR FVIII-mimetic[tiab] OR (FVIII[tiab] AND mimetic*[tiab] AND bispecific*[tiab]))) AND (\"1800/01/01\"[edat] : \"2020/10/22\"[edat])\n```\n\nThis uses the requested PubMed entry-date cutoff of **2020-10-22**; it has no publication-date limit.\n\n| Line | Search term | Results |\n|---:|---|---:|\n| 1 | `emicizumab[nm]` | 161 |\n| 2 | `emicizumab[tiab]` | 193 |\n| 3 | `ACE910[tiab]` | 29 |\n| 4 | `ACE-910[tiab]` | 1 |\n| 5 | `Hemlibra[tiab]` | 13 |\n| 6 | `emicizumab-kxwh[tiab]` | 3 |\n| 7 | `factor VIII-mimetic[tiab]` | 8 |\n| 8 | `(factor VIII[tiab] AND mimetic*[tiab] AND bispecific*[tiab])` | 11 |\n| 9 | `FVIII-mimetic[tiab]` | 7 |\n| 10 | `(FVIII[tiab] AND mimetic*[tiab] AND bispecific*[tiab])` | 8 |\n| 11 | **Combined strategy** | **233** |\n\n## Validation and handoff\n\nI screened focused pilot candidates and optional-block loss samples, adding 13 eligible records to the development set. The final search retrieved **13/13 (100% relative recall against that development set)**. This is not independent validation or a sensitivity estimate; no benchmark set was available.\n\nI left out both optional blocks to preserve records from both evidence streams. Requiring PK terms would have reduced 233 records to 52 and lost three known eligible efficacy reports. Requiring efficacy/bleeding terms would have reduced the set to 160 and lost three known PK/pharmacometric studies.\n\nThe protected report passed validation. The generated query is in [final-query.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-86f1a115e64cced2/ours-codex-noseed-20260928T215750Z/work/final-query.txt), with line counts, optional-block decisions, and audit details in [audit.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-86f1a115e64cced2/ours-codex-noseed-20260928T215750Z/work/audit.md). The two revision reviews and closing review found no issues. This draft still needs **human PRESS peer review by an information specialist before use**.",
+  "strategy": "((emicizumab[nm] OR emicizumab[tiab] OR ACE910[tiab] OR ACE-910[tiab] OR Hemlibra[tiab] OR emicizumab-kxwh[tiab] OR factor VIII-mimetic[tiab] OR (factor VIII[tiab] AND mimetic*[tiab] AND bispecific*[tiab]) OR FVIII-mimetic[tiab] OR (FVIII[tiab] AND mimetic*[tiab] AND bispecific*[tiab]))) AND (\"1800/01/01\"[edat] : \"2020/10/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-10-22",
+  "count": 233,
+  "gold_scored": 15,
+  "gold_reachable": 15,
+  "retrieved": 15,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 15.5,
+  "translation_issues": [],
+  "gold_seen_by_agent": 12,
+  "unseen_retrieved": 3,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "screen": 2,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "pk",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "efficacy",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 2
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

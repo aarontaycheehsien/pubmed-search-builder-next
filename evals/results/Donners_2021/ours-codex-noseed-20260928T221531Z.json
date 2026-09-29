@@ -1,0 +1,47 @@
+{
+  "topic": "Donners_2021",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T221531Z",
+  "scored": "20260928T222818Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 766
+  },
+  "final_message": " strategy\n\nPubMed search, bounded by **Entrez date 2020-10-22**:\n\n```text\n((emicizumab[nm] OR emicizumab[tiab] OR ACE910[tiab] OR ACE-910[tiab] OR Hemlibra[tiab] OR emicizumab-kxwh[tiab] OR factor VIII mimetic[tiab])) AND (\"1800/01/01\"[edat] : \"2020/10/22\"[edat])\n```\n\nLine counts returned by PubMed:\n\n1. `emicizumab[nm]` — 161  \n2. `emicizumab[tiab]` — 193  \n3. `ACE910[tiab]` — 29  \n4. `ACE-910[tiab]` — 1  \n5. `Hemlibra[tiab]` — 13  \n6. `emicizumab-kxwh[tiab]` — 3  \n7. `factor VIII mimetic[tiab]` — 8  \n8. Combined query — **233**\n\nThe outcome block was tested and left out: it reduced retrieval by 23.2%, and none of the 30 sampled records it removed clearly met eligibility. Leaving it out avoids requiring PK or bleeding-efficacy labels in the record.\n\n## Validation and files\n\nThe final query retrieved all **8/8 development records** and **3/3 held-out records**. The held-out result is only partly independent: term-ranking output was inspected before the split, though no terms were added from it. These figures are relative recall against screened records, not sensitivity; no user-supplied seeds or confirmed included-study benchmark were available.\n\nThe protected report passed validation. The internal critique found no issues, but was completed in the same context after a separate Codex session failed certificate validation. **This draft still needs PRESS peer review by an information specialist before use.**\n\n- [Generated query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-86f1a115e64cced2/ours-codex-noseed-20260928T221531Z/work/final-query.txt)\n- [Audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-86f1a115e64cced2/ours-codex-noseed-20260928T221531Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-86f1a115e64cced2/ours-codex-noseed-20260928T221531Z/work/validation-manifest.json)\n- [Rationale and limitations](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-86f1a115e64cced2/ours-codex-noseed-20260928T221531Z/work/narrative.md)",
+  "strategy": "((emicizumab[nm] OR emicizumab[tiab] OR ACE910[tiab] OR ACE-910[tiab] OR Hemlibra[tiab] OR emicizumab-kxwh[tiab] OR factor VIII mimetic[tiab])) AND (\"1800/01/01\"[edat] : \"2020/10/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-10-22",
+  "count": 233,
+  "gold_scored": 15,
+  "gold_reachable": 15,
+  "retrieved": 15,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 15.5,
+  "translation_issues": [],
+  "gold_seen_by_agent": 11,
+  "unseen_retrieved": 4,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": null,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

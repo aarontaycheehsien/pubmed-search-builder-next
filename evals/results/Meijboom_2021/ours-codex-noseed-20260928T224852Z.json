@@ -1,0 +1,61 @@
+{
+  "topic": "Meijboom_2021",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T224852Z",
+  "scored": "20260928T232328Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2076
+  },
+  "final_message": "nti-tumour necrosis factor\"[tiab]) AND (Drug Substitution[Mesh] OR switch*[tiab] OR transition*[tiab] OR substitut*[tiab] OR interchangeab*[tiab] OR retransition*[tiab] OR reintroduc*[tiab] OR restart*[tiab] OR revert*[tiab] OR return*[tiab]) AND (Biosimilar Pharmaceuticals[Mesh] OR biosimilar*[tiab] OR \"follow-on biologic\"[tiab] OR \"follow on biologic\"[tiab] OR \"subsequent entry biologic\"[tiab] OR \"CT-P13\"[tiab] OR \"SB2\"[tiab] OR \"SB4\"[tiab] OR \"SB5\"[tiab] OR \"GP2015\"[tiab] OR \"GP2017\"[tiab] OR \"ABP 501\"[tiab] OR \"BI 695501\"[tiab] OR \"PF-06438179\"[tiab] OR \"infliximab-dyyb\"[tiab] OR \"infliximab-abda\"[tiab] OR \"etanercept-szzs\"[tiab] OR \"adalimumab-atto\"[tiab] OR \"adalimumab-adbm\"[tiab] OR \"adalimumab-bwwd\"[tiab] OR \"adalimumab-fkjp\"[tiab] OR \"Remsima\"[tiab] OR \"Inflectra\"[tiab] OR \"Renflexis\"[tiab] OR \"Flixabi\"[tiab] OR \"Benepali\"[tiab] OR \"Erelzi\"[tiab] OR \"Amjevita\"[tiab] OR \"Amgevita\"[tiab] OR \"Imraldi\"[tiab] OR \"Hyrimoz\"[tiab] OR \"Cyltezo\"[tiab] OR \"Idacio\"[tiab] OR \"Hulio\"[tiab] OR \"Zessly\"[tiab] OR \"Ixifi\"[tiab])) AND (\"1800/01/01\"[edat] : \"2021/02/12\"[edat])\n```\n\n## Evaluation and files\n\nThe search retrieved all **9 of 9** relevant records identified during development. This is development-set recall, not independent validation. A 30-record sample of records excluded by the biosimilar block found no relevant records; 13 records from a reverse-switch pilot remain unscreened.\n\nThe [audit report](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-1b21fe8244224b90\\ours-codex-noseed-20260928T224852Z\\work\\audit.md) contains the line-by-line term counts, probes, and validation details. The [search narrative](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-1b21fe8244224b90\\ours-codex-noseed-20260928T224852Z\\work\\narrative.md) records the assumptions and decisions.\n\nKey risks: switch-back direction may only be clear in full text, and some abstracts may not identify a drug as a biosimilar. The strategy still needs a human information specialist’s PRESS review before use.",
+  "strategy": "((Infliximab[Mesh] OR Adalimumab[Mesh] OR Etanercept[Mesh] OR Golimumab[nm] OR Certolizumab Pegol[Mesh] OR infliximab[tiab] OR adalimumab[tiab] OR etanercept[tiab] OR golimumab[tiab] OR Simponi[tiab] OR \"CNTO-148\"[tiab] OR \"CNTO 148\"[tiab] OR certolizumab[tiab] OR \"anti-TNF\"[tiab] OR \"TNF inhibitor\"[tiab] OR \"tumor necrosis factor inhibitor\"[tiab] OR \"tumour necrosis factor inhibitor\"[tiab] OR \"anti-tumor necrosis factor\"[tiab] OR \"anti-tumour necrosis factor\"[tiab]) AND (Drug Substitution[Mesh] OR switch*[tiab] OR transition*[tiab] OR substitut*[tiab] OR interchangeab*[tiab] OR retransition*[tiab] OR reintroduc*[tiab] OR restart*[tiab] OR revert*[tiab] OR return*[tiab]) AND (Biosimilar Pharmaceuticals[Mesh] OR biosimilar*[tiab] OR \"follow-on biologic\"[tiab] OR \"follow on biologic\"[tiab] OR \"subsequent entry biologic\"[tiab] OR \"CT-P13\"[tiab] OR \"SB2\"[tiab] OR \"SB4\"[tiab] OR \"SB5\"[tiab] OR \"GP2015\"[tiab] OR \"GP2017\"[tiab] OR \"ABP 501\"[tiab] OR \"BI 695501\"[tiab] OR \"PF-06438179\"[tiab] OR \"infliximab-dyyb\"[tiab] OR \"infliximab-abda\"[tiab] OR \"etanercept-szzs\"[tiab] OR \"adalimumab-atto\"[tiab] OR \"adalimumab-adbm\"[tiab] OR \"adalimumab-bwwd\"[tiab] OR \"adalimumab-fkjp\"[tiab] OR \"Remsima\"[tiab] OR \"Inflectra\"[tiab] OR \"Renflexis\"[tiab] OR \"Flixabi\"[tiab] OR \"Benepali\"[tiab] OR \"Erelzi\"[tiab] OR \"Amjevita\"[tiab] OR \"Amgevita\"[tiab] OR \"Imraldi\"[tiab] OR \"Hyrimoz\"[tiab] OR \"Cyltezo\"[tiab] OR \"Idacio\"[tiab] OR \"Hulio\"[tiab] OR \"Zessly\"[tiab] OR \"Ixifi\"[tiab])) AND (\"1800/01/01\"[edat] : \"2021/02/12\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2021-02-12",
+  "count": 396,
+  "gold_scored": 35,
+  "gold_reachable": 35,
+  "retrieved": 35,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 11.3,
+  "translation_issues": [],
+  "gold_seen_by_agent": 6,
+  "unseen_retrieved": 29,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "biosimilar",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

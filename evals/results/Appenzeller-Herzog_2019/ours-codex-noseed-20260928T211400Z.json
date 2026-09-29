@@ -1,0 +1,62 @@
+{
+  "topic": "Appenzeller-Herzog_2019",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T211400Z",
+  "scored": "20260928T213833Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1473
+  },
+  "final_message": " (`[edat]`), with no publication-date limit.\n\nThe strategy retrieved all records in the build’s relevant set (7/7) and held-out sets (4/4 and 3/3). These are relative recall results from records found and screened during development—not an estimate of absolute sensitivity or an external benchmark. Human PRESS review is pending.\n\n```text\n((Hepatolenticular Degeneration[Mesh] OR \"Wilson disease\"[tiab] OR wilson disease*[tiab] OR \"hepatolenticular degeneration\"[tiab] OR \"progressive lenticular degeneration\"[tiab] OR \"copper storage disease\"[tiab] OR Kinnier-Wilson[tiab] OR Westphal-Strumpell[tiab]) AND (Penicillamine[Mesh] OR Trientine[Mesh] OR Zinc Acetate[Mesh] OR tetrathiomolybdate[nm] OR penicillamine[tiab] OR D-penicillamine[tiab] OR trientine[tiab] OR triethylenetetramine[tiab] OR zinc[tiab] OR zinc acetate[tiab] OR zinc sulphate[tiab] OR zinc salt*[tiab] OR tetrathiomolybdate[tiab] OR ammonium tetrathiomolybdate[tiab] OR unithiol[tiab] OR sodium dimercaptosuccinate[tiab] OR sodium dimercaptopropanesulfonate[tiab] OR dimercaprol[tiab] OR Gandou[tiab] OR Gandou tablet*[tiab] OR Gandou decoction[tiab] OR traditional Chinese medicine[tiab] OR Chinese herbal medicine[tiab] OR chelating agent*[tiab] OR copper chelation[tiab] OR copper-chelating[tiab] OR anticopper[tiab] OR decoppering[tiab] OR Zinc[Mesh] OR Zinc Sulfate[Mesh] OR ZnSO4[tiab] OR Dimercaprol[Mesh])) AND (\"1800/01/01\"[edat] : \"2018/12/23\"[edat])\n```\n\nThe protected delivery files are [final-query.txt](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-codex-noseed-20260928T211400Z/work/final-query.txt), [audit.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-codex-noseed-20260928T211400Z/work/audit.md), and [validation-manifest.json](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-codex-noseed-20260928T211400Z/work/validation-manifest.json). The audit includes line-by-line counts and documents the assumptions and remaining probe uncertainty.",
+  "strategy": "((Hepatolenticular Degeneration[Mesh] OR \"Wilson disease\"[tiab] OR wilson disease*[tiab] OR \"hepatolenticular degeneration\"[tiab] OR \"progressive lenticular degeneration\"[tiab] OR \"copper storage disease\"[tiab] OR Kinnier-Wilson[tiab] OR Westphal-Strumpell[tiab]) AND (Penicillamine[Mesh] OR Trientine[Mesh] OR Zinc Acetate[Mesh] OR tetrathiomolybdate[nm] OR penicillamine[tiab] OR D-penicillamine[tiab] OR trientine[tiab] OR triethylenetetramine[tiab] OR zinc[tiab] OR zinc acetate[tiab] OR zinc sulphate[tiab] OR zinc salt*[tiab] OR tetrathiomolybdate[tiab] OR ammonium tetrathiomolybdate[tiab] OR unithiol[tiab] OR sodium dimercaptosuccinate[tiab] OR sodium dimercaptopropanesulfonate[tiab] OR dimercaprol[tiab] OR Gandou[tiab] OR Gandou tablet*[tiab] OR Gandou decoction[tiab] OR traditional Chinese medicine[tiab] OR Chinese herbal medicine[tiab] OR chelating agent*[tiab] OR copper chelation[tiab] OR copper-chelating[tiab] OR anticopper[tiab] OR decoppering[tiab] OR Zinc[Mesh] OR Zinc Sulfate[Mesh] OR ZnSO4[tiab] OR Dimercaprol[Mesh])) AND (\"1800/01/01\"[edat] : \"2018/12/23\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-12-23",
+  "count": 1916,
+  "gold_scored": 22,
+  "gold_reachable": 21,
+  "retrieved": 21,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 91.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 6,
+  "unseen_retrieved": 15,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 2,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "therapy",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

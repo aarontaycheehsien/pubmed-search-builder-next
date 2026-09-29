@@ -1,0 +1,64 @@
+{
+  "topic": "CD011926",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T210934Z",
+  "scored": "20260928T214208Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1954
+  },
+  "final_message": "icrobial DNA[tiab] OR SeptiFast[tiab] OR Real-Time Polymerase Chain Reaction[Mesh] OR RNA, Ribosomal, 16S[Mesh] OR qPCR[tiab] OR qRT-PCR[tiab] OR quantitative PCR[tiab] OR quantitative real-time PCR[tiab]) AND (Infant, Newborn[Mesh] OR Infant, Premature[Mesh] OR Infant, Low Birth Weight[Mesh] OR neonat*[tiab] OR newborn*[tiab] OR neonatal[tiab] OR new-born[tiab] OR infant, newborn[tiab])) AND (\"1800/01/01\"[edat] : \"2014/08/09\"[edat])\n```\n\nThe search retrieved **748 records** at the 2014-08-09 Entrez-date cutoff. The [audit](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-a01e5029fcbb87a3/ours-codex-noseed-20260928T210934Z/work/audit.md>) contains the line-by-line query with counts.\n\nFive studies screened into the development set were retrieved: **5/5 (100% relative development recall)**. This is not independent validation or absolute sensitivity. A 30-record sample of records excluded by the neonatal block contained no eligible study; that block reduced the measured count by 91%.\n\nThe closing internal critic accepted residual uncertainty because category probes became stale after qPCR terms were added and their redraw budget was exhausted. The reference-standard eligibility definition also remains underspecified, and should be clarified in the review protocol. The [narrative](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-a01e5029fcbb87a3/ours-codex-noseed-20260928T210934Z/work/narrative.md>) records these assumptions and risks.\n\nProtected files are in `./work`: [final query](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-a01e5029fcbb87a3/ours-codex-noseed-20260928T210934Z/work/final-query.txt>), [audit](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-a01e5029fcbb87a3/ours-codex-noseed-20260928T210934Z/work/audit.md>), and [validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-a01e5029fcbb87a3/ours-codex-noseed-20260928T210934Z/work/validation-manifest.json>). The draft still needs PRESS peer review by an information specialist before use.",
+  "strategy": "((Sepsis[Mesh] OR Bacteremia[Mesh] OR sepsis[tiab] OR septicemia[tiab] OR bloodstream infection*[tiab] OR bacteremia[tiab] OR bacteraemia[tiab] OR fungemia[tiab] OR fungaemia[tiab] OR pyemia[tiab] OR pyaemia[tiab]) AND (Molecular Diagnostic Techniques[Mesh] OR Nucleic Acid Amplification Techniques[Mesh] OR Polymerase Chain Reaction[Mesh] OR In Situ Hybridization[Mesh] OR molecular assay*[tiab] OR molecular test*[tiab] OR molecular diagnos*[tiab] OR nucleic acid amplification[tiab] OR nucleic acid test*[tiab] OR polymerase chain reaction[tiab] OR PCR[tiab] OR RT-PCR[tiab] OR real-time PCR[tiab] OR real time PCR[tiab] OR multiplex PCR[tiab] OR broad-range PCR[tiab] OR 16S rRNA[tiab] OR 16S ribosomal RNA[tiab] OR DNA probe*[tiab] OR gene probe*[tiab] OR DNA hybridization[tiab] OR fluorescence in situ hybridization[tiab] OR FISH[tiab] OR DNA microarray*[tiab] OR microbial DNA[tiab] OR SeptiFast[tiab] OR Real-Time Polymerase Chain Reaction[Mesh] OR RNA, Ribosomal, 16S[Mesh] OR qPCR[tiab] OR qRT-PCR[tiab] OR quantitative PCR[tiab] OR quantitative real-time PCR[tiab]) AND (Infant, Newborn[Mesh] OR Infant, Premature[Mesh] OR Infant, Low Birth Weight[Mesh] OR neonat*[tiab] OR newborn*[tiab] OR neonatal[tiab] OR new-born[tiab] OR infant, newborn[tiab])) AND (\"1800/01/01\"[edat] : \"2014/08/09\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2014-08-09",
+  "count": 748,
+  "gold_scored": 29,
+  "gold_reachable": 29,
+  "retrieved": 28,
+  "recall_percent": 96.6,
+  "missed": [
+    "19279393"
+  ],
+  "nnr": 26.7,
+  "translation_issues": [],
+  "gold_seen_by_agent": 4,
+  "unseen_retrieved": 24,
+  "unseen_recall_percent": 96.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "neonatal_population",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

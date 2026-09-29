@@ -1,0 +1,54 @@
+{
+  "topic": "Muthu_2022",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T225205Z",
+  "scored": "20260928T230829Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 983
+  },
+  "final_message": "*[tiab] OR MSC[tiab] OR MSCs[tiab] OR bone marrow aspirate[tiab] OR bone marrow aspirates[tiab] OR bone marrow aspirate concentrate[tiab] OR bone marrow aspirate concentrate*[tiab] OR BMAC[tiab] OR bone marrow concentrate[tiab] OR adipose-derived stem cell*[tiab] OR adipose derived stem cell*[tiab] OR adipose-derived stromal cell*[tiab] OR adipose derived stromal cell*[tiab] OR tendon-derived stem cell*[tiab] OR tendon-derived progenitor cell*[tiab] OR biologic augmentation[tiab] OR biological augmentation[tiab] OR cell therapy[tiab] OR cell therapies[tiab] OR cellular therapy[tiab] OR cellular therapies[tiab] OR adipose-derived cell*[tiab] OR adipose derived cell*[tiab] OR tendon-derived cell*[tiab] OR tendon derived cell*[tiab])) AND (\"1800/01/01\"[edat] : \"2020/05/15\"[edat])\n```\n\nThe final search returned **604 records** through the requested Entrez-date cutoff. The audit gives counts for every search line and records the scope assumptions: [audit.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-05063212dadf5296/ours-codex-noseed-20260928T225205Z/work/audit.md). Protected outputs: [final-query.txt](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-05063212dadf5296/ours-codex-noseed-20260928T225205Z/work/final-query.txt) and [validation-manifest.json](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-05063212dadf5296/ours-codex-noseed-20260928T225205Z/work/validation-manifest.json).\n\nRelative recall was **12/12 (100%)** against a screened benchmark of studies cited by a matching PubMed systematic review. No user-supplied known articles were available, so this is not an estimate of absolute sensitivity. Both category probes found 0 eligible records among 30 sampled records per probe.\n\nThe scope was not user-confirmed, as requested; outcomes, comparator, and comparative human-study design were left for screening. The strategy passed two rounds of PRESS-structured internal critique. It remains a draft and needs PRESS peer review by an information specialist before use.",
+  "strategy": "((Rotator Cuff Injuries[Mesh] OR Rotator Cuff[Mesh] OR rotator cuff[tiab] OR rotator cuff tear[tiab] OR rotator cuff tears[tiab] OR rotator cuff repair[tiab] OR rotator cuff repairs[tiab] OR rotator cuff rupture[tiab] OR rotator cuff ruptures[tiab] OR cuff tear*[tiab] OR cuff injur*[tiab] OR supraspinatus tear*[tiab] OR infraspinatus tear*[tiab] OR subscapularis tear*[tiab] OR teres minor tear*[tiab]) AND (Platelet-Rich Plasma[Mesh] OR Platelet-Rich Fibrin[Mesh] OR Mesenchymal Stem Cells[Mesh] OR \"Cell- and Tissue-Based Therapy\"[Mesh] OR Mesenchymal Stem Cell Transplantation[Mesh] OR Stem Cell Transplantation[Mesh] OR platelet-rich plasma[tiab] OR platelet rich plasma[tiab] OR PRP[tiab] OR platelet-rich fibrin[tiab] OR platelet rich fibrin[tiab] OR platelet-rich fibrin matrix[tiab] OR platelet rich fibrin matrix[tiab] OR PRFM[tiab] OR L-PRF[tiab] OR (leukocyte[tiab] AND fibrin[tiab]) OR plasma rich in growth factor*[tiab] OR PRGF[tiab] OR autologous conditioned plasma[tiab] OR mesenchymal stem cell*[tiab] OR mesenchymal stromal cell*[tiab] OR multipotent stromal cell*[tiab] OR MSC[tiab] OR MSCs[tiab] OR bone marrow aspirate[tiab] OR bone marrow aspirates[tiab] OR bone marrow aspirate concentrate[tiab] OR bone marrow aspirate concentrate*[tiab] OR BMAC[tiab] OR bone marrow concentrate[tiab] OR adipose-derived stem cell*[tiab] OR adipose derived stem cell*[tiab] OR adipose-derived stromal cell*[tiab] OR adipose derived stromal cell*[tiab] OR tendon-derived stem cell*[tiab] OR tendon-derived progenitor cell*[tiab] OR biologic augmentation[tiab] OR biological augmentation[tiab] OR cell therapy[tiab] OR cell therapies[tiab] OR cellular therapy[tiab] OR cellular therapies[tiab] OR adipose-derived cell*[tiab] OR adipose derived cell*[tiab] OR tendon-derived cell*[tiab] OR tendon derived cell*[tiab])) AND (\"1800/01/01\"[edat] : \"2020/05/15\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-05-15",
+  "count": 604,
+  "gold_scored": 6,
+  "gold_reachable": 6,
+  "retrieved": 6,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 100.7,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 6,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "screen": 2,
+      "search": 2
+    },
+    "optional": []
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

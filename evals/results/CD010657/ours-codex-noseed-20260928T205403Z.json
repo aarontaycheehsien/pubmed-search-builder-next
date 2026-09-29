@@ -1,0 +1,47 @@
+{
+  "topic": "CD010657",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T205403Z",
+  "scored": "20260928T211742Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1419
+  },
+  "final_message": "[tiab])) AND (\"1800/01/01\"[edat] : \"2013/01/30\"[edat])\n```\n\nThe final search returned **2,050 records**. The line-by-line counts below are in PubMed order:\n\n| Line | Query | Count |\n|---:|---|---:|\n| 1 | `Vesico-Ureteral Reflux[Mesh]` | 7,234 |\n| 2 | `vesicoureteral reflux[tiab]` | 3,780 |\n| 3 | `vesicoureteric reflux[tiab]` | 819 |\n| 4 | `vesico-ureteral reflux[tiab]` | 1,021 |\n| 5 | `vesico-ureteric reflux[tiab]` | 456 |\n| 6 | `VUR[tiab]` | 1,500 |\n| 7 | Reflux block (lines 1–6 OR-ed) | 9,000 |\n| 8 | `Technetium Tc 99m Dimercaptosuccinic Acid[Mesh]` | 1,153 |\n| 9 | `Radionuclide Imaging[Mesh]` | 165,890 |\n| 10 | `Ultrasonography[Mesh]` | 319,531 |\n| 11 | `DMSA[tiab]` | 1,948 |\n| 12 | `dimercaptosuccinic[tiab]` | 1,632 |\n| 13 | `ultrasound[tiab]` | 141,762 |\n| 14 | `ultrasonograph*[tiab]` | 73,208 |\n| 15 | `sonograph*[tiab]` | 41,566 |\n| 16 | Index-test block (lines 8–15 OR-ed) | 560,428 |\n| 17 | Final search (lines 7 AND 16) | 2,050 |\n\n## Validation and handoff\n\nRelative recall was **9/9 (100%)** against the development set and **2/2 (100%)** against the small benchmark set from a related prior review. These are checks against known records, not absolute sensitivity. The category probe screened 30 records with no clearly eligible record found; one record lacked an abstract and remains uncertain. The internal critic resolved its findings, including the stale-probe warning; **formal PRESS peer review by an information specialist is still needed before use**.\n\nThe audit and validation receipt are available in [audit.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-01491638976b58ef/ours-codex-noseed-20260928T205403Z/work/audit.md) and [validation-manifest.json](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-01491638976b58ef/ours-codex-noseed-20260928T205403Z/work/validation-manifest.json). The scope and rationale are recorded in [narrative.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-01491638976b58ef/ours-codex-noseed-20260928T205403Z/work/narrative.md).",
+  "strategy": "((Vesico-Ureteral Reflux[Mesh] OR vesicoureteral reflux[tiab] OR vesicoureteric reflux[tiab] OR vesico-ureteral reflux[tiab] OR vesico-ureteric reflux[tiab] OR VUR[tiab]) AND (Technetium Tc 99m Dimercaptosuccinic Acid[Mesh] OR Radionuclide Imaging[Mesh] OR Ultrasonography[Mesh] OR DMSA[tiab] OR dimercaptosuccinic[tiab] OR ultrasound[tiab] OR ultrasonograph*[tiab] OR sonograph*[tiab])) AND (\"1800/01/01\"[edat] : \"2013/01/30\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2013-01-30",
+  "count": 2050,
+  "gold_scored": 35,
+  "gold_reachable": 35,
+  "retrieved": 35,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 58.6,
+  "translation_issues": [],
+  "gold_seen_by_agent": 3,
+  "unseen_retrieved": 32,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": null,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

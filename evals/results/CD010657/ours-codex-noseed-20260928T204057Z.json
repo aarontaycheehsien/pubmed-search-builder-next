@@ -1,0 +1,47 @@
+{
+  "topic": "CD010657",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T204057Z",
+  "scored": "20260928T205359Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 781
+  },
+  "final_message": "## PubMed strategy\n\n```text\n((\"Vesico-Ureteral Reflux\"[Mesh] OR \"vesicoureteral reflux\"[tiab] OR \"vesicoureteric reflux\"[tiab] OR \"vesico-ureteral reflux\"[tiab] OR \"ureteral reflux\"[tiab] OR \"ureteric reflux\"[tiab] OR VUR[tiab]) AND (\"Technetium Tc 99m Dimercaptosuccinic Acid\"[Mesh] OR \"Radionuclide Imaging\"[Mesh] OR \"dimercaptosuccinic acid\"[tiab] OR DMSA[tiab] OR \"Tc-99m\"[tiab] OR \"renal scan\"[tiab] OR \"renal scintigraphy\"[tiab] OR \"Ultrasonography\"[Mesh] OR ultrasonograph*[tiab] OR ultrasound[tiab] OR sonograph*[tiab] OR echograph*[tiab] OR dimercaptosuccinate[tiab] OR \"DMSA scan\"[tiab] OR \"renal US\"[tiab])) AND (\"1800/01/01\"[edat] : \"2013/01/30\"[edat])\n```\n\nThe final search retrieved **2,080 records** with the PubMed entry-date cutoff of **2013-01-30**. The reflux block returned 9,144 records; the combined DMSA/ultrasound block returned 563,771. The [audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-01491638976b58ef/ours-codex-noseed-20260928T204057Z/work/audit.md) has every numbered line and count.\n\nThree pilot records were screened in as relevant; the strategy retrieved **3/3 (100% relative recall against this development set)**. There were no user-supplied seeds or in-scope prior-review benchmark, so recall was not independently validated and this is not an estimate of sensitivity.\n\nThe protected query, audit and validation manifest are saved in [work](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-01491638976b58ef/ours-codex-noseed-20260928T204057Z/work). The internal PRESS-structured critique was same-context because Claude CLI required login; independent information-specialist PRESS peer review is still needed before use.",
+  "strategy": "((\"Vesico-Ureteral Reflux\"[Mesh] OR \"vesicoureteral reflux\"[tiab] OR \"vesicoureteric reflux\"[tiab] OR \"vesico-ureteral reflux\"[tiab] OR \"ureteral reflux\"[tiab] OR \"ureteric reflux\"[tiab] OR VUR[tiab]) AND (\"Technetium Tc 99m Dimercaptosuccinic Acid\"[Mesh] OR \"Radionuclide Imaging\"[Mesh] OR \"dimercaptosuccinic acid\"[tiab] OR DMSA[tiab] OR \"Tc-99m\"[tiab] OR \"renal scan\"[tiab] OR \"renal scintigraphy\"[tiab] OR \"Ultrasonography\"[Mesh] OR ultrasonograph*[tiab] OR ultrasound[tiab] OR sonograph*[tiab] OR echograph*[tiab] OR dimercaptosuccinate[tiab] OR \"DMSA scan\"[tiab] OR \"renal US\"[tiab])) AND (\"1800/01/01\"[edat] : \"2013/01/30\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2013-01-30",
+  "count": 2080,
+  "gold_scored": 35,
+  "gold_reachable": 35,
+  "retrieved": 35,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 59.4,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 34,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": null,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

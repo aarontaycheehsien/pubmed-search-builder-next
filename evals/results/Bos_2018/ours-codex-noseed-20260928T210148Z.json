@@ -1,0 +1,47 @@
+{
+  "topic": "Bos_2018",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T210148Z",
+  "scored": "20260928T212745Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1556
+  },
+  "final_message": "## PubMed strategy\n\nThe **one-line query** is saved verbatim in [final-query.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-535fe3dc7ca88971/ours-codex-noseed-20260928T210148Z/work/final-query.txt). The complete line-by-line strategy, counts, and audit are in [audit.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-535fe3dc7ca88971/ours-codex-noseed-20260928T210148Z/work/audit.md).\n\nThe final search retrieved **9,534 records**, with the Entrez-date bound through **2017-05-06** and no publication-date limit.\n\n| Search lines | Contents | Count |\n|---|---|---:|\n| 1–5 | MeSH headings for small vessel disease and related markers | Individual counts in the audit |\n| 6–44 | Exposure text words and synonyms | — |\n| 45 | Combined exposure block | 78,446 |\n| 46–74 | Dementia and cognitive outcome MeSH/text words | — |\n| 75 | Combined outcome block | 321,574 |\n| 76 | Exposure AND outcome | **9,534** |\n\nRequiring the optional outcome block reduced the exposure-only count by **87.8%**. A refreshed sample of 30 records removed by that block contained no eligible study. Community/population sampling and longitudinal follow-up remain screening criteria.\n\nTwo eligible pilot records were found and added as a development set. Both were retrieved: **2/2, or 100% relative recall on this non-independent development set**. This is not independent validation or sensitivity. The outcome category probe is stale after the final exposure-term addition; its two-probe budget was spent. The internal critic accepted this as a documented residual sampling risk. **Independent information-specialist PRESS peer review is still pending.**\n\nThe protected delivery passed validation: [validation-manifest.json](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-535fe3dc7ca88971/ours-codex-noseed-20260928T210148Z/work/validation-manifest.json).",
+  "strategy": "((Cerebral Small Vessel Diseases[Mesh] OR Leukoaraiosis[Mesh] OR Stroke, Lacunar[Mesh] OR Cerebral Infarction[Mesh] OR Cerebral Hemorrhage[Mesh] OR \"cerebral small vessel disease\"[tiab] OR \"cerebral small vessel diseases\"[tiab] OR \"small vessel disease\"[tiab] OR \"small vessel diseases\"[tiab] OR \"small vessel ischemic disease\"[tiab] OR \"cerebral microangiopathy\"[tiab] OR \"cerebral microangiopathies\"[tiab] OR leukoaraios*[tiab] OR \"white matter hyperintensit*\"[tiab] OR \"white-matter hyperintensit*\"[tiab] OR \"white matter lesion*\"[tiab] OR \"white-matter lesion*\"[tiab] OR \"white matter change*\"[tiab] OR \"white-matter change*\"[tiab] OR \"white matter signal\"[tiab:~2] OR \"white matter abnormalit*\"[tiab] OR \"periventricular hyperintensit*\"[tiab] OR \"lacunar infarct*\"[tiab] OR \"lacunar stroke*\"[tiab] OR lacune*[tiab] OR \"silent brain infarct*\"[tiab] OR \"silent cerebral infarct*\"[tiab] OR \"covert brain infarct*\"[tiab] OR \"silent infarct*\"[tiab] OR \"cerebral microbleed*\"[tiab] OR \"brain microbleed*\"[tiab] OR \"microbleed*\"[tiab] OR \"microhemorrhag*\"[tiab] OR \"micro-haemorrhag*\"[tiab] OR \"microhaemorrhag*\"[tiab] OR \"hemosiderin deposit*\"[tiab] OR \"haemosiderin deposit*\"[tiab] OR \"vascular brain injur*\"[tiab] OR \"vascular cognitive impairment\"[tiab] OR \"subcortical vascular disease\"[tiab] OR \"subcortical ischemic vascular disease\"[tiab] OR \"subcortical ischaemic vascular disease\"[tiab] OR \"Binswanger disease\"[tiab] OR \"Binswanger's disease\"[tiab]) AND (Dementia[Mesh] OR Alzheimer Disease[Mesh] OR Neurocognitive Disorders[Mesh] OR Cognitive Dysfunction[Mesh] OR \"cognitive impairment\"[tiab] OR \"cognitive impairments\"[tiab] OR \"cognitive decline\"[tiab] OR \"cognitive declines\"[tiab] OR \"cognitive deterioration\"[tiab] OR \"cognitive deteriorat*\"[tiab] OR \"cognitive function\"[tiab] OR \"cognitive functioning\"[tiab] OR \"cognitive change\"[tiab] OR \"cognitive changes\"[tiab] OR \"cognitive performance\"[tiab] OR \"cognitive trajectory\"[tiab] OR \"cognitive trajectories\"[tiab] OR dementia[tiab] OR dementias[tiab] OR Alzheimer*[tiab] OR \"mild cognitive impairment\"[tiab] OR \"mild cognitive impairments\"[tiab] OR \"memory decline\"[tiab] OR \"memory impairment\"[tiab] OR \"incident dementia\"[tiab] OR \"new-onset dementia\"[tiab] OR \"onset of dementia\"[tiab] OR \"cognitive outcome\"[tiab] OR \"cognitive outcomes\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/05/06\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-05-06",
+  "count": 9534,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 9,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 1059.3,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 8,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": null,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

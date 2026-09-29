@@ -1,0 +1,66 @@
+{
+  "topic": "van_de_Schoot_2018",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T004219Z",
+  "scored": "20260929T010402Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1302
+  },
+  "final_message": "s[tiab] AND disorder*[tiab]) OR (post traumatic[tiab] AND stress[tiab] AND disorder*[tiab]) OR (posttraumatic[tiab] AND stress[tiab] AND symptom*[tiab]) OR (post-traumatic[tiab] AND stress[tiab] AND symptom*[tiab]) OR (post traumatic[tiab] AND stress[tiab] AND symptom*[tiab]) OR posttraumatic stress[tiab] OR post-traumatic stress[tiab] OR post traumatic stress[tiab] OR PTSS[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])\n```\n\nThe Entrez-date bound applies the requested 2016-01-24 cutoff; there is no publication-date limit.\n\n| Search line | PubMed count |\n|---|---:|\n| `\"Stress Disorders, Post-Traumatic\"[Mesh]` | 25,369 |\n| `PTSD[tiab]` | 15,732 |\n| `posttraumatic[tiab] AND stress[tiab] AND disorder*[tiab]` | 19,537 |\n| `post-traumatic[tiab] AND stress[tiab] AND disorder*[tiab]` | 7,604 |\n| `post traumatic[tiab] AND stress[tiab] AND disorder*[tiab]` | 7,604 |\n| `posttraumatic[tiab] AND stress[tiab] AND symptom*[tiab]` | 11,271 |\n| `post-traumatic[tiab] AND stress[tiab] AND symptom*[tiab]` | 3,835 |\n| `post traumatic[tiab] AND stress[tiab] AND symptom*[tiab]` | 3,835 |\n| `posttraumatic stress[tiab]` | 14,174 |\n| `post-traumatic stress[tiab]` | 8,160 |\n| `post traumatic stress[tiab]` | 8,160 |\n| `PTSS[tiab]` | 510 |\n| **Combined query** | **32,346** |\n\nThe optional trajectory block was left out after screening found eligible repeated-symptom studies without trajectory wording. Trauma exposure is also screened because tested event wording missed eligible records. The final count exceeds the 10,000-record standard workload budget; this risk is documented in the audit.\n\nRelative recall was 6/6 (100%) against a disaster-focused prior-review benchmark and 9/9 (100%) against records found during development. These are relative recall figures, not sensitivity; the development records are not independent validation. The critic was same-context because no fresh-context reviewer was available. This draft still needs PRESS peer review by an information specialist before use.",
+  "strategy": "((\"Stress Disorders, Post-Traumatic\"[Mesh] OR PTSD[tiab] OR (posttraumatic[tiab] AND stress[tiab] AND disorder*[tiab]) OR (post-traumatic[tiab] AND stress[tiab] AND disorder*[tiab]) OR (post traumatic[tiab] AND stress[tiab] AND disorder*[tiab]) OR (posttraumatic[tiab] AND stress[tiab] AND symptom*[tiab]) OR (post-traumatic[tiab] AND stress[tiab] AND symptom*[tiab]) OR (post traumatic[tiab] AND stress[tiab] AND symptom*[tiab]) OR posttraumatic stress[tiab] OR post-traumatic stress[tiab] OR post traumatic stress[tiab] OR PTSS[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2016-01-24",
+  "count": 32346,
+  "gold_scored": 38,
+  "gold_reachable": 38,
+  "retrieved": 35,
+  "recall_percent": 92.1,
+  "missed": [
+    "20061839",
+    "20836603",
+    "26412244"
+  ],
+  "nnr": 924.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 35,
+  "unseen_recall_percent": 92.1,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 1,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "trajectory",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 1
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

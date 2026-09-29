@@ -1,0 +1,54 @@
+{
+  "topic": "Muthu_2022",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T230830Z",
+  "scored": "20260928T233315Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1484
+  },
+  "final_message": "esenchymal Stem Cells\"[Mesh] OR \"Stem Cell Transplantation\"[Mesh] OR \"Cell- and Tissue-Based Therapy\"[Mesh] OR \"Bone Marrow Cells\"[Mesh] OR \"platelet rich plasma\"[tiab] OR PRP[tiab] OR MSC[tiab] OR MSCs[tiab] OR PRFM[tiab] OR ACP[tiab] OR \"platelet-rich fibrin\"[tiab] OR \"platelet rich fibrin matrix\"[tiab] OR \"platelet leukocyte membrane\"[tiab] OR \"platelet-leukocyte membrane\"[tiab] OR \"plasma rich in growth factors\"[tiab] OR PRGF[tiab] OR \"autologous conditioned plasma\"[tiab] OR mesenchymal stem cell*[tiab] OR mesenchymal progenitor cell*[tiab] OR mesenchymal stromal cell*[tiab] OR bone marrow stromal cell*[tiab] OR bone marrow-derived cell*[tiab] OR bone marrow aspirate[tiab] OR \"bone marrow aspirate concentrate\"[tiab] OR \"bone marrow concentrate\"[tiab] OR \"concentrated bone marrow aspirate\"[tiab] OR BMAC[tiab] OR adipose-derived stem cell*[tiab] OR adipose derived stem cell*[tiab] OR adipose-derived cell*[tiab] OR adipose derived cell*[tiab] OR \"adipose-derived regenerative cell\"[tiab] OR \"stromal vascular fraction\"[tiab] OR tendon-derived stem cell*[tiab] OR tendon stem cell*[tiab] OR tenocyte*[tiab] OR \"tendon-derived cell\"[tiab] OR tendon-derived cell*[tiab] OR tendon derived cell*[tiab] OR \"stem cell\"[tiab] OR \"stem cells\"[tiab] OR \"cellular therapy\"[tiab] OR \"cell therapy\"[tiab] OR \"biologic augmentation\"[tiab] OR \"biological augmentation\"[tiab])) AND (\"1800/01/01\"[edat] : \"2020/05/15\"[edat])\n```\n\nThe 17 screened development records were all retrieved (100% relative recall against that set). They were mostly PRP studies, so this is **not an independent validation** or a sensitivity estimate. Two category-probe samples screened 60 records outside the intervention block; neither contained an eligible study. Comparison, human comparative design, and outcomes remain for screening.\n\nThe protected delivery passed validation. The internal PRESS-structured reviews are complete; **independent PRESS peer review by an information specialist is still needed before use**.",
+  "strategy": "((\"Rotator Cuff Injuries\"[Mesh] OR \"Rotator Cuff\"[Mesh] OR \"Tendon Injuries\"[Mesh] OR rotator cuff[tiab] OR \"rotator cuff tear\"[tiab] OR \"rotator cuff repair\"[tiab] OR \"rotator cuff rupture\"[tiab] OR \"cuff tear\"[tiab] OR \"cuff repair\"[tiab] OR supraspinatus[tiab]) AND (\"Platelet-Rich Plasma\"[Mesh] OR \"Mesenchymal Stem Cells\"[Mesh] OR \"Stem Cell Transplantation\"[Mesh] OR \"Cell- and Tissue-Based Therapy\"[Mesh] OR \"Bone Marrow Cells\"[Mesh] OR \"platelet rich plasma\"[tiab] OR PRP[tiab] OR MSC[tiab] OR MSCs[tiab] OR PRFM[tiab] OR ACP[tiab] OR \"platelet-rich fibrin\"[tiab] OR \"platelet rich fibrin matrix\"[tiab] OR \"platelet leukocyte membrane\"[tiab] OR \"platelet-leukocyte membrane\"[tiab] OR \"plasma rich in growth factors\"[tiab] OR PRGF[tiab] OR \"autologous conditioned plasma\"[tiab] OR mesenchymal stem cell*[tiab] OR mesenchymal progenitor cell*[tiab] OR mesenchymal stromal cell*[tiab] OR bone marrow stromal cell*[tiab] OR bone marrow-derived cell*[tiab] OR bone marrow aspirate[tiab] OR \"bone marrow aspirate concentrate\"[tiab] OR \"bone marrow concentrate\"[tiab] OR \"concentrated bone marrow aspirate\"[tiab] OR BMAC[tiab] OR adipose-derived stem cell*[tiab] OR adipose derived stem cell*[tiab] OR adipose-derived cell*[tiab] OR adipose derived cell*[tiab] OR \"adipose-derived regenerative cell\"[tiab] OR \"stromal vascular fraction\"[tiab] OR tendon-derived stem cell*[tiab] OR tendon stem cell*[tiab] OR tenocyte*[tiab] OR \"tendon-derived cell\"[tiab] OR tendon-derived cell*[tiab] OR tendon derived cell*[tiab] OR \"stem cell\"[tiab] OR \"stem cells\"[tiab] OR \"cellular therapy\"[tiab] OR \"cell therapy\"[tiab] OR \"biologic augmentation\"[tiab] OR \"biological augmentation\"[tiab])) AND (\"1800/01/01\"[edat] : \"2020/05/15\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-05-15",
+  "count": 1858,
+  "gold_scored": 6,
+  "gold_reachable": 6,
+  "retrieved": 6,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 309.7,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 6,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "screen": 2,
+      "search": 2
+    },
+    "optional": []
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

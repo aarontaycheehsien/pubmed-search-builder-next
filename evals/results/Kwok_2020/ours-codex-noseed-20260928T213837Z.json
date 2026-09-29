@@ -1,0 +1,69 @@
+{
+  "topic": "Kwok_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T213837Z",
+  "scored": "20260928T215934Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1257
+  },
+  "final_message": "iab] OR fish[tiab] OR fishes[tiab] OR salmon[tiab] OR trout[tiab] OR carp[tiab] OR tilapia[tiab] OR shrimp[tiab] OR \"Bees\"[Mesh] OR bee[tiab] OR bees[tiab] OR honeybee*[tiab] OR \"honey bee\"[tiab] OR \"honey bees\"[tiab] OR apis mellifera[tiab] OR apiculture[tiab] OR \"Animals\"[Mesh] OR animal*[tiab])) AND (\"1800/01/01\"[edat] : \"2019/02/22\"[edat])\n```\n\nThe final search returned **8,512 records**, bounded by Entrez date through 2019-02-22; no publication-date limit was added. The three concept blocks returned 1,092,395 (viral agents), 165,291 (metagenomics/sequencing), and 22,993,219 (animal population) individually. The complete 85-line count table is in the [generated audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/ours-codex-noseed-20260928T213837Z/work/audit.md).\n\nI screened **12 relevant records during the build**; the query retrieved all 12 (100% relative recall against this development set). There were no supplied seeds, held-out validation records, or prior-review benchmark, so independent recall is unknown. The build screened 165 discovery, probe, and loss-sample records—slightly above the standard-depth guide after strategy revisions required repeat sampling.\n\nThe final files passed the skill’s report gate: [query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/ours-codex-noseed-20260928T213837Z/work/final-query.txt), [audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/ours-codex-noseed-20260928T213837Z/work/audit.md), and [validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/ours-codex-noseed-20260928T213837Z/work/validation-manifest.json). The scope assumes farmed or managed production animals, including livestock, poultry, aquaculture, and managed honeybees. The optional farm-context block was left out because it would lose known relevant records. The internal critique was same-context; **PRESS peer review by an information specialist is still needed before use**.",
+  "strategy": "((\"Viruses\"[Mesh] OR virus*[tiab] OR viral[tiab] OR virome[tiab] OR phage*[tiab] OR bacteriophage*[tiab]) AND (\"Metagenomics\"[Mesh] OR \"High-Throughput Nucleotide Sequencing\"[Mesh] OR metagenom*[tiab] OR virom*[tiab] OR metavirom*[tiab] OR \"next generation sequencing\"[tiab] OR NGS[tiab] OR \"high throughput sequencing\"[tiab] OR HTS[tiab] OR \"deep sequencing\"[tiab] OR \"shotgun sequencing\"[tiab] OR \"Genomics\"[Mesh]) AND (\"Livestock\"[Mesh] OR \"Poultry\"[Mesh] OR \"Cattle\"[Mesh] OR \"Swine\"[Mesh] OR \"Sheep\"[Mesh] OR \"Goats\"[Mesh] OR \"Horses\"[Mesh] OR \"Rabbits\"[Mesh] OR \"Chickens\"[Mesh] OR \"Ducks\"[Mesh] OR \"Geese\"[Mesh] OR \"Turkeys\"[Mesh] OR \"Aquaculture\"[Mesh] OR \"Fishes\"[Mesh] OR livestock[tiab] OR \"farm animal\"[tiab] OR cattle[tiab] OR bovine[tiab] OR cow[tiab] OR cows[tiab] OR calf[tiab] OR calves[tiab] OR pig[tiab] OR pigs[tiab] OR swine[tiab] OR porcine[tiab] OR sheep[tiab] OR ovine[tiab] OR goat[tiab] OR goats[tiab] OR caprine[tiab] OR horse[tiab] OR horses[tiab] OR equine[tiab] OR poultry[tiab] OR chicken[tiab] OR chickens[tiab] OR broiler*[tiab] OR turkey[tiab] OR turkeys[tiab] OR duck[tiab] OR ducks[tiab] OR goose[tiab] OR geese[tiab] OR rabbit*[tiab] OR aquaculture[tiab] OR fish[tiab] OR fishes[tiab] OR salmon[tiab] OR trout[tiab] OR carp[tiab] OR tilapia[tiab] OR shrimp[tiab] OR \"Bees\"[Mesh] OR bee[tiab] OR bees[tiab] OR honeybee*[tiab] OR \"honey bee\"[tiab] OR \"honey bees\"[tiab] OR apis mellifera[tiab] OR apiculture[tiab] OR \"Animals\"[Mesh] OR animal*[tiab])) AND (\"1800/01/01\"[edat] : \"2019/02/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2019-02-22",
+  "count": 8512,
+  "gold_scored": 116,
+  "gold_reachable": 116,
+  "retrieved": 109,
+  "recall_percent": 94.0,
+  "missed": [
+    "22821184",
+    "24672039",
+    "25918239",
+    "28495761",
+    "28653486",
+    "29677111",
+    "29700160"
+  ],
+  "nnr": 78.1,
+  "translation_issues": [],
+  "gold_seen_by_agent": 7,
+  "unseen_retrieved": 102,
+  "unseen_recall_percent": 93.6,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 1,
+      "search": 3
+    },
+    "optional": [
+      {
+        "id": "farm_context",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

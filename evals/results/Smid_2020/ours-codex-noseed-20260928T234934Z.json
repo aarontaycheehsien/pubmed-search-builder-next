@@ -1,0 +1,76 @@
+{
+  "topic": "Smid_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T234934Z",
+  "scored": "20260929T001517Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1543
+  },
+  "final_message": "| `Bayesian[tiab]` | 35,533 |\n| 25 | `MCMC[tiab]` | 1,577 |\n| 26 | `\"Markov chain Monte Carlo\"[tiab]` | 3,122 |\n| 27 | `\"Markov chain\"[tiab]` | 4,870 |\n| 28 | Bayesian block (lines 22–27 ORed) | 49,381 |\n| 29 | Final query (lines 21 AND 28) | **12,364** |\n\n### Validation and limitations\n\nThe strategy retrieved the one likely relevant record screened in during development, PMID 28358542: relative recall was 1/1 (100%) on that development record. Its abstract supports the Bayesian versus maximum-likelihood comparison and small-sample context, but the simulation design is inferred and needs full-text confirmation. There was no independent validation set or benchmark, so recall is not independently estimated.\n\nI tested small-sample, simulation, and comparator blocks as optional concepts. Each would reduce the count, but the small-sample and simulation blocks miss PMID 28358542; the comparator block may miss eligible studies using other estimator comparisons. They remain unrequired. The resulting 12,364 records exceed the standard 10,000-record workload budget; screening capacity was not supplied.\n\nThe cutoff is an Entrez-date bound, with no publication-date limit. Counts reflect the live index with entries through 2017-11-29, not a frozen reconstruction of PubMed as it existed on that date. The internal PRESS-structured critique passed; human PRESS peer review by an information specialist is still needed before use.\n\nFiles: [final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260928T234934Z/work/final-query.txt), [audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260928T234934Z/work/audit.md), [validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260928T234934Z/work/validation-manifest.json), and [narrative notes](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260928T234934Z/work/narrative.md).",
+  "strategy": "((\"Latent Class Analysis\"[Mesh] OR \"Factor Analysis, Statistical\"[Mesh] OR \"Multilevel Analysis\"[Mesh] OR \"Mediation Analysis\"[Mesh] OR \"Models, Statistical\"[Mesh] OR \"structural equation model*\"[tiab] OR \"structural equation modeling\"[tiab] OR \"latent variable model*\"[tiab] OR \"latent growth\"[tiab] OR \"growth curve model*\"[tiab] OR \"confirmatory factor analys*\"[tiab] OR \"factor analys*\"[tiab] OR CFA[tiab] OR \"latent class model*\"[tiab] OR \"latent class analys*\"[tiab] OR \"multilevel model*\"[tiab] OR \"hierarchical linear model*\"[tiab] OR \"hierarchical model*\"[tiab] OR mediation[tiab] OR \"path analys*\"[tiab]) AND (\"Bayes Theorem\"[Mesh] OR Bayes*[tiab] OR Bayesian[tiab] OR MCMC[tiab] OR \"Markov chain Monte Carlo\"[tiab] OR \"Markov chain\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/11/29\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-11-29",
+  "count": 12364,
+  "gold_scored": 14,
+  "gold_reachable": 14,
+  "retrieved": 13,
+  "recall_percent": 92.9,
+  "missed": [
+    "25765534"
+  ],
+  "nnr": 951.1,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 13,
+  "unseen_recall_percent": 92.9,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 3,
+      "screen": 2,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "small_sample",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "simulation",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "comparator",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

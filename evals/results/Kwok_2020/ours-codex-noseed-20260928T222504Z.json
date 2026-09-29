@@ -1,0 +1,57 @@
+{
+  "topic": "Kwok_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T222504Z",
+  "scored": "20260928T230102Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2157
+  },
+  "final_message": "p[tiab] OR lamb[tiab] OR lambs[tiab] OR ovine[tiab] OR goat[tiab] OR goats[tiab] OR caprine[tiab] OR horse*[tiab] OR equine[tiab] OR rabbit*[tiab] OR \"Camelus\"[Mesh] OR \"Camelids, New World\"[Mesh] OR \"Buffaloes\"[Mesh] OR \"Bison\"[Mesh] OR \"Quail\"[Mesh] OR camel*[tiab] OR camelid*[tiab] OR buffalo*[tiab] OR bison[tiab] OR alpaca*[tiab] OR llama*[tiab] OR quail*[tiab])) AND (\"1800/01/01\"[edat] : \"2019/02/22\"[edat])\n```\n\nThe main viral-method block retrieved **11,730** records; the farm-animal block retrieved **1,594,965**; their intersection retrieved **1,444**. The audit lists counts and diagnostics for each component term.\n\n## Scope and limitations\n\nI treated the question as a PCC-style scoping search for food-producing livestock and poultry, including camelids, buffalo/bison, quail, and rabbits. Farmed aquatic species were outside this assumed scope. No known relevant articles were supplied. The query retrieved all **24** records screened into the development set, but that is development-set relative recall, not independent validation or a sensitivity estimate.\n\nThe two 30-record category-probe samples each contained zero eligible records, but they were screened before the final population terms were added. The validator retains this stale-probe warning as an accepted risk; the samples do not establish coverage of the final species list. Independent PRESS peer review remains pending.\n\n## Files\n\n- [Generated PubMed query](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/ours-codex-noseed-20260928T222504Z/work/final-query.txt>)\n- [Audit report](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/ours-codex-noseed-20260928T222504Z/work/audit.md>)\n- [Validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/ours-codex-noseed-20260928T222504Z/work/validation-manifest.json>)\n- [Build notes](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/ours-codex-noseed-20260928T222504Z/work/narrative.md>)",
+  "strategy": "((((\"Metagenomics\"[Mesh] OR \"Genomics\"[Mesh] OR metagenom*[tiab]) AND (\"Virology\"[Mesh] OR \"Viruses\"[Mesh] OR virus*[tiab] OR viral[tiab] OR virom*[tiab])) OR (\"High-Throughput Nucleotide Sequencing\"[Mesh] AND (\"Virology\"[Mesh] OR \"Viruses\"[Mesh] OR virus*[tiab] OR viral[tiab] OR virom*[tiab])) OR (sequenc*[tiab] AND ((next[tiab] AND generation[tiab]) OR (high[tiab] AND throughput[tiab]) OR deep[tiab] OR shotgun[tiab]) AND (virus*[tiab] OR viral[tiab] OR virom*[tiab])) OR virom*[tiab]) AND (\"Animals, Domestic\"[Mesh] OR \"Livestock\"[Mesh] OR \"Poultry\"[Mesh] OR \"Cattle\"[Mesh] OR \"Swine\"[Mesh] OR \"Sheep\"[Mesh] OR \"Goats\"[Mesh] OR \"Horses\"[Mesh] OR \"Chickens\"[Mesh] OR \"Ducks\"[Mesh] OR \"Geese\"[Mesh] OR \"Turkeys\"[Mesh] OR \"Rabbits\"[Mesh] OR farm animal*[tiab] OR livestock[tiab] OR poultry[tiab] OR cattle[tiab] OR bovine[tiab] OR calf[tiab] OR calves[tiab] OR cow[tiab] OR cows[tiab] OR pig[tiab] OR pigs[tiab] OR swine[tiab] OR porcine[tiab] OR hog[tiab] OR hogs[tiab] OR chicken*[tiab] OR fowl[tiab] OR avian[tiab] OR turkey[tiab] OR turkeys[tiab] OR duck*[tiab] OR goose[tiab] OR geese[tiab] OR sheep[tiab] OR lamb[tiab] OR lambs[tiab] OR ovine[tiab] OR goat[tiab] OR goats[tiab] OR caprine[tiab] OR horse*[tiab] OR equine[tiab] OR rabbit*[tiab] OR \"Camelus\"[Mesh] OR \"Camelids, New World\"[Mesh] OR \"Buffaloes\"[Mesh] OR \"Bison\"[Mesh] OR \"Quail\"[Mesh] OR camel*[tiab] OR camelid*[tiab] OR buffalo*[tiab] OR bison[tiab] OR alpaca*[tiab] OR llama*[tiab] OR quail*[tiab])) AND (\"1800/01/01\"[edat] : \"2019/02/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2019-02-22",
+  "count": 1444,
+  "gold_scored": 116,
+  "gold_reachable": 116,
+  "retrieved": 107,
+  "recall_percent": 92.2,
+  "missed": [
+    "22821184",
+    "24672039",
+    "25918239",
+    "26646894",
+    "28495761",
+    "28653486",
+    "29027372",
+    "29677111",
+    "29700160"
+  ],
+  "nnr": 13.5,
+  "translation_issues": [],
+  "gold_seen_by_agent": 13,
+  "unseen_retrieved": 94,
+  "unseen_recall_percent": 91.3,
+  "leakage": [],
+  "concepts": null,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

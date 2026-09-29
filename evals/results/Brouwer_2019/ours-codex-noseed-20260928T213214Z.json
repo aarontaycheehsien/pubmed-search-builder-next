@@ -1,0 +1,61 @@
+{
+  "topic": "Brouwer_2019",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T213214Z",
+  "scored": "20260928T220143Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1766
+  },
+  "final_message": "date cutoff and no publication-date limit.\n\n| Audit lines | Concept block | Block count |\n|---|---|---:|\n| 1–10 | Depressive and mood disorders | 480,837 |\n| 11–18 | Relapse, recurrence, recovery, and remission | 1,365,770 |\n| 19–39 | Psychological theories, models, and mechanisms | 5,763,716 |\n| 40 | Combined query | 17,746 |\n\nThe [audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260928T213214Z/work/audit.md) contains the full line-by-line counts, translations, and validation history. The protected [final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260928T213214Z/work/final-query.txt) and [validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260928T213214Z/work/validation-manifest.json) are in `./work`.\n\n## Validation and limitations\n\nThe strategy retrieved all **7 of 7** screened development records. That is 100% relative recall against records used during development, not independent validation or sensitivity; no held-out set or independent benchmark was available. The psychological-theory block reduced the broader query by 58.5%; none of its refreshed 30-record loss sample met the eligibility criteria.\n\nTwo risks remain documented in the audit: the final count exceeds the standard 10,000-record workload budget, and the depression category probe found relevant mixed-affective records before its two-probe budget was exhausted. Terms were broadened to cover those findings, but a fresh probe could not be run afterward. Bipolar-only records retrieved by the broader `Mood Disorders` heading need screening.\n\nI proceeded using the scope assumptions documented in the [narrative](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260928T213214Z/work/narrative.md); you did not separately confirm the concepts and roles. The draft still needs PRESS peer review by an information specialist before use.",
+  "strategy": "((\"Depressive Disorder\"[Mesh] OR \"Mood Disorders\"[Mesh] OR depress*[tiab] OR MDD[tiab] OR \"mood disorder*\"[tiab] OR \"affective disorder*\"[tiab] OR unipolar[tiab] OR dysthymi*[tiab] OR melanchol*[tiab]) AND (\"Recurrence\"[Mesh] OR relaps*[tiab] OR recurren*[tiab] OR recrudesc*[tiab] OR reemerg*[tiab] OR recover*[tiab] OR remiss*[tiab]) AND (\"Models, Psychological\"[Mesh] OR \"Cognition\"[Mesh] OR \"Rumination, Cognitive\"[Mesh] OR psycholog*[tiab] OR theor*[tiab] OR model*[tiab] OR cognit*[tiab] OR behavior*[tiab] OR behaviour*[tiab] OR mechanism*[tiab] OR vulnerab*[tiab] OR ruminat*[tiab] OR worr*[tiab] OR \"stress generation\"[tiab] OR \"learned helplessness\"[tiab] OR \"self-blam*\"[tiab] OR schema*[tiab] OR attribution*[tiab] OR hopeless*[tiab] OR psychodynamic*[tiab])) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-11-17",
+  "count": 17746,
+  "gold_scored": 54,
+  "gold_reachable": 54,
+  "retrieved": 41,
+  "recall_percent": 75.9,
+  "missed": [
+    "10096642",
+    "11246082",
+    "14691361",
+    "15291658",
+    "16538651",
+    "17156852",
+    "17574685",
+    "18251627",
+    "18805590",
+    "20584514",
+    "21848705",
+    "25560481",
+    "26519635"
+  ],
+  "nnr": 432.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 40,
+  "unseen_recall_percent": 75.5,
+  "leakage": [],
+  "concepts": null,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

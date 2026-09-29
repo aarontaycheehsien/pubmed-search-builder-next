@@ -1,0 +1,67 @@
+{
+  "topic": "gao-2026-Immune checkpoint inhibitors",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T235027Z",
+  "scored": "20260929T001614Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1546
+  },
+  "final_message": "ueries and counts are in the generated audit. For compact reference, counts in line order:\n\n- Lines 1–13, TNBC terms and combined block: `12,839; 19,872; 19,872; 21,215; 167; 167; 14,325; 95; 26; 3; 1,006; 95; 24,136`\n- Lines 14–42, checkpoint terms and combined block: `358,601; 42,288; 10,643; 183; 3,887; 56; 2,047; 24; 10,825; 123; 1,130; 17; 535; 5,698; 609; 10,138; 3,796; 1,757; 2,876; 2,373; 3,590; 2,720; 558; 193; 180; 8,557; 1,175; 9,914; 421,493`\n- Line 43, final AND: `2,028`\n\n## Validation and limits\n\nRelative recall was **9/9 (100%) against the development set** of screened records; this is not independent validation or an estimate of absolute sensitivity. The chemotherapy and early-stage blocks were tested and left out: their latest 30-record loss samples found no eligible records, and they would reduce the result set by about 47% and 73%, respectively. Those criteria should be applied during screening.\n\nA checkpoint category probe found one eligible case report (PMID 32914041) outside the earlier wording; I added PD-L1/PD-1 blockade terms, and the current strategy retrieves it. The probe budget was exhausted, so residual coverage uncertainty remains. The supplied criteria did not exclude case reports.\n\nThis draft still needs **PRESS peer review by an information specialist** before use. The internal critic was PRESS-structured, not specialist peer review.\n\n- [Final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-dc89f4701b07ff28/ours-codex-noseed-20260928T235027Z/work/final-query.txt)\n- [Audit with line-by-line strategy and counts](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-dc89f4701b07ff28/ours-codex-noseed-20260928T235027Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-dc89f4701b07ff28/ours-codex-noseed-20260928T235027Z/work/validation-manifest.json)\n- [Build rationale and open risks](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-dc89f4701b07ff28/ours-codex-noseed-20260928T235027Z/work/narrative.md)",
+  "strategy": "((Triple Negative Breast Neoplasms[Mesh] OR triple negative breast cancer[tiab] OR triple-negative breast cancer[tiab] OR triple-negative breast[tiab] OR triple negative breast neoplasm*[tiab] OR triple-negative breast neoplasm*[tiab] OR TNBC[tiab] OR (ER negative[tiab] AND PR negative[tiab] AND HER2 negative[tiab]) OR (estrogen receptor negative[tiab] AND progesterone receptor negative[tiab] AND HER2 negative[tiab]) OR (oestrogen receptor negative[tiab] AND progesterone receptor negative[tiab] AND HER2 negative[tiab]) OR (ER-/PR-/HER2-[tiab]) OR (ER-negative[tiab] AND PR-negative[tiab] AND HER2-negative[tiab])) AND (Immunotherapy[Mesh] OR Immune Checkpoint Proteins[Mesh] OR pembrolizumab[tiab] OR Keytruda[tiab] OR atezolizumab[tiab] OR Tecentriq[tiab] OR durvalumab[tiab] OR Imfinzi[tiab] OR nivolumab[tiab] OR Opdivo[tiab] OR avelumab[tiab] OR Bavencio[tiab] OR cemiplimab[tiab] OR ipilimumab[tiab] OR tremelimumab[tiab] OR anti-PD-1[tiab] OR anti-PD-L1[tiab] OR PD-L1 block*[tiab] OR PD-1 block*[tiab] OR anti-CTLA-4[tiab] OR PD-1 inhibitor*[tiab] OR PD-L1 inhibitor*[tiab] OR CTLA-4 inhibitor*[tiab] OR programmed cell death 1 inhibitor*[tiab] OR programmed death ligand 1 inhibitor*[tiab] OR immune checkpoint block*[tiab] OR immune checkpoint therap*[tiab] OR checkpoint blockade[tiab])) AND (\"1800/01/01\"[edat] : \"2025/01/31\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2025-01-31",
+  "count": 2028,
+  "gold_scored": 11,
+  "gold_reachable": 11,
+  "retrieved": 11,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 184.4,
+  "translation_issues": [],
+  "gold_seen_by_agent": 7,
+  "unseen_retrieved": 4,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "chemotherapy",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "early",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

@@ -1,0 +1,62 @@
+{
+  "topic": "Liu_2023_VR_nursing",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T222748Z",
+  "scored": "20260928T225855Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1867
+  },
+  "final_message": "sure[tiab] OR pre-licensure[tiab] OR preregistration[tiab] OR pre-registration[tiab] OR undergraduate nursing[tiab] OR graduate nursing student*[tiab] OR postgraduate[tiab] OR post-graduate[tiab]) AND (\"Virtual Reality\"[Mesh] OR \"Simulation Training\"[Mesh] OR \"Computer-Assisted Instruction\"[Mesh] OR \"Computer Simulation\"[Mesh] OR virtual realit*[tiab] OR VR[tiab] OR IVR[tiab] OR immersive[tiab] OR virtual simulat*[tiab] OR virtual patient*[tiab] OR virtual environment*[tiab] OR virtual world*[tiab] OR computer simulat*[tiab] OR computer-based simulat*[tiab] OR computer based simulat*[tiab] OR web-based simulat*[tiab] OR web based simulat*[tiab] OR screen-based simulat*[tiab] OR screen based simulat*[tiab] OR game-based virtual[tiab] OR simulated patient*[tiab])) AND (\"1800/01/01\"[edat] : \"2023/03/31\"[edat])\n```\n\nThe entry-date limit follows the requested cutoff; there is no publication-date limit. Comparator and controlled-study criteria are left for screening. The learning-outcomes block was tested and left out to favor recall.\n\nThe strategy retrieved all **14 known relevant records**: 7 development records, 4 other screened relevant records, and 3 held-out validation records. These are relative recall figures, not a measure of absolute sensitivity. A 30-record sample of records excluded by the outcome block found no eligible studies, but that sample is too small to rule out missed studies.\n\n## Files\n\n- [Final query](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3d10494d5653b6c0/ours-codex-noseed-20260928T222748Z/work/final-query.txt>)\n- [Full audit with term-by-term counts](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3d10494d5653b6c0/ours-codex-noseed-20260928T222748Z/work/audit.md>)\n- [Validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3d10494d5653b6c0/ours-codex-noseed-20260928T222748Z/work/validation-manifest.json>)\n\nLive validation and the internal critic check passed. The audit notes that human PRESS peer review is still pending.",
+  "strategy": "((\"Students, Nursing\"[Mesh] OR \"Education, Nursing\"[Mesh] OR \"Education, Nursing, Baccalaureate\"[Mesh] OR \"Education, Nursing, Associate\"[Mesh] OR \"Education, Nursing, Diploma Programs\"[Mesh] OR \"Education, Nursing, Graduate\"[Mesh] OR \"nursing student*\"[tiab] OR \"student nurse*\"[tiab] OR \"nurse student*\"[tiab] OR prelicensure[tiab] OR pre-licensure[tiab] OR preregistration[tiab] OR pre-registration[tiab] OR undergraduate nursing[tiab] OR graduate nursing student*[tiab] OR postgraduate[tiab] OR post-graduate[tiab]) AND (\"Virtual Reality\"[Mesh] OR \"Simulation Training\"[Mesh] OR \"Computer-Assisted Instruction\"[Mesh] OR \"Computer Simulation\"[Mesh] OR virtual realit*[tiab] OR VR[tiab] OR IVR[tiab] OR immersive[tiab] OR virtual simulat*[tiab] OR virtual patient*[tiab] OR virtual environment*[tiab] OR virtual world*[tiab] OR computer simulat*[tiab] OR computer-based simulat*[tiab] OR computer based simulat*[tiab] OR web-based simulat*[tiab] OR web based simulat*[tiab] OR screen-based simulat*[tiab] OR screen based simulat*[tiab] OR game-based virtual[tiab] OR simulated patient*[tiab])) AND (\"1800/01/01\"[edat] : \"2023/03/31\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2023-03-31",
+  "count": 5426,
+  "gold_scored": 6,
+  "gold_reachable": 6,
+  "retrieved": 6,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 904.3,
+  "translation_issues": [],
+  "gold_seen_by_agent": 3,
+  "unseen_retrieved": 3,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 2,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "learning_outcomes",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

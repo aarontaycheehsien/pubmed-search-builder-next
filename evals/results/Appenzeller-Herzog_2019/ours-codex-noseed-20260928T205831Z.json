@@ -1,0 +1,47 @@
+{
+  "topic": "Appenzeller-Herzog_2019",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T205831Z",
+  "scored": "20260928T211359Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 927
+  },
+  "final_message": "cular degeneration\"[tiab] OR \"progressive lenticular degeneration\"[tiab] OR \"copper storage disease\"[tiab] OR \"Kinnier-Wilson\"[tiab] OR \"neurohepatic degeneration\"[tiab] OR \"hepatocerebral degeneration\"[tiab] OR \"hepato-cerebral degeneration\"[tiab] OR pseudosclerosis[tiab] OR \"Westphal-Strumpell\"[tiab]) AND (\"Drug Therapy\"[Mesh] OR \"Penicillamine\"[Mesh] OR \"Trientine\"[Mesh] OR \"Zinc Acetate\"[Mesh] OR \"Liver Transplantation\"[Mesh] OR treat*[tiab] OR therap*[tiab] OR drug*[tiab] OR pharmacotherap*[tiab] OR chelati*[tiab] OR penicillamine[tiab] OR trientine[tiab] OR triethylene tetramine[tiab] OR zinc[tiab] OR zinc acetate[tiab] OR zinc sulfate[tiab] OR tetrathiomolybdate[tiab] OR ammonium tetrathiomolybdate[tiab] OR liver transplant*[tiab] OR hepatic transplant*[tiab] OR \"Zinc Sulfate\"[Mesh] OR \"Dimercaprol\"[Mesh] OR zinc sulphate[tiab] OR dimercaprol[tiab] OR \"British Anti-Lewisite\"[tiab] OR medication*[tiab] OR intervention*[tiab] OR management[tiab])) AND (\"1800/01/01\"[edat] : \"2018/12/23\"[edat])\n```\n\nThe condition block returned **7,337** records; the therapy block returned **8,559,975**; the combined search returned **3,521**. The audit contains the numbered line-by-line term counts and translations: [audit.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-codex-noseed-20260928T205831Z/work/audit.md). The generated query and validation receipt are [final-query.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-codex-noseed-20260928T205831Z/work/final-query.txt) and [validation-manifest.json](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-codex-noseed-20260928T205831Z/work/validation-manifest.json).\n\nAll five records screened in during the build were retrieved: **100% development relative recall**. No independent benchmark was available, so recall was not independently validated and this is not a sensitivity estimate. The draft needs PRESS peer review by an information specialist before use.",
+  "strategy": "((\"Hepatolenticular Degeneration\"[Mesh] OR \"Wilson Disease\"[tiab] OR \"Wilson's Disease\"[tiab] OR \"Wilsons Disease\"[tiab] OR \"hepatolenticular degeneration\"[tiab] OR \"progressive lenticular degeneration\"[tiab] OR \"copper storage disease\"[tiab] OR \"Kinnier-Wilson\"[tiab] OR \"neurohepatic degeneration\"[tiab] OR \"hepatocerebral degeneration\"[tiab] OR \"hepato-cerebral degeneration\"[tiab] OR pseudosclerosis[tiab] OR \"Westphal-Strumpell\"[tiab]) AND (\"Drug Therapy\"[Mesh] OR \"Penicillamine\"[Mesh] OR \"Trientine\"[Mesh] OR \"Zinc Acetate\"[Mesh] OR \"Liver Transplantation\"[Mesh] OR treat*[tiab] OR therap*[tiab] OR drug*[tiab] OR pharmacotherap*[tiab] OR chelati*[tiab] OR penicillamine[tiab] OR trientine[tiab] OR triethylene tetramine[tiab] OR zinc[tiab] OR zinc acetate[tiab] OR zinc sulfate[tiab] OR tetrathiomolybdate[tiab] OR ammonium tetrathiomolybdate[tiab] OR liver transplant*[tiab] OR hepatic transplant*[tiab] OR \"Zinc Sulfate\"[Mesh] OR \"Dimercaprol\"[Mesh] OR zinc sulphate[tiab] OR dimercaprol[tiab] OR \"British Anti-Lewisite\"[tiab] OR medication*[tiab] OR intervention*[tiab] OR management[tiab])) AND (\"1800/01/01\"[edat] : \"2018/12/23\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-12-23",
+  "count": 3521,
+  "gold_scored": 22,
+  "gold_reachable": 21,
+  "retrieved": 21,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 167.7,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 20,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": null,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

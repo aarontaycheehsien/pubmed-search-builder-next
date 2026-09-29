@@ -1,0 +1,54 @@
+{
+  "topic": "CD010657",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T211743Z",
+  "scored": "20260928T213539Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1075
+  },
+  "final_message": "| 11 | `DMSA[tiab]` | 1,948 |\n| 12 | `\"dimercaptosuccinic acid\"[tiab]` | 1,492 |\n| 13 | `\"dimercaptosuccinate\"[tiab]` | 154 |\n| 14 | `\"renal scintigraphy\"[tiab]` | 989 |\n| 15 | `renal scintigraph*[tiab]` | 1,024 |\n| 16 | `ultrasound[tiab]` | 141,762 |\n| 17 | `ultrasonograph*[tiab]` | 73,208 |\n| 18 | `sonograph*[tiab]` | 41,566 |\n| 19 | `echograph*[tiab]` | 8,470 |\n| 20 | `\"renal ultrasound\"[tiab]` | 814 |\n| 21 | `\"renal ultrasonography\"[tiab]` | 568 |\n| 22 | `\"urinary tract ultrasound\"[tiab]` | 39 |\n| 23 | `\"voiding urosonography\"[tiab]` | 52 |\n| 24 | `cystosonograph*[tiab]` | 25 |\n| 25 | `#8 OR #9 OR #10 OR #11 OR #12 OR #13 OR #14 OR #15 OR #16 OR #17 OR #18 OR #19 OR #20 OR #21 OR #22 OR #23 OR #24` | 562,726 |\n| 26 | `#7 AND #25` | **2,043** |\n\n## Known-record checks\n\n- **External benchmark:** 5/5 retrieved; 100% relative recall.\n- **Development records:** 8/8 retrieved; 100% relative recall.\n- **Held-out validation:** 2/2 retrieved; 100% relative recall.\n\nThese are relative recall checks against small known sets, not estimates of sensitivity or proof of complete retrieval. The scope was assumed from your criteria because you asked me to proceed without questions. Children/UTI context and eligible diagnostic evaluation are handled during screening. Broad imaging terms may retrieve irrelevant records, and the two-record validation set is limited.\n\nThe fresh-context PRESS-structured internal critique passed with no findings. **This draft still needs PRESS peer review by an information specialist before use.**\n\nGenerated artifacts are intact in `./work`: [final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-01491638976b58ef/ours-codex-noseed-20260928T211743Z/work/final-query.txt), [audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-01491638976b58ef/ours-codex-noseed-20260928T211743Z/work/audit.md), and [validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-01491638976b58ef/ours-codex-noseed-20260928T211743Z/work/validation-manifest.json).",
+  "strategy": "((\"Vesico-Ureteral Reflux\"[Mesh] OR \"vesicoureteral reflux\"[tiab] OR \"vesico-ureteral reflux\"[tiab] OR \"vesicoureteric reflux\"[tiab] OR \"vesico-ureteric reflux\"[tiab] OR VUR[tiab]) AND (\"Technetium Tc 99m Dimercaptosuccinic Acid\"[Mesh] OR \"Ultrasonography\"[Mesh] OR \"Radionuclide Imaging\"[Mesh] OR DMSA[tiab] OR \"dimercaptosuccinic acid\"[tiab] OR \"dimercaptosuccinate\"[tiab] OR \"renal scintigraphy\"[tiab] OR renal scintigraph*[tiab] OR ultrasound[tiab] OR ultrasonograph*[tiab] OR sonograph*[tiab] OR echograph*[tiab] OR \"renal ultrasound\"[tiab] OR \"renal ultrasonography\"[tiab] OR \"urinary tract ultrasound\"[tiab] OR \"voiding urosonography\"[tiab] OR cystosonograph*[tiab])) AND (\"1800/01/01\"[edat] : \"2013/01/30\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2013-01-30",
+  "count": 2043,
+  "gold_scored": 35,
+  "gold_reachable": 35,
+  "retrieved": 35,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 58.4,
+  "translation_issues": [],
+  "gold_seen_by_agent": 5,
+  "unseen_retrieved": 30,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "screen": 2,
+      "search": 2
+    },
+    "optional": []
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

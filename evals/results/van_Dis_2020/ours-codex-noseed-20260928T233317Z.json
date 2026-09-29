@@ -1,0 +1,66 @@
+{
+  "topic": "van_Dis_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T233317Z",
+  "scored": "20260928T235954Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1597
+  },
+  "final_message": "iab]` | 5,585 |\n| 31 | `exposure therap*[tiab]` | 1,294 |\n| 32 | `\"exposure and response prevention\"[tiab]` | 274 |\n| 33 | `exposure-response prevention[tiab]` | 36 |\n| 34 | `applied relaxation[tiab]` | 116 |\n| 35 | CBT block OR-combination | 81,360 |\n| 36 | Final query: `#20 AND #35` | **12,822** |\n\n## Validation and assumptions\n\nNo relevant articles were supplied. I found a 2015 Cochrane review and screened a targeted subset of its references. Relative recall was **16/16 (100%)** on the development set and **5/5 (100%)** on the held-out validation set. The validation set is semi-independent because both sets came from that review’s reference pool; it is not an independent benchmark.\n\nI assumed “anxiety-related disorders” includes core anxiety disorders plus OCD and PTSD. No minimum duration was specified, so follow-up duration remains a screening decision. The tested long-term/follow-up block cut the count by 55%, but its loss sample included an eligible CBT study with outcomes at 3, 6, and 9 months. I left that block out. The final count exceeds the standard 10,000-record workload budget.\n\nThe internal critique was same-context, not a fresh-context review. This draft still needs PRESS peer review by an information specialist before use. The counts use the current PubMed index with an Entrez-date bound; they do not reconstruct the index exactly as it existed in 2017.\n\n## Files\n\n- [Protected final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-62327eccbc31903b/ours-codex-noseed-20260928T233317Z/work/final-query.txt)\n- [Generated audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-62327eccbc31903b/ours-codex-noseed-20260928T233317Z/work/audit.md)\n- [Development narrative and open risks](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-62327eccbc31903b/ours-codex-noseed-20260928T233317Z/work/narrative.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-62327eccbc31903b/ours-codex-noseed-20260928T233317Z/work/validation-manifest.json)",
+  "strategy": "((Anxiety Disorders[Mesh] OR Stress Disorders, Post-Traumatic[Mesh] OR anxiety disorder*[tiab] OR anxiety neuros*[tiab] OR anxiety state*[tiab] OR generalized anxiety[tiab] OR generalised anxiety[tiab] OR panic disorder*[tiab] OR phobia*[tiab] OR social anxiety[tiab] OR social phobia*[tiab] OR agoraphobia*[tiab] OR separation anxiety[tiab] OR obsessive-compulsive[tiab] OR obsessive compulsive[tiab] OR OCD[tiab] OR posttraumatic stress[tiab] OR post-traumatic stress[tiab] OR PTSD[tiab]) AND (Cognitive Behavioral Therapy[Mesh] OR Behavior Therapy[Mesh] OR cognitive behavio*[tiab] OR cognitive behaviour*[tiab] OR cognitive therap*[tiab] OR cognitive psychotherap*[tiab] OR cognitive restructuring[tiab] OR CBT[tiab] OR behavio* therap*[tiab] OR behaviour* therap*[tiab] OR exposure therap*[tiab] OR \"exposure and response prevention\"[tiab] OR exposure-response prevention[tiab] OR applied relaxation[tiab])) AND (\"1800/01/01\"[edat] : \"2017/08/24\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-08-24",
+  "count": 12822,
+  "gold_scored": 61,
+  "gold_reachable": 61,
+  "retrieved": 58,
+  "recall_percent": 95.1,
+  "missed": [
+    "10883554",
+    "21644186",
+    "27459503"
+  ],
+  "nnr": 221.1,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 58,
+  "unseen_recall_percent": 95.1,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "long_term",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 1
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

@@ -1,0 +1,49 @@
+{
+  "topic": "CD011926",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T214210Z",
+  "scored": "20260928T220935Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1644
+  },
+  "final_message": "Polymerase Chain Reaction\"[Mesh] OR \"Real-Time Polymerase Chain Reaction\"[Mesh] OR \"Multiplex Polymerase Chain Reaction\"[Mesh] OR \"Reverse Transcriptase Polymerase Chain Reaction\"[Mesh] OR \"In Situ Hybridization\"[Mesh] OR \"Oligonucleotide Array Sequence Analysis\"[Mesh] OR molecular[tiab] OR PCR[tiab] OR qPCR[tiab] OR \"polymerase chain reaction\"[tiab] OR \"real-time PCR\"[tiab] OR \"real time PCR\"[tiab] OR \"reverse transcriptase PCR\"[tiab] OR \"reverse transcription PCR\"[tiab] OR \"nucleic acid amplification\"[tiab] OR \"nucleic acid test\"[tiab] OR \"nucleic acid assay\"[tiab] OR microarray[tiab] OR hybridization[tiab] OR hybridisation[tiab] OR sequencing[tiab] OR \"in situ hybridization\"[tiab] OR \"in situ hybridisation\"[tiab] OR FISH[tiab] OR DNA[tiab] OR amplif*[tiab])) AND (\"1800/01/01\"[edat] : \"2014/08/09\"[edat])\n```\n\nThe search returned **1,469 records**, bounded by PubMed entry date through 2014-08-09. The generated [audit](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-a01e5029fcbb87a3\\ours-codex-noseed-20260928T214210Z\\work\\audit.md) contains the line-by-line terms and counts, validation details, and rationale. The protected [query file](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-a01e5029fcbb87a3\\ours-codex-noseed-20260928T214210Z\\work\\final-query.txt) and [validation manifest](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-a01e5029fcbb87a3\\ours-codex-noseed-20260928T214210Z\\work\\validation-manifest.json) are in `./work`.\n\nRelative recall was 8/8 in the development set and 11/11 in the held-out validation set. These are screened known records, not an estimate of absolute sensitivity. A neonatal category probe is flagged as stale after the final sepsis-term edit; its sampled records found no relevant studies, but the risk is documented for review. The scope also provisionally treats culture or clinical/composite diagnosis as eligible reference standards; confirm this with the review team. **PRESS review by an independent information specialist is still pending.**",
+  "strategy": "((\"Infant, Newborn\"[Mesh] OR neonat*[tiab] OR newborn*[tiab] OR infant*[tiab] OR preterm*[tiab] OR premature*[tiab] OR \"low birth weight\"[tiab] OR \"very low birth weight\"[tiab]) AND (\"Sepsis\"[Mesh] OR \"Bacteremia\"[Mesh] OR sepsis[tiab] OR septic*[tiab] OR bacterem*[tiab] OR bacteraem*[tiab] OR pyem*[tiab] OR \"bloodstream infection\"[tiab] OR \"blood stream infection\"[tiab] OR \"blood poisoning\"[tiab] OR septicemia[tiab]) AND (\"Molecular Diagnostic Techniques\"[Mesh] OR \"Nucleic Acid Amplification Techniques\"[Mesh] OR \"Polymerase Chain Reaction\"[Mesh] OR \"Real-Time Polymerase Chain Reaction\"[Mesh] OR \"Multiplex Polymerase Chain Reaction\"[Mesh] OR \"Reverse Transcriptase Polymerase Chain Reaction\"[Mesh] OR \"In Situ Hybridization\"[Mesh] OR \"Oligonucleotide Array Sequence Analysis\"[Mesh] OR molecular[tiab] OR PCR[tiab] OR qPCR[tiab] OR \"polymerase chain reaction\"[tiab] OR \"real-time PCR\"[tiab] OR \"real time PCR\"[tiab] OR \"reverse transcriptase PCR\"[tiab] OR \"reverse transcription PCR\"[tiab] OR \"nucleic acid amplification\"[tiab] OR \"nucleic acid test\"[tiab] OR \"nucleic acid assay\"[tiab] OR microarray[tiab] OR hybridization[tiab] OR hybridisation[tiab] OR sequencing[tiab] OR \"in situ hybridization\"[tiab] OR \"in situ hybridisation\"[tiab] OR FISH[tiab] OR DNA[tiab] OR amplif*[tiab])) AND (\"1800/01/01\"[edat] : \"2014/08/09\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2014-08-09",
+  "count": 1469,
+  "gold_scored": 29,
+  "gold_reachable": 29,
+  "retrieved": 28,
+  "recall_percent": 96.6,
+  "missed": [
+    "19279393"
+  ],
+  "nnr": 52.5,
+  "translation_issues": [],
+  "gold_seen_by_agent": 17,
+  "unseen_retrieved": 11,
+  "unseen_recall_percent": 91.7,
+  "leakage": [],
+  "concepts": null,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

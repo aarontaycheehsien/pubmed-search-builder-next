@@ -1,0 +1,64 @@
+{
+  "topic": "Brouwer_2019",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T220146Z",
+  "scored": "20260928T223939Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2273
+  },
+  "final_message": "rez-date cutoff, with no publication-date limit. The protected report and validation manifest passed.\n\n**Final query** — 18,513 records:\n\n```text\n((\"Depressive Disorder\"[Mesh] OR \"Major Depressive Disorder\"[Mesh] OR \"Dysthymic Disorder\"[Mesh] OR \"Depression, Postpartum\"[Mesh] OR \"Seasonal Affective Disorder\"[Mesh] OR depress*[tiab] OR \"major depressive disorder\"[tiab] OR \"major depression\"[tiab] OR \"unipolar depression\"[tiab] OR dysthymi*[tiab] OR \"persistent depressive disorder\"[tiab] OR melancholi*[tiab]) AND (\"Recurrence\"[Mesh] OR relaps*[tiab] OR recurren*[tiab] OR recrudescen*[tiab] OR \"recurrent depression\"[tiab] OR \"recurrent depressive\"[tiab] OR \"relapse of depression\"[tiab] OR \"recurrence of depression\"[tiab] OR remitt*[tiab] OR \"return depression\"[tiab:~1] OR \"return depressive\"[tiab:~1])) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])\n```\n\nThe query retrieved all 8 records in the development set. That is relative recall on records used during development, not an independent sensitivity estimate; no independent validation set or known seed articles were available.\n\nThe optional psychological-theory block was left out because it excluded a known relevant record (PMID 1865963). The resulting count exceeds the standard 10,000-record workload budget. Category-probe results are stale for the final depression block, so category coverage remains a validation gap. Human PRESS review is pending.\n\n- [Protected query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260928T220146Z/work/final-query.txt)\n- [Audit report](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260928T220146Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260928T220146Z/work/validation-manifest.json)\n- [Assumptions and review notes](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260928T220146Z/work/narrative.md)",
+  "strategy": "((\"Depressive Disorder\"[Mesh] OR \"Major Depressive Disorder\"[Mesh] OR \"Dysthymic Disorder\"[Mesh] OR \"Depression, Postpartum\"[Mesh] OR \"Seasonal Affective Disorder\"[Mesh] OR depress*[tiab] OR \"major depressive disorder\"[tiab] OR \"major depression\"[tiab] OR \"unipolar depression\"[tiab] OR dysthymi*[tiab] OR \"persistent depressive disorder\"[tiab] OR melancholi*[tiab]) AND (\"Recurrence\"[Mesh] OR relaps*[tiab] OR recurren*[tiab] OR recrudescen*[tiab] OR \"recurrent depression\"[tiab] OR \"recurrent depressive\"[tiab] OR \"relapse of depression\"[tiab] OR \"recurrence of depression\"[tiab] OR remitt*[tiab] OR \"return depression\"[tiab:~1] OR \"return depressive\"[tiab:~1])) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-11-17",
+  "count": 18513,
+  "gold_scored": 54,
+  "gold_reachable": 54,
+  "retrieved": 52,
+  "recall_percent": 96.3,
+  "missed": [
+    "17696703",
+    "21848705"
+  ],
+  "nnr": 356.0,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 51,
+  "unseen_recall_percent": 96.2,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "psychological_theory",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

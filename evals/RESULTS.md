@@ -1,6 +1,6 @@
 # Evaluation results
 
-Generated 20260928T204037Z by `python evals/run.py report`.
+Generated 20260929T012742Z by `python evals/run.py report`.
 
 Recall is over gold records in PubMed on or before `as_of`; in the seeded condition the three seeds are excluded. `unseen` recall leaves out gold records the agent itself screened into its sets. NNR is total results divided by gold retrieved: a workload proxy, not precision. Generated rows show the mean (min-max) over `ok` runs.
 
@@ -12,34 +12,52 @@ Skill changes may be motivated only by these topics.
 
 | Topic | Source | Condition | Version | Runs | Recall % | Unseen recall % | Results | NNR | Cost $ |
 |---|---|---|---|---:|---|---|---:|---:|---:|
+| Appenzeller-Herzog_2019 | generated:ours (codex) | noseed | 7024a79b41 | 3/3 | 100.0 (100.0-100.0) | 100.0 (100.0-100.0) | 2449.3 (1911-3521) | 116.6 (91.0-167.7) | n/a |
+| Bos_2018 | generated:ours (codex) | noseed | 7024a79b41 | 3/3 | 100.0 (100.0-100.0) | 100.0 (100.0-100.0) | 8486.3 (7952-9534) | 942.9 (883.6-1059.3) | n/a |
 | Bos_2018 | generated:pubmed-search-builder-next (claude) | noseed | legacy | 1/1 † | 100.0 | 100.0 | 12495 | 1388.3 | 2.6 |
 | Bos_2018 | generated:pubmed-search-builder-next (codex) | noseed | legacy | 2/3 † | 100.0 (100.0-100.0) | 100.0 (100.0-100.0) | 68692 (54277-83107) | 7632.5 (6030.8-9234.1) | n/a |
 | Bos_2018 | naive | noseed | baseline | 1/1 | 66.7 | n/a | 2339 | 389.8 | n/a |
 | Bos_2018 | naive | seeded | baseline | 1/1 | 66.7 | n/a | 2339 | 584.8 | n/a |
+| Brouwer_2019 | generated:ours (codex) | noseed | 7024a79b41 | 3/3 | 80.2 (68.5-96.3) | 79.9 (67.9-96.2) | 17068.7 (14947-18513) | 397.6 (356.0-432.8) | n/a |
+| CD010657 | generated:ours (codex) | noseed | 7024a79b41 | 3/3 | 100.0 (100.0-100.0) | 100.0 (100.0-100.0) | 2057.7 (2043-2080) | 58.8 (58.4-59.4) | n/a |
 | CD010657 | naive | noseed | baseline | 1/1 | 91.4 | n/a | 644 | 20.1 | n/a |
 | CD010657 | naive | seeded | baseline | 1/1 | 90.6 | n/a | 644 | 22.2 | n/a |
+| CD011431 | generated:ours (codex) | noseed | 7024a79b41 | 3/3 | 100.0 (100.0-100.0) | 100.0 (100.0-100.0) | 4864.3 (1754-6940) | 187.1 (67.5-266.9) | n/a |
 | CD011431 | naive | noseed | baseline | 1/1 | 80.8 | n/a | 502 | 23.9 | n/a |
 | CD011431 | naive | seeded | baseline | 1/1 | 78.3 | n/a | 502 | 27.9 | n/a |
 | CD011926 | generated:lean-optimal (claude) | noseed | legacy | 1/1 † | 100.0 | 100.0 | 2179 | 75.1 | 1.7 |
+| CD011926 | generated:ours (codex) | noseed | 7024a79b41 | 2/3 † | 96.6 (96.6-96.6) | 93.8 (91.7-96.0) | 1108.5 (748-1469) | 39.6 (26.7-52.5) | n/a |
 | CD011926 | generated:pubmed-search-builder-next (claude) | noseed | legacy | 1/1 † | 100.0 | 100.0 | 2055 | 70.9 | 2.2 |
 | CD011926 | generated:pubmed-search-builder-next (codex) | noseed | legacy | 1/1 † | 96.6 | 95.0 | 1479 | 52.8 | n/a |
 | CD011926 | naive | noseed | baseline | 1/1 | 62.1 | n/a | 117 | 6.5 | n/a |
 | CD011926 | naive | seeded | baseline | 1/1 | 57.7 | n/a | 117 | 7.8 | n/a |
 | CD011926 | reference | noseed | baseline | 1/1 | 96.6 | n/a | 1001 | 35.8 | n/a |
 | CD011926 | reference | seeded | baseline | 1/1 | 96.2 | n/a | 1001 | 40.0 | n/a |
+| Donners_2021 | generated:ours (codex) | noseed | 7024a79b41 | 3/3 | 97.8 (93.3-100.0) | 93.3 (80.0-100.0) | 706 (233-1652) | 49.7 (15.5-118.0) | n/a |
 | Donners_2021 | naive | noseed | baseline | 1/1 | 100.0 | n/a | 1614 | 107.6 | n/a |
 | Donners_2021 | naive | seeded | baseline | 1/1 | 100.0 | n/a | 1614 | 134.5 | n/a |
+| Kwok_2020 | generated:ours (codex) | noseed | 7024a79b41 | 3/3 | 90.5 (85.3-94.0) | 88.9 (81.9-93.6) | 3563.3 (734-8512) | 33.0 (7.4-78.1) | n/a |
+| Liu_2023_VR_nursing | generated:ours (codex) | noseed | 7024a79b41 | 3/3 | 100.0 (100.0-100.0) | 100.0 (100.0-100.0) | 4208.7 (2645-5426) | 701.4 (440.8-904.3) | n/a |
 | Liu_2023_VR_nursing | naive | noseed | baseline | 1/1 | 100.0 | n/a | 374 | 62.3 | n/a |
+| Medeiros-2022-School-based food and nutr | generated:ours (codex) | noseed | 7024a79b41 | 3/3 | 88.9 (77.8-100.0) | 88.4 (77.8-100.0) | 5403.7 (4622-5861) | 689.0 (513.6-837.3) | n/a |
 | Medeiros-2022-School-based food and nutr | naive | noseed | baseline | 1/1 | 11.1 | n/a | 767 | 767.0 | n/a |
 | Medeiros-2022-School-based food and nutr | naive | seeded | baseline | 1/1 | 16.7 | n/a | 767 | 767.0 | n/a |
 | Medeiros-2022-School-based food and nutr | reference | noseed | baseline | 1/1 | 88.9 | n/a | 24320 | 3040.0 | n/a |
 | Medeiros-2022-School-based food and nutr | reference | seeded | baseline | 1/1 | 83.3 | n/a | 24320 | 4864.0 | n/a |
+| Meijboom_2021 | generated:ours (codex) | noseed | 7024a79b41 | 3/3 | 100.0 (100.0-100.0) | 100.0 (100.0-100.0) | 396.3 (393-400) | 11.3 (11.2-11.4) | n/a |
+| Muthu_2022 | generated:ours (codex) | noseed | 7024a79b41 | 3/3 | 100.0 (100.0-100.0) | 100.0 (100.0-100.0) | 1323.3 (604-1858) | 220.6 (100.7-309.7) | n/a |
 | Muthu_2022 | generated:quota-check (codex) | noseed | legacy | 0/1 † | n/a | n/a | n/a | n/a | n/a |
 | Muthu_2022 | naive | noseed | baseline | 1/1 | 100.0 | n/a | 505 | 84.2 | n/a |
+| Oud_2018 | generated:ours (codex) | noseed | 7024a79b41 | 3/3 | 100.0 (100.0-100.0) | 100.0 (100.0-100.0) | 10771.3 (5065-13713) | 633.6 (297.9-806.6) | n/a |
+| Smid_2020 | generated:ours (codex) | noseed | 7024a79b41 | 3/3 | 92.9 (92.9-92.9) | 90.9 (88.9-92.9) | 8793.7 (4623-12364) | 676.4 (355.6-951.1) | n/a |
 | Smid_2020 | naive | noseed | baseline | 1/1 | 78.6 | n/a | 1369 | 124.5 | n/a |
 | Smid_2020 | naive | seeded | baseline | 1/1 | 72.7 | n/a | 1369 | 171.1 | n/a |
+| Welling_2021 | generated:ours (codex) | noseed | 7024a79b41 | 3/3 | 89.3 (88.7-90.6) | 89.3 (88.7-90.6) | 14582 (12650-16619) | 308.1 (269.1-353.6) | n/a |
+| gao-2026-Immune checkpoint inhibitors | generated:ours (codex) | noseed | 7024a79b41 | 2/3 † | 100.0 (100.0-100.0) | 100.0 (100.0-100.0) | 2028.5 (2028-2029) | 184.4 (184.4-184.5) | n/a |
 | gao-2026-Immune checkpoint inhibitors | naive | noseed | baseline | 1/1 | 72.7 | n/a | 1599 | 199.9 | n/a |
 | gao-2026-Immune checkpoint inhibitors | naive | seeded | baseline | 1/1 | 62.5 | n/a | 1599 | 319.8 | n/a |
+| van_Dis_2020 | generated:ours (codex) | noseed | 7024a79b41 | 3/3 | 90.2 (83.6-95.1) | 90.2 (83.6-95.1) | 9391.7 (6812-12822) | 169.1 (133.6-221.1) | n/a |
+| van_de_Schoot_2018 | generated:ours (codex) | noseed | 7024a79b41 | 3/3 | 93.0 (92.1-94.7) | 92.8 (91.9-94.3) | 27398.3 (17663-32346) | 774.3 (504.7-924.2) | n/a |
 
 ## Held-out topics
 

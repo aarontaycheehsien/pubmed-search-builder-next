@@ -1,0 +1,69 @@
+{
+  "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T223030Z",
+  "scored": "20260928T230418Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2028
+  },
+  "final_message": "b] OR schoolchildren[tiab] OR pupil*[tiab] OR teenager*[tiab]) AND (\"Schools\"[Mesh] OR \"School Health Services\"[Mesh] OR school*[tiab] OR classroom*[tiab] OR pupil*[tiab] OR high school*[tiab] OR secondary school*[tiab] OR middle school*[tiab] OR primary school*[tiab] OR elementary school*[tiab]) AND (\"Feeding Behavior\"[Mesh] OR \"Eating\"[Mesh] OR \"Food Preferences\"[Mesh] OR \"Diet\"[Mesh] OR \"Fruit\"[Mesh] OR \"Vegetables\"[Mesh] OR diet*[tiab] OR dietary intake[tiab] OR food intake[tiab] OR food consumption[tiab] OR eating behavio*[tiab] OR feeding behavio*[tiab] OR food behavio*[tiab] OR fruit intake[tiab] OR vegetable intake[tiab] OR (fruit[tiab] AND vegetable*[tiab]) OR healthy eating[tiab] OR food choice*[tiab] OR food preference*[tiab] OR dietary behavio*[tiab] OR consumption[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])\n```\n\nThe query retrieved all three records in the development set (relative recall **3/3**), but that set came from the pilot search; there was no held-out validation set. The school and outcome blocks each reduced the result set substantially, and each 30-record loss sample found 0 eligible records. Those small samples do not rule out missed studies, so the block trade-off is documented for specialist review.\n\nFiles are in `work`: [protected query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260928T223030Z/work/final-query.txt), [audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260928T223030Z/work/audit.md), [validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260928T223030Z/work/validation-manifest.json), and [handoff narrative](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260928T223030Z/work/narrative.md). The critique was a same-context PRESS-structured internal critique because the separate reviewer could not access the packet; **PRESS peer review is pending**.",
+  "strategy": "((\"Health Education\"[Mesh] OR \"Health Promotion\"[Mesh] OR \"Child Nutrition Sciences\"[Mesh] OR \"nutrition education\"[tiab] OR \"dietary education\"[tiab] OR \"food education\"[tiab] OR \"healthy eating education\"[tiab] OR \"nutrition intervention*\"[tiab] OR \"nutrition program*\"[tiab] OR (nutrition[tiab] AND educat*[tiab]) OR (dietary[tiab] AND educat*[tiab]) OR (food[tiab] AND educat*[tiab]) OR (nutrition[tiab] AND intervention*[tiab]) OR (nutrition[tiab] AND program*[tiab]) OR (dietary[tiab] AND intervention*[tiab])) AND (\"Adolescent\"[Mesh] OR \"Students\"[Mesh] OR \"Child\"[Mesh] OR adolescen*[tiab] OR teen*[tiab] OR youth[tiab] OR young people[tiab] OR student*[tiab] OR schoolchild*[tiab] OR school-aged[tiab] OR school age[tiab] OR schoolchildren[tiab] OR pupil*[tiab] OR teenager*[tiab]) AND (\"Schools\"[Mesh] OR \"School Health Services\"[Mesh] OR school*[tiab] OR classroom*[tiab] OR pupil*[tiab] OR high school*[tiab] OR secondary school*[tiab] OR middle school*[tiab] OR primary school*[tiab] OR elementary school*[tiab]) AND (\"Feeding Behavior\"[Mesh] OR \"Eating\"[Mesh] OR \"Food Preferences\"[Mesh] OR \"Diet\"[Mesh] OR \"Fruit\"[Mesh] OR \"Vegetables\"[Mesh] OR diet*[tiab] OR dietary intake[tiab] OR food intake[tiab] OR food consumption[tiab] OR eating behavio*[tiab] OR feeding behavio*[tiab] OR food behavio*[tiab] OR fruit intake[tiab] OR vegetable intake[tiab] OR (fruit[tiab] AND vegetable*[tiab]) OR healthy eating[tiab] OR food choice*[tiab] OR food preference*[tiab] OR dietary behavio*[tiab] OR consumption[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-14",
+  "count": 5728,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 8,
+  "recall_percent": 88.9,
+  "missed": [
+    "25797051"
+  ],
+  "nnr": 716.0,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 7,
+  "unseen_recall_percent": 87.5,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "school_setting",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "food_consumption",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

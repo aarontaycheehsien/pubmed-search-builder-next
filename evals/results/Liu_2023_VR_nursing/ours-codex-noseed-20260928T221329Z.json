@@ -1,0 +1,54 @@
+{
+  "topic": "Liu_2023_VR_nursing",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T221329Z",
+  "scored": "20260928T222746Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 856
+  },
+  "final_message": "ulation*[tiab] OR computer based simulation*[tiab] OR screen-based simulation*[tiab] OR web-based virtual simulation*[tiab] OR 3D virtual[tiab] OR three-dimensional virtual[tiab] OR head-mounted display*[tiab] OR mixed reality[tiab])) AND (\"1800/01/01\"[edat] : \"2023/03/31\"[edat])\n```\n\n**Numbered line counts:** lines 1–35 returned, in order:\n\n```text\n30,313; 89,264; 21,150; 8,386; 20,313; 4,452; 43,479; 1,201; 450; 4,289; 197; 117,449;\n5,646; 11,657; 12,551; 16,425; 16,425; 12,192; 896; 1,492; 4,386; 1,003; 136; 1,138;\n160; 331; 331; 37; 2; 1,078; 511; 1,487; 830; 52,664; 4,555\n```\n\nThe generated audit maps each count to its search line and term: [audit.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3d10494d5653b6c0/ours-codex-noseed-20260928T221329Z/work/audit.md). The protected query and validation receipt are [final-query.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3d10494d5653b6c0/ours-codex-noseed-20260928T221329Z/work/final-query.txt) and [validation-manifest.json](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3d10494d5653b6c0/ours-codex-noseed-20260928T221329Z/work/validation-manifest.json). Rationale and handoff notes are in [narrative.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3d10494d5653b6c0/ours-codex-noseed-20260928T221329Z/work/narrative.md).\n\nThe search retrieved all **3 development records** found and screened during the build (100% relative recall against that set; this is not independent validation). Two category probes per concept screened 30 records each, with no eligible records found in the final probes. No held-out validation set or prior-review benchmark was assembled, so recall remains empirically under-validated.\n\nThe fresh-context PRESS-structured internal critic passed with no findings. **Human PRESS peer review by an information specialist is still needed before use.** The reported count is from the PubMed index at report time, restricted by Entrez date; it is not a reconstruction of the historical 2023 index.",
+  "strategy": "((\"Students, Nursing\"[Mesh] OR \"Education, Nursing\"[Mesh] OR \"Education, Nursing, Baccalaureate\"[Mesh] OR \"Education, Nursing, Graduate\"[Mesh] OR nursing student*[tiab] OR student nurse*[tiab] OR (nurs*[tiab] AND student*[tiab]) OR prelicensure[tiab] OR pre-licensure[tiab] OR undergraduate nursing[tiab] OR postgraduate nursing[tiab]) AND (\"Virtual Reality\"[Mesh] OR \"Simulation Training\"[Mesh] OR \"Computer-Assisted Instruction\"[Mesh] OR virtual reality[tiab] OR virtual-reality[tiab] OR VR[tiab] OR virtual simulation*[tiab] OR virtual patient*[tiab] OR virtual environment*[tiab] OR virtual world*[tiab] OR immersive simulation*[tiab] OR immersive virtual reality[tiab] OR immersive technolog*[tiab] OR computer-based simulation*[tiab] OR computer based simulation*[tiab] OR screen-based simulation*[tiab] OR web-based virtual simulation*[tiab] OR 3D virtual[tiab] OR three-dimensional virtual[tiab] OR head-mounted display*[tiab] OR mixed reality[tiab])) AND (\"1800/01/01\"[edat] : \"2023/03/31\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2023-03-31",
+  "count": 4555,
+  "gold_scored": 6,
+  "gold_reachable": 6,
+  "retrieved": 6,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 759.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 5,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "screen": 3,
+      "search": 2
+    },
+    "optional": []
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

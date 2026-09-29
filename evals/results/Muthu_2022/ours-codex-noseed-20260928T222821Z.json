@@ -1,0 +1,54 @@
+{
+  "topic": "Muthu_2022",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T222821Z",
+  "scored": "20260928T225203Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1422
+  },
+  "final_message": "b] OR ADRC[tiab] OR stromal vascular fraction[tiab] OR SVF[tiab] OR fat-derived stem cell*[tiab] OR tendon-derived cell*[tiab] OR tendon derived cell*[tiab] OR tendon-derived stem cell*[tiab] OR tendon derived stem cell*[tiab] OR progenitor cell*[tiab] OR cell therap*[tiab] OR cellular therap*[tiab] OR biologic augmentation[tiab] OR biological augmentation[tiab] OR biologic augment*[tiab] OR biological augment*[tiab])) AND (\"1800/01/01\"[edat] : \"2020/05/15\"[edat])\n```\n\nThe audit contains the **line-by-line strategy with counts for all 67 lines**, along with rationale and validation details: [audit.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-05063212dadf5296/ours-codex-noseed-20260928T222821Z/work/audit.md). The protected [final query](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-05063212dadf5296/ours-codex-noseed-20260928T222821Z/work/final-query.txt) and [validation manifest](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-05063212dadf5296/ours-codex-noseed-20260928T222821Z/work/validation-manifest.json) were generated and passed the report checks.\n\n## Validation and caveats\n\nRelative recall was **15/15 (100%)** in the development set and **6/6 (100%)** in the held-out validation set. The held-out set was not used for term mining, but came from the same screened pool, so it is semi-independent rather than external validation.\n\nThe required Entrez-date bound excludes records added to PubMed after 2020-05-15; no publication-date limit was applied. The rotator-cuff category probe is marked stale because the intervention block expanded after the last probe and the probe budget was spent. Two samples of 30 found no eligible omissions, but they do not establish complete recall. This is a draft for information-specialist PRESS review; PubMed-only coverage is another limitation.\n\nBuild rationale and critic dispositions are in [narrative.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-05063212dadf5296/ours-codex-noseed-20260928T222821Z/work/narrative.md).",
+  "strategy": "((\"Rotator Cuff Injuries\"[Mesh] OR \"Rotator Cuff\"[Mesh] OR \"Tendon Injuries\"[Mesh] OR \"Shoulder Injuries\"[Mesh] OR \"rotator cuff\"[tiab] OR rotator cuff tear*[tiab] OR rotator cuff injur*[tiab] OR rotator cuff repair*[tiab] OR cuff tear*[tiab] OR cuff injur*[tiab] OR cuff repair*[tiab] OR supraspinatus[tiab] OR infraspinatus[tiab] OR subscapularis[tiab] OR teres minor[tiab] OR shoulder tendon tear*[tiab]) AND (\"Mesenchymal Stem Cells\"[Mesh] OR \"Platelet-Rich Plasma\"[Mesh] OR \"Platelet-Rich Fibrin\"[Mesh] OR \"Bone Marrow Cells\"[Mesh] OR \"Adult Stem Cells\"[Mesh] OR \"Adipose Tissue\"[Mesh] OR \"Stem Cell Transplantation\"[Mesh] OR \"Mesenchymal Stem Cell Transplantation\"[Mesh] OR \"Regenerative Medicine\"[Mesh] OR mesenchymal stem cell*[tiab] OR mesenchymal stromal cell*[tiab] OR multipotent stromal cell*[tiab] OR bone marrow aspirat*[tiab] OR bone marrow concentrat*[tiab] OR bone marrow-derived cell*[tiab] OR marrow aspirate concentrat*[tiab] OR BMAC[tiab] OR platelet-rich plasma[tiab] OR platelet rich plasma[tiab] OR PRP[tiab] OR platelet-rich fibrin[tiab] OR platelet rich fibrin[tiab] OR PRF[tiab] OR platelet gel[tiab] OR autologous conditioned plasma[tiab] OR adipose-derived stem cell*[tiab] OR adipose derived stem cell*[tiab] OR adipose-derived cell*[tiab] OR adipose derived cell*[tiab] OR adipose-derived stromal cell*[tiab] OR adipose derived stromal cell*[tiab] OR adipose-derived regenerative cell*[tiab] OR adipose derived regenerative cell*[tiab] OR ADRC[tiab] OR stromal vascular fraction[tiab] OR SVF[tiab] OR fat-derived stem cell*[tiab] OR tendon-derived cell*[tiab] OR tendon derived cell*[tiab] OR tendon-derived stem cell*[tiab] OR tendon derived stem cell*[tiab] OR progenitor cell*[tiab] OR cell therap*[tiab] OR cellular therap*[tiab] OR biologic augmentation[tiab] OR biological augmentation[tiab] OR biologic augment*[tiab] OR biological augment*[tiab])) AND (\"1800/01/01\"[edat] : \"2020/05/15\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-05-15",
+  "count": 1508,
+  "gold_scored": 6,
+  "gold_reachable": 6,
+  "retrieved": 6,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 251.3,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 4,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "screen": 3,
+      "search": 2
+    },
+    "optional": []
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

@@ -1,0 +1,85 @@
+{
+  "topic": "Brouwer_2019",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T204057Z",
+  "scored": "20260928T213211Z",
+  "skill": {
+    "name": "ours",
+    "hash": "7024a79b4191688c7377167b9de755017157668532396cf65d2dd2548b07df99",
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b0c507691fdabf9b8a8a1c9a0a0e7fe949aa799a",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 3073
+  },
+  "final_message": "record screening budget. The audit also documents that the diagnosis-category probe is stale, so coverage for the current block remains unverified.\n\nThe draft needs PRESS peer review by an information specialist before use.\n\n```text\n((Depressive Disorder[Mesh] OR Depression[Mesh] OR depress*[tiab] OR dysthymi*[tiab] OR melanchol*[tiab] OR unipolar[tiab] OR affective disorder*[tiab]) AND (Recurrence[Mesh] OR relapse[tiab] OR relaps*[tiab] OR recurren*[tiab] OR recrudescen*[tiab] OR recurrent depression[tiab] OR depressive relapse[tiab] OR relapse prevention[tiab] OR vulnerab*[tiab] OR susceptib*[tiab] OR (subsequent[tiab] AND depress*[tiab] AND episode*[tiab]) OR (future[tiab] AND depress*[tiab]) OR (return*[tiab] AND depress*[tiab])) AND (Psychological Theory[Mesh] OR Models, Psychological[Mesh] OR psychological theor*[tiab] OR psychological model*[tiab] OR theoretical model*[tiab] OR cognitive theor*[tiab] OR cognitive model*[tiab] OR cognitive vulnerab*[tiab] OR cognitive reactiv*[tiab] OR rumination[tiab] OR attributional[tiab] OR hopelessness[tiab] OR learned helplessness[tiab] OR psychodynamic[tiab] OR interpersonal theor*[tiab] OR behavioral model*[tiab] OR behavioural model*[tiab] OR vulnerability-stress[tiab] OR self-esteem[tiab] OR self-blam*[tiab] OR experiential avoidance[tiab] OR worr*[tiab] OR dysfunctional attitude*[tiab] OR schema*[tiab] OR stress generation[tiab] OR cognitive therap*[tiab] OR cognitive behavio* therap*[tiab] OR behavioral therap*[tiab] OR behavioural therap*[tiab] OR interpersonal therap*[tiab] OR behavioral activation[tiab] OR time perspective[tiab] OR future perspective[tiab] OR loss event*[tiab] OR social support[tiab] OR life change event*[tiab] OR problem solving[tiab] OR reminiscen*[tiab] OR psychological mechanism*[tiab] OR cognitive mechanism*[tiab] OR explanatory model*[tiab] OR psychological explanat*[tiab] OR theoretical explanat*[tiab] OR theor*[tiab] OR mechanism*[tiab])) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])\n```",
+  "strategy": "((Depressive Disorder[Mesh] OR Depression[Mesh] OR depress*[tiab] OR dysthymi*[tiab] OR melanchol*[tiab] OR unipolar[tiab] OR affective disorder*[tiab]) AND (Recurrence[Mesh] OR relapse[tiab] OR relaps*[tiab] OR recurren*[tiab] OR recrudescen*[tiab] OR recurrent depression[tiab] OR depressive relapse[tiab] OR relapse prevention[tiab] OR vulnerab*[tiab] OR susceptib*[tiab] OR (subsequent[tiab] AND depress*[tiab] AND episode*[tiab]) OR (future[tiab] AND depress*[tiab]) OR (return*[tiab] AND depress*[tiab])) AND (Psychological Theory[Mesh] OR Models, Psychological[Mesh] OR psychological theor*[tiab] OR psychological model*[tiab] OR theoretical model*[tiab] OR cognitive theor*[tiab] OR cognitive model*[tiab] OR cognitive vulnerab*[tiab] OR cognitive reactiv*[tiab] OR rumination[tiab] OR attributional[tiab] OR hopelessness[tiab] OR learned helplessness[tiab] OR psychodynamic[tiab] OR interpersonal theor*[tiab] OR behavioral model*[tiab] OR behavioural model*[tiab] OR vulnerability-stress[tiab] OR self-esteem[tiab] OR self-blam*[tiab] OR experiential avoidance[tiab] OR worr*[tiab] OR dysfunctional attitude*[tiab] OR schema*[tiab] OR stress generation[tiab] OR cognitive therap*[tiab] OR cognitive behavio* therap*[tiab] OR behavioral therap*[tiab] OR behavioural therap*[tiab] OR interpersonal therap*[tiab] OR behavioral activation[tiab] OR time perspective[tiab] OR future perspective[tiab] OR loss event*[tiab] OR social support[tiab] OR life change event*[tiab] OR problem solving[tiab] OR reminiscen*[tiab] OR psychological mechanism*[tiab] OR cognitive mechanism*[tiab] OR explanatory model*[tiab] OR psychological explanat*[tiab] OR theoretical explanat*[tiab] OR theor*[tiab] OR mechanism*[tiab])) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-11-17",
+  "count": 14947,
+  "gold_scored": 54,
+  "gold_reachable": 54,
+  "retrieved": 37,
+  "recall_percent": 68.5,
+  "missed": [
+    "1537969",
+    "9500684",
+    "10096642",
+    "11246082",
+    "14691361",
+    "15291658",
+    "16538651",
+    "17156852",
+    "17574685",
+    "18251627",
+    "18805590",
+    "20584514",
+    "20797379",
+    "21848705",
+    "23111147",
+    "25560481",
+    "25881281"
+  ],
+  "nnr": 404.0,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 36,
+  "unseen_recall_percent": 67.9,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "relapse_recurrence",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "psychological_theory",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}
