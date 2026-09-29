@@ -1,0 +1,68 @@
+{
+  "topic": "Welling_2021",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T032410Z",
+  "scored": "20260929T035745Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4efc9e1c5e9be04c94f1adb65219b795c3fbc50746fd76e840e717df9e0386d2",
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2014
+  },
+  "final_message": "stress[tiab] OR loneliness[tiab] OR resilience[tiab] OR \"Cannabis\"[Mesh] OR cannabis[tiab] OR \"drug use\"[tiab] OR \"Sexual Behavior\"[Mesh] OR \"sexual behavior\"[tiab] OR \"sexual behaviour\"[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])\n```\n\nThe [audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260929T032410Z/work/audit.md) has the numbered line-by-line counts and search history. The protected [query file](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260929T032410Z/work/final-query.txt), [validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260929T032410Z/work/validation-manifest.json), and [build narrative](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260929T032410Z/work/narrative.md) are in `./work`.\n\n## Validation and limitations\n\n- All **17** relevant records screened into the development set were retrieved. This is development-set relative recall, **not sensitivity or independent validation**; no user-supplied seeds or held-out records were available.\n- The outcome block was tested as optional and retained: it reduced results by **85.1%**, kept all 17 development records, and the refreshed loss sample found no eligible records among 30 screened. An earlier sample revealed a missing drug-use and sexual-behavior study; those terms were added.\n- The result count exceeds the standard default screening budget of 10,000. The final exposure block also lacks a current category probe: the two-probe budget was used before later query revisions, and the earlier 0/30 sample does not validate the final query.\n- The cutoff is an **Entrez entry-date** limit; no publication-date (`[dp]`) limit was added. Counts use today’s PubMed index with that entry-date bound.\n- The internal critic was same-context and automated. This draft still needs **PRESS peer review by an information specialist before use**.",
+  "strategy": "((\"SARS-CoV-2\"[Mesh] OR \"COVID-19\"[Mesh] OR \"Physical Distancing\"[Mesh] OR physical distancing[tiab] OR \"home confinement\"[tiab] OR COVID-19[tiab] OR COVID19[tiab] OR SARS-CoV-2[tiab] OR SARS-CoV2[tiab] OR \"2019-nCoV\"[tiab] OR 2019nCoV[tiab] OR \"2019 novel coronavirus\"[tiab] OR \"2019 novel coronavirus disease\"[tiab] OR \"severe acute respiratory syndrome coronavirus 2\"[tiab] OR lockdown*[tiab] OR lock-down*[tiab] OR \"stay-at-home\"[tiab] OR \"stay at home\"[tiab] OR \"social distancing\"[tiab] OR quarantine*[tiab] OR \"self-isolation\"[tiab] OR \"self isolation\"[tiab]) AND (\"Life Style\"[Mesh] OR \"Health Behavior\"[Mesh] OR \"Exercise\"[Mesh] OR \"Motor Activity\"[Mesh] OR \"Sedentary Behavior\"[Mesh] OR \"Feeding Behavior\"[Mesh] OR \"Diet\"[Mesh] OR \"Sleep\"[Mesh] OR \"Alcohol Drinking\"[Mesh] OR \"Smoking\"[Mesh] OR \"Mental Health\"[Mesh] OR \"Psychological Distress\"[Mesh] OR \"Quality of Life\"[Mesh] OR lifestyle[tiab] OR \"life style\"[tiab] OR \"lifestyle behavior*\"[tiab] OR \"health behavior*\"[tiab] OR \"health behaviour*\"[tiab] OR behavior change[tiab] OR behaviour change[tiab] OR \"physical activit*\"[tiab] OR exercis*[tiab] OR sedentary[tiab] OR \"screen time\"[tiab] OR sleep[tiab] OR diet*[tiab] OR nutrition*[tiab] OR eating[tiab] OR alcohol[tiab] OR smoking[tiab] OR tobacco[tiab] OR \"substance use\"[tiab] OR \"mental health\"[tiab] OR wellbeing[tiab] OR well-being[tiab] OR \"quality of life\"[tiab] OR anxiety[tiab] OR depression[tiab] OR stress[tiab] OR distress[tiab] OR loneliness[tiab] OR resilience[tiab] OR \"Cannabis\"[Mesh] OR cannabis[tiab] OR \"drug use\"[tiab] OR \"Sexual Behavior\"[Mesh] OR \"sexual behavior\"[tiab] OR \"sexual behaviour\"[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-11-22",
+  "count": 12601,
+  "gold_scored": 53,
+  "gold_reachable": 53,
+  "retrieved": 47,
+  "recall_percent": 88.7,
+  "missed": [
+    "32227671",
+    "32242089",
+    "32640077",
+    "32959000",
+    "33004322",
+    "33105275"
+  ],
+  "nnr": 268.1,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 45,
+  "unseen_recall_percent": 88.2,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "lifestyle_wellbeing",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

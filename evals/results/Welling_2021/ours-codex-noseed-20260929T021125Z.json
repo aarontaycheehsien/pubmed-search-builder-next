@@ -1,0 +1,62 @@
+{
+  "topic": "Welling_2021",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T021125Z",
+  "scored": "20260929T023350Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4efc9e1c5e9be04c94f1adb65219b795c3fbc50746fd76e840e717df9e0386d2",
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1344
+  },
+  "final_message": "Mesh] OR COVID-19[tiab] OR COVID19[tiab] OR \"COVID 19\"[tiab] OR SARS-CoV-2[tiab] OR SARS-CoV2[tiab] OR 2019-nCoV[tiab] OR 2019nCoV[tiab] OR \"2019 novel coronavirus\"[tiab] OR \"novel coronavirus\"[tiab] OR \"coronavirus disease 2019\"[tiab] OR \"COVID-19 pandemic\"[tiab] OR \"COVID-19 outbreak\"[tiab] OR \"coronavirus pandemic\"[tiab] OR lockdown*[tiab] OR quarantin*[tiab] OR \"stay at home\"[tiab] OR \"stay-at-home\"[tiab] OR confinement[tiab] OR \"social distancing\"[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])\n```\n\nThe final count was **103,873 records**. The strategy’s line-by-line counts are in the [audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260929T021125Z/work/audit.md).\n\n## Validation and limits\n\nSeven relevant records discovered during the build were retrieved: **7/7 relative recall in the development set**. This is not independent validation or a sensitivity estimate; no held-out or benchmark set was established.\n\nI tested a lifestyle and well-being outcome block. It reduced retrieval by 87.7%, to 12,802 records, but that still exceeds the standard 10,000-record workload budget. With only seven known records, the skill’s threshold for safely requiring the outcome block was not met, so it remains out of the search. The resulting query is broad and has a substantial screening burden.\n\nThe search has two clean category probes and a PRESS-structured internal review, including the required cutoff disposition. **An information specialist still needs to PRESS peer review this draft before use.**\n\nProtected files: [final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260929T021125Z/work/final-query.txt), [audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260929T021125Z/work/audit.md), and [validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260929T021125Z/work/validation-manifest.json).",
+  "strategy": "((\"COVID-19\"[Mesh] OR \"SARS-CoV-2\"[Mesh] OR COVID-19[tiab] OR COVID19[tiab] OR \"COVID 19\"[tiab] OR SARS-CoV-2[tiab] OR SARS-CoV2[tiab] OR 2019-nCoV[tiab] OR 2019nCoV[tiab] OR \"2019 novel coronavirus\"[tiab] OR \"novel coronavirus\"[tiab] OR \"coronavirus disease 2019\"[tiab] OR \"COVID-19 pandemic\"[tiab] OR \"COVID-19 outbreak\"[tiab] OR \"coronavirus pandemic\"[tiab] OR lockdown*[tiab] OR quarantin*[tiab] OR \"stay at home\"[tiab] OR \"stay-at-home\"[tiab] OR confinement[tiab] OR \"social distancing\"[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-11-22",
+  "count": 103873,
+  "gold_scored": 53,
+  "gold_reachable": 53,
+  "retrieved": 53,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 1959.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 52,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 2,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "lifestyle_wellbeing",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

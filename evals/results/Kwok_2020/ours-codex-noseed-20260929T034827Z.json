@@ -1,0 +1,78 @@
+{
+  "topic": "Kwok_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T034827Z",
+  "scored": "20260929T041203Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4efc9e1c5e9be04c94f1adb65219b795c3fbc50746fd76e840e717df9e0386d2",
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1416
+  },
+  "final_message": "p[tiab] OR ovine[tiab] OR goat*[tiab] OR caprine[tiab] OR horse*[tiab] OR equine[tiab] OR chicken*[tiab] OR broiler*[tiab] OR turkey*[tiab] OR duck*[tiab] OR geese[tiab] OR rabbit*[tiab] OR camel*[tiab] OR buffalo*[tiab] OR aquaculture[tiab] OR farmed fish[tiab] OR Aquaculture[Mesh] OR fish farm*[tiab] OR tilapia[tiab] OR salmon[tiab] OR trout[tiab] OR carp[tiab] OR catfish[tiab] OR Penaeidae[Mesh] OR shrimp[tiab] OR prawn*[tiab])) AND (\"1800/01/01\"[edat] : \"2019/02/22\"[edat])\n```\n\nThe viral-metagenomics block returns **19,456** records; the farm-animal block returns **1,620,372**; their intersection returns **1,830**.\n\n## Validation and limitations\n\nSeven records screened as relevant during the build were all retrieved: **100% relative recall against this development set**. This is not independent validation or an estimate of absolute sensitivity. No user-supplied seeds or matching prior-review benchmark were available.\n\nA farm-animal probe found a relevant cultured-shrimp study, so shrimp and prawn terms were added. The viral category probe became stale after strategy revisions, and the standard probe budget was exhausted. These probe limitations are documented in the audit. The scope provisionally includes commercially farmed aquatic animals. **An information specialist should perform PRESS peer review before use.**\n\nFiles are in `./work`:\n\n- [Generated PubMed query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/ours-codex-noseed-20260929T034827Z/work/final-query.txt)\n- [Audit with line-by-line counts and critic dispositions](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/ours-codex-noseed-20260929T034827Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/ours-codex-noseed-20260929T034827Z/work/validation-manifest.json)\n- [Supplementary rationale and risks](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/ours-codex-noseed-20260929T034827Z/work/narrative.md)",
+  "strategy": "((Metagenomics[Mesh] OR (Genomics[Mesh] AND (virus*[tiab] OR viral[tiab] OR virolog*[tiab])) OR metagenom*[tiab] OR virom*[tiab] OR viral metagenom*[tiab] OR virus metagenom*[tiab] OR metagenom* virus*[tiab] OR viral communit*[tiab] OR virus communit*[tiab] OR viral microbiom*[tiab] OR virus microbiom*[tiab] OR viral sequenc*[tiab] OR virus sequenc*[tiab] OR metavirom*[tiab]) AND (Animals, Domestic[Mesh:noexp] OR Livestock[Mesh] OR Poultry[Mesh] OR Cattle[Mesh] OR Swine[Mesh] OR Sheep[Mesh] OR Goats[Mesh] OR Horses[Mesh] OR Rabbits[Mesh] OR Chickens[Mesh] OR Ducks[Mesh] OR Geese[Mesh] OR Turkeys[Mesh] OR farm animal*[tiab] OR livestock[tiab] OR poultry[tiab] OR cattle[tiab] OR bovine[tiab] OR cow[tiab] OR cows[tiab] OR calf[tiab] OR calves[tiab] OR swine[tiab] OR pig[tiab] OR pigs[tiab] OR porcine[tiab] OR piglet*[tiab] OR sheep[tiab] OR ovine[tiab] OR goat*[tiab] OR caprine[tiab] OR horse*[tiab] OR equine[tiab] OR chicken*[tiab] OR broiler*[tiab] OR turkey*[tiab] OR duck*[tiab] OR geese[tiab] OR rabbit*[tiab] OR camel*[tiab] OR buffalo*[tiab] OR aquaculture[tiab] OR farmed fish[tiab] OR Aquaculture[Mesh] OR fish farm*[tiab] OR tilapia[tiab] OR salmon[tiab] OR trout[tiab] OR carp[tiab] OR catfish[tiab] OR Penaeidae[Mesh] OR shrimp[tiab] OR prawn*[tiab])) AND (\"1800/01/01\"[edat] : \"2019/02/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2019-02-22",
+  "count": 1830,
+  "gold_scored": 116,
+  "gold_reachable": 116,
+  "retrieved": 92,
+  "recall_percent": 79.3,
+  "missed": [
+    "19748534",
+    "22821184",
+    "22848676",
+    "23363449",
+    "24672039",
+    "25918239",
+    "25926652",
+    "26646894",
+    "26909691",
+    "26940636",
+    "27178401",
+    "27314228",
+    "27314580",
+    "27315461",
+    "27353186",
+    "28495761",
+    "28653486",
+    "29027372",
+    "29143492",
+    "29148383",
+    "29484834",
+    "30473342",
+    "30496912",
+    "30547827"
+  ],
+  "nnr": 19.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 5,
+  "unseen_retrieved": 87,
+  "unseen_recall_percent": 78.4,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "search": 2
+    },
+    "optional": []
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

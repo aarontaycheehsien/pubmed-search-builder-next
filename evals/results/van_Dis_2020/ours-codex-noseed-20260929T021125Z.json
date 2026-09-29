@@ -1,0 +1,68 @@
+{
+  "topic": "van_Dis_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T021125Z",
+  "scored": "20260929T024116Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4efc9e1c5e9be04c94f1adb65219b795c3fbc50746fd76e840e717df9e0386d2",
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1790
+  },
+  "final_message": "tion anxiety\"[tiab] OR obsessive-compulsive[tiab] OR obsessive compulsive[tiab] OR OCD[tiab] OR PTSD[tiab] OR post-traumatic stress[tiab] OR posttraumatic stress[tiab]) AND (Behavior Therapy[Mesh] OR \"cognitive behavioral therapy\"[tiab] OR \"cognitive behaviour therapy\"[tiab] OR \"cognitive behavioral treatment\"[tiab] OR \"cognitive behavioural treatment\"[tiab] OR \"cognitive therapy\"[tiab] OR \"behavior therapy\"[tiab] OR \"behaviour therapy\"[tiab] OR CBT[tiab] OR \"exposure therapy\"[tiab] OR \"exposure-based\"[tiab] OR \"systematic desensitization\"[tiab] OR \"systematic desensitisation\"[tiab]) AND (Follow-Up Studies[Mesh] OR Treatment Outcome[Mesh] OR \"long-term\"[tiab] OR \"long term\"[tiab] OR follow-up[tiab] OR followup[tiab] OR posttreatment[tiab] OR \"post-treatment\"[tiab] OR relapse[tiab] OR recurrence[tiab] OR maintenance[tiab] OR durability[tiab] OR \"sustained response\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/08/24\"[edat])\n```\n\nThe query retrieved **34/34** known relevant records in the build-derived development set (100% relative recall on that set). These records were used to develop the strategy, so this is **not independent validation** and not an estimate of sensitivity. The long-term block was AND-ed after its loss sample contained no eligible records and it reduced the count by 52.7%.\n\nScope assumptions include OCD and PTSD within “anxiety-related disorders” and long-term follow-up as at least six months after CBT ended. Those assumptions were not confirmed by the user. The draft still needs PRESS peer review by an information specialist before use.\n\nFiles: [final query](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-62327eccbc31903b\\ours-codex-noseed-20260929T021125Z\\work\\final-query.txt) · [audit](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-62327eccbc31903b\\ours-codex-noseed-20260929T021125Z\\work\\audit.md) · [validation manifest](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-62327eccbc31903b\\ours-codex-noseed-20260929T021125Z\\work\\validation-manifest.json)",
+  "strategy": "((Anxiety Disorders[Mesh] OR Stress Disorders, Post-Traumatic[Mesh] OR anxiety[tiab] OR \"anxiety disorder\"[tiab:~1] OR panic[tiab] OR agoraphobia[tiab] OR phobia*[tiab] OR \"social anxiety\"[tiab] OR \"social phobia\"[tiab] OR \"generalized anxiety\"[tiab] OR \"generalised anxiety\"[tiab] OR \"separation anxiety\"[tiab] OR obsessive-compulsive[tiab] OR obsessive compulsive[tiab] OR OCD[tiab] OR PTSD[tiab] OR post-traumatic stress[tiab] OR posttraumatic stress[tiab]) AND (Behavior Therapy[Mesh] OR \"cognitive behavioral therapy\"[tiab] OR \"cognitive behaviour therapy\"[tiab] OR \"cognitive behavioral treatment\"[tiab] OR \"cognitive behavioural treatment\"[tiab] OR \"cognitive therapy\"[tiab] OR \"behavior therapy\"[tiab] OR \"behaviour therapy\"[tiab] OR CBT[tiab] OR \"exposure therapy\"[tiab] OR \"exposure-based\"[tiab] OR \"systematic desensitization\"[tiab] OR \"systematic desensitisation\"[tiab]) AND (Follow-Up Studies[Mesh] OR Treatment Outcome[Mesh] OR \"long-term\"[tiab] OR \"long term\"[tiab] OR follow-up[tiab] OR followup[tiab] OR posttreatment[tiab] OR \"post-treatment\"[tiab] OR relapse[tiab] OR recurrence[tiab] OR maintenance[tiab] OR durability[tiab] OR \"sustained response\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/08/24\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-08-24",
+  "count": 7653,
+  "gold_scored": 61,
+  "gold_reachable": 61,
+  "retrieved": 55,
+  "recall_percent": 90.2,
+  "missed": [
+    "10838679",
+    "10883554",
+    "15301642",
+    "21644186",
+    "23916633",
+    "27459503"
+  ],
+  "nnr": 139.1,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 55,
+  "unseen_recall_percent": 90.2,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "long_term",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

@@ -1,0 +1,64 @@
+{
+  "topic": "Smid_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T031020Z",
+  "scored": "20260929T034046Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4efc9e1c5e9be04c94f1adb65219b795c3fbc50746fd76e840e717df9e0386d2",
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1825
+  },
+  "final_message": "]` | 10,281 |\n| 10 | `CFA[tiab]` | 7,128 |\n| 11 | `latent growth[tiab]` | 1,734 |\n| 12 | `growth curve model*[tiab]` | 1,502 |\n| 13 | `latent growth curve*[tiab]` | 973 |\n| 14 | `growth mixture model*[tiab]` | 768 |\n| 15 | `latent class model*[tiab]` | 603 |\n| 16 | `latent class[tiab]` | 4,129 |\n| 17 | `multilevel[tiab]` | 25,930 |\n| 18 | `hierarchical model*[tiab]` | 3,344 |\n| 19 | `mediation[tiab]` | 22,917 |\n| 20 | `mediating variable*[tiab]` | 933 |\n| 21 | `indirect effect*[tiab]` | 12,817 |\n| 22 | `path analys*[tiab]` | 5,178 |\n| 23 | Model-family OR block | 218,091 |\n| 24 | `\"Markov Chains\"[Mesh]` | 13,023 |\n| 25 | `bayes*[tiab]` | 39,780 |\n| 26 | `MCMC[tiab]` | 1,577 |\n| 27 | `\"Markov chain Monte Carlo\"[tiab]` | 3,122 |\n| 28 | `\"Monte Carlo Markov chain\"[tiab]` | 133 |\n| 29 | `Gibbs sampl*[tiab]` | 1,028 |\n| 30 | `posterior[tiab]` | 243,365 |\n| 31 | `prior distribution*[tiab]` | 1,143 |\n| 32 | Bayesian OR block | 291,070 |\n| 33 | Final query (lines 23 AND 32) | **5,069** |\n\n### Validation and limitations\n\nThree screened development records were retrieved (3/3; **100% relative recall against this development set**). That is not independent validation or absolute sensitivity: no seed articles were supplied, no prior-review benchmark was identified, and no held-out set was available.\n\nThe Monte Carlo/simulation block was tested but left out to protect recall. It would reduce the result count from 5,069 to 943; none of the 30 sampled losses met eligibility, but only three known development records were available—below the skill’s threshold for safely adding the block. Screen simulation design, small-sample context, comparator, discipline, and peer-review status.\n\nThe cutoff is an **Entrez-entry date** bound; no publication-date limit was added. This is a PubMed-only draft, so coverage of social/behavioural methods may be incomplete. The PRESS-structured internal review passed, but the strategy still needs PRESS peer review by an information specialist before use.",
+  "strategy": "((\"Factor Analysis, Statistical\"[Mesh] OR \"Multilevel Analysis\"[Mesh] OR structural equation model*[tiab] OR \"structural equation modeling\"[tiab] OR SEM[tiab] OR \"latent variable model*\"[tiab] OR \"latent variable modeling\"[tiab] OR factor analys*[tiab] OR confirmatory factor analys*[tiab] OR CFA[tiab] OR latent growth[tiab] OR growth curve model*[tiab] OR latent growth curve*[tiab] OR growth mixture model*[tiab] OR latent class model*[tiab] OR latent class[tiab] OR multilevel[tiab] OR hierarchical model*[tiab] OR mediation[tiab] OR mediating variable*[tiab] OR indirect effect*[tiab] OR path analys*[tiab]) AND (\"Markov Chains\"[Mesh] OR bayes*[tiab] OR MCMC[tiab] OR \"Markov chain Monte Carlo\"[tiab] OR \"Monte Carlo Markov chain\"[tiab] OR Gibbs sampl*[tiab] OR posterior[tiab] OR prior distribution*[tiab])) AND (\"1800/01/01\"[edat] : \"2017/11/29\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-11-29",
+  "count": 5069,
+  "gold_scored": 14,
+  "gold_reachable": 14,
+  "retrieved": 13,
+  "recall_percent": 92.9,
+  "missed": [
+    "25765534"
+  ],
+  "nnr": 389.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 3,
+  "unseen_retrieved": 10,
+  "unseen_recall_percent": 90.9,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 1,
+      "screen": 3,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "simulation",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

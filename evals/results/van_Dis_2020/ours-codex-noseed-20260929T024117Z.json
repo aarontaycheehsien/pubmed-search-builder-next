@@ -1,0 +1,66 @@
+{
+  "topic": "van_Dis_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T024117Z",
+  "scored": "20260929T031646Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4efc9e1c5e9be04c94f1adb65219b795c3fbc50746fd76e840e717df9e0386d2",
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2127
+  },
+  "final_message": "3 |\n| 37 | CBT[tiab] | 8,158 |\n| 38 | cognitiv*[tiab] AND therap*[tiab] | 46,483 |\n| 39 | exposure[tiab] AND therap*[tiab] | 61,364 |\n| 40 | exposure-based[tiab] | 1,163 |\n| 41 | \"exposure and response prevention\"[tiab:~1] | 308 |\n| 42 | \"response prevention\"[tiab:~1] | 886 |\n| 43 | systematic desensiti*[tiab] | 391 |\n| 44 | behavior*[tiab] AND therap*[tiab] | 69,586 |\n| 45 | behaviour*[tiab] AND therap*[tiab] | 22,244 |\n| 46 | Intervention block (OR of lines 26–45) | 221,591 |\n| 47 | Final query (lines 25 AND 46) | 24,486 |\n\n## Validation and limitations\n\nNine screened relevant records were retrieved: **9/9, or 100% relative recall against the development set**. This is not an independent validation result or absolute sensitivity; no user seeds, independent benchmark, or held-out set were available.\n\nThe long-term follow-up block was tested and left out. It reduced the count to 10,190 (58.4%), but only nine known records were available, below the skill’s threshold for requiring an optional block. The loss sample found 0/30 clearly eligible records, which is too small to establish safety. Follow-up timing remains for screening. Even with that block, retrieval would exceed the 10,000-record standard workload budget.\n\nI assumed “anxiety-related disorders” includes OCD and PTSD as well as anxiety disorders; confirm that scope and the minimum follow-up interval for “long-term.” The counts use the current PubMed index constrained by Entrez date, not a reconstruction of the exact 2017 interface or indexing state.\n\nThe draft needs PRESS peer review by an information specialist before use. The full audit includes validation, rationale, and line counts: [audit.md](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-62327eccbc31903b/ours-codex-noseed-20260929T024117Z/work/audit.md>). The protected [validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-62327eccbc31903b/ours-codex-noseed-20260929T024117Z/work/validation-manifest.json>) was generated successfully.",
+  "strategy": "((Anxiety Disorders[Mesh] OR Anxiety[Mesh] OR Phobic Disorders[Mesh] OR Panic Disorder[Mesh] OR Obsessive-Compulsive Disorder[Mesh] OR Stress Disorders, Post-Traumatic[Mesh] OR anxiet*[tiab] OR (anxiety[tiab] AND disorder*[tiab]) OR anxious[tiab] OR (generalized[tiab] AND anxiety[tiab]) OR (generalised[tiab] AND anxiety[tiab]) OR GAD[tiab] OR panic[tiab] OR agoraphobi*[tiab] OR phobi*[tiab] OR (social[tiab] AND anxi*[tiab]) OR \"social phobia\"[tiab:~1] OR \"separation anxiety\"[tiab:~1] OR obsessive-compulsive[tiab] OR \"obsessive compulsive\"[tiab:~1] OR OCD[tiab] OR PTSD[tiab] OR \"posttraumatic stress\"[tiab:~1] OR \"post-traumatic stress\"[tiab:~1]) AND (Behavior Therapy[Mesh] OR Cognitive Behavioral Therapy[Mesh] OR Desensitization, Psychologic[Mesh] OR Implosive Therapy[Mesh] OR \"cognitive behavioral therapy\"[tiab:~2] OR \"cognitive behaviour therapy\"[tiab:~2] OR \"cognitive behavioral treatment\"[tiab:~2] OR \"cognitive behaviour treatment\"[tiab:~2] OR \"cognitive therapy\"[tiab:~1] OR \"behavior therapy\"[tiab:~1] OR \"behaviour therapy\"[tiab:~1] OR CBT[tiab] OR (cognitiv*[tiab] AND therap*[tiab]) OR (exposure[tiab] AND therap*[tiab]) OR exposure-based[tiab] OR \"exposure and response prevention\"[tiab:~1] OR \"response prevention\"[tiab:~1] OR systematic desensiti*[tiab] OR (behavior*[tiab] AND therap*[tiab]) OR (behaviour*[tiab] AND therap*[tiab]))) AND (\"1800/01/01\"[edat] : \"2017/08/24\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-08-24",
+  "count": 24486,
+  "gold_scored": 61,
+  "gold_reachable": 61,
+  "retrieved": 57,
+  "recall_percent": 93.4,
+  "missed": [
+    "10838679",
+    "10883554",
+    "21644186",
+    "27459503"
+  ],
+  "nnr": 429.6,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 55,
+  "unseen_recall_percent": 93.2,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "long_term",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

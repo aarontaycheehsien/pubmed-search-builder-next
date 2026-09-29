@@ -1,0 +1,64 @@
+{
+  "topic": "Brouwer_2019",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T021125Z",
+  "scored": "20260929T022920Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4efc9e1c5e9be04c94f1adb65219b795c3fbc50746fd76e840e717df9e0386d2",
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1074
+  },
+  "final_message": "ncholia[tiab]` | 1,412 |\n| 7 | `#1 OR #2 OR #3 OR #4 OR #5 OR #6` | 439,006 |\n| 8 | `Recurrence[Mesh]` | 178,366 |\n| 9 | `relaps*[tiab]` | 163,847 |\n| 10 | `recurren*[tiab]` | 496,927 |\n| 11 | `recrudescen*[tiab]` | 3,173 |\n| 12 | `reemerg*[tiab]` | 8,492 |\n| 13 | `re-emerg*[tiab]` | 5,672 |\n| 14 | `repeat episode*[tiab]` | 161 |\n| 15 | `subsequent episode*[tiab]` | 599 |\n| 16 | `#8 OR #9 OR #10 OR #11 OR #12 OR #13 OR #14 OR #15` | 713,857 |\n| 17 | `#7 AND #16` | **16,901** |\n\n## Validation and handoff\n\nThe strategy retrieved **8 of 8 known development records** (100% relative recall against that set). Those records were identified through one relevant review and its cited references, so this is not independent validation and should not be read as sensitivity. The search exceeds the 10,000-record workload budget by 6,901 records.\n\nI assumed the scope is psychological theories, models, or explanatory mechanisms specifically about depressive relapse/recurrence. I used an Entrez-date bound of 2018-11-17, with no publication-date cutoff. Counts were run against the current PubMed index with that entry-date bound; they do not reconstruct the exact historical index.\n\nThe protected report passed validation, and its artifacts are in `./work`:\n\n- [Generated query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260929T021125Z/work/final-query.txt)\n- [Audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260929T021125Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260929T021125Z/work/validation-manifest.json)\n- [Build notes and open risks](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260929T021125Z/work/narrative.md)\n\nA fresh-context PRESS-structured internal critique passed with no strategy findings. **This draft still needs PRESS peer review by an information specialist before use.**",
+  "strategy": "((Depressive Disorder[Mesh] OR depress*[tiab] OR unipolar depress*[tiab] OR major depressive disorder[tiab] OR dysthymi*[tiab] OR melancholia[tiab]) AND (Recurrence[Mesh] OR relaps*[tiab] OR recurren*[tiab] OR recrudescen*[tiab] OR reemerg*[tiab] OR re-emerg*[tiab] OR repeat episode*[tiab] OR subsequent episode*[tiab])) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-11-17",
+  "count": 16901,
+  "gold_scored": 54,
+  "gold_reachable": 54,
+  "retrieved": 52,
+  "recall_percent": 96.3,
+  "missed": [
+    "17696703",
+    "21848705"
+  ],
+  "nnr": 325.0,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 51,
+  "unseen_recall_percent": 96.2,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "psychological_theory",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

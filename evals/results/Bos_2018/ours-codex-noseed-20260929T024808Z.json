@@ -1,0 +1,62 @@
+{
+  "topic": "Bos_2018",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T024808Z",
+  "scored": "20260929T031828Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4efc9e1c5e9be04c94f1adb65219b795c3fbc50746fd76e840e717df9e0386d2",
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1819
+  },
+  "final_message": "essel disease\"[tiab] OR \"cerebral microangiopath*\"[tiab] OR \"small vessel ischemic disease\"[tiab] OR \"small vessel ischemic change*\"[tiab] OR \"white matter hyperintensity\"[tiab] OR \"white matter hyperintensities\"[tiab] OR \"white matter lesion\"[tiab] OR \"white matter lesions\"[tiab] OR \"white matter change\"[tiab] OR \"white matter changes\"[tiab] OR leukoaraiosis[tiab] OR \"lacunar infarct\"[tiab] OR \"lacunar infarcts\"[tiab] OR \"silent infarct\"[tiab] OR \"silent infarcts\"[tiab] OR \"silent brain infarct\"[tiab] OR \"silent brain infarcts\"[tiab] OR \"cerebral microbleed\"[tiab] OR \"cerebral microbleeds\"[tiab] OR \"brain microbleed\"[tiab] OR \"brain microbleeds\"[tiab] OR microbleed*[tiab] OR \"vascular brain injury\"[tiab] OR \"vascular brain damage\"[tiab] OR \"subclinical brain infarct\"[tiab] OR \"subclinical brain infarcts\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/05/06\"[edat])\n```\n\nThe search returned **45,434 records** under the PubMed entry-date cutoff of **2017-05-06**. No publication-date (`[dp]`), language, or study-design limit was applied. Outcome and cohort eligibility are left for screening; the tested outcome block reduced the count to 7,030, but the available known-record set was too small to establish that applying it would preserve recall.\n\nIt retrieved **8/8 benchmark records** and **2/2 development records**. These are relative recall checks, not an estimate of absolute sensitivity; there was no held-out validation set. The protected validation manifest passed, with human PRESS review pending.\n\nThe skill-generated files are [final-query.txt](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-535fe3dc7ca88971/ours-codex-noseed-20260929T024808Z/work/final-query.txt), [audit.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-535fe3dc7ca88971/ours-codex-noseed-20260929T024808Z/work/audit.md), and [validation-manifest.json](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-535fe3dc7ca88971/ours-codex-noseed-20260929T024808Z/work/validation-manifest.json). No web search was used.",
+  "strategy": "((\"Cerebral Small Vessel Diseases\"[Mesh] OR \"Leukoaraiosis\"[Mesh] OR \"Stroke, Lacunar\"[Mesh] OR \"Cerebral Infarction\"[Mesh] OR \"cerebral small vessel disease\"[tiab] OR \"small vessel disease\"[tiab] OR \"cerebral microangiopath*\"[tiab] OR \"small vessel ischemic disease\"[tiab] OR \"small vessel ischemic change*\"[tiab] OR \"white matter hyperintensity\"[tiab] OR \"white matter hyperintensities\"[tiab] OR \"white matter lesion\"[tiab] OR \"white matter lesions\"[tiab] OR \"white matter change\"[tiab] OR \"white matter changes\"[tiab] OR leukoaraiosis[tiab] OR \"lacunar infarct\"[tiab] OR \"lacunar infarcts\"[tiab] OR \"silent infarct\"[tiab] OR \"silent infarcts\"[tiab] OR \"silent brain infarct\"[tiab] OR \"silent brain infarcts\"[tiab] OR \"cerebral microbleed\"[tiab] OR \"cerebral microbleeds\"[tiab] OR \"brain microbleed\"[tiab] OR \"brain microbleeds\"[tiab] OR microbleed*[tiab] OR \"vascular brain injury\"[tiab] OR \"vascular brain damage\"[tiab] OR \"subclinical brain infarct\"[tiab] OR \"subclinical brain infarcts\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/05/06\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-05-06",
+  "count": 45434,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 9,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 5048.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 7,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 2,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "outcome",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

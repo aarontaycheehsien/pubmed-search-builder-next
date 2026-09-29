@@ -1,0 +1,70 @@
+{
+  "topic": "Smid_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T034048Z",
+  "scored": "20260929T041041Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4efc9e1c5e9be04c94f1adb65219b795c3fbc50746fd76e840e717df9e0386d2",
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1793
+  },
+  "final_message": " item response theory[tiab] | 2,378 |\n| 25 | IRT[tiab] | 2,417 |\n| 26 | Model-family block | 1,341,965 |\n| 27 | Bayes Theorem[Mesh] | 28,985 |\n| 28 | Bayesian[tiab] | 35,533 |\n| 29 | Bayes[tiab] | 5,705 |\n| 30 | MCMC[tiab] | 1,577 |\n| 31 | Markov chain Monte Carlo[tiab] | 3,122 |\n| 32 | Bayesian block | 47,661 |\n| 33 | Combined search | 2,337 |\n\n## Validation and handoff\n\nThe strategy retrieved both screened relevant records (PMIDs **25361865** and **26610033**): **100% relative recall against this development set**. This is not independent validation or an estimate of absolute sensitivity. Small-sample and simulation blocks were tested and left out; requiring the small-sample block would lose PMID 26610033. The audit records the decisions and the cutoff-bound samples.\n\nI found that the script’s initial small-result sampling path did not apply the Entrez cutoff automatically. I refreshed the optional loss samples with explicit `[edat]` bounds; no post-cutoff record entered the relevant set or term mining. Counts use the current PubMed index bounded by Entrez date; they do not reconstruct PubMed’s historical index.\n\nThe **PRESS-structured critique passed**, but this draft still needs review by an information specialist before use.\n\nFiles are in [`./work`](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260929T034048Z/work):\n\n- [Generated query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260929T034048Z/work/final-query.txt)\n- [Audit with full counts and validation details](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260929T034048Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260929T034048Z/work/validation-manifest.json)\n- [Supplemental rationale and risks](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260929T034048Z/work/narrative.md)",
+  "strategy": "((Latent Class Analysis[Mesh] OR Factor Analysis, Statistical[Mesh] OR Multilevel Analysis[Mesh] OR structural equation model*[tiab] OR structural equation modeling[tiab] OR structural equation modelling[tiab] OR \"latent variable\"[tiab:~1] OR \"latent variables\"[tiab:~1] OR \"factor analysis\"[tiab] OR \"factor analyses\"[tiab] OR confirmatory factor analys*[tiab] OR CFA[tiab] OR \"latent growth\"[tiab:~1] OR growth curve model*[tiab] OR \"latent class\"[tiab:~1] OR class growth model*[tiab] OR multilevel[tiab] OR mediation[tiab] OR indirect effect*[tiab] OR SEM[tiab] OR BSEM[tiab] OR MSEM[tiab] OR mediat*[tiab] OR item response theory[tiab] OR IRT[tiab]) AND (Bayes Theorem[Mesh] OR Bayesian[tiab] OR Bayes[tiab] OR MCMC[tiab] OR Markov chain Monte Carlo[tiab])) AND (\"1800/01/01\"[edat] : \"2017/11/29\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-11-29",
+  "count": 2337,
+  "gold_scored": 14,
+  "gold_reachable": 14,
+  "retrieved": 13,
+  "recall_percent": 92.9,
+  "missed": [
+    "25765534"
+  ],
+  "nnr": 179.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 12,
+  "unseen_recall_percent": 92.3,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 2,
+      "screen": 3,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "small_sample",
+        "choice": "leave_out",
+        "screened": 29,
+        "relevant": 0
+      },
+      {
+        "id": "simulation",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

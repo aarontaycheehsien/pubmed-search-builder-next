@@ -1,0 +1,54 @@
+{
+  "topic": "Smid_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T041043Z",
+  "scored": "20260929T043024Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4efc9e1c5e9be04c94f1adb65219b795c3fbc50746fd76e840e717df9e0386d2",
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 1,
+    "timed_out": false,
+    "seconds": 1181
+  },
+  "final_message": "",
+  "error": "no current protected delivery",
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 2,
+      "screen": 3,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "simulation",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "sample_context",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "infra",
+  "valid": false,
+  "split": "dev"
+}

@@ -1,0 +1,47 @@
+{
+  "topic": "Oud_2018",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T024532Z",
+  "scored": "20260929T031017Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4efc9e1c5e9be04c94f1adb65219b795c3fbc50746fd76e840e717df9e0386d2",
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1485
+  },
+  "final_message": "personal psychotherap*[tiab] OR cognitive analytic therap*[tiab] OR manual-assisted cognitive therap*[tiab] OR emotion regulation group therap*[tiab] OR psychoeducat*[tiab] OR group therap*[tiab] OR MBT[tiab] OR schema-focused[tiab] OR schema focused[tiab] OR general psychiatric management[tiab] OR good psychiatric management[tiab] OR GPM[tiab] OR structured clinical management[tiab] OR SCM[tiab] OR therap*[tiab] OR cognitive therap*[tiab] OR interpersonal therapy[tiab] OR good clinical care[tiab] OR TFP[tiab] OR CBT[tiab] OR CT[tiab] OR IPT[tiab] OR SFT[tiab] OR ERG[tiab] OR MACT[tiab] OR DDP[tiab] OR CAT[tiab] OR DBT-ST[tiab] OR SFT-G[tiab] OR IPT-BPD[tiab])) AND (\"1800/01/01\"[edat] : \"2015/03/27\"[edat])\n```\n\nThe [audit](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-f0c52b41b3ed9d0d/ours-codex-noseed-20260929T024532Z/work/audit.md>) gives line-by-line counts. The generated [query file](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-f0c52b41b3ed9d0d/ours-codex-noseed-20260929T024532Z/work/final-query.txt>), [validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-f0c52b41b3ed9d0d/ours-codex-noseed-20260929T024532Z/work/validation-manifest.json>), and [search notes](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-f0c52b41b3ed9d0d/ours-codex-noseed-20260929T024532Z/work/narrative.md>) are preserved in `./work`.\n\n## Validation and limitations\n\nThe query retrieved **17/17** screened development records (100% relative recall on that set). There were no user-supplied seeds or independent validation set, so recall is not estimated independently and this is not a sensitivity estimate. The two category probes returned identical samples; that open should-fix limitation is documented for review.\n\nThe scope assumes “specialized” means a structured, named, or disorder-specific psychotherapy. Adult age and whether a treatment meets that definition are left for screening. This draft still needs **PRESS peer review by an information specialist before use**.",
+  "strategy": "((Borderline Personality Disorder[Mesh] OR borderline personality disorder[tiab] OR borderline personality[tiab] OR (borderline[tiab] AND personality[tiab]) OR emotionally unstable personality[tiab] OR \"emotionally unstable\"[tiab:~1] OR BPD[tiab]) AND (Psychotherapy[Mesh] OR Behavior Therapy[Mesh] OR Cognitive Behavioral Therapy[Mesh] OR Psychotherapy, Group[Mesh] OR Psychoanalytic Therapy[Mesh] OR psychotherap*[tiab] OR psychological therap*[tiab] OR psychodynamic[tiab] OR dialectical[tiab] OR DBT[tiab] OR mentalization[tiab] OR mentalisation[tiab] OR transference-focused[tiab] OR transference focused[tiab] OR schema therap*[tiab] OR STEPPS[tiab] OR dynamic deconstructive[tiab] OR interpersonal psychotherap*[tiab] OR cognitive analytic therap*[tiab] OR manual-assisted cognitive therap*[tiab] OR emotion regulation group therap*[tiab] OR psychoeducat*[tiab] OR group therap*[tiab] OR MBT[tiab] OR schema-focused[tiab] OR schema focused[tiab] OR general psychiatric management[tiab] OR good psychiatric management[tiab] OR GPM[tiab] OR structured clinical management[tiab] OR SCM[tiab] OR therap*[tiab] OR cognitive therap*[tiab] OR interpersonal therapy[tiab] OR good clinical care[tiab] OR TFP[tiab] OR CBT[tiab] OR CT[tiab] OR IPT[tiab] OR SFT[tiab] OR ERG[tiab] OR MACT[tiab] OR DDP[tiab] OR CAT[tiab] OR DBT-ST[tiab] OR SFT-G[tiab] OR IPT-BPD[tiab])) AND (\"1800/01/01\"[edat] : \"2015/03/27\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2015-03-27",
+  "count": 3313,
+  "gold_scored": 17,
+  "gold_reachable": 17,
+  "retrieved": 17,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 194.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 6,
+  "unseen_retrieved": 11,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": null,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

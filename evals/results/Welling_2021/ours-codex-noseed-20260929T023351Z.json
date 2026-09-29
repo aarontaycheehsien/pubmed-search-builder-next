@@ -1,0 +1,67 @@
+{
+  "topic": "Welling_2021",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T023351Z",
+  "scored": "20260929T032408Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4efc9e1c5e9be04c94f1adb65219b795c3fbc50746fd76e840e717df9e0386d2",
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 3017
+  },
+  "final_message": "rus pandemic[tiab] OR lockdown*[tiab] OR lock-down*[tiab] OR quarantin*[tiab] OR self-isolat*[tiab] OR social distanc*[tiab] OR physical distanc*[tiab] OR stay-at-home[tiab] OR stay at home[tiab] OR shelter-in-place[tiab] OR shelter in place[tiab] OR home confin*[tiab] OR home restrict*[tiab] OR movement restrict*[tiab] OR mobility restrict*[tiab] OR public health measure*[tiab] OR public health restriction*[tiab]) AND (Life Style[Mesh] OR Health Behavior[Mesh] OR Motor Activity[Mesh] OR Exercise[Mesh] OR Sedentary Behavior[Mesh] OR Feeding Behavior[Mesh] OR Diet[Mesh] OR Sleep[Mesh] OR Smoking[Mesh] OR Alcohol Drinking[Mesh] OR Mental Health[Mesh] OR Psychological Well-Being[Mesh] OR Quality of Life[Mesh] OR Depression[Mesh] OR Anxiety[Mesh] OR Stress, Psychological[Mesh] OR Substance-Related Disorders[Mesh] OR lifestyle[tiab] OR life style[tiab] OR health behavior*[tiab] OR health behaviour*[tiab] OR physical activit*[tiab] OR exercise[tiab] OR sedentary[tiab] OR sitting time[tiab] OR screen time[tiab] OR physical inactivity[tiab] OR diet[tiab] OR dietary habit*[tiab] OR eating behavio*[tiab] OR food intake[tiab] OR nutrition*[tiab] OR sleep[tiab] OR sleeping[tiab] OR smoking[tiab] OR tobacco[tiab] OR alcohol[tiab] OR substance use[tiab] OR mental health[tiab] OR well-being[tiab] OR wellbeing[tiab] OR psychological well-being[tiab] OR psychological distress[tiab] OR quality of life[tiab] OR life satisfaction[tiab] OR depression[tiab] OR anxiety[tiab] OR stress[tiab] OR loneliness[tiab] OR Hygiene[Mesh] OR Hand Disinfection[Mesh] OR hygiene[tiab] OR hygiene habit*[tiab] OR handwash*[tiab] OR mobility[tiab] OR mobility pattern*[tiab] OR affect[tiab] OR positive affect[tiab] OR negative affect[tiab] OR affective well-being[tiab] OR wellness[tiab] OR psychosocial[tiab] OR psychosocial adjustment[tiab] OR mental state[tiab] OR mental well-being[tiab] OR weight gain[tiab] OR sexual health[tiab] OR sexual behavio*[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])\n```",
+  "strategy": "((COVID-19[Mesh] OR SARS-CoV-2[Mesh] OR Coronavirus Infections[Mesh] OR COVID-19[tiab] OR COVID19[tiab] OR SARS-CoV-2[tiab] OR SARS-CoV2[tiab] OR 2019-nCoV[tiab] OR 2019 novel coronavirus[tiab] OR novel coronavirus[tiab] OR coronavirus disease 2019[tiab] OR COVID pandemic[tiab] OR coronavirus pandemic[tiab] OR lockdown*[tiab] OR lock-down*[tiab] OR quarantin*[tiab] OR self-isolat*[tiab] OR social distanc*[tiab] OR physical distanc*[tiab] OR stay-at-home[tiab] OR stay at home[tiab] OR shelter-in-place[tiab] OR shelter in place[tiab] OR home confin*[tiab] OR home restrict*[tiab] OR movement restrict*[tiab] OR mobility restrict*[tiab] OR public health measure*[tiab] OR public health restriction*[tiab]) AND (Life Style[Mesh] OR Health Behavior[Mesh] OR Motor Activity[Mesh] OR Exercise[Mesh] OR Sedentary Behavior[Mesh] OR Feeding Behavior[Mesh] OR Diet[Mesh] OR Sleep[Mesh] OR Smoking[Mesh] OR Alcohol Drinking[Mesh] OR Mental Health[Mesh] OR Psychological Well-Being[Mesh] OR Quality of Life[Mesh] OR Depression[Mesh] OR Anxiety[Mesh] OR Stress, Psychological[Mesh] OR Substance-Related Disorders[Mesh] OR lifestyle[tiab] OR life style[tiab] OR health behavior*[tiab] OR health behaviour*[tiab] OR physical activit*[tiab] OR exercise[tiab] OR sedentary[tiab] OR sitting time[tiab] OR screen time[tiab] OR physical inactivity[tiab] OR diet[tiab] OR dietary habit*[tiab] OR eating behavio*[tiab] OR food intake[tiab] OR nutrition*[tiab] OR sleep[tiab] OR sleeping[tiab] OR smoking[tiab] OR tobacco[tiab] OR alcohol[tiab] OR substance use[tiab] OR mental health[tiab] OR well-being[tiab] OR wellbeing[tiab] OR psychological well-being[tiab] OR psychological distress[tiab] OR quality of life[tiab] OR life satisfaction[tiab] OR depression[tiab] OR anxiety[tiab] OR stress[tiab] OR loneliness[tiab] OR Hygiene[Mesh] OR Hand Disinfection[Mesh] OR hygiene[tiab] OR hygiene habit*[tiab] OR handwash*[tiab] OR mobility[tiab] OR mobility pattern*[tiab] OR affect[tiab] OR positive affect[tiab] OR negative affect[tiab] OR affective well-being[tiab] OR wellness[tiab] OR psychosocial[tiab] OR psychosocial adjustment[tiab] OR mental state[tiab] OR mental well-being[tiab] OR weight gain[tiab] OR sexual health[tiab] OR sexual behavio*[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-11-22",
+  "count": 15446,
+  "gold_scored": 53,
+  "gold_reachable": 53,
+  "retrieved": 49,
+  "recall_percent": 92.5,
+  "missed": [
+    "32242089",
+    "32640077",
+    "32959000",
+    "33105275"
+  ],
+  "nnr": 315.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 48,
+  "unseen_recall_percent": 92.3,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 1,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "lifestyle_wellbeing",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

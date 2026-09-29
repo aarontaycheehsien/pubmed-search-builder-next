@@ -1,0 +1,65 @@
+{
+  "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T033627Z",
+  "scored": "20260929T043023Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4efc9e1c5e9be04c94f1adb65219b795c3fbc50746fd76e840e717df9e0386d2",
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 1,
+    "timed_out": false,
+    "seconds": 3236
+  },
+  "final_message": "",
+  "error": "no current protected delivery",
+  "unfinished": {
+    "blockers": [
+      "critic_open",
+      "critic_revise",
+      "critic_stale",
+      "review_unresolved"
+    ],
+    "count": 15084,
+    "gold_reachable": 9,
+    "retrieved": 7,
+    "recall_percent": 77.8
+  },
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "school_setting",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "food_consumption",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "infra",
+  "valid": false,
+  "split": "dev"
+}

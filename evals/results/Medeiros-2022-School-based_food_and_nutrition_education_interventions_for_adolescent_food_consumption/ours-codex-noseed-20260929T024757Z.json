@@ -1,0 +1,75 @@
+{
+  "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T024757Z",
+  "scored": "20260929T033625Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4efc9e1c5e9be04c94f1adb65219b795c3fbc50746fd76e840e717df9e0386d2",
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2908
+  },
+  "final_message": "garten*[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])\n```\n\nThe protected query is [final-query.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260929T024757Z/work/final-query.txt). The [audit](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260929T024757Z/work/audit.md) has the full line-by-line terms, translations, and counts. Key combined lines: education OR block, **26,632**; school-setting OR block, **319,130**; final query, **7,762** records.\n\nFor line counts, numbered as in the audit:\n\n- Lines 1–11: 11,430; 1,008; 5,398; 84; 3,866; 252; 72; 105; 46; 34; 48.\n- Lines 12–22: 87; 540; 1,227; 970; 4,247; 44; 1,150; 16; 32; 145; **26,632**.\n- Lines 23–35: 107,820; 21,872; 246,627; 14,159; 10,873; 10,873; 587; 587; 1,684; 1,086; 5,565; **319,130**; **7,762**.\n\n## Validation and limitations\n\nThe strategy retrieves **31/31** records in the screened development set. That is relative recall against records used while building the search, not independent validation or sensitivity; no independent held-out set was available. The cutoff is PubMed Entrez date through **2017-12-14**; there is no publication-date filter.\n\nThe population and food-consumption blocks were left out to preserve recall; the setting block remains required. The closing critic passed the delivery gate but left one open should-fix concern: the education block’s category probe is stale and does not establish coverage of the current block. This is recorded, along with the other limitations, in [narrative.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260929T024757Z/work/narrative.md). The draft has had an internal PRESS-structured critique; PRESS peer review by an information specialist is still pending. The protected [validation manifest](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260929T024757Z/work/validation-manifest.json) passed.",
+  "strategy": "(((\"Health Education\"[Mesh] AND (\"Nutritional Sciences\"[Mesh] OR \"Child Nutrition Sciences\"[Mesh] OR \"Feeding Behavior\"[Mesh])) OR (\"Curriculum\"[Mesh] AND \"School Health Services\"[Mesh]) OR (school*[tiab] AND (nutrition[tiab] OR food[tiab] OR dietary[tiab]) AND (curriculum[tiab] OR lesson*[tiab] OR educat*[tiab] OR teach*[tiab])) OR \"food education\"[tiab] OR \"nutrition education\"[tiab] OR \"dietary education\"[tiab] OR \"nutrition teaching\"[tiab] OR \"food and nutrition education\"[tiab] OR \"nutrition instruction\"[tiab] OR \"food literacy\"[tiab] OR \"nutrition literacy\"[tiab] OR \"nutrition curriculum\"[tiab] OR (food[tiab] AND curricul*[tiab]) OR \"nutrition program\"[tiab] OR \"nutrition programs\"[tiab] OR \"dietary intervention\"[tiab] OR \"food intervention\"[tiab] OR \"nutrition intervention\"[tiab] OR \"food-based intervention\"[tiab] OR \"food-based interventions\"[tiab] OR nutrition promot*[tiab]) AND (\"Schools\"[Mesh] OR \"School Health Services\"[Mesh] OR school*[tiab] OR classroom*[tiab] OR \"school-based\"[tiab] OR \"school based\"[tiab] OR \"classroom-based\"[tiab] OR \"classroom based\"[tiab] OR \"school setting\"[tiab] OR \"school settings\"[tiab] OR kindergarten*[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-14",
+  "count": 7762,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 8,
+  "recall_percent": 88.9,
+  "missed": [
+    "25797051"
+  ],
+  "nnr": 970.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 8,
+  "unseen_recall_percent": 88.9,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 3,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "population",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "setting",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "consumption",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 1
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

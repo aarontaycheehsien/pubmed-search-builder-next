@@ -1,0 +1,63 @@
+{
+  "topic": "Brouwer_2019",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T025950Z",
+  "scored": "20260929T033203Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4efc9e1c5e9be04c94f1adb65219b795c3fbc50746fd76e840e717df9e0386d2",
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1933
+  },
+  "final_message": "## PubMed strategy\n\n```text\n((\"Depressive Disorder\"[Mesh] OR depress*[tiab] OR dysthymi*[tiab] OR melanchol*[tiab] OR \"unipolar depression\"[tiab]) AND (\"Recurrence\"[Mesh] OR relaps*[tiab] OR recurren*[tiab] OR recrudescen*[tiab] OR (return[tiab] AND depress*[tiab]) OR (reemerg*[tiab] AND depress*[tiab]) OR (re-emerg*[tiab] AND depress*[tiab]) OR (remission[tiab] AND return[tiab]) OR (recover*[tiab] AND episode*[tiab] AND depress*[tiab]) OR (improv*[tiab] AND episode*[tiab] AND depress*[tiab]))) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])\n```\n\nThe search returned **22,917 records** entered in PubMed through **2018-11-17**. The cutoff uses Entrez date, not publication date.\n\nThe strategy retrieved all **5 of 5 known relevant records** found during development. This is development-set relative recall, not independent validation or a sensitivity estimate. The optional psychological-theory block was left out because it reduced the result set by 67.5% and excluded one known relevant record. The final set exceeds the 10,000-record workload budget.\n\n## Files\n\n- [Final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260929T025950Z/work/final-query.txt)\n- [Audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260929T025950Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260929T025950Z/work/validation-manifest.json)\n- [Search rationale and assumptions](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260929T025950Z/work/narrative.md)\n\nThe audit records the component counts, screening decisions, and limitations. Human PRESS review remains pending.",
+  "strategy": "((\"Depressive Disorder\"[Mesh] OR depress*[tiab] OR dysthymi*[tiab] OR melanchol*[tiab] OR \"unipolar depression\"[tiab]) AND (\"Recurrence\"[Mesh] OR relaps*[tiab] OR recurren*[tiab] OR recrudescen*[tiab] OR (return[tiab] AND depress*[tiab]) OR (reemerg*[tiab] AND depress*[tiab]) OR (re-emerg*[tiab] AND depress*[tiab]) OR (remission[tiab] AND return[tiab]) OR (recover*[tiab] AND episode*[tiab] AND depress*[tiab]) OR (improv*[tiab] AND episode*[tiab] AND depress*[tiab]))) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-11-17",
+  "count": 22917,
+  "gold_scored": 54,
+  "gold_reachable": 54,
+  "retrieved": 53,
+  "recall_percent": 98.1,
+  "missed": [
+    "21848705"
+  ],
+  "nnr": 432.4,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 53,
+  "unseen_recall_percent": 98.1,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "psychological_theory",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

@@ -1,0 +1,68 @@
+{
+  "topic": "Bos_2018",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T031830Z",
+  "scored": "20260929T034817Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4efc9e1c5e9be04c94f1adb65219b795c3fbc50746fd76e840e717df9e0386d2",
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "b939e3a592be08663f034cc328708d9906b1f1f5",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1787
+  },
+  "final_message": "mall-vessel disease\"[tiab] OR \"cerebral small-vessel disease\"[tiab] OR \"small vessel diseases\"[tiab] OR \"cerebral small vessel\"[tiab] OR CSVD[tiab] OR \"cerebral microangiopathy\"[tiab] OR \"cerebral microangiopathies\"[tiab] OR leukoaraiosis[tiab] OR \"white matter hyperintens*\"[tiab] OR WMH[tiab] OR \"white matter lesion*\"[tiab] OR \"white matter change*\"[tiab] OR \"white matter signal\"[tiab] OR \"subcortical white matter lesion*\"[tiab] OR \"lacunar infarct*\"[tiab] OR \"lacunar stroke*\"[tiab] OR lacune*[tiab] OR \"subcortical infarct*\"[tiab] OR \"silent infarct*\"[tiab] OR \"covert infarct*\"[tiab] OR \"silent brain infarct*\"[tiab] OR \"silent cerebral infarct*\"[tiab] OR \"covert brain infarct*\"[tiab] OR microbleed*[tiab] OR microhemorrhag*[tiab] OR microhaemorrhag*[tiab] OR \"vascular brain injury\"[tiab] OR \"vascular brain lesion*\"[tiab]))) AND (\"1800/01/01\"[edat] : \"2017/05/06\"[edat])\n```\n\nLine counts from the audit:\n\n- Line 1: 343,071 records.\n- Line 2: 51,117 records.\n- Line 3 (`#1 OR #2`): 343,216 records.\n\nThe search is bounded by PubMed entry date through **2017-05-06**; it has no publication-date limit. Dementia/cognitive outcomes and population/cohort wording were tested as optional blocks and left out because only five eligible records were known—too few to justify requiring either block under the skill’s safety rule.\n\n## Validation and limitations\n\nAll five development records were retrieved (relative recall 5/5, 100%). They were found during this build, so this is **not independent validation** and recall is not an estimate of sensitivity. The main limitation is the screening burden: 343,216 records, well above the 10,000-record standard budget. The optional outcome block reduced the count to 22,988, but was left out to avoid an inadequately tested recall loss.\n\nThe search received a PRESS-structured internal critique; human PRESS peer review by an information specialist is still needed before use. The final query, audit, and validation manifest remain intact in `./work`.",
+  "strategy": "(((\"Cerebral Small Vessel Diseases\"[Mesh] OR \"Leukoaraiosis\"[Mesh] OR \"Stroke, Lacunar\"[Mesh] OR \"Cerebral Infarction\"[Mesh] OR \"Cerebrovascular Disorders\"[Mesh] OR \"small vessel disease\"[tiab] OR \"small vessel diseases\"[tiab] OR \"cerebral small vessel\"[tiab] OR CSVD[tiab] OR \"cerebral microangiopathy\"[tiab] OR \"cerebral microangiopathies\"[tiab] OR leukoaraiosis[tiab] OR \"white matter hyperintens*\"[tiab] OR WMH[tiab] OR \"white matter lesion*\"[tiab] OR \"white matter change*\"[tiab] OR \"white matter signal\"[tiab] OR lacun*[tiab] OR \"silent infarct*\"[tiab] OR \"covert infarct*\"[tiab] OR \"silent brain infarct*\"[tiab] OR microbleed*[tiab] OR microhemorrhag*[tiab] OR microhaemorrhag*[tiab] OR \"vascular brain injury\"[tiab] OR \"vascular brain lesion*\"[tiab]) OR (\"Cerebral Small Vessel Diseases\"[Mesh] OR \"Leukoaraiosis\"[Mesh] OR \"Stroke, Lacunar\"[Mesh] OR \"Cerebral Hemorrhage\"[Mesh] OR \"small vessel disease\"[tiab] OR \"small-vessel disease\"[tiab] OR \"cerebral small-vessel disease\"[tiab] OR \"small vessel diseases\"[tiab] OR \"cerebral small vessel\"[tiab] OR CSVD[tiab] OR \"cerebral microangiopathy\"[tiab] OR \"cerebral microangiopathies\"[tiab] OR leukoaraiosis[tiab] OR \"white matter hyperintens*\"[tiab] OR WMH[tiab] OR \"white matter lesion*\"[tiab] OR \"white matter change*\"[tiab] OR \"white matter signal\"[tiab] OR \"subcortical white matter lesion*\"[tiab] OR \"lacunar infarct*\"[tiab] OR \"lacunar stroke*\"[tiab] OR lacune*[tiab] OR \"subcortical infarct*\"[tiab] OR \"silent infarct*\"[tiab] OR \"covert infarct*\"[tiab] OR \"silent brain infarct*\"[tiab] OR \"silent cerebral infarct*\"[tiab] OR \"covert brain infarct*\"[tiab] OR microbleed*[tiab] OR microhemorrhag*[tiab] OR microhaemorrhag*[tiab] OR \"vascular brain injury\"[tiab] OR \"vascular brain lesion*\"[tiab]))) AND (\"1800/01/01\"[edat] : \"2017/05/06\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-05-06",
+  "count": 343216,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 9,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 38135.1,
+  "translation_issues": [],
+  "gold_seen_by_agent": 3,
+  "unseen_retrieved": 6,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "screen": 1,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "outcome",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "population",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}
