@@ -76,23 +76,57 @@ def test_sample_draws_only_removed_records_and_decide_binds_to_the_strategy(make
     assert codes(evaluate(ws))["optional_decision_stale"]["blocking"]
 
 
-def test_deciding_and_moves_the_block_and_flags_known_losses(make_ws):
+# 40 COVID records; lifestyle is named in 1-20 and 50. Sixteen known records, all about lifestyle.
+BIG = {"covid*[tiab]": {str(i) for i in range(1, 41)}, "lifestyle[tiab]": {*(str(i) for i in range(1, 21)), "50"}}
+
+
+def build_big(make_ws, *, known=16, budget=10):
+    ws, _ = make_ws(BIG, records={str(i): {"pmid": str(i), "title": f"record {i}"} for i in range(1, 41)})
+    protocol = ws.protocol()
+    protocol.update(concepts=[dict(c) for c in CONCEPTS], workload_budget=budget, depth="standard")
+    write_json(ws.root / "protocol.json", protocol)
+    write_json(ws.root / "strategy.json", {"blocks": [COVID], "limits": [], "candidates": [LIFESTYLE]})
+    ws.save_set("relevant", "relevant", [str(i) for i in range(1, known + 1)])
+    return ws
+
+
+def test_and_is_refused_with_fewer_than_15_known_records(make_ws):
     ws, _ = build(make_ws)
+    with pytest.raises(StrategyError, match="needs at least 15"):
+        optional.decide(ws, "lifestyle", choice="and", reason="halves the workload", screened=["6"], relevant=[])
+
+
+def test_and_is_refused_when_it_loses_a_known_record(make_ws):
+    ws = build_big(make_ws)
+    ws.save_set("more", "relevant", ["30"])  # a known record the lifestyle block misses
+    with pytest.raises(StrategyError, match="loses known records 30"):
+        optional.decide(ws, "lifestyle", choice="and", reason="x", screened=["21"], relevant=[])
+
+
+def test_deciding_and_with_enough_known_records_moves_the_block(make_ws):
+    ws = build_big(make_ws)
     optional.sample(ws, "lifestyle", n=30)
-    result = optional.decide(ws, "lifestyle", choice="and", reason="halves the workload", screened=None, relevant=[])
+    result = optional.decide(ws, "lifestyle", choice="and", reason="cuts half the records", screened=None, relevant=[])
     strategy = ws.strategy()
     assert result["moved"] and [b.id for b in strategy.blocks] == ["covid", "lifestyle"] and not strategy.candidates
     evaluation = evaluate(ws)
-    assert "lifestyle[tiab]" in evaluation["query"] and evaluation["optional"][0]["status"] == "current"
-    found = codes(evaluation)
-    assert found["optional_and_loses_known"]["requires_review"] and found["optional_and_loses_known"]["pmids"] == ["5"]
-    assert "screen_concept_searched" not in found
+    row = evaluation["optional"][0]
+    assert row["status"] == "current" and row["known_in_base"] == 16 and not row["known_lost"]
+    assert not {"optional_and_underpowered", "screen_concept_searched", "optional_and_loses_known"} & set(codes(evaluation))
+
+
+def test_an_and_decision_left_standing_with_too_few_known_records_blocks(make_ws):
+    ws = build_big(make_ws)
+    optional.sample(ws, "lifestyle", n=30)
+    optional.decide(ws, "lifestyle", choice="and", reason="cuts half the records", screened=None, relevant=[])
+    ws.save_set("relevant", "relevant", ["1", "2", "3"])  # the known set shrinks afterwards
+    assert codes(evaluate(ws))["optional_and_underpowered"]["blocking"]
 
 
 def test_a_decision_placed_against_its_choice_is_misplaced(make_ws):
-    ws, _ = build(make_ws, budget=3)  # still over budget once the block is AND-ed (4 records)
+    ws = build_big(make_ws, budget=3)  # still over budget once the block is AND-ed
     optional.sample(ws, "lifestyle", n=30)
-    optional.decide(ws, "lifestyle", choice="and", reason="halves the workload", screened=None, relevant=[])
+    optional.decide(ws, "lifestyle", choice="and", reason="cuts half the records", screened=None, relevant=[])
     protocol = ws.protocol()
     protocol["concepts"][1]["decision"]["choice"] = "leave_out"
     write_json(ws.root / "protocol.json", protocol)

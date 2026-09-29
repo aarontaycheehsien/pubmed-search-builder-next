@@ -27,6 +27,10 @@ from .strategy import Block, Strategy, StrategyError, apply_limits, block_query,
 DEFAULT_BUDGET = {"quick": None, "standard": 10_000, "thorough": 20_000}
 SAMPLE_SIZE = {"quick": 0, "standard": 30, "thorough": 60}
 MATERIAL_REDUCTION = 30.0  # percent; the guidance threshold for AND-ing, reported, not enforced
+# AND-ing an optional block is only safe when enough known records show it loses none. With 15
+# retained, a block that loses 20% of relevant records would have shown a loss about 96% of the
+# time; a 30-record loss sample almost never catches it, because relevant records are rare.
+MIN_KNOWN_FOR_AND = 15
 ESEARCH_WINDOW = 9_999  # PubMed will not page past this many records
 
 
@@ -98,7 +102,7 @@ def measure(pm, strategy: Strategy, protocol: dict, in_pubmed: set[str], sets: d
         row.update(
             count_without_block=count_base, count_with_block=count_with,
             reduction_percent=round(100.0 * (count_base - count_with) / count_base, 1) if count_base else None,
-            known_lost=lost,
+            known_lost=lost, known_in_base=len(hit_base),
             known_lost_by_set={name: [p for p in lost if p in data.get("pmids", [])]
                                for name, data in sets.items() if set(lost) & set(data.get("pmids", []))},
             removed_query=q["removed"], removed_count=count_base - count_with,
@@ -158,6 +162,12 @@ def issues(pm, rows: list[dict], protocol: dict, count: int | None) -> list[dict
                 if outside:
                     found.append(validation.issue("loss_sample_invalid", "Loss sample includes records the block does not remove",
                                                   location=location, pmids=outside))
+        if row["status"] == "current" and decision.get("choice") == "and" and row.get("known_in_base", 0) < MIN_KNOWN_FOR_AND:
+            found.append(validation.issue(
+                "optional_and_underpowered",
+                f"An optional block can be AND-ed only when at least {MIN_KNOWN_FOR_AND} known records sit in the "
+                "strategy without it and it loses none; find more known records or leave it out",
+                location=location, known_in_base=row.get("known_in_base", 0)))
         if row["status"] == "current" and decision.get("choice") == "and":
             if row.get("known_lost"):
                 found.append(validation.issue("optional_and_loses_known", "AND-ed optional block loses known relevant records",
@@ -257,6 +267,15 @@ def decide(ws, concept_id: str, *, choice: str, reason: str, screened: list[str]
     where, block, base = placement(strategy, concept_id)
     if block is None or base is None:
         raise StrategyError(f"no measurable block for {concept_id!r}: add it to strategy.json candidates")
+    if choice == "and":
+        known = sorted({p for data in ws.sets().values() for p in data.get("pmids", [])})
+        in_base = ws.pubmed.among(apply_limits(base, strategy.limits), ws.pubmed.existing(known)) if known else set()
+        if len(in_base) < MIN_KNOWN_FOR_AND:
+            raise StrategyError(f"only {len(in_base)} known records sit in the strategy without {concept_id!r}; AND-ing "
+                                f"it needs at least {MIN_KNOWN_FOR_AND} (none lost). Find more known records or leave it out")
+        lost = in_base - ws.pubmed.among(apply_limits(f"({base}) AND {block_query(block)}", strategy.limits), in_base)
+        if lost:
+            raise StrategyError(f"AND-ing {concept_id!r} loses known records {', '.join(sorted(lost, key=int))}; leave it out")
     moved = False
     if choice == "and" and where == "candidate":
         strategy.candidates = [c for c in strategy.candidates if c.id != concept_id]

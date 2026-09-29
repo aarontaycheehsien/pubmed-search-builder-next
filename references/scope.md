@@ -58,7 +58,10 @@ relevant reviews than four-block searches (Ho 2016, doi:10.1371/journal.pone.016
    (30 at `standard`, 60 at `thorough`). Screen each against the eligibility criteria. Add any
    relevant record to a `relevant` set: it is now a known record the block loses.
 4. Decide with `psb optional decide <id> --choice and|leave_out --reason "..." --relevant ...`.
-   AND the block only when all three hold:
+   AND the block only when all four hold:
+   - at least 15 known records sit in the strategy without it (`known_in_base` in `psb eval`);
+     with fewer, "no known record lost" cannot show the block is safe, so find more known
+     records (a prior review's included studies, `psb neighbors`) or leave it out;
    - it loses no known record;
    - its loss sample contains no relevant record;
    - it cuts the count materially (about 30% or more).
@@ -68,8 +71,12 @@ relevant reviews than four-block searches (Ho 2016, doi:10.1371/journal.pone.016
    either makes it stale: sample and decide again.
 
 A loss sample of 0/30 only shows that fewer than about 10% of the removed records are relevant
-(0/60: about 5%). With thousands removed that can still be many records, so the known-record
-loss and the reduction matter as much as the sample. The audit reports all three.
+(0/60: about 5%). Relevant records are usually far rarer than that, so a clean sample is weak
+evidence; the 15 retained known records carry the decision. `psb optional decide --choice and`
+refuses with fewer, and `psb report` blocks an AND-ed block that has too few.
+
+Leaving a block out over the workload budget is a legitimate outcome: the critic reviews the
+count, and the audit reports it.
 
 Over the workload budget (`workload_budget` in `protocol.json`), `psb report` refuses delivery
 until every optional concept has a current decision, and the count over budget needs a review

@@ -124,8 +124,9 @@ records, leave-one-block-out ablation, and what changed since the previous versi
   `strategy.json` `candidates`; `psb eval` reports the count with it AND-ed, the reduction, and
   the known records it would lose. Run `psb optional sample <id>`, screen every drawn record,
   add relevant ones to a `relevant` set, then `psb optional decide <id> --choice and|leave_out
-  --reason "..." --relevant ...`. AND it only when it loses no known record, its loss sample has
-  no relevant record, and it cuts the count materially (about 30% or more). Over the workload
+  --reason "..." --relevant ...`. AND it only when at least 15 known records sit in the strategy
+  without it and it loses none, its loss sample has no relevant record, and it cuts the count
+  materially (about 30% or more). With fewer known records, leave it out. Over the workload
   budget, `psb report` refuses delivery until every optional concept has a current decision.
 - Recovering a held-out validation miss makes that set part of development. Say so.
 
@@ -155,7 +156,9 @@ If no fresh context is available, review the packet yourself and say so in the a
 Read `references/reporting.md` and `references/validation.md`. Run `psb report` (`--fresh` is
 an equivalent spelling). It revalidates every line and heading live, checks the current critic,
 and writes `final-query.txt`, `audit.md`, and `validation-manifest.json` only if the gate passes.
-Deliver the generated query verbatim; do not reconstruct or edit it. Keep narrative additions
+Deliver the generated query verbatim; do not reconstruct or edit it. After `psb report` succeeds,
+change nothing in the workspace; if you must change anything (even `protocol.json` notes), run
+`psb eval` and `psb report` again, or the delivery is no longer current. Keep narrative additions
 in `narrative.md`, because changing the generated audit invalidates its manifest. Give the user:
 
 - the strategy (single line and line by line with counts),
