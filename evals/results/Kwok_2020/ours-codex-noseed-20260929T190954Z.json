@@ -1,0 +1,54 @@
+{
+  "topic": "Kwok_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T190954Z",
+  "scored": "20260929T194100Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "f3fc7687f02b72875e6ab326be592db151ec7a69",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "f3fc7687f02b72875e6ab326be592db151ec7a69",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1866
+  },
+  "final_message": "imal*[tiab] OR food animal*[tiab] OR poultry[tiab] OR chicken*[tiab] OR turkey[tiab] OR duck*[tiab] OR goose[tiab] OR cattle[tiab] OR bovine[tiab] OR cow[tiab] OR cows[tiab] OR swine[tiab] OR pig[tiab] OR pigs[tiab] OR porcine[tiab] OR sheep[tiab] OR ovine[tiab] OR goat*[tiab] OR caprine[tiab] OR horse*[tiab] OR equine[tiab] OR rabbit*[tiab] OR aquaculture[tiab] OR fish farm*[tiab] OR farmed fish[tiab] OR farmed shrimp[tiab] OR Poultry Diseases[Mesh] OR avian[tiab] OR Aquaculture[Mesh] OR Salmon[Mesh] OR Trout[Mesh] OR Carps[Mesh] OR Tilapia[Mesh] OR Catfishes[Mesh] OR salmon*[tiab] OR trout*[tiab] OR carp*[tiab] OR tilapia[tiab] OR catfish*[tiab] OR shrimp*[tiab] OR prawn*[tiab] OR oyster*[tiab] OR mussel*[tiab])) AND (\"1800/01/01\"[edat] : \"2019/02/22\"[edat])\n```\n\nThe pilot yielded **9 screened relevant development records**; the strategy retrieved all 9 (100% relative recall on that development set). This is not an independent validation or a sensitivity estimate. The category probes found no relevant records, though the virus-category probe became stale after later vocabulary expansion and is documented as a risk. Scope was interpreted to include farmed aquatic animals.\n\nA fresh-context critique resolved the aquatic-species vocabulary gap. The required Entrez cutoff was retained because it is part of the run instructions. **Human PRESS peer review by an information specialist is still needed before use.**\n\nArtifacts: [final query](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/ours-codex-noseed-20260929T190954Z/work/final-query.txt), [audit](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/ours-codex-noseed-20260929T190954Z/work/audit.md), [validation manifest](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/ours-codex-noseed-20260929T190954Z/work/validation-manifest.json), and [build notes](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/ours-codex-noseed-20260929T190954Z/work/narrative.md).",
+  "strategy": "((Viruses[Mesh] OR Bacteriophages[Mesh] OR virus*[tiab] OR viral[tiab] OR virome*[tiab] OR phage*[tiab]) AND (Metagenomics[Mesh] OR High-Throughput Nucleotide Sequencing[Mesh] OR metagenom*[tiab] OR virom*[tiab] OR next generation sequencing[tiab] OR next-generation sequencing[tiab] OR NGS[tiab] OR high throughput sequencing[tiab] OR high-throughput sequencing[tiab] OR deep sequencing[tiab] OR shotgun sequencing[tiab] OR shotgun metagenom*[tiab] OR unbiased sequencing[tiab] OR sequence-independent[tiab] OR sequence independent[tiab] OR SISPA[tiab] OR viral discovery[tiab] OR Metagenome[Mesh]) AND (Animals, Domestic[Mesh] OR Livestock[Mesh] OR Poultry[Mesh] OR Cattle[Mesh] OR Swine[Mesh] OR Sheep[Mesh] OR Goats[Mesh] OR Horses[Mesh] OR livestock[tiab] OR farm animal*[tiab] OR farmed animal*[tiab] OR production animal*[tiab] OR food animal*[tiab] OR poultry[tiab] OR chicken*[tiab] OR turkey[tiab] OR duck*[tiab] OR goose[tiab] OR cattle[tiab] OR bovine[tiab] OR cow[tiab] OR cows[tiab] OR swine[tiab] OR pig[tiab] OR pigs[tiab] OR porcine[tiab] OR sheep[tiab] OR ovine[tiab] OR goat*[tiab] OR caprine[tiab] OR horse*[tiab] OR equine[tiab] OR rabbit*[tiab] OR aquaculture[tiab] OR fish farm*[tiab] OR farmed fish[tiab] OR farmed shrimp[tiab] OR Poultry Diseases[Mesh] OR avian[tiab] OR Aquaculture[Mesh] OR Salmon[Mesh] OR Trout[Mesh] OR Carps[Mesh] OR Tilapia[Mesh] OR Catfishes[Mesh] OR salmon*[tiab] OR trout*[tiab] OR carp*[tiab] OR tilapia[tiab] OR catfish*[tiab] OR shrimp*[tiab] OR prawn*[tiab] OR oyster*[tiab] OR mussel*[tiab])) AND (\"1800/01/01\"[edat] : \"2019/02/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2019-02-22",
+  "count": 1118,
+  "gold_scored": 116,
+  "gold_reachable": 116,
+  "retrieved": 110,
+  "recall_percent": 94.8,
+  "missed": [
+    "22821184",
+    "25918239",
+    "28495761",
+    "28653486",
+    "29677111",
+    "29700160"
+  ],
+  "nnr": 10.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 4,
+  "unseen_retrieved": 106,
+  "unseen_recall_percent": 94.6,
+  "leakage": [],
+  "concepts": null,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

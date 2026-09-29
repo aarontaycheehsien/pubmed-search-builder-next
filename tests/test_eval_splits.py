@@ -111,6 +111,8 @@ def test_tree_hash_tracks_content_but_not_env_or_caches(tmp_path):
     ({"run": {"returncode": 0, "seconds": 900}, "recall_percent": 90.0, "leakage": [], "valid": True},
      "rate limit hit once, then recovered", "ok"),
     ({"status": "infra", "recall_percent": None}, "", "infra"),
+    ({"run": {"returncode": 1, "seconds": 169}, "workspace_started": False}, "", "infra"),
+    ({"run": {"returncode": 1, "seconds": 169}, "workspace_started": True}, "", "no-delivery"),
 ])
 def test_run_status(card, errors, expected):
     assert harness.run_status(card, errors) == expected

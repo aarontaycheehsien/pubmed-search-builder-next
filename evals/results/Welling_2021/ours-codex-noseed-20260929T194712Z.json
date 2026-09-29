@@ -1,0 +1,69 @@
+{
+  "topic": "Welling_2021",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T194712Z",
+  "scored": "20260929T202230Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "f3fc7687f02b72875e6ab326be592db151ec7a69",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "f3fc7687f02b72875e6ab326be592db151ec7a69",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2117
+  },
+  "final_message": "R well-being[tiab] OR wellness[tiab] OR \"mental health\"[tiab] OR \"psychological well-being\"[tiab] OR \"psychological distress\"[tiab] OR \"quality of life\"[tiab] OR \"life satisfaction\"[tiab] OR anxiety[tiab] OR depression[tiab] OR stress[tiab] OR mood[tiab] OR loneliness[tiab] OR \"social isolation\"[tiab] OR \"sense of coherence\"[tiab] OR \"daily routine\"[tiab] OR distress[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])\n```\n\nThe combined query returned **12,854 records**. In the generated line-by-line audit, the COVID context block returned 83,452, the outcome block 3,916,582, and their AND combination 12,854. The full line counts are in [audit.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260929T194712Z/work/audit.md).\n\nThere were no user-supplied known articles. I screened 15 relevant records during development; the strategy retrieved all 15 (**100% relative recall against this development set**). This is not an independent validation or a sensitivity estimate. The outcome block was tested against two 30-record loss samples; neither contained an eligible record. The final count is **2,854 above** the standard 10,000-record workload budget.\n\nThe main assumptions and remaining risks are recorded in [narrative.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260929T194712Z/work/narrative.md). This draft still needs **human PRESS peer review by an information specialist before use**; the internal critic does not replace it.\n\nGenerated files are intact in `./work`: [final-query.txt](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260929T194712Z/work/final-query.txt), [audit.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260929T194712Z/work/audit.md), and [validation-manifest.json](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260929T194712Z/work/validation-manifest.json).",
+  "strategy": "((\"COVID-19\"[Mesh] OR \"SARS-CoV-2\"[Mesh] OR \"Pandemics\"[Mesh] OR COVID-19[tiab] OR COVID19[tiab] OR COVID[tiab] OR SARS-CoV-2[tiab] OR SARS CoV 2[tiab] OR 2019-nCoV[tiab] OR 2019 nCoV[tiab] OR \"2019 novel coronavirus\"[tiab] OR \"novel coronavirus 2019\"[tiab] OR \"coronavirus disease 2019\"[tiab] OR \"COVID-19 pandemic\"[tiab] OR \"coronavirus pandemic\"[tiab]) AND (\"Life Style\"[Mesh] OR \"Healthy Lifestyle\"[Mesh] OR \"Health Behavior\"[Mesh] OR \"Sedentary Behavior\"[Mesh] OR \"Exercise\"[Mesh] OR \"Diet\"[Mesh] OR \"Feeding Behavior\"[Mesh] OR \"Alcohol Drinking\"[Mesh] OR \"Smoking\"[Mesh] OR \"Sleep\"[Mesh] OR \"Mental Health\"[Mesh] OR \"Stress, Psychological\"[Mesh] OR \"Anxiety\"[Mesh] OR \"Depression\"[Mesh] OR \"Quality of Life\"[Mesh] OR \"Social Isolation\"[Mesh] OR lifestyle[tiab] OR \"life style\"[tiab] OR \"health behavior\"[tiab] OR \"health behaviours\"[tiab] OR \"health behaviors\"[tiab] OR \"lifestyle behavior\"[tiab] OR \"lifestyle behaviours\"[tiab] OR \"lifestyle behaviors\"[tiab] OR \"behavioral change\"[tiab] OR \"behavioural change\"[tiab] OR \"physical activity\"[tiab] OR exercis*[tiab] OR sedentary[tiab] OR \"sitting time\"[tiab] OR diet*[tiab] OR \"eating habit\"[tiab] OR nutrition*[tiab] OR \"food consumption\"[tiab] OR sleep[tiab] OR insomnia[tiab] OR alcohol[tiab] OR smoking[tiab] OR tobacco[tiab] OR \"substance use\"[tiab] OR wellbeing[tiab] OR well-being[tiab] OR wellness[tiab] OR \"mental health\"[tiab] OR \"psychological well-being\"[tiab] OR \"psychological distress\"[tiab] OR \"quality of life\"[tiab] OR \"life satisfaction\"[tiab] OR anxiety[tiab] OR depression[tiab] OR stress[tiab] OR mood[tiab] OR loneliness[tiab] OR \"social isolation\"[tiab] OR \"sense of coherence\"[tiab] OR \"daily routine\"[tiab] OR distress[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-11-22",
+  "count": 12854,
+  "gold_scored": 53,
+  "gold_reachable": 53,
+  "retrieved": 47,
+  "recall_percent": 88.7,
+  "missed": [
+    "32227671",
+    "32242089",
+    "32640077",
+    "32959000",
+    "33105275",
+    "33181369"
+  ],
+  "nnr": 273.5,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 47,
+  "unseen_recall_percent": 88.7,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 1,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "outcomes",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

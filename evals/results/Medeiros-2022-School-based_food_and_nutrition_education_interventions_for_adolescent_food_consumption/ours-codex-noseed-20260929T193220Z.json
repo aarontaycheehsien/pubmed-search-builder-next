@@ -1,0 +1,69 @@
+{
+  "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T193220Z",
+  "scored": "20260929T203354Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "f3fc7687f02b72875e6ab326be592db151ec7a69",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "f3fc7687f02b72875e6ab326be592db151ec7a69",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 3693
+  },
+  "final_message": "ies it would exclude.\n\n```text\n((\"Health Education\"[Mesh] OR \"Health Promotion\"[Mesh] OR \"nutrition education\"[tiab] OR \"food education\"[tiab] OR \"dietary education\"[tiab] OR \"nutrition teaching\"[tiab] OR \"nutrition instruction\"[tiab] OR \"nutrition curriculum\"[tiab] OR \"nutrition knowledge\"[tiab] OR \"food knowledge\"[tiab] OR \"dietary knowledge\"[tiab] OR \"nutrition intervention*\"[tiab] OR \"dietary intervention*\"[tiab] OR \"nutrition program*\"[tiab] OR \"food program*\"[tiab] OR (nutrition[tiab] AND educat*[tiab]) OR (food[tiab] AND educat*[tiab]) OR (dietary[tiab] AND educat*[tiab]) OR (nutrition[tiab] AND intervention*[tiab]) OR \"nutrition lesson*\"[tiab] OR \"food lesson*\"[tiab]) AND (\"Adolescent\"[Mesh] OR \"Students\"[Mesh] OR \"Child\"[Mesh] OR adolescent*[tiab] OR teen*[tiab] OR teens[tiab] OR youth[tiab] OR youths[tiab] OR teenager*[tiab] OR schoolchild*[tiab] OR pupil*[tiab] OR (school[tiab] AND child*[tiab]) OR students[tiab] OR student*[tiab] OR child*[tiab]) AND (\"Schools\"[Mesh] OR \"School Health Services\"[Mesh] OR school*[tiab] OR classroom*[tiab] OR class-based[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])\n```\n\n- [Final query](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260929T193220Z/work/final-query.txt>)\n- [Audit with line counts and validation details](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260929T193220Z/work/audit.md>)\n- [Validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260929T193220Z/work/validation-manifest.json>)\n\nThe result exceeds the default 10,000-record screening budget. The scope was not confirmed; I treated adolescents or school students as eligible, including younger school students. Category-probe coverage has documented gaps, and there was no held-out validation set. The internal critic passed, but this draft still needs independent PRESS peer review by an information specialist before use.",
+  "strategy": "((\"Health Education\"[Mesh] OR \"Health Promotion\"[Mesh] OR \"nutrition education\"[tiab] OR \"food education\"[tiab] OR \"dietary education\"[tiab] OR \"nutrition teaching\"[tiab] OR \"nutrition instruction\"[tiab] OR \"nutrition curriculum\"[tiab] OR \"nutrition knowledge\"[tiab] OR \"food knowledge\"[tiab] OR \"dietary knowledge\"[tiab] OR \"nutrition intervention*\"[tiab] OR \"dietary intervention*\"[tiab] OR \"nutrition program*\"[tiab] OR \"food program*\"[tiab] OR (nutrition[tiab] AND educat*[tiab]) OR (food[tiab] AND educat*[tiab]) OR (dietary[tiab] AND educat*[tiab]) OR (nutrition[tiab] AND intervention*[tiab]) OR \"nutrition lesson*\"[tiab] OR \"food lesson*\"[tiab]) AND (\"Adolescent\"[Mesh] OR \"Students\"[Mesh] OR \"Child\"[Mesh] OR adolescent*[tiab] OR teen*[tiab] OR teens[tiab] OR youth[tiab] OR youths[tiab] OR teenager*[tiab] OR schoolchild*[tiab] OR pupil*[tiab] OR (school[tiab] AND child*[tiab]) OR students[tiab] OR student*[tiab] OR child*[tiab]) AND (\"Schools\"[Mesh] OR \"School Health Services\"[Mesh] OR school*[tiab] OR classroom*[tiab] OR class-based[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-14",
+  "count": 21262,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 8,
+  "recall_percent": 88.9,
+  "missed": [
+    "25797051"
+  ],
+  "nnr": 2657.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 7,
+  "unseen_recall_percent": 87.5,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "school_setting",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "food_consumption",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

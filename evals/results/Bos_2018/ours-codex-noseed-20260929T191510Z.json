@@ -1,0 +1,73 @@
+{
+  "topic": "Bos_2018",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T191510Z",
+  "scored": "20260929T201640Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "f3fc7687f02b72875e6ab326be592db151ec7a69",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "f3fc7687f02b72875e6ab326be592db151ec7a69",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 3690
+  },
+  "final_message": "matter change*\"[tiab] OR \"white matter abnormalit*\"[tiab] OR \"lacunar infarct*\"[tiab] OR lacune*[tiab] OR \"silent brain infarct*\"[tiab] OR \"silent cerebral infarct*\"[tiab] OR \"silent infarct*\"[tiab] OR \"covert brain infarct*\"[tiab] OR microbleed*[tiab] OR microhemorrhag*[tiab] OR microhaemorrhag*[tiab] OR \"vascular brain injury\"[tiab] OR \"vascular brain injur*\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/05/06\"[edat])\n```\n\nThe protected report passed validation. The query returns **52,262 records** with the PubMed entry-date cutoff of 2017-05-06; it has no publication-date `[dp]` limit. Outcome, population/community setting, and longitudinal design were tested as optional blocks and left out to protect recall. Eligibility for those concepts must be screened.\n\nRelative recall was **8/8 (100%)** in the development set and **3/3 (100%)** in the held-out validation set. The validation set was split from the same discovered records, so it is semi-independent rather than an external benchmark.\n\nThe audit notes that one follow-up exposure-category probe was drawn but not screened, and that the setting probe could not be redrawn after its budget was spent. The large screening burden and these probe limitations should be considered during review.\n\n- [Final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-535fe3dc7ca88971/ours-codex-noseed-20260929T191510Z/work/final-query.txt)\n- [Full audit and line-by-line counts](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-535fe3dc7ca88971/ours-codex-noseed-20260929T191510Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-535fe3dc7ca88971/ours-codex-noseed-20260929T191510Z/work/validation-manifest.json)\n- [Search rationale and reviewer notes](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-535fe3dc7ca88971/ours-codex-noseed-20260929T191510Z/work/narrative.md)\n\nThe internal critique was PRESS-structured, not formal PRESS peer review. An information specialist should review the strategy before use.",
+  "strategy": "((\"Cerebral Small Vessel Diseases\"[Mesh] OR \"Leukoaraiosis\"[Mesh] OR \"Stroke, Lacunar\"[Mesh] OR \"Brain Infarction\"[Mesh] OR \"cerebral small vessel disease\"[tiab] OR \"cerebral small vessel diseases\"[tiab] OR \"small vessel disease\"[tiab] OR \"small vessel diseases\"[tiab] OR cerebral microangiopath*[tiab] OR leukoaraiosis[tiab] OR \"white matter hyperintens*\"[tiab] OR \"white matter lesion*\"[tiab] OR \"white matter change*\"[tiab] OR \"white matter abnormalit*\"[tiab] OR \"lacunar infarct*\"[tiab] OR lacune*[tiab] OR \"silent brain infarct*\"[tiab] OR \"silent cerebral infarct*\"[tiab] OR \"silent infarct*\"[tiab] OR \"covert brain infarct*\"[tiab] OR microbleed*[tiab] OR microhemorrhag*[tiab] OR microhaemorrhag*[tiab] OR \"vascular brain injury\"[tiab] OR \"vascular brain injur*\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/05/06\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-05-06",
+  "count": 52262,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 9,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 5806.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 3,
+  "unseen_retrieved": 6,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 3,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "cognitive_outcomes",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "cohort_context",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "longitudinal_design",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

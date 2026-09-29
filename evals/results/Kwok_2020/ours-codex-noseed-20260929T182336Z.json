@@ -1,0 +1,35 @@
+{
+  "topic": "Kwok_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T182336Z",
+  "scored": "20260929T182626Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "f3fc7687f02b72875e6ab326be592db151ec7a69",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "f3fc7687f02b72875e6ab326be592db151ec7a69",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 1,
+    "timed_out": false,
+    "seconds": 169
+  },
+  "final_message": "",
+  "error": "no current protected delivery",
+  "concepts": null,
+  "status": "infra",
+  "valid": false,
+  "split": "dev",
+  "workspace_started": false,
+  "status_note": "reclassified: codex exited (rc 1) at 169 s before creating a workspace"
+}

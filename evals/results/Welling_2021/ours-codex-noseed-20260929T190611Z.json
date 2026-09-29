@@ -1,0 +1,63 @@
+{
+  "topic": "Welling_2021",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T190611Z",
+  "scored": "20260929T194711Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "f3fc7687f02b72875e6ab326be592db151ec7a69",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "f3fc7687f02b72875e6ab326be592db151ec7a69",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2460
+  },
+  "final_message": "**Protected final delivery is blocked.** The closing PRESS-structured critic left must-fix finding F2 open: restriction, quarantine, and lockdown terms were tested in an optional block, but that block was left out of the final search. The diagnostic report therefore issued no protected query; I have not substituted a hand-written one.\n\nThe evaluated draft returned 10,537 records. It retrieved all 18 development records and all 5 held-out records, though these were discovered records, not user-supplied seeds or an independent benchmark. The draft is 537 records above the screening budget. Requiring the restriction block would reduce the count to 2,392 but lose known relevant studies.\n\nThe diagnostic and rationale are in [diagnostic-audit.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260929T190611Z/work/diagnostic-audit.md) and [narrative.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260929T190611Z/work/narrative.md). No `final-query.txt`, `audit.md`, or validation manifest was issued. The strategy needs revision and re-evaluation to resolve F2 before protected delivery.",
+  "error": "no current protected delivery",
+  "unfinished": {
+    "blockers": [
+      "critic_open",
+      "critic_revise"
+    ],
+    "count": 10537,
+    "gold_reachable": 53,
+    "retrieved": 47,
+    "recall_percent": 88.7
+  },
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 2,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "restrictions",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 7
+      },
+      {
+        "id": "outcomes",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "no-delivery",
+  "valid": false,
+  "split": "dev"
+}

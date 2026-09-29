@@ -1,0 +1,49 @@
+{
+  "topic": "Smid_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T191448Z",
+  "scored": "20260929T193839Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "f3fc7687f02b72875e6ab326be592db151ec7a69",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "f3fc7687f02b72875e6ab326be592db151ec7a69",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1430
+  },
+  "final_message": "966 |\n| 30 | `\"Bayesian method\"[tiab]` | 1,320 |\n| 31 | `\"Bayesian methods\"[tiab]` | 1,812 |\n| 32 | `\"Bayesian approach\"[tiab]` | 3,278 |\n| 33 | `\"Bayesian analysis\"[tiab]` | 2,540 |\n| 34 | `\"Bayesian model\"[tiab]` | 2,344 |\n| 35 | `\"Bayesian models\"[tiab]` | 702 |\n| 36 | `\"Markov chain Monte Carlo\"[tiab]` | 3,122 |\n| 37 | `MCMC[tiab]` | 1,577 |\n| 38 | `\"Gibbs sampling\"[tiab]` | 712 |\n| 39 | `\"prior distribution\"[tiab]` | 661 |\n| 40 | `\"prior distributions\"[tiab]` | 568 |\n| 41 | Bayesian block, lines 26–40 ORed | 48,128 |\n| 42 | Lines 25 AND 41, with the Entry Date bound | **2,414** |\n\nThe protected report gate passed. The query, audit, and validation manifest are in [final-query.txt](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260929T191448Z/work/final-query.txt), [audit.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260929T191448Z/work/audit.md), and [validation-manifest.json](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260929T191448Z/work/validation-manifest.json). The [narrative.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260929T191448Z/work/narrative.md) records the scope assumptions and screening rationale.\n\n## Validation and limits\n\n- The six screened development records were all retrieved: **100% relative recall against the development set**. This is not independent validation or absolute sensitivity; no held-out set was available.\n- Small-sample and simulation blocks were tested but left out of the final AND search to preserve recall. Their 30-record loss samples found no eligible records, but the samples are weak evidence given how rare eligible papers are. Screen those criteria.\n- The count uses the harness-mandated PubMed **Entry Date** cutoff of 2017-11-29. No publication-date (`[dp]`) filter was applied.\n- This draft needs human PRESS peer review by an information specialist before use.",
+  "strategy": "((\"Factor Analysis, Statistical\"[Mesh] OR \"Multilevel Analysis\"[Mesh] OR \"Models, Psychological\"[Mesh] OR \"structural equation model\"[tiab:~0] OR \"structural equation models\"[tiab:~0] OR \"structural equation modeling\"[tiab:~0] OR \"structural equation modelling\"[tiab:~0] OR \"latent variable model\"[tiab:~0] OR \"latent variable models\"[tiab:~0] OR \"factor analysis\"[tiab] OR \"confirmatory factor analysis\"[tiab:~0] OR CFA[tiab] OR \"latent growth\"[tiab:~1] OR \"latent class\"[tiab:~1] OR multilevel[tiab] OR mediation[tiab] OR \"path analysis\"[tiab:~0] OR SEM[tiab] OR \"item factor analysis\"[tiab:~0] OR \"item response theory\"[tiab:~0] OR \"latent trait model\"[tiab:~0] OR \"growth curve model\"[tiab:~0] OR \"growth curve models\"[tiab:~0] OR \"mixture model\"[tiab:~0]) AND (\"Bayes Theorem\"[Mesh] OR Bayes[tiab] OR Bayesian[tiab] OR \"Bayesian estimation\"[tiab] OR \"Bayesian method\"[tiab] OR \"Bayesian methods\"[tiab] OR \"Bayesian approach\"[tiab] OR \"Bayesian analysis\"[tiab] OR \"Bayesian model\"[tiab] OR \"Bayesian models\"[tiab] OR \"Markov chain Monte Carlo\"[tiab] OR MCMC[tiab] OR \"Gibbs sampling\"[tiab] OR \"prior distribution\"[tiab] OR \"prior distributions\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/11/29\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-11-29",
+  "count": 2414,
+  "gold_scored": 14,
+  "gold_reachable": 14,
+  "retrieved": 13,
+  "recall_percent": 92.9,
+  "missed": [
+    "25765534"
+  ],
+  "nnr": 185.7,
+  "translation_issues": [],
+  "gold_seen_by_agent": 5,
+  "unseen_retrieved": 8,
+  "unseen_recall_percent": 88.9,
+  "leakage": [],
+  "concepts": null,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

@@ -1,0 +1,49 @@
+{
+  "topic": "Smid_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T185355Z",
+  "scored": "20260929T191447Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "f3fc7687f02b72875e6ab326be592db151ec7a69",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "f3fc7687f02b72875e6ab326be592db151ec7a69",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1252
+  },
+  "final_message": "odel-family block (#1–22 ORed) | 259,858 |\n| 24 | `\"Bayes Theorem\"[Mesh]` | 28,985 |\n| 25 | `Bayesian[tiab]` | 35,533 |\n| 26 | `Bayes[tiab]` | 5,705 |\n| 27 | `\"Bayesian estimation\"[tiab]` | 966 |\n| 28 | `\"Bayesian estimat*\"[tiab]` | 1,379 |\n| 29 | `\"Bayesian approach*\"[tiab]` | 3,793 |\n| 30 | `\"Bayesian method*\"[tiab]` | 3,265 |\n| 31 | `\"Bayesian analys*\"[tiab]` | 3,354 |\n| 32 | `\"Bayesian structural equation\"[tiab]` | 46 |\n| 33 | `\"Markov chain Monte Carlo\"[tiab]` | 3,122 |\n| 34 | `MCMC[tiab]` | 1,577 |\n| 35 | `\"prior distribution*\"[tiab]` | 1,143 |\n| 36 | `\"posterior distribution*\"[tiab]` | 1,486 |\n| 37 | `\"Gibbs sampling\"[tiab]` | 712 |\n| 38 | `WinBUGS[tiab]` | 295 |\n| 39 | `BUGS[tiab]` | 3,177 |\n| 40 | Bayesian block (#24–39 ORed) | 51,482 |\n| 41 | Model-family AND Bayesian blocks | **4,869** |\n\n### Validation and handoff\n\nThe search retrieved all **3/3 screened development records** (100% relative recall within that set): PMID 27594086, PMID 26745462, and PMID 26579002. This is not independent validation, and recall was not independently estimated. The small-sample optional block would have reduced the count to 157, but it was left out because only three known relevant records were available to assess its safety; sample-size context remains for screening.\n\nFiles are in `./work`: [final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260929T185355Z/work/final-query.txt), [audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260929T185355Z/work/audit.md), [narrative](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260929T185355Z/work/narrative.md), and [validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20260929T185355Z/work/validation-manifest.json).\n\nThis draft still needs **PRESS peer review by an information specialist before use**; the internal PRESS-structured critic is not a substitute.",
+  "strategy": "((\"Latent Class Analysis\"[Mesh] OR \"Factor Analysis, Statistical\"[Mesh] OR \"Multilevel Analysis\"[Mesh] OR \"Mediation Analysis\"[Mesh] OR \"structural equation model*\"[tiab] OR \"structural equation modeling\"[tiab] OR \"structural equation modelling\"[tiab] OR SEM[tiab] OR \"latent variable*\"[tiab] OR \"confirmatory factor analys*\"[tiab] OR CFA[tiab] OR \"factor analys*\"[tiab] OR \"latent class analys*\"[tiab] OR \"latent class model*\"[tiab] OR \"latent growth\"[tiab] OR \"growth curve model*\"[tiab] OR \"growth mixture model*\"[tiab] OR multilevel[tiab] OR \"multi-level\"[tiab] OR hierarchical[tiab] OR mediation[tiab] OR \"indirect effect*\"[tiab]) AND (\"Bayes Theorem\"[Mesh] OR Bayesian[tiab] OR Bayes[tiab] OR \"Bayesian estimation\"[tiab] OR \"Bayesian estimat*\"[tiab] OR \"Bayesian approach*\"[tiab] OR \"Bayesian method*\"[tiab] OR \"Bayesian analys*\"[tiab] OR \"Bayesian structural equation\"[tiab] OR \"Markov chain Monte Carlo\"[tiab] OR MCMC[tiab] OR \"prior distribution*\"[tiab] OR \"posterior distribution*\"[tiab] OR \"Gibbs sampling\"[tiab] OR WinBUGS[tiab] OR BUGS[tiab])) AND (\"1800/01/01\"[edat] : \"2017/11/29\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-11-29",
+  "count": 4869,
+  "gold_scored": 14,
+  "gold_reachable": 14,
+  "retrieved": 13,
+  "recall_percent": 92.9,
+  "missed": [
+    "25765534"
+  ],
+  "nnr": 374.5,
+  "translation_issues": [],
+  "gold_seen_by_agent": 3,
+  "unseen_retrieved": 10,
+  "unseen_recall_percent": 90.9,
+  "leakage": [],
+  "concepts": null,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

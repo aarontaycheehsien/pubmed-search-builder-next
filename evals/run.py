@@ -238,6 +238,8 @@ def generate_once(args, fixture: dict, split: str, *, skill_dir: Path, skill_nam
             card["unfinished"] = {"blockers": unfinished["blockers"],
                                   **{k: scored[k] for k in ("count", "gold_reachable", "retrieved", "recall_percent")}}
     card["concepts"] = harness.optional_summary(run_dir)
+    # The agent's own process died before it created a workspace: a driver failure, not the skill's.
+    card["workspace_started"] = (run_dir / "work" / "protocol.json").exists()
     card["status"] = harness.run_status(card, drivers.error_text(run_dir))
     card["valid"] = card["status"] == "ok"
     out = save(fixture["id"], label, seal(card, split))

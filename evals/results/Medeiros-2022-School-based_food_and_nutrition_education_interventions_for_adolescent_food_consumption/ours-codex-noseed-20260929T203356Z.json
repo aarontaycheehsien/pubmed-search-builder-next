@@ -1,0 +1,71 @@
+{
+  "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T203356Z",
+  "scored": "20260929T210724Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "f3fc7687f02b72875e6ab326be592db151ec7a69",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "f3fc7687f02b72875e6ab326be592db151ec7a69",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2008
+  },
+  "final_message": "on\"[tiab] OR nutrition educat*[tiab] OR \"food education\"[tiab] OR \"diet education\"[tiab] OR \"nutrition instruction\"[tiab] OR \"nutrition curriculum\"[tiab] OR \"food and nutrition education\"[tiab] OR nutrition counsel*[tiab] OR nutrition program*[tiab] OR dietary educat*[tiab] OR dietary intervention*[tiab] OR nutrition intervention*[tiab] OR food intervention*[tiab]) AND (\"Adolescent\"[Mesh] OR \"Students\"[Mesh] OR adolescent*[tiab] OR teen*[tiab] OR youth[tiab] OR youths[tiab] OR student*[tiab] OR pupil*[tiab] OR schoolchild*[tiab] OR \"Child\"[Mesh:noexp] OR child*[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])\n```\n\nThe strategy retrieved **69,329 records**. The [generated audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260929T203356Z/work/audit.md) has the numbered search lines and counts. The Entrez-date bound is December 14, 2017; no publication-date limit was added.\n\n## Validation and limitations\n\nRelative recall was **3/3 (100%)** against the development set. There was no held-out validation set, so this is not an estimate of sensitivity or independent performance. School setting and food-consumption outcome were tested as optional blocks and left out because only three relevant records were known; requiring them was not considered sufficiently validated. The final count exceeds the standard 10,000-record workload target.\n\nAssumptions and probe limitations are documented in [narrative.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260929T203356Z/work/narrative.md). The protected [final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260929T203356Z/work/final-query.txt) and [validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260929T203356Z/work/validation-manifest.json) were generated successfully. Human PRESS peer review by an information specialist is still needed before use.",
+  "strategy": "((\"Health Education\"[Mesh] OR \"Dietetics\"[Mesh] OR \"nutrition education\"[tiab] OR nutrition educat*[tiab] OR \"food education\"[tiab] OR \"diet education\"[tiab] OR \"nutrition instruction\"[tiab] OR \"nutrition curriculum\"[tiab] OR \"food and nutrition education\"[tiab] OR nutrition counsel*[tiab] OR nutrition program*[tiab] OR dietary educat*[tiab] OR dietary intervention*[tiab] OR nutrition intervention*[tiab] OR food intervention*[tiab]) AND (\"Adolescent\"[Mesh] OR \"Students\"[Mesh] OR adolescent*[tiab] OR teen*[tiab] OR youth[tiab] OR youths[tiab] OR student*[tiab] OR pupil*[tiab] OR schoolchild*[tiab] OR \"Child\"[Mesh:noexp] OR child*[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-14",
+  "count": 69329,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 6,
+  "recall_percent": 66.7,
+  "missed": [
+    "22625222",
+    "25797051",
+    "29228946"
+  ],
+  "nnr": 11554.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 6,
+  "unseen_recall_percent": 66.7,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 2,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "school",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "consumption",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

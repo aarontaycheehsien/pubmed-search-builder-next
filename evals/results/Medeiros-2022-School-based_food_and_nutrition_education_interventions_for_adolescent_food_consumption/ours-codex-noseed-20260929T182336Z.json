@@ -1,0 +1,71 @@
+{
+  "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T182336Z",
+  "scored": "20260929T193219Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "f3fc7687f02b72875e6ab326be592db151ec7a69",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "f3fc7687f02b72875e6ab326be592db151ec7a69",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 4121
+  },
+  "final_message": "*[tiab] OR eating behaviour*[tiab] OR behaviour*[tiab]) AND (Schools[Mesh] OR school*[tiab] OR school-based[tiab] OR classroom*[tiab] OR school setting*[tiab] OR school program*[tiab] OR educational setting*[tiab] OR afterschool[tiab] OR after-school[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])\n```\n\nThe generated, protected query is also in [final-query.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260929T182336Z/work/final-query.txt).\n\n| Search line | Records |\n|---|---:|\n| Education terms | 331,960 |\n| Adolescent or school-student terms | 3,400,727 |\n| Food-consumption terms | 1,034,999 |\n| School-delivery terms | 312,363 |\n| Combined strategy | **5,776** |\n\nThe strategy uses the requested Entrez-date bound through 2017-12-14; it has no publication-date limit.\n\n## Validation and files\n\nAll 22 screened relevant records were used during development, and the strategy retrieved all 22. This is **100% relative recall against the development set**, not sensitivity. There was no held-out validation set, so the strategy remains empirically unvalidated on independent records. The optional-block loss samples were small, which leaves a risk of missed eligible studies.\n\nThe protected report passed validation. The audit records the rationale, search history, reviewer dispositions, and limitations; the supplementary notes summarize assumptions and risks.\n\n- [Audit](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260929T182336Z/work/audit.md)\n- [Validation manifest](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260929T182336Z/work/validation-manifest.json)\n- [Supplementary notes](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20260929T182336Z/work/narrative.md)\n\nThis received a PRESS-structured internal critique; independent PRESS peer review by an information specialist is still needed before the search is used.",
+  "strategy": "((Health Education[Mesh] OR Health Promotion[Mesh] OR Health Knowledge, Attitudes, Practice[Mesh] OR nutrition education[tiab] OR food education[tiab] OR dietary education[tiab] OR nutrition instruction[tiab] OR nutrition curriculum[tiab] OR nutrition program*[tiab] OR nutrition intervention*[tiab] OR food literacy[tiab] OR nutrition knowledge[tiab] OR garden-based nutrition[tiab] OR Cooking[Mesh] OR \"cooking education\"[tiab] OR \"cooking class\"[tiab] OR \"cooking classes\"[tiab] OR cooking[tiab] OR culinary[tiab] OR garden*[tiab] OR school garden*[tiab]) AND (Adolescent[Mesh] OR Child[Mesh] OR Child, Preschool[Mesh] OR Students[Mesh] OR adolescen*[tiab] OR teen*[tiab] OR youth*[tiab] OR student*[tiab] OR pupil*[tiab] OR schoolchild*[tiab] OR school student*[tiab] OR schoolchildren[tiab] OR child*[tiab] OR middle school*[tiab] OR high school*[tiab] OR secondary school*[tiab] OR primary school*[tiab]) AND (Diet[Mesh] OR Feeding Behavior[Mesh] OR Food Preferences[Mesh] OR Fruit[Mesh] OR Vegetables[Mesh] OR food intake[tiab] OR dietary intake[tiab] OR food consumption[tiab] OR food consum*[tiab] OR diet* intake[tiab] OR fruit intake[tiab] OR vegetable intake[tiab] OR fruit consumption[tiab] OR vegetable consumption[tiab] OR food choice*[tiab] OR food preference*[tiab] OR eating behavior*[tiab] OR dietary behavior*[tiab] OR food habit*[tiab] OR serving*[tiab] OR intake[tiab] OR consumption[tiab] OR dietary behaviour*[tiab] OR eating behaviour*[tiab] OR behaviour*[tiab]) AND (Schools[Mesh] OR school*[tiab] OR school-based[tiab] OR classroom*[tiab] OR school setting*[tiab] OR school program*[tiab] OR educational setting*[tiab] OR afterschool[tiab] OR after-school[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-14",
+  "count": 5776,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 6,
+  "recall_percent": 66.7,
+  "missed": [
+    "22625222",
+    "25797051",
+    "29228946"
+  ],
+  "nnr": 962.7,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 6,
+  "unseen_recall_percent": 66.7,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 2,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "setting",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "consumption",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}
