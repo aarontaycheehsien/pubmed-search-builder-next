@@ -103,6 +103,10 @@ class Strategy:
             raise StrategyError("; ".join(errors))
 
 
+def _mask_quotes(text: str) -> str:
+    return re.sub(r'"[^"]*"', lambda m: "_" * len(m.group(0)), text)
+
+
 def wrap_term(term: str) -> str:
     """Parenthesise a term that has its own top-level operators, so OR-joining cannot rebind it."""
     stripped = term.strip()
@@ -239,6 +243,11 @@ def lint(strategy: Strategy, *, concepts: list[dict] | None = None) -> list[dict
             tags = {syntax.field(tag) for tag in _TAG.findall(term)}
             mesh = mesh or bool(tags & {"mh", "majr", "nm"})
             text = text or bool(tags & {"tiab", "ti", "ab", "tw", "ot", "kw"})
+        compound = [t for t in block.terms if re.search(r"\sAND\s", _mask_quotes(t))]
+        if len(block.terms) >= 2 and 2 * len(compound) >= len(block.terms):
+            issues.append({"severity": "warning", "code": "compound_block", "block": block.id,
+                           "message": "most terms AND two ideas inside one block: split them into separate concept "
+                                      "blocks so each gets its full vocabulary (synonyms, MeSH, spelling variants)"})
         if block.terms and not text:
             issues.append({"severity": "warning", "code": "no_text_layer", "block": block.id,
                            "message": "no title/abstract layer: records not yet MeSH-indexed will be missed"})

@@ -93,3 +93,14 @@ def test_lint_layers_and_protocol_roles():
 
 def test_limit_without_rationale():
     assert "limit_without_rationale" in codes(lint(make(TWO, limits=[{"clause": "english[la]"}])))
+
+
+
+def test_lint_flags_a_block_whose_terms_and_two_ideas():
+    from psb.strategy import Strategy, lint
+    compound = Strategy.from_dict({"blocks": [{"id": "vm", "terms": [
+        "(metagenom*[tiab] AND virus*[tiab])", '("Metagenomics"[Mesh] AND "Viruses"[Mesh])', "virom*[tiab]"]}]})
+    assert "compound_block" in {i["code"] for i in lint(compound)}
+    split = Strategy.from_dict({"blocks": [{"id": "v", "terms": ["virus*[tiab]", '"Viruses"[Mesh]']},
+                                           {"id": "m", "terms": ["metagenom*[tiab]", '"high AND low"[tiab]']}]})
+    assert "compound_block" not in {i["code"] for i in lint(split)}

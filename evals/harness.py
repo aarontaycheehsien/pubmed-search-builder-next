@@ -178,8 +178,9 @@ def run_status(card: dict, errors_text: str = "") -> str:
     delivered = card.get("recall_percent") is not None
     if run.get("timed_out") and not delivered:
         return "timeout"
+    crashed_before_work = run.get("returncode") not in (0, None) and card.get("workspace_started") is False
     if not delivered and ((run.get("returncode") not in (0, None) and (run.get("seconds") or 0) < INFRA_FAST_SECONDS)
-                          or INFRA_PATTERNS.search(errors_text or "")):
+                          or crashed_before_work or INFRA_PATTERNS.search(errors_text or "")):
         return "infra"
     if card.get("leakage"):
         return "leakage"

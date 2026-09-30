@@ -136,7 +136,9 @@ If no fresh context is available, review the packet yourself and say so in the a
 Read `references/reporting.md` and `references/validation.md`. Run `psb report` (`--fresh` is
 an equivalent spelling). It revalidates every line and heading live, checks the current critic,
 and writes `final-query.txt`, `audit.md`, and `validation-manifest.json` only if the gate passes.
-Deliver the generated query verbatim; do not reconstruct or edit it. Keep narrative additions
+Deliver the generated query verbatim; do not reconstruct or edit it. After `psb report` succeeds,
+change nothing in the workspace; if you must change anything (even `protocol.json` notes), run
+`psb eval` and `psb report` again, or the delivery is no longer current. Keep narrative additions
 in `narrative.md`, because changing the generated audit invalidates its manifest. Give the user:
 
 - the strategy (single line and line by line with counts),

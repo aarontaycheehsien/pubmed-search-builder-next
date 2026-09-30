@@ -192,8 +192,12 @@ def review_gate(ws: Workspace, evaluation: dict, *, rounds: list[dict] | None = 
     budget = revision_budget(evaluation["inputs"]["protocol"].get("depth"))
     if sum(bool(r.get("review_sha256")) and not r.get("closing") for r in rounds) > budget:
         blockers.append(validation.issue("critic_budget", "Critic revision budget exhausted; use the closing round or deliver a diagnostic handoff"))
+    # After the closing round no review is left to act on a should-fix finding, so it is delivered
+    # as a documented open concern; only a must-fix finding still stops the query.
+    closed_out = bool(latest.get("closing"))
+    blocking_severities = {"must-fix"} if closed_out else {"must-fix", "should-fix"}
     for fid, f in active.items():
-        if f["status"] == "open" and f["severity"] in {"must-fix", "should-fix"}:
+        if f["status"] == "open" and f["severity"] in blocking_severities:
             blockers.append(validation.issue("critic_open", "Finding needs a disposition", location=f"critic:{fid}", evidence=f))
     # An omitted finding must be explicitly carried forward, even if its old status was open.
     current_ids = {f.get("id") for f in latest.get("findings", []) if isinstance(f, dict)} if isinstance(latest.get("findings"), list) else set()
@@ -221,6 +225,9 @@ def review_gate(ws: Workspace, evaluation: dict, *, rounds: list[dict] | None = 
     for domain, row in (latest.get("domains") or {}).items():
         if isinstance(row, dict) and row.get("verdict") == "revise":
             explained = any(f.get("domain") == domain and f.get("status") in {"accepted-risk", "rejected", "resolved"} and _nonempty(f.get("response")) for f in active.values())
+            if closed_out:  # at closing, a domain blocks only through an open must-fix finding in it
+                explained = not any(f.get("domain") == domain and f["status"] == "open" and f["severity"] == "must-fix"
+                                    for f in active.values())
             if not explained:
                 blockers.append(validation.issue("critic_revise", "Domain still requires revision", location=f"critic:{domain}"))
     return {"blockers": blockers, "findings": list(active.values()), "issue_dispositions": dispositions}

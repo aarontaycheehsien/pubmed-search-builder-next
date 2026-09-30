@@ -1,6 +1,6 @@
 # Evaluation results
 
-Generated 20260928T114216Z by `python evals/run.py report`.
+Generated 20260930T120051Z by `python evals/run.py report`.
 
 Recall is over gold records in PubMed on or before `as_of`; in the seeded condition the three seeds are excluded. `unseen` recall leaves out gold records the agent itself screened into its sets. NNR is total results divided by gold retrieved: a workload proxy, not precision. Generated rows show the mean (min-max) over `ok` runs.
 
@@ -86,3 +86,4 @@ Frozen before their first run; misses and audits are never kept. Claim an improv
 ## Retired topics
 
 - Jeyaraman_2020: gold set is mostly chondrocyte-implantation and microfracture trials outside the question (mesenchymal stem cells for knee osteoarthritis)
+- Menon_2022: gold set counts diet, opioid use, food insecurity and vitamin D reviews as environmental health, which the question's plain reading excludes; probes against that reading found little while recall stayed near 57%

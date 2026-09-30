@@ -11,7 +11,6 @@
     "Liu_2023_VR_nursing",
     "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
     "Meijboom_2021",
-    "Menon_2022",
     "Muthu_2022",
     "Oud_2018",
     "Smid_2020",
@@ -63,6 +62,7 @@
     }
   },
   "retired": {
-    "Jeyaraman_2020": "gold set is mostly chondrocyte-implantation and microfracture trials outside the question (mesenchymal stem cells for knee osteoarthritis)"
+    "Jeyaraman_2020": "gold set is mostly chondrocyte-implantation and microfracture trials outside the question (mesenchymal stem cells for knee osteoarthritis)",
+    "Menon_2022": "gold set counts diet, opioid use, food insecurity and vitamin D reviews as environmental health, which the question's plain reading excludes; probes against that reading found little while recall stayed near 57%"
   }
 }

@@ -102,3 +102,11 @@ def test_harness_reads_the_query_and_blockers_of_a_diagnostic_handoff(make_ws, t
     handoff = harness.diagnostic_handoff(run_dir)
     assert "asthma*[tiab]" in handoff["query"] and handoff["blockers"] == ["critic_missing"]
     assert harness.diagnostic_handoff(tmp_path / "nowhere") is None
+
+
+def test_after_closing_only_must_fix_blocks(make_ws):
+    ws = evaluated(make_ws)
+    exhaust_revision_rounds(ws)
+    should = {**OPEN, "severity": "should-fix", "kind": "reporting"}
+    write_round(ws, 3, [should], REVISE, closing=True)
+    assert deliver.report(ws)["ok"]
