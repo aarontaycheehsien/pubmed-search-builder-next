@@ -1,0 +1,46 @@
+{
+  "topic": "social-prescribing-older-adults",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T233619Z",
+  "scored": "20260930T001855Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2555
+  },
+  "strategy": "((\"Aged\"[Mesh] OR \"Aged, 80 and over\"[Mesh] OR \"older adult\"[tiab:~1] OR \"older people\"[tiab:~1] OR \"older person\"[tiab:~1] OR \"older patient\"[tiab:~1] OR \"older population\"[tiab:~1] OR elder*[tiab] OR senior*[tiab] OR geriatric*[tiab] OR \"aged 65\"[tiab:~2] OR \"over 65\"[tiab:~1] OR \"65 year old\"[tiab:~1]) AND (\"Community Health Workers\"[Mesh] OR social prescrib*[tiab] OR \"social prescribing\"[tiab] OR \"social prescription\"[tiab] OR \"link worker\"[tiab:~1] OR \"community link worker\"[tiab:~1] OR (community[tiab] AND link*[tiab] AND practition*[tiab]) OR \"community link scheme\"[tiab:~1] OR \"wellbeing coordinator\"[tiab:~1] OR (wellbeing[tiab] AND co-ordinator*[tiab]) OR \"community navigator\"[tiab:~1] OR \"social referral\"[tiab:~1] OR \"community referral\"[tiab:~1] OR \"arts on prescription\"[tiab] OR \"museum prescription\"[tiab:~2] OR \"green prescription\"[tiab] OR \"nature-based social prescribing\"[tiab] OR \"community activity referral\"[tiab:~2])) AND (\"1800/01/01\"[edat] : \"2019/12/30\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2019-12-30",
+  "count": 937,
+  "gold_scored": 10,
+  "gold_reachable": 10,
+  "retrieved": 4,
+  "recall_percent": 40.0,
+  "nnr": 234.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 3,
+  "unseen_recall_percent": 33.3,
+  "leakage": [],
+  "concepts": null,
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

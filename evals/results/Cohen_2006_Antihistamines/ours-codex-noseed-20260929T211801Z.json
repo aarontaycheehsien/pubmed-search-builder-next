@@ -1,0 +1,53 @@
+{
+  "topic": "Cohen_2006_Antihistamines",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T211801Z",
+  "scored": "20260929T215852Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2450
+  },
+  "strategy": "((\"Rhinitis, Allergic, Seasonal\"[Mesh] OR \"Rhinitis, Allergic, Perennial\"[Mesh] OR Rhinitis[Mesh] OR Urticaria[Mesh] OR \"allergic rhinitis\"[tiab] OR \"allergic rhinitides\"[tiab] OR \"rhinitis, allergic\"[tiab] OR rhinitis[tiab] OR (allergic[tiab] AND rhinitis[tiab]) OR \"seasonal rhinitis\"[tiab] OR \"perennial rhinitis\"[tiab] OR rhinoconjunctivitis*[tiab] OR \"allergic rhinoconjunctivitis\"[tiab] OR \"hay fever\"[tiab] OR hayfever[tiab] OR pollinosis[tiab] OR pollinoses[tiab] OR urticaria*[tiab] OR hives[tiab] OR \"urticarial wheal\"[tiab] OR \"urticarial wheals\"[tiab]) AND (Cetirizine[Mesh] OR Loratadine[Mesh] OR Terfenadine[Mesh] OR Astemizole[Mesh] OR Ketotifen[Mesh] OR \"second generation antihistamine\"[tiab] OR \"second-generation antihistamine\"[tiab] OR \"second generation antihistamines\"[tiab] OR \"second-generation antihistamines\"[tiab] OR \"non-sedating antihistamine\"[tiab] OR \"nonsedating antihistamine\"[tiab] OR \"non sedating antihistamine\"[tiab] OR \"less sedating antihistamine\"[tiab:~2] OR \"less-sedating antihistamine\"[tiab:~2] OR \"H1 antihistamine\"[tiab] OR \"H1 antihistamines\"[tiab] OR \"newer antihistamine\"[tiab] OR \"newer antihistamines\"[tiab] OR \"H1 receptor antagonist\"[tiab] OR \"H1 receptor antagonists\"[tiab] OR \"H1-receptor antagonist\"[tiab] OR \"H1-receptor antagonists\"[tiab] OR \"histamine H1 antagonist\"[tiab] OR \"histamine H1 antagonists\"[tiab] OR cetirizine[tiab] OR levocetirizine[tiab] OR levocabastine[tiab] OR loratadine[tiab] OR desloratadine[tiab] OR emedastine[tiab] OR epinastine[tiab] OR fexofenadine[tiab] OR terfenadine[tiab] OR astemizole[tiab] OR acrivastine[tiab] OR azelastine[tiab] OR ebastine[tiab] OR mizolastine[tiab] OR ketotifen[tiab])) AND (\"1800/01/01\"[edat] : \"2002/05/26\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2002-05-26",
+  "count": 1269,
+  "gold_scored": 16,
+  "gold_reachable": 16,
+  "retrieved": 13,
+  "recall_percent": 81.2,
+  "nnr": 97.6,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 12,
+  "unseen_recall_percent": 80.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "screen": 4,
+      "search": 2
+    },
+    "optional": []
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

@@ -1,0 +1,46 @@
+{
+  "topic": "social-prescribing-older-adults",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T231053Z",
+  "scored": "20260929T233616Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1523
+  },
+  "strategy": "((\"Aged\"[Mesh] OR \"Aged, 80 and over\"[Mesh] OR \"Frail Elderly\"[Mesh] OR older adult*[tiab] OR older people[tiab] OR older person*[tiab] OR elderly[tiab] OR geriatric*[tiab] OR senior adult*[tiab] OR aged 65[tiab] OR aged 70[tiab]) AND (\"Referral and Consultation\"[Mesh] OR \"Community Health Services\"[Mesh] OR \"Community Participation\"[Mesh] OR \"Social Participation\"[Mesh] OR \"Patient Navigation\"[Mesh] OR \"Social Support\"[Mesh] OR social prescribing[tiab] OR social prescription*[tiab] OR link worker*[tiab] OR link-worker*[tiab] OR community link worker*[tiab] OR wellbeing coordinator*[tiab] OR community referral[tiab] OR referral to community[tiab] OR community navigator*[tiab] OR community connector*[tiab] OR arts on prescription[tiab] OR green prescription*[tiab] OR prescribed activity[tiab] OR prescribed activities[tiab] OR (community[tiab] AND link[tiab] AND practitioner*[tiab]) OR (wellbeing[tiab] AND coordinator*[tiab]) OR (museum[tiab] AND prescription*[tiab]) OR (community[tiab] AND activit*[tiab]))) AND (\"1800/01/01\"[edat] : \"2019/12/30\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2019-12-30",
+  "count": 86309,
+  "gold_scored": 10,
+  "gold_reachable": 10,
+  "retrieved": 4,
+  "recall_percent": 40.0,
+  "nnr": 21577.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 3,
+  "unseen_recall_percent": 33.3,
+  "leakage": [],
+  "concepts": null,
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

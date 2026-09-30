@@ -1,0 +1,60 @@
+{
+  "topic": "healthcare-nudging",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T224003Z",
+  "scored": "20260929T231614Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2170
+  },
+  "strategy": "((Economics, Behavioral[Mesh] OR Reminder Systems[Mesh] OR Decision Support Techniques[Mesh] OR Clinical Decision-Making[Mesh] OR nudge*[tiab] OR choice architecture[tiab] OR behavioral economics[tiab] OR behavioural economics[tiab] OR default*[tiab] OR reminder*[tiab] OR prompt*[tiab] OR peer comparison[tiab] OR social norm*[tiab] OR public commitment[tiab] OR suggested alternative*[tiab] OR accountable justification*[tiab] OR choice design[tiab] OR Decision Support Systems, Clinical[Mesh] OR clinical decision support[tiab] OR decision support system*[tiab]) AND (Health Personnel[Mesh] OR Physicians[Mesh] OR Nurses[Mesh] OR Pharmacists[Mesh] OR Allied Health Personnel[Mesh] OR physician*[tiab] OR clinician*[tiab] OR doctor*[tiab] OR nurse*[tiab] OR pharmacist*[tiab] OR dentist*[tiab] OR practitioner*[tiab] OR healthcare professional*[tiab] OR health care professional*[tiab] OR healthcare worker*[tiab] OR health care worker*[tiab] OR provider*[tiab] OR Intensive Care Units[Mesh] OR intensive care unit*[tiab] OR ICU[tiab] OR medical staff[tiab] OR clinical staff[tiab] OR hospital staff[tiab] OR prescriber*[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/18\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-18",
+  "count": 35854,
+  "gold_scored": 86,
+  "gold_reachable": 86,
+  "retrieved": 58,
+  "recall_percent": 67.4,
+  "nnr": 618.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 4,
+  "unseen_retrieved": 54,
+  "unseen_recall_percent": 65.9,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "practice",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

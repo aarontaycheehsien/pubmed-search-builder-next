@@ -1,0 +1,61 @@
+{
+  "topic": "Cohen_2006_ACEInhibitors",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T211801Z",
+  "scored": "20260929T215534Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2252
+  },
+  "strategy": "((\"Captopril\"[Mesh] OR \"Enalapril\"[Mesh] OR \"Fosinopril\"[Mesh] OR \"Lisinopril\"[Mesh] OR \"Perindopril\"[Mesh] OR \"Quinapril\"[Mesh] OR \"Ramipril\"[Mesh] OR \"angiotensin converting enzyme inhibitor\"[tiab] OR \"angiotensin converting enzyme inhibitors\"[tiab] OR \"angiotensin-converting enzyme inhibitor\"[tiab] OR \"angiotensin-converting enzyme inhibitors\"[tiab] OR \"ACE inhibitor\"[tiab] OR \"ACE inhibitors\"[tiab] OR benazepril[tiab] OR captopril[tiab] OR enalapril[tiab] OR fosinopril[tiab] OR lisinopril[tiab] OR moexipril[tiab] OR perindopril[tiab] OR quinapril[tiab] OR ramipril[tiab] OR trandolapril[tiab] OR \"Cilazapril\"[Mesh] OR cilazapril[tiab] OR Inhibace[tiab] OR \"RO 31-2848\"[tiab]) AND (\"Hypertension\"[Mesh] OR \"Heart Failure\"[Mesh] OR \"Coronary Disease\"[Mesh] OR \"Coronary Artery Disease\"[Mesh] OR \"Myocardial Infarction\"[Mesh] OR \"Ventricular Dysfunction\"[Mesh] OR \"Kidney Diseases\"[Mesh] OR \"Diabetic Nephropathies\"[Mesh] OR \"Renal Insufficiency\"[Mesh] OR \"Risk Factors\"[Mesh] OR hypertension[tiab] OR \"high blood pressure\"[tiab] OR \"heart failure\"[tiab] OR \"congestive heart failure\"[tiab] OR \"coronary artery disease\"[tiab] OR \"coronary heart disease\"[tiab] OR \"coronary disease\"[tiab] OR \"ischemic heart disease\"[tiab] OR \"ischaemic heart disease\"[tiab] OR \"myocardial infarction\"[tiab] OR \"heart attack\"[tiab] OR \"left ventricular dysfunction\"[tiab] OR \"ventricular dysfunction\"[tiab] OR \"left ventricular impairment\"[tiab] OR \"kidney disease\"[tiab] OR \"kidney diseases\"[tiab] OR \"renal disease\"[tiab] OR \"renal diseases\"[tiab] OR \"chronic renal failure\"[tiab] OR \"chronic renal insufficiency\"[tiab] OR \"chronic kidney disease\"[tiab] OR \"diabetic nephropathy\"[tiab] OR \"diabetic nephropathies\"[tiab] OR \"diabetic kidney disease\"[tiab] OR \"microalbuminuria\"[tiab] OR \"cardiovascular risk\"[tiab] OR \"high cardiovascular risk\"[tiab] OR \"high risk\"[tiab] OR \"risk factor\"[tiab] OR \"risk factors\"[tiab] OR \"Albuminuria\"[Mesh] OR \"Proteinuria\"[Mesh] OR proteinuria[tiab])) AND (\"1800/01/01\"[edat] : \"2003/03/15\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2003-03-15",
+  "count": 18551,
+  "gold_scored": 41,
+  "gold_reachable": 41,
+  "retrieved": 41,
+  "recall_percent": 100.0,
+  "nnr": 452.5,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 41,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 2,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "outcomes",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

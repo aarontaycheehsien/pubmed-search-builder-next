@@ -1,0 +1,53 @@
+{
+  "topic": "Cohen_2006_Antihistamines",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T223646Z",
+  "scored": "20260929T231049Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2042
+  },
+  "strategy": "((Rhinitis, Allergic[Mesh] OR Rhinitis, Allergic, Seasonal[Mesh] OR Rhinitis, Allergic, Perennial[Mesh] OR Urticaria[Mesh] OR \"allergic rhinitis\"[tiab] OR \"seasonal allergic rhinitis\"[tiab] OR \"seasonal rhinitis\"[tiab] OR \"perennial allergic rhinitis\"[tiab] OR \"perennial rhinitis\"[tiab] OR \"hay fever\"[tiab] OR hayfever[tiab] OR pollinosis[tiab] OR \"pollen allergy\"[tiab] OR \"allergic rhinoconjunctivitis\"[tiab] OR rhinoconjunctivit*[tiab] OR urticaria[tiab] OR urticarial[tiab] OR hives[tiab] OR \"urticarial wheal\"[tiab] OR \"chronic idiopathic urticaria\"[tiab] OR \"chronic spontaneous urticaria\"[tiab] OR \"acute urticaria\"[tiab] OR \"chronic urticaria\"[tiab]) AND (Cetirizine[Mesh] OR Loratadine[Mesh] OR Terfenadine[Mesh] OR Astemizole[Mesh] OR antihistamin*[tiab] OR \"second generation antihistamine\"[tiab] OR \"second-generation antihistamine\"[tiab] OR \"new generation antihistamine\"[tiab] OR \"non-sedating antihistamine\"[tiab] OR \"nonsedating antihistamine\"[tiab] OR \"non sedating antihistamine\"[tiab] OR \"H1 receptor antagonist\"[tiab] OR \"H1-receptor antagonist\"[tiab] OR \"histamine H1 antagonist\"[tiab] OR \"histamine H1-receptor antagonist\"[tiab] OR \"newer antihistamine\"[tiab] OR cetirizine[tiab] OR cetirizin*[tiab] OR loratadine[tiab] OR desloratadine[nm] OR desloratadine[tiab] OR fexofenadine[nm] OR fexofenadine[tiab] OR terfenadine[tiab] OR astemizole[tiab] OR acrivastine[nm] OR acrivastine[tiab] OR ebastine[nm] OR ebastine[tiab] OR azelastine[nm] OR azelastine[tiab] OR mizolastine[nm] OR mizolastine[tiab] OR levocetirizine[nm] OR levocetirizine[tiab])) AND (\"1800/01/01\"[edat] : \"2002/05/26\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2002-05-26",
+  "count": 1985,
+  "gold_scored": 16,
+  "gold_reachable": 16,
+  "retrieved": 13,
+  "recall_percent": 81.2,
+  "nnr": 152.7,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 13,
+  "unseen_recall_percent": 81.2,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "screen": 4,
+      "search": 2
+    },
+    "optional": []
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

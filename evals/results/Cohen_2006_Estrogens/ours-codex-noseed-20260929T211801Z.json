@@ -1,0 +1,61 @@
+{
+  "topic": "Cohen_2006_Estrogens",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T211801Z",
+  "scored": "20260929T215655Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2333
+  },
+  "strategy": "((Menopause[Mesh] OR Postmenopause[Mesh] OR Perimenopause[Mesh] OR Climacteric[Mesh] OR Premenopause[Mesh] OR Menopause, Premature[Mesh] OR menopaus*[tiab] OR climacter*[tiab] OR perimenopaus*[tiab] OR postmenopaus*[tiab] OR premenopaus*[tiab] OR oophorectom*[tiab] OR ovariectom*[tiab] OR hysterectom*[tiab] OR \"surgical menopause\"[tiab]) AND (Estrogen Replacement Therapy[Mesh] OR Estradiol Congeners[Mesh] OR estrogen*[tiab] OR oestrogen*[tiab] OR estradiol[tiab] OR oestradiol[tiab] OR estriol[tiab] OR estrone[tiab] OR conjugated equine estrogen*[tiab] OR conjugated equine oestrogen*[tiab] OR esterified estrogen*[tiab] OR ethinyl estradiol[tiab] OR micronized estradiol[tiab] OR vaginal estrogen*[tiab] OR transdermal estrogen*[tiab] OR hormone replacement therap*[tiab])) AND (\"1800/01/01\"[edat] : \"2003/10/12\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2003-10-12",
+  "count": 30977,
+  "gold_scored": 80,
+  "gold_reachable": 80,
+  "retrieved": 77,
+  "recall_percent": 96.2,
+  "nnr": 402.3,
+  "translation_issues": [],
+  "gold_seen_by_agent": 13,
+  "unseen_retrieved": 64,
+  "unseen_recall_percent": 95.5,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 2,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "outcomes",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

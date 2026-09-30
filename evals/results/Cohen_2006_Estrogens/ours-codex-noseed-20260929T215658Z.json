@@ -1,0 +1,60 @@
+{
+  "topic": "Cohen_2006_Estrogens",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T215658Z",
+  "scored": "20260929T223103Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2045
+  },
+  "strategy": "((\"Menopause\"[Mesh] OR \"Postmenopause\"[Mesh] OR \"Premenopause\"[Mesh] OR menopaus*[tiab] OR perimenopaus*[tiab] OR postmenopaus*[tiab] OR climacteric[tiab] OR climacterium[tiab] OR surgical menopause[tiab] OR surgically induced menopause[tiab] OR oophorectom*[tiab]) AND (\"Estrogen Replacement Therapy\"[Mesh] OR \"Hormone Replacement Therapy\"[Mesh] OR \"Estrogens, Conjugated (USP)\"[Mesh] OR estrogen*[tiab] OR oestrogen*[tiab] OR estradiol[tiab] OR oestradiol[tiab] OR estriol[tiab] OR oestriol[tiab] OR estrone[tiab] OR oestrone[tiab] OR conjugated estrogen*[tiab] OR conjugated oestrogen*[tiab] OR Premarin[tiab] OR progestin*[tiab] OR progestogen*[tiab] OR hormone replacement therap*[tiab] OR hormone replace* therap*[tiab] OR HRT[tiab])) AND (\"1800/01/01\"[edat] : \"2003/10/12\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2003-10-12",
+  "count": 19908,
+  "gold_scored": 80,
+  "gold_reachable": 80,
+  "retrieved": 76,
+  "recall_percent": 95.0,
+  "nnr": 261.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 7,
+  "unseen_retrieved": 69,
+  "unseen_recall_percent": 94.5,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "outcomes",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

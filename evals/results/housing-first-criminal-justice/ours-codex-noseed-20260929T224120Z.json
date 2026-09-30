@@ -1,0 +1,61 @@
+{
+  "topic": "housing-first-criminal-justice",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T224120Z",
+  "scored": "20260929T230739Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1579
+  },
+  "strategy": "((\"Ill-Housed Persons\"[Mesh] OR homeless*[tiab] OR unhoused[tiab] OR houseless[tiab] OR \"rough sleeping\"[tiab:~1] OR \"precariously housed\"[tiab:~1] OR \"unstably housed\"[tiab:~1] OR \"at risk of homelessness\"[tiab:~2] OR \"precarious housing\"[tiab:~0]) AND (\"Housing\"[Mesh] OR \"Public Housing\"[Mesh] OR \"housing first\"[tiab:~0] OR \"permanent supportive housing\"[tiab:~1] OR \"supportive housing\"[tiab:~1] OR \"supported housing\"[tiab:~1] OR \"scattered site housing\"[tiab:~1] OR \"project based housing\"[tiab:~1] OR \"low barrier housing\"[tiab:~1])) AND (\"1800/01/01\"[edat] : \"2018/08/01\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-08-01",
+  "count": 1492,
+  "gold_scored": 5,
+  "gold_reachable": 5,
+  "retrieved": 5,
+  "recall_percent": 100.0,
+  "nnr": 298.4,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 5,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 3,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "justice_outcomes",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

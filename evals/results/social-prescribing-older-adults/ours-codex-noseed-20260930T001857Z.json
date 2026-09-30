@@ -1,0 +1,60 @@
+{
+  "topic": "social-prescribing-older-adults",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260930T001857Z",
+  "scored": "20260930T004536Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1599
+  },
+  "strategy": "((Aged[Mesh] OR oldest old*[tiab] OR older adult*[tiab] OR older people[tiab] OR older person*[tiab] OR older patient*[tiab] OR elderly[tiab] OR elder*[tiab] OR geriatric*[tiab] OR senior*[tiab] OR late life[tiab] OR later life[tiab] OR aged 65[tiab] OR \"65 years and older\"[tiab] OR 65 years[tiab]) AND (Community Health Workers[Mesh] OR Patient Navigation[Mesh] OR social prescribing[tiab] OR social prescription[tiab] OR social prescriptions[tiab] OR link work*[tiab] OR community connector*[tiab] OR community navigat*[tiab] OR care navigat*[tiab] OR community referral*[tiab] OR non-medical referral*[tiab] OR community link*[tiab] OR community-based referral*[tiab] OR community-based program*[tiab] OR community-based programme*[tiab] OR referral scheme*[tiab] OR community activit*[tiab] OR community support[tiab])) AND (\"1800/01/01\"[edat] : \"2019/12/30\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2019-12-30",
+  "count": 2066,
+  "gold_scored": 10,
+  "gold_reachable": 10,
+  "retrieved": 4,
+  "recall_percent": 40.0,
+  "nnr": 516.5,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 3,
+  "unseen_recall_percent": 33.3,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "outcomes",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

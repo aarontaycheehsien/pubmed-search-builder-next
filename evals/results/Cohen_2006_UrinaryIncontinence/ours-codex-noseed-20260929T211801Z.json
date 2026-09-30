@@ -1,0 +1,50 @@
+{
+  "topic": "Cohen_2006_UrinaryIncontinence",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T211801Z",
+  "scored": "20260929T214244Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1482
+  },
+  "error": "no current protected delivery",
+  "unfinished": {
+    "blockers": [
+      "critic_open",
+      "critic_revise"
+    ],
+    "count": 889,
+    "gold_reachable": 40,
+    "retrieved": 31,
+    "recall_percent": 77.5
+  },
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "screen": 4,
+      "search": 2
+    },
+    "optional": []
+  },
+  "workspace_started": true,
+  "status": "no-delivery",
+  "valid": false,
+  "split": "heldout"
+}

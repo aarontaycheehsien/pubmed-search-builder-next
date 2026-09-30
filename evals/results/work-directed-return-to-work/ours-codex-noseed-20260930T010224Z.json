@@ -1,0 +1,67 @@
+{
+  "topic": "work-directed-return-to-work",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260930T010224Z",
+  "scored": "20260930T015342Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 3078
+  },
+  "strategy": "((\"Depressive Disorder\"[Mesh] OR \"Anxiety Disorders\"[Mesh] OR \"Adjustment Disorders\"[Mesh] OR \"Stress Disorders, Traumatic\"[Mesh] OR \"Mental Disorders\"[Mesh] OR depress*[tiab] OR anxi*[tiab] OR \"adjustment disorder\"[tiab] OR \"adjustment disorders\"[tiab] OR \"stress disorder\"[tiab] OR \"stress disorders\"[tiab] OR \"stress reaction\"[tiab] OR \"stress reactions\"[tiab] OR \"acute stress reaction\"[tiab] OR \"acute stress reactions\"[tiab] OR \"stress-related disorder\"[tiab] OR \"stress-related disorders\"[tiab] OR \"stress related disorder\"[tiab] OR \"stress related disorders\"[tiab] OR \"exhaustion disorder*\"[tiab] OR \"common mental disorder\"[tiab] OR \"common mental disorders\"[tiab] OR \"mental disorder\"[tiab] OR \"mental disorders\"[tiab] OR \"mental illness\"[tiab] OR \"mental illnesses\"[tiab] OR burnout[tiab] OR \"reaction to severe stress\"[tiab] OR \"reactions to severe stress\"[tiab]) AND (\"Occupational Health\"[Mesh] OR \"Occupational Health Services\"[Mesh] OR \"Rehabilitation, Vocational\"[Mesh] OR \"Employment, Supported\"[Mesh] OR \"Workplace\"[Mesh] OR \"Return to Work\"[Mesh] OR work-directed[tiab] OR \"work directed\"[tiab] OR work-focused[tiab] OR \"work focused\"[tiab] OR workplace[tiab] OR workplaces[tiab] OR worksite[tiab] OR worksites[tiab] OR employer[tiab] OR employers[tiab] OR supervisor[tiab] OR supervisors[tiab] OR \"occupational health service\"[tiab] OR \"occupational health services\"[tiab] OR \"occupational rehabilitation\"[tiab] OR \"vocational rehabilitation\"[tiab] OR \"work rehabilitation\"[tiab] OR \"workplace intervention\"[tiab] OR \"workplace interventions\"[tiab] OR workplace-based[tiab] OR \"workplace based\"[tiab] OR \"worksite intervention\"[tiab] OR \"worksite interventions\"[tiab] OR \"return-to-work intervention\"[tiab] OR \"return-to-work interventions\"[tiab] OR \"return-to-work program\"[tiab] OR \"return-to-work programmes\"[tiab] OR \"return-to-work programme\"[tiab] OR \"return-to-work programs\"[tiab] OR \"return to work intervention\"[tiab] OR \"return to work interventions\"[tiab] OR \"return to work program\"[tiab] OR \"return to work programme\"[tiab] OR \"workplace dialogue\"[tiab] OR \"workplace meeting\"[tiab] OR \"workplace visit\"[tiab] OR \"work modification\"[tiab] OR \"work accommodation\"[tiab] OR \"job support\"[tiab] OR \"individual job support\"[tiab] OR \"supported employment\"[tiab] OR \"work conditioning\"[tiab] OR \"work hardening\"[tiab] OR \"work-focused cognitive behavioural therapy\"[tiab] OR \"work-focused cognitive behavioral therapy\"[tiab] OR \"work-focused CBT\"[tiab] OR \"work focused CBT\"[tiab] OR \"work-related intervention\"[tiab] OR \"work related intervention\"[tiab] OR \"work-related interventions\"[tiab] OR \"work related interventions\"[tiab] OR \"work-related problem-solving\"[tiab] OR \"work related problem solving\"[tiab] OR \"workplace-based rehabilitation\"[tiab] OR \"work-focused therapy\"[tiab] OR \"work focused therapy\"[tiab])) AND (\"1800/01/01\"[edat] : \"2021/12/18\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2021-12-18",
+  "count": 17510,
+  "gold_scored": 11,
+  "gold_reachable": 11,
+  "retrieved": 11,
+  "recall_percent": 100.0,
+  "nnr": 1591.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 4,
+  "unseen_retrieved": 7,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "screen": 2,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "return_work",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "sick_leave_context",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

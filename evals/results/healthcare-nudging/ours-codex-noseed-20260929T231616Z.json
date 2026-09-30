@@ -1,0 +1,46 @@
+{
+  "topic": "healthcare-nudging",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T231616Z",
+  "scored": "20260929T235812Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2515
+  },
+  "strategy": "((\"Economics, Behavioral\"[Mesh] OR \"Feedback\"[Mesh] OR nudge*[tiab] OR nudging[tiab] OR choice architecture[tiab] OR choice architect*[tiab] OR behavioral economics[tiab] OR behavioural economics[tiab] OR default*[tiab] OR active choice[tiab] OR opt-out[tiab] OR opt out[tiab] OR preselect*[tiab] OR decision environment*[tiab] OR choice environment*[tiab] OR commitment letter*[tiab] OR public commitment[tiab] OR social norm*[tiab] OR peer comparison*[tiab] OR feedback*[tiab] OR framing effect*[tiab]) AND (\"Health Personnel\"[Mesh] OR \"Allied Health Personnel\"[Mesh] OR physician*[tiab] OR doctor*[tiab] OR clinician*[tiab] OR nurse*[tiab] OR pharmacist*[tiab] OR provider*[tiab] OR practitioner*[tiab] OR prescriber*[tiab] OR healthcare professional*[tiab] OR health care professional*[tiab] OR healthcare worker*[tiab] OR health care worker*[tiab] OR medical assistant*[tiab] OR surgeon*[tiab] OR resident*[tiab] OR trainee*[tiab] OR intern*[tiab]) AND (\"Evidence-Based Practice\"[Mesh] OR \"Evidence-Based Medicine\"[Mesh] OR \"Evidence-Based Nursing\"[Mesh] OR \"Guideline Adherence\"[Mesh] OR \"Practice Guidelines as Topic\"[Mesh] OR \"Practice Patterns, Physicians'\"[Mesh] OR evidence-based[tiab] OR evidence based[tiab] OR evidence-based medicine[tiab] OR evidence-based practice[tiab] OR guideline*[tiab] OR guidance[tiab] OR guideline-concordant[tiab] OR guideline concordant[tiab] OR guideline adherence[tiab] OR guideline compliance[tiab] OR protocol adherence[tiab] OR protocol compliance[tiab] OR practice pattern*[tiab] OR prescrib*[tiab] OR high-value care[tiab] OR low-value care[tiab] OR evidence-practice gap[tiab] OR translation of evidence[tiab] OR evidence translation[tiab] OR vaccin*[tiab] OR immuniz*[tiab] OR immunis*[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/18\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-18",
+  "count": 5871,
+  "gold_scored": 86,
+  "gold_reachable": 86,
+  "retrieved": 14,
+  "recall_percent": 16.3,
+  "nnr": 419.4,
+  "translation_issues": [],
+  "gold_seen_by_agent": 4,
+  "unseen_retrieved": 10,
+  "unseen_recall_percent": 12.2,
+  "leakage": [],
+  "concepts": null,
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

@@ -1,0 +1,46 @@
+{
+  "topic": "Cohen_2006_Antihistamines",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T215855Z",
+  "scored": "20260929T223644Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2269
+  },
+  "strategy": "((\"Rhinitis, Allergic\"[Mesh] OR \"Rhinitis, Allergic, Seasonal\"[Mesh] OR \"Rhinitis, Allergic, Perennial\"[Mesh] OR \"Urticaria\"[Mesh] OR \"Allergic Rhinitis\"[tiab] OR \"allergic rhinit*\"[tiab] OR \"rhinitis allerg*\"[tiab] OR \"seasonal rhinitis\"[tiab] OR \"perennial rhinitis\"[tiab] OR \"hay fever\"[tiab] OR hayfever[tiab] OR pollinosis[tiab] OR pollinoses[tiab] OR urticaria[tiab] OR urticar*[tiab] OR hives[tiab] OR wheal*[tiab] OR rhinoconjunctivitis[tiab]) AND (\"Cetirizine\"[Mesh] OR \"Loratadine\"[Mesh] OR \"Terfenadine\"[Mesh] OR \"Astemizole\"[Mesh] OR fexofenadine[nm] OR acrivastine[nm] OR ebastine[nm] OR mizolastine[nm] OR desloratadine[nm] OR cetirizine[tiab] OR cetirizin*[tiab] OR loratadine[tiab] OR fexofenadine[tiab] OR acrivastine[tiab] OR ebastine[tiab] OR mizolastine[tiab] OR astemizole[tiab] OR terfenadine[tiab] OR desloratadine[tiab] OR levocetirizine[tiab] OR azelastine[tiab] OR levocabastine[tiab] OR epinastine[tiab] OR \"second-generation antihistamine*\"[tiab] OR \"second generation antihistamine*\"[tiab] OR \"non-sedating antihistamine*\"[tiab] OR \"nonsedating antihistamine*\"[tiab] OR \"non sedating antihistamine*\"[tiab] OR \"newer antihistamine*\"[tiab] OR azelastine[nm] OR levocabastine[nm] OR epinastine[nm] OR bilastine[tiab] OR rupatadine[tiab] OR olopatadine[tiab] OR bepotastine[tiab])) AND (\"1800/01/01\"[edat] : \"2002/05/26\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2002-05-26",
+  "count": 1119,
+  "gold_scored": 16,
+  "gold_reachable": 16,
+  "retrieved": 14,
+  "recall_percent": 87.5,
+  "nnr": 79.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 13,
+  "unseen_recall_percent": 86.7,
+  "leakage": [],
+  "concepts": null,
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

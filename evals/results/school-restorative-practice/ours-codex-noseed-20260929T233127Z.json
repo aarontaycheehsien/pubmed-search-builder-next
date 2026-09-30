@@ -1,0 +1,67 @@
+{
+  "topic": "school-restorative-practice",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T233127Z",
+  "scored": "20260930T001012Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2325
+  },
+  "strategy": "((\"restorative justice\"[tiab] OR restorative practice*[tiab] OR restorative approach*[tiab] OR restorative disciplin*[tiab] OR restorative circle*[tiab] OR restorative intervention*[tiab] OR restorative program*[tiab] OR restorative process*[tiab] OR (\"Negotiating\"[Mesh] AND restorative[tiab]) OR (restorat*[tiab] AND conferenc*[tiab]) OR (restorat*[tiab] AND circle*[tiab]) OR circle*[tiab] OR conferenc*[tiab])) AND (\"1800/01/01\"[edat] : \"2020/06/03\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-06-03",
+  "count": 99509,
+  "gold_scored": 6,
+  "gold_reachable": 6,
+  "retrieved": 5,
+  "recall_percent": 83.3,
+  "nnr": 19901.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 3,
+  "unseen_recall_percent": 75.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "screen": 1,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "school_setting",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "school_age",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

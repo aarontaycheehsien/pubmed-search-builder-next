@@ -1,6 +1,6 @@
 # Evaluation results
 
-Generated 20260929T210850Z by `python evals/run.py report`.
+Generated 20260930T015418Z by `python evals/run.py report`.
 
 Recall is over gold records in PubMed on or before `as_of`; in the seeded condition the three seeds are excluded. `unseen` recall leaves out gold records the agent itself screened into its sets. NNR is total results divided by gold retrieved: a workload proxy, not precision. Generated rows show the mean (min-max) over `ok` runs.
 
@@ -50,18 +50,43 @@ Skill changes may be motivated only by these topics.
 
 Frozen before their first run; misses and audits are never kept. Claim an improvement only from the latest version with at least 3 ok runs a side. Every use is logged in `evals/heldout-ledger.jsonl`.
 
+**A = generated:ours vs B = generated:lean-optimal** (codex, noseed): 4 win, 5 tie, 1 loss on recall; 6 topic(s) where A returns more than 2× B's results; 1 topic(s) with fewer than 3 ok runs a side.
+
+| Topic | Recall A | Recall B | Recall | Results A | Results B | Ratio A/B | Runs A/B |
+|---|---:|---:|---|---:|---:|---:|---:|
+| Cohen_2006_ACEInhibitors | 100.0 | 100.0 | tie | 19,023 | 20,937 | 0.91 | 3/3 |
+| Cohen_2006_ADHD | 95.0 | 95.0 | tie | 6,560 | 2,770 | 2.37 ⚠ | 3/3 |
+| Cohen_2006_Antihistamines | 83.3 | 81.2 | win | 1,458 | 1,359 | 1.07 | 3/3 |
+| Cohen_2006_Estrogens | 95.4 | 91.6 | win | 23,828 | 29,672 | 0.8 | 3/3 |
+| Cohen_2006_UrinaryIncontinence | 80.0 | 80.0 | tie | 1,359 | 1,095 | 1.24 | 1/3 † |
+| healthcare-nudging | 45.7 | 38.0 | win | 64,420 | 4,998 | 12.89 ⚠ | 3/3 |
+| housing-first-criminal-justice | 100.0 | 86.7 | win | 1,662 | 385 | 4.32 ⚠ | 3/3 |
+| school-restorative-practice | 88.9 | 94.4 | loss | 58,698 | 1,397 | 42.01 ⚠ | 3/3 |
+| social-prescribing-older-adults | 40.0 | 40.0 | tie | 29,771 | 1,805 | 16.49 ⚠ | 3/3 |
+| work-directed-return-to-work | 100.0 | 100.0 | tie | 23,011 | 8,122 | 2.83 ⚠ | 3/3 |
+
 | Topic | Source | Condition | Version | Runs | Recall % | Unseen recall % | Results | NNR | Cost $ |
 |---|---|---|---|---:|---|---|---:|---:|---:|
 | Cohen_2006_ACEInhibitors | generated:lean-optimal (codex) | noseed | b2569259e8 | 3/3 | 100.0 (100.0-100.0) | 100.0 (100.0-100.0) | 20936.7 (20591-21375) | 510.6 (502.2-521.3) | n/a |
+| Cohen_2006_ACEInhibitors | generated:ours (codex) | noseed | 4e852a8e95 | 3/3 | 100.0 (100.0-100.0) | 100.0 (100.0-100.0) | 19023.3 (18551-19709) | 464.0 (452.5-480.7) | n/a |
 | Cohen_2006_ADHD | generated:lean-optimal (codex) | noseed | b2569259e8 | 3/3 | 95.0 (95.0-95.0) | 95.0 (95.0-95.0) | 2769.7 (2620-2960) | 145.8 (137.9-155.8) | n/a |
+| Cohen_2006_ADHD | generated:ours (codex) | noseed | 4e852a8e95 | 3/3 | 95.0 (95.0-95.0) | 93.5 (93.3-93.8) | 6559.7 (2745-9178) | 345.3 (144.5-483.1) | n/a |
 | Cohen_2006_Antihistamines | generated:lean-optimal (codex) | noseed | b2569259e8 | 3/3 | 81.2 (81.2-81.2) | 81.2 (81.2-81.2) | 1359.3 (955-2153) | 104.6 (73.5-165.6) | n/a |
+| Cohen_2006_Antihistamines | generated:ours (codex) | noseed | 4e852a8e95 | 3/3 | 83.3 (81.2-87.5) | 82.6 (80.0-86.7) | 1457.7 (1119-1985) | 110.1 (79.9-152.7) | n/a |
 | Cohen_2006_Estrogens | generated:lean-optimal (codex) | noseed | b2569259e8 | 3/3 | 91.6 (82.5-96.2) | 91.6 (82.5-96.2) | 29672.3 (28843-30163) | 406.2 (389.8-437.0) | n/a |
+| Cohen_2006_Estrogens | generated:ours (codex) | noseed | 4e852a8e95 | 3/3 | 95.4 (95.0-96.2) | 94.9 (94.5-95.5) | 23827.7 (19908-30977) | 311.7 (261.9-402.3) | n/a |
 | Cohen_2006_UrinaryIncontinence | generated:lean-optimal (codex) | noseed | b2569259e8 | 3/3 | 80.0 (80.0-80.0) | 80.0 (80.0-80.0) | 1094.7 (594-1841) | 34.2 (18.6-57.5) | n/a |
+| Cohen_2006_UrinaryIncontinence | generated:ours (codex) | noseed | 4e852a8e95 | 1/3 † | 80.0 | 74.2 | 1359 | 42.5 | n/a |
 | healthcare-nudging | generated:lean-optimal (codex) | noseed | b2569259e8 | 3/3 | 38.0 (34.9-44.2) | 38.0 (34.9-44.2) | 4998 (3319-6352) | 154.1 (110.6-211.7) | n/a |
+| healthcare-nudging | generated:ours (codex) | noseed | 4e852a8e95 | 3/3 | 45.7 (16.3-67.4) | 42.9 (12.2-65.9) | 64420 (5871-151535) | 1443.9 (419.4-3294.2) | n/a |
 | housing-first-criminal-justice | generated:lean-optimal (codex) | noseed | b2569259e8 | 3/3 | 86.7 (80.0-100.0) | 86.7 (80.0-100.0) | 385 (361-432) | 90.2 (72.4-108.0) | n/a |
+| housing-first-criminal-justice | generated:ours (codex) | noseed | 4e852a8e95 | 3/3 | 100.0 (100.0-100.0) | 100.0 (100.0-100.0) | 1662.3 (1492-1930) | 332.5 (298.4-386.0) | n/a |
 | school-restorative-practice | generated:lean-optimal (codex) | noseed | b2569259e8 | 3/3 | 94.4 (83.3-100.0) | 94.4 (83.3-100.0) | 1397.3 (263-2989) | 235.8 (52.6-498.2) | n/a |
+| school-restorative-practice | generated:ours (codex) | noseed | 4e852a8e95 | 3/3 | 88.9 (83.3-100.0) | 80.6 (66.7-100.0) | 58698 (1170-99509) | 11726.6 (195.0-19901.8) | n/a |
 | social-prescribing-older-adults | generated:lean-optimal (codex) | noseed | b2569259e8 | 3/3 | 40.0 (40.0-40.0) | 40.0 (40.0-40.0) | 1805 (981-3056) | 451.2 (245.2-764.0) | n/a |
+| social-prescribing-older-adults | generated:ours (codex) | noseed | 4e852a8e95 | 3/3 | 40.0 (40.0-40.0) | 33.3 (33.3-33.3) | 29770.7 (937-86309) | 7442.6 (234.2-21577.2) | n/a |
 | work-directed-return-to-work | generated:lean-optimal (codex) | noseed | b2569259e8 | 3/3 | 100.0 (100.0-100.0) | 100.0 (100.0-100.0) | 8121.7 (7394-8690) | 738.3 (672.2-790.0) | n/a |
+| work-directed-return-to-work | generated:ours (codex) | noseed | 4e852a8e95 | 3/3 | 100.0 (100.0-100.0) | 100.0 (100.0-100.0) | 23011.3 (11988-39536) | 2091.9 (1089.8-3594.2) | n/a |
 
 ## Retired topics
 

@@ -1,0 +1,53 @@
+{
+  "topic": "Cohen_2006_UrinaryIncontinence",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T221536Z",
+  "scored": "20260929T223959Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1463
+  },
+  "strategy": "((\"Urinary Incontinence\"[Mesh] OR \"Urinary Bladder Diseases\"[Mesh] OR \"Urination Disorders\"[Mesh] OR \"overactive bladder\"[tiab] OR \"overactive urinary bladder\"[tiab] OR \"overactive detrusor\"[tiab] OR \"detrusor overactiv*\"[tiab] OR \"detrusor hyperreflexia\"[tiab] OR \"detrusor overactivity\"[tiab] OR \"detrusor instability\"[tiab] OR \"bladder instability\"[tiab] OR \"unstable bladder\"[tiab] OR \"urge syndrome\"[tiab] OR \"urge incontinence\"[tiab] OR \"urinary urge incontinence\"[tiab] OR \"urinary incontinence, urge\"[tiab] OR \"mixed incontinence\"[tiab] OR \"mixed urinary incontinence\"[tiab] OR \"urinary urgency\"[tiab] OR \"urinary frequency\"[tiab]) AND (\"Flavoxate\"[Mesh] OR oxybutynin[nm] OR trospium chloride[nm] OR propiverine[nm] OR \"tolterodine tartrate\"[Mesh] OR darifenacin[nm] OR \"Solifenacin Succinate\"[Mesh] OR oxybutynin[tiab] OR tolterodine[tiab] OR trospium[tiab] OR propiverine[tiab] OR darifenacin[tiab] OR solifenacin[tiab] OR flavoxate[tiab] OR emepronium[tiab] OR propantheline[tiab] OR dicyclomine[tiab] OR terodiline[tiab] OR papaverine[tiab] OR baclofen[tiab] OR prazosin[tiab] OR doxepin[tiab] OR flurbiprofen[tiab] OR bromocriptine[tiab] OR capsaicin[tiab] OR parasympatholytic*[tiab] OR antispasmodic*[tiab] OR anticholinergic*[tiab] OR antimuscarinic*[tiab] OR \"muscarinic antagonist*\"[tiab] OR \"cholinergic antagonist*\"[tiab])) AND (\"1800/01/01\"[edat] : \"2003/09/11\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2003-09-11",
+  "count": 1359,
+  "gold_scored": 40,
+  "gold_reachable": 40,
+  "retrieved": 32,
+  "recall_percent": 80.0,
+  "nnr": 42.5,
+  "translation_issues": [],
+  "gold_seen_by_agent": 9,
+  "unseen_retrieved": 23,
+  "unseen_recall_percent": 74.2,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "screen": 4,
+      "search": 2
+    },
+    "optional": []
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

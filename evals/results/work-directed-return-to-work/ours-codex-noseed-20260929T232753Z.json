@@ -1,0 +1,67 @@
+{
+  "topic": "work-directed-return-to-work",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T232753Z",
+  "scored": "20260930T002021Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 3147
+  },
+  "strategy": "((\"Mental Disorders\"[Mesh] OR \"Depressive Disorder\"[Mesh] OR \"Major Depressive Disorder\"[Mesh] OR \"Anxiety Disorders\"[Mesh] OR \"Adjustment Disorders\"[Mesh] OR \"Stress Disorders, Post-Traumatic\"[Mesh] OR depress*[tiab] OR \"low mood\"[tiab] OR anxi*[tiab] OR adjustment disorder*[tiab] OR acute stress reaction*[tiab] OR acute stress disorder*[tiab] OR posttraumatic stress disorder*[tiab] OR post-traumatic stress disorder*[tiab] OR reaction* to severe stress[tiab] OR stress-related disorder*[tiab] OR psychological distress[tiab] OR common mental disorder*[tiab] OR mental disorder*[tiab] OR \"Stress Disorders, Traumatic, Acute\"[Mesh] OR \"acute stress reaction\"[tiab:~1] OR \"stress reaction*\"[tiab]) AND (\"Return to Work\"[Mesh] OR \"Occupational Health\"[Mesh] OR \"Occupational Health Services\"[Mesh] OR \"Rehabilitation, Vocational\"[Mesh] OR \"Employment\"[Mesh] OR \"workplace intervention*\"[tiab] OR \"work-directed intervention*\"[tiab] OR \"work-focused intervention*\"[tiab] OR \"work-related intervention*\"[tiab] OR \"work-oriented intervention*\"[tiab] OR \"workplace-based intervention*\"[tiab] OR \"workplace-based\"[tiab] OR \"workplace intervention\"[tiab] OR workplace*[tiab] OR worksite*[tiab] OR work-directed[tiab] OR work-focused[tiab] OR work-related[tiab] OR occupational[tiab] OR vocational[tiab] OR employer*[tiab] OR \"return to work\"[tiab:~1] OR \"back to work\"[tiab:~1] OR \"modified work\"[tiab] OR \"graded return\"[tiab] OR \"work accommodation*\"[tiab] OR \"workplace accommodation*\"[tiab] OR \"occupational physician*\"[tiab] OR \"occupational health service*\"[tiab] OR \"work reintegration\"[tiab] OR \"return-to-work\"[tiab] OR \"Workplace\"[Mesh] OR \"Case Management\"[Mesh] OR \"case management\"[tiab] OR \"occupational health referral\"[tiab] OR \"line manager*\"[tiab] OR \"vocational rehabilitation\"[tiab] OR \"stay at work\"[tiab] OR \"staying at work\"[tiab] OR \"work retention\"[tiab] OR \"job retention\"[tiab] OR \"work maintenance\"[tiab])) AND (\"1800/01/01\"[edat] : \"2021/12/18\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2021-12-18",
+  "count": 39536,
+  "gold_scored": 11,
+  "gold_reachable": 11,
+  "retrieved": 11,
+  "recall_percent": 100.0,
+  "nnr": 3594.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 11,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "screen": 3,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "outcomes",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "sick_leave_status",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

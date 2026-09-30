@@ -1,0 +1,53 @@
+{
+  "topic": "Cohen_2006_ADHD",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T222036Z",
+  "scored": "20260929T224117Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1241
+  },
+  "strategy": "((\"Attention Deficit Disorder with Hyperactivity\"[Mesh] OR ADHD[tiab] OR AD/HD[tiab] OR \"attention deficit hyperactivity\"[tiab] OR \"attention-deficit hyperactivity\"[tiab] OR \"attention deficit disorder\"[tiab] OR \"attention-deficit disorder\"[tiab] OR hyperkinetic[tiab] OR \"minimal brain dysfunction\"[tiab] OR (\"attention deficit\"[tiab] AND hyperactivity[tiab])) AND (\"Methylphenidate\"[Mesh] OR \"Amphetamines\"[Mesh] OR \"Pemoline\"[Mesh] OR \"Bupropion\"[Mesh] OR \"Atomoxetine Hydrochloride\"[Mesh] OR \"Drug Therapy\"[Mesh] OR methylphenidate[tiab] OR dexmethylphenidate[tiab] OR amphetamine*[tiab] OR dextroamphetamine[tiab] OR pemoline[tiab] OR atomoxetine[tiab] OR bupropion[tiab] OR modafinil[tiab] OR clonidine[tiab] OR guanfacine[tiab] OR desipramine[tiab] OR imipramine[tiab] OR nortriptyline[tiab] OR tricyclic[tiab] OR stimulant*[tiab] OR pharmacotherap*[tiab] OR medicat*[tiab] OR \"drug therapy\"[tiab])) AND (\"1800/01/01\"[edat] : \"2003/08/06\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2003-08-06",
+  "count": 2745,
+  "gold_scored": 20,
+  "gold_reachable": 20,
+  "retrieved": 19,
+  "recall_percent": 95.0,
+  "nnr": 144.5,
+  "translation_issues": [],
+  "gold_seen_by_agent": 4,
+  "unseen_retrieved": 15,
+  "unseen_recall_percent": 93.8,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "screen": 4,
+      "search": 2
+    },
+    "optional": []
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

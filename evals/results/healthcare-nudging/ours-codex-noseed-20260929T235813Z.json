@@ -1,0 +1,66 @@
+{
+  "topic": "healthcare-nudging",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260929T235813Z",
+  "scored": "20260930T003348Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "dbc76e5116c285c6a78f8f3613a440bd7642e0e3",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2135
+  },
+  "strategy": "((Economics, Behavioral[Mesh] OR Reminder Systems[Mesh] OR Formative Feedback[Mesh] OR nudge*[tiab] OR nudging[tiab] OR nudged[tiab] OR \"choice architect*\"[tiab] OR default*[tiab] OR reminder*[tiab] OR \"social norm*\"[tiab] OR \"peer comparison\"[tiab] OR \"comparative feedback\"[tiab] OR \"behavioral economics\"[tiab] OR \"behavioural economics\"[tiab] OR \"behavioral insight*\"[tiab] OR \"behavioural insight*\"[tiab] OR \"behavioral intervention*\"[tiab] OR \"behavioural intervention*\"[tiab] OR \"suggested alternative*\"[tiab] OR \"accountable justification\"[tiab] OR \"public commitment\"[tiab] OR prompt*[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/18\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-18",
+  "count": 151535,
+  "gold_scored": 86,
+  "gold_reachable": 86,
+  "retrieved": 46,
+  "recall_percent": 53.5,
+  "nnr": 3294.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 5,
+  "unseen_retrieved": 41,
+  "unseen_recall_percent": 50.6,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "hcp",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "ebm_behavior",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}
