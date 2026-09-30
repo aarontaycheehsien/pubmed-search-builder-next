@@ -1,0 +1,71 @@
+{
+  "topic": "Smid_2020",
+  "source": "generated:ours-noprobe",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-noprobe-codex-noseed-20260930T122604Z",
+  "scored": "20260930T131003Z",
+  "skill": {
+    "name": "ours-noprobe",
+    "hash": "8817bab45a1908693747b9bde11f72242442d397dc2d9ddeb0952f82b4220fde",
+    "commit": null,
+    "dirty": null
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2638
+  },
+  "final_message": "[Mesh]` | 1,470 |\n| 4 | `\"structural equation model*\"[tiab]` | 12,605 |\n| 5 | `\"structural equation modelling\"[tiab]` | 1,788 |\n| 6 | `\"structural equation modeling\"[tiab]` | 7,913 |\n| 7 | `\"structural equation\"[tiab:~1]` | 12,970 |\n| 8 | `SEM[tiab]` | 81,594 |\n| 9 | `\"confirmatory factor analysis\"[tiab]` | 8,085 |\n| 10 | `CFA[tiab]` | 7,128 |\n| 11 | `\"factor analysis\"[tiab]` | 33,735 |\n| 12 | `\"latent variable model*\"[tiab]` | 671 |\n| 13 | `\"latent growth\"[tiab]` | 1,734 |\n| 14 | `\"growth curve model*\"[tiab]` | 1,502 |\n| 15 | `\"latent class\"[tiab]` | 4,129 |\n| 16 | `multilevel[tiab]` | 25,930 |\n| 17 | `mediation[tiab]` | 22,917 |\n| 18 | `mediator[tiab]` | 63,582 |\n| 19 | `\"indirect effect*\"[tiab]` | 12,817 |\n| 20 | SEM/latent-variable block | 268,202 |\n| 21 | `\"Bayes Theorem\"[Mesh]` | 28,985 |\n| 22 | `Bayesian[tiab]` | 35,533 |\n| 23 | `Bayes[tiab]` | 5,705 |\n| 24 | `MCMC[tiab]` | 1,577 |\n| 25 | `\"Markov chain Monte Carlo\"[tiab]` | 3,122 |\n| 26 | `\"prior distribution*\"[tiab]` | 1,143 |\n| 27 | `\"posterior distribution*\"[tiab]` | 1,486 |\n| 28 | `\"Bayesian estimation\"[tiab]` | 966 |\n| 29 | `\"Bayesian approach\"[tiab]` | 3,278 |\n| 30 | Bayesian block | 48,119 |\n| 31 | Combined query | **1,407** |\n\n### Validation and limits\n\nTwo screened development records—PMIDs **27594086** and **24550881**—were both retrieved (100% relative recall against this small development set). Recall was **not independently validated**; this is not an estimate of sensitivity. Small-sample and simulation blocks were tested but left out: requiring either would reduce retrieval substantially, and only two relevant records were known. Their comparison, sample-size, simulation, and social/behavioural-science eligibility details must therefore be screened.\n\nThe search needs **independent PRESS peer review by an information specialist before use**. The internal critique was same-context because no fresh-context reviewer was available. The query, audit, and validation manifest are intact under `./work`.",
+  "strategy": "((\"Factor Analysis, Statistical\"[Mesh] OR \"Latent Class Analysis\"[Mesh] OR \"Multilevel Analysis\"[Mesh] OR \"structural equation model*\"[tiab] OR \"structural equation modelling\"[tiab] OR \"structural equation modeling\"[tiab] OR \"structural equation\"[tiab:~1] OR SEM[tiab] OR \"confirmatory factor analysis\"[tiab] OR CFA[tiab] OR \"factor analysis\"[tiab] OR \"latent variable model*\"[tiab] OR \"latent growth\"[tiab] OR \"growth curve model*\"[tiab] OR \"latent class\"[tiab] OR multilevel[tiab] OR mediation[tiab] OR mediator[tiab] OR \"indirect effect*\"[tiab]) AND (\"Bayes Theorem\"[Mesh] OR Bayesian[tiab] OR Bayes[tiab] OR MCMC[tiab] OR \"Markov chain Monte Carlo\"[tiab] OR \"prior distribution*\"[tiab] OR \"posterior distribution*\"[tiab] OR \"Bayesian estimation\"[tiab] OR \"Bayesian approach\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/11/29\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-11-29",
+  "count": 1407,
+  "gold_scored": 14,
+  "gold_reachable": 14,
+  "retrieved": 13,
+  "recall_percent": 92.9,
+  "missed": [
+    "25765534"
+  ],
+  "nnr": 108.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 11,
+  "unseen_recall_percent": 91.7,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 2,
+      "screen": 3,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "small_sample",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "simulation",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

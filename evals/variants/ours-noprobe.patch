@@ -1,0 +1,129 @@
+diff -ru --strip-trailing-cr -x __pycache__ -x .cache ours-noprobe/SKILL.md ours-noprobe/SKILL.md
+--- ours-noprobe/SKILL.md	2026-09-30 09:54:19.000000000 +0800
++++ ours-noprobe/SKILL.md	2026-09-30 20:24:50.738961300 +0800
+@@ -64,8 +64,7 @@
+ A block that names one direction of a process (switching back) is fragile; search the process.
+ Every member the criteria list for a concept is searched by its own name.
+ A concept whose records often name only a member (chronic conditions: asthma, epilepsy)
+-is a category: mark it `"category": true` and probe it (`references/scope.md`). Give every
+-`search` and `optional` concept `"category": true` or `false`; `psb eval` blocks until you do.
++is a category: build its block from its members as well as its name (`references/scope.md`).
+ Decide roles from the question before reading any seed record.
+ 
+ Show the user a short table of concepts, roles and limits, and ask them to confirm. Set
+@@ -115,10 +114,7 @@
+   and `psb sample` to find noisy terms. Recall comes first.
+ - A block whose removal gains known records (ablation) is a sign of over-structuring:
+   reconsider its role in `protocol.json`.
+-- Probe every category concept (`references/scope.md`, "Category concepts"): `psb probe draw
+-  <id> "<broader query>"`, screen the sample, add relevant records to a `relevant` set,
+-  `psb probe record <id> --relevant ...`; widen the block and probe again while probes find any.
+-- A recall risk you name in your notes or narrative is a test you still owe: run the probe,
++- A recall risk you name in your notes or narrative is a test you still owe: run the
+   sample or count that would show it, or say plainly in the audit that you could not.
+ - Test every `optional` concept (`references/scope.md`, "Optional concepts"): put its block in
+   `strategy.json` `candidates`; `psb eval` reports the count with it AND-ed, the reduction, and
+diff -ru --strip-trailing-cr -x __pycache__ -x .cache ours-noprobe/references/anti-patterns.md ours-noprobe/references/anti-patterns.md
+--- ours-noprobe/references/anti-patterns.md	2026-09-30 09:54:19.000000000 +0800
++++ ours-noprobe/references/anti-patterns.md	2026-09-30 20:24:50.739961600 +0800
+@@ -186,9 +186,9 @@
+ "studies named only by a specific condition may be missed". Trials in adolescents with type 1
+ diabetes, asthma or epilepsy never say "chronic condition".
+ 
+-Better: mark the concept `"category": true`, build it from its members as well as its name, and
+-probe it (`psb probe draw chronic "disease*[tiab] OR disorder*[tiab] OR Chronic Disease[Mesh]"`).
+-A risk you can name is a risk you can measure. See "Category concepts" in `scope.md`.
++Better: build the block from its members as well as its name (the Chronic Disease MeSH tree,
++the conditions the criteria and screened records name), plus generic wording as a layer.
++See "Category concepts" in `scope.md`.
+ 
+ ## Mistake 19: Two ideas in one block
+ 
+diff -ru --strip-trailing-cr -x __pycache__ -x .cache ours-noprobe/references/critic.md ours-noprobe/references/critic.md
+--- ours-noprobe/references/critic.md	2026-09-30 09:54:19.000000000 +0800
++++ ours-noprobe/references/critic.md	2026-09-30 20:25:00.435963500 +0800
+@@ -26,7 +26,7 @@
+ 
+ | Key | PRESS element | Ask |
+ |---|---|---|
+-| `translation` | Translation of the question | Do the AND-ed blocks match the concepts? Is anything AND-ed that should be screened? Is every member the criteria name searched by its bare name? Does a block require one direction of a process? Is a category concept built from its members and probed? Is a searchable, topic-defining outcome or setting only screened, or an optional block AND-ed or left out against its measured losses and loss sample? (`scope.md`) |
++| `translation` | Translation of the question | Do the AND-ed blocks match the concepts? Is anything AND-ed that should be screened? Is every member the criteria name searched by its bare name? Does a block require one direction of a process? Is a category concept built from its members? Is a searchable, topic-defining outcome or setting only screened, or an optional block AND-ed or left out against its measured losses and loss sample? (`scope.md`) |
+ | `operators` | Boolean and proximity operators | Are OR and AND used correctly? Any NOT? Proximity distances sensible? |
+ | `subject_headings` | Subject headings | Right descriptors, explosion, missing narrower or related headings, supplementary concepts? |
+ | `text_words` | Text-word searching | Missing synonyms, spellings, plurals, acronyms; truncation too short or too broad? |
+diff -ru --strip-trailing-cr -x __pycache__ -x .cache ours-noprobe/references/reporting.md ours-noprobe/references/reporting.md
+--- ours-noprobe/references/reporting.md	2026-09-30 09:54:19.000000000 +0800
++++ ours-noprobe/references/reporting.md	2026-09-30 20:24:50.741168000 +0800
+@@ -11,7 +11,6 @@
+ - the strategy line by line with counts, and as one line for copying into PubMed
+ - recall on each known set with its role, missed records and the blocks that miss them
+ - leave-one-block-out results
+-- category probes: each broader query, records outside the block, relevant found / screened
+ - tested optional concepts: records without and with each block, reduction, known records lost,
+   loss sample (relevant/screened, with its upper bound when none were relevant), decision and reason
+ - the development history (every evaluated version, its change, lost records, and note)
+diff -ru --strip-trailing-cr -x __pycache__ -x .cache ours-noprobe/references/scope.md ours-noprobe/references/scope.md
+--- ours-noprobe/references/scope.md	2026-09-30 09:54:19.000000000 +0800
++++ ours-noprobe/references/scope.md	2026-09-30 20:24:50.738961300 +0800
+@@ -116,32 +116,15 @@
+ category: "chronic conditions" (type 1 diabetes, asthma, epilepsy), "psychotropic drugs"
+ (sertraline, lithium), "complementary therapies" (acupuncture, yoga), "vulnerable groups".
+ Only topic concepts are categories: a condition, exposure, intervention, population or setting.
+-A report type (systematic reviews, trials) or a method is not; probing one spends the budget on
+-records its own filter already handles. A block of the
++A report type (systematic reviews, trials) or a method is not. A block of the
+ category's own words misses them, and its seeds rarely show it, because the records you find
+ first are the ones that use the category's words.
+ 
+-1. Mark the concept `"category": true` in `protocol.json`. Every `search` and `optional` concept
+-   declares `"category": true` or `false` at `standard` and `thorough` depth; ask for each one
+-   whether a relevant record could name only a member and never the concept itself.
+-2. Build the block from members as well as the category: its MeSH tree (`psb mesh show` lists
+-   narrower headings; explode where the tree matches the concept), and the members the
+-   question, the eligibility criteria and screened records name.
+-3. Probe it: `psb probe draw <id> "<broader query>"` samples records that the other blocks and a
+-   broader query retrieve but your block does not. The broader query is whatever a member-only
+-   record would still say: generic wording (`disease*`, `therap*`, `risk factor*`), the
+-   exploded MeSH trees of the category, or a longer list of members. Screen every sampled
+-   record. Add relevant ones to a `relevant` set and run `psb probe record <id> --relevant ...`.
+-4. If the probe found one relevant record, add the member it names to the block, `psb eval`,
+-   and probe again with a fresh draw. If it found two or more, `psb probe record` estimates how
+-   many relevant records lie outside the block; that is too many to recover member by member.
+-   Add the broader query's own wording to the block as a generic layer (`exposure*`,
+-   `risk factor*`, the exploded MeSH tree), `psb eval` to see the count, then probe again.
+-   A new probe can be drawn only after the previous one is screened and recorded. Delivery at `standard` and `thorough` needs, for each category
+-   concept, a screened probe on the current block that found none, or the probe budget (2 at
+-   `standard`, 3 at `thorough`) spent with the remaining finding reviewed by the critic.
+-
+-A probe stays valid while the block only gains terms and the other blocks are unchanged.
++Build the block from members as well as the category: its MeSH tree (`psb mesh show` lists
++narrower headings; explode where the tree matches the concept), and the members the question,
++the eligibility criteria and screened records name. Where a record could name only a member,
++add generic wording for the category (`exposure*`, `risk factor*`, the exploded MeSH tree) as a
++layer and check the count with `psb eval`.
+ 
+ ## Ambiguity check
+ 
+diff -ru --strip-trailing-cr -x __pycache__ -x .cache ours-noprobe/scripts/psb/cli.py ours-noprobe/scripts/psb/cli.py
+--- ours-noprobe/scripts/psb/cli.py	2026-09-30 09:54:19.000000000 +0800
++++ ours-noprobe/scripts/psb/cli.py	2026-09-30 20:24:50.753712700 +0800
+@@ -87,7 +87,7 @@
+             todo.append(f"add a candidate block for optional concept {concept.get('id')!r} to strategy.json candidates")
+         elif concept.get("role") == "optional" and not concept.get("decision"):
+             todo.append(f"sample and decide optional concept {concept.get('id')!r} (psb optional sample / decide)")
+-    for concept in probe.category_concepts(protocol):
++    for concept in []:  # ablation variant: no category probes
+         if not probe.probes(ws, str(concept.get("id"))):
+             todo.append(f"probe category concept {concept.get('id')!r} for records naming only a member (psb probe draw / record)")
+     if not critic:
+diff -ru --strip-trailing-cr -x __pycache__ -x .cache ours-noprobe/scripts/psb/probe.py ours-noprobe/scripts/psb/probe.py
+--- ours-noprobe/scripts/psb/probe.py	2026-09-30 09:54:19.000000000 +0800
++++ ours-noprobe/scripts/psb/probe.py	2026-09-30 20:24:50.752714000 +0800
+@@ -151,6 +151,7 @@
+ 
+ 
+ def issues(rows: list[dict], protocol: dict) -> list[dict]:
++    return []  # ablation variant: category probes are not required
+     depth = protocol.get("depth") or "standard"
+     if not PROBE_BUDGET.get(depth):
+         return []

@@ -1,0 +1,69 @@
+{
+  "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+  "source": "generated:ours-noprobe",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-noprobe-codex-noseed-20260930T160502Z",
+  "scored": "20260930T171239Z",
+  "skill": {
+    "name": "ours-noprobe",
+    "hash": "8817bab45a1908693747b9bde11f72242442d397dc2d9ddeb0952f82b4220fde",
+    "commit": null,
+    "dirty": null
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 4056
+  },
+  "final_message": "OR young people[tiab] OR child*[tiab] OR student*[tiab] OR schoolchild*[tiab] OR pupil*[tiab]) AND (Schools[Mesh] OR School Health Services[Mesh] OR school*[tiab] OR school-based[tiab] OR classroom*[tiab] OR schoolchild*[tiab] OR primary school*[tiab] OR secondary school*[tiab] OR middle school*[tiab] OR high school*[tiab] OR in-school[tiab]) AND (Eating[Mesh] OR Feeding Behavior[Mesh] OR Diet[Mesh] OR Food Preferences[Mesh] OR Diet Surveys[Mesh] OR eating[tiab] OR diet*[tiab] OR food intake[tiab] OR dietary intake[tiab] OR food consumption[tiab] OR consum*[tiab] OR fruit*[tiab] OR vegetable*[tiab] OR beverage*[tiab] OR sugar-sweetened beverage*[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])\n```\n\nThe build’s development set contained 19 relevant records, all retrieved (19/19, 100%). That is **relative recall against the records found during the build**, not an independent sensitivity estimate; no known articles were supplied, and there was no held-out or benchmark set.\n\nThe optional school-setting and food-consumption blocks each reduced results substantially. For each, none of 30 sampled records excluded by the block were judged relevant, and all 19 known relevant records remained retrieved. Those small samples do not rule out missed eligible records.\n\nThe final count exceeds the 10,000-record workload budget. The report includes line-by-line counts, validation evidence, and the development history. An information specialist should PRESS-review the draft before use; the internal critic was automated, not peer review.\n\n- [Final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-noprobe-codex-noseed-20260930T160502Z/work/final-query.txt)\n- [Audit report](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-noprobe-codex-noseed-20260930T160502Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-noprobe-codex-noseed-20260930T160502Z/work/validation-manifest.json)",
+  "strategy": "((Health Education[Mesh] OR Health Promotion[Mesh] OR Child Nutrition Sciences[Mesh] OR nutrition education[tiab] OR dietary education[tiab] OR food education[tiab] OR healthy eating education[tiab] OR nutrition intervention*[tiab] OR dietary intervention*[tiab] OR intervention*[tiab] OR food[tiab] OR nutrition[tiab] OR education[tiab]) AND (Adolescent[Mesh] OR Child[Mesh] OR Students[Mesh] OR adolescent*[tiab] OR teen*[tiab] OR youth[tiab] OR young people[tiab] OR child*[tiab] OR student*[tiab] OR schoolchild*[tiab] OR pupil*[tiab]) AND (Schools[Mesh] OR School Health Services[Mesh] OR school*[tiab] OR school-based[tiab] OR classroom*[tiab] OR schoolchild*[tiab] OR primary school*[tiab] OR secondary school*[tiab] OR middle school*[tiab] OR high school*[tiab] OR in-school[tiab]) AND (Eating[Mesh] OR Feeding Behavior[Mesh] OR Diet[Mesh] OR Food Preferences[Mesh] OR Diet Surveys[Mesh] OR eating[tiab] OR diet*[tiab] OR food intake[tiab] OR dietary intake[tiab] OR food consumption[tiab] OR consum*[tiab] OR fruit*[tiab] OR vegetable*[tiab] OR beverage*[tiab] OR sugar-sweetened beverage*[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-14",
+  "count": 13229,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 9,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 1469.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 9,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "screen": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "school_setting",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "food_consumption",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

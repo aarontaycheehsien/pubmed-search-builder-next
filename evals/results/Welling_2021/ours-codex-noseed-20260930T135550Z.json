@@ -1,0 +1,53 @@
+{
+  "topic": "Welling_2021",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260930T135550Z",
+  "scored": "20260930T144257Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2826
+  },
+  "final_message": "h] OR Anxiety[Mesh] OR Stress, Psychological[Mesh] OR Loneliness[Mesh] OR Social Isolation[Mesh] OR Resilience, Psychological[Mesh] OR wellbeing[tiab] OR well-being[tiab] OR well being[tiab] OR mental health[tiab] OR psychological[tiab] OR psychosocial[tiab] OR quality of life[tiab] OR health-related quality of life[tiab] OR HRQoL[tiab] OR life satisfaction[tiab] OR mood[tiab] OR loneliness[tiab] OR social isolation[tiab] OR social connectedness[tiab] OR stress[tiab] OR anxiety[tiab] OR depress*[tiab] OR distress[tiab] OR resilien*[tiab] OR physical activ*[tiab] OR exercise[tiab] OR sedentary[tiab] OR screen time[tiab] OR sleep[tiab] OR diet*[tiab] OR eating[tiab] OR nutrition*[tiab] OR alcohol[tiab] OR smoking[tiab] OR tobacco[tiab] OR substance use[tiab] OR health behavior*[tiab] OR lifestyle[tiab] OR life style[tiab] OR daily activit*[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])\n```\n\n## Validation and limitations\n\nThe query returned **20,244 records** through the required **2020-11-22 Entrez-date bound**; no publication-date limit was added. Relative recall was **11/11 (100%)** in the development set and **4/4 (100%)** in the semi-independent held-out set. These small, internally discovered sets do not estimate absolute sensitivity or external benchmark recall.\n\nThe outcome block reduced the exposure-only count by 85.7%, but the final count exceeds the 10,000-record standard workload budget. Two category probes found no eligible records, but they predate the final exposure-term additions; this residual coverage risk was accepted provisionally and is documented in the audit.\n\nFiles: [audit.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260930T135550Z/work/audit.md), [validation-manifest.json](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20260930T135550Z/work/validation-manifest.json). This is a draft; PRESS peer review by an information specialist is still needed before use.",
+  "strategy": "((COVID-19[Mesh] OR SARS-CoV-2[Mesh] OR Pandemics[Mesh] OR Quarantine[Mesh] OR SARS-CoV-2[tiab] OR COVID-19[tiab] OR COVID19[tiab] OR 2019-nCoV[tiab] OR 2019 novel coronavirus[tiab] OR coronavirus disease 2019[tiab] OR novel coronavirus[tiab] OR coronavirus pandemic[tiab] OR COVID pandemic[tiab] OR coronavirus[tiab] OR pandemic[tiab] OR lockdown*[tiab] OR quarantine*[tiab] OR stay-at-home[tiab] OR stay at home[tiab] OR shelter-in-place[tiab] OR shelter in place[tiab] OR social distanc*[tiab] OR physical distanc*[tiab] OR self-isolat*[tiab] OR self isolat*[tiab] OR confinement[tiab]) AND (Life Style[Mesh] OR Health Behavior[Mesh] OR Exercise[Mesh] OR Sedentary Behavior[Mesh] OR Sleep[Mesh] OR Feeding Behavior[Mesh] OR Diet[Mesh] OR Alcohol Drinking[Mesh] OR Smoking[Mesh] OR Mental Health[Mesh] OR Quality of Life[Mesh] OR Depression[Mesh] OR Anxiety[Mesh] OR Stress, Psychological[Mesh] OR Loneliness[Mesh] OR Social Isolation[Mesh] OR Resilience, Psychological[Mesh] OR wellbeing[tiab] OR well-being[tiab] OR well being[tiab] OR mental health[tiab] OR psychological[tiab] OR psychosocial[tiab] OR quality of life[tiab] OR health-related quality of life[tiab] OR HRQoL[tiab] OR life satisfaction[tiab] OR mood[tiab] OR loneliness[tiab] OR social isolation[tiab] OR social connectedness[tiab] OR stress[tiab] OR anxiety[tiab] OR depress*[tiab] OR distress[tiab] OR resilien*[tiab] OR physical activ*[tiab] OR exercise[tiab] OR sedentary[tiab] OR screen time[tiab] OR sleep[tiab] OR diet*[tiab] OR eating[tiab] OR nutrition*[tiab] OR alcohol[tiab] OR smoking[tiab] OR tobacco[tiab] OR substance use[tiab] OR health behavior*[tiab] OR lifestyle[tiab] OR life style[tiab] OR daily activit*[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-11-22",
+  "count": 20244,
+  "gold_scored": 53,
+  "gold_reachable": 53,
+  "retrieved": 49,
+  "recall_percent": 92.5,
+  "missed": [
+    "32227671",
+    "32242089",
+    "32640077",
+    "33105275"
+  ],
+  "nnr": 413.1,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 49,
+  "unseen_recall_percent": 92.5,
+  "leakage": [],
+  "concepts": null,
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

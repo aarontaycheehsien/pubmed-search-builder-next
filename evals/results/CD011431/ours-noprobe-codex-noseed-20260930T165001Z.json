@@ -1,0 +1,63 @@
+{
+  "topic": "CD011431",
+  "source": "generated:ours-noprobe",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-noprobe-codex-noseed-20260930T165001Z",
+  "scored": "20260930T172101Z",
+  "skill": {
+    "name": "ours-noprobe",
+    "hash": "8817bab45a1908693747b9bde11f72242442d397dc2d9ddeb0952f82b4220fde",
+    "commit": null,
+    "dirty": null
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1859
+  },
+  "final_message": "m ovale[Mesh] OR Plasmodium knowlesi[Mesh] OR malaria[tiab] OR plasmodi*[tiab] OR vivax[tiab] OR malariae[tiab] OR ovale[tiab] OR knowlesi[tiab] OR non-falciparum[tiab] OR nonfalciparum[tiab]) AND (Antigens, Protozoan[Mesh] OR Diagnostic Tests, Routine[Mesh] OR Reagent Kits, Diagnostic[Mesh] OR Immunoassay[Mesh] OR rapid diagnostic test*[tiab] OR rapid test*[tiab] OR malaria test*[tiab] OR RDT[tiab] OR RDTs[tiab] OR immunochromatograph*[tiab] OR lateral flow[tiab] OR point-of-care test*[tiab] OR point of care test*[tiab] OR malaria antigen test*[tiab] OR antigen detection[tiab] OR ICT[tiab] OR pLDH[tiab] OR HRP2[tiab] OR histidine-rich protein 2[tiab] OR parasite lactate dehydrogenase[tiab])) AND (\"1800/01/01\"[edat] : \"2013/06/09\"[edat])\n```\n\nThe protected query is [final-query.txt](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-noprobe-codex-noseed-20260930T165001Z/work/final-query.txt). The [audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-noprobe-codex-noseed-20260930T165001Z/work/audit.md) contains the full line-by-line term counts: the malaria block returned **80,504**, the RDT block **455,540**, and the combined search **7,725** records.\n\nThe query uses the **2013-06-09 Entrez-date bound**, with no publication-date limit or other filters. The endemic-setting block was tested but left out: it reduced retrieval by 85.1% while losing 9 of 16 known relevant records.\n\nAll 16 screened development records were retrieved (100% relative recall on that set). That is not an independent validation or an estimate of sensitivity; no independent validation set was available. A fresh-context internal critic passed all six review domains with no findings. **An information specialist’s PRESS peer review is still needed before use.**\n\nThe validation receipt passed: [validation-manifest.json](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-noprobe-codex-noseed-20260930T165001Z/work/validation-manifest.json).",
+  "strategy": "((Malaria[Mesh] OR Malaria, Vivax[Mesh] OR Plasmodium vivax[Mesh] OR Plasmodium malariae[Mesh] OR Plasmodium ovale[Mesh] OR Plasmodium knowlesi[Mesh] OR malaria[tiab] OR plasmodi*[tiab] OR vivax[tiab] OR malariae[tiab] OR ovale[tiab] OR knowlesi[tiab] OR non-falciparum[tiab] OR nonfalciparum[tiab]) AND (Antigens, Protozoan[Mesh] OR Diagnostic Tests, Routine[Mesh] OR Reagent Kits, Diagnostic[Mesh] OR Immunoassay[Mesh] OR rapid diagnostic test*[tiab] OR rapid test*[tiab] OR malaria test*[tiab] OR RDT[tiab] OR RDTs[tiab] OR immunochromatograph*[tiab] OR lateral flow[tiab] OR point-of-care test*[tiab] OR point of care test*[tiab] OR malaria antigen test*[tiab] OR antigen detection[tiab] OR ICT[tiab] OR pLDH[tiab] OR HRP2[tiab] OR histidine-rich protein 2[tiab] OR parasite lactate dehydrogenase[tiab])) AND (\"1800/01/01\"[edat] : \"2013/06/09\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2013-06-09",
+  "count": 7725,
+  "gold_scored": 26,
+  "gold_reachable": 26,
+  "retrieved": 26,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 297.1,
+  "translation_issues": [],
+  "gold_seen_by_agent": 9,
+  "unseen_retrieved": 17,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 2,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "endemic_setting",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

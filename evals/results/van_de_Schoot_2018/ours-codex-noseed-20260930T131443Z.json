@@ -1,0 +1,67 @@
+{
+  "topic": "van_de_Schoot_2018",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260930T131443Z",
+  "scored": "20260930T141053Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 3369
+  },
+  "final_message": "The protected report passed. The search returned **32,908 records** with the Entrez entry-date bound through 2016-01-24. It retrieved all **11/11 development records**, but those records were used to build the search, so this is not independent validation or an estimate of absolute sensitivity.\n\n```text\n((Stress Disorders, Post-Traumatic[Mesh] OR PTSD[tiab] OR post-traumatic stress[tiab] OR posttraumatic stress[tiab] OR post traumatic stress[tiab] OR post-traumatic stress disorder*[tiab] OR posttraumatic stress disorder*[tiab] OR post traumatic stress disorder*[tiab] OR post-traumatic stress symptom*[tiab] OR posttraumatic stress symptom*[tiab] OR post traumatic stress symptom*[tiab] OR PTSS[tiab] OR posttraumatic symptom*[tiab] OR \"pediatric medical traumatic stress\"[tiab] OR \"medical traumatic stress\"[tiab] OR trauma symptom*[tiab] OR trauma-related symptom*[tiab] OR traumatic stress symptom*[tiab] OR \"PTSD Checklist\"[tiab] OR PCL-C[tiab] OR PCL-M[tiab] OR PCL-S[tiab] OR PCL-5[tiab] OR \"Impact of Event Scale\"[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])\n```\n\nThe trajectory block was left out: it reduced the count to 8,283 but excluded a relevant development record (PMID 10221639). The report records the result set’s workload risk and the need for independent PRESS review by an information specialist.\n\nGenerated files are in `./work`:\n\n- [Final query](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-fa9b74053cc569e3\\ours-codex-noseed-20260930T131443Z\\work\\final-query.txt)\n- [Audit report](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-fa9b74053cc569e3\\ours-codex-noseed-20260930T131443Z\\work\\audit.md)\n- [Validation manifest](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-fa9b74053cc569e3\\ours-codex-noseed-20260930T131443Z\\work\\validation-manifest.json)\n- [Search rationale and handoff](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-fa9b74053cc569e3\\ours-codex-noseed-20260930T131443Z\\work\\narrative.md)",
+  "strategy": "((Stress Disorders, Post-Traumatic[Mesh] OR PTSD[tiab] OR post-traumatic stress[tiab] OR posttraumatic stress[tiab] OR post traumatic stress[tiab] OR post-traumatic stress disorder*[tiab] OR posttraumatic stress disorder*[tiab] OR post traumatic stress disorder*[tiab] OR post-traumatic stress symptom*[tiab] OR posttraumatic stress symptom*[tiab] OR post traumatic stress symptom*[tiab] OR PTSS[tiab] OR posttraumatic symptom*[tiab] OR \"pediatric medical traumatic stress\"[tiab] OR \"medical traumatic stress\"[tiab] OR trauma symptom*[tiab] OR trauma-related symptom*[tiab] OR traumatic stress symptom*[tiab] OR \"PTSD Checklist\"[tiab] OR PCL-C[tiab] OR PCL-M[tiab] OR PCL-S[tiab] OR PCL-5[tiab] OR \"Impact of Event Scale\"[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2016-01-24",
+  "count": 32908,
+  "gold_scored": 38,
+  "gold_reachable": 38,
+  "retrieved": 35,
+  "recall_percent": 92.1,
+  "missed": [
+    "20061839",
+    "20836603",
+    "26412244"
+  ],
+  "nnr": 940.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 34,
+  "unseen_recall_percent": 91.9,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 1,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "trajectory",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

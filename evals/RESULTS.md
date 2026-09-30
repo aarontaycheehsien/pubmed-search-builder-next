@@ -1,6 +1,6 @@
 # Evaluation results
 
-Generated 20260930T015418Z by `python evals/run.py report`.
+Generated 20260930T180137Z by `python evals/run.py report`.
 
 Recall is over gold records in PubMed on or before `as_of`; in the seeded condition the three seeds are excluded. `unseen` recall leaves out gold records the agent itself screened into its sets. NNR is total results divided by gold retrieved: a workload proxy, not precision. Generated rows show the mean (min-max) over `ok` runs.
 
@@ -12,13 +12,19 @@ Skill changes may be motivated only by these topics.
 
 | Topic | Source | Condition | Version | Runs | Recall % | Unseen recall % | Results | NNR | Cost $ |
 |---|---|---|---|---:|---|---|---:|---:|---:|
+| Appenzeller-Herzog_2019 | generated:ours (codex) | noseed | 4e852a8e95 | 3/3 | 100.0 (100.0-100.0) | 100.0 (100.0-100.0) | 5023.7 (3365-7600) | 239.2 (160.2-361.9) | n/a |
+| Appenzeller-Herzog_2019 | generated:ours-noprobe (codex) | noseed | 8817bab45a | 3/3 | 100.0 (100.0-100.0) | 100.0 (100.0-100.0) | 5690.7 (1958-7801) | 271.0 (93.2-371.5) | n/a |
 | Bos_2018 | generated:ours (codex) | noseed | 4e852a8e95 | 2/2 +1 infra † | 100.0 (100.0-100.0) | 100.0 (100.0-100.0) | 36514.5 (20767-52262) | 4057.1 (2307.4-5806.9) | n/a |
 | Bos_2018 | generated:pubmed-search-builder-next (claude) | noseed | legacy | 1/1 † | 100.0 | 100.0 | 12495 | 1388.3 | 2.6 |
 | Bos_2018 | generated:pubmed-search-builder-next (codex) | noseed | legacy | 2/3 † | 100.0 (100.0-100.0) | 100.0 (100.0-100.0) | 68692 (54277-83107) | 7632.5 (6030.8-9234.1) | n/a |
 | Bos_2018 | naive | noseed | baseline | 1/1 | 66.7 | n/a | 2339 | 389.8 | n/a |
 | Bos_2018 | naive | seeded | baseline | 1/1 | 66.7 | n/a | 2339 | 584.8 | n/a |
+| Brouwer_2019 | generated:ours (codex) | noseed | 4e852a8e95 | 3/3 | 97.5 (96.3-100.0) | 97.5 (96.2-100.0) | 160769 (16856-439310) | 2987.4 (324.2-8135.4) | n/a |
+| Brouwer_2019 | generated:ours-noprobe (codex) | noseed | 8817bab45a | 2/3 † | 96.3 (96.3-96.3) | 96.2 (96.2-96.2) | 21948.5 (17169-26728) | 422.1 (330.2-514.0) | n/a |
 | CD010657 | naive | noseed | baseline | 1/1 | 91.4 | n/a | 644 | 20.1 | n/a |
 | CD010657 | naive | seeded | baseline | 1/1 | 90.6 | n/a | 644 | 22.2 | n/a |
+| CD011431 | generated:ours (codex) | noseed | 4e852a8e95 | 3/3 | 98.7 (96.2-100.0) | 97.9 (93.8-100.0) | 6281 (1101-9304) | 246.3 (42.3-372.2) | n/a |
+| CD011431 | generated:ours-noprobe (codex) | noseed | 8817bab45a | 3/3 | 100.0 (100.0-100.0) | 100.0 (100.0-100.0) | 4565.7 (1742-7725) | 175.6 (67.0-297.1) | n/a |
 | CD011431 | naive | noseed | baseline | 1/1 | 80.8 | n/a | 502 | 23.9 | n/a |
 | CD011431 | naive | seeded | baseline | 1/1 | 78.3 | n/a | 502 | 27.9 | n/a |
 | CD011926 | generated:lean-optimal (claude) | noseed | legacy | 1/1 † | 100.0 | 100.0 | 2179 | 75.1 | 1.7 |
@@ -30,9 +36,11 @@ Skill changes may be motivated only by these topics.
 | CD011926 | reference | seeded | baseline | 1/1 | 96.2 | n/a | 1001 | 40.0 | n/a |
 | Donners_2021 | naive | noseed | baseline | 1/1 | 100.0 | n/a | 1614 | 107.6 | n/a |
 | Donners_2021 | naive | seeded | baseline | 1/1 | 100.0 | n/a | 1614 | 134.5 | n/a |
-| Kwok_2020 | generated:ours (codex) | noseed | 4e852a8e95 | 2/2 +1 infra † | 95.2 (94.8-95.7) | 94.7 (94.6-94.8) | 3521 (1118-5924) | 31.8 (10.2-53.4) | n/a |
+| Kwok_2020 | generated:ours (codex) | noseed | 4e852a8e95 | 3/3 +1 infra | 87.6 (72.4-95.7) | 86.9 (71.2-94.8) | 2707 (1079-5924) | 25.5 (10.2-53.4) | n/a |
+| Kwok_2020 | generated:ours-noprobe (codex) | noseed | 8817bab45a | 3/3 | 95.1 (94.0-95.7) | 94.6 (93.1-95.6) | 4959.7 (910-8180) | 44.7 (8.3-73.7) | n/a |
 | Liu_2023_VR_nursing | naive | noseed | baseline | 1/1 | 100.0 | n/a | 374 | 62.3 | n/a |
 | Medeiros-2022-School-based food and nutr | generated:ours (codex) | noseed | 4e852a8e95 | 3/3 | 74.1 (66.7-88.9) | 73.6 (66.7-87.5) | 32122.3 (5776-69329) | 5058.4 (962.7-11554.8) | n/a |
+| Medeiros-2022-School-based food and nutr | generated:ours-noprobe (codex) | noseed | 8817bab45a | 2/3 † | 100.0 (100.0-100.0) | 100.0 (100.0-100.0) | 14713 (13229-16197) | 1634.8 (1469.9-1799.7) | n/a |
 | Medeiros-2022-School-based food and nutr | naive | noseed | baseline | 1/1 | 11.1 | n/a | 767 | 767.0 | n/a |
 | Medeiros-2022-School-based food and nutr | naive | seeded | baseline | 1/1 | 16.7 | n/a | 767 | 767.0 | n/a |
 | Medeiros-2022-School-based food and nutr | reference | noseed | baseline | 1/1 | 88.9 | n/a | 24320 | 3040.0 | n/a |
@@ -40,11 +48,15 @@ Skill changes may be motivated only by these topics.
 | Muthu_2022 | generated:quota-check (codex) | noseed | legacy | 0/1 † | n/a | n/a | n/a | n/a | n/a |
 | Muthu_2022 | naive | noseed | baseline | 1/1 | 100.0 | n/a | 505 | 84.2 | n/a |
 | Smid_2020 | generated:ours (codex) | noseed | 4e852a8e95 | 3/3 | 92.9 (92.9-92.9) | 89.9 (88.9-90.9) | 2876.3 (1346-4869) | 221.2 (103.5-374.5) | n/a |
+| Smid_2020 | generated:ours-noprobe (codex) | noseed | 8817bab45a | 2/3 † | 92.9 (92.9-92.9) | 91.7 (91.7-91.7) | 2053 (1407-2699) | 157.9 (108.2-207.6) | n/a |
 | Smid_2020 | naive | noseed | baseline | 1/1 | 78.6 | n/a | 1369 | 124.5 | n/a |
 | Smid_2020 | naive | seeded | baseline | 1/1 | 72.7 | n/a | 1369 | 171.1 | n/a |
-| Welling_2021 | generated:ours (codex) | noseed | 4e852a8e95 | 2/3 † | 90.6 (88.7-92.5) | 90.5 (88.7-92.3) | 14362.5 (12854-15871) | 298.7 (273.5-323.9) | n/a |
+| Welling_2021 | generated:ours (codex) | noseed | 4e852a8e95 | 3/4 | 91.2 (88.7-92.5) | 91.2 (88.7-92.5) | 16323 (12854-20244) | 336.8 (273.5-413.1) | n/a |
+| Welling_2021 | generated:ours-noprobe (codex) | noseed | 8817bab45a | 2/3 † | 93.4 (86.8-100.0) | 93.4 (86.8-100.0) | 68084 (13167-123001) | 1303.5 (286.2-2320.8) | n/a |
 | gao-2026-Immune checkpoint inhibitors | naive | noseed | baseline | 1/1 | 72.7 | n/a | 1599 | 199.9 | n/a |
 | gao-2026-Immune checkpoint inhibitors | naive | seeded | baseline | 1/1 | 62.5 | n/a | 1599 | 319.8 | n/a |
+| van_de_Schoot_2018 | generated:ours (codex) | noseed | 4e852a8e95 | 3/3 | 92.1 (92.1-92.1) | 90.3 (87.0-92.1) | 32403.3 (32074-32908) | 925.8 (916.4-940.2) | n/a |
+| van_de_Schoot_2018 | generated:ours-noprobe (codex) | noseed | 8817bab45a | 3/3 | 92.1 (92.1-92.1) | 91.7 (91.4-91.9) | 17903.7 (10603-32459) | 511.5 (302.9-927.4) | n/a |
 
 ## Held-out topics
 

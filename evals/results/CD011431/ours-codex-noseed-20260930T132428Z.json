@@ -1,0 +1,48 @@
+{
+  "topic": "CD011431",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260930T132428Z",
+  "scored": "20260930T135656Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1947
+  },
+  "final_message": "ral flow\"[tiab] OR dipstick*[tiab] OR \"antigen-detecting test\"[tiab] OR \"antigen detection test\"[tiab] OR \"malaria antigen test\"[tiab] OR \"point-of-care test\"[tiab] OR \"point of care test\"[tiab] OR HRP2[tiab] OR pLDH[tiab] OR \"parasite lactate dehydrogenase\"[tiab] OR OptiMAL[tiab] OR ParaSight[tiab] OR BinaxNOW[tiab] OR CareStart[tiab] OR Paracheck[tiab] OR \"VIKIA malaria\"[tiab] OR \"Reagent Kits, Diagnostic\"[Mesh] OR \"Immunoassay\"[Mesh] OR \"Antigens, Protozoan\"[Mesh] OR \"rapid diagnostic\"[tiab] OR \"diagnostic test\"[tiab] OR \"diagnostic tests\"[tiab] OR \"First Response\"[tiab] OR ParaHIT[tiab] OR \"SD BIOLINE\"[tiab])) AND (\"1800/01/01\"[edat] : \"2013/06/09\"[edat])\n```\n\nThe final query returned **8,438 records** with the Entrez entry-date cutoff of **2013-06-09**. No publication-date limit was used. The linked audit lists all 51 PubMed lines and their counts: [audit.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-codex-noseed-20260930T132428Z/work/audit.md).\n\n## Validation and handoff\n\nFive pilot-discovered records were screened in as development records. The strategy retrieved all five: **100% relative recall on that development set**. This is not independent validation or a sensitivity estimate. The final category probes found no relevant records among the 30 sampled for each concept.\n\nThe protected report passed validation. Files are available here:\n\n- [final-query.txt](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-codex-noseed-20260930T132428Z/work/final-query.txt)\n- [validation-manifest.json](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-codex-noseed-20260930T132428Z/work/validation-manifest.json)\n- [narrative.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-codex-noseed-20260930T132428Z/work/narrative.md)\n\nThe internal critique was completed in the same context, so it is not independent PRESS peer review. This draft needs review by an information specialist before use.",
+  "strategy": "((\"Malaria\"[Mesh] OR \"Malaria, Vivax\"[Mesh] OR \"Plasmodium vivax\"[Mesh] OR malaria[tiab] OR plasmodium[tiab] OR vivax[tiab] OR malariae[tiab] OR ovale[tiab] OR knowlesi[tiab] OR non-falciparum[tiab] OR nonfalciparum[tiab] OR \"non falciparum\"[tiab] OR \"benign tertian\"[tiab] OR \"quartan malaria\"[tiab]) AND (\"Reagent Strips\"[Mesh] OR \"Diagnostic Tests, Routine\"[Mesh] OR \"rapid diagnostic test\"[tiab] OR \"rapid diagnostic tests\"[tiab] OR \"rapid test\"[tiab] OR \"rapid tests\"[tiab] OR RDT[tiab] OR RDTs[tiab] OR immunochromatograph*[tiab] OR \"lateral flow\"[tiab] OR dipstick*[tiab] OR \"antigen-detecting test\"[tiab] OR \"antigen detection test\"[tiab] OR \"malaria antigen test\"[tiab] OR \"point-of-care test\"[tiab] OR \"point of care test\"[tiab] OR HRP2[tiab] OR pLDH[tiab] OR \"parasite lactate dehydrogenase\"[tiab] OR OptiMAL[tiab] OR ParaSight[tiab] OR BinaxNOW[tiab] OR CareStart[tiab] OR Paracheck[tiab] OR \"VIKIA malaria\"[tiab] OR \"Reagent Kits, Diagnostic\"[Mesh] OR \"Immunoassay\"[Mesh] OR \"Antigens, Protozoan\"[Mesh] OR \"rapid diagnostic\"[tiab] OR \"diagnostic test\"[tiab] OR \"diagnostic tests\"[tiab] OR \"First Response\"[tiab] OR ParaHIT[tiab] OR \"SD BIOLINE\"[tiab])) AND (\"1800/01/01\"[edat] : \"2013/06/09\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2013-06-09",
+  "count": 8438,
+  "gold_scored": 26,
+  "gold_reachable": 26,
+  "retrieved": 26,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 324.5,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 24,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": null,
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

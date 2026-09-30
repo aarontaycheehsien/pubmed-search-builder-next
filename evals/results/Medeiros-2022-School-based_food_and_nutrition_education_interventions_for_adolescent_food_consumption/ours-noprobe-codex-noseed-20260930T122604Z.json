@@ -1,0 +1,74 @@
+{
+  "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+  "source": "generated:ours-noprobe",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-noprobe-codex-noseed-20260930T122604Z",
+  "scored": "20260930T134351Z",
+  "skill": {
+    "name": "ours-noprobe",
+    "hash": "8817bab45a1908693747b9bde11f72242442d397dc2d9ddeb0952f82b4220fde",
+    "commit": null,
+    "dirty": null
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 4665
+  },
+  "final_message": "aining\"[tiab] OR intervention*[tiab] OR education*[tiab]) AND (\"Schools\"[Mesh] OR \"School Health Services\"[Mesh] OR school*[tiab] OR classroom*[tiab] OR school-based[tiab] OR \"school based\"[tiab] OR \"high school*\"[tiab] OR \"middle school*\"[tiab] OR \"secondary school*\"[tiab] OR \"primary school*\"[tiab] OR \"school-age*\"[tiab]) AND (\"Feeding Behavior\"[Mesh] OR \"Diet\"[Mesh] OR \"Food Preferences\"[Mesh] OR \"Fruit\"[Mesh] OR \"Vegetables\"[Mesh] OR \"Beverages\"[Mesh] OR \"food consumption\"[tiab] OR \"food intake\"[tiab] OR \"dietary intake\"[tiab] OR \"dietary behavior\"[tiab] OR \"dietary behaviour\"[tiab] OR \"eating behavior\"[tiab] OR \"eating behaviour\"[tiab] OR \"eating habit\"[tiab] OR \"dietary habit\"[tiab] OR \"food habit\"[tiab] OR diet*[tiab] OR consum*[tiab] OR intake[tiab] OR \"food choice\"[tiab] OR \"fruit and vegetable intake\"[tiab] OR \"fruit and vegetable consumption\"[tiab] OR \"beverage consumption\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])\n```\n\nThe query returned **16,197 records** with the Entrez date bound of 2017-12-14 and no publication-date limit. It retrieved all **8/8 benchmark records** and **9/9 records found relevant during development**. Those figures are relative recall against the identified sets, not sensitivity; there was no held-out validation set.\n\nThe count exceeds the 10,000-record workload budget. The population block was tested but left out because it reduced results by only 12%; the setting and outcome blocks were retained after substantial reductions and 30-record loss samples with no eligible records. These samples do not rule out missed studies. The audit also records that the PRESS-structured internal critique was same-context; independent PRESS peer review is pending.\n\nOne link in the list above has a path typo and may not open: use this verified path for the manifest instead: [validation-manifest.json](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-noprobe-codex-noseed-20260930T122604Z/work/validation-manifest.json).",
+  "strategy": "((\"Health Education\"[Mesh] OR \"Health Promotion\"[Mesh] OR \"Curriculum\"[Mesh] OR \"Child Nutrition Sciences\"[Mesh] OR \"Diet\"[Mesh] OR \"Feeding Behavior\"[Mesh] OR \"nutrition education\"[tiab] OR \"food education\"[tiab] OR \"dietary education\"[tiab] OR \"nutrition intervention\"[tiab] OR \"nutrition interventions\"[tiab] OR nutrition intervention*[tiab] OR nutrition educat*[tiab] OR dietary educat*[tiab] OR food educat*[tiab] OR nutrition program*[tiab] OR nutrition programme*[tiab] OR food program*[tiab] OR food programme*[tiab] OR nutrition promot*[tiab] OR healthy eating program*[tiab] OR healthy eating intervention*[tiab] OR dietary intervention*[tiab] OR nutrition curriculum*[tiab] OR \"nutrition instruction\"[tiab] OR \"nutrition training\"[tiab] OR intervention*[tiab] OR education*[tiab]) AND (\"Schools\"[Mesh] OR \"School Health Services\"[Mesh] OR school*[tiab] OR classroom*[tiab] OR school-based[tiab] OR \"school based\"[tiab] OR \"high school*\"[tiab] OR \"middle school*\"[tiab] OR \"secondary school*\"[tiab] OR \"primary school*\"[tiab] OR \"school-age*\"[tiab]) AND (\"Feeding Behavior\"[Mesh] OR \"Diet\"[Mesh] OR \"Food Preferences\"[Mesh] OR \"Fruit\"[Mesh] OR \"Vegetables\"[Mesh] OR \"Beverages\"[Mesh] OR \"food consumption\"[tiab] OR \"food intake\"[tiab] OR \"dietary intake\"[tiab] OR \"dietary behavior\"[tiab] OR \"dietary behaviour\"[tiab] OR \"eating behavior\"[tiab] OR \"eating behaviour\"[tiab] OR \"eating habit\"[tiab] OR \"dietary habit\"[tiab] OR \"food habit\"[tiab] OR diet*[tiab] OR consum*[tiab] OR intake[tiab] OR \"food choice\"[tiab] OR \"fruit and vegetable intake\"[tiab] OR \"fruit and vegetable consumption\"[tiab] OR \"beverage consumption\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-14",
+  "count": 16197,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 9,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 1799.7,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 7,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 3,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "population",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "setting",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "outcome",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

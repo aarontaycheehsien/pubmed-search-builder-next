@@ -1,0 +1,55 @@
+{
+  "topic": "Appenzeller-Herzog_2019",
+  "source": "generated:ours-noprobe",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-noprobe-codex-noseed-20260930T122604Z",
+  "scored": "20260930T130016Z",
+  "skill": {
+    "name": "ours-noprobe",
+    "hash": "8817bab45a1908693747b9bde11f72242442d397dc2d9ddeb0952f82b4220fde",
+    "commit": null,
+    "dirty": null
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2051
+  },
+  "final_message": "e[tiab]` | 219 |\n| 21 | `triethylenetetramine[tiab]` | 360 |\n| 22 | `TETA[tiab]` | 1,290 |\n| 23 | `zinc[tiab]` | 108,490 |\n| 24 | `\"zinc acetate\"[tiab]` | 817 |\n| 25 | `\"zinc sulfate\"[tiab]` | 1,531 |\n| 26 | `\"zinc sulphate\"[tiab]` | 857 |\n| 27 | `tetrathiomolybdate[tiab]` | 351 |\n| 28 | `\"ammonium tetrathiomolybdate\"[tiab]` | 84 |\n| 29 | `\"bis-choline tetrathiomolybdate\"[tiab]` | 6 |\n| 30 | `WTX101[tiab]` | 3 |\n| 31 | `DMPS[tiab]` | 745 |\n| 32 | `dimercaptopropanesulfonate[tiab]` | 27 |\n| 33 | `\"anti-copper\"[tiab]` | 29 |\n| 34 | `anticopper[tiab]` | 79 |\n| 35 | `chelat*[tiab]` | 62,346 |\n| 36 | Therapy block (`#9 OR … OR #35`) | 199,011 |\n| 37 | Final search (`#8 AND #36`) | 1,958 |\n\n## Validation and handoff\n\nThe strategy retrieved **17/17 (100%)** records in the screened development set. This is relative recall against records found during the build—not independent validation or absolute sensitivity. No held-out set or prior-review benchmark was established. A date-bounded PubMed search found a relevant prior review (PMID 19210288), but its included-study list was not obtained.\n\nThe fresh-context critic’s date-bound finding was rejected because removing the required `[edat]` cutoff would violate the harness instructions. The report command passed with no open must-fix findings.\n\nFiles are in `./work`: [final-query.txt](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-noprobe-codex-noseed-20260930T122604Z/work/final-query.txt), [audit.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-noprobe-codex-noseed-20260930T122604Z/work/audit.md), [validation-manifest.json](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-noprobe-codex-noseed-20260930T122604Z/work/validation-manifest.json), and [narrative.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-noprobe-codex-noseed-20260930T122604Z/work/narrative.md).\n\nThis draft needs PRESS peer review by an information specialist before use.",
+  "strategy": "((\"Hepatolenticular Degeneration\"[Mesh] OR \"Wilson disease\"[tiab] OR \"Wilson's disease\"[tiab] OR \"hepatolenticular degeneration\"[tiab] OR \"progressive lenticular degeneration\"[tiab] OR \"copper storage disease\"[tiab] OR hepatolenticular[tiab]) AND (\"Penicillamine\"[Mesh] OR \"Trientine\"[Mesh] OR \"Zinc Acetate\"[Mesh] OR \"Zinc Sulfate\"[Mesh] OR \"Zinc\"[Mesh] OR \"Chelation Therapy\"[Mesh] OR tetrathiomolybdate[nm] OR penicillamine[tiab] OR \"D-penicillamine\"[tiab] OR \"D penicillamine\"[tiab] OR DPA[tiab] OR trientine[tiab] OR triethylenetetramine[tiab] OR TETA[tiab] OR zinc[tiab] OR \"zinc acetate\"[tiab] OR \"zinc sulfate\"[tiab] OR \"zinc sulphate\"[tiab] OR tetrathiomolybdate[tiab] OR \"ammonium tetrathiomolybdate\"[tiab] OR \"bis-choline tetrathiomolybdate\"[tiab] OR WTX101[tiab] OR DMPS[tiab] OR dimercaptopropanesulfonate[tiab] OR \"anti-copper\"[tiab] OR anticopper[tiab] OR chelat*[tiab])) AND (\"1800/01/01\"[edat] : \"2018/12/23\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-12-23",
+  "count": 1958,
+  "gold_scored": 22,
+  "gold_reachable": 21,
+  "retrieved": 21,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 93.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 6,
+  "unseen_retrieved": 15,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "screen": 3,
+      "search": 2
+    },
+    "optional": []
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

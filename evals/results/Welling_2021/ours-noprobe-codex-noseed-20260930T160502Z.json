@@ -1,0 +1,62 @@
+{
+  "topic": "Welling_2021",
+  "source": "generated:ours-noprobe",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-noprobe-codex-noseed-20260930T160502Z",
+  "scored": "20260930T165042Z",
+  "skill": {
+    "name": "ours-noprobe",
+    "hash": "8817bab45a1908693747b9bde11f72242442d397dc2d9ddeb0952f82b4220fde",
+    "commit": null,
+    "dirty": null
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2739
+  },
+  "final_message": "tiab]` | 7,988 |\n| 15 | `lockdown[tiab]` | 3,157 |\n| 16 | `lockdowns[tiab]` | 441 |\n| 17 | `stay-at-home[tiab]` | 815 |\n| 18 | `stay at home[tiab]` | 815 |\n| 19 | `shelter-in-place[tiab]` | 210 |\n| 20 | `quarantine[tiab]` | 6,169 |\n| 21 | `social distanc*[tiab]` | 3,813 |\n| 22 | `physical distanc*[tiab]` | 1,606 |\n| 23 | `movement restriction*[tiab]` | 568 |\n| 24 | `\"COVID-19\"[Mesh]` | 57,089 |\n| 25 | `\"SARS-CoV-2\"[Mesh]` | 45,931 |\n| 26 | `pandemic*[tiab]` | 58,444 |\n| 27 | **Combined query** | **123,001** |\n\n## Validation and limitations\n\nThe strategy retrieved all 14 records in the screened development set (100% relative recall on that set). This is not independent validation or an estimate of sensitivity. The lifestyle and well-being block was tested but left out: it reduced results by 88.3%, while only 14 known relevant records were available—below the skill’s threshold for safely requiring that optional block. Its 30-record loss sample contained no relevant records, but that sample is weak evidence.\n\nThe resulting 123,001 records exceed the default 10,000-record workload budget. Generic pandemic, quarantine, lockdown, and distancing terms can also retrieve unrelated records, so screen for relevance to COVID-19 and the specified outcomes. The internal critic passed; the strategy still needs human PRESS peer review by an information specialist before use.\n\nGenerated files: [final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-noprobe-codex-noseed-20260930T160502Z/work/final-query.txt), [audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-noprobe-codex-noseed-20260930T160502Z/work/audit.md), [validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-noprobe-codex-noseed-20260930T160502Z/work/validation-manifest.json), and [rationale and handoff notes](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-noprobe-codex-noseed-20260930T160502Z/work/narrative.md).",
+  "strategy": "((\"Coronavirus Infections\"[Mesh] OR \"Quarantine\"[Mesh] OR \"Pandemics\"[Mesh] OR COVID-19[tiab] OR COVID19[tiab] OR COVID-19 pandemic[tiab] OR COVID pandemic*[tiab] OR coronavirus disease 2019[tiab] OR coronavirus pandemic*[tiab] OR SARS-CoV-2[tiab] OR SARS-CoV2[tiab] OR 2019-nCoV[tiab] OR novel coronavirus[tiab] OR severe acute respiratory syndrome coronavirus 2[tiab] OR lockdown[tiab] OR lockdowns[tiab] OR stay-at-home[tiab] OR stay at home[tiab] OR shelter-in-place[tiab] OR quarantine[tiab] OR social distanc*[tiab] OR physical distanc*[tiab] OR movement restriction*[tiab] OR \"COVID-19\"[Mesh] OR \"SARS-CoV-2\"[Mesh] OR pandemic*[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-11-22",
+  "count": 123001,
+  "gold_scored": 53,
+  "gold_reachable": 53,
+  "retrieved": 53,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 2320.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 53,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "outcomes",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

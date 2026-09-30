@@ -1,0 +1,63 @@
+{
+  "topic": "Appenzeller-Herzog_2019",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260930T135453Z",
+  "scored": "20260930T142437Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1784
+  },
+  "final_message": "| 13 | `westphal-strumpell[tiab]` | 26 |\n| 14 | `ATP7B[tiab]` | 1,016 |\n| 15 | `#1 OR #2 OR … OR #14` | **7,600** |\n\n## Scope and validation\n\nI assumed “common therapies” means pharmacologic anti-copper treatments, including chelators and zinc; liver transplantation alone is outside that scope. Wilson disease is the required search concept. Comparators and outcomes are screened rather than required in the query.\n\nI found and screened related PubMed records, adding **11** relevant records to a development set. The strategy retrieved **11/11 (100%)** of that set. This is development-set relative recall, not independent validation or sensitivity; no user-supplied seeds or held-out validation records were available.\n\nThe therapy block reduced the count from 7,600 to 3,374 when tested as an AND, but it was left out: only 11 known relevant records were available, below the skill’s 15-record threshold for requiring the block. The optional-block loss sample and category probe each found 0 relevant records among 30 sampled records; those small samples do not establish that requiring therapy terms is safe.\n\nThree fresh-context internal critic rounds passed without open strategy findings. The retained `neurohepatic degeneration[tiab]` term has a zero-hit warning; its PubMed translation was intact, and the warning was explicitly dispositioned. Counts use PubMed’s current index bounded by Entrez date, rather than a reconstruction of PubMed’s historical index.\n\nThe protected [audit](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-codex-noseed-20260930T135453Z/work/audit.md), [validation manifest](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-codex-noseed-20260930T135453Z/work/validation-manifest.json), and [narrative notes](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-codex-noseed-20260930T135453Z/work/narrative.md) are in `./work`. This draft needs PRESS peer review by an information specialist before use.",
+  "strategy": "((Hepatolenticular Degeneration[Mesh] OR wilson disease[tiab] OR wilson's disease[tiab] OR wilsons disease[tiab] OR hepatolenticular degeneration[tiab] OR hepatolenticular[tiab] OR progressive lenticular degeneration[tiab] OR kinnier-wilson[tiab] OR copper storage disease[tiab] OR copper storage diseases[tiab] OR neurohepatic degeneration[tiab] OR hepatocerebral degeneration[tiab] OR westphal-strumpell[tiab] OR ATP7B[tiab])) AND (\"1800/01/01\"[edat] : \"2018/12/23\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-12-23",
+  "count": 7600,
+  "gold_scored": 22,
+  "gold_reachable": 21,
+  "retrieved": 21,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 361.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 6,
+  "unseen_retrieved": 15,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 1,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "therapies",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

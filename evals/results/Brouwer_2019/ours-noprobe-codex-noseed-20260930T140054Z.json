@@ -1,0 +1,51 @@
+{
+  "topic": "Brouwer_2019",
+  "source": "generated:ours-noprobe",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-noprobe-codex-noseed-20260930T140054Z",
+  "scored": "20260930T142600Z",
+  "skill": {
+    "name": "ours-noprobe",
+    "hash": "8817bab45a1908693747b9bde11f72242442d397dc2d9ddeb0952f82b4220fde",
+    "commit": null,
+    "dirty": null
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1506
+  },
+  "final_message": "sers/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-noprobe-codex-noseed-20260930T140054Z/work/audit.md), and [validation-manifest.json](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-noprobe-codex-noseed-20260930T140054Z/work/validation-manifest.json). The audit contains every search line with its count.\n\n```text\n((\"Depressive Disorder\"[Mesh] OR \"Major Depressive Disorder\"[Mesh] OR \"Depression, Postpartum\"[Mesh] OR \"Seasonal Affective Disorder\"[Mesh] OR \"Dysthymic Disorder\"[Mesh] OR depress*[tiab] OR \"major depression\"[tiab] OR \"unipolar depression\"[tiab] OR dysthymi*[tiab] OR melancholia[tiab] OR MDD[tiab]) AND (\"Recurrence\"[Mesh] OR \"Secondary Prevention\"[Mesh] OR relaps*[tiab] OR recurren*[tiab] OR recrudescen*[tiab] OR \"recurrent episode*\"[tiab] OR \"relapse prevention\"[tiab])) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])\n```\n\nThe search combines two required concepts: depressive disorders and relapse/recurrence. Psychological theories and mechanisms were tested as an optional block and left out because only 7 relevant records were available to assess whether requiring that block would be safe.\n\nThe final search retrieved **17,169 records** through the requested 2018-11-17 PubMed entry-date cutoff. It retrieved all **7 of 7** screened development records; that is development relative recall, not independent validation or sensitivity. No seeds or held-out validation set were available. The optional-block loss sample found 0 relevant records among 30 screened, but that small sample does not establish safety.\n\nI proceeded with the documented scope assumptions because you asked me not to pause for clarification. The full result set exceeds the standard 10,000-record screening budget, so the audit recommends screening all records in batches without truncating the set. The cutoff is an Entrez entry-date bound; no publication-date limit was added. This is a draft and needs PRESS peer review by an information specialist before use.",
+  "strategy": "((\"Depressive Disorder\"[Mesh] OR \"Major Depressive Disorder\"[Mesh] OR \"Depression, Postpartum\"[Mesh] OR \"Seasonal Affective Disorder\"[Mesh] OR \"Dysthymic Disorder\"[Mesh] OR depress*[tiab] OR \"major depression\"[tiab] OR \"unipolar depression\"[tiab] OR dysthymi*[tiab] OR melancholia[tiab] OR MDD[tiab]) AND (\"Recurrence\"[Mesh] OR \"Secondary Prevention\"[Mesh] OR relaps*[tiab] OR recurren*[tiab] OR recrudescen*[tiab] OR \"recurrent episode*\"[tiab] OR \"relapse prevention\"[tiab])) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-11-17",
+  "count": 17169,
+  "gold_scored": 54,
+  "gold_reachable": 54,
+  "retrieved": 52,
+  "recall_percent": 96.3,
+  "missed": [
+    "17696703",
+    "21848705"
+  ],
+  "nnr": 330.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 51,
+  "unseen_recall_percent": 96.2,
+  "leakage": [],
+  "concepts": null,
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

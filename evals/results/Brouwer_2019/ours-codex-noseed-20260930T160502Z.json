@@ -1,0 +1,65 @@
+{
+  "topic": "Brouwer_2019",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260930T160502Z",
+  "scored": "20260930T165830Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 3207
+  },
+  "final_message": "iab]` | 419,763 |\n| 4 | `dysthymi*[tiab]` | 3,055 |\n| 5 | `melanchol*[tiab]` | 2,939 |\n| 6 | Depression block | 439,310 |\n| 7 | `Recurrence[Mesh]` | 178,366 |\n| 8 | `relaps*[tiab]` | 163,847 |\n| 9 | `recurren*[tiab]` | 496,927 |\n| 10 | `recrudescen*[tiab]` | 3,173 |\n| 11 | `reemerg*[tiab]` | 8,492 |\n| 12 | `re-emerg*[tiab]` | 5,672 |\n| 13 | `\"recurrent episode*\"[tiab]` | 6,351 |\n| 14 | Relapse/recurrence block | 713,435 |\n| 15 | Final combined search | **16,856** |\n\n## Validation and limitations\n\nOne relevant record, PMID 28152467, was found during a focused pilot and retrieved by the strategy. Relative recall was 1/1 against this single development record; this is not independent validation or a sensitivity estimate. No matching prior-review benchmark or additional in-scope record was found through the sampled candidates and neighbors.\n\nA theory/mechanism block reduced the count by 60.8%, but was left out to preserve recall: only one relevant record was known, below the skill’s threshold for safely requiring that block. The final count exceeds the standard 10,000-record workload budget, and many results will need screening for actual psychological-theory content. **This draft needs PRESS peer review by an information specialist before use.**\n\nThe protected report succeeded. Files are in [`work`](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260930T160502Z/work):\n\n- [Generated query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260930T160502Z/work/final-query.txt)\n- [Audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260930T160502Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260930T160502Z/work/validation-manifest.json)\n- [Rationale and discovery notes](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260930T160502Z/work/narrative.md)",
+  "strategy": "((Depressive Disorder[Mesh] OR Major Depressive Disorder[Mesh] OR depress*[tiab] OR dysthymi*[tiab] OR melanchol*[tiab]) AND (Recurrence[Mesh] OR relaps*[tiab] OR recurren*[tiab] OR recrudescen*[tiab] OR reemerg*[tiab] OR re-emerg*[tiab] OR \"recurrent episode*\"[tiab])) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-11-17",
+  "count": 16856,
+  "gold_scored": 54,
+  "gold_reachable": 54,
+  "retrieved": 52,
+  "recall_percent": 96.3,
+  "missed": [
+    "17696703",
+    "21848705"
+  ],
+  "nnr": 324.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 52,
+  "unseen_recall_percent": 96.3,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "psychological_theory",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

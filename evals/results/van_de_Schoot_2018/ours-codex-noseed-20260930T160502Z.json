@@ -1,0 +1,72 @@
+{
+  "topic": "van_de_Schoot_2018",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260930T160502Z",
+  "scored": "20260930T172121Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 4578
+  },
+  "final_message": "## PubMed strategy\n\n```text\n((\"Stress Disorders, Post-Traumatic\"[Mesh] OR \"post-traumatic stress disorder\"[tiab] OR \"post traumatic stress disorder\"[tiab] OR \"posttraumatic stress disorder\"[tiab] OR post-traumatic stress[tiab] OR post traumatic stress[tiab] OR posttraumatic stress[tiab] OR \"symptoms of post-traumatic stress\"[tiab] OR \"symptoms of post traumatic stress\"[tiab] OR \"symptoms posttraumatic stress\"[tiab:~1] OR \"post-traumatic stress disorders\"[tiab] OR \"post traumatic stress disorders\"[tiab] OR \"posttraumatic stress disorders\"[tiab] OR PTSD[tiab] OR \"post-traumatic stress symptom*\"[tiab] OR \"post traumatic stress symptom*\"[tiab] OR \"posttraumatic stress symptom*\"[tiab] OR \"post-traumatic stress reaction*\"[tiab] OR \"post traumatic stress reaction*\"[tiab] OR \"posttraumatic stress reaction*\"[tiab] OR PTSS[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])\n```\n\nThe strategy returned **32,228 records** as of the requested Entrez-date cutoff. It retrieved **13/13 known relevant records** found during development; this is not independent validation. The trajectory and trauma-context blocks were tested but left out: each would remove a known relevant record. The higher screening workload is documented as an accepted risk. No publication-date limit was applied.\n\nThe closing critic check passed, and `psb report --fresh` generated the protected files:\n\n- [Audit report](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20260930T160502Z/work/audit.md)\n- [Final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20260930T160502Z/work/final-query.txt)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20260930T160502Z/work/validation-manifest.json)\n\nThe report recommends information-specialist PRESS peer review before use.",
+  "strategy": "((\"Stress Disorders, Post-Traumatic\"[Mesh] OR \"post-traumatic stress disorder\"[tiab] OR \"post traumatic stress disorder\"[tiab] OR \"posttraumatic stress disorder\"[tiab] OR post-traumatic stress[tiab] OR post traumatic stress[tiab] OR posttraumatic stress[tiab] OR \"symptoms of post-traumatic stress\"[tiab] OR \"symptoms of post traumatic stress\"[tiab] OR \"symptoms posttraumatic stress\"[tiab:~1] OR \"post-traumatic stress disorders\"[tiab] OR \"post traumatic stress disorders\"[tiab] OR \"posttraumatic stress disorders\"[tiab] OR PTSD[tiab] OR \"post-traumatic stress symptom*\"[tiab] OR \"post traumatic stress symptom*\"[tiab] OR \"posttraumatic stress symptom*\"[tiab] OR \"post-traumatic stress reaction*\"[tiab] OR \"post traumatic stress reaction*\"[tiab] OR \"posttraumatic stress reaction*\"[tiab] OR PTSS[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2016-01-24",
+  "count": 32228,
+  "gold_scored": 38,
+  "gold_reachable": 38,
+  "retrieved": 35,
+  "recall_percent": 92.1,
+  "missed": [
+    "20061839",
+    "20836603",
+    "26412244"
+  ],
+  "nnr": 920.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 35,
+  "unseen_recall_percent": 92.1,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 2,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "trajectory",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "trauma_context",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

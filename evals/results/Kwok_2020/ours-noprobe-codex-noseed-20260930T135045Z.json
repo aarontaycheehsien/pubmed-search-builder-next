@@ -1,0 +1,68 @@
+{
+  "topic": "Kwok_2020",
+  "source": "generated:ours-noprobe",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-noprobe-codex-noseed-20260930T135045Z",
+  "scored": "20260930T143626Z",
+  "skill": {
+    "name": "ours-noprobe",
+    "hash": "8817bab45a1908693747b9bde11f72242442d397dc2d9ddeb0952f82b4220fde",
+    "commit": null,
+    "dirty": null
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2740
+  },
+  "final_message": " \"Goats\"[Mesh] OR \"Horses\"[Mesh] OR \"Rabbits\"[Mesh] OR livestock[tiab] OR \"farm animal*\"[tiab] OR \"food animal*\"[tiab] OR \"production animal*\"[tiab] OR \"domestic animal*\"[tiab] OR cattle[tiab] OR bovine[tiab] OR cow[tiab] OR cows[tiab] OR calf[tiab] OR calves[tiab] OR swine[tiab] OR pig[tiab] OR pigs[tiab] OR porcine[tiab] OR poultry[tiab] OR chicken*[tiab] OR turkey[tiab] OR turkeys[tiab] OR duck[tiab] OR ducks[tiab] OR goose[tiab] OR geese[tiab] OR avian[tiab] OR sheep[tiab] OR ovine[tiab] OR goat*[tiab] OR caprine[tiab] OR horse*[tiab] OR equine[tiab] OR rabbit*[tiab])) AND (\"1800/01/01\"[edat] : \"2019/02/22\"[edat])\n```\n\nThe search returned **8,180 records** with the Entrez-date bound of 2019-02-22; no publication-date limit was added. The full audit has counts for every search line, plus the optional-block results.\n\nSeven records found and screened during the build were retrieved (**100% relative recall against this development set**). This is not independent validation or an estimate of sensitivity. The viral-target block would reduce the result to 1,369, but was left out because only seven relevant records were available to assess whether requiring it was safe.\n\nI proceeded with a documented **terrestrial farm-animal** scope assumption; farmed aquatic animals may be missed. The strategy needs PRESS peer review by an information specialist before use.\n\n- [Protected query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/ours-noprobe-codex-noseed-20260930T135045Z/work/final-query.txt)\n- [Audit with line-by-line counts](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/ours-noprobe-codex-noseed-20260930T135045Z/work/audit.md)\n- [Rationale and risks](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/ours-noprobe-codex-noseed-20260930T135045Z/work/narrative.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/ours-noprobe-codex-noseed-20260930T135045Z/work/validation-manifest.json)",
+  "strategy": "((\"Metagenomics\"[Mesh] OR \"Genomics\"[Mesh] OR \"High-Throughput Nucleotide Sequencing\"[Mesh] OR metagenom*[tiab] OR virom*[tiab] OR \"viral metagenom*\"[tiab] OR \"virus metagenom*\"[tiab] OR \"viral microbiom*\"[tiab] OR viromic*[tiab] OR \"viral community\"[tiab] OR \"virus communit*\"[tiab] OR \"unbiased sequencing\"[tiab] OR \"deep sequencing\"[tiab] OR \"shotgun sequencing\"[tiab] OR \"next generation sequencing\"[tiab] OR \"high throughput sequencing\"[tiab] OR \"metagenomic sequencing\"[tiab] OR \"metatranscriptom*\"[tiab]) AND (\"Livestock\"[Mesh] OR \"Animals, Domestic\"[Mesh] OR \"Poultry\"[Mesh] OR \"Cattle\"[Mesh] OR \"Swine\"[Mesh] OR \"Sheep\"[Mesh] OR \"Goats\"[Mesh] OR \"Horses\"[Mesh] OR \"Rabbits\"[Mesh] OR livestock[tiab] OR \"farm animal*\"[tiab] OR \"food animal*\"[tiab] OR \"production animal*\"[tiab] OR \"domestic animal*\"[tiab] OR cattle[tiab] OR bovine[tiab] OR cow[tiab] OR cows[tiab] OR calf[tiab] OR calves[tiab] OR swine[tiab] OR pig[tiab] OR pigs[tiab] OR porcine[tiab] OR poultry[tiab] OR chicken*[tiab] OR turkey[tiab] OR turkeys[tiab] OR duck[tiab] OR ducks[tiab] OR goose[tiab] OR geese[tiab] OR avian[tiab] OR sheep[tiab] OR ovine[tiab] OR goat*[tiab] OR caprine[tiab] OR horse*[tiab] OR equine[tiab] OR rabbit*[tiab])) AND (\"1800/01/01\"[edat] : \"2019/02/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2019-02-22",
+  "count": 8180,
+  "gold_scored": 116,
+  "gold_reachable": 116,
+  "retrieved": 111,
+  "recall_percent": 95.7,
+  "missed": [
+    "22821184",
+    "24672039",
+    "25918239",
+    "28495761",
+    "28653486"
+  ],
+  "nnr": 73.7,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 109,
+  "unseen_recall_percent": 95.6,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "viral_target",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

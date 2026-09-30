@@ -1,0 +1,51 @@
+{
+  "topic": "Brouwer_2019",
+  "source": "generated:ours-noprobe",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-noprobe-codex-noseed-20260930T122604Z",
+  "scored": "20260930T131522Z",
+  "skill": {
+    "name": "ours-noprobe",
+    "hash": "8817bab45a1908693747b9bde11f72242442d397dc2d9ddeb0952f82b4220fde",
+    "commit": null,
+    "dirty": null
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2957
+  },
+  "final_message": ",520 |\n| 3 | `depress*[tiab]` | 419,763 |\n| 4 | `melanchol*[tiab]` | 2,939 |\n| 5 | `unipolar[tiab]` | 10,360 |\n| 6 | `#1 OR #2 OR #3 OR #4 OR #5` | 443,690 |\n| 7 | `Recurrence[Mesh]` | 178,366 |\n| 8 | `Secondary Prevention[Mesh]` | 19,442 |\n| 9 | `relaps*[tiab]` | 163,847 |\n| 10 | `recurren*[tiab]` | 496,927 |\n| 11 | `recrudescen*[tiab]` | 3,173 |\n| 12 | `return*[tiab]` | 223,418 |\n| 13 | `remitt*[tiab]` | 16,130 |\n| 14 | `#7 OR #8 OR #9 OR #10 OR #11 OR #12 OR #13` | 932,544 |\n| 15 | `#6 AND #14` | **26,728** |\n\n## Validation and handoff\n\nThe strategy retrieved all **10 of 10** records in the development set (100% relative recall against that set). These records were used during development; there were no user-supplied seeds or held-out validation set, so recall on unseen records was not estimated.\n\nThe optional psychology/theory block was left out after testing: it would reduce the count by 61.2%, while losing five known relevant records; two of 30 records in its loss sample were relevant. The final count exceeds the standard 10,000-record screening budget, an open workload risk. The count is from current PubMed with the requested entry-date bound, not a reconstruction of PubMed as it stood on that date.\n\nThis is a draft and needs **PRESS peer review by an information specialist before use**. The internal critic was automated and does not replace that review.\n\nGenerated files are in `./work`: [final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-noprobe-codex-noseed-20260930T122604Z/work/final-query.txt), [audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-noprobe-codex-noseed-20260930T122604Z/work/audit.md), [validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-noprobe-codex-noseed-20260930T122604Z/work/validation-manifest.json), and [narrative](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-noprobe-codex-noseed-20260930T122604Z/work/narrative.md).",
+  "strategy": "((Depressive Disorder[Mesh] OR Major Depressive Disorder[Mesh] OR depress*[tiab] OR melanchol*[tiab] OR unipolar[tiab]) AND (Recurrence[Mesh] OR Secondary Prevention[Mesh] OR relaps*[tiab] OR recurren*[tiab] OR recrudescen*[tiab] OR return*[tiab] OR remitt*[tiab])) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-11-17",
+  "count": 26728,
+  "gold_scored": 54,
+  "gold_reachable": 54,
+  "retrieved": 52,
+  "recall_percent": 96.3,
+  "missed": [
+    "17696703",
+    "21848705"
+  ],
+  "nnr": 514.0,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 51,
+  "unseen_recall_percent": 96.2,
+  "leakage": [],
+  "concepts": null,
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

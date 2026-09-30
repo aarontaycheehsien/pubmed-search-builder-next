@@ -1,0 +1,63 @@
+{
+  "topic": "Appenzeller-Herzog_2019",
+  "source": "generated:ours-noprobe",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-noprobe-codex-noseed-20260930T142439Z",
+  "scored": "20260930T145637Z",
+  "skill": {
+    "name": "ours-noprobe",
+    "hash": "8817bab45a1908693747b9bde11f72242442d397dc2d9ddeb0952f82b4220fde",
+    "commit": null,
+    "dirty": null
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1917
+  },
+  "final_message": "/12/23\"[edat])\n```\n\n| Line | Search term | Records |\n|---:|---|---:|\n| 1 | `\"Hepatolenticular Degeneration\"[Mesh]` | 5,697 |\n| 2 | `wilson disease[tiab]` | 5,545 |\n| 3 | `wilson's disease[tiab]` | 4,158 |\n| 4 | `wilsons disease[tiab]` | 4,135 |\n| 5 | `hepatolenticular degeneration[tiab]` | 946 |\n| 6 | `hepatocerebral degeneration[tiab]` | 142 |\n| 7 | `copper storage disease[tiab]` | 25 |\n| 8 | `westphal-strumpell syndrome[tiab]` | 1 |\n| 9 | `pseudosclerosis[tiab]` | 55 |\n| 10 | Combined disease block | **7,313** |\n\nThe Entrez entry-date bound is **2018-12-23**; there is no publication-date limit. The therapy block was tested but left out: it reduced retrieval by 68.3%, while only eight eligible known records were available—below the skill’s threshold for safely requiring it. None of its 30 sampled losses met the eligibility criteria. The final count is within the 10,000-record standard workload budget.\n\nThe search retrieved **8 of 8** screened relevant records (100% relative recall on this development set). No user-supplied seeds or independent benchmark set were available, so this is not independent validation and recall was not estimated against unseen studies. The working assumption is that comparative effectiveness requires studies comparing at least two Wilson disease therapies or regimens; please confirm that scope during protocol review.\n\nThe protected report completed successfully, and workspace status verified the delivery. The strategy still needs PRESS peer review by an information specialist before use.\n\n- [Audit](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-bb18548fe89ff8fd\\ours-noprobe-codex-noseed-20260930T142439Z\\work\\audit.md)\n- [Validation manifest](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-bb18548fe89ff8fd\\ours-noprobe-codex-noseed-20260930T142439Z\\work\\validation-manifest.json)\n- [Build narrative and assumptions](C:\\Users\\aaron\\AppData\\Local\\Temp\\psb-evals\\run-bb18548fe89ff8fd\\ours-noprobe-codex-noseed-20260930T142439Z\\work\\narrative.md)",
+  "strategy": "((\"Hepatolenticular Degeneration\"[Mesh] OR wilson disease[tiab] OR wilson's disease[tiab] OR wilsons disease[tiab] OR hepatolenticular degeneration[tiab] OR hepatocerebral degeneration[tiab] OR copper storage disease[tiab] OR westphal-strumpell syndrome[tiab] OR pseudosclerosis[tiab])) AND (\"1800/01/01\"[edat] : \"2018/12/23\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-12-23",
+  "count": 7313,
+  "gold_scored": 22,
+  "gold_reachable": 21,
+  "retrieved": 21,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 348.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 3,
+  "unseen_retrieved": 18,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 1,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "therapy",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

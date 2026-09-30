@@ -1,0 +1,43 @@
+{
+  "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+  "source": "generated:ours-noprobe",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-noprobe-codex-noseed-20260930T134356Z",
+  "scored": "20260930T151357Z",
+  "skill": {
+    "name": "ours-noprobe",
+    "hash": "8817bab45a1908693747b9bde11f72242442d397dc2d9ddeb0952f82b4220fde",
+    "commit": null,
+    "dirty": null
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 1,
+    "timed_out": true,
+    "seconds": 5401
+  },
+  "final_message": "",
+  "error": "no current protected delivery",
+  "unfinished": {
+    "blockers": [
+      "critic_missing"
+    ],
+    "count": 7618,
+    "gold_reachable": 9,
+    "retrieved": 9,
+    "recall_percent": 100.0
+  },
+  "concepts": null,
+  "workspace_started": true,
+  "status": "timeout",
+  "valid": false,
+  "split": "dev"
+}

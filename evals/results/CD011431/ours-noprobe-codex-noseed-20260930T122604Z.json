@@ -1,0 +1,63 @@
+{
+  "topic": "CD011431",
+  "source": "generated:ours-noprobe",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-noprobe-codex-noseed-20260930T122604Z",
+  "scored": "20260930T132423Z",
+  "skill": {
+    "name": "ours-noprobe",
+    "hash": "8817bab45a1908693747b9bde11f72242442d397dc2d9ddeb0952f82b4220fde",
+    "commit": null,
+    "dirty": null
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 3498
+  },
+  "final_message": " test[tiab] OR rapid diagnostic tests[tiab] OR rapid test[tiab] OR rapid tests[tiab] OR rapid antigen test[tiab] OR rapid antigen tests[tiab] OR RDT[tiab] OR RDTs[tiab] OR immunochromatograph*[tiab] OR immunochromatographic[tiab] OR ICT[tiab] OR dipstick*[tiab] OR lateral flow[tiab] OR antigen test[tiab] OR antigen tests[tiab] OR malaria antigen[tiab] OR antigen detection[tiab] OR point-of-care test[tiab] OR point of care test[tiab] OR test strip[tiab] OR test strips[tiab] OR OptiMAL[tiab] OR ParaSight[tiab] OR BinaxNOW[tiab] OR Paracheck[tiab])) AND (\"1800/01/01\"[edat] : \"2013/06/09\"[edat])\n```\n\nThe search returned **4,230 records** in the requested PubMed Entry Date snapshot. The full audit has the line-by-line strategy and counts: [audit.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-noprobe-codex-noseed-20260930T122604Z/work/audit.md). The protected query and validation receipt are [final-query.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-noprobe-codex-noseed-20260930T122604Z/work/final-query.txt) and [validation-manifest.json](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-noprobe-codex-noseed-20260930T122604Z/work/validation-manifest.json).\n\n## Validation and limitations\n\nThe strategy retrieved all five screened relevant development records: **relative recall 5/5 (100%)**. This is not independent validation or sensitivity; there were no user-supplied seeds, held-out records, or independent benchmark set. Endemic setting, uncomplicated status, severity, reference standard, and species-specific results remain screening criteria. The setting block was left out because it would have lost two known relevant records.\n\nThe 2013-06-09 bound is an intentional **PubMed Entry Date** snapshot, not a publication-date limit. The internal PRESS-structured critic completed three rounds with findings resolved; independent PRESS peer review by an information specialist is still needed before use.",
+  "strategy": "((Malaria[Mesh] OR Malaria, Vivax[Mesh] OR Plasmodium vivax[Mesh] OR malaria[tiab] OR plasmodium[tiab] OR plasmodium vivax[tiab] OR P. vivax[tiab] OR P vivax[tiab] OR vivax malaria[tiab] OR non-falciparum[tiab] OR nonfalciparum[tiab] OR non falciparum[tiab] OR P. malariae[tiab] OR Plasmodium malariae[tiab] OR P. ovale[tiab] OR Plasmodium ovale[tiab] OR Plasmodium knowlesi[tiab] OR knowlesi malaria[tiab] OR benign tertian[tiab] OR quartan malaria[tiab]) AND (Immunoassay[Mesh] OR Reagent Kits, Diagnostic[Mesh] OR Reagent Strips[Mesh] OR Diagnostic Tests, Routine[Mesh] OR rapid diagnostic test[tiab] OR rapid diagnostic tests[tiab] OR rapid test[tiab] OR rapid tests[tiab] OR rapid antigen test[tiab] OR rapid antigen tests[tiab] OR RDT[tiab] OR RDTs[tiab] OR immunochromatograph*[tiab] OR immunochromatographic[tiab] OR ICT[tiab] OR dipstick*[tiab] OR lateral flow[tiab] OR antigen test[tiab] OR antigen tests[tiab] OR malaria antigen[tiab] OR antigen detection[tiab] OR point-of-care test[tiab] OR point of care test[tiab] OR test strip[tiab] OR test strips[tiab] OR OptiMAL[tiab] OR ParaSight[tiab] OR BinaxNOW[tiab] OR Paracheck[tiab])) AND (\"1800/01/01\"[edat] : \"2013/06/09\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2013-06-09",
+  "count": 4230,
+  "gold_scored": 26,
+  "gold_reachable": 26,
+  "retrieved": 26,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 162.7,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 24,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 1,
+      "screen": 2,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "endemic_setting",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

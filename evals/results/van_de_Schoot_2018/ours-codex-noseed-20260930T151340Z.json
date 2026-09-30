@@ -1,0 +1,52 @@
+{
+  "topic": "van_de_Schoot_2018",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260930T151340Z",
+  "scored": "20260930T154422Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1841
+  },
+  "final_message": "` | 12,654 |\n| 4 | `post-traumatic stress disorder*[tiab]` | 7,263 |\n| 5 | `post traumatic stress disorder*[tiab]` | 7,263 |\n| 6 | `posttraumatic stress symptom*[tiab]` | 1,177 |\n| 7 | `post-traumatic stress symptom*[tiab]` | 474 |\n| 8 | `post traumatic stress symptom*[tiab]` | 474 |\n| 9 | `posttraumatic stress[tiab]` | 14,174 |\n| 10 | `post-traumatic stress[tiab]` | 8,160 |\n| 11 | `post traumatic stress[tiab]` | 8,160 |\n| 12 | `#1 OR #2 OR #3 OR #4 OR #5 OR #6 OR #7 OR #8 OR #9 OR #10 OR #11` | **32,074** |\n\n## Known-record checks\n\n| Set | Records | Retrieved | Relative recall |\n|---|---:|---:|---:|\n| External benchmark: screened studies cited by a prior PTSD trajectory review | 11 | 11 | 100.0% |\n| Development set: screened pilot records | 24 | 24 | 100.0% |\n| Held-out validation set: pilot records not used for term mining | 10 | 10 | 100.0% |\n\nThese figures are relative recall against the known sets, not absolute sensitivity. The optional trajectory block reduced the count by 78.7%, but lost benchmark PMID 18629750, so it was left out. Its random loss sample contained 0 relevant records out of 30.\n\nI assumed all ages, trauma types, languages, and study designs were eligible. The 32,074-record yield exceeds the standard-depth screening budget of 10,000; the internal critic accepted this as a documented risk. The draft needs PRESS peer review by an information specialist before use.\n\n## Files\n\n- [Generated query](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20260930T151340Z/work/final-query.txt>)\n- [Audit](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20260930T151340Z/work/audit.md>)\n- [Narrative and assumptions](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20260930T151340Z/work/narrative.md>)\n- [Validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20260930T151340Z/work/validation-manifest.json>)",
+  "strategy": "((Stress Disorders, Post-Traumatic[Mesh] OR PTSD[tiab] OR posttraumatic stress disorder*[tiab] OR post-traumatic stress disorder*[tiab] OR post traumatic stress disorder*[tiab] OR posttraumatic stress symptom*[tiab] OR post-traumatic stress symptom*[tiab] OR post traumatic stress symptom*[tiab] OR posttraumatic stress[tiab] OR post-traumatic stress[tiab] OR post traumatic stress[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2016-01-24",
+  "count": 32074,
+  "gold_scored": 38,
+  "gold_reachable": 38,
+  "retrieved": 35,
+  "recall_percent": 92.1,
+  "missed": [
+    "20061839",
+    "20836603",
+    "26412244"
+  ],
+  "nnr": 916.4,
+  "translation_issues": [],
+  "gold_seen_by_agent": 15,
+  "unseen_retrieved": 20,
+  "unseen_recall_percent": 87.0,
+  "leakage": [],
+  "concepts": null,
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

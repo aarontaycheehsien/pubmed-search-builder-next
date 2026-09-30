@@ -1,0 +1,71 @@
+{
+  "topic": "Smid_2020",
+  "source": "generated:ours-noprobe",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-noprobe-codex-noseed-20260930T131007Z",
+  "scored": "20260930T134638Z",
+  "skill": {
+    "name": "ours-noprobe",
+    "hash": "8817bab45a1908693747b9bde11f72242442d397dc2d9ddeb0952f82b4220fde",
+    "commit": null,
+    "dirty": null
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2190
+  },
+  "final_message": "b] OR \"exploratory factor analysis\"[tiab] OR \"factor analysis\"[tiab] OR \"latent variable\"[tiab] OR \"latent variables\"[tiab] OR \"latent growth\"[tiab] OR \"growth curve model\"[tiab] OR \"growth mixture\"[tiab] OR \"latent class\"[tiab] OR \"multilevel\"[tiab] OR \"multi-level\"[tiab] OR \"hierarchical model\"[tiab] OR \"hierarchical models\"[tiab] OR mediation[tiab] OR \"indirect effect\"[tiab] OR \"path analysis\"[tiab] OR \"covariance structure\"[tiab] OR SEM[tiab] OR SEMs[tiab] OR CFA[tiab] OR CFAs[tiab]) AND (\"Bayes Theorem\"[Mesh] OR Bayesian[tiab] OR Bayes[tiab] OR \"Bayesian estimation\"[tiab] OR \"Bayesian methods\"[tiab] OR \"Bayesian approach\"[tiab] OR MCMC[tiab] OR \"Markov chain Monte Carlo\"[tiab] OR \"Markov chains\"[tiab] OR \"posterior distribution\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/11/29\"[edat])\n```\n\nThe two required blocks return 210,412 SEM-family records and 48,400 Bayesian records; their intersection returns 2,699. The audit contains every search line and its count.\n\n## Validation and limitations\n\nThe search retrieved both known relevant records: **100% relative recall (2/2) on the development set**. Those records were found during the build, so this is not independent validation or a sensitivity estimate. Small-sample and simulation terms were tested but left out of the required query because only two relevant records were available to assess the risk of adding them.\n\nThe strategy, line-by-line counts, audit, and validation manifest are in [audit.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-noprobe-codex-noseed-20260930T131007Z/work/audit.md), [final-query.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-noprobe-codex-noseed-20260930T131007Z/work/final-query.txt), and [validation-manifest.json](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-noprobe-codex-noseed-20260930T131007Z/work/validation-manifest.json).\n\nThis draft still needs PRESS peer review by an information specialist before use.",
+  "strategy": "((\"Factor Analysis, Statistical\"[Mesh] OR \"Latent Class Analysis\"[Mesh] OR \"Multilevel Analysis\"[Mesh] OR \"structural equation model\"[tiab] OR \"structural equation models\"[tiab] OR \"structural equation modeling\"[tiab] OR \"structural equation modelling\"[tiab] OR \"confirmatory factor analysis\"[tiab] OR \"exploratory factor analysis\"[tiab] OR \"factor analysis\"[tiab] OR \"latent variable\"[tiab] OR \"latent variables\"[tiab] OR \"latent growth\"[tiab] OR \"growth curve model\"[tiab] OR \"growth mixture\"[tiab] OR \"latent class\"[tiab] OR \"multilevel\"[tiab] OR \"multi-level\"[tiab] OR \"hierarchical model\"[tiab] OR \"hierarchical models\"[tiab] OR mediation[tiab] OR \"indirect effect\"[tiab] OR \"path analysis\"[tiab] OR \"covariance structure\"[tiab] OR SEM[tiab] OR SEMs[tiab] OR CFA[tiab] OR CFAs[tiab]) AND (\"Bayes Theorem\"[Mesh] OR Bayesian[tiab] OR Bayes[tiab] OR \"Bayesian estimation\"[tiab] OR \"Bayesian methods\"[tiab] OR \"Bayesian approach\"[tiab] OR MCMC[tiab] OR \"Markov chain Monte Carlo\"[tiab] OR \"Markov chains\"[tiab] OR \"posterior distribution\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/11/29\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-11-29",
+  "count": 2699,
+  "gold_scored": 14,
+  "gold_reachable": 14,
+  "retrieved": 13,
+  "recall_percent": 92.9,
+  "missed": [
+    "25765534"
+  ],
+  "nnr": 207.6,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 11,
+  "unseen_recall_percent": 91.7,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "screen": 3,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "small_sample",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "simulation",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

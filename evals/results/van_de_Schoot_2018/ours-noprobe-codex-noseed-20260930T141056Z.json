@@ -1,0 +1,52 @@
+{
+  "topic": "van_de_Schoot_2018",
+  "source": "generated:ours-noprobe",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-noprobe-codex-noseed-20260930T141056Z",
+  "scored": "20260930T151337Z",
+  "skill": {
+    "name": "ours-noprobe",
+    "hash": "8817bab45a1908693747b9bde11f72242442d397dc2d9ddeb0952f82b4220fde",
+    "commit": null,
+    "dirty": null
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 3760
+  },
+  "final_message": "[Mesh] OR \"Follow-Up Studies\"[Mesh] OR \"Time Factors\"[Mesh] OR \"Disease Progression\"[Mesh] OR trajectory*[tiab] OR longitudin*[tiab] OR course[tiab] OR \"follow-up\"[tiab] OR followup[tiab] OR prospective[tiab] OR chang*[tiab] OR persist*[tiab] OR remission[tiab] OR recovery[tiab] OR growth[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])\n```\n\nThe combined query returned **10,603 records**. The numbered audit contains line-by-line counts for all 39 search lines.\n\n- Relative recall was **21/21 (100%)** against records screened into the development set. This is not independent validation or an estimate of sensitivity; there were no user-supplied seeds or held-out records.\n- The trajectory/course block was AND-ed after testing: it retained all 21 known records and reduced the PTSD set by 67.8%. A 30-record loss sample contained no clearly eligible study, though one older record lacked an abstract.\n- A traumatic-event block was tested and left out: it reduced the set by 5.9% but lost three known relevant records. The 603-record excess over the assumed 10,000-record screening budget is documented and accepted to preserve recall.\n\nFiles are in [`./work`](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-noprobe-codex-noseed-20260930T141056Z/work/>): [final query](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-noprobe-codex-noseed-20260930T141056Z/work/final-query.txt>), [audit with line-by-line counts](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-noprobe-codex-noseed-20260930T141056Z/work/audit.md>), [validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-noprobe-codex-noseed-20260930T141056Z/work/validation-manifest.json>), and [narrative notes](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-noprobe-codex-noseed-20260930T141056Z/work/narrative.md>).\n\nThis is a draft and needs PRESS peer review by an information specialist before use.",
+  "strategy": "((\"Stress Disorders, Post-Traumatic\"[Mesh] OR PTSD[tiab] OR \"posttraumatic stress\"[tiab] OR \"post-traumatic stress\"[tiab] OR \"post traumatic stress\"[tiab] OR \"posttraumatic stress disorder\"[tiab] OR \"post-traumatic stress disorder\"[tiab] OR \"post traumatic stress disorder\"[tiab] OR \"posttraumatic stress symptom\"[tiab] OR \"post-traumatic stress symptom\"[tiab] OR \"post traumatic stress symptom\"[tiab] OR \"Combat Disorders\"[Mesh] OR \"posttraumatic stress symptoms\"[tiab] OR \"post-traumatic stress symptoms\"[tiab] OR \"post traumatic stress symptoms\"[tiab] OR \"post-traumatic neurosis\"[tiab] OR \"posttraumatic neurosis\"[tiab] OR \"traumatic neurosis\"[tiab] OR \"shell shock\"[tiab] OR \"combat stress disorder\"[tiab] OR \"war neurosis\"[tiab]) AND (\"Longitudinal Studies\"[Mesh] OR \"Follow-Up Studies\"[Mesh] OR \"Time Factors\"[Mesh] OR \"Disease Progression\"[Mesh] OR trajectory*[tiab] OR longitudin*[tiab] OR course[tiab] OR \"follow-up\"[tiab] OR followup[tiab] OR prospective[tiab] OR chang*[tiab] OR persist*[tiab] OR remission[tiab] OR recovery[tiab] OR growth[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2016-01-24",
+  "count": 10603,
+  "gold_scored": 38,
+  "gold_reachable": 38,
+  "retrieved": 35,
+  "recall_percent": 92.1,
+  "missed": [
+    "20061839",
+    "20836603",
+    "26412244"
+  ],
+  "nnr": 302.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 3,
+  "unseen_retrieved": 32,
+  "unseen_recall_percent": 91.4,
+  "leakage": [],
+  "concepts": null,
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

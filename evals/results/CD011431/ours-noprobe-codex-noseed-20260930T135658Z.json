@@ -1,0 +1,63 @@
+{
+  "topic": "CD011431",
+  "source": "generated:ours-noprobe",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-noprobe-codex-noseed-20260930T135658Z",
+  "scored": "20260930T144403Z",
+  "skill": {
+    "name": "ours-noprobe",
+    "hash": "8817bab45a1908693747b9bde11f72242442d397dc2d9ddeb0952f82b4220fde",
+    "commit": null,
+    "dirty": null
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2825
+  },
+  "final_message": "hic tests\"[tiab] OR immunochromatograph*[tiab] OR \"immunochromatographic assay\"[tiab] OR \"immunochromatographic assays\"[tiab] OR \"lateral flow test\"[tiab] OR \"lateral flow tests\"[tiab] OR \"lateral flow assay\"[tiab] OR \"lateral flow assays\"[tiab] OR dipstick*[tiab] OR \"card test\"[tiab] OR \"card tests\"[tiab] OR \"antigen detection test\"[tiab] OR \"antigen detection tests\"[tiab] OR \"bedside test\"[tiab] OR \"bedside tests\"[tiab] OR ICT[tiab] OR RDT[tiab] OR RDTs[tiab] OR (OptiMAL[tiab] AND (malaria[tiab] OR plasmodium[tiab] OR vivax[tiab])) OR Binax[tiab] OR \"First Response\"[tiab] OR ParaScreen[tiab] OR CareStart[tiab] OR ParaSight[tiab])) AND (\"1800/01/01\"[edat] : \"2013/06/09\"[edat])\n```\n\nThe disease block returned **76,237** records; the rapid-test block returned **28,470**. The audit includes counts for each individual term and the complete search history: [audit.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-noprobe-codex-noseed-20260930T135658Z/work/audit.md). The protected query and validation manifest are [final-query.txt](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-noprobe-codex-noseed-20260930T135658Z/work/final-query.txt) and [validation-manifest.json](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-noprobe-codex-noseed-20260930T135658Z/work/validation-manifest.json).\n\n## Validation and assumptions\n\nNo known relevant articles were provided, so there was no independent seed set. The query retrieved all **18** records in the development set, but those records informed vocabulary development; this is development-set recall, not an independent sensitivity estimate. An optional endemic-setting block reduced results by 71.4% but lost 13 of those 18 records, so it was left out. The review narrative records these assumptions and remaining validation limits: [narrative.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-noprobe-codex-noseed-20260930T135658Z/work/narrative.md).",
+  "strategy": "((\"Malaria\"[Mesh] OR \"Malaria, Vivax\"[Mesh] OR \"Plasmodium vivax\"[Mesh] OR malaria*[tiab] OR plasmodium[tiab] OR vivax[tiab] OR \"non-falciparum\"[tiab] OR nonfalciparum[tiab] OR \"P. vivax\"[tiab] OR \"P vivax\"[tiab] OR \"P. malariae\"[tiab] OR \"P. ovale\"[tiab] OR \"P. knowlesi\"[tiab]) AND (\"Point-of-Care Testing\"[Mesh] OR \"Reagent Kits, Diagnostic\"[Mesh] OR \"Reagent Strips\"[Mesh] OR \"rapid diagnostic test\"[tiab] OR \"rapid diagnostic tests\"[tiab] OR \"rapid test\"[tiab] OR \"rapid tests\"[tiab] OR \"rapid antigen test\"[tiab] OR \"rapid antigen tests\"[tiab] OR \"immunochromatographic test\"[tiab] OR \"immunochromatographic tests\"[tiab] OR immunochromatograph*[tiab] OR \"immunochromatographic assay\"[tiab] OR \"immunochromatographic assays\"[tiab] OR \"lateral flow test\"[tiab] OR \"lateral flow tests\"[tiab] OR \"lateral flow assay\"[tiab] OR \"lateral flow assays\"[tiab] OR dipstick*[tiab] OR \"card test\"[tiab] OR \"card tests\"[tiab] OR \"antigen detection test\"[tiab] OR \"antigen detection tests\"[tiab] OR \"bedside test\"[tiab] OR \"bedside tests\"[tiab] OR ICT[tiab] OR RDT[tiab] OR RDTs[tiab] OR (OptiMAL[tiab] AND (malaria[tiab] OR plasmodium[tiab] OR vivax[tiab])) OR Binax[tiab] OR \"First Response\"[tiab] OR ParaScreen[tiab] OR CareStart[tiab] OR ParaSight[tiab])) AND (\"1800/01/01\"[edat] : \"2013/06/09\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2013-06-09",
+  "count": 1742,
+  "gold_scored": 26,
+  "gold_reachable": 26,
+  "retrieved": 26,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 67.0,
+  "translation_issues": [],
+  "gold_seen_by_agent": 6,
+  "unseen_retrieved": 20,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 3,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "endemic_setting",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 2
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

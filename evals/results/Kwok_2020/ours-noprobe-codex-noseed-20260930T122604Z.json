@@ -1,0 +1,62 @@
+{
+  "topic": "Kwok_2020",
+  "source": "generated:ours-noprobe",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-noprobe-codex-noseed-20260930T122604Z",
+  "scored": "20260930T131505Z",
+  "skill": {
+    "name": "ours-noprobe",
+    "hash": "8817bab45a1908693747b9bde11f72242442d397dc2d9ddeb0952f82b4220fde",
+    "commit": null,
+    "dirty": null
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2939
+  },
+  "final_message": "nimals\"[tiab] OR \"domestic animal\"[tiab] OR \"domestic animals\"[tiab] OR cattle[tiab] OR bovine[tiab] OR cow[tiab] OR cows[tiab] OR calf[tiab] OR calves[tiab] OR swine[tiab] OR pig[tiab] OR pigs[tiab] OR porcine[tiab] OR piglet*[tiab] OR sheep[tiab] OR ovine[tiab] OR lamb[tiab] OR lambs[tiab] OR goat[tiab] OR goats[tiab] OR caprine[tiab] OR poultry[tiab] OR chicken[tiab] OR chickens[tiab] OR broiler*[tiab] OR turkey[tiab] OR turkeys[tiab] OR duck[tiab] OR ducks[tiab] OR geese[tiab] OR horse[tiab] OR horses[tiab] OR equine[tiab] OR foal*[tiab] OR rabbit*[tiab] OR camel*[tiab] OR camelid*[tiab] OR alpaca*[tiab] OR llama*[tiab] OR buffalo*[tiab])) AND (\"1800/01/01\"[edat] : \"2019/02/22\"[edat])\n```\n\nThe three concept blocks returned 1,097,524 virus records, 66,884 method records, and 1,542,509 animal records before combining. The audit has the full line-by-line strategy and counts.\n\n- [Generated query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/ours-noprobe-codex-noseed-20260930T122604Z/work/final-query.txt)\n- [Audit with line counts and validation details](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/ours-noprobe-codex-noseed-20260930T122604Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/ours-noprobe-codex-noseed-20260930T122604Z/work/validation-manifest.json)\n- [Scope assumptions and rationale](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/ours-noprobe-codex-noseed-20260930T122604Z/work/narrative.md)\n\nThe query retrieved all **21 screened development records**. That is development-set relative recall, not independent validation; overall recall was not estimated because no known articles or independent benchmark were available. The operational scope includes terrestrial production animals such as livestock, poultry, rabbits, and camelids, and excludes aquaculture.\n\nThe draft still needs **human PRESS peer review by an information specialist before use**.",
+  "strategy": "((\"Viruses\"[Mesh] OR \"Bacteriophages\"[Mesh] OR virus*[tiab] OR viral[tiab] OR virolog*[tiab] OR phage*[tiab] OR bacteriophage*[tiab]) AND (\"Metagenomics\"[Mesh] OR \"High-Throughput Nucleotide Sequencing\"[Mesh] OR metagenom*[tiab] OR metagenome*[tiab] OR virom*[tiab] OR \"high throughput sequencing\"[tiab] OR \"next generation sequencing\"[tiab] OR \"deep sequencing\"[tiab] OR \"massively parallel sequencing\"[tiab] OR \"sequence independent amplification\"[tiab] OR SISPA[tiab] OR NGS[tiab]) AND (\"Animals, Domestic\"[Mesh] OR \"Livestock\"[Mesh] OR \"Poultry\"[Mesh] OR \"Animal Husbandry\"[Mesh] OR \"Cattle\"[Mesh] OR \"Swine\"[Mesh] OR \"Sheep\"[Mesh] OR \"Goats\"[Mesh] OR \"Horses\"[Mesh] OR \"Chickens\"[Mesh] OR \"Turkeys\"[Mesh] OR \"Ducks\"[Mesh] OR \"Geese\"[Mesh] OR \"Rabbits\"[Mesh] OR \"Camelus\"[Mesh] OR livestock[tiab] OR \"farm animal\"[tiab] OR \"farm animals\"[tiab] OR \"production animal\"[tiab] OR \"production animals\"[tiab] OR \"domestic animal\"[tiab] OR \"domestic animals\"[tiab] OR cattle[tiab] OR bovine[tiab] OR cow[tiab] OR cows[tiab] OR calf[tiab] OR calves[tiab] OR swine[tiab] OR pig[tiab] OR pigs[tiab] OR porcine[tiab] OR piglet*[tiab] OR sheep[tiab] OR ovine[tiab] OR lamb[tiab] OR lambs[tiab] OR goat[tiab] OR goats[tiab] OR caprine[tiab] OR poultry[tiab] OR chicken[tiab] OR chickens[tiab] OR broiler*[tiab] OR turkey[tiab] OR turkeys[tiab] OR duck[tiab] OR ducks[tiab] OR geese[tiab] OR horse[tiab] OR horses[tiab] OR equine[tiab] OR foal*[tiab] OR rabbit*[tiab] OR camel*[tiab] OR camelid*[tiab] OR alpaca*[tiab] OR llama*[tiab] OR buffalo*[tiab])) AND (\"1800/01/01\"[edat] : \"2019/02/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2019-02-22",
+  "count": 910,
+  "gold_scored": 116,
+  "gold_reachable": 116,
+  "retrieved": 109,
+  "recall_percent": 94.0,
+  "missed": [
+    "22821184",
+    "24672039",
+    "25918239",
+    "28495761",
+    "28653486",
+    "29677111",
+    "29700160"
+  ],
+  "nnr": 8.3,
+  "translation_issues": [],
+  "gold_seen_by_agent": 15,
+  "unseen_retrieved": 94,
+  "unseen_recall_percent": 93.1,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "search": 3
+    },
+    "optional": []
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

@@ -1,0 +1,58 @@
+{
+  "topic": "Welling_2021",
+  "source": "generated:ours-noprobe",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-noprobe-codex-noseed-20260930T144300Z",
+  "scored": "20260930T154354Z",
+  "skill": {
+    "name": "ours-noprobe",
+    "hash": "8817bab45a1908693747b9bde11f72242442d397dc2d9ddeb0952f82b4220fde",
+    "commit": null,
+    "dirty": null
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 3654
+  },
+  "final_message": "**Unfinished: the protected delivery gate did not pass.** The run produced an unfinished diagnostic, not a final query or validation manifest. The diagnostic reports `critic_missing`; the current strategy still needs a fresh critic round and a successful `psb report`.\n\nThe current draft has **37,784 records** in the PubMed snapshot through **2020-11-22** (Entrez date; no publication-date limit). The outcome block reduced the exposure-only count from 164,628 by 77%. It retained all 21 screened relevant records, and neither 30-record loss sample contained an eligible record.\n\nRelative recall was 100% on both the 15-record development set and the 6-record held-out set. Treat those figures cautiously: the records came from the same pilot discovery process, so the validation set is only semi-independent. The query also exceeds the 10,000-record workload budget.\n\nThe required internal critique could not be completed after the disk filled. My attempt to stage the request log to make room was blocked by automatic review, so I stopped that cleanup. The generated [diagnostic audit](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-noprobe-codex-noseed-20260930T144300Z/work/diagnostic-audit.md>) is explicitly unfinished. The working [strategy](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-noprobe-codex-noseed-20260930T144300Z/work/strategy.json>) and [protocol](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-noprobe-codex-noseed-20260930T144300Z/work/protocol.json>) remain in `./work`.\n\nAfter freeing workspace disk space, the remaining steps are to generate a current critic packet, complete and check its review, then run `psb report --fresh`. The draft still needs PRESS peer review by an information specialist before use.",
+  "error": "no current protected delivery",
+  "unfinished": {
+    "blockers": [
+      "critic_missing"
+    ],
+    "count": 37784,
+    "gold_reachable": 53,
+    "retrieved": 48,
+    "recall_percent": 90.6
+  },
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 1,
+      "screen": 1,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "outcomes",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "no-delivery",
+  "valid": false,
+  "split": "dev"
+}

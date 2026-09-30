@@ -1,0 +1,51 @@
+{
+  "topic": "Brouwer_2019",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260930T131527Z",
+  "scored": "20260930T140051Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2723
+  },
+  "final_message": "rence\"[tiab]` | 589 |\n| 17 | `\"episode recurrence\"[tiab]` | 84 |\n| 18 | `\"new episode\"[tiab]` | 664 |\n| 19 | `\"subsequent episode\"[tiab]` | 161 |\n| 20 | `\"recurrent episode\"[tiab]` | 393 |\n| 21 | `\"recurrent depression\"[tiab]` | 935 |\n| 22 | `return*[tiab]` | 223,418 |\n| 23 | Relapse/recurrence block OR | 945,322 |\n| 24 | Final AND of both blocks | **26,141** |\n\n**Validation:** The search retrieved all 10 screened, build-discovered records (100% relative recall on that development set). There was no independent validation set, so this is not a sensitivity estimate. The optional psychological-theory block was left out: it reduced results by 59.8%, but the 10 known records were below the skill’s 15-record safety threshold for AND-ing. Its refreshed 30-record loss sample contained no eligible records, which does not establish that the block is safe to require.\n\nThe count exceeds the standard 10,000-record screening budget. The documented plan is for the review team to decide capacity; if retained, screen deduplicated title/abstract records in batches with two independent screeners and adjudicate disagreements. The scope is provisional: I assumed psychological explanatory accounts across depressive illness, rather than only intervention studies. The cutoff is the harness-required Entrez-date snapshot, not a publication-date limit.\n\nFiles: [final query](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260930T131527Z/work/final-query.txt), [audit](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260930T131527Z/work/audit.md), [validation manifest](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260930T131527Z/work/validation-manifest.json), and [narrative notes](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260930T131527Z/work/narrative.md).\n\nThis draft still needs PRESS peer review by an information specialist before use.",
+  "strategy": "((\"Depressive Disorder\"[Mesh] OR \"Major Depressive Disorder\"[Mesh] OR \"Depression, Postpartum\"[Mesh] OR \"Seasonal Affective Disorder\"[Mesh] OR \"Dysthymic Disorder\"[Mesh] OR depress*[tiab] OR melancholia[tiab] OR unipolar[tiab] OR \"Depression\"[Mesh]) AND (\"Recurrence\"[Mesh] OR \"Secondary Prevention\"[Mesh] OR relaps*[tiab] OR recurr*[tiab] OR recrudescen*[tiab] OR \"symptom recurrence\"[tiab] OR \"episode recurrence\"[tiab] OR \"new episode\"[tiab] OR \"subsequent episode\"[tiab] OR \"recurrent episode\"[tiab] OR \"recurrent depression\"[tiab] OR return*[tiab])) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-11-17",
+  "count": 26141,
+  "gold_scored": 54,
+  "gold_reachable": 54,
+  "retrieved": 52,
+  "recall_percent": 96.3,
+  "missed": [
+    "17696703",
+    "21848705"
+  ],
+  "nnr": 502.7,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 50,
+  "unseen_recall_percent": 96.2,
+  "leakage": [],
+  "concepts": null,
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

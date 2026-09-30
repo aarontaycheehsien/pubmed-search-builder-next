@@ -1,0 +1,50 @@
+{
+  "topic": "CD011431",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260930T172125Z",
+  "scored": "20260930T180022Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2337
+  },
+  "final_message": " returned **9,304 records** through PubMed Entry Date **2013-06-09**. It retrieved 9/9 pilot records, 11/11 development neighbors, and 5/5 held-out validation records. These are relative recall checks, not estimates of absolute sensitivity.\n\n**Copy-ready query** (the Entry Date bound is required by the historical harness):\n\n```text\n((Malaria[Mesh] OR Malaria, Vivax[Mesh] OR Plasmodium vivax[Mesh] OR malaria[tiab] OR plasmodium[tiab] OR paludism[tiab] OR \"P. vivax\"[tiab] OR vivax[tiab] OR \"P. ovale\"[tiab] OR ovale[tiab] OR \"P. malariae\"[tiab] OR malariae[tiab] OR \"P. knowlesi\"[tiab] OR knowlesi[tiab] OR \"non-falciparum\"[tiab] OR nonfalciparum[tiab]) AND (Diagnostic Tests, Routine[Mesh] OR Reagent Kits, Diagnostic[Mesh] OR Clinical Laboratory Techniques[Mesh] OR \"rapid diagnostic test\"[tiab:~2] OR \"rapid test\"[tiab:~2] OR \"point of care test\"[tiab:~2] OR RDT[tiab] OR RDTs[tiab] OR ICT[tiab] OR ICTs[tiab] OR immunochromatograph*[tiab] OR \"lateral flow\"[tiab:~2] OR dipstick*[tiab] OR \"antigen detection test\"[tiab:~2] OR \"antigen test\"[tiab:~2] OR rapid antigen test*[tiab])) AND (\"1800/01/01\"[edat] : \"2013/06/09\"[edat])\n```\n\nThe endemic-setting block was left out because it would exclude 15 of 25 known relevant records, including all five held-out records. The full audit includes line-by-line search counts, validation details, assumptions, and critic dispositions.\n\n- [Final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-codex-noseed-20260930T172125Z/work/final-query.txt)\n- [Audit report](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-codex-noseed-20260930T172125Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-codex-noseed-20260930T172125Z/work/validation-manifest.json)\n\nThis is a historical, harness-limited draft; refresh it without the 2013 Entry Date ceiling before using it for a current review, and have an information specialist conduct PRESS peer review.",
+  "strategy": "((Malaria[Mesh] OR Malaria, Vivax[Mesh] OR Plasmodium vivax[Mesh] OR malaria[tiab] OR plasmodium[tiab] OR paludism[tiab] OR \"P. vivax\"[tiab] OR vivax[tiab] OR \"P. ovale\"[tiab] OR ovale[tiab] OR \"P. malariae\"[tiab] OR malariae[tiab] OR \"P. knowlesi\"[tiab] OR knowlesi[tiab] OR \"non-falciparum\"[tiab] OR nonfalciparum[tiab]) AND (Diagnostic Tests, Routine[Mesh] OR Reagent Kits, Diagnostic[Mesh] OR Clinical Laboratory Techniques[Mesh] OR \"rapid diagnostic test\"[tiab:~2] OR \"rapid test\"[tiab:~2] OR \"point of care test\"[tiab:~2] OR RDT[tiab] OR RDTs[tiab] OR ICT[tiab] OR ICTs[tiab] OR immunochromatograph*[tiab] OR \"lateral flow\"[tiab:~2] OR dipstick*[tiab] OR \"antigen detection test\"[tiab:~2] OR \"antigen test\"[tiab:~2] OR rapid antigen test*[tiab])) AND (\"1800/01/01\"[edat] : \"2013/06/09\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2013-06-09",
+  "count": 9304,
+  "gold_scored": 26,
+  "gold_reachable": 26,
+  "retrieved": 25,
+  "recall_percent": 96.2,
+  "missed": [
+    "18256418"
+  ],
+  "nnr": 372.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 10,
+  "unseen_retrieved": 15,
+  "unseen_recall_percent": 93.8,
+  "leakage": [],
+  "concepts": null,
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

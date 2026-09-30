@@ -1,0 +1,70 @@
+{
+  "topic": "Welling_2021",
+  "source": "generated:ours-noprobe",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-noprobe-codex-noseed-20260930T122604Z",
+  "scored": "20260930T135546Z",
+  "skill": {
+    "name": "ours-noprobe",
+    "hash": "8817bab45a1908693747b9bde11f72242442d397dc2d9ddeb0952f82b4220fde",
+    "commit": null,
+    "dirty": null
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 5378
+  },
+  "final_message": "Completed the standard-depth PubMed strategy, with the Entrez-date cutoff set to **2020-11-22** and no publication-date limit.\n\n- [Final PubMed query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-noprobe-codex-noseed-20260930T122604Z/work/final-query.txt)\n- [Audit report](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-noprobe-codex-noseed-20260930T122604Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-noprobe-codex-noseed-20260930T122604Z/work/validation-manifest.json)\n- [Assumptions and reviewer notes](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-noprobe-codex-noseed-20260930T122604Z/work/narrative.md)\n\nThe query retrieves **13,167 records**. It retained all 23 screened relevant development records (relative recall **23/23**); no independent held-out validation set was available. The audit documents that limitation and the remaining excess over the 10,000-record workload budget. PRESS peer review is pending.",
+  "strategy": "((COVID-19[Mesh] OR SARS-CoV-2[Mesh] OR Coronavirus Infections[Mesh] OR COVID-19[tiab] OR COVID19[tiab] OR COVID[tiab] OR SARS-CoV-2[tiab] OR 2019-nCoV[tiab] OR novel coronavirus[tiab] OR coronavirus disease 2019[tiab] OR coronavirus pandemic[tiab] OR lockdown*[tiab] OR self-quarantine[tiab] OR stay-at-home[tiab] OR stay at home[tiab] OR shelter-in-place[tiab] OR shelter in place[tiab] OR social distancing[tiab] OR physical distancing[tiab] OR movement restriction*[tiab] OR movement control[tiab] OR coronavirus[tiab]) AND (Life Style[Mesh] OR Healthy Lifestyle[Mesh] OR Exercise[Mesh] OR Sedentary Behavior[Mesh] OR Sleep[Mesh] OR Diet[Mesh] OR Alcohol Drinking[Mesh] OR Smoking[Mesh] OR Mental Health[Mesh] OR Quality of Life[Mesh] OR Depression[Mesh] OR Anxiety[Mesh] OR Stress, Psychological[Mesh] OR Social Isolation[Mesh] OR lifestyle[tiab] OR life style[tiab] OR health behavior*[tiab] OR health behaviour*[tiab] OR health habit*[tiab] OR physical activit*[tiab] OR exercise[tiab] OR sedentary[tiab] OR sitting time[tiab] OR inactivit*[tiab] OR diet[tiab] OR dietary[tiab] OR eating behavior*[tiab] OR eating behaviour*[tiab] OR food consumption[tiab] OR nutrition[tiab] OR sleep[tiab] OR sleep quality[tiab] OR sleep duration[tiab] OR alcohol[tiab] OR drinking[tiab] OR smoking[tiab] OR tobacco[tiab] OR well-being[tiab] OR wellbeing[tiab] OR mental health[tiab] OR psychological well-being[tiab] OR quality of life[tiab] OR life satisfaction[tiab] OR psychological distress[tiab] OR depress*[tiab] OR anxiet*[tiab] OR stress[tiab] OR loneliness[tiab] OR social isolation[tiab] OR Obsessive-Compulsive Disorder[Mesh] OR mobility[tiab] OR protective behavio*[tiab] OR protective behaviour*[tiab] OR compliance[tiab] OR OCD[tiab] OR obsessive-compulsive[tiab] OR obsessive compulsive[tiab] OR behavior*[tiab] OR behaviour*[tiab] OR substance use[tiab] OR substance-use[tiab] OR substance misuse[tiab] OR drug use[tiab] OR drug-use[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-11-22",
+  "count": 13167,
+  "gold_scored": 53,
+  "gold_reachable": 53,
+  "retrieved": 46,
+  "recall_percent": 86.8,
+  "missed": [
+    "32227671",
+    "32242089",
+    "32640077",
+    "32762129",
+    "32959000",
+    "33105275",
+    "33181369"
+  ],
+  "nnr": 286.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 46,
+  "unseen_recall_percent": 86.8,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "outcomes",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

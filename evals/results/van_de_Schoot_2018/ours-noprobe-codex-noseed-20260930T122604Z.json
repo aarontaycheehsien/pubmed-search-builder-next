@@ -1,0 +1,52 @@
+{
+  "topic": "van_de_Schoot_2018",
+  "source": "generated:ours-noprobe",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-noprobe-codex-noseed-20260930T122604Z",
+  "scored": "20260930T131439Z",
+  "skill": {
+    "name": "ours-noprobe",
+    "hash": "8817bab45a1908693747b9bde11f72242442d397dc2d9ddeb0952f82b4220fde",
+    "commit": null,
+    "dirty": null
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2913
+  },
+  "final_message": "`\"Disease Progression\"[Mesh]` | 138,666 |\n| 15 | `\"Time Factors\"[Mesh]` | 1,073,830 |\n| 16 | `trajectory[tiab]` | 24,167 |\n| 17 | `trajectories[tiab]` | 25,088 |\n| 18 | `course[tiab]` | 460,316 |\n| 19 | `longitudinal[tiab]` | 168,713 |\n| 20 | `follow-up[tiab]` | 703,004 |\n| 21 | `followup[tiab]` | 670,163 |\n| 22 | `prospectiv*[tiab]` | 506,579 |\n| 23 | `persist*[tiab]` | 367,137 |\n| 24 | `remission[tiab]` | 92,395 |\n| 25 | `recover*[tiab]` | 513,916 |\n| 26 | `chronic*[tiab]` | 944,256 |\n| 27 | `fluctuat*[tiab]` | 88,066 |\n| 28 | `progression[tiab]` | 353,159 |\n| 29 | `\"over time\"[tiab]` | 128,863 |\n| 30 | `#12 OR #13 OR #14 OR #15 OR #16 OR #17 OR #18 OR #19 OR #20 OR #21 OR #22 OR #23 OR #24 OR #25 OR #26 OR #27 OR #28 OR #29` | 4,648,263 |\n| 31 | `#11 AND #30` | **10,649** |\n\n## Validation and handoff\n\nThe strategy retrieved **20 of 20 screened development records** (100% relative recall against that set). This is not an independent validation set and is not an estimate of sensitivity. No known articles were supplied. The count is 649 above the default 10,000-record workload budget. The trauma-event block was tested and left out: it reduced results by 18.8% but its loss sample included two relevant records.\n\nThe draft still needs **PRESS peer review by an information specialist before use**. The internal critic passed its review rounds; it is not human PRESS peer review.\n\n- [Generated query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-noprobe-codex-noseed-20260930T122604Z/work/final-query.txt)\n- [Audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-noprobe-codex-noseed-20260930T122604Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-noprobe-codex-noseed-20260930T122604Z/work/validation-manifest.json)\n- [Build notes and open risks](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-noprobe-codex-noseed-20260930T122604Z/work/narrative.md)",
+  "strategy": "((\"Stress Disorders, Post-Traumatic\"[Mesh] OR PTSD[tiab] OR \"posttraumatic stress disorder\"[tiab] OR \"post-traumatic stress disorder\"[tiab] OR \"post traumatic stress disorder\"[tiab] OR \"posttraumatic stress\"[tiab] OR \"post-traumatic stress\"[tiab] OR \"post traumatic stress\"[tiab] OR \"posttraumatic stress symptoms\"[tiab] OR \"post-traumatic stress symptoms\"[tiab]) AND (\"Longitudinal Studies\"[Mesh] OR \"Follow-Up Studies\"[Mesh] OR \"Disease Progression\"[Mesh] OR \"Time Factors\"[Mesh] OR trajectory[tiab] OR trajectories[tiab] OR course[tiab] OR longitudinal[tiab] OR follow-up[tiab] OR followup[tiab] OR prospectiv*[tiab] OR persist*[tiab] OR remission[tiab] OR recover*[tiab] OR chronic*[tiab] OR fluctuat*[tiab] OR progression[tiab] OR \"over time\"[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2016-01-24",
+  "count": 10649,
+  "gold_scored": 38,
+  "gold_reachable": 38,
+  "retrieved": 35,
+  "recall_percent": 92.1,
+  "missed": [
+    "20061839",
+    "20836603",
+    "26412244"
+  ],
+  "nnr": 304.3,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 34,
+  "unseen_recall_percent": 91.9,
+  "leakage": [],
+  "concepts": null,
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

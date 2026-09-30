@@ -1,0 +1,48 @@
+{
+  "topic": "Appenzeller-Herzog_2019",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260930T130037Z",
+  "scored": "20260930T133334Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1976
+  },
+  "final_message": "| 6,853 |\n| 25 | `D-penicillamine[tiab]` | 3,268 |\n| 26 | `trientine[tiab]` | 219 |\n| 27 | `triethylenetetramine[tiab]` | 360 |\n| 28 | `zinc[tiab]` | 108,490 |\n| 29 | `zinc therap*[tiab]` | 379 |\n| 30 | `zinc acetate[tiab]` | 817 |\n| 31 | `tetrathiomolybdate[tiab]` | 351 |\n| 32 | `liver transplant*[tiab]` | 55,108 |\n| 33 | `hepatic transplant*[tiab]` | 1,078 |\n| 34 | `low copper diet[tiab]` | 81 |\n| 35 | `copper restricted diet[tiab]` | 4 |\n| 36 | `copper-restricted diet[tiab]` | 4 |\n| 37 | Lines 12–36 OR | 7,048,189 |\n| 38 | Line 11 AND line 37 | **3,365** |\n\n## Validation and limitations\n\nNo known relevant articles were supplied. A targeted search found a prior systematic review on chelators and zinc, but the skill’s reference-neighbor command returned no included-study candidates. I screened 50 records from a therapy-focused pilot sample and 30 records in the therapy-category probe; none was added as an eligible known record. The probe therefore found **0 relevant records among 30 screened**, but that small sample does not establish completeness.\n\n**Recall was not estimated; the strategy is empirically unvalidated.** The draft received three independent PRESS-structured internal critique rounds; a broader zinc MeSH heading was added and the finding was resolved. Human PRESS peer review by an information specialist is still pending.\n\nThe protected report completed successfully. Files are in `./work`:\n\n- [Final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-codex-noseed-20260930T130037Z/work/final-query.txt)\n- [Audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-codex-noseed-20260930T130037Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-codex-noseed-20260930T130037Z/work/validation-manifest.json)\n- [Search narrative and limitations](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-codex-noseed-20260930T130037Z/work/narrative.md)",
+  "strategy": "((Hepatolenticular Degeneration[Mesh] OR wilson disease[tiab] OR wilson's disease[tiab] OR wilsons disease[tiab] OR hepatolenticular degeneration[tiab] OR hepatocerebral degeneration[tiab] OR kinnier-wilson[tiab] OR copper storage disease[tiab] OR copper storage diseases[tiab] OR westphal-strumpell[tiab]) AND (Drug Therapy[Mesh] OR Chelation Therapy[Mesh] OR Penicillamine[Mesh] OR Trientine[Mesh] OR Zinc Acetate[Mesh] OR Zinc Compounds[Mesh] OR Liver Transplantation[Mesh] OR treat*[tiab] OR therap*[tiab] OR pharmacotherap*[tiab] OR drug therap*[tiab] OR chelati*[tiab] OR penicillamine[tiab] OR D-penicillamine[tiab] OR trientine[tiab] OR triethylenetetramine[tiab] OR zinc[tiab] OR zinc therap*[tiab] OR zinc acetate[tiab] OR tetrathiomolybdate[tiab] OR liver transplant*[tiab] OR hepatic transplant*[tiab] OR low copper diet[tiab] OR copper restricted diet[tiab] OR copper-restricted diet[tiab])) AND (\"1800/01/01\"[edat] : \"2018/12/23\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-12-23",
+  "count": 3365,
+  "gold_scored": 22,
+  "gold_reachable": 21,
+  "retrieved": 21,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 160.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 21,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": null,
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

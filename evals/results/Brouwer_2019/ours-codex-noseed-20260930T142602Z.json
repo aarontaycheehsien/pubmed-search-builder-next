@@ -1,0 +1,68 @@
+{
+  "topic": "Brouwer_2019",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260930T142602Z",
+  "scored": "20260930T144827Z",
+  "skill": {
+    "name": "ours",
+    "hash": "4e852a8e9577f29001f7677ca980038953e99066bfb2df07f8176fa84ec87f08",
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1344
+  },
+  "final_message": "| 8 | `Depression, Postpartum[Mesh]` | 5,164 |\n| 9 | `Seasonal Affective Disorder[Mesh]` | 1,198 |\n| 10 | Combined depression block | 439,310 |\n\nI left relapse/recurrence and theory/model terms out of the required query: each was tested as an optional block, but only one relevant record was found, too few to justify requiring either concept while preserving recall. They would reduce the count to 24,549 and 176,196, respectively.\n\n## Validation and handoff\n\nOne discovered review was screened in as a development record. Relative recall was **1/1 (100%) on that development record**; this is not independent validation, and recall on unseen records is unknown. There were no user-supplied seeds or held-out validation set. The depression-category probe found no eligible records in its 30-record sample. The optional-block loss samples found none in 30 records each.\n\nThe internal PRESS-structured review passed all six domains, but it was same-context review. The search returns far more records than the standard 10,000-record screening budget, so screening burden is the main open risk. **Have an information specialist conduct PRESS peer review before using this draft.**\n\nThe skill’s protected report completed successfully. The generated query, audit, validation manifest, and rationale are in [`work`](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260930T142602Z/work/>): [final-query.txt](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260930T142602Z/work/final-query.txt>), [audit.md](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260930T142602Z/work/audit.md>), [validation-manifest.json](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260930T142602Z/work/validation-manifest.json>), and [narrative.md](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20260930T142602Z/work/narrative.md>).",
+  "strategy": "((Depressive Disorder[Mesh] OR depress*[tiab] OR major depress*[tiab] OR unipolar depress*[tiab] OR melanchol*[tiab] OR dysthymi*[tiab] OR persistent depressive disorder[tiab] OR Depression, Postpartum[Mesh] OR Seasonal Affective Disorder[Mesh])) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-11-17",
+  "count": 439310,
+  "gold_scored": 54,
+  "gold_reachable": 54,
+  "retrieved": 54,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 8135.4,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 54,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "relapse_recurrence",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "psychological_theory",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

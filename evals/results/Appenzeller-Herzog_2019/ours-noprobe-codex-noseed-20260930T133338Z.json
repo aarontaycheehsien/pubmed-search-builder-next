@@ -1,0 +1,63 @@
+{
+  "topic": "Appenzeller-Herzog_2019",
+  "source": "generated:ours-noprobe",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-noprobe-codex-noseed-20260930T133338Z",
+  "scored": "20260930T135450Z",
+  "skill": {
+    "name": "ours-noprobe",
+    "hash": "8817bab45a1908693747b9bde11f72242442d397dc2d9ddeb0952f82b4220fde",
+    "commit": null,
+    "dirty": null
+  },
+  "harness": {
+    "commit": "9571cc503f4d8d8339dc126901e0432cbc2079b7",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1272
+  },
+  "final_message": "disease[tiab]` | 6,171 |\n| 3 | `\"Wilson disease\"[tiab]` | 5,545 |\n| 4 | `hepatolenticular[tiab]` | 975 |\n| 5 | `\"Kinnier-Wilson\"[tiab]` | 38 |\n| 6 | `\"copper storage disease\"[tiab]` | 25 |\n| 7 | Combined disease block, with the Entrez-date bound | **7,801** |\n\n## Validation and assumptions\n\nThe search retrieved all 7 screened relevant development records (100% relative recall on that set). This is not independent validation or an estimate of absolute sensitivity. No seeds were provided, and no prior-review benchmark set was available.\n\nThe therapy block would reduce results by 77.4%, but was left out: only 7 known relevant records were available, below the skill’s 15-record threshold for safely requiring an optional block. None of the 30 randomly sampled records it would remove was eligible. The full strategy therefore keeps the Wilson disease block broad.\n\nI assumed “common therapies” means pharmacologic treatments, including chelators and zinc; comparative outcomes and comparators are for screening. Comparative effectiveness of liver transplantation is outside this assumed scope and should be checked against the review protocol. The strategy has no publication-date, language, age, or study-design limits.\n\nThe protected delivery passed validation, and its generated files remain in `./work`: [final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-noprobe-codex-noseed-20260930T133338Z/work/final-query.txt), [audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-noprobe-codex-noseed-20260930T133338Z/work/audit.md), [validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-noprobe-codex-noseed-20260930T133338Z/work/validation-manifest.json), and [assumptions and rationale](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-noprobe-codex-noseed-20260930T133338Z/work/narrative.md).\n\nThis is a draft; an information specialist should conduct PRESS peer review before use.",
+  "strategy": "((Hepatolenticular Degeneration[Mesh] OR (Wilson[tiab] AND disease[tiab]) OR \"Wilson disease\"[tiab] OR hepatolenticular[tiab] OR \"Kinnier-Wilson\"[tiab] OR \"copper storage disease\"[tiab])) AND (\"1800/01/01\"[edat] : \"2018/12/23\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-12-23",
+  "count": 7801,
+  "gold_scored": 22,
+  "gold_reachable": 21,
+  "retrieved": 21,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 371.5,
+  "translation_issues": [],
+  "gold_seen_by_agent": 4,
+  "unseen_retrieved": 17,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 1,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "therapies",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}
