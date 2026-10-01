@@ -72,5 +72,23 @@ rejected or accepted-risk with a response, or still open with the domain at `rev
 raise a new `must-fix` or `should-fix` finding (`psb critic check` rejects one); a new concern is
 recorded as `document`. A closing round must be the last round. After it, only an open `must-fix`
 finding blocks delivery: an open `should-fix` finding is delivered as a documented open concern
-(list it in `narrative.md` for the peer reviewer). If a `must-fix` finding stays open, deliver the
-diagnostic handoff. Historical unbound rounds remain readable but do not authorize delivery.
+(list it in `narrative.md` for the peer reviewer). Historical unbound rounds remain readable but
+do not authorize delivery.
+
+## After the closing round
+
+- **A change after the closing round.** If you fix a closing-round finding, or change anything
+  else the critic reviewed, `psb critic packet` issues one verification round (also
+  `"closing": true`, same rules). Nothing may follow it. Editing only `notes` or
+  `scope_confirmed` never needs a critic round: run `psb report` again.
+- **An open must-fix you disagree with.** For a `lexical`, `structural`, `scope` or `reporting`
+  finding, `psb critic override <id> --reason "..."` records why the finding is wrong for this
+  search, with the evidence (counts, known records, loss samples). `psb report` then delivers,
+  and the audit opens with "Delivered over an open critic objection" for the peer reviewer.
+  Use it for a disagreement on evidence, never to skip work you could do. A `syntax` or
+  `filter` finding cannot be overridden, nor can any technical blocker. An override answers one
+  round: after a verification round, make it again if the finding is still open.
+- Otherwise deliver the diagnostic handoff.
+
+The packet tells the reviewer what psb enforces (an optional block is AND-ed only with 15 or more
+known records retained and none lost), so a finding should not ask for a change psb refuses.

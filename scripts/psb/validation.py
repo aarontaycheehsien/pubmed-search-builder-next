@@ -69,11 +69,34 @@ def input_snapshot(ws) -> dict:
     return snapshot
 
 
+# Protocol fields that record the conversation, not what is searched. Editing them after a review
+# (correcting scope_confirmed, adding a note) needs a fresh `psb report`, never a fresh critic.
+REVIEW_EXEMPT_PROTOCOL_KEYS = ("notes", "scope_confirmed")
+
+
+def review_inputs(inputs: dict) -> dict:
+    """The inputs a critic reviews: everything but conversation metadata in the protocol."""
+    protocol = {k: v for k, v in (inputs.get("protocol") or {}).items() if k not in REVIEW_EXEMPT_PROTOCOL_KEYS}
+    return {**inputs, "protocol": protocol}
+
+
+def changed_inputs(old: dict, new: dict) -> list[str]:
+    """Top-level input sections, and protocol fields, that differ between two snapshots."""
+    changed = []
+    for key in sorted(set(old) | set(new)):
+        if key == "protocol":
+            a, b = old.get(key) or {}, new.get(key) or {}
+            changed += [f"protocol.{k}" for k in sorted(set(a) | set(b)) if a.get(k) != b.get(k)]
+        elif old.get(key) != new.get(key):
+            changed.append(key)
+    return changed
+
+
 def review_fingerprint(evaluation: dict) -> str:
     """Counts and clocks may change; query interpretation and known hits may not."""
     authorities = [{k: v for k, v in row.items() if k != "checked_at"}
                    for row in evaluation.get("vocabulary", [])]
-    return digest({"inputs": evaluation.get("input_sha256"), "query": evaluation.get("query"),
+    return digest({"inputs": digest(review_inputs(evaluation.get("inputs") or {})), "query": evaluation.get("query"),
                    "issues": sorted(i["id"] for i in evaluation["validation"]["issues"]),
                    "translations": [(x.get("query"), x.get("translation")) for x in evaluation.get("lines", [])],
                    "translation": evaluation.get("translation"), "vocabulary": stable(authorities),

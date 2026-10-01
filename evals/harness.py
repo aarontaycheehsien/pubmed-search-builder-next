@@ -12,6 +12,7 @@ import datetime as dt
 import hashlib
 import json
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -161,15 +162,27 @@ def git_state(path: Path) -> dict:
 INFRA_PATTERNS = re.compile(r"usage limit|rate limit|rate_limit|quota|\b429\b|overloaded|credit balance",
                             re.IGNORECASE)
 INFRA_FAST_SECONDS = 60
+# A full disk stops the agent mid-run; it says so in its final message, or the run leaves little room.
+DISK_PATTERNS = re.compile(r"no space left on device|not enough space on the disk|ENOSPC|disk (?:is |was )?full|disk filled",
+                           re.IGNORECASE)
+MIN_FREE_BYTES = 5 * 1024 ** 3   # refuse to start a run with less free space than this
+LOW_DISK_BYTES = 1024 ** 3       # an undelivered run that ended with less than this counts as infra
+
+
+def free_bytes(path: Path) -> int:
+    path = Path(path)
+    while not path.exists() and path != path.parent:
+        path = path.parent
+    return shutil.disk_usage(path).free
 STATUSES = ("ok", "leakage", "no-delivery", "timeout", "infra")
 
 
-def run_status(card: dict, errors_text: str = "") -> str:
+def run_status(card: dict, errors_text: str = "", *, low_disk: bool = False) -> str:
     """Why a generated run counts (``ok``) or not.
 
     ``infra`` is a failure of the account or service, not of the skill: the agent exited non-zero
     within a minute, or the transcript/stderr reports a quota or rate limit and nothing was
-    delivered. Infra runs are retried and left out of a skill's run count. Scorecards written
+    delivered, or the disk filled up. Infra runs are retried and left out of a skill's run count. Scorecards written
     before this field existed are classified from what they recorded.
     """
     if card.get("status") in STATUSES:
@@ -180,7 +193,8 @@ def run_status(card: dict, errors_text: str = "") -> str:
         return "timeout"
     crashed_before_work = run.get("returncode") not in (0, None) and card.get("workspace_started") is False
     if not delivered and ((run.get("returncode") not in (0, None) and (run.get("seconds") or 0) < INFRA_FAST_SECONDS)
-                          or crashed_before_work or INFRA_PATTERNS.search(errors_text or "")):
+                          or crashed_before_work or INFRA_PATTERNS.search(errors_text or "") or low_disk
+                          or DISK_PATTERNS.search((errors_text or "") + "\n" + (card.get("final_message") or ""))):
         return "infra"
     if card.get("leakage"):
         return "leakage"
@@ -364,6 +378,13 @@ def diagnostic_handoff(run_dir: Path) -> dict | None:
     """The query and blocker codes of an undelivered run's ``diagnostic-audit.md`` (psb report
     --diagnostic, or a gate refusal). None when there is no parseable handoff."""
     path = run_dir / "work" / "diagnostic-audit.md"
+    delivered = run_dir / "work" / "final-query.txt"
+    manifest = run_dir / "work" / "validation-manifest.json"
+    # A delivery made after the last diagnostic and then invalidated by a later edit: its query is the
+    # latest one, and the old diagnostic's blockers no longer describe the run.
+    if delivered.exists() and manifest.exists() and (not path.exists() or manifest.stat().st_mtime > path.stat().st_mtime):
+        query = delivered.read_text(encoding="utf-8").strip()
+        return {"query": query, "blockers": ["delivery_stale"]} if query else None
     try:
         text = path.read_text(encoding="utf-8")
         data = json.loads(text[text.index("```json") + len("```json"):text.rindex("```")])

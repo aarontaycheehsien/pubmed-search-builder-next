@@ -156,3 +156,30 @@ def test_report_shows_latest_version_pairs_topics_and_discounts_infra(evals_dir)
     assert "T3 | generated:ours" not in text
     run.cmd_report(argparse.Namespace(all_versions=True, pair=["generated:ours", "generated:lean-optimal"]))
     assert "| T1 | generated:ours (codex) | noseed | legacy | 1/1 † | 50.0 |" in (evals_dir / "RESULTS.md").read_text(encoding="utf-8")
+
+
+@pytest.mark.parametrize("card, errors, low_disk, expected", [
+    ({"run": {"returncode": 0, "seconds": 3654},
+      "final_message": "The required internal critique could not be completed after the disk filled."}, "", False, "infra"),
+    ({"run": {"returncode": 1, "seconds": 3798}}, "OSError: [Errno 28] No space left on device", False, "infra"),
+    ({"run": {"returncode": 0, "seconds": 3798}, "final_message": ""}, "", True, "infra"),
+    ({"run": {"returncode": 0, "seconds": 3798}, "final_message": "blocked by critic_open"}, "", False, "no-delivery"),
+    ({"run": {"returncode": 0, "seconds": 900}, "recall_percent": 90.0, "leakage": [], "valid": True,
+      "final_message": "the disk filled earlier but I cleaned up"}, "", True, "ok"),
+])
+def test_full_disk_is_infra(card, errors, low_disk, expected):
+    assert harness.run_status(card, errors, low_disk=low_disk) == expected
+
+
+def test_stale_delivery_reports_its_query_not_an_older_diagnostic(tmp_path):
+    import os
+    work = tmp_path / "work"
+    work.mkdir()
+    (work / "diagnostic-audit.md").write_text('```json\n{"blockers": [{"code": "critic_open"}], '
+                                              '"evaluation": {"query": "old[tiab]"}}\n```\n', encoding="utf-8")
+    (work / "final-query.txt").write_text("new[tiab]\n", encoding="utf-8")
+    (work / "validation-manifest.json").write_text("{}", encoding="utf-8")
+    os.utime(work / "diagnostic-audit.md", (1, 1))
+    assert harness.diagnostic_handoff(tmp_path) == {"query": "new[tiab]", "blockers": ["delivery_stale"]}
+    os.utime(work / "validation-manifest.json", (0, 0))  # a diagnostic after the delivery still wins
+    assert harness.diagnostic_handoff(tmp_path)["blockers"] == ["critic_open"]

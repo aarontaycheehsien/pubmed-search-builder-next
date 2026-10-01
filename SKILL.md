@@ -148,7 +148,15 @@ review the strategy you mean to deliver. If it asks for changes, make them, `psb
 `psb critic packet` once more: the closing round only verifies how each earlier finding was
 handled and cannot raise new must-fix findings. Close substantive findings with explanations and
 supply the packet's evidence-bound issue dispositions. Technical blockers cannot be accepted as
-risks. If the closing round still asks for revision, produce diagnostic output.
+risks. If the closing round still asks for revision:
+
+- fix what you can, `psb eval`, and run `psb critic packet` for the one verification round that
+  may follow a closing round (it also covers any change you make after the closing round);
+- for an open must-fix judgment you disagree with on evidence (kinds lexical, structural, scope,
+  reporting), `psb critic override <id> --reason "..."`; the audit opens with the objection and
+  your reason for the peer reviewer. Syntax and filter findings cannot be overridden;
+- otherwise produce diagnostic output.
+
 If no fresh context is available, review the packet yourself and say so in the audit.
 
 ### 7. Deliver
@@ -156,9 +164,11 @@ If no fresh context is available, review the packet yourself and say so in the a
 Read `references/reporting.md` and `references/validation.md`. Run `psb report` (`--fresh` is
 an equivalent spelling). It revalidates every line and heading live, checks the current critic,
 and writes `final-query.txt`, `audit.md`, and `validation-manifest.json` only if the gate passes.
-Deliver the generated query verbatim; do not reconstruct or edit it. After `psb report` succeeds,
-change nothing in the workspace; if you must change anything (even `protocol.json` notes), run
-`psb eval` and `psb report` again, or the delivery is no longer current. Keep narrative additions
+Deliver the generated query verbatim; do not reconstruct or edit it. Set `scope_confirmed` and
+`notes` truthfully before the report. After `psb report` succeeds, change nothing in the
+workspace. If you must, run `psb status`: it names what changed. A change to `notes` or
+`scope_confirmed` needs only `psb report` again; any other change needs `psb eval`, the critic's
+verification round, and `psb report`. Deliver only from this workspace; never copy it to start over. Keep narrative additions
 in `narrative.md`, because changing the generated audit invalidates its manifest. Give the user:
 
 - the strategy (single line and line by line with counts),
@@ -196,4 +206,4 @@ in `narrative.md`, because changing the generated audit invalidates its manifest
 |---|---|---|---|
 | Known records | seeds if given | seeds + discovery or a prior-review benchmark | both, larger screening budget |
 | Term mining | if seeds | yes | yes, plus `psb terms miss` on every miss |
-| Critic rounds | 1 + closing | 1-2 + closing | 1-3 + closing |
+| Critic rounds | 1 + closing (+ verification) | 1-2 + closing (+ verification) | 1-3 + closing (+ verification) |

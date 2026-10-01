@@ -51,7 +51,7 @@ python scripts/psb.py --workspace runs/demo report
 | `terms rank`, `terms miss` | objective term candidates; vocabulary of missed records |
 | `probe draw`, `probe record` | sample records a category block misses because they name only a member |
 | `optional sample`, `optional decide` | loss sample of the records an optional block removes; record whether to AND it |
-| `critic packet`, `critic check` | PRESS critic input; validate a critic round |
+| `critic packet`, `critic check`, `critic override` | PRESS critic input; validate a critic round; deliver over an open judgment finding after the closing round |
 | `report` | live validation and protected query/audit/manifest; `--diagnostic` emits unfinished output |
 | `log`, `cache`, `doctor` | provenance summary, cache, configuration check |
 
