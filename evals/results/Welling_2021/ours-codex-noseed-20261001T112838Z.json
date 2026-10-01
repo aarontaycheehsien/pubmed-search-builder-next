@@ -1,0 +1,69 @@
+{
+  "topic": "Welling_2021",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261001T112838Z",
+  "scored": "20261001T120033Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1915
+  },
+  "final_message": " behaviour*[tiab] OR physical activit*[tiab] OR exercise[tiab] OR movement behavio*[tiab] OR play behavio*[tiab] OR sedentary behavio*[tiab] OR sedentary time[tiab] OR screen time[tiab] OR sleep[tiab] OR insomnia[tiab] OR sleep quality[tiab] OR sleep duration[tiab] OR diet*[tiab] OR eating behavio*[tiab] OR food intake[tiab] OR alcohol consum*[tiab] OR substance use[tiab] OR mental health[tiab] OR psychological well-being[tiab] OR psychological wellbeing[tiab] OR well-being[tiab] OR wellbeing[tiab] OR emotional well-being[tiab] OR psychological distress[tiab] OR distress[tiab] OR anxiety[tiab] OR depress*[tiab] OR stress[tiab] OR loneliness[tiab] OR quality of life[tiab] OR life satisfaction[tiab] OR emotions[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])\n```\n\nThe query returned **16,925 records** with the required Entrez-date cutoff. The optional outcome block reduced the exposure-only count by 91.2%, from 191,637; its 30-record loss sample contained no eligible studies. The generated audit provides the full line-by-line counts.\n\nRelative recall was **19/19 (100%) against the development set** discovered and screened during this run. Recall was not estimated against an independent validation set, and the strategy is empirically unvalidated against user-supplied seeds. The count exceeds the default standard screening budget of 10,000 records.\n\nThe cutoff uses `[edat]`, as required for this run; there is no publication-date `[dp]` limit. The draft still needs **PRESS peer review by an information specialist before use**.\n\n- [Generated query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20261001T112838Z/work/final-query.txt)\n- [Audit with line-by-line counts](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20261001T112838Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/ours-codex-noseed-20261001T112838Z/work/validation-manifest.json)",
+  "strategy": "((COVID-19[Mesh] OR SARS-CoV-2[Mesh] OR Coronavirus Infections[Mesh] OR Pandemics[Mesh] OR Quarantine[Mesh] OR Disease Outbreaks[Mesh] OR COVID-19[tiab] OR COVID19[tiab] OR SARS-CoV-2[tiab] OR SARS CoV 2[tiab] OR 2019-nCoV[tiab] OR 2019 novel coronavirus[tiab] OR novel coronavirus[tiab] OR coronavirus disease 2019[tiab] OR coronavirus disease-19[tiab] OR COVID-19 pandemic[tiab] OR coronavirus pandemic[tiab] OR coronavirus outbreak[tiab] OR lockdown*[tiab] OR quarantine*[tiab] OR self-quarantine[tiab] OR self isolation[tiab] OR self-isolation[tiab] OR social distancing[tiab] OR physical distancing[tiab] OR stay-at-home[tiab] OR stay at home[tiab] OR home confinement[tiab] OR movement restriction*[tiab] OR mobility restriction*[tiab] OR containment measure*[tiab] OR isolation measure*[tiab]) AND (Life Style[Mesh] OR Healthy Lifestyle[Mesh] OR Health Behavior[Mesh] OR Exercise[Mesh] OR Sedentary Behavior[Mesh] OR Sleep[Mesh] OR Sleep Wake Disorders[Mesh] OR Diet[Mesh] OR Feeding Behavior[Mesh] OR Mental Health[Mesh] OR Psychological Distress[Mesh] OR Anxiety[Mesh] OR Depression[Mesh] OR Stress, Psychological[Mesh] OR Quality of Life[Mesh] OR Emotions[Mesh] OR lifestyle*[tiab] OR health behavior*[tiab] OR health behaviour*[tiab] OR physical activit*[tiab] OR exercise[tiab] OR movement behavio*[tiab] OR play behavio*[tiab] OR sedentary behavio*[tiab] OR sedentary time[tiab] OR screen time[tiab] OR sleep[tiab] OR insomnia[tiab] OR sleep quality[tiab] OR sleep duration[tiab] OR diet*[tiab] OR eating behavio*[tiab] OR food intake[tiab] OR alcohol consum*[tiab] OR substance use[tiab] OR mental health[tiab] OR psychological well-being[tiab] OR psychological wellbeing[tiab] OR well-being[tiab] OR wellbeing[tiab] OR emotional well-being[tiab] OR psychological distress[tiab] OR distress[tiab] OR anxiety[tiab] OR depress*[tiab] OR stress[tiab] OR loneliness[tiab] OR quality of life[tiab] OR life satisfaction[tiab] OR emotions[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-11-22",
+  "count": 16925,
+  "gold_scored": 53,
+  "gold_reachable": 53,
+  "retrieved": 48,
+  "recall_percent": 90.6,
+  "missed": [
+    "32227671",
+    "32242089",
+    "32640077",
+    "32959000",
+    "33105275"
+  ],
+  "nnr": 352.6,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 46,
+  "unseen_recall_percent": 90.2,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 1,
+      "screen": 2,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "lifestyle_wellbeing",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

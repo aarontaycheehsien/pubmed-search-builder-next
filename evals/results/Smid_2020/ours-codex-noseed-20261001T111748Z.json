@@ -1,0 +1,71 @@
+{
+  "topic": "Smid_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261001T111748Z",
+  "scored": "20261001T115309Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2120
+  },
+  "final_message": "pling\"[tiab] OR \"Metropolis Hastings\"[tiab] OR \"Metropolis-Hastings\"[tiab] OR \"Bayesian estimation\"[tiab] OR \"Bayesian analysis\"[tiab] OR \"Bayesian method\"[tiab] OR \"Bayesian methods\"[tiab] OR \"Bayesian approach\"[tiab] OR \"Bayesian approaches\"[tiab] OR \"prior distribution\"[tiab] OR \"prior distributions\"[tiab] OR \"posterior distribution\"[tiab] OR \"posterior distributions\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/11/29\"[edat])\n```\n\n| Search line | Results |\n|---|---:|\n| SEM and latent-variable model family | 1,045,352 |\n| Bayesian estimation | 58,786 |\n| Both blocks combined, with the Entrez-date bound | **3,312** |\n\nThe small-sample and simulation blocks were tested and left out: each would sharply reduce retrieval, and the eight known relevant records are too few to justify requiring either block. Screen those criteria, along with comparator, performance outcomes, peer-review status, and disciplinary fit.\n\nThe strategy retrieved **8/8** records in the development set (100% relative recall). These records were discovered during the build, so this is not independent validation and does not estimate sensitivity. The search was bounded by PubMed Entrez date **2017-11-29**; no publication-date limit was used.\n\nThe internal PRESS-structured review closed with no open must-fix findings. This draft still needs PRESS peer review by an information specialist before use.\n\n## Run files\n\n- [Generated query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20261001T111748Z/work/final-query.txt)\n- [Audit with the full line-by-line counts](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20261001T111748Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20261001T111748Z/work/validation-manifest.json)\n- [Rationale and open risks](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/ours-codex-noseed-20261001T111748Z/work/narrative.md)",
+  "strategy": "((\"Factor Analysis, Statistical\"[Mesh] OR \"Latent Class Analysis\"[Mesh] OR \"Multilevel Analysis\"[Mesh] OR \"Mediation Analysis\"[Mesh] OR \"structural equation model\"[tiab] OR \"structural equation models\"[tiab] OR \"structural equation modeling\"[tiab] OR \"structural equation modelling\"[tiab] OR \"Bayesian SEM\"[tiab] OR SEM[tiab] OR \"confirmatory factor analysis\"[tiab] OR CFA[tiab] OR \"factor analysis\"[tiab] OR \"latent variable\"[tiab] OR \"latent variables\"[tiab] OR \"latent growth\"[tiab] OR \"growth curve model\"[tiab] OR \"growth curve models\"[tiab] OR \"growth mixture model\"[tiab] OR \"growth mixture modeling\"[tiab] OR \"growth mixture modelling\"[tiab] OR \"latent class\"[tiab] OR \"latent profile\"[tiab] OR multilevel[tiab] OR \"multi-level\"[tiab] OR \"hierarchical model\"[tiab] OR \"hierarchical models\"[tiab] OR mediation[tiab] OR mediated[tiab] OR \"indirect effect\"[tiab] OR \"indirect effects\"[tiab]) AND (\"Bayes Theorem\"[Mesh] OR \"Markov Chains\"[Mesh] OR Bayesian[tiab] OR Bayes[tiab] OR MCMC[tiab] OR \"Markov chain Monte Carlo\"[tiab] OR \"Markov chain Monte-Carlo\"[tiab] OR \"Gibbs sampling\"[tiab] OR \"Metropolis Hastings\"[tiab] OR \"Metropolis-Hastings\"[tiab] OR \"Bayesian estimation\"[tiab] OR \"Bayesian analysis\"[tiab] OR \"Bayesian method\"[tiab] OR \"Bayesian methods\"[tiab] OR \"Bayesian approach\"[tiab] OR \"Bayesian approaches\"[tiab] OR \"prior distribution\"[tiab] OR \"prior distributions\"[tiab] OR \"posterior distribution\"[tiab] OR \"posterior distributions\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/11/29\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-11-29",
+  "count": 3312,
+  "gold_scored": 14,
+  "gold_reachable": 14,
+  "retrieved": 13,
+  "recall_percent": 92.9,
+  "missed": [
+    "25765534"
+  ],
+  "nnr": 254.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 7,
+  "unseen_retrieved": 6,
+  "unseen_recall_percent": 85.7,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "screen": 2,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "small_sample",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "simulation",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

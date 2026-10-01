@@ -1,0 +1,55 @@
+{
+  "topic": "CD011431",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261001T115630Z",
+  "scored": "20261001T123924Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2574
+  },
+  "final_message": "um[tiab] OR \"p vivax\"[tiab] OR \"p malariae\"[tiab] OR \"p ovale\"[tiab] OR \"p knowlesi\"[tiab]) AND (\"Reagent Kits, Diagnostic\"[Mesh] OR \"Point-of-Care Systems\"[Mesh] OR \"rapid diagnostic test\"[tiab:~2] OR \"rapid diagnostic tests\"[tiab] OR \"rapid test\"[tiab:~2] OR \"rapid tests\"[tiab] OR RDT[tiab] OR RDTs[tiab] OR mRDT[tiab] OR MRDTs[tiab] OR ICT[tiab] OR immunochromatograph*[tiab] OR immuno-chromatograph*[tiab] OR dipstick*[tiab] OR \"antigen detection test\"[tiab:~2] OR \"rapid antigen test\"[tiab:~2] OR \"point of care\"[tiab:~2] OR OptiMAL[tiab] OR Paracheck[tiab])) AND (\"1800/01/01\"[edat] : \"2013/06/09\"[edat])\n```\n\nThe search retrieved **1,908 records**. The malaria/species block returned 81,441 records; the rapid-test block returned 275,422. The [full audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-codex-noseed-20261001T115630Z/work/audit.md) lists every query line and its count. The protected query and validation manifest are [final-query.txt](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-codex-noseed-20261001T115630Z/work/final-query.txt) and [validation-manifest.json](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-codex-noseed-20261001T115630Z/work/validation-manifest.json).\n\n## Validation and limitations\n\nThe strategy retrieved **14/14 known development records (100% relative recall)**. These records were identified during the build, so this is not independent validation or diagnostic sensitivity; no separate validation set or same-scope review benchmark was available. The required cutoff is by PubMed Entrez entry date through 2013-06-09; no publication-date limit was applied.\n\nThe search is recall-first and may retrieve falciparum-only, non-endemic, asymptomatic, or otherwise ineligible studies. The `OptiMAL[tiab]` term is especially broad and may add noise. The internal PRESS-structured critique passed, but **human PRESS peer review by an information specialist is still needed before use**.",
+  "strategy": "((\"Malaria\"[Mesh] OR \"Malaria, Vivax\"[Mesh] OR \"Plasmodium vivax\"[Mesh] OR \"Plasmodium malariae\"[Mesh] OR \"Plasmodium ovale\"[Mesh] OR \"Plasmodium knowlesi\"[Mesh] OR malaria[tiab] OR malarial[tiab] OR plasmodium*[tiab] OR plasmodia[tiab] OR vivax[tiab] OR malariae[tiab] OR ovale[tiab] OR knowlesi[tiab] OR \"non-falciparum\"[tiab] OR \"non falciparum\"[tiab] OR nonfalciparum[tiab] OR \"p vivax\"[tiab] OR \"p malariae\"[tiab] OR \"p ovale\"[tiab] OR \"p knowlesi\"[tiab]) AND (\"Reagent Kits, Diagnostic\"[Mesh] OR \"Point-of-Care Systems\"[Mesh] OR \"rapid diagnostic test\"[tiab:~2] OR \"rapid diagnostic tests\"[tiab] OR \"rapid test\"[tiab:~2] OR \"rapid tests\"[tiab] OR RDT[tiab] OR RDTs[tiab] OR mRDT[tiab] OR MRDTs[tiab] OR ICT[tiab] OR immunochromatograph*[tiab] OR immuno-chromatograph*[tiab] OR dipstick*[tiab] OR \"antigen detection test\"[tiab:~2] OR \"rapid antigen test\"[tiab:~2] OR \"point of care\"[tiab:~2] OR OptiMAL[tiab] OR Paracheck[tiab])) AND (\"1800/01/01\"[edat] : \"2013/06/09\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2013-06-09",
+  "count": 1908,
+  "gold_scored": 26,
+  "gold_reachable": 26,
+  "retrieved": 26,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 73.4,
+  "translation_issues": [],
+  "gold_seen_by_agent": 6,
+  "unseen_retrieved": 20,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "screen": 2,
+      "search": 2
+    },
+    "optional": []
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

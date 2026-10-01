@@ -1,0 +1,67 @@
+{
+  "topic": "van_de_Schoot_2018",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261001T112327Z",
+  "scored": "20261001T114734Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1446
+  },
+  "final_message": "---:|\n| 1 | `Stress Disorders, Post-Traumatic[Mesh]` | 25,369 |\n| 2 | `post-traumatic stress disorder[tiab]` | 7,081 |\n| 3 | `post traumatic stress disorder[tiab]` | 7,081 |\n| 4 | `posttraumatic stress disorder[tiab]` | 12,500 |\n| 5 | `PTSD[tiab]` | 15,732 |\n| 6 | `post-traumatic stress symptom*[tiab]` | 474 |\n| 7 | `post traumatic stress symptom*[tiab]` | 474 |\n| 8 | `posttraumatic stress symptom*[tiab]` | 1,177 |\n| 9 | `post-traumatic stress[tiab]` | 8,160 |\n| 10 | `post traumatic stress[tiab]` | 8,160 |\n| 11 | `posttraumatic stress[tiab]` | 14,174 |\n| 12 | `PTSS[tiab]` | 510 |\n| 13 | `traumatic stress symptom*[tiab]` | 626 |\n| **14** | **Combined query** | **32,255** |\n\n## Validation and files\n\nThe search retrieved **23 of 23** screened development records (100% relative recall against that set). These records were found during the build, so that result is not independent validation and does not estimate sensitivity. The optional trajectory/course block was left out: it would reduce results by 74.9%, but loses known eligible PMID 18629750. Its loss sample found 0 relevant records among 30.\n\nThe final count exceeds the standard 10,000-record screening budget. That workload was accepted because the tested optional block lost a known eligible study. The scope assumptions—including that both diagnosed PTSD and subthreshold post-traumatic stress symptoms are eligible—were not confirmed with you.\n\n- [Generated query](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20261001T112327Z/work/final-query.txt>)\n- [Audit](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20261001T112327Z/work/audit.md>)\n- [Validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20261001T112327Z/work/validation-manifest.json>)\n\nTwo PRESS-structured internal critic rounds passed with no findings. This draft still needs PRESS peer review by an information specialist before use.",
+  "strategy": "((Stress Disorders, Post-Traumatic[Mesh] OR post-traumatic stress disorder[tiab] OR post traumatic stress disorder[tiab] OR posttraumatic stress disorder[tiab] OR PTSD[tiab] OR post-traumatic stress symptom*[tiab] OR post traumatic stress symptom*[tiab] OR posttraumatic stress symptom*[tiab] OR post-traumatic stress[tiab] OR post traumatic stress[tiab] OR posttraumatic stress[tiab] OR PTSS[tiab] OR traumatic stress symptom*[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2016-01-24",
+  "count": 32255,
+  "gold_scored": 38,
+  "gold_reachable": 38,
+  "retrieved": 35,
+  "recall_percent": 92.1,
+  "missed": [
+    "20061839",
+    "20836603",
+    "26412244"
+  ],
+  "nnr": 921.6,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 33,
+  "unseen_recall_percent": 91.7,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 1,
+      "screen": 1,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "trajectory",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

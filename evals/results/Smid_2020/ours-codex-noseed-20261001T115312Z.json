@@ -1,0 +1,71 @@
+{
+  "topic": "Smid_2020",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261001T115312Z",
+  "scored": "20261001T123715Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2643
+  },
+  "final_message": " model*\"[tiab]` | 768 |\n| 12 | `\"latent class model*\"[tiab]` | 603 |\n| 13 | `\"latent class analys*\"[tiab]` | 2,675 |\n| 14 | `factor analys*[tiab]` | 38,459 |\n| 15 | `mediation[tiab]` | 22,917 |\n| 16 | `multilevel[tiab]` | 25,930 |\n| 17 | `\"path analys*\"[tiab]` | 5,178 |\n| 18 | `SEM[tiab]` | 81,594 |\n| 19 | `\"latent growth\"[tiab]` | 1,734 |\n| 20 | `\"latent class\"[tiab]` | 4,129 |\n| 21 | `\"growth mixture\"[tiab]` | 791 |\n| 22 | `\"indirect effect*\"[tiab]` | 12,817 |\n| 23 | `\"mediated effect*\"[tiab]` | 8,056 |\n| 24 | Lines 1–23 OR-ed: model-family block | 581,122 |\n| 25 | `\"Bayes Theorem\"[Mesh]` | 28,985 |\n| 26 | `Bayesian[tiab]` | 35,533 |\n| 27 | `Bayes[tiab]` | 5,705 |\n| 28 | `MCMC[tiab]` | 1,577 |\n| 29 | `\"Markov chain Monte Carlo\"[tiab]` | 3,122 |\n| 30 | `\"prior distribution*\"[tiab]` | 1,143 |\n| 31 | `\"posterior distribution*\"[tiab]` | 1,486 |\n| 32 | `\"Bayesian estimation\"[tiab]` | 966 |\n| 33 | `\"Bayesian method*\"[tiab]` | 3,265 |\n| 34 | Lines 25–33 OR-ed: Bayesian block | 48,119 |\n| 35 | Lines 24 AND 34, with entry-date cutoff | 11,582 |\n\n## Validation and limitations\n\nThe final query retrieved all **6 of 6** screened relevant development records: **100% relative recall against that development set**, not independent validation or sensitivity. There was no held-out validation set.\n\nThe small-sample and simulation blocks were tested and left out because only six known relevant records were available, below the skill’s 15-record threshold for safely requiring an optional block. They reduced the count to 630 and 4,398, respectively; each had 0 relevant records in a 30-record loss sample. The final count of 11,582 exceeds the 10,000 standard workload budget.\n\nThe internal PRESS-structured critic was same-context, not independent peer review. The current `Latent Class Analysis` MeSH heading postdates the assumed 2017 search date; this historical-vocabulary limitation is documented in the audit. **An information specialist should PRESS peer review this draft before use.**",
+  "strategy": "((\"Factor Analysis, Statistical\"[Mesh] OR \"Latent Class Analysis\"[Mesh] OR \"Multilevel Analysis\"[Mesh] OR \"Models, Statistical\"[Mesh] OR \"structural equation model*\"[tiab] OR \"covariance structure model*\"[tiab] OR \"confirmatory factor analys*\"[tiab] OR CFA[tiab] OR \"latent variable model*\"[tiab] OR \"latent growth model*\"[tiab] OR \"growth mixture model*\"[tiab] OR \"latent class model*\"[tiab] OR \"latent class analys*\"[tiab] OR factor analys*[tiab] OR mediation[tiab] OR multilevel[tiab] OR \"path analys*\"[tiab] OR SEM[tiab] OR \"latent growth\"[tiab] OR \"latent class\"[tiab] OR \"growth mixture\"[tiab] OR \"indirect effect*\"[tiab] OR \"mediated effect*\"[tiab]) AND (\"Bayes Theorem\"[Mesh] OR Bayesian[tiab] OR Bayes[tiab] OR MCMC[tiab] OR \"Markov chain Monte Carlo\"[tiab] OR \"prior distribution*\"[tiab] OR \"posterior distribution*\"[tiab] OR \"Bayesian estimation\"[tiab] OR \"Bayesian method*\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/11/29\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-11-29",
+  "count": 11582,
+  "gold_scored": 14,
+  "gold_reachable": 14,
+  "retrieved": 13,
+  "recall_percent": 92.9,
+  "missed": [
+    "25765534"
+  ],
+  "nnr": 890.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 6,
+  "unseen_retrieved": 7,
+  "unseen_recall_percent": 87.5,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 2,
+      "screen": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "small_sample",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "simulation_design",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

@@ -1,0 +1,53 @@
+{
+  "topic": "van_de_Schoot_2018",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261001T103949Z",
+  "scored": "20261001T112320Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2609
+  },
+  "final_message": "[tiab] OR \"post traumatic stress disorders\"[tiab] OR \"posttraumatic stress\"[tiab] OR \"post-traumatic stress\"[tiab] OR \"post traumatic stress\"[tiab] OR \"posttraumatic stress symptoms\"[tiab] OR \"post-traumatic stress symptoms\"[tiab] OR \"post traumatic stress symptoms\"[tiab] OR PTSS[tiab] OR \"posttraumatic neuroses\"[tiab] OR \"post-traumatic neuroses\"[tiab] OR \"post traumatic neuroses\"[tiab]) AND (\"Disease Progression\"[Mesh] OR \"Follow-Up Studies\"[Mesh] OR \"Longitudinal Studies\"[Mesh] OR \"Time Factors\"[Mesh] OR \"Prognosis\"[Mesh] OR trajector*[tiab] OR course[tiab] OR longitudinal[tiab] OR prospective[tiab] OR follow-up[tiab] OR followup[tiab] OR \"natural history\"[tiab] OR \"symptom course\"[tiab] OR \"symptom change\"[tiab] OR \"symptom changes\"[tiab] OR remission[tiab] OR recovery[tiab] OR chronicity[tiab] OR persistence[tiab] OR fluctuat*[tiab] OR stability[tiab] OR pattern*[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])\n```\n\nThe generated [`audit.md`](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/ours-codex-noseed-20261001T103949Z/work/audit.md) has every query line with its count. Lines 1–19 are the PTSD block (32,228); lines 20–42 are the course block (5,094,790); line 43 is the combined query (10,252).\n\n## Validation and limits\n\nThe strategy retrieved all 18 screened development records: **100% relative recall against that set**. This is not an independent validation set or an estimate of sensitivity. The optional course block reduced the count by 68.2%; its refreshed loss sample found 0 relevant records among 30 screened.\n\nThe final count is 252 above the standard screening budget. Scope assumptions—including any age group and traumatic event—are recorded in the protocol; scope was not user-confirmed. The search is pinned to the required **2016-01-24 Entrez-date cutoff** and has no publication-date `[dp]` limit.\n\nThis draft still needs **PRESS peer review by an information specialist before use**. The internal critic is not PRESS peer review.",
+  "strategy": "((\"Stress Disorders, Post-Traumatic\"[Mesh] OR PTSD[tiab] OR \"posttraumatic stress disorder\"[tiab] OR \"posttraumatic stress disorders\"[tiab] OR \"post-traumatic stress disorder\"[tiab] OR \"post-traumatic stress disorders\"[tiab] OR \"post traumatic stress disorder\"[tiab] OR \"post traumatic stress disorders\"[tiab] OR \"posttraumatic stress\"[tiab] OR \"post-traumatic stress\"[tiab] OR \"post traumatic stress\"[tiab] OR \"posttraumatic stress symptoms\"[tiab] OR \"post-traumatic stress symptoms\"[tiab] OR \"post traumatic stress symptoms\"[tiab] OR PTSS[tiab] OR \"posttraumatic neuroses\"[tiab] OR \"post-traumatic neuroses\"[tiab] OR \"post traumatic neuroses\"[tiab]) AND (\"Disease Progression\"[Mesh] OR \"Follow-Up Studies\"[Mesh] OR \"Longitudinal Studies\"[Mesh] OR \"Time Factors\"[Mesh] OR \"Prognosis\"[Mesh] OR trajector*[tiab] OR course[tiab] OR longitudinal[tiab] OR prospective[tiab] OR follow-up[tiab] OR followup[tiab] OR \"natural history\"[tiab] OR \"symptom course\"[tiab] OR \"symptom change\"[tiab] OR \"symptom changes\"[tiab] OR remission[tiab] OR recovery[tiab] OR chronicity[tiab] OR persistence[tiab] OR fluctuat*[tiab] OR stability[tiab] OR pattern*[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2016-01-24",
+  "count": 10252,
+  "gold_scored": 38,
+  "gold_reachable": 38,
+  "retrieved": 34,
+  "recall_percent": 89.5,
+  "missed": [
+    "20061839",
+    "20836603",
+    "25461873",
+    "26412244"
+  ],
+  "nnr": 301.5,
+  "translation_issues": [],
+  "gold_seen_by_agent": 7,
+  "unseen_retrieved": 27,
+  "unseen_recall_percent": 87.1,
+  "leakage": [],
+  "concepts": null,
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

@@ -1,0 +1,55 @@
+{
+  "topic": "Appenzeller-Herzog_2019",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261001T122041Z",
+  "scored": "20261001T125054Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1813
+  },
+  "final_message": "mine[tiab] OR treatment[tiab] OR therap*[tiab] OR trientine[tiab] OR triethylenetetramine[tiab] OR zinc[tiab] OR tetrathiomolybdate[tiab] OR \"ammonium tetrathiomolybdate\"[tiab] OR molybdate[tiab] OR chelat*[tiab] OR \"zinc therapy\"[tiab] OR \"zinc therapies\"[tiab] OR \"zinc supplement*\"[tiab] OR \"zinc acetate\"[tiab] OR \"zinc sulfate\"[tiab] OR \"anti-copper therapy\"[tiab] OR \"copper chelat*\"[tiab])) AND (\"1800/01/01\"[edat] : \"2018/12/23\"[edat])\n```\n\nThe strategy retrieved **3,026 records** using the required PubMed entry-date cutoff of 2018-12-23. The audit contains the full 34-line strategy with counts for every line.\n\n- [Generated query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-codex-noseed-20261001T122041Z/work/final-query.txt)\n- [Audit and line-by-line counts](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-codex-noseed-20261001T122041Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-codex-noseed-20261001T122041Z/work/validation-manifest.json)\n- [Development rationale and assumptions](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/ours-codex-noseed-20261001T122041Z/work/narrative.md)\n\nI assumed “common therapies” means established medical treatments, particularly chelators and zinc-based regimens. Comparators, outcomes, and study design are left for screening. No user-supplied articles or independent validation set were available. The strategy retrieved **7/7** screened development records; that is relative recall against a small, related set, not an estimate of sensitivity. The therapy-category probe found **0 relevant records among 30 sampled** outside the therapy block.\n\nThe internal critic’s date-cutoff objection was rejected because the harness requires the 2018-12-23 snapshot; the query uses an Entrez `[edat]` bound, not a publication-date `[dp]` limit. This draft still needs PRESS peer review by an information specialist before use.",
+  "strategy": "((\"Hepatolenticular Degeneration\"[Mesh] OR \"Wilson disease\"[tiab] OR \"Wilson's disease\"[tiab] OR Wilson's[tiab] OR Wilsons[tiab] OR hepatolenticular[tiab] OR \"Kinnier-Wilson\"[tiab] OR \"hepatocerebral degeneration\"[tiab] OR \"copper storage disease\"[tiab]) AND (\"Penicillamine\"[Mesh] OR \"Trientine\"[Mesh] OR \"Zinc Compounds\"[Mesh] OR \"Zinc\"[Mesh] OR \"Zinc Acetate\"[Mesh] OR penicillamine[tiab] OR treatment[tiab] OR therap*[tiab] OR trientine[tiab] OR triethylenetetramine[tiab] OR zinc[tiab] OR tetrathiomolybdate[tiab] OR \"ammonium tetrathiomolybdate\"[tiab] OR molybdate[tiab] OR chelat*[tiab] OR \"zinc therapy\"[tiab] OR \"zinc therapies\"[tiab] OR \"zinc supplement*\"[tiab] OR \"zinc acetate\"[tiab] OR \"zinc sulfate\"[tiab] OR \"anti-copper therapy\"[tiab] OR \"copper chelat*\"[tiab])) AND (\"1800/01/01\"[edat] : \"2018/12/23\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-12-23",
+  "count": 3026,
+  "gold_scored": 22,
+  "gold_reachable": 21,
+  "retrieved": 21,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 144.1,
+  "translation_issues": [],
+  "gold_seen_by_agent": 5,
+  "unseen_retrieved": 16,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "screen": 3,
+      "search": 2
+    },
+    "optional": []
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

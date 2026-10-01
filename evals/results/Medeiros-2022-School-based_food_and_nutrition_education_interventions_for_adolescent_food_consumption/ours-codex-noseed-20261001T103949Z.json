@@ -1,0 +1,52 @@
+{
+  "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261001T103949Z",
+  "scored": "20261001T112343Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2633
+  },
+  "final_message": " |\n| 25 | `adolescent*[tiab]` | 213,221 |\n| 26 | `teen*[tiab]` | 26,895 |\n| 27 | `youth*[tiab]` | 64,596 |\n| 28 | `schoolchild*[tiab]` | 13,052 |\n| 29 | `\"school children\"[tiab]` | 20,666 |\n| 30 | `\"school child\"[tiab]` | 495 |\n| 31 | `student*[tiab]` | 234,078 |\n| 32 | `pupil*[tiab]` | 26,074 |\n| 33 | `schoolboy*[tiab]` | 469 |\n| 34 | `schoolgirl*[tiab]` | 785 |\n| 35 | `\"young people\"[tiab]` | 23,082 |\n| 36 | `\"young person\"[tiab]` | 1,094 |\n| 37 | `\"young persons\"[tiab]` | 2,277 |\n| 38 | Population block total | 3,090,080 |\n| 39 | Combined strategy total | **17,364** |\n\n### Validation and limits\n\nThe strategy retrieved **5 of 5** screened development records: relative recall **100%** against that small, non-independent set. There was no held-out validation set, so this is not an estimate of sensitivity. The optional setting and outcome blocks each had a loss sample with 0 relevant records out of 30, but only five known records were available—below the skill’s 15-record threshold for justifying either block as an AND requirement.\n\nThe scope was not confirmed by the user. I assumed school-age pupils qualify when exact age is unstated. For screening, eligible outcomes include actual food or dietary intake, consumption frequency, dietary behavior, or food choice; knowledge, attitudes, preferences alone, and BMI alone do not qualify.\n\nThis draft exceeds the default 10,000-record screening budget. It needs **PRESS peer review by an information specialist before use**; the internal critique was same-context and is not independent peer review.\n\nArtifacts: [audit.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20261001T103949Z/work/audit.md), [validation-manifest.json](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20261001T103949Z/work/validation-manifest.json), and [narrative.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20261001T103949Z/work/narrative.md).",
+  "strategy": "(((\"Health Education\"[Mesh] AND (\"Eating\"[Mesh] OR \"Feeding Behavior\"[Mesh] OR \"Food Preferences\"[Mesh])) OR \"nutrition education\"[tiab] OR (nutrition[tiab] AND educat*[tiab]) OR \"nutrition instruction\"[tiab] OR (food[tiab] AND educat*[tiab]) OR \"food education\"[tiab] OR \"dietary education\"[tiab] OR (diet*[tiab] AND educat*[tiab]) OR \"healthy eating education\"[tiab] OR (\"healthy eating\"[tiab] AND educat*[tiab]) OR \"nutrition curriculum\"[tiab] OR \"nutrition program\"[tiab] OR \"nutrition programs\"[tiab] OR \"nutrition intervention\"[tiab] OR \"nutrition interventions\"[tiab] OR \"nutrition counseling\"[tiab] OR \"nutrition counselling\"[tiab] OR \"cooking education\"[tiab] OR (cook*[tiab] AND educat*[tiab]) OR (food[tiab] AND literac*[tiab])) AND (\"Adolescent\"[Mesh] OR \"Child\"[Mesh] OR \"Students\"[Mesh] OR adolescent*[tiab] OR teen*[tiab] OR youth*[tiab] OR schoolchild*[tiab] OR \"school children\"[tiab] OR \"school child\"[tiab] OR student*[tiab] OR pupil*[tiab] OR schoolboy*[tiab] OR schoolgirl*[tiab] OR \"young people\"[tiab] OR \"young person\"[tiab] OR \"young persons\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-14",
+  "count": 17364,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 6,
+  "recall_percent": 66.7,
+  "missed": [
+    "17605839",
+    "22625222",
+    "25797051"
+  ],
+  "nnr": 2894.0,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 6,
+  "unseen_recall_percent": 66.7,
+  "leakage": [],
+  "concepts": null,
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

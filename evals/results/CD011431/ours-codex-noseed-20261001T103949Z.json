@@ -1,0 +1,48 @@
+{
+  "topic": "CD011431",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261001T103949Z",
+  "scored": "20261001T112126Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2495
+  },
+  "final_message": "atographic test\"[tiab:~2]` | 562 |\n| 25 | `\"lateral flow test\"[tiab:~2]` | 119 |\n| 26 | `\"lateral flow assay\"[tiab:~2]` | 156 |\n| 27 | `RDT[tiab]` | 653 |\n| 28 | `RDTs[tiab]` | 303 |\n| 29 | `CareStart[tiab]` | 21 |\n| 30 | `OptiMAL[tiab]` | 235,534 |\n| 31 | `ParaHIT[tiab]` | 9 |\n| 32 | `OnSite[tiab]` | 7,425 |\n| 33 | `BinaxNOW[tiab]` | 47 |\n| 34 | `\"SD Bioline\"[tiab]` | 59 |\n| 35 | `\"First Response\"[tiab]` | 902 |\n| 36 | `ICT[tiab]` | 2,484 |\n| 37 | Test block (OR of lines 17–36) | 1,042,430 |\n| 38 | Final combined search | **6,046** |\n\n## Validation and handoff\n\nThe 20 screened development records were all retrieved: **100% relative recall against that development set**. No user-supplied seeds, held-out validation set, or benchmark set were available, so recall is not independently validated and is not a sensitivity estimate.\n\nThe malaria category probes found no records outside the condition block. The broader RDT probe screened 30 records and found no eligible records outside the test block; a sample of that size cannot rule out all unusual product-specific wording. Endemic setting, uncomplicated severity, reference standard, and reported accuracy remain screening criteria.\n\nThe internal critique passed in two same-context rounds because a fresh reviewer session was unavailable. This is not independent PRESS peer review. **An information specialist should PRESS peer review this draft before use.**\n\nArtifacts: [final-query.txt](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-codex-noseed-20261001T103949Z/work/final-query.txt), [audit.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-codex-noseed-20261001T103949Z/work/audit.md), [validation-manifest.json](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-codex-noseed-20261001T103949Z/work/validation-manifest.json), and [narrative.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/ours-codex-noseed-20261001T103949Z/work/narrative.md).",
+  "strategy": "((\"Malaria\"[Mesh] OR \"Malaria, Vivax\"[Mesh] OR \"Plasmodium vivax\"[Mesh] OR \"Plasmodium\"[Mesh] OR malaria[tiab] OR malaria*[tiab] OR plasmodium[tiab] OR vivax[tiab] OR \"P. vivax\"[tiab] OR \"P vivax\"[tiab] OR non-falciparum[tiab] OR non falciparum[tiab] OR knowlesi[tiab] OR malariae[tiab] OR ovale[tiab]) AND (\"Diagnostic Tests, Routine\"[Mesh] OR \"Immunologic Tests\"[Mesh] OR \"Reagent Kits, Diagnostic\"[Mesh] OR \"Immunoassay\"[Mesh] OR \"rapid diagnostic test\"[tiab:~2] OR \"rapid test\"[tiab:~2] OR \"rapid antigen test\"[tiab:~2] OR \"immunochromatographic test\"[tiab:~2] OR \"lateral flow test\"[tiab:~2] OR \"lateral flow assay\"[tiab:~2] OR RDT[tiab] OR RDTs[tiab] OR CareStart[tiab] OR OptiMAL[tiab] OR ParaHIT[tiab] OR OnSite[tiab] OR BinaxNOW[tiab] OR \"SD Bioline\"[tiab] OR \"First Response\"[tiab] OR ICT[tiab])) AND (\"1800/01/01\"[edat] : \"2013/06/09\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2013-06-09",
+  "count": 6046,
+  "gold_scored": 26,
+  "gold_reachable": 26,
+  "retrieved": 26,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 232.5,
+  "translation_issues": [],
+  "gold_seen_by_agent": 7,
+  "unseen_retrieved": 19,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": null,
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

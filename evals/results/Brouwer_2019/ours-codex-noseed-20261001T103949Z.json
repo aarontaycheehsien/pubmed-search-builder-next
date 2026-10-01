@@ -1,0 +1,65 @@
+{
+  "topic": "Brouwer_2019",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261001T103949Z",
+  "scored": "20261001T112558Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2768
+  },
+  "final_message": "e Disorder\"[Mesh]` | 105,341 |\n| 2 | `\"Major Depressive Disorder\"[Mesh]` | 28,520 |\n| 3 | `\"Dysthymic Disorder\"[Mesh]` | 1,130 |\n| 4 | `depress*[tiab]` | 419,763 |\n| 5 | `dysthymi*[tiab]` | 3,055 |\n| 6 | `melanchol*[tiab]` | 2,939 |\n| 7 | `unipolar[tiab]` | 10,360 |\n| 8 | `#1 OR #2 OR #3 OR #4 OR #5 OR #6 OR #7` | 443,941 |\n| 9 | `\"Recurrence\"[Mesh]` | 178,366 |\n| 10 | `\"Secondary Prevention\"[Mesh]` | 19,442 |\n| 11 | `relaps*[tiab]` | 163,847 |\n| 12 | `recurren*[tiab]` | 496,927 |\n| 13 | `recrudescen*[tiab]` | 3,173 |\n| 14 | `recurrent episode*[tiab]` | 6,351 |\n| 15 | `return*[tiab]` | 223,418 |\n| 16 | `#9 OR #10 OR #11 OR #12 OR #13 OR #14 OR #15` | 927,028 |\n| 17 | `#8 AND #16` | **25,059** |\n\n## Validation and limitations\n\nEight records discovered and screened during this build were retrieved (4/4 in each of two development sets; 100% relative recall). There were no user-provided seeds, held-out records, or independent benchmark set, so independent recall was not estimated.\n\nThe query exceeds the standard 10,000-record screening budget. The tested psychological-theory block would reduce the count to 8,290, but it loses four known eligible records, so it was left out. The scope reflects assumptions made because you could not answer questions; it was not user-confirmed. The PRESS-structured internal critique passed, but this draft still needs PRESS peer review by an information specialist before use.\n\nGenerated files: [final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20261001T103949Z/work/final-query.txt), [audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20261001T103949Z/work/audit.md), [validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20261001T103949Z/work/validation-manifest.json), and [search narrative](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20261001T103949Z/work/narrative.md).",
+  "strategy": "((\"Depressive Disorder\"[Mesh] OR \"Major Depressive Disorder\"[Mesh] OR \"Dysthymic Disorder\"[Mesh] OR depress*[tiab] OR dysthymi*[tiab] OR melanchol*[tiab] OR unipolar[tiab]) AND (\"Recurrence\"[Mesh] OR \"Secondary Prevention\"[Mesh] OR relaps*[tiab] OR recurren*[tiab] OR recrudescen*[tiab] OR recurrent episode*[tiab] OR return*[tiab])) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-11-17",
+  "count": 25059,
+  "gold_scored": 54,
+  "gold_reachable": 54,
+  "retrieved": 52,
+  "recall_percent": 96.3,
+  "missed": [
+    "17696703",
+    "21848705"
+  ],
+  "nnr": 481.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 51,
+  "unseen_recall_percent": 96.2,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "psychological_theory",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

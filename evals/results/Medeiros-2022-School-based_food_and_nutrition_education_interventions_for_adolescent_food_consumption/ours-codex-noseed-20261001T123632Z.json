@@ -1,0 +1,68 @@
+{
+  "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261001T123632Z",
+  "scored": "20261001T131823Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2511
+  },
+  "final_message": "ating[tiab] OR healthy food*[tiab]) AND (\"Adolescent\"[Mesh] OR \"Child\"[Mesh] OR \"Child, Preschool\"[Mesh] OR \"Students\"[Mesh] OR adolescen*[tiab] OR teen*[tiab] OR youth*[tiab] OR child*[tiab] OR schoolchild*[tiab] OR school child*[tiab] OR student*[tiab] OR pupil*[tiab] OR school-aged[tiab] OR school age[tiab] OR middle schooler*[tiab] OR high schooler*[tiab] OR schoolgirl*[tiab] OR schoolboy*[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])\n```\n\n| Search line | Records |\n|---|---:|\n| Education or behavior-change intervention | 1,197,541 |\n| Food or nutrition content | 1,488,368 |\n| Adolescents or school students | 3,394,789 |\n| Combined strategy | 38,870 |\n\nThe audit contains the full line-by-line term counts. School delivery and food-consumption outcomes were tested as optional blocks, then left out because only nine known relevant studies were available—below the skill’s threshold for safely requiring either block. Screen for both eligibility criteria.\n\n## Validation and limitations\n\n- All nine screened development records were retrieved: **100% relative recall on that development set**. This is not independent validation or sensitivity; no held-out validation set or formal benchmark set was established.\n- One 30-record probe was screened for each of the three category concepts; none found a relevant record outside its block. Each optional-block loss sample also had 0 relevant records among 30 sampled records.\n- The combined count of **38,870** exceeds the default 10,000-record workload budget. Standard-depth screening activity totaled 218 screening instances, above the intended approximate 150; possible overlap is documented in the workspace narrative.\n- The search was bounded by Entrez date through **2017-12-14** as required for this run. It has no publication-date (`[dp]`) limit.\n- The scope was not user-confirmed. The draft needs **PRESS peer review by an information specialist before use**; the completed internal critique is not human PRESS peer review.",
+  "strategy": "((\"Health Education\"[Mesh] OR \"Health Promotion\"[Mesh] OR \"Curriculum\"[Mesh] OR \"Teaching\"[Mesh] OR \"Education\"[Mesh] OR educat*[tiab] OR curricul*[tiab] OR teach*[tiab] OR lesson*[tiab] OR instruction*[tiab] OR school-based intervention*[tiab] OR behavior change intervention*[tiab] OR behaviour change intervention*[tiab] OR health promotion program*[tiab] OR health promotion programme*[tiab] OR classroom intervention*[tiab] OR classroom-based[tiab] OR learning activit*[tiab] OR educational program*[tiab] OR educational programme*[tiab] OR nutrition education[tiab] OR food education[tiab] OR dietary education[tiab] OR nutrition intervention*[tiab] OR nutrition program*[tiab] OR nutrition programme*[tiab] OR nutrition promotion[tiab] OR \"food and nutrition education\"[tiab] OR healthy eating education[tiab] OR healthy eating program*[tiab] OR healthy eating programme*[tiab] OR nutrition curriculum[tiab] OR garden-based nutrition[tiab] OR school garden*[tiab] OR food literacy[tiab] OR nutrition literacy[tiab] OR nutrition training[tiab] OR nutrition counseling[tiab] OR nutrition counselling[tiab] OR dietary intervention*[tiab] OR healthy diet promotion[tiab] OR healthy food promotion[tiab]) AND (\"Child Nutrition Sciences\"[Mesh] OR \"Food\"[Mesh] OR \"Diet\"[Mesh] OR \"Eating\"[Mesh] OR \"Feeding Behavior\"[Mesh] OR \"Food Preferences\"[Mesh] OR nutrition*[tiab] OR food*[tiab] OR diet*[tiab] OR eating[tiab] OR dietary[tiab] OR fruit*[tiab] OR vegetable*[tiab] OR beverage*[tiab] OR healthy eating[tiab] OR healthy food*[tiab]) AND (\"Adolescent\"[Mesh] OR \"Child\"[Mesh] OR \"Child, Preschool\"[Mesh] OR \"Students\"[Mesh] OR adolescen*[tiab] OR teen*[tiab] OR youth*[tiab] OR child*[tiab] OR schoolchild*[tiab] OR school child*[tiab] OR student*[tiab] OR pupil*[tiab] OR school-aged[tiab] OR school age[tiab] OR middle schooler*[tiab] OR high schooler*[tiab] OR schoolgirl*[tiab] OR schoolboy*[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-14",
+  "count": 38870,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 9,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 4318.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 9,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "search": 3
+    },
+    "optional": [
+      {
+        "id": "school",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "consumption",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

@@ -1,0 +1,62 @@
+{
+  "topic": "Brouwer_2019",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261001T120856Z",
+  "scored": "20261001T130115Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 3139
+  },
+  "final_message": "` | 5,164 |\n| 5 | `\"Seasonal Affective Disorder\"[Mesh]` | 1,198 |\n| 6 | `depress*[tiab]` | 419,763 |\n| 7 | `dysthymi*[tiab]` | 3,055 |\n| 8 | `melanchol*[tiab]` | 2,939 |\n| 9 | `unipolar[tiab]` | 10,360 |\n| 10 | `#1 OR #2 OR #3 OR #4 OR #5 OR #6 OR #7 OR #8 OR #9` | 465,339 |\n| 11 | `\"Recurrence\"[Mesh]` | 178,366 |\n| 12 | `relaps*[tiab]` | 163,847 |\n| 13 | `recurren*[tiab]` | 496,927 |\n| 14 | `recrudescen*[tiab]` | 3,173 |\n| 15 | `remission*[tiab]` | 113,679 |\n| 16 | `\"re-emergence\"[tiab]` | 2,275 |\n| 17 | `(return*[tiab] AND depress*[tiab])` | 7,933 |\n| 18 | `reappear*[tiab]` | 11,263 |\n| 19 | `recover*[tiab]` | 602,986 |\n| 20 | `#11 OR #12 OR #13 OR #14 OR #15 OR #16 OR #17 OR #18 OR #19` | 1,374,314 |\n| 21 | `#10 AND #20` | 47,011 |\n\n## Validation and limitations\n\nThe strategy retrieved all 8 known relevant records: **100% relative recall against the development set**, not an independent sensitivity estimate. The records came from a pilot search and references of a systematic review; there was no held-out validation set.\n\nThe psychological theory/model/mechanism block was tested but left out: it reduced results by 66.2% while losing known relevant PMID 24364598. The final count exceeds the 10,000-record screening budget. The closing internal critic left a documentation concern about searching `return*` only alongside `depress*`; the rationale and test are recorded in the narrative. Scope assumptions were not confirmed with you, as requested.\n\nThis is a draft for **human PRESS peer review by an information specialist before use**.\n\n- [Generated audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20261001T120856Z/work/audit.md)\n- [Narrative and reviewer notes](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20261001T120856Z/work/narrative.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20261001T120856Z/work/validation-manifest.json)",
+  "strategy": "((\"Depressive Disorder\"[Mesh] OR \"Major Depressive Disorder\"[Mesh] OR \"Depression\"[Mesh] OR \"Depression, Postpartum\"[Mesh] OR \"Seasonal Affective Disorder\"[Mesh] OR depress*[tiab] OR dysthymi*[tiab] OR melanchol*[tiab] OR unipolar[tiab]) AND (\"Recurrence\"[Mesh] OR relaps*[tiab] OR recurren*[tiab] OR recrudescen*[tiab] OR remission*[tiab] OR \"re-emergence\"[tiab] OR (return*[tiab] AND depress*[tiab]) OR reappear*[tiab] OR recover*[tiab])) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-11-17",
+  "count": 47011,
+  "gold_scored": 54,
+  "gold_reachable": 54,
+  "retrieved": 54,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 870.6,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 53,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "psychological_theory",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

@@ -1,0 +1,48 @@
+{
+  "topic": "Brouwer_2019",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261001T112602Z",
+  "scored": "20261001T120854Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2572
+  },
+  "final_message": "## PubMed strategy\n\nThe protected report completed successfully. The final query uses an Entrez entry-date bound through **2018-11-17** and has no publication-date limit:\n\n```text\n((\"Depressive Disorder\"[Mesh] OR \"Major Depressive Disorder\"[Mesh] OR \"Depression\"[Mesh] OR depress*[tiab] OR dysthym*[tiab] OR melanchol*[tiab] OR \"unipolar depression\"[tiab] OR \"unipolar depressive\"[tiab])) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])\n```\n\nThe depression concept block returned **460,729** records. The optional recurrence and theory blocks were left out because they would have excluded known relevant records.\n\nOn the 19-record development set, the final strategy retrieved **19/19**. This is relative recall on a non-independent set, not an estimate of overall sensitivity. The broad result count and lack of an independent validation set remain key limitations; an information specialist’s PRESS review is pending.\n\n- [Final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20261001T112602Z/work/final-query.txt)\n- [Audit report](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20261001T112602Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20261001T112602Z/work/validation-manifest.json)\n- [Search rationale and notes](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/ours-codex-noseed-20261001T112602Z/work/narrative.md)",
+  "strategy": "((\"Depressive Disorder\"[Mesh] OR \"Major Depressive Disorder\"[Mesh] OR \"Depression\"[Mesh] OR depress*[tiab] OR dysthym*[tiab] OR melanchol*[tiab] OR \"unipolar depression\"[tiab] OR \"unipolar depressive\"[tiab])) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-11-17",
+  "count": 460729,
+  "gold_scored": 54,
+  "gold_reachable": 54,
+  "retrieved": 54,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 8532.0,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 52,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": null,
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

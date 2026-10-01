@@ -1,0 +1,50 @@
+{
+  "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261001T112345Z",
+  "scored": "20261001T123629Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "844e5a936aecd48545a3535f82d77b0fe09c78fd",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 4364
+  },
+  "final_message": " OR \"eating behaviors\"[tiab] OR \"eating behaviour\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])\n```\n\n**Counts by concept block:** education/intervention: 2,017,304; food/nutrition content: 1,164,809; school setting: 316,648; food-consumption outcomes: 404,112; combined query: **6,539 records**. The audit has the line-by-line counts for every term and combination: [audit.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20261001T112345Z/work/audit.md).\n\nThe cutoff is an **Entrez record-entry snapshot through 2017-12-14**, not a publication-date limit. The report gate passed; the protected [query file](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/ours-codex-noseed-20261001T112345Z/work/final-query.txt) and [validation manifest](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8f2f6f5e/ours-codex-noseed-20261001T112345Z/work/validation-manifest.json) are in `work`.\n\n## Checks and assumptions\n\nThe query retrieved **16 of 16** screened development records (100% relative recall). These records helped build the strategy, so this is not independent validation or a sensitivity estimate; there was no held-out set. The school and outcome blocks each retained all 16 known records and had 0 relevant records in their respective fresh 30-record loss samples.\n\nI interpreted eligible consumption outcomes broadly to include dietary intake, eating behavior or choice, food preference, and diet quality. I treated adolescents and school students across grades as potentially eligible, so age/grade remains a screening criterion rather than a required query block. The scope proceeded under your instruction not to pause for questions; those assumptions are documented in the audit.\n\nThree internal critic rounds were completed, including correction of two eating-behavior spelling variants. This is internal QA, not PRESS peer review. **Have an information specialist conduct PRESS peer review before using the strategy.**",
+  "strategy": "((\"Health Education\"[Mesh] OR \"Health Promotion\"[Mesh] OR education[tiab] OR educat*[tiab] OR teach*[tiab] OR curricul*[tiab] OR lesson*[tiab] OR program*[tiab] OR programme*[tiab] OR intervention*[tiab] OR \"nutrition education\"[tiab] OR \"nutrition instruction\"[tiab] OR \"nutrition teaching\"[tiab] OR \"nutrition curriculum\"[tiab] OR \"nutrition curricula\"[tiab] OR \"dietary education\"[tiab] OR \"food education\"[tiab] OR \"healthy eating education\"[tiab] OR \"nutrition intervention*\"[tiab] OR \"dietary intervention*\"[tiab] OR \"nutrition program*\"[tiab] OR \"nutrition programme*\"[tiab] OR \"nutrition promotion\"[tiab] OR \"healthy eating promotion\"[tiab]) AND (\"Child Nutrition Sciences\"[Mesh] OR \"Adolescent Nutritional Physiological Phenomena\"[Mesh] OR \"Diet\"[Mesh] OR \"Feeding Behavior\"[Mesh] OR \"Food Preferences\"[Mesh] OR nutrition*[tiab] OR diet*[tiab] OR food*[tiab] OR \"healthy eating\"[tiab] OR beverage*[tiab] OR fruit*[tiab] OR vegetable*[tiab]) AND (\"School Health Services\"[Mesh] OR \"Schools\"[Mesh] OR school*[tiab] OR classroom*[tiab] OR school-based[tiab] OR school based[tiab] OR in-school[tiab] OR in school[tiab]) AND (\"Diet\"[Mesh] OR \"Feeding Behavior\"[Mesh] OR \"Food Preferences\"[Mesh] OR \"Energy Intake\"[Mesh] OR food consumption[tiab] OR \"food intake\"[tiab] OR \"dietary intake\"[tiab] OR \"energy intake\"[tiab] OR \"fat intake\"[tiab] OR \"eating behavior\"[tiab] OR \"eating behaviours\"[tiab] OR \"food choice\"[tiab] OR \"food choices\"[tiab] OR \"food preference*\"[tiab] OR \"diet quality\"[tiab] OR \"dietary behavior\"[tiab] OR \"dietary behaviour\"[tiab] OR \"fruit and vegetable intake\"[tiab] OR \"beverage consumption\"[tiab] OR \"food purchase*\"[tiab] OR \"food sales\"[tiab] OR \"eating behaviors\"[tiab] OR \"eating behaviour\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-14",
+  "count": 6539,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 8,
+  "recall_percent": 88.9,
+  "missed": [
+    "25797051"
+  ],
+  "nnr": 817.4,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 7,
+  "unseen_recall_percent": 87.5,
+  "leakage": [],
+  "concepts": null,
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}
