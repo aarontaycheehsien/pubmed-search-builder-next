@@ -18,6 +18,10 @@ SEVERITIES = {"must-fix", "should-fix", "document"}
 KINDS = {"lexical", "structural", "scope", "filter", "syntax", "reporting"}
 STATUSES = {"open", "resolved", "rejected", "accepted-risk"}
 ARTIFACTS = ("validation-manifest.json", "final-query.txt", "audit.md")
+# After the closing round, a must-fix finding of these kinds is a judgment the agent may disagree
+# with: the query is delivered with the objection on the audit's first page for the human peer
+# reviewer. Syntax and filter findings, and technical blockers, are never overridable.
+OVERRIDABLE_KINDS = {"lexical", "structural", "scope", "reporting"}
 
 
 def record_evaluation(ws: Workspace, evaluation: dict, *, note: str = "") -> None:
@@ -59,6 +63,50 @@ def critic_rounds(ws: Workspace) -> list[dict]:
         seen.add(expected)
         rounds.append(data)
     return rounds
+
+
+def critic_overrides(ws: Workspace) -> list[dict]:
+    path = ws.root / "critic" / "overrides.json"
+    if not path.exists():
+        return []
+    data = read_json(path)
+    if not isinstance(data, list) or any(not isinstance(o, dict) for o in data):
+        raise WorkspaceError("critic/overrides.json must be a list of objects")
+    return data
+
+
+def critic_digest(rounds: list[dict], overrides: list[dict]) -> str:
+    """The critic evidence a delivery rests on (rounds alone when nothing was overridden)."""
+    return validation.digest(rounds) if not overrides else validation.digest({"rounds": rounds, "overrides": overrides})
+
+
+def _override_problems(finding: dict | None, closed_out: bool) -> list[str]:
+    if not closed_out:
+        return ["overrides apply only after the closing round"]
+    if finding is None:
+        return ["no such finding"]
+    if finding.get("status") != "open" or finding.get("severity") != "must-fix":
+        return ["only an open must-fix finding can be overridden"]
+    if finding.get("kind") not in OVERRIDABLE_KINDS:
+        return [f"a {finding.get('kind')!r} finding cannot be overridden (only {', '.join(sorted(OVERRIDABLE_KINDS))})"]
+    return []
+
+
+def override_finding(ws: Workspace, finding_id: str, reason: str) -> dict:
+    """Record disagreement with an open must-fix judgment after the closing round."""
+    if not _nonempty(reason):
+        raise WorkspaceError("give the reason you disagree, with the evidence for it")
+    rounds = critic_rounds(ws)
+    if not rounds:
+        raise WorkspaceError("no critic round to override")
+    active = {f.get("id"): f for r in rounds for f in r.get("findings") or [] if isinstance(f, dict)}
+    problems = _override_problems(active.get(finding_id), bool(rounds[-1].get("closing")))
+    if problems:
+        raise WorkspaceError(f"{finding_id}: {problems[0]}")
+    overrides = [o for o in critic_overrides(ws) if o.get("id") != finding_id]
+    overrides.append({"id": finding_id, "round": rounds[-1]["round"], "response": reason.strip(), "created": now()})
+    write_json(ws.root / "critic" / "overrides.json", overrides)
+    return {"overridden": finding_id, "next": "run psb report; the audit will open with this objection and your reason"}
 
 
 def latest_evaluation(ws: Workspace) -> dict:
@@ -148,19 +196,39 @@ def revision_budget(depth: str | None) -> int:
     return {"quick": 1, "standard": 2, "thorough": 3}.get(depth or "standard", 2)
 
 
+# The closing round, plus one verification round when the strategy or scope changed after it.
+MAX_CLOSING_ROUNDS = 2
+
+# What psb itself enforces, so the critic does not demand a change the tool refuses to make.
+_RULES_NOTE = [
+    "**Rules psb enforces.** An optional block can be AND-ed only when at least "
+    f"{optional.MIN_KNOWN_FOR_AND} known records sit in the strategy without it and it loses none of them; "
+    "otherwise `psb optional decide --choice and` refuses. Leaving an optional block out, even over the "
+    "workload budget, is a legitimate outcome. When a left-out block concerns you, the available remedies "
+    "are finding more known records, broadening or rewording the block, or screening it; recommend one of "
+    "those, not AND-ing it regardless. A finding that asks for something psb refuses cannot be resolved.", ""]
+
+
 def _closing_problems(rounds: list[dict]) -> list[tuple[int, str]]:
     """A closing round verifies how earlier findings were handled; it cannot open a new front.
 
     Without it, a last revision round that asks for changes is a dead end: fixing the strategy
     makes the critic stale with no round left, and leaving the findings open blocks delivery.
+    The same dead end recurs if anything the critic reviewed changes after the closing round, so
+    one more closing round (a verification round) may follow it; nothing may follow that.
     """
     problems = []
     earlier: set[str] = set()
-    for index, r in enumerate(rounds):
+    closings = 0
+    for r in rounds:
         findings = [f for f in r.get("findings") or [] if isinstance(f, dict)]
+        if not r.get("closing") and closings:
+            problems.append((r.get("round"), "a revision round cannot follow a closing round"))
         if r.get("closing"):
-            if index != len(rounds) - 1:
-                problems.append((r.get("round"), "a closing round must be the last round"))
+            closings += 1
+            if closings > MAX_CLOSING_ROUNDS:
+                problems.append((r.get("round"), f"at most {MAX_CLOSING_ROUNDS} closing rounds (one verification "
+                                 "round after a late change)"))
             for f in findings:
                 if f.get("id") not in earlier and f.get("severity") != "document":
                     problems.append((r.get("round"), f"{f.get('id')}: a closing round may only verify earlier findings; "
@@ -169,9 +237,11 @@ def _closing_problems(rounds: list[dict]) -> list[tuple[int, str]]:
     return problems
 
 
-def review_gate(ws: Workspace, evaluation: dict, *, rounds: list[dict] | None = None) -> dict:
+def review_gate(ws: Workspace, evaluation: dict, *, rounds: list[dict] | None = None,
+                overrides: list[dict] | None = None) -> dict:
     blockers = []
     rounds = critic_rounds(ws) if rounds is None else rounds
+    overrides = critic_overrides(ws) if overrides is None else overrides
     if not rounds:
         return {"blockers": [validation.issue("critic_missing", "A current internal critic is required at every depth")], "findings": []}
     latest = rounds[-1]
@@ -195,9 +265,19 @@ def review_gate(ws: Workspace, evaluation: dict, *, rounds: list[dict] | None = 
     # After the closing round no review is left to act on a should-fix finding, so it is delivered
     # as a documented open concern; only a must-fix finding still stops the query.
     closed_out = bool(latest.get("closing"))
+    overridden = {}
+    # An override answers one round; after a verification round it must be made again.
+    for o in [o for o in overrides or [] if o.get("round") == latest.get("round")]:
+        problems = _override_problems(active.get(o.get("id")), closed_out)
+        if not _nonempty(o.get("response")):
+            problems.append("an override needs a response")
+        if problems:
+            blockers.append(validation.issue("override_invalid", "Invalid critic override", location=f"critic:{o.get('id')}", evidence=problems))
+        else:
+            overridden[o["id"]] = {**active[o["id"]], "override": o["response"]}
     blocking_severities = {"must-fix"} if closed_out else {"must-fix", "should-fix"}
     for fid, f in active.items():
-        if f["status"] == "open" and f["severity"] in blocking_severities:
+        if f["status"] == "open" and f["severity"] in blocking_severities and fid not in overridden:
             blockers.append(validation.issue("critic_open", "Finding needs a disposition", location=f"critic:{fid}", evidence=f))
     # An omitted finding must be explicitly carried forward, even if its old status was open.
     current_ids = {f.get("id") for f in latest.get("findings", []) if isinstance(f, dict)} if isinstance(latest.get("findings"), list) else set()
@@ -227,10 +307,11 @@ def review_gate(ws: Workspace, evaluation: dict, *, rounds: list[dict] | None = 
             explained = any(f.get("domain") == domain and f.get("status") in {"accepted-risk", "rejected", "resolved"} and _nonempty(f.get("response")) for f in active.values())
             if closed_out:  # at closing, a domain blocks only through an open must-fix finding in it
                 explained = not any(f.get("domain") == domain and f["status"] == "open" and f["severity"] == "must-fix"
-                                    for f in active.values())
+                                    and fid not in overridden for fid, f in active.items())
             if not explained:
                 blockers.append(validation.issue("critic_revise", "Domain still requires revision", location=f"critic:{domain}"))
-    return {"blockers": blockers, "findings": list(active.values()), "issue_dispositions": dispositions}
+    return {"blockers": blockers, "findings": list(active.values()), "issue_dispositions": dispositions,
+            "overridden": list(overridden.values())}
 
 
 def check_round(ws: Workspace, path: Path) -> dict:
@@ -240,8 +321,16 @@ def check_round(ws: Workspace, path: Path) -> dict:
     evaluation = latest_evaluation(ws)
     rounds = [r for r in critic_rounds(ws) if r["round"] < data["round"]] + [data]
     result = review_gate(ws, evaluation, rounds=rounds)
-    return {"ok": not result["blockers"], "problems": [b["message"] for b in result["blockers"]],
-            "blockers": result["blockers"], "open_must_fix": [f["id"] for f in result["findings"] if f["status"] == "open" and f["severity"] == "must-fix"]}
+    overridden = {f["id"] for f in result.get("overridden", [])}
+    open_must_fix = [f for f in result["findings"] if f["status"] == "open" and f["severity"] == "must-fix" and f["id"] not in overridden]
+    body = {"ok": not result["blockers"], "problems": [b["message"] for b in result["blockers"]],
+            "blockers": result["blockers"], "open_must_fix": [f["id"] for f in open_must_fix]}
+    overridable = [f["id"] for f in open_must_fix if data.get("closing") and f.get("kind") in OVERRIDABLE_KINDS]
+    if overridable:
+        body["overridable"] = overridable
+        body["next"] = ("If you can fix a finding, fix it, psb eval, and take the verification round. If you disagree with "
+                        "it on evidence, psb critic override <id> --reason \"...\"; the audit opens with the objection.")
+    return body
 
 
 def critic_packet(ws: Workspace) -> Path:
@@ -251,9 +340,15 @@ def critic_packet(ws: Workspace) -> Path:
     rounds = critic_rounds(ws)
     number = max((r["round"] for r in rounds), default=0) + 1
     budget = revision_budget(ws.protocol().get("depth"))
-    if any(r.get("closing") for r in rounds):
-        raise WorkspaceError("the closing round has been used; use report --diagnostic for the handoff")
-    closing = sum(bool(r.get("review_sha256")) for r in rounds) >= budget
+    closings = [r for r in rounds if r.get("closing")]
+    verification = False
+    if closings:
+        if closings[-1].get("review_sha256") == evaluation["review_sha256"]:
+            raise WorkspaceError("the closing round reviewed the current strategy; run psb report")
+        if len(closings) >= MAX_CLOSING_ROUNDS:
+            raise WorkspaceError("the verification round has been used; use report --diagnostic for the handoff")
+        verification = True
+    closing = verification or sum(bool(r.get("review_sha256")) for r in rounds) >= budget
     template = {"round": number, **({"closing": True} if closing else {}),
                 "strategy_version": evaluation.get("version"), "review_sha256": evaluation["review_sha256"],
                 "domains": {d: {"verdict": "pass | revise", "note": "explanation"} for d in DOMAINS}, "findings": [],
@@ -263,7 +358,13 @@ def critic_packet(ws: Workspace) -> Path:
                      "it open and the domain at revise if it was not handled. Do not raise new must-fix or should-fix "
                      "findings; record any new concern as severity 'document'. Keep \"closing\": true in the response.", ""]
                     if closing else [])
-    lines = [f"# Critic packet, round {number}{' (closing)' if closing else ''}", "", *closing_note,
+    if verification:
+        closing_note = ["**Verification round.** The draft changed after the closing round. This is the last review: "
+                        "check that the change keeps every earlier finding's disposition true, and update a finding only "
+                        "where the change affects it. Do not raise new must-fix or should-fix findings; record any new "
+                        "concern as severity 'document'. Keep \"closing\": true in the response.", ""]
+    title = " (verification)" if verification else " (closing)" if closing else ""
+    lines = [f"# Critic packet, round {number}{title}", "", *closing_note, *_RULES_NOTE,
              "Review this draft as an information specialist using the six PRESS domains. "
              "Use only the packet. Do not answer the evidence question. Technical errors cannot be waived. "
              "Carry earlier finding IDs forward with explicit dispositions. For each finding provide id, domain, severity "
@@ -319,6 +420,8 @@ def report(ws: Workspace, *, diagnostic: bool = False, note: str = "") -> dict:
         cache.enabled = False
         evaluation = {}
         rounds = []
+        overrides = []
+        overridden = []
         try:
             evaluation = evaluate(ws, term_counts=True)
             evaluation["fresh"] = True
@@ -327,9 +430,11 @@ def report(ws: Workspace, *, diagnostic: bool = False, note: str = "") -> dict:
             if not evaluation["validation"]["complete"]:
                 blockers.append(validation.issue("validation_incomplete", "All final validation checks must complete"))
             rounds = critic_rounds(ws)
-            critic_hash = validation.digest(rounds)
-            review = review_gate(ws, evaluation, rounds=rounds)
+            overrides = critic_overrides(ws)
+            critic_hash = critic_digest(rounds, overrides)
+            review = review_gate(ws, evaluation, rounds=rounds, overrides=overrides)
             blockers.extend(review["blockers"])
+            overridden = review.get("overridden", [])
         except (ValueError, OSError, WorkspaceError) as exc:
             blockers = [validation.issue("finalization_failed", "Finalization could not complete", evidence=str(exc))]
         finally:
@@ -343,17 +448,18 @@ def report(ws: Workspace, *, diagnostic: bool = False, note: str = "") -> dict:
         stage = ws.root / "attempts" / (attempt["attempt_id"] + "-delivery")
         stage.mkdir()
         query_bytes = (evaluation["query"] + "\n").encode("utf-8")
-        audit_bytes = _audit(ws, evaluation, rounds).encode("utf-8")
+        audit_bytes = _audit(ws, evaluation, rounds, overridden).encode("utf-8")
         import hashlib
         hashes = {"final-query.txt": hashlib.sha256(query_bytes).hexdigest(), "audit.md": hashlib.sha256(audit_bytes).hexdigest()}
         manifest = {"status": "passed", "policy_version": validation.POLICY_VERSION, "attempt_id": attempt["attempt_id"],
                     "input_sha256": evaluation["input_sha256"], "review_sha256": evaluation["review_sha256"], "critic_sha256": critic_hash,
-                    "created": now(), "query": evaluation["query"], "artifacts": hashes, "human_press_review": "pending"}
+                    "created": now(), "query": evaluation["query"], "artifacts": hashes, "human_press_review": "pending",
+                    **({"overridden_findings": [f["id"] for f in overridden]} if overridden else {})}
         try:
             (stage / "final-query.txt").write_bytes(query_bytes)
             (stage / "audit.md").write_bytes(audit_bytes)
             write_json(stage / "validation-manifest.json", manifest)
-            if validation.digest(validation.input_snapshot(ws)) != evaluation["input_sha256"] or validation.digest(critic_rounds(ws)) != critic_hash:
+            if validation.digest(validation.input_snapshot(ws)) != evaluation["input_sha256"] or critic_digest(critic_rounds(ws), critic_overrides(ws)) != critic_hash:
                 raise WorkspaceError("inputs or critic changed during finalization")
             for name in ("final-query.txt", "audit.md", "validation-manifest.json"):
                 (stage / name).replace(ws.root / name)
@@ -372,6 +478,19 @@ def report(ws: Workspace, *, diagnostic: bool = False, note: str = "") -> dict:
                 "manifest": str(ws.root / "validation-manifest.json"), "attempt_id": attempt["attempt_id"]}
 
 
+def _changed_hint(ws: Workspace, manifest: dict, snapshot: dict) -> str:
+    """Which inputs changed since the delivery, and whether a plain `psb report` re-run will do."""
+    try:
+        old = read_json(ws.root / "attempts" / f"{manifest.get('attempt_id')}.json")["evaluation"]["inputs"]
+    except (OSError, ValueError, KeyError, TypeError):
+        return "; run psb eval and psb report again"
+    changed = validation.changed_inputs(old, snapshot)
+    exempt = {f"protocol.{k}" for k in validation.REVIEW_EXEMPT_PROTOCOL_KEYS}
+    advice = ("only conversation metadata changed: the critic is still current, so run psb report again"
+              if changed and set(changed) <= exempt else "run psb eval, review the change with the critic, and psb report again")
+    return f" ({', '.join(changed) or 'unknown'}); {advice}"
+
+
 def verify_delivery(ws: Workspace) -> dict:
     """Read-only receipt check for consumers; never trust an orphaned or stale query file."""
     import hashlib
@@ -381,9 +500,10 @@ def verify_delivery(ws: Workspace) -> dict:
             raise WorkspaceError("missing current validation receipt")
         if (ws.root / ".report.lock").exists():
             raise WorkspaceError("publication is in progress or was interrupted")
-        if manifest.get("input_sha256") != validation.digest(validation.input_snapshot(ws)):
-            raise WorkspaceError("delivery inputs have changed")
-        if manifest.get("critic_sha256") != validation.digest(critic_rounds(ws)):
+        snapshot = validation.input_snapshot(ws)
+        if manifest.get("input_sha256") != validation.digest(snapshot):
+            raise WorkspaceError("delivery inputs have changed" + _changed_hint(ws, manifest, snapshot))
+        if manifest.get("critic_sha256") != critic_digest(critic_rounds(ws), critic_overrides(ws)):
             raise WorkspaceError("critic evidence has changed")
         for name in ("final-query.txt", "audit.md"):
             expected = manifest.get("artifacts", {}).get(name)
@@ -396,7 +516,22 @@ def verify_delivery(ws: Workspace) -> dict:
         return {"ok": False, "error": str(exc)}
 
 
-def _audit(ws: Workspace, evaluation: dict, rounds: list[dict]) -> str:
+def _overridden_section(overridden: list[dict]) -> list[str]:
+    """Must-fix findings the closing critic left open and the agent disagreed with: first thing a reviewer reads."""
+    if not overridden:
+        return []
+    lines = ["## Delivered over an open critic objection", "",
+             "The internal critic's closing round left these must-fix findings open. The query was delivered "
+             "with them overridden; the peer reviewer should decide each one.", ""]
+    for f in overridden:
+        lines += [f"- **{f['id']}** ({f.get('domain')}, {f.get('kind')}{', block ' + str(f['block']) if f.get('block') else ''}): "
+                  f"{f.get('finding')}",
+                  f"  - Critic recommended: {f.get('recommendation') or 'not stated'}",
+                  f"  - Reason for overriding: {f['override']}"]
+    return lines + [""]
+
+
+def _audit(ws: Workspace, evaluation: dict, rounds: list[dict], overridden: list[dict] | None = None) -> str:
     protocol = evaluation["inputs"]["protocol"]
     strategy = Strategy.from_dict(evaluation["inputs"]["strategy"])
     versions = ws.versions()
@@ -409,6 +544,7 @@ def _audit(ws: Workspace, evaluation: dict, rounds: list[dict]) -> str:
         "",
         f"Generated {now()} by `psb report` from workspace files. Draft for human PRESS peer review.",
         "",
+        *_overridden_section(overridden or []),
         "## Question and scope",
         "",
         f"- Question: {protocol.get('question')}",

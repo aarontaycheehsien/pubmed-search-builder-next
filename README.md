@@ -49,7 +49,7 @@ python scripts/psb.py --workspace runs/demo report
 | `lint` | offline syntax and design checks, numbered line set |
 | `eval` | counts per line, recall per set, failing blocks, ablation, change since last version |
 | `terms rank`, `terms miss` | objective term candidates; vocabulary of missed records |
-| `critic packet`, `critic check` | PRESS critic input; validate a critic round |
+| `critic packet`, `critic check`, `critic override` | PRESS critic input; validate a critic round; deliver over an open judgment finding after the closing round |
 | `report` | live validation and protected query/audit/manifest; `--diagnostic` emits unfinished output |
 | `log`, `cache`, `doctor` | provenance summary, cache, configuration check |
 

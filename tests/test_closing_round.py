@@ -73,7 +73,7 @@ def test_closing_round_that_still_asks_for_revision_ends_in_diagnostic(make_ws):
     write_round(ws, 3, [OPEN], REVISE, closing=True)
     result = deliver.report(ws)
     assert not result["ok"] and {"critic_open", "critic_revise"} <= {b["code"] for b in result["blockers"]}
-    with pytest.raises(WorkspaceError, match="closing round has been used"):
+    with pytest.raises(WorkspaceError, match="closing round reviewed the current strategy"):
         deliver.critic_packet(ws)
 
 

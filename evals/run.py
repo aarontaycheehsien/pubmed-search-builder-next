@@ -47,6 +47,20 @@ def stamp() -> str:
     return dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
 
 
+def _verify(run_dir: Path, effective_as_of: str | None) -> dict:
+    """psb's own delivery check on the run's workspace, with the run's as-of bound in force."""
+    previous = os.environ.get("PSB_AS_OF")
+    try:
+        if effective_as_of:
+            os.environ["PSB_AS_OF"] = effective_as_of
+        return deliver.verify_delivery(Workspace(run_dir / "work"))
+    finally:
+        if previous is None:
+            os.environ.pop("PSB_AS_OF", None)
+        else:
+            os.environ["PSB_AS_OF"] = previous
+
+
 def find_strategy_file(run_dir: Path, *, require_protected: bool = False, effective_as_of: str | None = None) -> Path | None:
     """The agent's final strategy, wherever it actually wrote it.
 
@@ -56,17 +70,8 @@ def find_strategy_file(run_dir: Path, *, require_protected: bool = False, effect
     a skill's real output rather than discarding a completed, on-topic run over a path detail.
     """
     if require_protected:
-        previous = os.environ.get("PSB_AS_OF")
-        try:
-            if effective_as_of:
-                os.environ["PSB_AS_OF"] = effective_as_of
-            verified = deliver.verify_delivery(Workspace(run_dir / "work"))
-            return Path(verified["query_file"]) if verified["ok"] else None
-        finally:
-            if previous is None:
-                os.environ.pop("PSB_AS_OF", None)
-            else:
-                os.environ["PSB_AS_OF"] = previous
+        verified = _verify(run_dir, effective_as_of)
+        return Path(verified["query_file"]) if verified["ok"] else None
     for candidate in (run_dir / "final_strategy.txt", run_dir / "work" / "final_strategy.txt"):
         if candidate.exists() and candidate.read_text(encoding="utf-8").strip():
             return candidate
@@ -232,6 +237,8 @@ def generate_once(args, fixture: dict, split: str, *, skill_dir: Path, skill_nam
         card["leakage"] = harness.leakage(fixture, run_dir, transcript)
     else:
         card["error"] = "no current protected delivery" if protected else "no final_strategy.txt"
+        if protected and (run_dir / "work" / "validation-manifest.json").exists():
+            card["delivery_error"] = _verify(run_dir, fixture.get("as_of")).get("error")
         unfinished = harness.diagnostic_handoff(run_dir)
         if unfinished:  # what the undelivered query would have retrieved; never counted as delivered
             scored = harness.score(fixture, unfinished["query"], exclude=set(seeds))
@@ -239,7 +246,8 @@ def generate_once(args, fixture: dict, split: str, *, skill_dir: Path, skill_nam
                                   **{k: scored[k] for k in ("count", "gold_reachable", "retrieved", "recall_percent")}}
     # The agent's own process died before it created a workspace: a driver failure, not the skill's.
     card["workspace_started"] = (run_dir / "work" / "protocol.json").exists()
-    card["status"] = harness.run_status(card, drivers.error_text(run_dir))
+    card["status"] = harness.run_status(card, drivers.error_text(run_dir),
+                                        low_disk=harness.free_bytes(run_dir) < harness.LOW_DISK_BYTES)
     card["valid"] = card["status"] == "ok"
     out = save(fixture["id"], label, seal(card, split))
     if split == "heldout":
@@ -256,6 +264,8 @@ def generate_once(args, fixture: dict, split: str, *, skill_dir: Path, skill_nam
           f"({card.get('retrieved')}/{card.get('gold_reachable')}) unseen={card.get('unseen_recall_percent')}% "
           f"count={card.get('count')} cost=${card['run'].get('cost_usd')} seconds={card['run'].get('seconds')} "
           f"leakage={card.get('leakage')}\n  scorecard: {out}", flush=True)
+    if card["status"] == "ok" and not getattr(args, "keep_run_dirs", False):  # scorecard and audit are saved; failures stay for diagnosis
+        shutil.rmtree(run_dir, ignore_errors=True)
     return card
 
 
@@ -270,6 +280,10 @@ def cmd_generate(args) -> int:
     provenance = {"skill": harness.git_state(skill_dir), "harness": harness.git_state(harness.EVALS),
                   "driver_version": drivers.driver_version(args.driver)}
     status = 0
+    free = harness.free_bytes(Path(args.runs_root))
+    if free < harness.MIN_FREE_BYTES:
+        raise SystemExit(f"only {free / 1024 ** 3:.1f} GB free under {args.runs_root}; "
+                         f"free at least {harness.MIN_FREE_BYTES / 1024 ** 3:.0f} GB before generating runs")
     for repeat in range(args.runs):
         for attempt in range(args.retry_infra + 1):
             print(f"[{repeat + 1}/{args.runs}]" + (f" infra retry {attempt}" if attempt else ""), flush=True)
@@ -454,6 +468,7 @@ def main() -> int:
     p.add_argument("--heldout", action="store_true", help="allow a held-out topic (logged; misses not kept)")
     p.add_argument("--retry-infra", type=int, default=0, help="retry a run that failed on quota/rate limits up to N times")
     p.add_argument("--retry-wait", type=int, default=300, help="seconds to wait before an infra retry")
+    p.add_argument("--keep-run-dirs", action="store_true", help="keep a delivered run's directory (default: delete it)")
     p.set_defaults(func=cmd_generate)
     p = sub.add_parser("freeze", help="add never-run topics to the held-out set")
     p.add_argument("topics", nargs="+")
