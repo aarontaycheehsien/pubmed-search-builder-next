@@ -199,15 +199,6 @@ def revision_budget(depth: str | None) -> int:
 # The closing round, plus one verification round when the strategy or scope changed after it.
 MAX_CLOSING_ROUNDS = 2
 
-# What psb itself enforces, so the critic does not demand a change the tool refuses to make.
-_RULES_NOTE = [
-    "**Rules psb enforces.** An optional block can be AND-ed only when at least "
-    f"{optional.MIN_KNOWN_FOR_AND} known records sit in the strategy without it and it loses none of them; "
-    "otherwise `psb optional decide --choice and` refuses. Leaving an optional block out, even over the "
-    "workload budget, is a legitimate outcome. When a left-out block concerns you, the available remedies "
-    "are finding more known records, broadening or rewording the block, or screening it; recommend one of "
-    "those, not AND-ing it regardless. A finding that asks for something psb refuses cannot be resolved.", ""]
-
 
 def _closing_problems(rounds: list[dict]) -> list[tuple[int, str]]:
     """A closing round verifies how earlier findings were handled; it cannot open a new front.
@@ -364,7 +355,7 @@ def critic_packet(ws: Workspace) -> Path:
                         "where the change affects it. Do not raise new must-fix or should-fix findings; record any new "
                         "concern as severity 'document'. Keep \"closing\": true in the response.", ""]
     title = " (verification)" if verification else " (closing)" if closing else ""
-    lines = [f"# Critic packet, round {number}{title}", "", *closing_note, *_RULES_NOTE,
+    lines = [f"# Critic packet, round {number}{title}", "", *closing_note,
              "Review this draft as an information specialist using the six PRESS domains. "
              "Use only the packet. Do not answer the evidence question. Technical errors cannot be waived. "
              "Carry earlier finding IDs forward with explicit dispositions. For each finding provide id, domain, severity "

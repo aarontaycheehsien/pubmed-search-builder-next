@@ -89,6 +89,3 @@ do not authorize delivery.
   `filter` finding cannot be overridden, nor can any technical blocker. An override answers one
   round: after a verification round, make it again if the finding is still open.
 - Otherwise deliver the diagnostic handoff.
-
-The packet tells the reviewer what psb enforces (an optional block is AND-ed only with 15 or more
-known records retained and none lost), so a finding should not ask for a change psb refuses.

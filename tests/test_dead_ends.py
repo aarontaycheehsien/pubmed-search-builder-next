@@ -134,9 +134,3 @@ def test_override_lapses_after_a_verification_round(make_ws):
     revise_strategy(ws)
     write_round(ws, 4, [OPEN], REVISE, closing=True)
     assert "critic_open" in {b["code"] for b in deliver.report(ws)["blockers"]}
-
-
-def test_packet_states_the_rules_psb_enforces(make_ws):
-    ws = evaluated(make_ws)
-    packet = deliver.critic_packet(ws).read_text(encoding="utf-8")
-    assert "Rules psb enforces" in packet and "--choice and` refuses" in packet
