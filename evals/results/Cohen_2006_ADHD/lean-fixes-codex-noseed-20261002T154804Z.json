@@ -1,0 +1,45 @@
+{
+  "topic": "Cohen_2006_ADHD",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T154804Z",
+  "scored": "20261002T161106Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "8a391e8a8e0b0e159209a63daeab94a9036b9fe9",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "8a391e8a8e0b0e159209a63daeab94a9036b9fe9",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1381
+  },
+  "strategy": "((Attention Deficit Disorder with Hyperactivity[Mesh] OR ADHD[tiab] OR attention deficit hyperactivity[tiab] OR attention-deficit hyperactivity[tiab] OR ADDH[tiab] OR attention deficit hyperactivity disorder[tiab] OR attention deficit-hyperactivity disorder[tiab] OR attention deficit disorder[tiab] OR attention-deficit disorder[tiab] OR hyperkinetic disorder*[tiab] OR hyperkinetic syndrome*[tiab] OR minimal brain dysfunction[tiab]) AND (Methylphenidate[Mesh] OR Amphetamines[Mesh] OR Pemoline[Mesh] OR Bupropion[Mesh] OR Modafinil[Mesh] OR Guanfacine[Mesh] OR psychopharmac*[tiab] OR pharmacotherap*[tiab] OR pharmacologic*[tiab] OR medication*[tiab] OR medicat*[tiab] OR Clonidine[Mesh] OR drug treatment*[tiab] OR drug therap*[tiab] OR psychostimulant*[tiab] OR stimulant*[tiab] OR methylphenidate[tiab] OR methyl phenidate[tiab] OR Ritalin[tiab] OR Concerta[tiab] OR dexmethylphenidate[tiab] OR dextroamphetamine[tiab] OR amphetamine*[tiab] OR Adderall[tiab] OR pemoline[tiab] OR Cylert[tiab] OR atomoxetine[tiab] OR Strattera[tiab] OR bupropion[tiab] OR Wellbutrin[tiab] OR modafinil[tiab] OR Provigil[tiab] OR clonidine[tiab] OR guanfacine[tiab] OR imipramine[tiab] OR desipramine[tiab] OR nortriptyline[tiab] OR tricyclic antidepressant*[tiab] OR antidepressant*[tiab] OR antihypertensive*[tiab] OR nicotine[tiab] OR venlafaxine[tiab] OR moclobemide[tiab])) AND (\"1800/01/01\"[edat] : \"2003/08/06\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2003-08-06",
+  "count": 2701,
+  "gold_scored": 20,
+  "gold_reachable": 20,
+  "retrieved": 19,
+  "recall_percent": 95.0,
+  "nnr": 142.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 19,
+  "unseen_recall_percent": 95.0,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

@@ -1,0 +1,45 @@
+{
+  "topic": "healthcare-nudging",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T154804Z",
+  "scored": "20261002T161004Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "8a391e8a8e0b0e159209a63daeab94a9036b9fe9",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "8a391e8a8e0b0e159209a63daeab94a9036b9fe9",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1319
+  },
+  "strategy": "((\"Choice Behavior\"[Mesh] OR \"Decision Support Systems, Clinical\"[Mesh] OR \"Decision Support Techniques\"[Mesh] OR nudge*[tiab] OR nudging[tiab] OR \"choice architecture\"[tiab] OR \"active choice\"[tiab] OR \"choice design\"[tiab] OR default*[tiab] OR prompt*[tiab] OR reminder*[tiab] OR \"clinical alert\"[tiab] OR \"clinical alerts\"[tiab] OR \"peer comparison\"[tiab] OR \"social comparison\"[tiab] OR \"social norm\"[tiab] OR \"social norms\"[tiab] OR \"suggested alternative\"[tiab] OR \"suggested alternatives\"[tiab] OR \"accountable justification\"[tiab] OR \"accountable justifications\"[tiab] OR \"behavioral economics\"[tiab] OR \"behavioural economics\"[tiab] OR \"behavioral science\"[tiab] OR \"behavioural science\"[tiab] OR \"behavioral intervention\"[tiab] OR \"behavioral interventions\"[tiab] OR \"behavioural intervention\"[tiab] OR \"behavioural interventions\"[tiab] OR \"decision architecture\"[tiab] OR \"order set\"[tiab] OR \"order sets\"[tiab] OR \"choice framing\"[tiab] OR \"framing effect\"[tiab] OR \"framing effects\"[tiab] OR salience[tiab]) AND (\"Health Personnel\"[Mesh] OR \"healthcare professional\"[tiab] OR \"healthcare professionals\"[tiab] OR \"health care professional\"[tiab] OR \"health care professionals\"[tiab] OR \"healthcare provider\"[tiab] OR \"healthcare providers\"[tiab] OR \"health care provider\"[tiab] OR \"health care providers\"[tiab] OR \"healthcare worker\"[tiab] OR \"healthcare workers\"[tiab] OR \"health care worker\"[tiab] OR \"health care workers\"[tiab] OR \"health personnel\"[tiab] OR \"medical staff\"[tiab] OR clinician*[tiab] OR physician*[tiab] OR doctor*[tiab] OR nurse*[tiab] OR prescriber*[tiab] OR pharmacist*[tiab] OR \"health practitioner\"[tiab] OR \"health practitioners\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/18\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-18",
+  "count": 41443,
+  "gold_scored": 86,
+  "gold_reachable": 86,
+  "retrieved": 47,
+  "recall_percent": 54.7,
+  "nnr": 881.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 45,
+  "unseen_recall_percent": 53.6,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

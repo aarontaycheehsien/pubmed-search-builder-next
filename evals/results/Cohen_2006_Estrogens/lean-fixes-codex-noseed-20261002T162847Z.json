@@ -1,0 +1,45 @@
+{
+  "topic": "Cohen_2006_Estrogens",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T162847Z",
+  "scored": "20261002T164842Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "8a391e8a8e0b0e159209a63daeab94a9036b9fe9",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "8a391e8a8e0b0e159209a63daeab94a9036b9fe9",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1194
+  },
+  "strategy": "((\"Menopause\"[Mesh] OR \"Climacteric\"[Mesh] OR \"Postmenopause\"[Mesh] OR \"Perimenopause\"[Mesh] OR \"Premenopause\"[Mesh] OR menopaus*[tiab] OR perimenopaus*[tiab] OR postmenopaus*[tiab] OR pre-menopaus*[tiab] OR premenopaus*[tiab] OR climacter*[tiab] OR \"surgical menopause\"[tiab] OR \"surgically menopausal\"[tiab] OR \"induced menopause\"[tiab] OR oophorectom*[tiab] OR ovariectom*[tiab]) AND (\"Estradiol Congeners\"[Mesh] OR \"Estrogen Replacement Therapy\"[Mesh] OR \"Hormone Replacement Therapy\"[Mesh] OR \"Estrogens, Conjugated (USP)\"[Mesh] OR \"Estrogens, Esterified (USP)\"[Mesh] OR estrogen*[tiab] OR oestrogen*[tiab] OR estradiol*[tiab] OR oestradiol*[tiab] OR \"conjugated estrogen\"[tiab] OR \"conjugated estrogens\"[tiab] OR \"conjugated oestrogen\"[tiab] OR \"conjugated oestrogens\"[tiab] OR \"equine estrogen\"[tiab] OR \"equine estrogens\"[tiab] OR \"estrogen replacement therapy\"[tiab] OR \"oestrogen replacement therapy\"[tiab] OR \"hormone replacement therapy\"[tiab] OR \"menopausal hormone therapy\"[tiab] OR \"menopausal hormone treatment\"[tiab] OR \"postmenopausal hormone therapy\"[tiab] OR \"post-menopausal hormone therapy\"[tiab] OR \"estrogen progestin therapy\"[tiab] OR \"estrogen progestogen therapy\"[tiab] OR estriol*[tiab] OR oestriol*[tiab] OR estrone*[tiab] OR oestrone*[tiab])) AND (\"1800/01/01\"[edat] : \"2003/10/12\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2003-10-12",
+  "count": 30744,
+  "gold_scored": 80,
+  "gold_reachable": 80,
+  "retrieved": 77,
+  "recall_percent": 96.2,
+  "nnr": 399.3,
+  "translation_issues": [],
+  "gold_seen_by_agent": 6,
+  "unseen_retrieved": 71,
+  "unseen_recall_percent": 95.9,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

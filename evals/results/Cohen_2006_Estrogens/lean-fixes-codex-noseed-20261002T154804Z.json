@@ -1,0 +1,45 @@
+{
+  "topic": "Cohen_2006_Estrogens",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T154804Z",
+  "scored": "20261002T162844Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "8a391e8a8e0b0e159209a63daeab94a9036b9fe9",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "8a391e8a8e0b0e159209a63daeab94a9036b9fe9",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2439
+  },
+  "strategy": "((Estrogen Replacement Therapy[Mesh] OR \"Estrogens, Conjugated (USP)\"[Mesh] OR Estradiol[Mesh] OR Estradiol Congeners[Mesh] OR Hormone Replacement Therapy[Mesh] OR estrogen*[tiab] OR oestrogen*[tiab] OR estradiol[tiab] OR oestradiol[tiab] OR estriol[tiab] OR oestriol[tiab] OR estrone[tiab] OR oestrone[tiab] OR ethinyl estradiol[tiab] OR conjugated estrogen*[tiab] OR HRT[tiab] OR hormone replacement therapy[tiab] OR postmenopausal hormone therapy[tiab] OR hormone therap*[tiab] OR menopausal hormone therap*[tiab])) AND (\"1800/01/01\"[edat] : \"2003/10/12\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2003-10-12",
+  "count": 142007,
+  "gold_scored": 80,
+  "gold_reachable": 80,
+  "retrieved": 80,
+  "recall_percent": 100.0,
+  "nnr": 1775.1,
+  "translation_issues": [],
+  "gold_seen_by_agent": 7,
+  "unseen_retrieved": 73,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

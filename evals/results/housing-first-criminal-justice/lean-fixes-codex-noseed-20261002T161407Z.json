@@ -1,0 +1,45 @@
+{
+  "topic": "housing-first-criminal-justice",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T161407Z",
+  "scored": "20261002T163056Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "8a391e8a8e0b0e159209a63daeab94a9036b9fe9",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "8a391e8a8e0b0e159209a63daeab94a9036b9fe9",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1008
+  },
+  "strategy": "((\"Ill-Housed Persons\"[Mesh] OR homeless*[tiab] OR unhoused[tiab] OR \"people experiencing homelessness\"[tiab] OR \"persons experiencing homelessness\"[tiab] OR \"precariously housed\"[tiab] OR \"precarious housing\"[tiab] OR \"housing insecure\"[tiab]) AND (\"Mental Disorders\"[Mesh] OR \"serious mental illness\"[tiab] OR \"severe mental illness\"[tiab] OR \"severe and persistent mental illness\"[tiab] OR \"mental illness\"[tiab] OR \"mentally ill\"[tiab] OR \"psychiatric disorder\"[tiab] OR schizophren*[tiab]) AND (\"Housing\"[Mesh] OR \"housing first\"[tiab] OR (pathways[tiab] AND housing[tiab]) OR \"permanent supportive housing\"[tiab] OR \"supportive housing\"[tiab])) AND (\"1800/01/01\"[edat] : \"2018/08/01\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-08-01",
+  "count": 747,
+  "gold_scored": 5,
+  "gold_reachable": 5,
+  "retrieved": 3,
+  "recall_percent": 60.0,
+  "nnr": 249.0,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 3,
+  "unseen_recall_percent": 60.0,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

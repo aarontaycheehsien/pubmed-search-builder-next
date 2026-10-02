@@ -1,0 +1,45 @@
+{
+  "topic": "work-directed-return-to-work",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T154804Z",
+  "scored": "20261002T161418Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "8a391e8a8e0b0e159209a63daeab94a9036b9fe9",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "8a391e8a8e0b0e159209a63daeab94a9036b9fe9",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1573
+  },
+  "strategy": "((\"Depressive Disorder\"[Mesh] OR \"Major Depressive Disorder\"[Mesh] OR \"Anxiety Disorders\"[Mesh] OR \"Adjustment Disorders\"[Mesh] OR \"Stress Disorders, Traumatic, Acute\"[Mesh] OR \"Stress Disorders, Post-Traumatic\"[Mesh] OR anxiety[tiab] OR depress*[tiab] OR \"mood disorder*\"[tiab] OR \"affective disorder*\"[tiab] OR \"anxiety disorder*\"[tiab] OR \"anxiety neuros*\"[tiab] OR \"anxiety state*\"[tiab] OR \"generalized anxiety\"[tiab] OR \"generalised anxiety\"[tiab] OR \"panic disorder*\"[tiab] OR \"adjustment disorder*\"[tiab] OR \"reactive depression\"[tiab] OR \"reactive depressions\"[tiab] OR \"situational depression\"[tiab] OR \"acute stress disorder*\"[tiab] OR (acute[tiab] AND stress[tiab] AND reaction*[tiab]) OR (severe[tiab] AND stress[tiab] AND reaction*[tiab]) OR \"posttraumatic stress disorder*\"[tiab] OR \"post-traumatic stress disorder*\"[tiab] OR \"post traumatic stress disorder*\"[tiab] OR PTSD[tiab] OR \"common mental disorder*\"[tiab] OR \"common mental health problem*\"[tiab] OR \"common mental health complaint*\"[tiab] OR \"mild to moderate depression\"[tiab] OR \"mild-to-moderate depression\"[tiab]) AND (\"Occupational Health\"[Mesh] OR \"Occupational Health Services\"[Mesh] OR \"Workplace\"[Mesh] OR \"Return to Work\"[Mesh] OR \"Rehabilitation, Vocational\"[Mesh] OR \"Case Management\"[Mesh] OR \"Sick Leave\"[Mesh] OR \"Absenteeism\"[Mesh] OR workplace[tiab] OR \"work-directed\"[tiab] OR \"work directed\"[tiab] OR \"work-focused\"[tiab] OR \"work focused\"[tiab] OR \"work-oriented\"[tiab] OR \"work oriented\"[tiab] OR \"work-related intervention*\"[tiab] OR \"workplace intervention*\"[tiab] OR \"workplace-based intervention*\"[tiab] OR \"workplace based intervention*\"[tiab] OR \"work rehabilitation\"[tiab] OR \"work rehabilitation program*\"[tiab] OR \"work rehabilitation programme*\"[tiab] OR \"vocational rehabilitation\"[tiab] OR \"occupational rehabilitation\"[tiab] OR \"return-to-work intervention*\"[tiab] OR \"return to work intervention*\"[tiab] OR \"return-to-work program*\"[tiab] OR \"return-to-work programme*\"[tiab] OR \"return to work\"[tiab] OR \"return-to-work\"[tiab] OR \"employer involvement\"[tiab] OR \"employer support\"[tiab] OR \"employer-based\"[tiab] OR \"employer based\"[tiab] OR \"supervisor support\"[tiab] OR \"work accommodation*\"[tiab] OR \"job accommodation*\"[tiab] OR \"modified work\"[tiab] OR \"workplace meeting*\"[tiab] OR \"occupational health referral\"[tiab] OR \"case management\"[tiab] OR (workplace[tiab] AND \"case management\"[tiab]) OR (work-focused[tiab] AND \"case management\"[tiab]) OR \"work-focused cognitive behavio*\"[tiab] OR \"individual placement and support\"[tiab] OR \"sick leave\"[tiab] OR \"sickness absence\"[tiab] OR \"work absence\"[tiab] OR \"absence from work\"[tiab] OR \"off work\"[tiab])) AND (\"1800/01/01\"[edat] : \"2021/12/18\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2021-12-18",
+  "count": 7675,
+  "gold_scored": 11,
+  "gold_reachable": 11,
+  "retrieved": 11,
+  "recall_percent": 100.0,
+  "nnr": 697.7,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 11,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

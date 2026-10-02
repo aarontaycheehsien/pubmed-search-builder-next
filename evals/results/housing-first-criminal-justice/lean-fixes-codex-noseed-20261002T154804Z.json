@@ -1,0 +1,45 @@
+{
+  "topic": "housing-first-criminal-justice",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T154804Z",
+  "scored": "20261002T161404Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "8a391e8a8e0b0e159209a63daeab94a9036b9fe9",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "8a391e8a8e0b0e159209a63daeab94a9036b9fe9",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1559
+  },
+  "strategy": "((Housing[Mesh] OR \"housing first\"[tiab] OR \"permanent supportive housing\"[tiab] OR \"supportive housing\"[tiab] OR \"scattered-site housing\"[tiab] OR \"scatter-site housing\"[tiab] OR \"congregate housing\"[tiab] OR \"low-barrier housing\"[tiab] OR \"rapid rehousing\"[tiab]) AND (Ill-Housed Persons[Mesh] OR homeless*[tiab] OR unhoused[tiab] OR shelterless[tiab] OR \"precariously housed\"[tiab] OR \"vulnerably housed\"[tiab] OR \"unstably housed\"[tiab] OR \"housing insecure\"[tiab] OR \"precarious housing\"[tiab] OR \"housing instability\"[tiab] OR \"unstable housing\"[tiab] OR \"housing insecurity\"[tiab] OR \"marginally housed\"[tiab])) AND (\"1800/01/01\"[edat] : \"2018/08/01\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-08-01",
+  "count": 1533,
+  "gold_scored": 5,
+  "gold_reachable": 5,
+  "retrieved": 5,
+  "recall_percent": 100.0,
+  "nnr": 306.6,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 5,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}
