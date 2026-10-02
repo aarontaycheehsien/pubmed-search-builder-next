@@ -1,0 +1,47 @@
+{
+  "topic": "Brouwer_2019",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T131327Z",
+  "scored": "20261002T133807Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1479
+  },
+  "final_message": "8/11/17\"[edat])\n```\n\n| # | Search line | Results |\n|---:|---|---:|\n| 1 | `\"Depressive Disorder\"[Mesh]` | 105,341 |\n| 2 | `\"Major Depressive Disorder\"[Mesh]` | 28,520 |\n| 3 | `\"Depression\"[Mesh]` | 112,392 |\n| 4 | `depress*[tiab]` | 419,764 |\n| 5 | `melanchol*[tiab]` | 2,939 |\n| 6 | `dysthymi*[tiab]` | 3,055 |\n| 7 | `MDD[tiab]` | 10,931 |\n| 8 | `\"unipolar depression\"[tiab]` | 2,526 |\n| 9 | Lines 1–8 ORed | 461,214 |\n| 10 | `\"Recurrence\"[Mesh]` | 178,366 |\n| 11 | `\"Secondary Prevention\"[Mesh]` | 19,442 |\n| 12 | `relaps*[tiab]` | 163,847 |\n| 13 | `recurr*[tiab]` | 518,001 |\n| 14 | `recrudesc*[tiab]` | 3,310 |\n| 15 | `return*[tiab]` | 223,418 |\n| 16 | `episode*[tiab]` | 187,072 |\n| 17 | `remission*[tiab]` | 113,679 |\n| 18 | `recover*[tiab]` | 602,986 |\n| 19 | `(return*[tiab] AND depress*[tiab])` | 7,933 |\n| 20 | `(return*[tiab] AND episode*[tiab])` | 4,133 |\n| 21 | Lines 10–20 ORed | 1,712,006 |\n| 22 | Lines 9 AND 21 | **60,709** |\n\n## Validation and handoff\n\nEight records screened during the build formed a **development set**. The query retrieved all eight (100% relative recall against that set). This is not an independent validation set and does not estimate absolute sensitivity. The internal PRESS-structured critic’s finding was resolved; **independent PRESS peer review by an information specialist is still needed before use**.\n\nThe psychological-theory focus is left for screening because relevant articles may describe mechanisms without naming them as theories. The broad course terms also mean substantial screening volume.\n\n- [Protected final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/lean-fixes-codex-noseed-20261002T131327Z/work/final-query.txt)\n- [Generated audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/lean-fixes-codex-noseed-20261002T131327Z/work/audit.md)\n- [Build notes and open risks](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/lean-fixes-codex-noseed-20261002T131327Z/work/narrative.md)",
+  "strategy": "((\"Depressive Disorder\"[Mesh] OR \"Major Depressive Disorder\"[Mesh] OR \"Depression\"[Mesh] OR depress*[tiab] OR melanchol*[tiab] OR dysthymi*[tiab] OR MDD[tiab] OR \"unipolar depression\"[tiab]) AND (\"Recurrence\"[Mesh] OR \"Secondary Prevention\"[Mesh] OR relaps*[tiab] OR recurr*[tiab] OR recrudesc*[tiab] OR return*[tiab] OR episode*[tiab] OR remission*[tiab] OR recover*[tiab] OR (return*[tiab] AND depress*[tiab]) OR (return*[tiab] AND episode*[tiab]))) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-11-17",
+  "count": 60709,
+  "gold_scored": 54,
+  "gold_reachable": 54,
+  "retrieved": 54,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 1124.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 4,
+  "unseen_retrieved": 50,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

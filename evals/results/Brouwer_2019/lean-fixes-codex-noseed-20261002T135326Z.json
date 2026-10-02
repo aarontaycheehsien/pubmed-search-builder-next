@@ -1,0 +1,50 @@
+{
+  "topic": "Brouwer_2019",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T135326Z",
+  "scored": "20261002T140929Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 962
+  },
+  "final_message": "## PubMed strategy\n\n```text\n((Depressive Disorder[Mesh] OR Depression[Mesh] OR depress*[tiab]) AND (Recurrence[Mesh] OR relaps*[tiab] OR recurr*[tiab])) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])\n```\n\nThe entry-date bound reflects the requested PubMed snapshot; there is no publication-date limit. The generated [final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/lean-fixes-codex-noseed-20261002T135326Z/work/final-query.txt) and [full audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/lean-fixes-codex-noseed-20261002T135326Z/work/audit.md) are in `./work`.\n\n| Line | Search | Records |\n|---:|---|---:|\n| 1 | `Depressive Disorder[Mesh]` | 105,341 |\n| 2 | `Depression[Mesh]` | 206,675 |\n| 3 | `depress*[tiab]` | 419,764 |\n| 4 | Depression block | 460,091 |\n| 5 | `Recurrence[Mesh]` | 178,366 |\n| 6 | `relaps*[tiab]` | 163,847 |\n| 7 | `recurr*[tiab]` | 518,001 |\n| 8 | Relapse/recurrence block | 721,215 |\n| 9 | Combined search | **17,535** |\n\nThe three records screened in during the build were all retrieved: **3/3 development-set coverage**. This is not independent validation and does not estimate sensitivity. No user-supplied seeds or benchmark set were available.\n\nThe scope assumes psychological theories includes substantive psychological explanatory accounts, with theory/model eligibility assessed during screening. The fresh-context PRESS-structured internal critic passed its closing check. The draft still needs PRESS peer review by an information specialist before use. The [validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/lean-fixes-codex-noseed-20261002T135326Z/work/validation-manifest.json) records successful protected delivery.",
+  "strategy": "((Depressive Disorder[Mesh] OR Depression[Mesh] OR depress*[tiab]) AND (Recurrence[Mesh] OR relaps*[tiab] OR recurr*[tiab])) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-11-17",
+  "count": 17535,
+  "gold_scored": 54,
+  "gold_reachable": 54,
+  "retrieved": 52,
+  "recall_percent": 96.3,
+  "missed": [
+    "17696703",
+    "21848705"
+  ],
+  "nnr": 337.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 51,
+  "unseen_recall_percent": 96.2,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

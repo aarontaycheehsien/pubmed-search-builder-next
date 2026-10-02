@@ -1,0 +1,47 @@
+{
+  "topic": "CD011431",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T140222Z",
+  "scored": "20261002T141641Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 858
+  },
+  "final_message": "records** using the 2013-06-09 Entrez entry-date cutoff; it has no publication-date limit. The full line-by-line strategy with counts is in the [audit](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/lean-fixes-codex-noseed-20261002T140222Z/work/audit.md>).\n\n```text\n((Malaria[Mesh] OR Plasmodium vivax[Mesh] OR malaria[tiab] OR plasmodi*[tiab] OR paludism[tiab] OR Plasmodium vivax[tiab] OR Plasmodium falciparum[tiab] OR Plasmodium malariae[tiab] OR Plasmodium ovale[tiab] OR Plasmodium knowlesi[tiab] OR non-falciparum[tiab] OR non falciparum[tiab] OR P. vivax[tiab] OR P. falciparum[tiab] OR P. malariae[tiab] OR P. ovale[tiab] OR P. knowlesi[tiab]) AND (Diagnostic Tests, Routine[Mesh] OR Reagent Kits, Diagnostic[Mesh] OR rapid diagnostic test[tiab] OR rapid diagnostic tests[tiab] OR rapid test[tiab] OR rapid tests[tiab] OR RDT[tiab] OR RDTs[tiab] OR rapid antigen test[tiab] OR rapid antigen tests[tiab] OR rapid antigen detection test[tiab] OR rapid antigen detection tests[tiab] OR malaria rapid test[tiab] OR malaria rapid tests[tiab] OR dipstick[tiab] OR immunochromatograph*[tiab] OR immunochromatography[tiab] OR lateral flow[tiab] OR point-of-care[tiab])) AND (\"1800/01/01\"[edat] : \"2013/06/09\"[edat])\n```\n\nRelative recall was **1/1 (100%)** against the single screened-in development record; that is not independent validation, and recall was not estimated across a representative set. The internal critic was same-context; independent PRESS peer review by an information specialist is still needed before use.\n\nFiles: [final query](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/lean-fixes-codex-noseed-20261002T140222Z/work/final-query.txt>), [audit](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/lean-fixes-codex-noseed-20261002T140222Z/work/audit.md>), and [validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/lean-fixes-codex-noseed-20261002T140222Z/work/validation-manifest.json>).",
+  "strategy": "((Malaria[Mesh] OR Plasmodium vivax[Mesh] OR malaria[tiab] OR plasmodi*[tiab] OR paludism[tiab] OR Plasmodium vivax[tiab] OR Plasmodium falciparum[tiab] OR Plasmodium malariae[tiab] OR Plasmodium ovale[tiab] OR Plasmodium knowlesi[tiab] OR non-falciparum[tiab] OR non falciparum[tiab] OR P. vivax[tiab] OR P. falciparum[tiab] OR P. malariae[tiab] OR P. ovale[tiab] OR P. knowlesi[tiab]) AND (Diagnostic Tests, Routine[Mesh] OR Reagent Kits, Diagnostic[Mesh] OR rapid diagnostic test[tiab] OR rapid diagnostic tests[tiab] OR rapid test[tiab] OR rapid tests[tiab] OR RDT[tiab] OR RDTs[tiab] OR rapid antigen test[tiab] OR rapid antigen tests[tiab] OR rapid antigen detection test[tiab] OR rapid antigen detection tests[tiab] OR malaria rapid test[tiab] OR malaria rapid tests[tiab] OR dipstick[tiab] OR immunochromatograph*[tiab] OR immunochromatography[tiab] OR lateral flow[tiab] OR point-of-care[tiab])) AND (\"1800/01/01\"[edat] : \"2013/06/09\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2013-06-09",
+  "count": 1102,
+  "gold_scored": 26,
+  "gold_reachable": 26,
+  "retrieved": 26,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 42.4,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 26,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

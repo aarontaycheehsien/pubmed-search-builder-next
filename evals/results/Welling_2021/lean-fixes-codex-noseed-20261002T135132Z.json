@@ -1,0 +1,47 @@
+{
+  "topic": "Welling_2021",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T135132Z",
+  "scored": "20261002T140800Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 987
+  },
+  "final_message": "] OR Coronavirus Infections[Mesh] OR Quarantine[Mesh] OR COVID-19[tiab] OR COVID19[tiab] OR \"COVID 19\"[tiab] OR \"coronavirus disease 2019\"[tiab] OR \"coronavirus disease-19\"[tiab] OR \"2019 novel coronavirus\"[tiab] OR 2019-nCoV[tiab] OR 2019 nCoV[tiab] OR SARS-CoV-2[tiab] OR SARS CoV 2[tiab] OR \"novel coronavirus\"[tiab] OR lockdown*[tiab] OR \"lock down\"[tiab] OR \"stay at home\"[tiab] OR \"stay-at-home\"[tiab] OR \"shelter in place\"[tiab] OR \"shelter-in-place\"[tiab] OR quarantin*[tiab] OR \"social distancing\"[tiab] OR \"physical distancing\"[tiab] OR \"movement restriction\"[tiab] OR \"movement restrictions\"[tiab] OR \"community containment\"[tiab] OR \"containment measure\"[tiab] OR \"containment measures\"[tiab] OR Pandemics[Mesh] OR pandemic*[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])\n```\n\n## Validation and assumptions\n\nSix screened-in pilot studies formed the development set. The strategy retrieved all six (**100% relative recall on this non-independent development set**); no held-out validation set or matching prior-review benchmark was available, so recall beyond those records is unknown. The search leaves lifestyle and well-being outcomes and population for screening, assuming a study reporting either outcome may qualify. No publication-date, language, or population limits were applied.\n\nThe broad exposure search will require substantial screening. The 2020-11-22 bound limits PubMed entry date, but does not reconstruct a historical PubMed/MeSH snapshot; the current COVID-19 MeSH heading was introduced after that date and may have been applied retrospectively.\n\nThe [validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/lean-fixes-codex-noseed-20261002T135132Z/work/validation-manifest.json) and [search-build notes](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/lean-fixes-codex-noseed-20261002T135132Z/work/narrative.md) are also available. This draft still needs PRESS peer review by an information specialist before use.",
+  "strategy": "((COVID-19[Mesh] OR Coronavirus Infections[Mesh] OR Quarantine[Mesh] OR COVID-19[tiab] OR COVID19[tiab] OR \"COVID 19\"[tiab] OR \"coronavirus disease 2019\"[tiab] OR \"coronavirus disease-19\"[tiab] OR \"2019 novel coronavirus\"[tiab] OR 2019-nCoV[tiab] OR 2019 nCoV[tiab] OR SARS-CoV-2[tiab] OR SARS CoV 2[tiab] OR \"novel coronavirus\"[tiab] OR lockdown*[tiab] OR \"lock down\"[tiab] OR \"stay at home\"[tiab] OR \"stay-at-home\"[tiab] OR \"shelter in place\"[tiab] OR \"shelter-in-place\"[tiab] OR quarantin*[tiab] OR \"social distancing\"[tiab] OR \"physical distancing\"[tiab] OR \"movement restriction\"[tiab] OR \"movement restrictions\"[tiab] OR \"community containment\"[tiab] OR \"containment measure\"[tiab] OR \"containment measures\"[tiab] OR Pandemics[Mesh] OR pandemic*[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-11-22",
+  "count": 121518,
+  "gold_scored": 53,
+  "gold_reachable": 53,
+  "retrieved": 53,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 2292.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 52,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

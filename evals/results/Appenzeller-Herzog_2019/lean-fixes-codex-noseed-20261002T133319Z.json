@@ -1,0 +1,47 @@
+{
+  "topic": "Appenzeller-Herzog_2019",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T133319Z",
+  "scored": "20261002T134711Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 832
+  },
+  "final_message": " Wilson\"[tiab:~1] OR \"Westphal Strumpell\"[tiab:~1] OR \"copper storage disease\"[tiab:~0])) AND (\"1800/01/01\"[edat] : \"2018/12/23\"[edat])\n```\n\nThe search covers Wilson disease with one OR block; therapies, comparators, outcomes, and study designs are left for screening. It retrieves **7,282 records** in the PubMed snapshot bounded at Entrez date **2018-12-23**.\n\n| Search line | Records |\n|---|---:|\n| `\"Hepatolenticular Degeneration\"[Mesh]` | 5,697 |\n| `\"Wilson disease\"[tiab:~0]` | 1,570 |\n| `\"Wilson's disease\"[tiab]` | 4,158 |\n| `Wilsons disease[tiab]` | 4,135 |\n| `\"hepatolenticular degeneration\"[tiab:~0]` | 946 |\n| `\"neurohepatic degeneration\"[tiab:~0]` | 0 |\n| `\"Kinnier Wilson\"[tiab:~1]` | 38 |\n| `\"Westphal Strumpell\"[tiab:~1]` | 27 |\n| `\"copper storage disease\"[tiab:~0]` | 27 |\n| Combined disease block | **7,282** |\n\n## Validation and files\n\nRelative recall was **100% against one screened development record**. That is not independent validation or a sensitivity estimate. A PubMed warning reported “No items found” for the neurohepatic-degeneration clause; it was retained as a recall-first synonym and documented as an accepted risk by the internal critic. No independent validation set or review benchmark was available.\n\nThe protected report passed validation. The draft still needs **PRESS peer review by an information specialist before use**; the automated critic is not PRESS peer review.\n\n- [Final query](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/lean-fixes-codex-noseed-20261002T133319Z/work/final-query.txt>)\n- [Audit](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/lean-fixes-codex-noseed-20261002T133319Z/work/audit.md>)\n- [Validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/lean-fixes-codex-noseed-20261002T133319Z/work/validation-manifest.json>)\n- [Build notes](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/lean-fixes-codex-noseed-20261002T133319Z/work/narrative.md>)",
+  "strategy": "((\"Hepatolenticular Degeneration\"[Mesh] OR \"Wilson disease\"[tiab:~0] OR \"Wilson's disease\"[tiab] OR Wilsons disease[tiab] OR \"hepatolenticular degeneration\"[tiab:~0] OR \"neurohepatic degeneration\"[tiab:~0] OR \"Kinnier Wilson\"[tiab:~1] OR \"Westphal Strumpell\"[tiab:~1] OR \"copper storage disease\"[tiab:~0])) AND (\"1800/01/01\"[edat] : \"2018/12/23\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-12-23",
+  "count": 7282,
+  "gold_scored": 22,
+  "gold_reachable": 21,
+  "retrieved": 21,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 346.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 20,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

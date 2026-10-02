@@ -1,0 +1,49 @@
+{
+  "topic": "Brouwer_2019",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T133810Z",
+  "scored": "20261002T135324Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 913
+  },
+  "final_message": "```text\n((Depressive Disorder[Mesh] OR Major Depressive Disorder[Mesh] OR depress*[tiab] OR melancholia[tiab]) AND (Recurrence[Mesh] OR relaps*[tiab] OR recur*[tiab] OR recrudescen*[tiab] OR vulnerab*[tiab])) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])\n```\n\nThe Entrez date bound follows the harness cutoff; the search has no publication-date `[dp]` limit.\n\n| # | Search line | Results |\n|---:|---|---:|\n| 1 | `Depressive Disorder[Mesh]` | 105,341 |\n| 2 | `Major Depressive Disorder[Mesh]` | 28,520 |\n| 3 | `depress*[tiab]` | 419,764 |\n| 4 | `melancholia[tiab]` | 1,412 |\n| 5 | `#1 OR #2 OR #3 OR #4` | 438,756 |\n| 6 | `Recurrence[Mesh]` | 178,366 |\n| 7 | `relaps*[tiab]` | 163,847 |\n| 8 | `recur*[tiab]` | 531,492 |\n| 9 | `recrudescen*[tiab]` | 3,173 |\n| 10 | `vulnerab*[tiab]` | 113,966 |\n| 11 | `#6 OR #7 OR #8 OR #9 OR #10` | 847,096 |\n| 12 | `#5 AND #11` | **26,641** |\n\nRelative recall was 4/4 (100%) against the screened development records. These records helped build the strategy, so this is not independent validation or an estimate of sensitivity. No held-out validation or benchmark set was assembled.\n\nI assumed a broad scope that includes psychological mechanisms and vulnerability to a later episode; those concepts are assessed during screening rather than required as a separate theory-word block. The final search was checked through three PRESS-structured internal critic rounds. The closing round accepted the required Entrez cutoff as a documented risk. This draft still needs PRESS peer review by an information specialist before use.\n\nFiles: [audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/lean-fixes-codex-noseed-20261002T133810Z/work/audit.md) · [validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/lean-fixes-codex-noseed-20261002T133810Z/work/validation-manifest.json) · [final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-3ef4260cbc2db74f/lean-fixes-codex-noseed-20261002T133810Z/work/final-query.txt)",
+  "strategy": "((Depressive Disorder[Mesh] OR Major Depressive Disorder[Mesh] OR depress*[tiab] OR melancholia[tiab]) AND (Recurrence[Mesh] OR relaps*[tiab] OR recur*[tiab] OR recrudescen*[tiab] OR vulnerab*[tiab])) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-11-17",
+  "count": 26641,
+  "gold_scored": 54,
+  "gold_reachable": 54,
+  "retrieved": 53,
+  "recall_percent": 98.1,
+  "missed": [
+    "21848705"
+  ],
+  "nnr": 502.7,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 52,
+  "unseen_recall_percent": 98.1,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

@@ -1,0 +1,54 @@
+{
+  "topic": "Kwok_2020",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T131327Z",
+  "scored": "20261002T134348Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1820
+  },
+  "final_message": "animals\"[tiab] OR \"food animal\"[tiab] OR \"food animals\"[tiab] OR cattle[tiab] OR bovin*[tiab] OR cow[tiab] OR cows[tiab] OR calf[tiab] OR calves[tiab] OR swine[tiab] OR pig[tiab] OR pigs[tiab] OR porcin*[tiab] OR poultry[tiab] OR fowl[tiab] OR chicken*[tiab] OR broiler*[tiab] OR turkey[tiab] OR turkeys[tiab] OR duck*[tiab] OR goose[tiab] OR geese[tiab] OR sheep[tiab] OR ovine[tiab] OR goat*[tiab] OR caprin*[tiab] OR horse*[tiab] OR equine*[tiab] OR rabbit*[tiab] OR camel*[tiab] OR alpaca*[tiab] OR aquaculture[tiab] OR aquacultur*[tiab] OR fish[tiab] OR salmon[tiab] OR salmonids[tiab] OR trout*[tiab] OR tilapia*[tiab] OR carp*[tiab] OR shrimp[tiab] OR prawn*[tiab] OR oyster*[tiab] OR mussel*[tiab] OR farmed fish[tiab] OR farmed salmon[tiab])) AND (\"1800/01/01\"[edat] : \"2019/02/22\"[edat])\n```\n\nThe full audit has the line-by-line counts for all 81 numbered lines. The virus block returned 1,073,749 records, the metagenomics/sequencing block 70,093, the farm-animal block 1,774,006, and the combined query 1,060; block counts overlap.\n\nRelative recall was **7/7 (100%)** against screened development records. This is not independent validation: no user-supplied seeds or prior-review benchmark were available, and no held-out set was created. The 2019 entry-date bound is retained because the run harness required it. The scope was not confirmed with you; I assumed farmed aquatic species are in scope alongside terrestrial farm animals.\n\n- [Full audit with line-by-line counts](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/lean-fixes-codex-noseed-20261002T131327Z/work/audit.md)\n- [Protected final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/lean-fixes-codex-noseed-20261002T131327Z/work/final-query.txt)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-def605b9b5df8f15/lean-fixes-codex-noseed-20261002T131327Z/work/validation-manifest.json)\n\nThis draft needs PRESS peer review by an information specialist before use.",
+  "strategy": "((\"Viruses\"[Mesh] OR virus*[tiab] OR viral[tiab] OR virolog*[tiab] OR virome[tiab] OR viromic*[tiab]) AND (\"Metagenomics\"[Mesh] OR \"Metagenome\"[Mesh] OR \"High-Throughput Nucleotide Sequencing\"[Mesh] OR metagenom*[tiab] OR virom*[tiab] OR \"high throughput sequencing\"[tiab] OR \"high-throughput sequencing\"[tiab] OR \"next generation sequencing\"[tiab] OR \"next-generation sequencing\"[tiab] OR \"deep sequencing\"[tiab] OR \"shotgun sequencing\"[tiab] OR \"massively parallel sequencing\"[tiab] OR \"sequence-independent\"[tiab]) AND (\"Livestock\"[Mesh] OR \"Poultry\"[Mesh] OR \"Animals, Domestic\"[Mesh] OR \"Cattle\"[Mesh] OR \"Swine\"[Mesh] OR \"Sheep\"[Mesh] OR \"Goats\"[Mesh] OR \"Horses\"[Mesh] OR \"Rabbits\"[Mesh] OR livestock[tiab] OR \"farm animal\"[tiab] OR \"farm animals\"[tiab] OR \"production animal\"[tiab] OR \"production animals\"[tiab] OR \"food animal\"[tiab] OR \"food animals\"[tiab] OR cattle[tiab] OR bovin*[tiab] OR cow[tiab] OR cows[tiab] OR calf[tiab] OR calves[tiab] OR swine[tiab] OR pig[tiab] OR pigs[tiab] OR porcin*[tiab] OR poultry[tiab] OR fowl[tiab] OR chicken*[tiab] OR broiler*[tiab] OR turkey[tiab] OR turkeys[tiab] OR duck*[tiab] OR goose[tiab] OR geese[tiab] OR sheep[tiab] OR ovine[tiab] OR goat*[tiab] OR caprin*[tiab] OR horse*[tiab] OR equine*[tiab] OR rabbit*[tiab] OR camel*[tiab] OR alpaca*[tiab] OR aquaculture[tiab] OR aquacultur*[tiab] OR fish[tiab] OR salmon[tiab] OR salmonids[tiab] OR trout*[tiab] OR tilapia*[tiab] OR carp*[tiab] OR shrimp[tiab] OR prawn*[tiab] OR oyster*[tiab] OR mussel*[tiab] OR farmed fish[tiab] OR farmed salmon[tiab])) AND (\"1800/01/01\"[edat] : \"2019/02/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2019-02-22",
+  "count": 1060,
+  "gold_scored": 116,
+  "gold_reachable": 116,
+  "retrieved": 110,
+  "recall_percent": 94.8,
+  "missed": [
+    "22821184",
+    "25918239",
+    "28495761",
+    "28653486",
+    "29677111",
+    "29700160"
+  ],
+  "nnr": 9.6,
+  "translation_issues": [],
+  "gold_seen_by_agent": 5,
+  "unseen_retrieved": 105,
+  "unseen_recall_percent": 94.6,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

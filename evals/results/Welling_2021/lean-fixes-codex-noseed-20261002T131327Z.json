@@ -1,0 +1,47 @@
+{
+  "topic": "Welling_2021",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T131327Z",
+  "scored": "20261002T133350Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1223
+  },
+  "final_message": "\n| 5 | `Pandemics[Mesh]` | 50,277 |\n| 6 | `COVID*[tiab]` | 68,959 |\n| 7 | `coronavir*[tiab]` | 43,266 |\n| 8 | `SARS-CoV-2[tiab]` | 23,503 |\n| 9 | `2019-nCoV[tiab]` | 1,288 |\n| 10 | `Wuhan coronavirus[tiab]` | 29 |\n| 11 | `novel coronavirus[tiab]` | 6,179 |\n| 12 | `coronavirus disease 2019[tiab]` | 14,613 |\n| 13 | `lockdown*[tiab]` | 3,416 |\n| 14 | `quarantin*[tiab]` | 6,954 |\n| 15 | `social distancing[tiab]` | 2,657 |\n| 16 | `stay at home[tiab]` | 815 |\n| 17 | `stay-at-home[tiab]` | 815 |\n| 18 | `home confinement[tiab]` | 121 |\n| 19 | `self-isolat*[tiab]` | 400 |\n| 20 | `pandemic*[tiab]` | 58,444 |\n| 21 | Combined exposure block | 128,242 |\n\n## Validation and handoff\n\nThe three screened development records were all retrieved: **relative recall against the development set was 3/3 (100%)**. This is not independent validation or a sensitivity estimate; no user-supplied records or independent benchmark set were available.\n\nLifestyle behaviors and well-being were left for screening because they are broad outcomes whose wording may vary. The scope is provisional, and the large result set may include records about other coronavirus infections or pandemics. Screen for the review’s specific outcomes and COVID-era context.\n\nThe strategy passed the skill’s protected report validation and closing internal critique. It still needs **PRESS peer review by an information specialist before use**.\n\n- [Generated query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/lean-fixes-codex-noseed-20261002T131327Z/work/final-query.txt)\n- [Audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/lean-fixes-codex-noseed-20261002T131327Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/lean-fixes-codex-noseed-20261002T131327Z/work/validation-manifest.json)\n- [Build notes and assumptions](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/lean-fixes-codex-noseed-20261002T131327Z/work/narrative.md)",
+  "strategy": "((COVID-19[Mesh] OR SARS-CoV-2[Mesh] OR Coronavirus Infections[Mesh] OR Quarantine[Mesh] OR Pandemics[Mesh] OR COVID*[tiab] OR coronavir*[tiab] OR SARS-CoV-2[tiab] OR 2019-nCoV[tiab] OR Wuhan coronavirus[tiab] OR novel coronavirus[tiab] OR coronavirus disease 2019[tiab] OR lockdown*[tiab] OR quarantin*[tiab] OR social distancing[tiab] OR stay at home[tiab] OR stay-at-home[tiab] OR home confinement[tiab] OR self-isolat*[tiab] OR pandemic*[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-11-22",
+  "count": 128242,
+  "gold_scored": 53,
+  "gold_reachable": 53,
+  "retrieved": 53,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 2419.7,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 53,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}
