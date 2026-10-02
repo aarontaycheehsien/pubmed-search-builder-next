@@ -1,0 +1,45 @@
+{
+  "topic": "healthcare-nudging",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T161008Z",
+  "scored": "20261002T164954Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "8a391e8a8e0b0e159209a63daeab94a9036b9fe9",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "8a391e8a8e0b0e159209a63daeab94a9036b9fe9",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2385
+  },
+  "strategy": "((Economics, Behavioral[Mesh] OR Choice Behavior[Mesh] OR Reminder Systems[Mesh] OR Decision Support Systems, Clinical[Mesh] OR nudge*[tiab] OR \"choice architecture\"[tiab] OR \"choice architect*\"[tiab] OR \"active choice\"[tiab] OR \"behavioral economics\"[tiab] OR \"behavioural economics\"[tiab] OR \"behavioral science\"[tiab] OR \"behavioural science\"[tiab] OR default*[tiab] OR remind*[tiab] OR prompt*[tiab] OR alert*[tiab] OR \"peer comparison\"[tiab] OR \"social norm*\"[tiab] OR \"accountable justification\"[tiab] OR \"commitment letter*\"[tiab] OR precommit*[tiab] OR \"choice design\"[tiab] OR \"framing effect*\"[tiab] OR \"clinical decision support\"[tiab] OR \"decision support system*\"[tiab] OR \"computerized decision support\"[tiab] OR \"computerised decision support\"[tiab] OR \"order set*\"[tiab] OR \"clinical decision tool*\"[tiab]) AND (Health Personnel[Mesh] OR clinician*[tiab] OR physician*[tiab] OR doctor*[tiab] OR nurse*[tiab] OR pharmacist*[tiab] OR prescriber*[tiab] OR midwi*[tiab] OR practitioner*[tiab] OR \"health personnel\"[tiab] OR \"health professional*\"[tiab] OR \"healthcare professional*\"[tiab] OR \"health care professional*\"[tiab] OR \"healthcare worker*\"[tiab] OR \"health care worker*\"[tiab] OR \"medical staff\"[tiab] OR \"health provider*\"[tiab] OR Intensive Care Units[Mesh] OR \"intensive care\"[tiab] OR ICU[tiab] OR hospital*[tiab] OR clinic[tiab] OR clinics[tiab] OR \"primary care\"[tiab] OR outpatient*[tiab] OR inpatient*[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/18\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-18",
+  "count": 70863,
+  "gold_scored": 86,
+  "gold_reachable": 86,
+  "retrieved": 64,
+  "recall_percent": 74.4,
+  "nnr": 1107.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 4,
+  "unseen_retrieved": 60,
+  "unseen_recall_percent": 73.2,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

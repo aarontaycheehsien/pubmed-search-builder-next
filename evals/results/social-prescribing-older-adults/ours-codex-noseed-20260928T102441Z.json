@@ -1,0 +1,45 @@
+{
+  "topic": "social-prescribing-older-adults",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T102441Z",
+  "scored": "20260928T104448Z",
+  "skill": {
+    "name": "ours",
+    "hash": "49fa7fd0b4d8465a17edf4c04050fca9e17c15fcd601f3be27462d4253786e26",
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": true
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1207
+  },
+  "strategy": "((\"Community Health Workers\"[Mesh] OR \"Patient Navigation\"[Mesh] OR (\"Referral and Consultation\"[Mesh] AND (community[tiab] OR voluntary[tiab] OR \"third sector\"[tiab] OR \"community-based\"[tiab])) OR (\"Social Support\"[Mesh] AND (community[tiab] OR referral[tiab] OR \"link worker\"[tiab])) OR (\"Community Participation\"[Mesh] AND (social[tiab] OR referral[tiab] OR link[tiab])) OR (\"Social Welfare\"[Mesh] AND (community[tiab] OR referral[tiab] OR link[tiab] OR voluntary[tiab])) OR \"social prescribing\"[tiab] OR social prescrib*[tiab] OR \"social prescription\"[tiab] OR \"social prescriptions\"[tiab] OR \"link worker\"[tiab] OR \"link workers\"[tiab] OR \"link-worker\"[tiab] OR \"link-workers\"[tiab] OR \"community link\"[tiab] OR \"community links\"[tiab] OR \"community-link\"[tiab] OR \"community-links\"[tiab] OR (\"community link\"[tiab] AND worker[tiab]) OR \"community link workers\"[tiab] OR \"community connector\"[tiab] OR \"community connectors\"[tiab] OR \"care navigation\"[tiab] OR \"care navigator\"[tiab] OR \"care navigators\"[tiab] OR \"wellbeing coordinator\"[tiab] OR \"wellbeing coordinators\"[tiab] OR ((wellbeing[tiab] OR well-being[tiab]) AND coordinat*[tiab]) OR \"community referral\"[tiab] OR \"voluntary sector\"[tiab] OR \"third sector\"[tiab] OR (community[tiab] AND (activit*[tiab] OR service*[tiab] OR organisation*[tiab] OR organization*[tiab] OR support[tiab] OR group*[tiab] OR resource*[tiab]) AND (referr*[tiab] OR link[tiab] OR navigat*[tiab] OR prescrib*[tiab])))) AND (\"1800/01/01\"[edat] : \"2019/12/30\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2019-12-30",
+  "count": 50516,
+  "gold_scored": 10,
+  "gold_reachable": 10,
+  "retrieved": 10,
+  "recall_percent": 100.0,
+  "nnr": 5051.6,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 9,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

@@ -1,0 +1,47 @@
+{
+  "topic": "CD011431",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T131327Z",
+  "scored": "20261002T133954Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1586
+  },
+  "final_message": "The protected report passed validation. The PubMed query returned **1,453 records** through the **2013-06-09 Entrez Entry Date** boundary.\n\n```text\n((Malaria[Mesh] OR Malaria, Vivax[Mesh] OR Plasmodium vivax[Mesh] OR malaria[tiab] OR plasmodium[tiab] OR vivax[tiab] OR Plasmodium vivax[tiab] OR P. vivax[tiab] OR non-falciparum[tiab] OR nonfalciparum[tiab] OR ovale[tiab] OR malariae[tiab]) AND (Reagent Kits, Diagnostic[Mesh] OR rapid diagnostic test[tiab] OR rapid diagnostic tests[tiab] OR rapid test[tiab] OR rapid tests[tiab] OR RDT[tiab] OR RDTs[tiab] OR immunochromatograph*[tiab] OR lateral flow[tiab] OR point-of-care[tiab] OR dipstick[tiab] OR strip test[tiab] OR malaria antigen test[tiab] OR malaria antigen tests[tiab] OR antigen test[tiab] OR antigen tests[tiab] OR antigen detection[tiab] OR HRP2[tiab] OR HRP-2[tiab] OR histidine-rich protein 2[tiab] OR pLDH[tiab] OR lactate dehydrogenase[tiab])) AND (\"1800/01/01\"[edat] : \"2013/06/09\"[edat])\n```\n\nThe strategy retrieved all **5 of 5** screened development records. That is development-set relative recall, not independent validation; no user-supplied seeds or held-out validation set were available. The audit contains the line-by-line counts, evaluation history, and critic dispositions.\n\n- [Final query](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/lean-fixes-codex-noseed-20261002T131327Z/work/final-query.txt>)\n- [Audit](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/lean-fixes-codex-noseed-20261002T131327Z/work/audit.md>)\n- [Validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/lean-fixes-codex-noseed-20261002T131327Z/work/validation-manifest.json>)\n\nThe date bound is an Entrez entry-date snapshot, not a publication-date limit. Scope decisions remain provisional because you asked me to proceed without follow-up. The draft needs PRESS peer review by an information specialist before use.",
+  "strategy": "((Malaria[Mesh] OR Malaria, Vivax[Mesh] OR Plasmodium vivax[Mesh] OR malaria[tiab] OR plasmodium[tiab] OR vivax[tiab] OR Plasmodium vivax[tiab] OR P. vivax[tiab] OR non-falciparum[tiab] OR nonfalciparum[tiab] OR ovale[tiab] OR malariae[tiab]) AND (Reagent Kits, Diagnostic[Mesh] OR rapid diagnostic test[tiab] OR rapid diagnostic tests[tiab] OR rapid test[tiab] OR rapid tests[tiab] OR RDT[tiab] OR RDTs[tiab] OR immunochromatograph*[tiab] OR lateral flow[tiab] OR point-of-care[tiab] OR dipstick[tiab] OR strip test[tiab] OR malaria antigen test[tiab] OR malaria antigen tests[tiab] OR antigen test[tiab] OR antigen tests[tiab] OR antigen detection[tiab] OR HRP2[tiab] OR HRP-2[tiab] OR histidine-rich protein 2[tiab] OR pLDH[tiab] OR lactate dehydrogenase[tiab])) AND (\"1800/01/01\"[edat] : \"2013/06/09\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2013-06-09",
+  "count": 1453,
+  "gold_scored": 26,
+  "gold_reachable": 26,
+  "retrieved": 26,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 55.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 24,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

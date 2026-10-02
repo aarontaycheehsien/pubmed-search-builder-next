@@ -1,0 +1,47 @@
+{
+  "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T131327Z",
+  "scored": "20261002T134304Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1776
+  },
+  "final_message": "*[tiab] OR teach*[tiab] OR curricul*[tiab] OR lesson*[tiab] OR instruction*[tiab] OR training[tiab] OR pedagog*[tiab] OR program*[tiab] OR intervention*[tiab] OR promot*[tiab] OR \"food literacy\"[tiab] OR \"food skills\"[tiab:~2]) AND (\"Schools\"[Mesh] OR school*[tiab] OR classroom*[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])\n```\n\n| Audit line | Search block | Count |\n|---:|---|---:|\n| 12 | Adolescents or school-age students | 3,198,981 |\n| 26 | Food or nutrition content | 1,478,162 |\n| 41 | Education or intervention activity | 2,908,296 |\n| 45 | School delivery | 311,646 |\n| 46 | Combined strategy | **12,411** |\n\nThe [full audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/lean-fixes-codex-noseed-20261002T131327Z/work/audit.md) contains counts for every search line.\n\n## Validation and handoff\n\nNine records screened into the development set were retrieved (relative recall **9/9, 100%**). They were found during this run, so this is not independent validation; recall was not estimated on a held-out set. The strategy had three PRESS-structured internal critic rounds. An independent information specialist should PRESS peer review it before use.\n\nOpen risks include the unconfirmed scope assumptions, the school-delivery block potentially missing records that do not name school context, and the broad search’s substantial screening burden. See [the rationale and risk notes](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/lean-fixes-codex-noseed-20261002T131327Z/work/narrative.md).\n\nGenerated artifacts: [final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/lean-fixes-codex-noseed-20261002T131327Z/work/final-query.txt), [audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/lean-fixes-codex-noseed-20261002T131327Z/work/audit.md), and [validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/lean-fixes-codex-noseed-20261002T131327Z/work/validation-manifest.json).",
+  "strategy": "((\"Adolescent\"[Mesh] OR \"Child\"[Mesh] OR adolescen*[tiab] OR teen*[tiab] OR youth*[tiab] OR child*[tiab] OR schoolchild*[tiab] OR \"school children\"[tiab] OR \"school students\"[tiab] OR \"school-age\"[tiab] OR \"school age\"[tiab]) AND (\"Diet\"[Mesh] OR \"Food\"[Mesh] OR \"Feeding Behavior\"[Mesh] OR \"Food Preferences\"[Mesh] OR \"Fruit\"[Mesh] OR \"Vegetables\"[Mesh] OR nutrition*[tiab] OR diet*[tiab] OR food*[tiab] OR eating[tiab] OR fruit*[tiab] OR vegetable*[tiab] OR meal*[tiab]) AND (\"Health Education\"[Mesh] OR \"Health Promotion\"[Mesh] OR educat*[tiab] OR teach*[tiab] OR curricul*[tiab] OR lesson*[tiab] OR instruction*[tiab] OR training[tiab] OR pedagog*[tiab] OR program*[tiab] OR intervention*[tiab] OR promot*[tiab] OR \"food literacy\"[tiab] OR \"food skills\"[tiab:~2]) AND (\"Schools\"[Mesh] OR school*[tiab] OR classroom*[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-14",
+  "count": 12411,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 9,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 1379.0,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 9,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

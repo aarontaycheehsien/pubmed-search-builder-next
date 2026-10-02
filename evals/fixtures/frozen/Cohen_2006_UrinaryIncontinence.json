@@ -1,10 +1,12 @@
 {
   "id": "Cohen_2006_UrinaryIncontinence",
   "suite": "frozen",
-  "question": "What is the efficacy and safety of drug treatments for urinary incontinence?",
+  "question": "In adults with overactive bladder or urge urinary incontinence, how do drug treatments compare with each other and with placebo in effectiveness and harms?",
   "eligibility": [
-    "Urinary-incontinence-related records labelled included in the Cohen 2006 SYNERGY dataset.",
-    "PubMed-indexed records with label_included=1."
+    "Adults with overactive bladder, urge urinary incontinence or mixed urinary incontinence.",
+    "A drug for overactive bladder (for example oxybutynin, tolterodine, trospium, darifenacin, solifenacin, propiverine or flavoxate) compared with another drug, a different formulation or placebo.",
+    "Incontinence episodes, urinary frequency or urgency, quality of life, or adverse events.",
+    "Randomized controlled trials; controlled observational studies for harms."
   ],
   "as_of": "2003-09-11",
   "as_of_source": "Day after latest Entrez date among included SYNERGY records (lower bound).",
@@ -57,5 +59,5 @@
   ],
   "source": "Cohen et al. 2006 screening collection, UrinaryIncontinence SYNERGY subset (40 included PubMed IDs): https://raw.githubusercontent.com/asreview/systematic-review-datasets/metadata-v1-final/datasets/Cohen_2006/output/online/UrinaryIncontinence.csv; source paper DOI https://doi.org/10.1197/jamia.M1929",
   "naive_blocks": null,
-  "notes": "Topic scope is inferred from the dataset subset name; the answer key uses label_included PubMed IDs."
+  "notes": "Question and eligibility reconstructed from the Drug Effectiveness Review Project (Oregon EPC) drug-class review this subset came from, not from its original protocol. The Cohen 2006 collection drew citations from a 1994-2003 MEDLINE subset (TREC 2004 Genomics), so gold covers 1994-2003 only: recall is valid, but result counts include earlier literature. The answer key uses label_included PubMed IDs (article-level inclusion)."
 }

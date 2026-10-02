@@ -1,0 +1,49 @@
+{
+  "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T134307Z",
+  "scored": "20261002T140002Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1014
+  },
+  "final_message": "trition*[tiab] OR diet*[tiab] OR food*[tiab] OR eating[tiab] OR feeding[tiab]) AND (\"Adolescent\"[Mesh] OR \"Students\"[Mesh] OR \"Child\"[Mesh] OR adolescen*[tiab] OR teen*[tiab] OR youth[tiab] OR student*[tiab] OR schoolchild*[tiab] OR schoolchildren[tiab] OR pupil*[tiab] OR child*[tiab]) AND (\"Schools\"[Mesh] OR \"School Health Services\"[Mesh] OR school*[tiab] OR classroom*[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])\n```\n\nThe final count was **11,418 records**, bounded by Entrez entry date through 2017-12-14; no publication-date limit was applied. Block totals were education **1,443,791**, food/diet/nutrition **1,590,321**, population **3,392,932**, and school/classroom setting **316,648**. The [audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/lean-fixes-codex-noseed-20261002T134307Z/work/audit.md) has the complete line-by-line counts and translations.\n\n## Validation and limitations\n\nSeven records screened from a targeted PubMed pilot were added as a development set. The strategy retrieved **7/7 (100% relative recall)** against that set; this is not independent validation or absolute sensitivity. No held-out set or included-study benchmark was available. The search has an accepted risk that its school-setting block could miss eligible studies where school delivery appears only in full text or is poorly indexed. The internal PRESS-structured critique was same-context QA, not specialist peer review.\n\nThe draft needs **PRESS peer review by an information specialist before use**.\n\nGenerated files are in `./work`: [final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/lean-fixes-codex-noseed-20261002T134307Z/work/final-query.txt), [audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/lean-fixes-codex-noseed-20261002T134307Z/work/audit.md), and [validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/lean-fixes-codex-noseed-20261002T134307Z/work/validation-manifest.json).",
+  "strategy": "((\"Health Education\"[Mesh] OR \"Health Promotion\"[Mesh] OR educat*[tiab] OR teach*[tiab] OR curriculum[tiab] OR lesson*[tiab] OR instruction*[tiab] OR program*[tiab]) AND (\"Diet, Food, and Nutrition\"[Mesh] OR \"Nutritional Sciences\"[Mesh] OR \"Child Nutrition Sciences\"[Mesh] OR \"Nutritional Physiological Phenomena\"[Mesh] OR \"Feeding Behavior\"[Mesh] OR \"Diet\"[Mesh] OR nutrition*[tiab] OR diet*[tiab] OR food*[tiab] OR eating[tiab] OR feeding[tiab]) AND (\"Adolescent\"[Mesh] OR \"Students\"[Mesh] OR \"Child\"[Mesh] OR adolescen*[tiab] OR teen*[tiab] OR youth[tiab] OR student*[tiab] OR schoolchild*[tiab] OR schoolchildren[tiab] OR pupil*[tiab] OR child*[tiab]) AND (\"Schools\"[Mesh] OR \"School Health Services\"[Mesh] OR school*[tiab] OR classroom*[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-14",
+  "count": 11418,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 8,
+  "recall_percent": 88.9,
+  "missed": [
+    "25797051"
+  ],
+  "nnr": 1427.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 7,
+  "unseen_recall_percent": 87.5,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

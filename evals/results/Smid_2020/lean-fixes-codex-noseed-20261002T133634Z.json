@@ -1,0 +1,49 @@
+{
+  "topic": "Smid_2020",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T133634Z",
+  "scored": "20261002T135700Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1226
+  },
+  "final_message": "]` | 1,470 |\n| 13 | `\"structural equation model*\"[tiab]` | 12,605 |\n| 14 | `SEM[tiab]` | 81,594 |\n| 15 | `\"confirmatory factor analysis\"[tiab]` | 8,085 |\n| 16 | `CFA[tiab]` | 7,128 |\n| 17 | `\"factor analysis\"[tiab]` | 33,735 |\n| 18 | `\"latent variable model*\"[tiab]` | 671 |\n| 19 | `\"latent growth\"[tiab]` | 1,734 |\n| 20 | `\"growth curve model*\"[tiab]` | 1,502 |\n| 21 | `\"latent class\"[tiab]` | 4,129 |\n| 22 | `\"growth mixture model*\"[tiab]` | 768 |\n| 23 | `mediation[tiab]` | 22,917 |\n| 24 | `multilevel[tiab]` | 25,930 |\n| 25 | `\"multi-level\"[tiab]` | 4,831 |\n| 26 | `\"hierarchical model*\"[tiab]` | 3,344 |\n| 27 | `\"path analysis\"[tiab]` | 4,075 |\n| 28 | SEM/latent-variable block (OR of lines 11–27) | 203,914 |\n| 29 | Final search (line 10 AND line 28) | **2,600** |\n\n## Validation and handoff\n\nFive screened-in records formed the **development set**; the strategy retrieved all five (100% relative recall on that set). This is not an independent validation set and does not establish sensitivity or complete recall. No in-scope systematic-review benchmark was identified. One retained record has a later displayed publication year but was present in PubMed by the required Entrez cutoff.\n\nThe [full audit](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/lean-fixes-codex-noseed-20261002T133634Z/work/audit.md>), [validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/lean-fixes-codex-noseed-20261002T133634Z/work/validation-manifest.json>), and [working rationale](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/lean-fixes-codex-noseed-20261002T133634Z/work/narrative.md>) are in `./work`. The protected report passed validation. The internal PRESS-structured critique is automated; **this draft still needs PRESS peer review by an information specialist before use**.\n\nThe cutoff bounds records by their PubMed entry date; the live counts use the current PubMed index and do not reconstruct its exact 2017 indexing state.",
+  "strategy": "((\"Bayes Theorem\"[Mesh] OR Bayesian[tiab] OR Bayes[tiab] OR \"Bayesian estimation\"[tiab] OR \"Bayesian method*\"[tiab] OR \"Bayesian approach*\"[tiab] OR \"Markov chain Monte Carlo\"[tiab] OR MCMC[tiab] OR \"prior distribution*\"[tiab]) AND (\"Factor Analysis, Statistical\"[Mesh] OR \"Multilevel Analysis\"[Mesh] OR \"structural equation model*\"[tiab] OR SEM[tiab] OR \"confirmatory factor analysis\"[tiab] OR CFA[tiab] OR \"factor analysis\"[tiab] OR \"latent variable model*\"[tiab] OR \"latent growth\"[tiab] OR \"growth curve model*\"[tiab] OR \"latent class\"[tiab] OR \"growth mixture model*\"[tiab] OR mediation[tiab] OR multilevel[tiab] OR \"multi-level\"[tiab] OR \"hierarchical model*\"[tiab] OR \"path analysis\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/11/29\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-11-29",
+  "count": 2600,
+  "gold_scored": 14,
+  "gold_reachable": 14,
+  "retrieved": 13,
+  "recall_percent": 92.9,
+  "missed": [
+    "25765534"
+  ],
+  "nnr": 200.0,
+  "translation_issues": [],
+  "gold_seen_by_agent": 5,
+  "unseen_retrieved": 8,
+  "unseen_recall_percent": 88.9,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

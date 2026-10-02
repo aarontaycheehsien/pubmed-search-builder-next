@@ -1,0 +1,45 @@
+{
+  "topic": "work-directed-return-to-work",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T161421Z",
+  "scored": "20261002T164727Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "8a391e8a8e0b0e159209a63daeab94a9036b9fe9",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "8a391e8a8e0b0e159209a63daeab94a9036b9fe9",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1986
+  },
+  "strategy": "((\"Depressive Disorder\"[Mesh] OR \"Anxiety Disorders\"[Mesh] OR \"Adjustment Disorders\"[Mesh] OR \"Stress, Psychological\"[Mesh] OR \"Stress Disorders, Traumatic\"[Mesh] OR \"Stress Disorders, Traumatic, Acute\"[Mesh] OR \"Stress Disorders, Post-Traumatic\"[Mesh] OR depress*[tiab] OR depressive disorder*[tiab] OR \"major depress*\"[tiab] OR dysthymi*[tiab] OR anxiet*[tiab] OR anxious[tiab] OR adjustment disorder*[tiab] OR \"reaction* to severe stress\"[tiab] OR \"severe stress reaction*\"[tiab] OR \"acute stress disorder*\"[tiab] OR \"stress-related disorder*\"[tiab] OR \"stress related disorder*\"[tiab] OR \"common mental disorder*\"[tiab] OR \"post-traumatic stress disorder*\"[tiab] OR \"posttraumatic stress disorder*\"[tiab] OR PTSD[tiab] OR \"acute stress reaction*\"[tiab] OR \"acute stress response*\"[tiab]) AND (\"Occupational Health\"[Mesh] OR \"Occupational Health Services\"[Mesh] OR \"Rehabilitation, Vocational\"[Mesh] OR Workplace[Mesh] OR \"Return to Work\"[Mesh] OR \"work-focused\"[tiab] OR \"work focused\"[tiab] OR \"work-directed\"[tiab] OR \"work directed\"[tiab] OR workplace[tiab] OR workplaces[tiab] OR employer*[tiab] OR manager*[tiab] OR supervisor*[tiab] OR \"occupational health\"[tiab] OR \"occupational health service*\"[tiab] OR \"vocational rehabilitation\"[tiab] OR \"workplace intervention*\"[tiab] OR \"workplace-based\"[tiab] OR \"workplace based\"[tiab] OR \"workplace contact\"[tiab] OR \"workplace meeting*\"[tiab] OR \"workplace dialogue\"[tiab] OR \"employer involvement\"[tiab] OR \"manager involvement\"[tiab] OR \"work accommodation*\"[tiab] OR \"job accommodation*\"[tiab] OR \"work modification*\"[tiab] OR \"work adjustment*\"[tiab] OR \"return-to-work intervention*\"[tiab] OR \"return to work intervention*\"[tiab] OR \"return-to-work program*\"[tiab] OR \"return to work program*\"[tiab] OR \"return-to-work service*\"[tiab] OR \"return to work service*\"[tiab] OR \"work rehabilitation\"[tiab])) AND (\"1800/01/01\"[edat] : \"2021/12/18\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2021-12-18",
+  "count": 16547,
+  "gold_scored": 11,
+  "gold_reachable": 11,
+  "retrieved": 11,
+  "recall_percent": 100.0,
+  "nnr": 1504.3,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 11,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

@@ -1,0 +1,55 @@
+{
+  "topic": "Cohen_2006_Antihistamines",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260928T083814Z",
+  "scored": "20260928T090333Z",
+  "skill": {
+    "name": "lean-optimal",
+    "hash": "b2569259e8a0658dd10bae3023147f2090fc75073a5bd07f9ebc1c23cc887486",
+    "commit": null,
+    "dirty": null,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": true
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1519
+  },
+  "strategy": "(\"Rhinitis, Allergic, Seasonal\"[Mesh] OR \"Rhinitis, Allergic, Perennial\"[Mesh] OR \"Urticaria\"[Mesh:noexp] OR \"Rhinitis, Allergic, Seasonal\"[tiab] OR \"Hay Fever\"[tiab] OR \"Fever, Hay\"[tiab] OR \"Hayfever\"[tiab] OR \"Pollen Allergy\"[tiab] OR \"Allergies, Pollen\"[tiab] OR \"Allergy, Pollen\"[tiab] OR \"Pollen Allergies\"[tiab] OR \"Pollinosis\"[tiab] OR \"Pollinoses\"[tiab] OR \"Seasonal Allergic Rhinitis\"[tiab] OR \"Allergic Rhinitides, Seasonal\"[tiab] OR \"Allergic Rhinitis, Seasonal\"[tiab] OR \"Rhinitides, Seasonal Allergic\"[tiab] OR \"Rhinitis, Seasonal Allergic\"[tiab] OR \"Seasonal Allergic Rhinitides\"[tiab] OR \"Rhinitis, Allergic, Perennial\"[tiab] OR \"Rhinitis, Allergic, Nonseasonal\"[tiab] OR \"Urticaria\"[tiab] OR \"Urticarias\"[tiab] OR \"Hives\"[tiab] OR \"Urticarial Wheals\"[tiab] OR \"Urticarial Wheal\"[tiab] OR \"Wheals, Urticarial\"[tiab] OR \"Wheal, Urticarial\"[tiab] OR \"allergic rhinitis\"[tiab] OR (allerg*[tiab] AND rhinit*[tiab]) OR \"seasonal rhinitis\"[tiab] OR \"perennial rhinitis\"[tiab] OR \"hay fever\"[tiab] OR hayfever[tiab] OR pollinosis[tiab] OR urticaria[tiab] OR hives[tiab]) AND (\"Histamine H1 Antagonists, Non-Sedating\"[tiab] OR \"Histamine H1 Antagonists, Non Sedating\"[tiab] OR \"Second Generation H1 Antagonist\"[tiab] OR \"H1 Antihistamines, Non-Sedating\"[tiab] OR \"H1 Antihistamines, Non Sedating\"[tiab] OR \"Non-Sedating H1 Antihistamines\"[tiab] OR \"Second Generation Antihistamines\"[tiab] OR \"Antihistamines, Second Generation\"[tiab] OR \"Second Generation H1 Antagonists\"[tiab] OR \"Second Generation Antihistamine\"[tiab] OR \"Antihistamine, Second Generation\"[tiab] OR \"Generation Antihistamine, Second\"[tiab] OR \"Third Generation H1 Antagonists\"[tiab] OR \"Third Generation H1 Antagonist\"[tiab] OR \"second-generation antihistamine\"[tiab] OR \"second-generation antihistamines\"[tiab] OR \"second generation antihistamine\"[tiab] OR \"second generation antihistamines\"[tiab] OR \"non-sedating antihistamine\"[tiab] OR \"non-sedating antihistamines\"[tiab] OR \"nonsedating antihistamine\"[tiab] OR \"nonsedating antihistamines\"[tiab] OR \"non sedating antihistamine\"[tiab] OR cetirizine[tiab] OR desloratadine[tiab] OR fexofenadine[tiab] OR loratadine[tiab] OR levocetirizine[tiab] OR terfenadine[tiab] OR ebastine[tiab] OR mizolastine[tiab] OR acrivastine[tiab] OR astemizole[tiab] OR azelastine[tiab] OR levocabastine[tiab] OR emedastine[tiab] OR Zyrtec[tiab] OR Zirtek[tiab] OR Reactine[tiab] OR Claritin[tiab] OR Allegra[tiab] OR Telfast[tiab] OR Clarinex[tiab] OR Aerius[tiab] OR \"desloratadine\"[Supplementary Concept] OR \"fexofenadine\"[Supplementary Concept] OR \"ebastine\"[Supplementary Concept] OR \"mizolastine\"[Supplementary Concept] OR \"acrivastine\"[Supplementary Concept] OR \"azelastine\"[Supplementary Concept] OR \"levocabastine\"[Supplementary Concept] OR \"emedastine\"[Supplementary Concept]) AND (\"1800/01/01\"[edat] : \"2002/05/26\"[edat])",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2002-05-26",
+  "count": 970,
+  "gold_scored": 16,
+  "gold_reachable": 16,
+  "retrieved": 13,
+  "recall_percent": 81.2,
+  "nnr": 74.6,
+  "translation_issues": [
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 13,
+  "unseen_recall_percent": 81.2,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

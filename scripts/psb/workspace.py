@@ -64,7 +64,7 @@ def sha256_text(text: str) -> str:
 
 def read_json(path: Path) -> object:
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
+        return json.loads(path.read_text(encoding="utf-8-sig"))
     except FileNotFoundError:
         raise WorkspaceError(f"missing {path.name}") from None
     except ValueError as exc:

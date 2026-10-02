@@ -1,0 +1,45 @@
+{
+  "topic": "Cohen_2006_Antihistamines",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T075845Z",
+  "scored": "20260928T082607Z",
+  "skill": {
+    "name": "ours",
+    "hash": "49fa7fd0b4d8465a17edf4c04050fca9e17c15fcd601f3be27462d4253786e26",
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1642
+  },
+  "strategy": "((\"Rhinitis, Allergic, Seasonal\"[Mesh] OR \"Rhinitis, Allergic, Perennial\"[Mesh] OR \"Rhinitis, Allergic\"[Mesh] OR \"Rhinitis\"[Mesh] OR \"Urticaria\"[Mesh] OR allergic rhinit*[tiab] OR rhinit*[tiab] OR hay fever[tiab] OR hayfever[tiab] OR pollinosis[tiab] OR pollen allerg*[tiab] OR rhinoconjunctivitis[tiab] OR urticari*[tiab] OR hives[tiab] OR wheal*[tiab]) AND (\"Cetirizine\"[Mesh] OR \"Loratadine\"[Mesh] OR \"Astemizole\"[Mesh] OR \"Terfenadine\"[Mesh] OR \"Acrivastine\"[nm] OR \"Azelastine\"[nm] OR \"Desloratadine\"[nm] OR \"Ebastine\"[nm] OR \"Emedastine\"[nm] OR \"Fexofenadine\"[nm] OR \"Levocabastine\"[nm] OR \"Mizolastine\"[nm] OR cetirizine[tiab] OR loratadine[tiab] OR desloratadine[tiab] OR fexofenadine[tiab] OR levocetirizine[tiab] OR terfenadine[tiab] OR astemizole[tiab] OR acrivastine[tiab] OR azelastine[tiab] OR ebastine[tiab] OR emedastine[tiab] OR levocabastine[tiab] OR mizolastine[tiab] OR antihistamin*[tiab] OR (second[tiab] AND generation[tiab] AND antihistamin*[tiab]) OR (newer[tiab] AND antihistamin*[tiab]) OR nonsedat*[tiab] OR non-sedat*[tiab] OR Zyrtec[tiab] OR Zirtek[tiab] OR Reactine[tiab] OR Claritin[tiab] OR Clarinex[tiab] OR Aerius[tiab] OR Allegra[tiab] OR Seldane[tiab] OR Triludan[tiab] OR Hismanal[tiab] OR Semprex[tiab] OR Astelin[tiab] OR Kestin[tiab] OR Livostin[tiab] OR Emadine[tiab])) AND (\"1800/01/01\"[edat] : \"2002/05/26\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2002-05-26",
+  "count": 2233,
+  "gold_scored": 16,
+  "gold_reachable": 16,
+  "retrieved": 14,
+  "recall_percent": 87.5,
+  "nnr": 159.5,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 14,
+  "unseen_recall_percent": 87.5,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

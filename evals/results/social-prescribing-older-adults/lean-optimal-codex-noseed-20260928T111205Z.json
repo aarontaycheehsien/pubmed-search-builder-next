@@ -1,0 +1,51 @@
+{
+  "topic": "social-prescribing-older-adults",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260928T111205Z",
+  "scored": "20260928T112620Z",
+  "skill": {
+    "name": "lean-optimal",
+    "hash": "b2569259e8a0658dd10bae3023147f2090fc75073a5bd07f9ebc1c23cc887486",
+    "commit": null,
+    "dirty": null,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": true
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 854
+  },
+  "strategy": "((\"Aged\"[Mesh] OR aged[tiab] OR elderly[tiab] OR \"older adult\"[tiab] OR \"older adults\"[tiab] OR \"older person\"[tiab] OR \"older people\"[tiab] OR senior*[tiab])) AND ((\"Social Participation\"[Mesh] OR \"Participation, Social\"[tiab] OR \"Social Engagement\"[tiab] OR \"Engagement, Social\"[tiab] OR \"Social Citizenship\"[tiab] OR \"Citizenship, Social\"[tiab] OR \"Community Networks\"[Mesh] OR \"Community Network\"[tiab] OR \"Network, Community\"[tiab] OR \"Networks, Community\"[tiab] OR \"Community Care Networks\"[tiab] OR \"Care Network, Community\"[tiab] OR \"Care Networks, Community\"[tiab] OR \"Community Care Network\"[tiab] OR \"Network, Community Care\"[tiab] OR \"Networks, Community Care\"[tiab] OR \"Community Health Networks\"[tiab] OR \"Community Health Network\"[tiab] OR \"Health Network, Community\"[tiab] OR \"Health Networks, Community\"[tiab] OR \"Network, Community Health\"[tiab] OR \"Networks, Community Health\"[tiab] OR \"social prescribing\"[tiab] OR \"social prescription\"[tiab] OR \"social prescriptions\"[tiab] OR \"social prescriber\"[tiab] OR \"social prescribers\"[tiab] OR \"link worker\"[tiab] OR \"link workers\"[tiab] OR \"link-worker\"[tiab] OR \"link-workers\"[tiab] OR linkwork*[tiab] OR \"community link\"[tiab] OR \"community links\"[tiab] OR \"community link worker\"[tiab] OR \"community link workers\"[tiab] OR \"community link practitioner\"[tiab] OR \"community link practitioners\"[tiab] OR \"community connector\"[tiab] OR \"community connectors\"[tiab] OR \"community navigator\"[tiab] OR \"community navigators\"[tiab] OR \"community referral\"[tiab] OR \"community referrals\"[tiab] OR \"referral scheme\"[tiab] OR \"referral schemes\"[tiab])) AND (\"1800/01/01\"[edat] : \"2019/12/30\"[edat])",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2019-12-30",
+  "count": 3056,
+  "gold_scored": 10,
+  "gold_reachable": 10,
+  "retrieved": 4,
+  "recall_percent": 40.0,
+  "nnr": 764.0,
+  "translation_issues": [
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 4,
+  "unseen_recall_percent": 40.0,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

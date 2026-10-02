@@ -1,0 +1,49 @@
+{
+  "topic": "Smid_2020",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T131327Z",
+  "scored": "20261002T133629Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1381
+  },
+  "final_message": "\"[tiab]` | 1,934 |\n| 17 | `\"structural equation models\"[tiab]` | 1,695 |\n| 18 | `SEM[tiab]` | 81,594 |\n| 19 | `\"latent variable\"[tiab]` | 2,007 |\n| 20 | `\"latent variables\"[tiab]` | 1,525 |\n| 21 | `\"latent variable model\"[tiab]` | 253 |\n| 22 | `\"latent variable models\"[tiab]` | 277 |\n| 23 | `\"confirmatory factor analysis\"[tiab]` | 8,085 |\n| 24 | `CFA[tiab]` | 7,128 |\n| 25 | `\"factor analysis\"[tiab]` | 33,735 |\n| 26 | `\"factor model\"[tiab]` | 5,552 |\n| 27 | `\"factor models\"[tiab]` | 1,000 |\n| 28 | `\"latent growth\"[tiab]` | 1,734 |\n| 29 | `\"growth curve model\"[tiab]` | 270 |\n| 30 | `\"growth curve models\"[tiab]` | 584 |\n| 31 | `\"latent class\"[tiab]` | 4,129 |\n| 32 | `multilevel[tiab]` | 25,930 |\n| 33 | `multi-level[tiab]` | 4,831 |\n| 34 | `hierarchical[tiab]` | 51,718 |\n| 35 | `mediation[tiab]` | 22,917 |\n| 36 | `\"mediation analysis\"[tiab]` | 1,822 |\n| 37 | `#10 OR #11 OR … OR #36` | 285,800 |\n| 38 | `#9 AND #37` | 13,861 |\n\n## Recall and limitations\n\nFour relevant records were found and screened during strategy development. The strategy retrieved all four (**100% relative recall on this development set**). That set is small and not independent validation; no matching prior-review benchmark or held-out set was identified, so recall on unseen records is unknown.\n\nThe broad `prior[tiab]` cue is retained for recall after internal critique, despite increasing the screening burden. The internal PRESS-structured critique passed; the draft still needs **PRESS peer review by an information specialist before use**.\n\nArtifacts: [final-query.txt](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/lean-fixes-codex-noseed-20261002T131327Z/work/final-query.txt), [validation-manifest.json](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/lean-fixes-codex-noseed-20261002T131327Z/work/validation-manifest.json), and [narrative.md](/C:/Users/aaron/AppData/Local/Temp/psb-evals/run-1ea9c6b0d2472c4a/lean-fixes-codex-noseed-20261002T131327Z/work/narrative.md).",
+  "strategy": "((\"Bayes Theorem\"[Mesh] OR Bayesian[tiab] OR Bayes[tiab] OR prior[tiab] OR \"prior distribution\"[tiab] OR \"prior distributions\"[tiab] OR MCMC[tiab] OR \"Markov chain Monte Carlo\"[tiab]) AND (\"Factor Analysis, Statistical\"[Mesh] OR \"Latent Class Analysis\"[Mesh] OR \"Multilevel Analysis\"[Mesh] OR \"Mediation Analysis\"[Mesh] OR \"Models, Psychological\"[Mesh] OR \"structural equation modeling\"[tiab] OR \"structural equation model\"[tiab] OR \"structural equation models\"[tiab] OR SEM[tiab] OR \"latent variable\"[tiab] OR \"latent variables\"[tiab] OR \"latent variable model\"[tiab] OR \"latent variable models\"[tiab] OR \"confirmatory factor analysis\"[tiab] OR CFA[tiab] OR \"factor analysis\"[tiab] OR \"factor model\"[tiab] OR \"factor models\"[tiab] OR \"latent growth\"[tiab] OR \"growth curve model\"[tiab] OR \"growth curve models\"[tiab] OR \"latent class\"[tiab] OR multilevel[tiab] OR multi-level[tiab] OR hierarchical[tiab] OR mediation[tiab] OR \"mediation analysis\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/11/29\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-11-29",
+  "count": 13861,
+  "gold_scored": 14,
+  "gold_reachable": 14,
+  "retrieved": 13,
+  "recall_percent": 92.9,
+  "missed": [
+    "25765534"
+  ],
+  "nnr": 1066.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 4,
+  "unseen_retrieved": 9,
+  "unseen_recall_percent": 90.0,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

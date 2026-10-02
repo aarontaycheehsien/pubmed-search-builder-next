@@ -1,0 +1,50 @@
+{
+  "topic": "van_de_Schoot_2018",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T133959Z",
+  "scored": "20261002T135928Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1169
+  },
+  "final_message": "iab] OR \"posttraumatic symptom\"[tiab] OR \"posttraumatic symptoms\"[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])\n```\n\nThe 2016-01-24 cutoff is applied to PubMed entry date (`[edat]`), with no publication-date limit.\n\n| # | Search line | Records |\n|---:|---|---:|\n| 1 | `\"Stress Disorders, Post-Traumatic\"[Mesh]` | 25,369 |\n| 2 | `\"Stress Disorders, Traumatic, Acute\"[Mesh]` | 387 |\n| 3 | `PTSD[tiab]` | 15,732 |\n| 4 | `\"post-traumatic stress\"[tiab]` | 8,160 |\n| 5 | `posttraumatic stress[tiab]` | 14,174 |\n| 6 | `posttraumatic[tiab]` | 46,488 |\n| 7 | `\"post-traumatic neurosis\"[tiab]` | 22 |\n| 8 | `posttraumatic neurosis[tiab]` | 7 |\n| 9 | `\"post-traumatic symptom\"[tiab]` | 43 |\n| 10 | `\"post-traumatic symptoms\"[tiab]` | 170 |\n| 11 | `\"posttraumatic symptom\"[tiab]` | 43 |\n| 12 | `\"posttraumatic symptoms\"[tiab]` | 320 |\n| 13 | Combined query | **56,663** |\n\nPTSD symptoms are the sole searched concept. Traumatic-event context and longitudinal symptom trajectory/course are screening criteria. The scope was not user-confirmed; this assumption is recorded in the audit.\n\nEight discovered, screened-in studies were used as the development set. Relative recall against that set was **8/8 (100%)**. There were no user-supplied seeds and no held-out validation set, so this is not an independent recall estimate or sensitivity measure.\n\nThe audit records the assumptions, discovery process, and three PRESS-structured internal critique rounds. **This draft still needs PRESS peer review by an information specialist before use.**\n\nGenerated files: [final query](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/lean-fixes-codex-noseed-20261002T133959Z/work/final-query.txt>), [audit](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/lean-fixes-codex-noseed-20261002T133959Z/work/audit.md>), and [validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/lean-fixes-codex-noseed-20261002T133959Z/work/validation-manifest.json>).",
+  "strategy": "((\"Stress Disorders, Post-Traumatic\"[Mesh] OR \"Stress Disorders, Traumatic, Acute\"[Mesh] OR PTSD[tiab] OR \"post-traumatic stress\"[tiab] OR posttraumatic stress[tiab] OR posttraumatic[tiab] OR \"post-traumatic neurosis\"[tiab] OR posttraumatic neurosis[tiab] OR \"post-traumatic symptom\"[tiab] OR \"post-traumatic symptoms\"[tiab] OR \"posttraumatic symptom\"[tiab] OR \"posttraumatic symptoms\"[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2016-01-24",
+  "count": 56663,
+  "gold_scored": 38,
+  "gold_reachable": 38,
+  "retrieved": 36,
+  "recall_percent": 94.7,
+  "missed": [
+    "20061839",
+    "20836603"
+  ],
+  "nnr": 1574.0,
+  "translation_issues": [],
+  "gold_seen_by_agent": 3,
+  "unseen_retrieved": 33,
+  "unseen_recall_percent": 94.3,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

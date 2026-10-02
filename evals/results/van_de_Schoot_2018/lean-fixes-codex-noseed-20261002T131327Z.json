@@ -1,0 +1,51 @@
+{
+  "topic": "van_de_Schoot_2018",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T131327Z",
+  "scored": "20261002T132517Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 710
+  },
+  "final_message": "c stress disorder[tiab] OR post traumatic stress disorder[tiab] OR posttraumatic stress[tiab] OR post-traumatic stress[tiab] OR post traumatic stress[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])\n```\n\n| Line | Search | Count |\n|---:|---|---:|\n| 1 | `Stress Disorders, Post-Traumatic[Mesh]` | 25,369 |\n| 2 | `PTSD[tiab]` | 15,732 |\n| 3 | `posttraumatic stress disorder[tiab]` | 12,500 |\n| 4 | `post-traumatic stress disorder[tiab]` | 7,081 |\n| 5 | `post traumatic stress disorder[tiab]` | 7,081 |\n| 6 | `posttraumatic stress[tiab]` | 14,174 |\n| 7 | `post-traumatic stress[tiab]` | 8,160 |\n| 8 | `post traumatic stress[tiab]` | 8,160 |\n| 9 | `#1 OR #2 OR #3 OR #4 OR #5 OR #6 OR #7 OR #8` | **32,074** |\n\nPTSD is the only required search block. Trauma details and symptom trajectories/course are screening criteria, since requiring those terms could miss studies that describe repeated symptom measurements using different language.\n\nThe strategy retrieved **7 of 7** screened-in development records (100% relative recall on that set). These were similar-article candidates around a related systematic review, not an independent validation set or a benchmark of that review’s included studies. Overall sensitivity is unknown. The internal critic used the same context and is not an independent PRESS review.\n\n## Files\n\n- [Final query](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/lean-fixes-codex-noseed-20261002T131327Z/work/final-query.txt)\n- [Audit](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/lean-fixes-codex-noseed-20261002T131327Z/work/audit.md)\n- [Validation manifest](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/lean-fixes-codex-noseed-20261002T131327Z/work/validation-manifest.json)\n- [Scope, rationale, and limitations](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-fa9b74053cc569e3/lean-fixes-codex-noseed-20261002T131327Z/work/narrative.md)\n\nThis draft needs PRESS peer review by an information specialist before use.",
+  "strategy": "((Stress Disorders, Post-Traumatic[Mesh] OR PTSD[tiab] OR posttraumatic stress disorder[tiab] OR post-traumatic stress disorder[tiab] OR post traumatic stress disorder[tiab] OR posttraumatic stress[tiab] OR post-traumatic stress[tiab] OR post traumatic stress[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2016-01-24",
+  "count": 32074,
+  "gold_scored": 38,
+  "gold_reachable": 38,
+  "retrieved": 35,
+  "recall_percent": 92.1,
+  "missed": [
+    "20061839",
+    "20836603",
+    "26412244"
+  ],
+  "nnr": 916.4,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 35,
+  "unseen_recall_percent": 92.1,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

@@ -1,0 +1,45 @@
+{
+  "topic": "social-prescribing-older-adults",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T162740Z",
+  "scored": "20261002T164325Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "8a391e8a8e0b0e159209a63daeab94a9036b9fe9",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "8a391e8a8e0b0e159209a63daeab94a9036b9fe9",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 944
+  },
+  "strategy": "(((\"Referral and Consultation\"[Mesh] AND (\"Social Participation\"[Mesh] OR \"Social Support\"[Mesh] OR \"Social Work\"[Mesh])) OR \"social prescribing\"[tiab] OR \"social prescription\"[tiab] OR \"social prescriptions\"[tiab] OR \"social referral\"[tiab] OR \"social referrals\"[tiab] OR \"community referral\"[tiab] OR \"community referrals\"[tiab] OR \"link worker\"[tiab:~1] OR linkworker*[tiab] OR \"community link worker\"[tiab:~2] OR \"community link\"[tiab] OR \"community links\"[tiab] OR \"wellbeing coordinator\"[tiab:~1] OR \"community navigator\"[tiab:~1] OR \"community connector\"[tiab:~1] OR \"social prescribing service\"[tiab:~1] OR \"social prescribing programme\"[tiab:~1] OR \"social prescribing program\"[tiab:~1] OR \"care navigator\"[tiab:~1] OR \"care navigation\"[tiab])) AND (\"1800/01/01\"[edat] : \"2019/12/30\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2019-12-30",
+  "count": 2238,
+  "gold_scored": 10,
+  "gold_reachable": 10,
+  "retrieved": 10,
+  "recall_percent": 100.0,
+  "nnr": 223.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 10,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

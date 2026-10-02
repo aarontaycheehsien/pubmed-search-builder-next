@@ -1,0 +1,56 @@
+{
+  "topic": "Cohen_2006_ACEInhibitors",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260928T072330Z",
+  "scored": "20260928T074832Z",
+  "skill": {
+    "name": "lean-optimal",
+    "hash": "b2569259e8a0658dd10bae3023147f2090fc75073a5bd07f9ebc1c23cc887486",
+    "commit": null,
+    "dirty": null,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1502
+  },
+  "strategy": "(\"Angiotensin-Converting Enzyme Inhibitors\"[Pharmacological Action] OR \"Angiotensin-Converting Enzyme Inhibitors\"[Mesh] OR \"benazepril\"[Supplementary Concept] OR \"moexipril\"[Supplementary Concept] OR \"trandolapril\"[Supplementary Concept] OR \"Angiotensin-Converting Enzyme Inhibitors\"[tiab] OR \"angiotensin-converting enzyme inhibitor\"[tiab] OR \"angiotensin-converting enzyme inhibitors\"[tiab] OR \"angiotensin converting enzyme inhibitor\"[tiab] OR \"angiotensin converting enzyme inhibitors\"[tiab] OR \"ACE inhibitor\"[tiab] OR \"ACE inhibitors\"[tiab] OR ACEI[tiab] OR ACEIs[tiab] OR \"ACE inhibitor*\"[tiab] OR benazepril[tiab] OR captopril[tiab] OR enalapril[tiab] OR fosinopril[tiab] OR lisinopril[tiab] OR moexipril[tiab] OR perindopril[tiab] OR quinapril[tiab] OR ramipril[tiab] OR trandolapril[tiab] OR \"benazepril\"[tiab] OR \"benazapril\"[tiab] OR \"benzazepril\"[tiab] OR \"CGS-14824-A\"[tiab] OR \"CGS-14824A\"[tiab] OR \"benazepril hydrochloride\"[tiab] OR \"Lotensin\"[tiab] OR \"Cibacen\"[tiab] OR \"Cibacène\"[tiab] OR \"Briem\"[tiab] OR \"Labopal\"[tiab] OR \"moexipril\"[tiab] OR \"2-((1-ethoxycarbony)-3-phenylpropylamino-1-oxopropyl)-6,7-dimethoxy-1,2,3,4-tetrahydroisoquinoline-3-carboxylic acid\"[tiab] OR \"RS 10085\"[tiab] OR \"RS-10085\"[tiab] OR \"moexipril hydrochloride\"[tiab] OR \"Univasc\"[tiab] OR \"Perdix\"[tiab] OR \"Moex\"[tiab] OR \"Fempress\"[tiab] OR \"trandolapril\"[tiab] OR \"1-(2-((1-(ethoxycarbonyl)-3-phenylpropyl)amino)-1-oxopropyl)octahydro-1H-indol-2-carboxylic acid\"[tiab] OR \"RU 44570\"[tiab] OR \"RU-44570\"[tiab] OR \"RU44570\"[tiab] OR \"Mavik\"[tiab] OR \"Gopten\"[tiab] OR \"Odrik\"[tiab] OR \"Udrik\"[tiab]) AND (\"Hypertension\"[Mesh] OR \"Heart Failure\"[Mesh] OR \"Coronary Artery Disease\"[Mesh] OR \"Myocardial Infarction\"[Mesh] OR \"Ventricular Dysfunction, Left\"[Mesh] OR \"Kidney Diseases\"[Mesh] OR \"Diabetic Nephropathies\"[Mesh] OR \"Risk Factors\"[Mesh:noexp] OR \"Hypertension\"[tiab] OR \"Blood Pressure, High\"[tiab] OR \"Blood Pressures, High\"[tiab] OR \"High Blood Pressure\"[tiab] OR \"High Blood Pressures\"[tiab] OR \"Heart Failure\"[tiab] OR \"Cardiac Failure\"[tiab] OR \"Heart Decompensation\"[tiab] OR \"Decompensation, Heart\"[tiab] OR \"Congestive Heart Failure\"[tiab] OR \"Heart Failure, Congestive\"[tiab] OR \"Heart Failure, Right-Sided\"[tiab] OR \"Heart Failure, Right Sided\"[tiab] OR \"Right-Sided Heart Failure\"[tiab] OR \"Right Sided Heart Failure\"[tiab] OR \"Heart Failure, Left-Sided\"[tiab] OR \"Heart Failure, Left Sided\"[tiab] OR \"Left-Sided Heart Failure\"[tiab] OR \"Left Sided Heart Failure\"[tiab] OR \"Myocardial Failure\"[tiab] OR \"Coronary Artery Disease\"[tiab] OR \"Artery Disease, Coronary\"[tiab] OR \"Artery Diseases, Coronary\"[tiab] OR \"Coronary Artery Diseases\"[tiab] OR \"Coronary Arteriosclerosis\"[tiab] OR \"Arterioscleroses, Coronary\"[tiab] OR \"Coronary Arterioscleroses\"[tiab] OR \"Arteriosclerosis, Coronary\"[tiab] OR \"Atherosclerosis, Coronary\"[tiab] OR \"Atheroscleroses, Coronary\"[tiab] OR \"Coronary Atheroscleroses\"[tiab] OR \"Coronary Atherosclerosis\"[tiab] OR \"Left Main Coronary Artery Disease\"[tiab] OR \"Left Main Coronary Disease\"[tiab] OR \"Left Main Disease\"[tiab] OR \"Left Main Diseases\"[tiab] OR \"Myocardial Infarction\"[tiab] OR \"Infarction, Myocardial\"[tiab] OR \"Infarctions, Myocardial\"[tiab] OR \"Myocardial Infarctions\"[tiab] OR \"Heart Attack\"[tiab] OR \"Heart Attacks\"[tiab] OR \"Myocardial Infarct\"[tiab] OR \"Infarct, Myocardial\"[tiab] OR \"Infarcts, Myocardial\"[tiab] OR \"Myocardial Infarcts\"[tiab] OR \"Cardiovascular Stroke\"[tiab] OR \"Cardiovascular Strokes\"[tiab] OR \"Stroke, Cardiovascular\"[tiab] OR \"Strokes, Cardiovascular\"[tiab] OR \"Ventricular Dysfunction, Left\"[tiab] OR \"Dysfunction, Left Ventricular\"[tiab] OR \"Left Ventricular Dysfunctions\"[tiab] OR \"Left Ventricular Dysfunction\"[tiab] OR \"LV Dysfunction\"[tiab] OR \"Dysfunction, LV\"[tiab] OR \"LV Dysfunctions\"[tiab] OR \"Left Ventricular Diastolic Dysfunction\"[tiab] OR \"LV Diastolic Dysfunction\"[tiab] OR \"Diastolic Dysfunction, LV\"[tiab] OR \"Dysfunction, LV Diastolic\"[tiab] OR \"LV Diastolic Dysfunctions\"[tiab] OR \"Left Ventricular Systolic Dysfunction\"[tiab] OR \"LV Systolic Dysfunction\"[tiab] OR \"Dysfunction, LV Systolic\"[tiab] OR \"LV Systolic Dysfunctions\"[tiab] OR \"Systolic Dysfunction, LV\"[tiab] OR \"Kidney Diseases\"[tiab] OR \"Disease, Kidney\"[tiab] OR \"Diseases, Kidney\"[tiab] OR \"Kidney Disease\"[tiab] OR \"Diabetic Nephropathies\"[tiab] OR \"Nephropathies, Diabetic\"[tiab] OR \"Nephropathy, Diabetic\"[tiab] OR \"Diabetic Kidney Disease\"[tiab] OR \"Diabetic Kidney Diseases\"[tiab] OR \"Kidney Disease, Diabetic\"[tiab] OR \"Kidney Diseases, Diabetic\"[tiab] OR \"Diabetic Nephropathy\"[tiab] OR \"Diabetic Glomerulosclerosis\"[tiab] OR \"Glomerulosclerosis, Diabetic\"[tiab] OR \"Intracapillary Glomerulosclerosis\"[tiab] OR \"Kimmelstiel-Wilson Disease\"[tiab] OR \"Kimmelstiel Wilson Disease\"[tiab] OR \"Nodular Glomerulosclerosis\"[tiab] OR \"Glomerulosclerosis, Nodular\"[tiab] OR \"Kimmelstiel-Wilson Syndrome\"[tiab] OR \"Kimmelstiel Wilson Syndrome\"[tiab] OR \"Syndrome, Kimmelstiel-Wilson\"[tiab] OR \"Risk Factors\"[tiab] OR \"Factor, Risk\"[tiab] OR \"Risk Factor\"[tiab] OR \"Population at Risk\"[tiab] OR \"Populations at Risk\"[tiab] OR \"Risk Scores\"[tiab] OR \"Risk Score\"[tiab] OR \"Score, Risk\"[tiab] OR \"Risk Factor Scores\"[tiab] OR \"Risk Factor Score\"[tiab] OR \"Score, Risk Factor\"[tiab] OR \"Health Correlates\"[tiab] OR \"Correlates, Health\"[tiab] OR \"Social Risk Factors\"[tiab] OR \"Factor, Social Risk\"[tiab] OR \"Factors, Social Risk\"[tiab] OR \"Risk Factor, Social\"[tiab] OR \"Risk Factors, Social\"[tiab] OR \"Social Risk Factor\"[tiab] OR \"cardiovascular risk\"[tiab] OR \"cardiovascular risks\"[tiab] OR \"high cardiovascular risk\"[tiab] OR \"high-risk\"[tiab] OR \"high risk\"[tiab] OR \"CV risk\"[tiab] OR \"CV risks\"[tiab] OR \"coronary risk\"[tiab] OR \"cardiac risk\"[tiab] OR \"cardiovascular risk factor\"[tiab] OR \"cardiovascular risk factors\"[tiab] OR hypertens*[tiab] OR nephropath*[tiab])",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2003-03-15",
+  "count": 21375,
+  "gold_scored": 41,
+  "gold_reachable": 41,
+  "retrieved": 41,
+  "recall_percent": 100.0,
+  "nnr": 521.3,
+  "translation_issues": [
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 41,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

@@ -1,0 +1,45 @@
+{
+  "topic": "work-directed-return-to-work",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T092957Z",
+  "scored": "20260928T095314Z",
+  "skill": {
+    "name": "ours",
+    "hash": "49fa7fd0b4d8465a17edf4c04050fca9e17c15fcd601f3be27462d4253786e26",
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": true
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1397
+  },
+  "strategy": "((\"Depressive Disorder\"[Mesh] OR \"Anxiety Disorders\"[Mesh] OR \"Adjustment Disorders\"[Mesh] OR \"Stress Disorders, Post-Traumatic\"[Mesh] OR \"Mental Disorders\"[Mesh] OR depress*[tiab] OR depressive[tiab] OR depression[tiab] OR anxiety[tiab] OR anxious[tiab] OR anxiety disorder*[tiab] OR adjustment disorder*[tiab] OR stress reaction*[tiab] OR reaction* to severe stress[tiab] OR posttraumatic stress[tiab] OR post-traumatic stress[tiab] OR common mental disorder*[tiab] OR psychological distress[tiab]) AND (\"Workplace\"[Mesh] OR \"Occupational Health\"[Mesh] OR \"Occupational Health Services\"[Mesh] OR \"Rehabilitation, Vocational\"[Mesh] OR \"Return to Work\"[Mesh] OR workplace[tiab] OR workplaces[tiab] OR workplace-based[tiab] OR workplace based[tiab] OR workplace intervention*[tiab] OR work-directed[tiab] OR work directed[tiab] OR work-focused[tiab] OR work focused[tiab] OR work-oriented[tiab] OR work oriented[tiab] OR workplace-oriented[tiab] OR workplace oriented[tiab] OR occupational rehabilitation[tiab] OR vocational rehabilitation[tiab] OR work rehabilitation[tiab] OR return to work intervention*[tiab] OR return-to-work intervention*[tiab] OR work accommodation*[tiab] OR work modification*[tiab] OR job accommodation*[tiab] OR employer involvement[tiab] OR employer participation[tiab] OR workplace dialogue[tiab] OR workplace meeting*[tiab] OR (employer*[tiab] AND (involv*[tiab] OR participat*[tiab] OR engag*[tiab] OR collaborat*[tiab])) OR (workplace*[tiab] AND (intervention*[tiab] OR program*[tiab] OR programme*[tiab] OR rehabilitat*[tiab] OR support[tiab])) OR ((work[tiab] OR workplace*[tiab] OR occupation*[tiab]) AND (intervention*[tiab] OR rehabilitat*[tiab] OR reintegrat*[tiab])))) AND (\"1800/01/01\"[edat] : \"2021/12/18\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2021-12-18",
+  "count": 28668,
+  "gold_scored": 11,
+  "gold_reachable": 11,
+  "retrieved": 11,
+  "recall_percent": 100.0,
+  "nnr": 2606.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 11,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

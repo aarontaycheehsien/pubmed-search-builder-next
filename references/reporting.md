@@ -5,6 +5,8 @@
 `validation-manifest.json` from the same evaluated snapshot. The exported query includes any
 explicit effective `as_of` entry-date restriction. The audit includes:
 
+- first, any must-fix finding delivered over an open critic objection (`psb critic override`),
+  with the critic's recommendation and the reason for overriding; the manifest lists their IDs
 - question, framework, concept roles, and whether the user confirmed the scope
 - PRISMA-S search details: database and platform, date the counts were run, `as_of` bound,
   total records, limits with rationale

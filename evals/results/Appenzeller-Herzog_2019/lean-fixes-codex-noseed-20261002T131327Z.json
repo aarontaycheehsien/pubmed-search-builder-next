@@ -1,0 +1,47 @@
+{
+  "topic": "Appenzeller-Herzog_2019",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T131327Z",
+  "scored": "20261002T133315Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1188
+  },
+  "final_message": "/lean-fixes-codex-noseed-20261002T131327Z/work/final-query.txt>)\n- [Audit with line-by-line counts](<C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/lean-fixes-codex-noseed-20261002T131327Z/work/audit.md>)\n- [Validation manifest](<C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/lean-fixes-codex-noseed-20261002T131327Z/work/validation-manifest.json>)\n- [Rationale and limitations](<C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/lean-fixes-codex-noseed-20261002T131327Z/work/narrative.md>)\n\nThe search returned **3,329 records**, using an Entrez entry-date cutoff of **2018-12-23** and no publication-date limit. It retrieved both records in the development set (100% relative recall on that set). That is not independent validation: recall was not independently estimated, and the strategy remains empirically unvalidated.\n\nI assumed “common therapies” means established anti-copper treatments plus liver transplantation; the scope was not confirmed with you. The draft needs PRESS peer review by an information specialist before use.\n\n```text\n((\"Hepatolenticular Degeneration\"[Mesh] OR \"Wilson disease\"[tiab] OR \"Wilson's disease\"[tiab] OR hepatolenticular[tiab] OR Kinnier-Wilson[tiab] OR pseudoscleros*[tiab] OR \"copper storage disease\"[tiab] OR ATP7B[tiab]) AND (\"Penicillamine\"[Mesh] OR \"Trientine\"[Mesh] OR \"Chelation Therapy\"[Mesh] OR \"Zinc\"[Mesh] OR \"Zinc Compounds\"[Mesh] OR \"Zinc Sulfate\"[Mesh] OR \"Tetrathiomolybdate\"[nm] OR \"Liver Transplantation\"[Mesh] OR penicillamine[tiab] OR \"D-penicillamine\"[tiab] OR trientine[tiab] OR triethylenetetramine[tiab] OR zinc[tiab] OR \"zinc sulfate\"[tiab] OR \"zinc acetate\"[tiab] OR \"zinc salt\"[tiab] OR chelat*[tiab] OR \"anti-copper\"[tiab] OR anticopper[tiab] OR \"copper chelation\"[tiab] OR tetrathiomolybdate[tiab] OR \"ammonium tetrathiomolybdate\"[tiab] OR \"ATN-224\"[tiab] OR WTX101[tiab] OR transplant*[tiab] OR treatment[tiab] OR therap*[tiab])) AND (\"1800/01/01\"[edat] : \"2018/12/23\"[edat])\n```",
+  "strategy": "((\"Hepatolenticular Degeneration\"[Mesh] OR \"Wilson disease\"[tiab] OR \"Wilson's disease\"[tiab] OR hepatolenticular[tiab] OR Kinnier-Wilson[tiab] OR pseudoscleros*[tiab] OR \"copper storage disease\"[tiab] OR ATP7B[tiab]) AND (\"Penicillamine\"[Mesh] OR \"Trientine\"[Mesh] OR \"Chelation Therapy\"[Mesh] OR \"Zinc\"[Mesh] OR \"Zinc Compounds\"[Mesh] OR \"Zinc Sulfate\"[Mesh] OR \"Tetrathiomolybdate\"[nm] OR \"Liver Transplantation\"[Mesh] OR penicillamine[tiab] OR \"D-penicillamine\"[tiab] OR trientine[tiab] OR triethylenetetramine[tiab] OR zinc[tiab] OR \"zinc sulfate\"[tiab] OR \"zinc acetate\"[tiab] OR \"zinc salt\"[tiab] OR chelat*[tiab] OR \"anti-copper\"[tiab] OR anticopper[tiab] OR \"copper chelation\"[tiab] OR tetrathiomolybdate[tiab] OR \"ammonium tetrathiomolybdate\"[tiab] OR \"ATN-224\"[tiab] OR WTX101[tiab] OR transplant*[tiab] OR treatment[tiab] OR therap*[tiab])) AND (\"1800/01/01\"[edat] : \"2018/12/23\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-12-23",
+  "count": 3329,
+  "gold_scored": 22,
+  "gold_reachable": 21,
+  "retrieved": 21,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 158.5,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 21,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

@@ -1,0 +1,45 @@
+{
+  "topic": "Cohen_2006_UrinaryIncontinence",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T160802Z",
+  "scored": "20261002T163540Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "8a391e8a8e0b0e159209a63daeab94a9036b9fe9",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "8a391e8a8e0b0e159209a63daeab94a9036b9fe9",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1658
+  },
+  "strategy": "((\"Urinary Bladder, Overactive\"[Mesh] OR \"Urinary Incontinence, Urge\"[Mesh] OR \"Urinary Incontinence\"[Mesh] OR \"Urination Disorders\"[Mesh] OR \"overactive bladder\"[tiab] OR \"overactive urinary bladder\"[tiab] OR \"overactive detrusor\"[tiab] OR \"detrusor overactivity\"[tiab] OR \"detrusor instability\"[tiab] OR \"detrusor hyperreflexia\"[tiab] OR \"unstable bladder\"[tiab] OR \"bladder instability\"[tiab] OR \"bladder overactivity\"[tiab] OR \"urge incontinence\"[tiab] OR \"urinary urge incontinence\"[tiab] OR \"urge urinary incontinence\"[tiab] OR \"urgency incontinence\"[tiab] OR \"mixed urinary incontinence\"[tiab] OR \"urinary incontinence\"[tiab] OR incontinence[tiab] OR urge[tiab]) AND (\"Flavoxate\"[Mesh] OR \"Tolterodine Tartrate\"[Mesh] OR \"Solifenacin Succinate\"[Mesh] OR oxybutynin[nm] OR \"trospium chloride\"[nm] OR darifenacin[nm] OR propiverine[nm] OR oxybutynin[tiab] OR tolterodine[tiab] OR trospium[tiab] OR darifenacin[tiab] OR solifenacin[tiab] OR propiverine[tiab] OR flavoxate[tiab] OR emepronium[tiab] OR propantheline[tiab] OR terodiline[tiab] OR imipramine[tiab] OR anticholinergic*[tiab] OR antimuscarinic*[tiab] OR antispasmodic*[tiab])) AND (\"1800/01/01\"[edat] : \"2003/09/11\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2003-09-11",
+  "count": 1248,
+  "gold_scored": 40,
+  "gold_reachable": 40,
+  "retrieved": 32,
+  "recall_percent": 80.0,
+  "nnr": 39.0,
+  "translation_issues": [],
+  "gold_seen_by_agent": 14,
+  "unseen_retrieved": 18,
+  "unseen_recall_percent": 69.2,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

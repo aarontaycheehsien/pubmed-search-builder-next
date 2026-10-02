@@ -1,0 +1,47 @@
+{
+  "topic": "Appenzeller-Herzog_2019",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T134712Z",
+  "scored": "20261002T140945Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1353
+  },
+  "final_message": "20 | `\"zinc acetate\"[tiab]` | 817 |\n| 21 | `\"zinc sulfate\"[tiab]` | 1,531 |\n| 22 | `tetrathiomolybdate[tiab]` | 351 |\n| 23 | `dimercaprol[tiab]` | 623 |\n| 24 | `\"Unithiol\"[Mesh]` | 571 |\n| 25 | `Unithiol[tiab]` | 216 |\n| 26 | `DMPS[tiab]` | 745 |\n| 27 | `dimercaptopropane*[tiab]` | 267 |\n| 28 | Therapy block: `#8 OR #9 OR … OR #27` | 7,044,887 |\n| 29 | Final: `#7 AND #28` | **4,099** |\n\n## Validation and scope\n\nThe search retrieved **4/4** screened relevant development records: relative recall **100% against that set**. These records were found during development, so this is not independent validation and does not establish sensitivity or complete recall. No user-supplied seeds, held-out validation set, or prior-review benchmark were available.\n\nI assumed “common therapies” means **pharmacologic copper-lowering treatments, including chelation and zinc**, and treated direct comparison and outcomes as screening criteria. Liver transplantation is outside that assumed scope. The scope remains provisional because you asked me to proceed without follow-up.\n\nThe internal critique was completed in the same context; an independent reviewer was unavailable. This draft still needs **PRESS peer review by an information specialist before use**.\n\nGenerated files are in [`work`](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/lean-fixes-codex-noseed-20261002T134712Z/work>):\n\n- [Final query](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/lean-fixes-codex-noseed-20261002T134712Z/work/final-query.txt>)\n- [Audit](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/lean-fixes-codex-noseed-20261002T134712Z/work/audit.md>)\n- [Validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/lean-fixes-codex-noseed-20261002T134712Z/work/validation-manifest.json>)\n- [Peer-review narrative](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-bb18548fe89ff8fd/lean-fixes-codex-noseed-20261002T134712Z/work/narrative.md>)",
+  "strategy": "((\"Hepatolenticular Degeneration\"[Mesh] OR Wilson*[tiab] OR \"hepatolenticular degeneration\"[tiab] OR \"hepatocerebral degeneration\"[tiab] OR \"copper storage disease\"[tiab] OR \"Westphal-Strumpell syndrome\"[tiab]) AND (\"Drug Therapy\"[Mesh] OR \"Penicillamine\"[Mesh] OR \"Trientine\"[Mesh] OR \"Zinc Compounds\"[Mesh] OR \"Zinc\"[Mesh] OR treat*[tiab] OR therap*[tiab] OR pharmacotherap*[tiab] OR chelat*[tiab] OR penicillamin*[tiab] OR trientin*[tiab] OR zinc[tiab] OR \"zinc acetate\"[tiab] OR \"zinc sulfate\"[tiab] OR tetrathiomolybdate[tiab] OR dimercaprol[tiab] OR \"Unithiol\"[Mesh] OR Unithiol[tiab] OR DMPS[tiab] OR dimercaptopropane*[tiab])) AND (\"1800/01/01\"[edat] : \"2018/12/23\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-12-23",
+  "count": 4099,
+  "gold_scored": 22,
+  "gold_reachable": 21,
+  "retrieved": 21,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 195.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 4,
+  "unseen_retrieved": 17,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

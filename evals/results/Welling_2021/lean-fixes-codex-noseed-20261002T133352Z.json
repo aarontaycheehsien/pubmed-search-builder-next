@@ -1,0 +1,47 @@
+{
+  "topic": "Welling_2021",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T133352Z",
+  "scored": "20261002T135130Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1058
+  },
+  "final_message": "8 |\n| 10 | `\"2019 novel coronavirus\"[tiab:~1]` | 2,326 |\n| 11 | `\"coronavirus disease 2019\"[tiab:~2]` | 15,475 |\n| 12 | `SARS-CoV-2[tiab]` | 23,503 |\n| 13 | `coronavirus[tiab]` | 41,791 |\n| 14 | `pandemic*[tiab]` | 58,444 |\n| 15 | `lockdown*[tiab]` | 3,416 |\n| 16 | `lock-down[tiab]` | 163 |\n| 17 | `quarantin*[tiab]` | 6,954 |\n| 18 | `\"stay at home\"[tiab:~1]` | 869 |\n| 19 | `\"stay-at-home\"[tiab]` | 815 |\n| 20 | `\"social distancing\"[tiab:~1]` | 2,679 |\n| 21 | `\"physical distancing\"[tiab:~1]` | 446 |\n| 22 | `\"containment measure*\"[tiab]` | 636 |\n| 23 | Combined query | **126,898** |\n\nRelative recall was **6/6 (100%)** against the small, screened development set. This is not independent validation or absolute sensitivity. No user-supplied seeds or matching prior-review benchmark were available. The internal critiques were same-context; **PRESS peer review by an information specialist is still needed before use**.\n\nThe query uses an Entrez-date bound, not a publication-date limit. Some records already in PubMed by the cutoff have later publication years. The current MeSH index includes a COVID-19 heading introduced in 2021 (2020), so this run does not recreate the exact historical PubMed index. The broad OR block also brings substantial screening work.\n\nArtifacts are in [`./work`](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/lean-fixes-codex-noseed-20261002T133352Z/work):\n\n- [final-query.txt](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/lean-fixes-codex-noseed-20261002T133352Z/work/final-query.txt)\n- [audit.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/lean-fixes-codex-noseed-20261002T133352Z/work/audit.md)\n- [validation-manifest.json](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/lean-fixes-codex-noseed-20261002T133352Z/work/validation-manifest.json)\n- [narrative.md](C:/Users/aaron/AppData/Local/Temp/psb-evals/run-7e47969c4c7a654f/lean-fixes-codex-noseed-20261002T133352Z/work/narrative.md)",
+  "strategy": "((COVID-19[Mesh] OR Coronavirus Infections[Mesh] OR Pandemics[Mesh] OR Quarantine[Mesh] OR COVID-19[tiab] OR COVID19[tiab] OR 2019-nCoV[tiab] OR \"2019 nCoV\"[tiab] OR \"novel coronavirus\"[tiab:~1] OR \"2019 novel coronavirus\"[tiab:~1] OR \"coronavirus disease 2019\"[tiab:~2] OR SARS-CoV-2[tiab] OR coronavirus[tiab] OR pandemic*[tiab] OR lockdown*[tiab] OR lock-down[tiab] OR quarantin*[tiab] OR \"stay at home\"[tiab:~1] OR \"stay-at-home\"[tiab] OR \"social distancing\"[tiab:~1] OR \"physical distancing\"[tiab:~1] OR \"containment measure*\"[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-11-22",
+  "count": 126898,
+  "gold_scored": 53,
+  "gold_reachable": 53,
+  "retrieved": 53,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 2394.3,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 52,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

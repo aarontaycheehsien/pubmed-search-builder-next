@@ -1,0 +1,45 @@
+{
+  "topic": "social-prescribing-older-adults",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T154804Z",
+  "scored": "20261002T162738Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "8a391e8a8e0b0e159209a63daeab94a9036b9fe9",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "8a391e8a8e0b0e159209a63daeab94a9036b9fe9",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2374
+  },
+  "strategy": "(((\"Community Health Workers\"[Mesh] AND \"Referral and Consultation\"[Mesh]) OR social prescrib*[tiab] OR social prescription*[tiab] OR link worker*[tiab] OR linkwork*[tiab] OR \"community link\"[tiab:~0] OR \"community navigator\"[tiab:~0] OR \"community connector\"[tiab:~0] OR \"community referral\"[tiab:~1] OR arts on prescription[tiab] OR arts on referral[tiab] OR \"community activit*\"[tiab])) AND (\"1800/01/01\"[edat] : \"2019/12/30\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2019-12-30",
+  "count": 1659,
+  "gold_scored": 10,
+  "gold_reachable": 10,
+  "retrieved": 10,
+  "recall_percent": 100.0,
+  "nnr": 165.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 9,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

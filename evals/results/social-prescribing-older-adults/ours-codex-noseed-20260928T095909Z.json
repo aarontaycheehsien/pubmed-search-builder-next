@@ -1,0 +1,45 @@
+{
+  "topic": "social-prescribing-older-adults",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20260928T095909Z",
+  "scored": "20260928T102439Z",
+  "skill": {
+    "name": "ours",
+    "hash": "49fa7fd0b4d8465a17edf4c04050fca9e17c15fcd601f3be27462d4253786e26",
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": false,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": true
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1530
+  },
+  "strategy": "((\"Community Health Workers\"[Mesh] OR \"social prescribing\"[tiab] OR \"social prescription\"[tiab] OR \"social prescriptions\"[tiab] OR social prescrib*[tiab] OR link worker*[tiab] OR link-work*[tiab] OR linkworker*[tiab] OR community link*[tiab] OR community link worker*[tiab] OR (community[tiab] AND (link[tiab] OR links[tiab]) AND practitioner*[tiab]) OR community connector*[tiab] OR community navigator*[tiab] OR \"community referral\"[tiab:~2] OR (referral*[tiab] AND facilitator*[tiab]) OR (voluntar*[tiab] AND sector[tiab] AND referral*[tiab])) AND (\"Aged\"[Mesh] OR \"Frail Elderly\"[Mesh] OR older[tiab] OR \"older adult*\"[tiab] OR \"older people\"[tiab] OR \"older person*\"[tiab] OR \"older patient*\"[tiab] OR elderly[tiab] OR senior*[tiab] OR geriatric*[tiab] OR aged[tiab])) AND (\"1800/01/01\"[edat] : \"2019/12/30\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2019-12-30",
+  "count": 1253,
+  "gold_scored": 10,
+  "gold_reachable": 10,
+  "retrieved": 4,
+  "recall_percent": 40.0,
+  "nnr": 313.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 3,
+  "unseen_recall_percent": 33.3,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

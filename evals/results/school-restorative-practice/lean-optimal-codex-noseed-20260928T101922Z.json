@@ -1,0 +1,49 @@
+{
+  "topic": "school-restorative-practice",
+  "source": "generated:lean-optimal",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-optimal-codex-noseed-20260928T101922Z",
+  "scored": "20260928T104029Z",
+  "skill": {
+    "name": "lean-optimal",
+    "hash": "b2569259e8a0658dd10bae3023147f2090fc75073a5bd07f9ebc1c23cc887486",
+    "commit": null,
+    "dirty": null,
+    "hash_note": "recomputed from a fresh staging after a harness bug hashed the skill after the run"
+  },
+  "harness": {
+    "commit": "7e7ed650a56db154688d6e487f65a074b4bd3e28",
+    "dirty": true
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1267
+  },
+  "strategy": "﻿(\"restorative justice\"[tiab] OR \"restorative practice\"[tiab] OR \"restorative practices\"[tiab] OR \"restorative-practice\"[tiab] OR \"restorative-practices\"[tiab] OR \"restorative approach\"[tiab] OR \"restorative approaches\"[tiab] OR \"restorative discipline\"[tiab] OR \"restorative conferencing\"[tiab] OR \"restorative conference\"[tiab] OR \"restorative conferences\"[tiab] OR \"restorative circle\"[tiab] OR \"restorative circles\"[tiab] OR \"restorative process\"[tiab] OR \"restorative processes\"[tiab] OR \"restorative program\"[tiab] OR \"restorative programs\"[tiab] OR \"restorative programme\"[tiab] OR \"restorative programmes\"[tiab] OR (restorative[tiab] AND (justice[tiab] OR practice*[tiab] OR discipl*[tiab] OR conference*[tiab] OR circle*[tiab] OR process*[tiab]))) AND (\"Schools\"[Mesh:noexp] OR \"Students\"[Mesh:noexp] OR \"Schools\"[tiab] OR \"School\"[tiab] OR \"Primary Schools\"[tiab] OR \"Primary School\"[tiab] OR \"School, Primary\"[tiab] OR \"Schools, Primary\"[tiab] OR \"Schools, Secondary\"[tiab] OR \"School, Secondary\"[tiab] OR \"Secondary School\"[tiab] OR \"Secondary Schools\"[tiab] OR \"Students\"[tiab] OR \"Student\"[tiab] OR \"School Enrollment\"[tiab] OR \"Enrollment, School\"[tiab] OR \"Enrollments, School\"[tiab] OR \"School Enrollments\"[tiab] OR school*[tiab] OR student*[tiab] OR classroom*[tiab] OR \"K-12\"[tiab] OR K12[tiab]) AND 0001/01/01:2020/06/03[edat]",
+  "strategy_path": "final_strategy.txt",
+  "as_of": "2020-06-03",
+  "count": 263,
+  "gold_scored": 6,
+  "gold_reachable": 6,
+  "retrieved": 5,
+  "recall_percent": 83.3,
+  "nnr": 52.6,
+  "translation_issues": [
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found",
+    "quoted_phrase_not_found"
+  ],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 5,
+  "unseen_recall_percent": 83.3,
+  "leakage": [],
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

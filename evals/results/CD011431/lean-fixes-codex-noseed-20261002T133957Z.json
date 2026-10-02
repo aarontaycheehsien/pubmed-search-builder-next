@@ -1,0 +1,47 @@
+{
+  "topic": "CD011431",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T133957Z",
+  "scored": "20261002T140220Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1342
+  },
+  "final_message": "ria[tiab] OR malarial[tiab] OR malarias[tiab] OR plasmodium[tiab] OR plasmodia[tiab] OR vivax[tiab] OR ovale[tiab] OR malariae[tiab] OR falciparum[tiab] OR \"non-falciparum\"[tiab] OR \"non falciparum\"[tiab] OR \"nonfalciparum\"[tiab] OR \"P. vivax\"[tiab] OR \"P. ovale\"[tiab] OR \"P. malariae\"[tiab] OR \"Malaria, Vivax\"[Mesh] OR \"Plasmodium vivax\"[Mesh] OR \"Plasmodium vivax\"[tiab] OR \"Plasmodium ovale\"[tiab] OR \"Plasmodium malariae\"[tiab]) AND (\"Reagent Kits, Diagnostic\"[Mesh] OR \"rapid diagnostic test\"[tiab] OR \"rapid diagnostic tests\"[tiab] OR \"rapid test\"[tiab] OR \"rapid tests\"[tiab] OR RDT[tiab] OR RDTs[tiab] OR immunochromatograph*[tiab] OR \"lateral flow\"[tiab:~1] OR dipstick*[tiab] OR \"test strip\"[tiab] OR \"test strips\"[tiab] OR \"antigen test\"[tiab] OR \"antigen tests\"[tiab] OR \"antigen detection\"[tiab] OR \"point of care\"[tiab:~1] OR \"rapid diagnostic\"[tiab])) AND (\"1800/01/01\"[edat] : \"2013/06/09\"[edat])\n```\n\nThe [audit](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/lean-fixes-codex-noseed-20261002T133957Z/work/audit.md>) contains the full line-by-line strategy and counts. The generated [query file](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/lean-fixes-codex-noseed-20261002T133957Z/work/final-query.txt>), [validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/lean-fixes-codex-noseed-20261002T133957Z/work/validation-manifest.json>), and [rationale and screening notes](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-6287bf84e7d19aae/lean-fixes-codex-noseed-20261002T133957Z/work/narrative.md>) are in `./work`.\n\nThe search retrieved **7 of 7** screened development records. That is relative recall on records used during strategy development, not independent validation or sensitivity; no independent validation set was available. I treated the scope as an assumption because you asked me to proceed without clarification. The strategy needs PRESS peer review by an information specialist before use.",
+  "strategy": "((Malaria[Mesh] OR malaria[tiab] OR malarial[tiab] OR malarias[tiab] OR plasmodium[tiab] OR plasmodia[tiab] OR vivax[tiab] OR ovale[tiab] OR malariae[tiab] OR falciparum[tiab] OR \"non-falciparum\"[tiab] OR \"non falciparum\"[tiab] OR \"nonfalciparum\"[tiab] OR \"P. vivax\"[tiab] OR \"P. ovale\"[tiab] OR \"P. malariae\"[tiab] OR \"Malaria, Vivax\"[Mesh] OR \"Plasmodium vivax\"[Mesh] OR \"Plasmodium vivax\"[tiab] OR \"Plasmodium ovale\"[tiab] OR \"Plasmodium malariae\"[tiab]) AND (\"Reagent Kits, Diagnostic\"[Mesh] OR \"rapid diagnostic test\"[tiab] OR \"rapid diagnostic tests\"[tiab] OR \"rapid test\"[tiab] OR \"rapid tests\"[tiab] OR RDT[tiab] OR RDTs[tiab] OR immunochromatograph*[tiab] OR \"lateral flow\"[tiab:~1] OR dipstick*[tiab] OR \"test strip\"[tiab] OR \"test strips\"[tiab] OR \"antigen test\"[tiab] OR \"antigen tests\"[tiab] OR \"antigen detection\"[tiab] OR \"point of care\"[tiab:~1] OR \"rapid diagnostic\"[tiab])) AND (\"1800/01/01\"[edat] : \"2013/06/09\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2013-06-09",
+  "count": 1172,
+  "gold_scored": 26,
+  "gold_reachable": 26,
+  "retrieved": 26,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 45.1,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 25,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

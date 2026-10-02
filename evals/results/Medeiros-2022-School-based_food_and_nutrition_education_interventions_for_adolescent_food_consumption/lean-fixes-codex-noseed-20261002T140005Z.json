@@ -1,0 +1,47 @@
+{
+  "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+  "source": "generated:lean-fixes",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "lean-fixes-codex-noseed-20261002T140005Z",
+  "scored": "20261002T142535Z",
+  "skill": {
+    "name": "lean-fixes",
+    "hash": "a4438e0ef39428220c25450332e6ed81975232e2f6f22f7eb90a0c91bb4e0c61",
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "2f3e21c02876f3c755af775c2a6ecb3fc567cee4",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1529
+  },
+  "final_message": "\n| 36 | `adolescen*[tiab]` | 248,945 |\n| 37 | `teen*[tiab]` | 26,895 |\n| 38 | `youth*[tiab]` | 64,596 |\n| 39 | `student*[tiab]` | 234,078 |\n| 40 | `schoolchild*[tiab]` | 13,052 |\n| 41 | `school child*[tiab]` | 21,096 |\n| 42 | `pupil*[tiab]` | 26,074 |\n| 43 | `schoolgirl*[tiab]` | 785 |\n| 44 | `schoolboy*[tiab]` | 469 |\n| 45 | `secondary school*[tiab]` | 8,822 |\n| 46 | `high school*[tiab]` | 27,028 |\n| 47 | `middle school*[tiab]` | 4,703 |\n| 48 | `junior high[tiab]` | 2,267 |\n| 49 | OR of lines 33–48 | 2,237,865 |\n| 50 | Lines 16 AND 32 AND 49 | **36,367** |\n\n### Validation and limitations\n\nNo relevant articles were supplied. The build screened three eligible records into a **development** set; the final strategy retrieved all three (100% relative recall against that set). This is not an estimate of sensitivity. There is no independent validation set or prior-review benchmark. A candidate systematic review was found, but its included studies could not be retrieved through PubMed links.\n\nThe result set is large, and screening noise is expected because school delivery and consumption outcomes remain screening criteria. The internal PRESS-structured critique closed with no open must-fix findings; human PRESS peer review is still pending. A suggested “Nutrition Education” MeSH heading was not added because lookup found no such heading and the direct tagged check fell back to All Fields.\n\n- [Final query](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/lean-fixes-codex-noseed-20261002T140005Z/work/final-query.txt>)\n- [Audit](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/lean-fixes-codex-noseed-20261002T140005Z/work/audit.md>)\n- [Validation manifest](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/lean-fixes-codex-noseed-20261002T140005Z/work/validation-manifest.json>)\n- [Development notes](</C:/Users/aaron/AppData/Local/Temp/psb-evals/run-9c6e3b4b8b2f6f5e/lean-fixes-codex-noseed-20261002T140005Z/work/narrative.md>)",
+  "strategy": "((\"Health Education\"[Mesh] OR \"Health Promotion\"[Mesh] OR \"Teaching\"[Mesh] OR educat*[tiab] OR intervention*[tiab] OR teach*[tiab] OR instruct*[tiab] OR lesson*[tiab] OR curricul*[tiab] OR learn*[tiab] OR program*[tiab] OR \"nutrition education\"[tiab] OR \"food education\"[tiab] OR \"dietary education\"[tiab] OR \"nutrition instruction\"[tiab]) AND (\"Child Nutrition Sciences\"[Mesh] OR \"Child Nutritional Physiological Phenomena\"[Mesh] OR \"Adolescent Nutritional Physiological Phenomena\"[Mesh] OR \"Feeding Behavior\"[Mesh] OR \"Diet\"[Mesh] OR \"Food Preferences\"[Mesh] OR \"Fruit\"[Mesh] OR \"Vegetables\"[Mesh] OR nutrition*[tiab] OR food*[tiab] OR diet*[tiab] OR fruit*[tiab] OR vegetable*[tiab] OR eating[tiab] OR \"healthy eating\"[tiab]) AND (\"Adolescent\"[Mesh] OR \"Students\"[Mesh] OR (\"Child\"[Mesh] AND (school*[tiab] OR classroom*[tiab] OR grade*[tiab] OR student*[tiab] OR pupil*[tiab])) OR adolescen*[tiab] OR teen*[tiab] OR youth*[tiab] OR student*[tiab] OR schoolchild*[tiab] OR school child*[tiab] OR pupil*[tiab] OR schoolgirl*[tiab] OR schoolboy*[tiab] OR secondary school*[tiab] OR high school*[tiab] OR middle school*[tiab] OR junior high[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/14\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-14",
+  "count": 36367,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 9,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 4040.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 9,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

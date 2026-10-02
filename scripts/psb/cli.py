@@ -84,6 +84,9 @@ def cmd_status(args) -> dict:
     if not critic:
         todo.append("run a critic round (psb critic packet)")
     last = versions[-1]["evaluation"] if versions else {}
+    delivery = deliver.verify_delivery(ws)
+    if not delivery["ok"] and (ws.root / "validation-manifest.json").exists():
+        todo.append(f"the delivery is no longer current: {delivery['error']}")
     return {
         "ok": True,
         "workspace": str(ws.root),
@@ -96,7 +99,7 @@ def cmd_status(args) -> dict:
         "versions": len(versions),
         "last_eval": {"count": last.get("count"), "recall": {n: s.get("recall_percent") for n, s in (last.get("sets") or {}).items()}} if last else None,
         "critic_rounds": critic,
-        "delivery": deliver.verify_delivery(ws),
+        "delivery": delivery,
         "todo": todo,
     }
 
@@ -281,6 +284,8 @@ def cmd_critic(args) -> dict:
         return {"ok": True, "packet": str(path),
                 "next": "give only this file to a fresh-context reviewer (subagent) and save its JSON as "
                         f"critic/round-N.json; then run psb critic check"}
+    if args.critic_command == "override":
+        return {"ok": True, **deliver.override_finding(ws, args.finding, args.reason)}
     paths = deliver.round_paths(ws)
     path = Path(args.round) if args.round else (paths[-1] if paths else None)
     if path is None:
@@ -417,6 +422,9 @@ def build_parser() -> argparse.ArgumentParser:
     csub.add_parser("packet", help="write critic/packet-N.md from the latest evaluated version")
     q = csub.add_parser("check", help="validate a critic/round-N.json")
     q.add_argument("round", nargs="?")
+    q = csub.add_parser("override", help="after the closing round, deliver over an open must-fix judgment you disagree with")
+    q.add_argument("finding")
+    q.add_argument("--reason", required=True, help="why the finding is wrong for this search, with the evidence")
     p.set_defaults(func=cmd_critic)
 
     p = sub.add_parser("report", help="render audit.md from the workspace")

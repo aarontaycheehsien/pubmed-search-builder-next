@@ -61,5 +61,31 @@ Read `validation.md` for the phrase-review decision tree.
 Before accepting a change, check that `psb eval` shows no newly lost known records. Update the
 finding's `status` and `response` in the next round's file. Stop when no substantive (`must-fix` or `should-fix`) finding is open; accepted risks need
 explanations. List remaining documentation findings in the audit. Every depth requires review;
-quick/standard/thorough have budgets of 1/2/3 rounds. Budget exhaustion with unresolved concerns
-requires diagnostic handoff. Historical unbound rounds remain readable but do not authorize delivery.
+quick/standard/thorough allow 1/2/3 revision rounds, then one closing round. Make all planned
+changes before the last revision round, and check them with `psb report --diagnostic`.
+
+## Closing round
+
+When the revision rounds are used, `psb critic packet` issues a closing round (`"closing": true`).
+Its reviewer verifies how each earlier finding was handled in the current strategy: resolved,
+rejected or accepted-risk with a response, or still open with the domain at `revise`. It may not
+raise a new `must-fix` or `should-fix` finding (`psb critic check` rejects one); a new concern is
+recorded as `document`. A closing round must be the last round. After it, only an open `must-fix`
+finding blocks delivery: an open `should-fix` finding is delivered as a documented open concern
+(list it in `narrative.md` for the peer reviewer). Historical unbound rounds remain readable but
+do not authorize delivery.
+
+## After the closing round
+
+- **A change after the closing round.** If you fix a closing-round finding, or change anything
+  else the critic reviewed, `psb critic packet` issues one verification round (also
+  `"closing": true`, same rules). Nothing may follow it. Editing only `notes` or
+  `scope_confirmed` never needs a critic round: run `psb report` again.
+- **An open must-fix you disagree with.** For a `lexical`, `structural`, `scope` or `reporting`
+  finding, `psb critic override <id> --reason "..."` records why the finding is wrong for this
+  search, with the evidence (counts, known records, loss samples). `psb report` then delivers,
+  and the audit opens with "Delivered over an open critic objection" for the peer reviewer.
+  Use it for a disagreement on evidence, never to skip work you could do. A `syntax` or
+  `filter` finding cannot be overridden, nor can any technical blocker. An override answers one
+  round: after a verification round, make it again if the finding is still open.
+- Otherwise deliver the diagnostic handoff.
