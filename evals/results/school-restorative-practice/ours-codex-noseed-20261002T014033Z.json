@@ -1,0 +1,61 @@
+{
+  "topic": "school-restorative-practice",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261002T014033Z",
+  "scored": "20261002T021058Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1824
+  },
+  "strategy": "((\"Negotiating\"[Mesh] OR \"restorative justice\"[tiab] OR \"restorative practice\"[tiab] OR \"restorative practices\"[tiab] OR restorative practice*[tiab] OR restorative approach*[tiab] OR restorative intervention*[tiab] OR restorative program*[tiab] OR restorative circle*[tiab] OR restorative discipline[tiab] OR restorative process*[tiab] OR peer mediation[tiab] OR conflict resolution[tiab] OR \"Learning Together\"[tiab] OR mediation[tiab])) AND (\"1800/01/01\"[edat] : \"2020/06/03\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-06-03",
+  "count": 38146,
+  "gold_scored": 6,
+  "gold_reachable": 6,
+  "retrieved": 5,
+  "recall_percent": 83.3,
+  "nnr": 7629.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 3,
+  "unseen_retrieved": 2,
+  "unseen_recall_percent": 66.7,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 3,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "school",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

@@ -1,0 +1,53 @@
+{
+  "topic": "Cohen_2006_ADHD",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261002T014033Z",
+  "scored": "20261002T020627Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1553
+  },
+  "strategy": "((Attention Deficit Disorder with Hyperactivity[Mesh] OR ADHD[tiab] OR ADDH[tiab] OR ADD[tiab] OR \"attention deficit disorder\"[tiab] OR \"attention deficit hyperactivity disorder\"[tiab] OR \"attention deficit-hyperactivity disorder\"[tiab] OR \"attention-deficit hyperactivity disorder\"[tiab] OR \"attention-deficit/hyperactivity disorder\"[tiab] OR \"hyperkinetic disorder\"[tiab] OR \"hyperkinetic syndrome\"[tiab] OR \"minimal brain dysfunction\"[tiab]) AND (Drug Therapy[Mesh] OR Amphetamines[Mesh] OR Dextroamphetamine[Mesh] OR Methylphenidate[Mesh] OR Pemoline[Mesh] OR Bupropion[Mesh] OR Atomoxetine Hydrochloride[Mesh] OR drug therap*[tiab] OR pharmacotherap*[tiab] OR medication*[tiab] OR stimulant*[tiab] OR psychostimulant*[tiab] OR methylphenidate[tiab] OR ritalin[tiab] OR ritaline[tiab] OR ritalin-sr[tiab] OR metadate[tiab] OR equasym[tiab] OR methylin[tiab] OR concerta[tiab] OR \"methylphenidate hydrochloride\"[tiab] OR dexmethylphenidate[tiab] OR amphetamine*[tiab] OR dextroamphetamine[tiab] OR pemoline[tiab] OR atomoxetine[tiab] OR tomoxetine[tiab] OR \"LY 139603\"[tiab] OR strattera[tiab] OR bupropion[tiab] OR modafinil[tiab] OR selegiline[tiab] OR clonidine[tiab] OR guanfacine[tiab] OR imipramine[tiab] OR desipramine[tiab] OR tricyclic[tiab])) AND (\"1800/01/01\"[edat] : \"2003/08/06\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2003-08-06",
+  "count": 4171,
+  "gold_scored": 20,
+  "gold_reachable": 20,
+  "retrieved": 19,
+  "recall_percent": 95.0,
+  "nnr": 219.5,
+  "translation_issues": [],
+  "gold_seen_by_agent": 6,
+  "unseen_retrieved": 13,
+  "unseen_recall_percent": 92.9,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "screen": 3,
+      "search": 2
+    },
+    "optional": []
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

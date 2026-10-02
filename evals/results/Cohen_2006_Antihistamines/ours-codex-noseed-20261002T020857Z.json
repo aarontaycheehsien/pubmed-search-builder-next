@@ -1,0 +1,46 @@
+{
+  "topic": "Cohen_2006_Antihistamines",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261002T020857Z",
+  "scored": "20261002T023704Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1686
+  },
+  "strategy": "((\"Rhinitis, Allergic\"[Mesh] OR \"Rhinitis, Allergic, Seasonal\"[Mesh] OR \"Rhinitis, Allergic, Perennial\"[Mesh] OR \"Urticaria\"[Mesh] OR \"Cold Urticaria\"[Mesh] OR \"allergic rhinitis\"[tiab] OR \"seasonal rhinitis\"[tiab] OR \"perennial rhinitis\"[tiab] OR rhinoconjunctivitis[tiab] OR pollinosis[tiab] OR pollenosis[tiab] OR \"pollen allergy\"[tiab] OR \"hay fever\"[tiab] OR urticaria[tiab] OR hives[tiab] OR wheal*[tiab]) AND (\"Cetirizine\"[Mesh] OR \"Loratadine\"[Mesh] OR \"Terfenadine\"[Mesh] OR cetirizine[tiab] OR levocetirizine[tiab] OR loratadine[tiab] OR desloratadine[tiab] OR fexofenadine[tiab] OR terfenadine[tiab] OR ebastine[tiab] OR astemizole[tiab] OR acrivastine[tiab] OR mizolastine[tiab] OR azelastine[tiab] OR bilastine[tiab] OR rupatadine[tiab] OR zyrtec[tiab] OR claritin[tiab] OR seldane[tiab] OR allegra[tiab] OR hismanal[tiab] OR semprex[tiab] OR kestine[tiab] OR mizollen[tiab] OR astelin[tiab] OR clarinex[tiab] OR xyzal[tiab] OR \"second generation antihistamine*\"[tiab] OR \"second-generation antihistamine*\"[tiab] OR \"new generation antihistamine*\"[tiab] OR \"non sedating antihistamine*\"[tiab] OR \"nonsedating antihistamine*\"[tiab] OR \"non-sedating antihistamine*\"[tiab] OR \"non sedative antihistamine*\"[tiab])) AND (\"1800/01/01\"[edat] : \"2002/05/26\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2002-05-26",
+  "count": 1063,
+  "gold_scored": 16,
+  "gold_reachable": 16,
+  "retrieved": 14,
+  "recall_percent": 87.5,
+  "nnr": 75.9,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 14,
+  "unseen_recall_percent": 87.5,
+  "leakage": [],
+  "concepts": null,
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

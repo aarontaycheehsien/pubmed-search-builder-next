@@ -1,0 +1,61 @@
+{
+  "topic": "Cohen_2006_Estrogens",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261002T021755Z",
+  "scored": "20261002T030838Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 3043
+  },
+  "strategy": "((Menopause[Mesh] OR Climacteric[Mesh] OR Postmenopause[Mesh] OR Premenopause[Mesh] OR menopaus*[tiab] OR climacter*[tiab] OR perimenopaus*[tiab] OR peri-menopaus*[tiab] OR postmenopaus*[tiab] OR post-menopaus*[tiab] OR premenopaus*[tiab] OR pre-menopaus*[tiab] OR surgical menopause[tiab] OR induced menopause[tiab] OR surgically menopausal[tiab] OR ovariectom*[tiab] OR oophorectom*[tiab]) AND (Estrogen Replacement Therapy[Mesh] OR \"Estrogens, Conjugated (USP)\"[Mesh] OR \"Estrogens, Esterified (USP)\"[Mesh] OR Estradiol[Mesh] OR Estradiol Congeners[Mesh] OR Estrogenic Steroids, Alkylated[Mesh] OR estrogen*[tiab] OR oestrogen*[tiab] OR estradiol[tiab] OR oestradiol[tiab] OR estriol[tiab] OR oestriol[tiab] OR estrone[tiab] OR oestrone[tiab] OR ethinyl estradiol[tiab] OR mestranol[tiab] OR equilin[tiab] OR conjugated estrogen*[tiab] OR conjugated oestrogen*[tiab] OR esterified estrogen*[tiab] OR esterified oestrogen*[tiab] OR estradiol valerate[tiab] OR oestradiol valerate[tiab] OR estradiol acetate[tiab] OR oestradiol acetate[tiab] OR micronized estradiol[tiab] OR micronised oestradiol[tiab] OR hormone replacement therap*[tiab] OR hormone therap*[tiab])) AND (\"1800/01/01\"[edat] : \"2003/10/12\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2003-10-12",
+  "count": 30688,
+  "gold_scored": 80,
+  "gold_reachable": 80,
+  "retrieved": 77,
+  "recall_percent": 96.2,
+  "nnr": 398.5,
+  "translation_issues": [],
+  "gold_seen_by_agent": 12,
+  "unseen_retrieved": 65,
+  "unseen_recall_percent": 95.6,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 2,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "outcomes",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 1
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

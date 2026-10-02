@@ -1,0 +1,61 @@
+{
+  "topic": "work-directed-return-to-work",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261002T021128Z",
+  "scored": "20261002T024942Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2293
+  },
+  "strategy": "((\"Depressive Disorder\"[Mesh] OR \"Major Depressive Disorder\"[Mesh] OR \"Anxiety Disorders\"[Mesh] OR \"Adjustment Disorders\"[Mesh] OR \"Stress Disorders, Traumatic, Acute\"[Mesh] OR \"Stress Disorders, Post-Traumatic\"[Mesh] OR depress*[tiab] OR anxiet*[tiab] OR \"mental disorders\"[tiab] OR \"adjustment disorder\"[tiab] OR \"adjustment disorders\"[tiab] OR \"acute stress disorder\"[tiab] OR \"acute stress reaction\"[tiab] OR \"reaction to severe stress\"[tiab] OR \"reactions to severe stress\"[tiab] OR \"severe stress reaction\"[tiab] OR \"severe stress reactions\"[tiab] OR \"post-traumatic stress disorder\"[tiab] OR \"posttraumatic stress disorder\"[tiab] OR PTSD[tiab]) AND (\"Occupational Health\"[Mesh] OR \"Occupational Health Services\"[Mesh] OR \"Workplace\"[Mesh] OR \"Rehabilitation, Vocational\"[Mesh] OR \"Return to Work\"[Mesh] OR \"work-directed intervention\"[tiab] OR \"work directed intervention\"[tiab] OR \"work-focused intervention\"[tiab] OR \"work focused intervention\"[tiab] OR \"workplace intervention\"[tiab] OR \"workplace interventions\"[tiab] OR \"workplace-based intervention\"[tiab] OR \"workplace based intervention\"[tiab] OR (employer[tiab] AND intervention*[tiab]) OR employer*[tiab] OR (workplace[tiab] AND dialogue[tiab]) OR \"workplace involvement\"[tiab] OR \"employer involvement\"[tiab] OR \"workplace meeting\"[tiab] OR \"workplace meetings\"[tiab] OR \"work accommodation\"[tiab] OR \"work accommodations\"[tiab] OR \"vocational rehabilitation\"[tiab] OR \"occupational rehabilitation\"[tiab] OR \"work rehabilitation\"[tiab] OR \"return-to-work intervention\"[tiab] OR \"return to work intervention\"[tiab] OR \"return-to-work program\"[tiab] OR \"return to work program\"[tiab] OR \"return-to-work programme\"[tiab] OR \"return to work programme\"[tiab] OR \"workplace-based return\"[tiab:~3] OR \"employer contact\"[tiab] OR \"workplace contact\"[tiab] OR \"work reintegration\"[tiab] OR \"work re-integration\"[tiab] OR \"employment reintegration\"[tiab] OR \"return to employment\"[tiab] OR \"work retention\"[tiab] OR \"job retention\"[tiab] OR \"stay at work\"[tiab] OR \"employment retention\"[tiab])) AND (\"1800/01/01\"[edat] : \"2021/12/18\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2021-12-18",
+  "count": 4435,
+  "gold_scored": 11,
+  "gold_reachable": 11,
+  "retrieved": 10,
+  "recall_percent": 90.9,
+  "nnr": 443.5,
+  "translation_issues": [],
+  "gold_seen_by_agent": 3,
+  "unseen_retrieved": 7,
+  "unseen_recall_percent": 87.5,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 1,
+      "screen": 2,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "work_outcomes",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

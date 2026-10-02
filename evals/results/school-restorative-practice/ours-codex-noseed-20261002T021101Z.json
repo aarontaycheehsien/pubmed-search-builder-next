@@ -1,0 +1,61 @@
+{
+  "topic": "school-restorative-practice",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261002T021101Z",
+  "scored": "20261002T024454Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2032
+  },
+  "strategy": "(((\"Social Justice\"[Mesh] AND (restorat*[tiab] OR circle*[tiab] OR conferenc*[tiab] OR mediation[tiab] OR peace[tiab])) OR \"restorative justice\"[tiab] OR \"restorative practice\"[tiab] OR \"restorative practices\"[tiab] OR \"restorative approach\"[tiab] OR \"restorative approaches\"[tiab] OR \"restorative circles\"[tiab] OR (restorat*[tiab] AND circle*[tiab]) OR (restorat*[tiab] AND conferenc*[tiab]) OR (restorat*[tiab] AND intervention*[tiab]) OR (restorat*[tiab] AND program*[tiab]) OR (restorat*[tiab] AND programme*[tiab]) OR \"restorative practices intervention\"[tiab] OR \"restorative justice conference\"[tiab] OR \"restorative justice conferencing\"[tiab] OR \"restorative discipline\"[tiab] OR \"circle process\"[tiab] OR (peace[tiab] AND circle*[tiab]) OR (commun*[tiab] AND conferenc*[tiab] AND (restorat*[tiab] OR justice[tiab] OR peace[tiab])) OR \"family group conference\"[tiab] OR \"family group conferencing\"[tiab] OR \"victim offender mediation\"[tiab] OR \"victim-offender mediation\"[tiab])) AND (\"1800/01/01\"[edat] : \"2020/06/03\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-06-03",
+  "count": 10499,
+  "gold_scored": 6,
+  "gold_reachable": 6,
+  "retrieved": 6,
+  "recall_percent": 100.0,
+  "nnr": 1749.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 3,
+  "unseen_retrieved": 3,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 3,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "school",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

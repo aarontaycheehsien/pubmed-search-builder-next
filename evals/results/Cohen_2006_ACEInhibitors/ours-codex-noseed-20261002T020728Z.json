@@ -1,0 +1,46 @@
+{
+  "topic": "Cohen_2006_ACEInhibitors",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261002T020728Z",
+  "scored": "20261002T024840Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2470
+  },
+  "strategy": "((Hypertension[Mesh] OR Heart Failure[Mesh] OR Coronary Artery Disease[Mesh] OR Coronary Disease[Mesh] OR Myocardial Infarction[Mesh] OR Kidney Diseases[Mesh] OR Diabetic Nephropathies[Mesh] OR Renal Insufficiency, Chronic[Mesh] OR Ventricular Dysfunction, Left[Mesh] OR Cardiovascular Diseases[Mesh] OR Risk Factors[Mesh] OR hypertension[tiab] OR high blood pressure[tiab] OR heart failure[tiab] OR congestive heart failure[tiab] OR cardiac failure[tiab] OR coronary artery disease[tiab] OR coronary heart disease[tiab] OR coronary disease[tiab] OR ischemic heart disease[tiab] OR ischaemic heart disease[tiab] OR myocardial infarct*[tiab] OR heart attack*[tiab] OR left ventricular dysfunction[tiab] OR ventricular dysfunction[tiab] OR renal disease*[tiab] OR kidney disease*[tiab] OR diabetic nephropath*[tiab] OR nephropath*[tiab] OR chronic renal insufficien*[tiab] OR chronic kidney insufficien*[tiab] OR end stage renal[tiab] OR end-stage renal[tiab] OR cardiovascular risk[tiab] OR high risk[tiab] OR cardiac risk[tiab] OR cardiovascular risk factor*[tiab] OR Diabetes Mellitus[Mesh] OR diabetes[tiab] OR diabet*[tiab]) AND (Captopril[Mesh] OR Enalapril[Mesh] OR Lisinopril[Mesh] OR Fosinopril[Mesh] OR Perindopril[Mesh] OR Quinapril[Mesh] OR Ramipril[Mesh] OR cilazapril[tiab] OR zofenopril[tiab] OR ace inhibitor*[tiab] OR angiotensin converting enzyme inhibitor*[tiab] OR angiotensin-converting enzyme inhibitor*[tiab] OR angiotensin converting-enzyme inhibitor*[tiab] OR angiotensin-converting-enzyme inhibitor*[tiab] OR benazepril[tiab] OR captopril[tiab] OR enalapril[tiab] OR fosinopril[tiab] OR lisinopril[tiab] OR moexipril[tiab] OR perindopril[tiab] OR quinapril[tiab] OR ramipril[tiab] OR trandolapril[tiab] OR alacepril[tiab] OR delapril[tiab] OR imidapril[tiab] OR temocapril[tiab] OR spirapril[tiab] OR ceronapril[tiab] OR libenzapril[tiab])) AND (\"1800/01/01\"[edat] : \"2003/03/15\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2003-03-15",
+  "count": 19850,
+  "gold_scored": 41,
+  "gold_reachable": 41,
+  "retrieved": 41,
+  "recall_percent": 100.0,
+  "nnr": 484.1,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 39,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": null,
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

@@ -1,0 +1,46 @@
+{
+  "topic": "housing-first-criminal-justice",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261002T022731Z",
+  "scored": "20261002T024502Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1050
+  },
+  "strategy": "((Housing[Mesh] OR \"housing first\"[tiab] OR \"housing first\"[tiab:~1] OR \"housing-first\"[tiab] OR (HF[tiab] AND housing[tiab]) OR \"low barrier housing\"[tiab] OR \"low-barrier housing\"[tiab] OR \"low demand housing\"[tiab] OR \"low-demand housing\"[tiab] OR \"non-abstinence-contingent housing\"[tiab] OR \"permanent supportive housing\"[tiab] OR \"supportive housing\"[tiab]) AND (Ill-Housed Persons[Mesh] OR homeless*[tiab] OR houseless*[tiab] OR unhoused[tiab] OR \"street people\"[tiab] OR \"precarious housing\"[tiab] OR \"precariously housed\"[tiab] OR \"marginally housed\"[tiab] OR \"unstably housed\"[tiab] OR \"unstable housing\"[tiab] OR \"at risk of homelessness\"[tiab])) AND (\"1800/01/01\"[edat] : \"2018/08/01\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-08-01",
+  "count": 1486,
+  "gold_scored": 5,
+  "gold_reachable": 5,
+  "retrieved": 5,
+  "recall_percent": 100.0,
+  "nnr": 297.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 5,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": null,
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

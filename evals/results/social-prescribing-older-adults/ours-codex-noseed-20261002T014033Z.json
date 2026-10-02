@@ -1,0 +1,66 @@
+{
+  "topic": "social-prescribing-older-adults",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261002T014033Z",
+  "scored": "20261002T022842Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2889
+  },
+  "strategy": "((\"Social Prescribing\"[Mesh] OR \"social prescribing\"[tiab] OR \"social prescription\"[tiab] OR \"referral facilitator\"[tiab:~1] OR \"referrals facilitator\"[tiab:~1] OR \"voluntary sector\"[tiab] OR \"voluntary organisation\"[tiab] OR \"voluntary organisations\"[tiab] OR \"voluntary organization\"[tiab] OR \"voluntary organizations\"[tiab] OR (community[tiab] AND link*[tiab] AND scheme*[tiab]) OR \"link worker\"[tiab] OR \"link workers\"[tiab] OR \"link-worker\"[tiab] OR \"link-workers\"[tiab] OR \"link worker\"[tiab:~2] OR \"community navigator\"[tiab:~1] OR \"community navigators\"[tiab:~1] OR \"community connector\"[tiab:~1] OR \"community connectors\"[tiab:~1] OR \"community referral\"[tiab:~2] OR \"community referrals\"[tiab:~2] OR \"social referral\"[tiab:~2] OR \"social referrals\"[tiab:~2] OR signpost*[tiab] OR (community[tiab] AND activit*[tiab] AND referral*[tiab]) OR (community[tiab] AND service*[tiab] AND referral*[tiab]) OR (community[tiab] AND navigat*[tiab]))) AND (\"1800/01/01\"[edat] : \"2019/12/30\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2019-12-30",
+  "count": 10006,
+  "gold_scored": 10,
+  "gold_reachable": 10,
+  "retrieved": 10,
+  "recall_percent": 100.0,
+  "nnr": 1000.6,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 9,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 2,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "older_adults",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      },
+      {
+        "id": "outcomes",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

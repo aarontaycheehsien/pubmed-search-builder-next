@@ -1,0 +1,66 @@
+{
+  "topic": "healthcare-nudging",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261002T014033Z",
+  "scored": "20261002T024743Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 4029
+  },
+  "strategy": "((\"Reminder Systems\"[Mesh] OR \"Decision Support Systems, Clinical\"[Mesh] OR \"Feedback, Psychological\"[Mesh] OR \"Social Norms\"[Mesh] OR \"Choice Behavior\"[Mesh] OR \"Decision Making, Computer-Assisted\"[Mesh] OR \"Decision Support Techniques\"[Mesh] OR \"nudge\"[tiab] OR nudges[tiab] OR nudging[tiab] OR \"choice architecture\"[tiab] OR \"choice architectures\"[tiab] OR default*[tiab] OR reminder*[tiab] OR prompt*[tiab] OR alert*[tiab] OR feedback[tiab] OR \"social norm*\"[tiab] OR framing[tiab] OR salience[tiab] OR preselect*[tiab] OR \"opt-in\"[tiab] OR \"opt-out\"[tiab] OR \"clinical decision support\"[tiab] OR decision support[tiab] OR computerized advice[tiab] OR computerised advice[tiab] OR \"care suggestions\"[tiab] OR clinical workflow[tiab] OR nomogram*[tiab] OR \"Checklist\"[Mesh] OR checklist*[tiab] OR \"Critical Pathways\"[Mesh] OR pathway*[tiab] OR \"order set\"[tiab] OR \"order sets\"[tiab] OR \"standing orders\"[tiab]) AND (\"Evidence-Based Practice\"[Mesh] OR \"Evidence-Based Medicine\"[Mesh] OR \"Guideline Adherence\"[Mesh] OR \"Practice Guidelines as Topic\"[Mesh] OR \"Practice Patterns, Physicians'\"[Mesh] OR \"evidence-based medicine\"[tiab] OR \"evidence based medicine\"[tiab] OR \"evidence-based practice\"[tiab] OR \"evidence based practice\"[tiab] OR guideline-based[tiab] OR \"guideline based\"[tiab] OR EBM[tiab] OR guideline*[tiab] OR \"clinical practice guideline*\"[tiab] OR \"guideline-concordant\"[tiab] OR \"guideline adher*\"[tiab] OR \"guideline compli*\"[tiab] OR \"guideline implementation\"[tiab] OR \"preventive care\"[tiab] OR antiplatelet[tiab] OR \"best practice\"[tiab] OR \"appropriate care\"[tiab] OR \"clinical decision making\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/18\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-18",
+  "count": 38652,
+  "gold_scored": 86,
+  "gold_reachable": 86,
+  "retrieved": 55,
+  "recall_percent": 64.0,
+  "nnr": 702.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 11,
+  "unseen_retrieved": 44,
+  "unseen_recall_percent": 58.7,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 2,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "hcp",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 2
+      },
+      {
+        "id": "ebm_guideline",
+        "choice": "and",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

@@ -1,0 +1,61 @@
+{
+  "topic": "housing-first-criminal-justice",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261002T014033Z",
+  "scored": "20261002T022727Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2814
+  },
+  "strategy": "((Housing[Mesh] OR Public Housing[Mesh] OR \"Housing First\"[tiab] OR \"Pathways model\"[tiab] OR \"permanent supportive housing\"[tiab] OR \"supportive housing\"[tiab] OR scattered-site housing[tiab] OR \"pathways housing\"[tiab:~1]) AND (Ill-Housed Persons[Mesh] OR Homeless Youth[Mesh] OR homeless*[tiab] OR unhoused[tiab] OR houseless[tiab] OR roofless[tiab] OR \"precariously housed\"[tiab] OR \"housing instability\"[tiab] OR \"housing insecure\"[tiab] OR \"housing insecurity\"[tiab] OR \"unstable housing\"[tiab] OR \"homeless shelter\"[tiab] OR \"without housing\"[tiab:~3]) AND (Mental Disorders[Mesh] OR Schizophrenia[Mesh] OR Psychotic Disorders[Mesh] OR Bipolar Disorder[Mesh] OR Major Depressive Disorder[Mesh] OR \"serious mental illness\"[tiab] OR \"severe mental illness\"[tiab] OR \"severe mental disorder\"[tiab] OR \"severe psychiatric illness\"[tiab] OR psychiatr*[tiab] OR mental health[tiab] OR \"mental illness\"[tiab] OR \"mental disorder\"[tiab] OR \"mental disorders\"[tiab] OR \"mentally ill\"[tiab] OR schizophren*[tiab] OR psychosis[tiab] OR psychotic[tiab] OR bipolar[tiab] OR mania[tiab] OR \"major depression\"[tiab] OR \"major depressive\"[tiab])) AND (\"1800/01/01\"[edat] : \"2018/08/01\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-08-01",
+  "count": 873,
+  "gold_scored": 5,
+  "gold_reachable": 5,
+  "retrieved": 3,
+  "recall_percent": 60.0,
+  "nnr": 291.0,
+  "translation_issues": [],
+  "gold_seen_by_agent": 0,
+  "unseen_retrieved": 3,
+  "unseen_recall_percent": 60.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 1,
+      "search": 3
+    },
+    "optional": [
+      {
+        "id": "criminal_justice",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

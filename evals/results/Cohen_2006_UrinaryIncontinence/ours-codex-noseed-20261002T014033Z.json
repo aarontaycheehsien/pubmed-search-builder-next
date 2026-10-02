@@ -1,0 +1,53 @@
+{
+  "topic": "Cohen_2006_UrinaryIncontinence",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261002T014033Z",
+  "scored": "20261002T020448Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1455
+  },
+  "strategy": "((Urinary Bladder, Overactive[Mesh] OR Urinary Incontinence, Urge[Mesh] OR Urinary Incontinence[Mesh] OR Urinary Bladder, Neurogenic[Mesh] OR overactive bladder[tiab] OR overactive urinary bladder[tiab] OR bladder overactivity[tiab] OR overactive detrusor[tiab] OR OAB[tiab] OR urge incontinence[tiab] OR urinary urge incontinence[tiab] OR urge urinary incontinence[tiab] OR mixed urinary incontinence[tiab] OR urinary incontinence[tiab] OR urinary urgency[tiab] OR detrusor overactiv*[tiab] OR detrusor hyperreflexia[tiab] OR detrusor instability[tiab] OR unstable bladder[tiab] OR bladder overactiv*[tiab] OR uninhibited bladder[tiab] OR urge syndrome[tiab] OR motor urge incontinence[tiab]) AND (oxybutynin[nm] OR tolterodine tartrate[Mesh] OR trospium chloride[nm] OR oxybutynin[tiab] OR tolterodine[tiab] OR trospium[tiab] OR darifenacin[tiab] OR solifenacin[tiab] OR propiverine[tiab] OR flavoxate[tiab] OR propantheline[tiab] OR hyoscyamine[tiab] OR imipramine[tiab] OR emepronium[tiab] OR clenbuterol[tiab] OR antimuscarinic*[tiab] OR anticholinergic*[tiab] OR muscarinic antagonist*[tiab] OR bladder relaxant*[tiab] OR detrusor relaxant*[tiab])) AND (\"1800/01/01\"[edat] : \"2003/09/11\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2003-09-11",
+  "count": 884,
+  "gold_scored": 40,
+  "gold_reachable": 40,
+  "retrieved": 31,
+  "recall_percent": 77.5,
+  "nnr": 28.5,
+  "translation_issues": [],
+  "gold_seen_by_agent": 12,
+  "unseen_retrieved": 19,
+  "unseen_recall_percent": 67.9,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "screen": 4,
+      "search": 2
+    },
+    "optional": []
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

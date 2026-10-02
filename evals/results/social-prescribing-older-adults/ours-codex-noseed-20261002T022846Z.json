@@ -1,0 +1,60 @@
+{
+  "topic": "social-prescribing-older-adults",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261002T022846Z",
+  "scored": "20261002T030347Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2101
+  },
+  "strategy": "((\"Aged\"[Mesh] OR \"Frail Elderly\"[Mesh] OR older adult*[tiab] OR older people[tiab] OR older person*[tiab] OR elderly[tiab] OR geriatric*[tiab] OR senior*[tiab] OR aged 65[tiab] OR aged 60[tiab] OR 65 year*[tiab] OR 60 year*[tiab] OR late life[tiab]) AND (\"Community Health Workers\"[Mesh] OR social prescribing[tiab] OR social prescription*[tiab] OR \"link worker\"[tiab:~0] OR \"link workers\"[tiab:~0] OR \"worker link\"[tiab:~0] OR \"community link worker\"[tiab:~1] OR \"community link practitioner\"[tiab:~1] OR community link*[tiab] OR \"community navigator\"[tiab:~0] OR \"care navigator\"[tiab:~0] OR \"social prescribing practitioner\"[tiab:~1] OR \"community referral\"[tiab:~0] OR \"voluntary sector referral\"[tiab:~1] OR \"arts on prescription\"[tiab:~1] OR \"exercise on prescription\"[tiab:~1] OR \"green prescription\"[tiab:~0] OR \"community activity referral\"[tiab:~3] OR \"community activities referral\"[tiab:~3] OR \"referral facilitator\"[tiab:~0] OR \"referrals facilitator\"[tiab:~0] OR \"voluntary referral service\"[tiab:~1] OR \"community link scheme\"[tiab:~1] OR \"wellbeing coordinator\"[tiab:~0] OR \"well-being coordinator\"[tiab:~0] OR referral[tiab] OR community activit*[tiab])) AND (\"1800/01/01\"[edat] : \"2019/12/30\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2019-12-30",
+  "count": 30541,
+  "gold_scored": 10,
+  "gold_reachable": 10,
+  "retrieved": 4,
+  "recall_percent": 40.0,
+  "nnr": 7635.2,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 3,
+  "unseen_recall_percent": 33.3,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "outcomes",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

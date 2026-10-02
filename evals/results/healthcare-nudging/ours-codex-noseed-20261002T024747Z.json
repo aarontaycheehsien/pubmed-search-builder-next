@@ -1,0 +1,60 @@
+{
+  "topic": "healthcare-nudging",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261002T024747Z",
+  "scored": "20261002T032606Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 2299
+  },
+  "strategy": "((\"Economics, Behavioral\"[Mesh] OR \"Decision Support Systems, Clinical\"[Mesh] OR \"Reminder Systems\"[Mesh] OR \"Formative Feedback\"[Mesh] OR \"Social Norms\"[Mesh] OR nudge*[tiab] OR \"choice architecture\"[tiab] OR \"behavioral economics\"[tiab] OR \"behavioural economics\"[tiab] OR default*[tiab] OR reminder*[tiab] OR \"clinical decision support\"[tiab] OR \"computerized decision support\"[tiab] OR \"computerised decision support\"[tiab] OR \"audit and feedback\"[tiab:~2] OR \"peer comparison\"[tiab:~2] OR \"social norm\"[tiab] OR \"social norms\"[tiab] OR \"suggested alternative\"[tiab] OR \"suggested alternatives\"[tiab] OR \"accountable justification\"[tiab] OR \"accountable justifications\"[tiab] OR \"prescribing alert\"[tiab] OR \"prescribing alerts\"[tiab] OR \"clinical prompt\"[tiab:~2] OR \"prescribing prompt\"[tiab:~2] OR \"clinical alert\"[tiab:~2]) AND (\"Health Personnel\"[Mesh] OR \"healthcare professional\"[tiab] OR \"health care professional\"[tiab] OR \"healthcare provider\"[tiab] OR \"health care provider\"[tiab] OR clinician*[tiab] OR physician*[tiab] OR doctor*[tiab] OR nurs*[tiab] OR pharmacist*[tiab] OR prescriber*[tiab] OR practitioner*[tiab] OR dentist*[tiab] OR therapist*[tiab] OR clinical[tiab] OR medical[tiab] OR provider*[tiab] OR care[tiab] OR surgeon*[tiab] OR \"birth attendant\"[tiab] OR \"birth attendants\"[tiab] OR \"intensive care unit\"[tiab] OR \"intensive care units\"[tiab] OR ICU[tiab] OR \"medical staff\"[tiab] OR hospital*[tiab] OR practice*[tiab] OR unit*[tiab] OR \"medical team\"[tiab] OR \"clinical team\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/12/18\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-12-18",
+  "count": 24054,
+  "gold_scored": 86,
+  "gold_reachable": 86,
+  "retrieved": 61,
+  "recall_percent": 70.9,
+  "nnr": 394.3,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 59,
+  "unseen_recall_percent": 70.2,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": null,
+    "roles": {
+      "optional": 1,
+      "search": 2
+    },
+    "optional": [
+      {
+        "id": "evidence_based_behavior",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 1
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}

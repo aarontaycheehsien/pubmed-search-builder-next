@@ -1,0 +1,61 @@
+{
+  "topic": "Cohen_2006_ACEInhibitors",
+  "source": "generated:ours",
+  "driver": "codex",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "ours-codex-noseed-20261002T014033Z",
+  "scored": "20261002T020724Z",
+  "skill": {
+    "name": "ours",
+    "hash": "d521c529ed4d7db7a1a47b79cf22ee7e45c80a80a10381ccc851a39f8f624f1c",
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "139ce60ef8ba8e28fdcf93d957e3a63fbfba2606",
+    "dirty": false
+  },
+  "driver_version": "codex-cli 0.157.1",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1610
+  },
+  "strategy": "((Captopril[Mesh] OR Enalapril[Mesh] OR Enalaprilat[Mesh] OR Fosinopril[Mesh] OR Lisinopril[Mesh] OR Perindopril[Mesh] OR Quinapril[Mesh] OR Ramipril[Mesh] OR Cilazapril[Mesh] OR captopril[tiab] OR enalapril[tiab] OR fosinopril[tiab] OR lisinopril[tiab] OR benazepril[tiab] OR moexipril[tiab] OR perindopril[tiab] OR quinapril[tiab] OR ramipril[tiab] OR trandolapril[tiab] OR cilazapril[tiab] OR zofenopril[tiab] OR delapril[tiab] OR imidapril[tiab] OR temocapril[tiab] OR spirapril[tiab] OR alacepril[tiab] OR angiotensin converting enzyme inhibitor[tiab] OR angiotensin-converting enzyme inhibitor[tiab] OR angiotensin converting enzyme inhibitors[tiab] OR angiotensin-converting enzyme inhibitors[tiab] OR ACE inhibitor[tiab] OR ACE inhibitors[tiab] OR ACEI[tiab] OR ACEIs[tiab] OR Capoten[tiab] OR Lopirin[tiab] OR Renitec[tiab] OR Renitek[tiab] OR Monopril[tiab] OR Fozitec[tiab] OR Fosinorm[tiab] OR Zestril[tiab] OR Prinivil[tiab] OR Perstarium[tiab] OR Accupril[tiab] OR Altace[tiab] OR Tritace[tiab] OR Delix[tiab] OR Ramace[tiab] OR Inhibace[tiab] OR MK-421[tiab] OR MK-521[tiab])) AND (\"1800/01/01\"[edat] : \"2003/03/15\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2003-03-15",
+  "count": 26386,
+  "gold_scored": 41,
+  "gold_reachable": 41,
+  "retrieved": 41,
+  "recall_percent": 100.0,
+  "nnr": 643.6,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 39,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "concepts": {
+    "workload_budget": 10000,
+    "roles": {
+      "optional": 1,
+      "screen": 3,
+      "search": 1
+    },
+    "optional": [
+      {
+        "id": "eligible_conditions",
+        "choice": "leave_out",
+        "screened": 30,
+        "relevant": 0
+      }
+    ]
+  },
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "heldout"
+}
