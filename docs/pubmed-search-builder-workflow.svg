@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="860" viewBox="0 0 1440 860" role="img" aria-labelledby="title desc">
+  <title id="title">PubMed Search Builder workflow</title>
+  <desc id="desc">Seven-step workflow: Question and Intake, Scope, Known Records, Vocabulary, Test and Revise, Critique, Deliver.</desc>
+  <defs>
+    <style>
+      .title{font:700 48px Arial,sans-serif;fill:#102a43}
+      .subtitle{font:400 24px Arial,sans-serif;fill:#627d98}
+      .num{font:700 24px Arial,sans-serif;fill:white;text-anchor:middle;dominant-baseline:middle}
+      .cardTitle{font:700 23px Arial,sans-serif;fill:#102a43;text-anchor:middle}
+      .body{font:400 16px Arial,sans-serif;fill:#486581;text-anchor:middle}
+      .footerTitle{font:700 23px Arial,sans-serif;fill:#102a43}
+      .footerBody{font:400 17px Arial,sans-serif;fill:#334e68}
+      .arrow{font:700 34px Arial,sans-serif;fill:#829ab1;text-anchor:middle}
+    </style>
+  </defs>
+  <rect width="1440" height="860" fill="#ffffff"/>
+  <text x="720" y="70" class="title" text-anchor="middle">PubMed Search Builder (next)</text>
+  <text x="720" y="112" class="subtitle" text-anchor="middle">An iterative workflow for building high-sensitivity PubMed search strategies</text>
+
+  <!-- Step 1 -->
+  <rect x="25" y="180" rx="18" width="175" height="420" fill="#eef7ff" stroke="#90cdf4" stroke-width="2"/>
+  <circle cx="112" cy="172" r="28" fill="#3182ce"/><text x="112" y="173" class="num">1</text>
+  <text x="112" y="245" font-size="48" text-anchor="middle">❓</text>
+  <text x="112" y="302" class="cardTitle">Question /</text><text x="112" y="332" class="cardTitle">Intake</text>
+  <text x="112" y="382" class="body"><tspan x="112" dy="0">Start with the</tspan><tspan x="112" dy="24">review question,</tspan><tspan x="112" dy="24">known articles,</tspan><tspan x="112" dy="24">depth and limits.</tspan></text>
+
+  <text x="210" y="385" class="arrow">→</text>
+
+  <!-- Step 2 -->
+  <rect x="220" y="180" rx="18" width="175" height="420" fill="#eefbf3" stroke="#9ae6b4" stroke-width="2"/>
+  <circle cx="307" cy="172" r="28" fill="#38a169"/><text x="307" y="173" class="num">2</text>
+  <text x="307" y="245" font-size="48" text-anchor="middle">🎯</text>
+  <text x="307" y="317" class="cardTitle">Scope</text>
+  <text x="307" y="382" class="body"><tspan x="307" dy="0">Decide which</tspan><tspan x="307" dy="24">concepts to search,</tspan><tspan x="307" dy="24">screen, or keep</tspan><tspan x="307" dy="24">optional.</tspan></text>
+
+  <text x="405" y="385" class="arrow">→</text>
+
+  <!-- Step 3 -->
+  <rect x="415" y="180" rx="18" width="175" height="420" fill="#fff8e8" stroke="#f6c453" stroke-width="2"/>
+  <circle cx="502" cy="172" r="28" fill="#dd8a13"/><text x="502" y="173" class="num">3</text>
+  <text x="502" y="245" font-size="48" text-anchor="middle">📚</text>
+  <text x="502" y="302" class="cardTitle">Known</text><text x="502" y="332" class="cardTitle">Records</text>
+  <text x="502" y="382" class="body"><tspan x="502" dy="0">Collect seed or</tspan><tspan x="502" dy="24">benchmark PMIDs</tspan><tspan x="502" dy="24">to test relative</tspan><tspan x="502" dy="24">recall.</tspan></text>
+
+  <text x="600" y="385" class="arrow">→</text>
+
+  <!-- Step 4 -->
+  <rect x="610" y="180" rx="18" width="175" height="420" fill="#f5f0ff" stroke="#b794f4" stroke-width="2"/>
+  <circle cx="697" cy="172" r="28" fill="#805ad5"/><text x="697" y="173" class="num">4</text>
+  <text x="697" y="245" font-size="48" text-anchor="middle">🏷️</text>
+  <text x="697" y="317" class="cardTitle">Vocabulary</text>
+  <text x="697" y="382" class="body"><tspan x="697" dy="0">Build concept</tspan><tspan x="697" dy="24">blocks with MeSH</tspan><tspan x="697" dy="24">plus title/abstract</tspan><tspan x="697" dy="24">terms.</tspan></text>
+
+  <text x="795" y="385" class="arrow">→</text>
+
+  <!-- Step 5 -->
+  <rect x="805" y="180" rx="18" width="175" height="420" fill="#eef7ff" stroke="#90cdf4" stroke-width="2"/>
+  <circle cx="892" cy="172" r="28" fill="#3182ce"/><text x="892" y="173" class="num">5</text>
+  <text x="892" y="245" font-size="48" text-anchor="middle">🔁</text>
+  <text x="892" y="317" class="cardTitle">Test &amp; Revise</text>
+  <text x="892" y="382" class="body"><tspan x="892" dy="0">Run searches,</tspan><tspan x="892" dy="24">inspect counts,</tspan><tspan x="892" dy="24">diagnose misses,</tspan><tspan x="892" dy="24">and revise.</tspan></text>
+
+  <text x="990" y="385" class="arrow">→</text>
+
+  <!-- Step 6 -->
+  <rect x="1000" y="180" rx="18" width="175" height="420" fill="#fff1f3" stroke="#feb2b2" stroke-width="2"/>
+  <circle cx="1087" cy="172" r="28" fill="#d53f5c"/><text x="1087" y="173" class="num">6</text>
+  <text x="1087" y="245" font-size="48" text-anchor="middle">✅</text>
+  <text x="1087" y="317" class="cardTitle">Critique</text>
+  <text x="1087" y="382" class="body"><tspan x="1087" dy="0">Run a PRESS-</tspan><tspan x="1087" dy="24">structured internal</tspan><tspan x="1087" dy="24">review and resolve</tspan><tspan x="1087" dy="24">findings.</tspan></text>
+
+  <text x="1185" y="385" class="arrow">→</text>
+
+  <!-- Step 7 -->
+  <rect x="1195" y="180" rx="18" width="220" height="420" fill="#eefbf3" stroke="#9ae6b4" stroke-width="2"/>
+  <circle cx="1305" cy="172" r="28" fill="#38a169"/><text x="1305" y="173" class="num">7</text>
+  <text x="1305" y="245" font-size="48" text-anchor="middle">📦</text>
+  <text x="1305" y="317" class="cardTitle">Deliver</text>
+  <text x="1305" y="382" class="body"><tspan x="1305" dy="0">Generate the final</tspan><tspan x="1305" dy="24">query, audit trail,</tspan><tspan x="1305" dy="24">and validation</tspan><tspan x="1305" dy="24">manifest.</tspan></text>
+
+  <!-- Bottom panels -->
+  <rect x="25" y="640" rx="16" width="675" height="180" fill="#f7fbff" stroke="#bee3f8" stroke-width="2"/>
+  <text x="55" y="685" class="footerTitle">Why use it?</text>
+  <text x="55" y="724" class="footerBody">✓ Avoid one-shot Boolean generation</text>
+  <text x="55" y="756" class="footerBody">✓ Test against known relevant records</text>
+  <text x="360" y="724" class="footerBody">✓ Document decisions and revisions</text>
+  <text x="360" y="756" class="footerBody">✓ Produce an auditable draft for human PRESS review</text>
+
+  <rect x="740" y="640" rx="16" width="675" height="180" fill="#f7fff9" stroke="#c6f6d5" stroke-width="2"/>
+  <text x="770" y="685" class="footerTitle">Outputs</text>
+  <text x="770" y="724" class="footerBody">✓ Final PubMed search strategy</text>
+  <text x="770" y="756" class="footerBody">✓ Line-by-line counts and relative recall</text>
+  <text x="1060" y="724" class="footerBody">✓ Critique and change history</text>
+  <text x="1060" y="756" class="footerBody">✓ PRISMA-S style audit</text>
+</svg>
