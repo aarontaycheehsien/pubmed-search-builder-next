@@ -6,8 +6,19 @@ and writes a PRISMA-S style audit.
 
 This is a fresh rebuild of
 [pubmed-search-builder](https://github.com/aarontaycheehsien/pubmed-search-builder)
-(`protocol-first-empirical-search-builder` branch). It keeps that project's methodology and
-drops its bookkeeping machinery.
+(`protocol-first-empirical-search-builder` branch). It retains the methodology of the earlier
+project but replaces much of its excessively heavy bookkeeping machinery with a simpler, leaner
+implementation. The aim is to preserve the parts that improve search quality while making the
+code easier to understand, maintain, and modify.
+
+This version has also been tested much more systematically with Luna-6 at high effort. A typical
+run takes around 10–15 minutes. Any major code change is first tested on a development set of 10
+questions, each with a gold-standard set of relevant records. Each question is run three times so
+that improvements are not judged from a single favourable run. Once a change performs
+satisfactorily on the development set, it is tested separately on a held-out set of 10 additional
+questions that was not used to guide the change. The held-out set checks that the improvement
+generalises beyond the questions used during development, rather than simply fitting the
+development set.
 
 ## What it does
 
