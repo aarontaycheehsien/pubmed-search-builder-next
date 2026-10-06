@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="720" viewBox="0 0 1600 720">
+<style>
+  .t{font-family:Arial,Helvetica,sans-serif;fill:#12213d}.h{font-size:42px;font-weight:700}.sh{font-size:26px;font-weight:700}.b{font-size:20px}.sm{font-size:18px}.card{stroke:#d9e1ef;stroke-width:2}.arrow{stroke:#64748b;stroke-width:7;fill:none;marker-end:url(#a)}
+</style>
+<defs><marker id="a" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#64748b"/></marker></defs>
+<rect width="1600" height="720" fill="#fff"/>
+<text x="800" y="58" class="t h" text-anchor="middle">How you and the agent work together</text>
+<rect x="25" y="105" rx="24" width="270" height="520" fill="#eaf4ff" class="card"/>
+<text x="160" y="150" class="t sh" text-anchor="middle">1. You provide</text><text x="160" y="182" class="t sh" text-anchor="middle">the inputs</text>
+<circle cx="160" cy="235" r="28" fill="#2482c5"/><path d="M115 307q45-70 90 0v18h-90z" fill="#2482c5"/><text x="160" y="355" class="t sh" text-anchor="middle">You</text>
+<text x="48" y="400" class="t b">• Review question</text><text x="48" y="435" class="t b">• Eligibility criteria</text><text x="48" y="470" class="t b">• Optional seed papers</text><text x="68" y="500" class="t sm">PMIDs, DOIs or PMCIDs</text><text x="48" y="540" class="t b">• Required limits</text><text x="68" y="570" class="t sm">date, language, etc.</text>
+<rect x="335" y="105" rx="24" width="275" height="520" fill="#f3efff" class="card"/>
+<text x="472" y="150" class="t sh" text-anchor="middle">2. Agent proposes</text><text x="472" y="182" class="t sh" text-anchor="middle">search scope</text>
+<rect x="432" y="220" width="80" height="60" rx="18" fill="#5943b9"/><circle cx="457" cy="250" r="6" fill="#fff"/><circle cx="487" cy="250" r="6" fill="#fff"/><path d="M456 264q16 14 32 0" stroke="#fff" stroke-width="5" fill="none"/>
+<text x="472" y="325" class="t sh" text-anchor="middle">Agent</text><text x="365" y="385" class="t b">Proposes which concepts are:</text><text x="383" y="430" class="t b">• searched in PubMed</text><text x="383" y="470" class="t b">• handled at screening</text><text x="383" y="510" class="t b">• treated as optional</text>
+<rect x="650" y="105" rx="24" width="240" height="520" fill="#eaf4ff" class="card"/>
+<text x="770" y="150" class="t sh" text-anchor="middle">3. You review</text><text x="770" y="182" class="t sh" text-anchor="middle">and approve</text>
+<circle cx="770" cy="235" r="28" fill="#2482c5"/><path d="M725 307q45-70 90 0v18h-90z" fill="#2482c5"/><text x="770" y="355" class="t sh" text-anchor="middle">You</text><text x="680" y="420" class="t b">Approve or revise the</text><text x="680" y="452" class="t b">proposed scope before</text><text x="680" y="484" class="t b">the search is built.</text>
+<rect x="930" y="105" rx="24" width="405" height="520" fill="#f3efff" class="card"/>
+<text x="1132" y="150" class="t sh" text-anchor="middle">4. Agent develops, tests</text><text x="1132" y="182" class="t sh" text-anchor="middle">and revises</text>
+<text x="965" y="235" class="t b">✓ Builds MeSH + free-text vocabulary</text><text x="965" y="278" class="t b">✓ Checks MeSH against the real vocabulary</text><text x="965" y="321" class="t b">✓ Constructs candidate PubMed strategies</text><text x="965" y="364" class="t b">✓ Runs them directly in PubMed</text><text x="965" y="407" class="t b">✓ Measures retrieval of known papers</text><text x="965" y="450" class="t b">✓ Diagnoses misses and revises</text><text x="965" y="493" class="t b">✓ Runs a PRESS-structured critique</text><text x="965" y="536" class="t b">✓ Validates the final search</text><path d="M1040 570 Q1132 655 1225 570" stroke="#5943b9" stroke-width="7" fill="none"/><text x="1132" y="605" class="t sm" text-anchor="middle">Iterate until requirements are met</text>
+<rect x="1375" y="105" rx="24" width="200" height="520" fill="#edf9ef" class="card"/>
+<text x="1475" y="150" class="t sh" text-anchor="middle">5. You receive</text><text x="1475" y="182" class="t sh" text-anchor="middle">the outputs</text>
+<text x="1400" y="250" class="t b">• Final PubMed</text><text x="1420" y="278" class="t sm">search strategy</text><text x="1400" y="325" class="t b">• Line counts</text><text x="1400" y="372" class="t b">• Retrieval of</text><text x="1420" y="400" class="t sm">known papers</text><text x="1400" y="447" class="t b">• Decisions +</text><text x="1420" y="475" class="t sm">limitations</text><text x="1400" y="522" class="t b">• PRESS critique</text><text x="1400" y="569" class="t b">• PRISMA-S audit</text>
+<path d="M295 365H325" class="arrow"/><path d="M610 365H640" class="arrow"/><path d="M890 365H920" class="arrow"/><path d="M1335 365H1365" class="arrow"/>
+</svg>
