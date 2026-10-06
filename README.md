@@ -32,16 +32,19 @@ Instead of asking an LLM to produce a plausible-looking Boolean query in one sho
 
 ## Why use it?
 
-LLMs can write convincing search strings that still have serious retrieval problems. They may AND too many concepts, search outcomes or comparators unnecessarily, misuse controlled vocabulary, generate syntax that PubMed interprets differently from what was intended, or simply stop after producing the first plausible query.
+LLMs can produce convincing PubMed search strings that still have serious retrieval problems. They may **hallucinate MeSH headings that do not exist**, use real MeSH terms incorrectly, AND too many concepts, search outcomes or comparators unnecessarily, generate syntax that PubMed interprets differently from what was intended, or stop after producing the first plausible-looking query. A search can look sophisticated without ever being tested against PubMed or against records that it should retrieve.
 
-PubMed Search Builder adds a search-development loop around the model:
+PubMed Search Builder adds an empirical search-development loop around the model:
 
-- **Scope before vocabulary.** It decides which concepts need to be searched before using seed records, reducing overfitting and the common mistake of turning every PICO element into an AND block.
-- **MeSH plus free text.** Each searched concept is represented explicitly with controlled vocabulary and title/abstract terms rather than relying on PubMed Automatic Term Mapping.
-- **Empirical testing.** The strategy is actually run in PubMed. Counts, translations, known-record retrieval, failing blocks, and leave-one-block-out results are inspected.
-- **Diagnose misses rather than explain them away.** When a known relevant record is missed, the workflow identifies which concept block failed and examines the record's vocabulary.
-- **Revision is recorded.** Search versions, changes, lost records, counts, and rationales are retained rather than disappearing into a chat transcript.
-- **Protected delivery.** The final query and audit are generated only after validation and critique requirements pass.
+- **Scope before vocabulary.** The agent first proposes which concepts should be searched and which are better left to screening, with the user approving or revising that decision. This helps avoid turning every PICO element into an AND block.
+- **Verified MeSH plus free text.** MeSH headings are checked against the actual vocabulary rather than assumed to exist, and each searched concept is represented with controlled vocabulary and appropriate title/abstract terms.
+- **Test against PubMed, not just the model's intuition.** Candidate strategies are **executed directly in PubMed via its API**. The workflow inspects result counts, PubMed translations, known-record retrieval, failing blocks and leave-one-block-out results.
+- **Strong validity checks before delivery.** The final search is not accepted merely because it looks syntactically plausible. It must execute successfully in PubMed, pass syntax and design checks, resolve its MeSH terms correctly, and survive final revalidation. **The final query is checked again before delivery, along with its result counts, so you are not handed a search that only looks valid but fails when run in PubMed.**
+- **Use known relevant records when available.** Seed papers supplied by the user can be used to test whether the developing strategy retrieves studies that it should already be able to find.
+- **Diagnose misses rather than explain them away.** When a known relevant record is missed, the workflow identifies which concept block failed, examines the record's vocabulary and uses that evidence to guide revision.
+- **Iterate rather than stop at the first query.** The agent repeatedly constructs, tests, diagnoses and revises the strategy instead of treating the first plausible Boolean string as the finished search.
+- **Keep an audit trail.** Search versions, changes, lost records, counts and rationales are retained rather than disappearing into a chat transcript.
+- **Critique before delivery.** A PRESS-structured internal critique and final validation are required before the final query and audit are produced.
 
 The guiding principle is simple: **the LLM can reason about the search, but claims about PubMed should come from PubMed.**
 
