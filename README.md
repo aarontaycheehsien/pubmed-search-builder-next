@@ -9,6 +9,76 @@ This is a fresh rebuild of
 (`protocol-first-empirical-search-builder` branch). It keeps that project's methodology and
 drops its bookkeeping machinery.
 
+## What it does
+
+PubMed Search Builder is an agent skill for **Claude Code and Codex** that develops high-sensitivity PubMed search strategies for systematic reviews, scoping reviews, rapid reviews, and other evidence syntheses.
+
+Instead of asking an LLM to produce a plausible-looking Boolean query in one shot, it treats search development as an **iterative, testable process**. It starts from the review question, decides which concepts actually belong in the search, builds MeSH and free-text vocabulary, tests the strategy in PubMed, evaluates it against known relevant records when available, diagnoses misses, runs a PRESS-structured internal critique, and produces an auditable final search.
+
+> **This is not just an LLM Boolean-query generator. It is an agentic search-development workflow.**
+
+![PubMed Search Builder workflow](docs/pubmed-search-builder-workflow.svg)
+
+## Why use it?
+
+LLMs can write convincing search strings that still have serious retrieval problems. They may AND too many concepts, search outcomes or comparators unnecessarily, misuse controlled vocabulary, generate syntax that PubMed interprets differently from what was intended, or simply stop after producing the first plausible query.
+
+PubMed Search Builder adds a search-development loop around the model:
+
+- **Scope before vocabulary.** It decides which concepts need to be searched before using seed records, reducing overfitting and the common mistake of turning every PICO element into an AND block.
+- **MeSH plus free text.** Each searched concept is represented explicitly with controlled vocabulary and title/abstract terms rather than relying on PubMed Automatic Term Mapping.
+- **Empirical testing.** The strategy is actually run in PubMed. Counts, translations, known-record retrieval, failing blocks, and leave-one-block-out results are inspected.
+- **Diagnose misses rather than explain them away.** When a known relevant record is missed, the workflow identifies which concept block failed and examines the record's vocabulary.
+- **Revision is recorded.** Search versions, changes, lost records, counts, and rationales are retained rather than disappearing into a chat transcript.
+- **Protected delivery.** The final query and audit are generated only after validation and critique requirements pass.
+
+The guiding principle is simple: **the LLM can reason about the search, but claims about PubMed should come from PubMed.**
+
+The workflow is recall-first. It does not try to produce the smallest possible result set if doing so risks missing relevant studies.
+
+## Workflow
+
+| Step | What happens |
+|---|---|
+| **1. Question / intake** | Start with the plain-language review question, optional known articles, search depth, and required limits. |
+| **2. Scope** | Decide which concepts should be searched, handled at screening, or tested as optional blocks. |
+| **3. Known records** | Collect seed or benchmark PMIDs when available so the strategy can be tested against known relevant studies. |
+| **4. Vocabulary** | Build each searched concept using MeSH plus free-text title/abstract terminology. |
+| **5. Test & revise** | Run the search, inspect PubMed translations and counts, measure relative recall, diagnose misses, and revise one change at a time. |
+| **6. Critique** | Run a fresh-context PRESS-structured internal critique and resolve, reject, or explicitly document each finding. |
+| **7. Deliver** | Revalidate the strategy and generate the final query, audit, and validation manifest for handoff. |
+
+The core loop is:
+
+**construct → execute → measure → diagnose → revise → critique → validate**
+
+## What you get
+
+A successful run produces:
+
+- a copyable final PubMed search strategy;
+- the strategy line by line with counts;
+- relative recall against each known-record set, when such records are available;
+- missed-record and failing-block diagnostics;
+- the development and change history;
+- scope and search-design decisions;
+- an internal PRESS-structured critique and dispositions;
+- a PRISMA-S-style audit for the PubMed search; and
+- a validation manifest tying the delivered query to the evaluated workspace.
+
+The output is a **draft ready for human PRESS peer review by an information specialist**, not a claim that the strategy has perfect recall or has itself undergone formal PRESS peer review.
+
+## When to use it
+
+Typical uses include:
+
+- building a new PubMed strategy from a review question;
+- building a strategy when you already have several known relevant articles to test against;
+- reviewing an existing PubMed strategy for likely recall, structure, vocabulary, or syntax problems; and
+- updating a previously completed PubMed search while documenting what changed.
+
+It is designed for **search development**, not for answering the review question or summarising the retrieved literature. It covers PubMed/MEDLINE only; searches of other databases, registries, citation indexes, and grey-literature sources remain separate parts of an evidence-synthesis search.
+
 ## Design
 
 - **One tool, one workspace.** `scripts/psb.py` does all PubMed and MeSH work. A run workspace
