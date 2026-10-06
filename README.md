@@ -28,7 +28,7 @@ The agent then:
 
 You receive the final PubMed strategy, line-by-line counts, retrieval results for known relevant papers, documented decisions and limitations, and a PRISMA-S-style audit.
 
-![How you and the agent work together](docs/pubmed-search-builder-human-agent-workflow.webp)
+![How you and the agent work together](docs/pubmed-search-builder-human-agent-workflow.jpg)
 
 ## Why use it?
 
@@ -146,7 +146,7 @@ First, the change is tested against a **development set that originally containe
 
 Only after a change performs satisfactorily on the development set is it evaluated against a **separate held-out set of 10 topics**. These topics are frozen before evaluation and are not used to design or tune the change. The held-out set therefore checks whether an apparent improvement generalises beyond the topics that influenced development rather than simply fitting the development set.
 
-![How changes are evaluated](docs/pubmed-search-builder-evaluation.webp)
+![How changes are evaluated](docs/pubmed-search-builder-evaluation.jpg)
 
 The evaluation harness tests the skill end to end. The agent receives the review question and any permitted seed records but **does not receive the complete gold-standard set of relevant records used for scoring**.
 
