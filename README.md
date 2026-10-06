@@ -24,7 +24,7 @@ development set.
 
 PubMed Search Builder is an agent skill for **Claude Code and Codex** that develops high-sensitivity PubMed search strategies for systematic reviews, scoping reviews, rapid reviews, and other evidence syntheses.
 
-Instead of asking an LLM to produce a plausible-looking Boolean query in one shot, it treats search development as an **iterative, testable process**. It starts from the review question, decides which concepts actually belong in the search, builds MeSH and free-text vocabulary, tests the strategy in PubMed, evaluates it against known relevant records when available, diagnoses misses, runs a PRESS-structured internal critique, and produces an auditable final search.
+Instead of asking an LLM to produce a plausible-looking Boolean query in one shot, it treats search development as an **iterative, testable process**. The user provides the review question and can optionally supply seed papers. The agent then proposes which concepts should be searched and which are better handled during screening; the user approves or revises that decision **(human in the loop)**. The agent builds the MeSH and free-text vocabulary, then **pilots and tests candidate strategies directly in PubMed via its API**. It evaluates retrieval against the supplied or known relevant records, diagnoses misses, revises the strategy, runs a PRESS-structured internal critique, and produces an auditable final search for human review.
 
 > **This is not just an LLM Boolean-query generator. It is an agentic search-development workflow.**
 
