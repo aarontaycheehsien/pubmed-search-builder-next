@@ -12,6 +12,10 @@ Give it a review question and, optionally, known relevant papers. The agent deve
 
 You provide the **review question** and can optionally supply **seed papers that you already know are relevant**.
 
+If you do not have known relevant papers, the workflow can still proceed. At **standard** or **thorough** depth, the agent first tries to establish its own set of known relevant records. It may look for a suitable prior systematic review and screen its included studies, run narrow high-precision pilot searches, and expand from confirmed relevant records using PubMed relationships such as similar articles and citation links. Candidates are screened against the review's eligibility criteria before they are used.
+
+These records are then used to test whether the developing search retrieves studies that it should retrieve. If too few suitable records can be established, the search can still be built, but the audit makes clear that the empirical evidence for recall is limited or absent. At **quick** depth, this additional record-discovery step is skipped when no seeds are supplied.
+
 The agent then proposes which concepts should be represented in the PubMed search and which are better assessed during screening. **You approve or revise this scope decision before the main search is built.**
 
 The agent then:
@@ -94,7 +98,7 @@ An NCBI API key is optional but raises the permitted request rate.
 |---|---|---|
 | **1. Question / intake** | User | Provide the review question, eligibility criteria, optional known relevant articles, and required limits. |
 | **2. Scope** | Agent → User | The agent proposes which concepts should be searched, handled at screening, or treated as optional. The user approves or revises the plan. |
-| **3. Known records** | User + Agent | User-supplied seed papers and other screened relevant records can be collected as benchmarks for retrieval. |
+| **3. Known records** | User + Agent | User-supplied seeds, screened relevant discoveries, held-out validation records, and eligible studies from prior reviews are organised into known-record sets for search development and retrieval testing. |
 | **4. Vocabulary** | Agent | Build each searched concept using verified MeSH plus free-text title/abstract terminology. |
 | **5. Test & revise** | Agent | Run candidate searches in PubMed, inspect translations and counts, measure retrieval of known records, diagnose misses, and revise. |
 | **6. Critique** | Agent | Run a fresh-context PRESS-structured internal critique and address each finding. |
@@ -104,6 +108,23 @@ An NCBI API key is optional but raises the permitted request rate.
 The core loop is:
 
 **construct → execute → measure → diagnose → revise → critique → validate**
+
+## How known relevant records are used
+
+Classify each known relevant record by source and role, then apply the corresponding safeguards.
+
+| Record type | Where it comes from | Used for term mining? | Used to test retrieval? | Interpretation |
+| --- | --- | ---: | ---: | --- |
+| **`seed`** | Known relevant papers supplied by the user | Yes | Yes | Development evidence; not independent validation |
+| **`relevant`** | Papers discovered during the build and screened as eligible | Yes | Yes | Development evidence; not independent validation |
+| **`validation`** | Seed or relevant records held out from term mining | No | Yes | More independent test of generalisability beyond development records |
+| **`benchmark`** | Eligible studies from a suitable prior review kept separate from development | No | Yes | External relative-recall benchmark |
+
+1. **Classify each record.** Label user-supplied known relevant papers as `seed` and eligible papers discovered during search development as `relevant`. Treat both types as development records. They may inform terminology, strategy refinement, and retrieval testing, but performance on them is development evidence rather than independent validation.
+2. **Create a validation holdout.** When roughly 10 or more development records are available, select some `seed` or `relevant` records for a holdout and reclassify them as `validation`. Remove these records from term mining. They remain available as a more independent retrieval check during evaluation. If inspecting a validation record prompts a strategy change, reclassify it as `relevant` or otherwise treat it as development evidence; it no longer qualifies as independent validation.
+3. **Set aside benchmark records.** Classify eligible studies from a suitable prior review as `benchmark` only if they remain separate from strategy development. Do not use them for term mining or strategy revision before retrieval testing. If a benchmark record is inspected for vocabulary or strategy revision, reclassify it as a development record and no longer treat it as protected benchmark evidence.
+4. **Test retrieval against each set.** Test candidate and final strategies against the development, validation, and benchmark sets. Keep the results separate so that development performance is not conflated with more independent or external testing.
+5. **Report recall by set.** Report recall separately for the development, validation, and benchmark sets. Retrieving 6/6 development records demonstrates capture of records used to build the strategy; it does not provide independent evidence of 100% recall.
 
 ## What you get
 
