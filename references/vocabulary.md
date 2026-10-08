@@ -13,8 +13,8 @@ that use unexpected words, and text words find records that are not yet (or neve
 3. Explode by default (`"Heading"[Mesh]`). Use `:noexp` only when the narrower headings are
    clearly out of scope, and say why.
 4. Tag every heading explicitly. Never rely on a bare phrase mapping to MeSH.
-5. Add MeSH that known records carry: `psb terms rank` lists headings common in your
-   relevant sets; `psb fetch` shows each record's headings.
+5. Add MeSH that development records carry: `psb terms rank` lists headings common in your
+   development sets; `psb fetch` shows each record's headings. Held-out records are never mined.
 6. Avoid `[majr]` and `Heading/subheading` combinations in recall-first searches.
 
 ## Title and abstract words
@@ -26,7 +26,7 @@ For each concept, work through:
 - singular and plural; UK and US spelling; hyphenated, spaced and closed compounds
 - older and newer names, eponyms, lay and technical terms, brand and generic drug names
 - word-order variants (use proximity)
-- terms from known records (`psb terms rank`) and from missed records (`psb terms miss`)
+- terms from development records (`psb terms rank`) and from missed development records (`psb terms miss`)
 
 Tag with `[tiab]`. Multi-word terms without quotes are searched as a phrase when PubMed knows the
 phrase; quote phrases to be explicit.

@@ -129,7 +129,7 @@ Next: Step 5/7 Develop & revise: check counts and development retrieval, and fix
 **PSB · Step 5/7 Develop & revise · Evaluation v1**
 v1: 5 records
 - Change: first draft
-- Known-record retrieval: development relevant 3/3 (100.0%), seeds 2/2 (100.0%)
+- Known-record retrieval: development sets: relevant 3/3 (100.0%), seeds 2/2 (100.0%)
 - Missed known records: none
 - Checks: 0 blockers · 0 need critic review · lint 0 errors, 0 warnings
 
@@ -138,7 +138,7 @@ v1: 5 records
 **PSB · Step 5/7 Develop & revise · Summary**
 1 version evaluated: 5 → 5 records
 - Latest: v1 — first draft
-- Known-record retrieval: development relevant 3/3 (100.0%), seeds 2/2 (100.0%)
+- Known-record retrieval: development sets: relevant 3/3 (100.0%), seeds 2/2 (100.0%)
 - Missed known records: none
 - Known records lost along the way and not recovered: none
 - Checks: 0 blockers · 0 need critic review · lint 0 errors, 0 warnings
@@ -175,7 +175,7 @@ Next: Step 7/7 Deliver: the held-out test when records are reserved (psb holdout
 
 **PSB · Step 7/7 Deliver · Report**
 Delivered: final query validated live, 5 records
-- Known-record retrieval: development relevant 3/3 (100.0%), seeds 2/2 (100.0%)
+- Known-record retrieval: development sets: relevant 3/3 (100.0%), seeds 2/2 (100.0%)
 - Held-out test: No held-out test was performed.
 - Critic: 1 round (internal PRESS-structured critique, not PRESS peer review); overridden findings: none
 - Files: final-query.txt · audit.md · validation-manifest.json

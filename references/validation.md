@@ -55,16 +55,32 @@ Changed translation or inputs invalidate the disposition; "the complete query wo
 ## Evidence and publication
 
 Every evaluation attempt is saved separately from strategy versions. Critic bindings include scope,
-sets, effective dates, diagnostics, vocabulary and known hits. Count/timestamp changes alone do not
-require another critique. Every depth requires a critic; quick/standard/thorough permit 1/2/3 rounds.
-Unresolved findings cannot disappear by omission from a later round. On budget exhaustion use an
-unfinished diagnostic handoff instead of issuing a final query.
+development and comparison sets, the frozen allocation (as a digest), effective dates, diagnostics,
+vocabulary and known hits. Held-out records are not sets: no evaluation, critic packet or binding
+contains them, and their retrieval never moves the critic binding. Count/timestamp changes alone do
+not require another critique. Every depth requires a critic; quick/standard/thorough permit 1/2/3
+rounds. Unresolved findings cannot disappear by omission from a later round. On budget exhaustion use
+an unfinished diagnostic handoff instead of issuing a final query.
+
+## The held-out receipt
+
+`psb holdout-test` runs after a complete evaluation and a current critic review. It stores
+`holdout/receipt-N.json`, bound to the query, strategy, `review_sha256`, `as_of`, the allocation and
+held-out membership, eligibility, policy version and template version. A repeat with the same binding
+returns the stored receipt; a new receipt is allowed only when the binding changed for a reason other
+than a strategy edit. A changed strategy after a receipt is refused until `psb holdout-release`.
+`psb report` requires the matching complete or empty receipt (blockers `allocation_missing`,
+`allocation_stale`, `holdout_test_missing`, `holdout_test_incomplete`, `holdout_test_stale`,
+`holdout_strategy_changed`), never scores the held-out records again, and never turns holdout misses
+into a review: the tested query is delivered unchanged. The manifest records the receipt's hash and the
+delivered interpretation text.
 
 `psb report` always validates live and runs all checks. `--fresh` is a compatible alias. On success,
 deliver `final-query.txt` verbatim alongside `audit.md` and `validation-manifest.json`. The query
 includes effective entry-date restrictions so it matches the tested search. Put additional prose
 in `narrative.md`; editing generated artifacts invalidates their hashes. Counts reflect today's
-index with the specified date bound, not a reconstruction of historical indexing.
+index with the specified date bound, not a reconstruction of historical indexing. A policy-1
+delivery (from before held-out testing) still verifies and is labelled legacy.
 
 On failure, inspect `diagnostic-audit.md`; it is unfinished output and no current protected query
 is issued. Previous artifacts are archived, not discarded. `psb status` verifies the receipt;

@@ -14,7 +14,7 @@ You provide the **review question** and can optionally supply **seed papers that
 
 If you do not have known relevant papers, the workflow can still proceed. At **standard** or **thorough** depth, the agent first tries to establish its own set of known relevant records. It may look for a suitable prior systematic review and screen its included studies, run narrow high-precision pilot searches, and expand from confirmed relevant records using PubMed relationships such as similar articles and citation links. Candidates are screened against the review's eligibility criteria before they are used.
 
-These records are then used to test whether the developing search retrieves studies that it should retrieve. If too few suitable records can be established, the search can still be built, but the audit makes clear that the empirical evidence for recall is limited or absent. At **quick** depth, this additional record-discovery step is skipped when no seeds are supplied.
+Most of these records are used to develop and check the search. When there are enough of them, and some were screened in a separate context so the agent building the search never saw them, a share is **held out** for one retrieval test of the finished query. You decide whether to keep that held-out test or use everything for development. If too few suitable records can be established, the search can still be built, but the audit makes clear that the empirical evidence for recall is limited or absent. At **quick** depth, discovery is limited to about 30 screened candidates and no held-out test is created automatically.
 
 The agent then proposes which concepts should be represented in the PubMed search and which are better assessed during screening. **You approve or revise this scope decision before the main search is built.**
 
@@ -98,11 +98,11 @@ An NCBI API key is optional but raises the permitted request rate.
 |---|---|---|
 | **1. Question / intake** | User | Provide the review question, eligibility criteria, optional known relevant articles, and required limits. |
 | **2. Scope** | Agent → User | The agent proposes which concepts should be searched, handled at screening, or treated as optional, shown as a fixed table with the limits and eligibility criteria and a short explanation of each role. The user replies **keep** or says what to change. |
-| **3. Known records** | User + Agent | User-supplied seeds, screened relevant discoveries, held-out validation records, and eligible studies from prior reviews are organised into known-record sets for search development and retrieval testing. |
+| **3. Known records** | User + Agent | User-supplied papers and discovered candidates are screened against the eligibility criteria. The eligible records are allocated to development and, when a holdout is proposed, to a held-out test set; **the user chooses whether to keep the holdout**. |
 | **4. Vocabulary** | Agent | Build each searched concept using verified MeSH plus free-text title/abstract terminology. |
-| **5. Test & revise** | Agent | Run candidate searches in PubMed, inspect translations and counts, measure retrieval of known records, diagnose misses, and revise. |
+| **5. Develop & revise** | Agent | Run candidate searches in PubMed, inspect translations and counts, check retrieval of development records, diagnose misses, and revise. |
 | **6. Critique** | Agent | Run a fresh-context PRESS-structured internal critique and address each finding. |
-| **7. Validate & deliver** | Agent | Re-run validation against PubMed and generate the final query, counts, audit, and validation artefacts. |
+| **7. Validate & deliver** | Agent | Run the one held-out test (when records are reserved), re-run validation against PubMed, and deliver the tested query unchanged with a fixed interpretation of the result; a repair is offered afterwards. |
 | **8. Review** | Human | Review the draft and, where appropriate, obtain formal PRESS peer review from an information specialist. |
 
 The core loop is:
@@ -111,20 +111,19 @@ The core loop is:
 
 ## How known relevant records are used
 
-Classify each known relevant record by source and role, then apply the corresponding safeguards.
+Every known record has a purpose. Where it came from (the user, a prior review, a pilot search, similar articles or a citation search) is recorded separately: origin alone never makes a record independent.
 
-| Record type | Where it comes from | Used for term mining? | Used to test retrieval? | Interpretation |
-| --- | --- | ---: | ---: | --- |
-| **`seed`** | Known relevant papers supplied by the user | Yes | Yes | Development evidence; not independent validation |
-| **`relevant`** | Papers discovered during the build and screened as eligible | Yes | Yes | Development evidence; not independent validation |
-| **`validation`** | Seed or relevant records held out from term mining | No | Yes | More independent test of generalisability beyond development records |
-| **`benchmark`** | Eligible studies from a suitable prior review kept separate from development | No | Yes | External relative-recall benchmark |
+| Purpose | What it is | Used for term mining? | When its retrieval is checked | Interpretation |
+| --- | --- | ---: | --- | --- |
+| **Development set** | Eligible records the agent may see and use | Yes | At every evaluation | Development check; not independent validation |
+| **Held-out test set** | Eligible records screened in a separate context and never shown to the agent | No | Once, after the critic review of the final query | One retrieval test of the frozen query, interpreted with fixed wording |
+| **Comparison list** | Records outside the allocation pool (unscreened lists, sets from older versions of this skill) | Not by default | At every evaluation, reported separately | Comparison only; never a held-out test |
 
-1. **Classify each record.** Label user-supplied known relevant papers as `seed` and eligible papers discovered during search development as `relevant`. Treat both types as development records. They may inform terminology, strategy refinement, and retrieval testing, but performance on them is development evidence rather than independent validation.
-2. **Create a validation holdout.** When roughly 10 or more development records are available, select some `seed` or `relevant` records for a holdout and reclassify them as `validation`. Remove these records from term mining. They remain available as a more independent retrieval check during evaluation. If inspecting a validation record prompts a strategy change, reclassify it as `relevant` or otherwise treat it as development evidence; it no longer qualifies as independent validation.
-3. **Set aside benchmark records.** Classify eligible studies from a suitable prior review as `benchmark` only if they remain separate from strategy development. Do not use them for term mining or strategy revision before retrieval testing. If a benchmark record is inspected for vocabulary or strategy revision, reclassify it as a development record and no longer treat it as protected benchmark evidence.
-4. **Test retrieval against each set.** Test candidate and final strategies against the development, validation, and benchmark sets. Keep the results separate so that development performance is not conflated with more independent or external testing.
-5. **Report recall by set.** Report recall separately for the development, validation, and benchmark sets. Retrieving 6/6 development records demonstrates capture of records used to build the strategy; it does not provide independent evidence of 100% recall.
+1. **Screen first.** Eligibility is fixed before any supplied paper is examined. Every candidate is screened, and reports of the same study are grouped so they are allocated together.
+2. **Know what the agent has seen.** A record is *exposed* if the agent building the search has seen its title, abstract, indexing, full text, a description of it, or whether the search retrieves it. Unknown exposure counts as exposure. Exposed records always go to development.
+3. **Allocate once.** With N eligible units and U unexposed units, a holdout is proposed only when N ≥ 10 and U > 0: H = min(round(0.3 × N), U), drawn reproducibly. For example, 20 unexposed units give 14 for development and 6 held out. The user keeps the holdout or uses everything for development; a test set the user designates replaces the automatic one.
+4. **Protect the holdout.** Until the test, held-out records are never shown, fetched, sampled, mined or diagnosed, and the critic is told only how many there are.
+5. **Test once and report with fixed wording.** The frozen query is tested once. The result is reported with fixed wording that keeps "6/6" from being read as proof of high recall: retrieving every held-out record shows that those records were found, not that all relevant literature was. Misses are reported with the tested query unchanged, and a repair is offered; a repaired query never claims the earlier test.
 
 ## What you get
 
@@ -132,7 +131,7 @@ A successful run produces:
 
 - a **copyable final PubMed search strategy**;
 - the strategy line by line with PubMed result counts;
-- relative recall against known relevant records, when available;
+- development checks against known relevant records and, when records were held out, one held-out test with a fixed interpretation of what its result does and does not show;
 - identification of missed records and the concept blocks responsible;
 - the development and revision history;
 - documented scope and search-design decisions;
@@ -165,7 +164,7 @@ Any major change to the code goes through two stages of evaluation.
 
 First, the change is tested against a **development set that originally contained 20 topics, each with a gold-standard set of relevant records**. Two development topics were later retired because their gold-standard sets could not be scored fairly, leaving **18 active development topics**. Each active topic is run **three times**, because agentic search development can vary between runs. A change is therefore not accepted because of one unusually favourable result.
 
-Only after a change performs satisfactorily on the development set is it evaluated against a **separate held-out set of 10 topics**. These topics are frozen before evaluation and are not used to design or tune the change. The held-out set therefore checks whether an apparent improvement generalises beyond the topics that influenced development rather than simply fitting the development set.
+Only after a change performs satisfactorily on the development set is it evaluated against a **separate set of 10 held-out topics**. These topics are frozen before evaluation and are not used to design or tune the change. They check whether an apparent improvement generalises beyond the topics that influenced development rather than simply fitting the development set. (These held-out *topics* belong to the evaluation harness; they are unrelated to the held-out *test set* of records inside one search build.)
 
 ![How changes are evaluated](docs/pubmed-search-builder-evaluation.svg)
 
@@ -186,8 +185,8 @@ Full evaluation methods are documented in [`evals/README.md`](evals/README.md), 
 
 PubMed Search Builder is deliberately conservative about what its evaluation demonstrates.
 
-- **Relative recall is not proof of complete recall.** Retrieval can only be measured against the known relevant records available for a test.
-- **Known records can influence development.** Results on records used during search development are therefore separated from more independent validation where possible.
+- **Relative recall is not proof of complete recall.** Retrieval can only be measured against the known relevant records available for a test. A held-out test that retrieves every reserved record shows that those records were found; it does not establish that all relevant literature was.
+- **Known records can influence development.** Records the agent saw are development records. A held-out test exists only when some eligible records were screened in a separate context and never shown to the agent; without such a context, no holdout is proposed and the report says so. This separation is enforced procedurally by the tool, not as a security boundary.
 - **High recall can mean larger result sets.** This is a recall-first workflow and may accept additional screening workload when that reduces the risk of missing relevant studies.
 - **The internal PRESS-structured critic is not formal PRESS peer review.** Final searches should still receive human review where the review protocol requires it.
 - **PubMed is only one source.** A systematic or scoping review may require other databases, registries, citation searching, and grey-literature sources.
@@ -222,7 +221,10 @@ python scripts/psb.py --workspace runs/demo mesh lookup "vesicoureteral reflux"
 # edit runs/demo/protocol.json and runs/demo/strategy.json
 
 python scripts/psb.py --workspace runs/demo \
-  set add seeds 12345678 23456789 --role seed
+  screen --include 12345678 23456789 --origin user-supplied --reason "meets all criteria"
+
+python scripts/psb.py --workspace runs/demo allocate --preview
+python scripts/psb.py --workspace runs/demo allocate      # or --keep-holdout / --all-development
 
 python scripts/psb.py --workspace runs/demo eval --note "first draft"
 
@@ -230,6 +232,7 @@ python scripts/psb.py --workspace runs/demo critic packet
 
 # Save the reviewer's response as critic/round-1.json, then run critic check.
 
+python scripts/psb.py --workspace runs/demo holdout-test  # only when records are held out
 python scripts/psb.py --workspace runs/demo report
 ```
 
@@ -241,20 +244,24 @@ python scripts/psb.py --workspace runs/demo report
 | `count`, `sample`, `fetch` | Run queries and inspect PubMed records and translations. |
 | `neighbors`, `resolve` | Find related records and resolve DOIs/PMCIDs to PMIDs. |
 | `mesh lookup`, `mesh show` | Inspect MeSH descriptors, entry terms, narrower headings, and counts. |
-| `set add/remove/split/list` | Manage known-record sets. |
+| `set add/remove/list` | Manage development sets and comparison lists (`set split` is withdrawn: use `allocate`). |
+| `screen` | Record screening decisions, with screening context, study group, origin, evidence basis and source. |
+| `exposure declare` | Record that the agent has seen a record outside `psb`. |
+| `allocate` | Preview, choose and freeze the split of eligible records into development and held-out units. |
 | `lint` | Run offline syntax and design checks. |
-| `eval` | Measure counts, known-record recall, failing blocks, ablation, and changes since the previous version. |
-| `terms rank`, `terms miss` | Inspect candidate vocabulary and terminology in missed records. |
+| `eval` | Measure counts, development retrieval, failing blocks, ablation, and changes since the previous version. |
+| `terms rank`, `terms miss` | Inspect candidate vocabulary and terminology in missed development records. |
 | `critic packet`, `critic check`, `critic override` | Generate and validate PRESS-structured critique rounds. |
+| `holdout-test` | Test the frozen query once against the held-out records. |
+| `holdout-release` | Return the held-out records to development to repair the search. |
 | `report` | Perform final live validation and generate the protected query and audit. |
-| `screen` | Record screening decisions (include, exclude, uncertain) on candidate records. |
 | `progress` | Render the standard progress message for a workflow step, or list every message sent. |
+| `log`, `cache`, `doctor` | Inspect provenance, cache, and configuration. |
 
 Progress messages are fixed templates over workspace state. Commands that search for candidates,
-screen, change sets, evaluate, run the critic or report attach one as `progress`. The agent relays
-`progress.text` to the user verbatim. These messages and their logs never affect the evaluation,
-critic or delivery hashes.
-| `log`, `cache`, `doctor` | Inspect provenance, cache, and configuration. |
+screen, change sets, allocate, evaluate, run the critic, test or report attach one as `progress`. The
+agent relays `progress.text` to the user verbatim. These messages and their logs never affect the
+evaluation, critic or delivery hashes.
 
 ## Tests
 

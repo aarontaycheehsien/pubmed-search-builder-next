@@ -29,6 +29,7 @@ STEPS = {1: "Intake", 2: "Scope", 3: "Known records", 4: "Vocabulary", 5: "Devel
 # "test" keeps naming Step 5 so legacy progress logs still read; the held-out test is psb holdout-test.
 STAGES = {"intake": 1, "scope": 2, "known-records": 3, "vocabulary": 4, "test": 5, "critic": 6, "deliver": 7}
 PURPOSE_ORDER = ("development", "comparison")
+PURPOSE_GROUPS = {"development": "development sets", "comparison": "comparison lists"}
 PURPOSE_USE = {
     "development": "used for term mining, diagnosing misses and repeated development checks",
     "comparison": "outside the allocation pool; checked and reported separately, not mined, never a held-out test",
@@ -144,9 +145,9 @@ def _recall(evaluation: dict) -> str:
     for name in _set_order(sets):
         data = sets[name]
         purpose = purpose_of(data)
-        groups.setdefault(purpose, []).append(
+        groups.setdefault(PURPOSE_GROUPS.get(purpose, purpose), []).append(
             f"{name} {_n(data.get('retrieved'))}/{_n(data.get('in_pubmed'))} ({_pct(data.get('recall_percent'))})")
-    return " · ".join(f"{purpose} {', '.join(parts)}" for purpose, parts in groups.items())
+    return " · ".join(f"{group}: {', '.join(parts)}" for group, parts in groups.items())
 
 
 def _misses(evaluation: dict, cap: int = 10) -> str:

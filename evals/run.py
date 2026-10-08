@@ -234,6 +234,8 @@ def generate_once(args, fixture: dict, split: str, *, skill_dir: Path, skill_nam
         card["strategy"] = " ".join(query.split())
         card["strategy_path"] = strategy_path.relative_to(run_dir).as_posix()
         card.update(harness.score(fixture, query, exclude=set(seeds), seen=seen))
+        card["gold_reserved_by_agent"] = len(harness.gold_reserved(fixture, run_dir) - set(seeds))
+        card["screening_contexts"] = harness.screening_contexts(run_dir)
         card["leakage"] = harness.leakage(fixture, run_dir, transcript)
     else:
         card["error"] = "no current protected delivery" if protected else "no final_strategy.txt"

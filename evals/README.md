@@ -58,6 +58,15 @@ A topic in no split cannot be run: assign it to dev or freeze it first.
   condition.
 - **Unseen recall** leaves out gold records the agent itself screened into its sets during the
   build. Those records were used to develop the strategy, so recall on them flatters it.
+  Held-out records are not sets, so they are not counted as seen; `gold_reserved_by_agent` counts
+  the gold records the run held out for its own held-out test (zero after a release for repair).
+- **Screening contexts**: how many screening decisions the run made in a separate screening context
+  and how many the builder made. With no separate context the skill cannot hold records out, so an
+  all-development allocation is expected rather than a failure.
+
+The harness's held-out **topics** (`splits.json`, `--heldout`) are a different thing from the
+held-out **test set** of records inside one build: the first guards the skill's development, the
+second is one retrieval test of one search.
 - **Results** (the count on or before `as_of`) and **NNR** (results per gold record retrieved), a
   workload proxy rather than precision.
 - **Cost and time** from the driver.

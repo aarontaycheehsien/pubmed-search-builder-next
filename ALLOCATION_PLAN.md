@@ -1,6 +1,21 @@
 # Plan: known-record allocation, a one-shot held-out test, and fixed interpretation messages
 
-Status: ready to implement. Baseline at `704317b`: `uv run --with pytest pytest -q` → 214 passed, 1 skipped.
+Status: implemented on branch `worktree-holdout-allocation`. Baseline at `704317b`: 214 passed,
+1 skipped; after the change: 303 passed, 1 skipped, and the skill validator passes.
+
+## As built: differences from the text below
+
+- **Held-out membership is never a set.** It lives only in `allocation.json` (with later events in
+  `allocation-log.jsonl`). There is no `sets/holdout.json`, so no command that lists, mines or
+  evaluates sets can reach a reserved record.
+- **A user's designated test set is given as PMIDs** (`psb allocate --reserve <PMIDs>`), not as a set
+  name.
+- **The six interpretation lines are a Markdown list** (`- **Allocation:** …`). Plain consecutive lines
+  collapse into one paragraph when Markdown is rendered.
+- **`psb allocate --rebind`** is the command that re-binds a stale allocation after re-screening.
+- **Exposure "after the reservation"** is ordered by position in `exposure.jsonl`, not by timestamp.
+- **The manifest stores the delivered interpretation text** (`holdout.text`). The Step 7 message relays
+  those bytes, which is how it matches the audit.
 
 The plan resolves four decisions:
 

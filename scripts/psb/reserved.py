@@ -54,10 +54,10 @@ def refuse(ws: Workspace, pmids: Iterable[str], action: str) -> None:
     reserved = ws.reserved_pmids()
     hit = [p for p in pmids if str(p) in reserved]
     if hit:
+        one = len(hit) == 1
         raise WorkspaceError(
-            f"{len(hit)} of the requested records {'is' if len(hit) == 1 else 'are'} reserved for the held-out "
-            f"test; {action} would expose {'it' if len(hit) == 1 else 'them'}. Reserved records are released only "
-            "by psb holdout-release.")
+            f"{len(hit)} of the requested records {'is' if one else 'are'} reserved for the held-out test, and "
+            f"{action} would expose {'it' if one else 'them'}. Reserved records are released only by psb holdout-release.")
 
 
 def check_query(ws: Workspace, query: str) -> None:

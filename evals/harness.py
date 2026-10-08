@@ -341,7 +341,8 @@ def leakage(fixture: dict, run_dir: Path, transcript: str) -> list[str]:
 
 
 def gold_seen(fixture: dict, run_dir: Path) -> set[str]:
-    """Gold records the agent put into its own known-record sets."""
+    """Gold records the agent put into its own known-record sets (development and comparison).
+    Held-out records are not sets, so they are never counted here: see ``gold_reserved``."""
     seen: set[str] = set()
     for path in (run_dir / "work" / "sets").glob("*.json"):
         try:
@@ -349,6 +350,38 @@ def gold_seen(fixture: dict, run_dir: Path) -> set[str]:
         except ValueError:
             continue
     return seen & set(fixture["gold_pmids"])
+
+
+def gold_reserved(fixture: dict, run_dir: Path) -> set[str]:
+    """Gold records the run held out for its one held-out test (none once released for repair)."""
+    work = run_dir / "work"
+    try:
+        allocation = json.loads((work / "allocation.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return set()
+    log = work / "allocation-log.jsonl"
+    if log.exists() and '"type": "release"' in log.read_text(encoding="utf-8"):
+        return set()
+    held = {str(p) for u in allocation.get("units") or [] if isinstance(u, dict) and u.get("purpose") == "holdout"
+            for p in u.get("members") or []}
+    return held & set(fixture["gold_pmids"])
+
+
+def screening_contexts(run_dir: Path) -> dict[str, int]:
+    """How many screening decisions were made in the separate context and by the builder; a run with
+    no separate context cannot hold anything out, which explains an all-development allocation."""
+    counts = {"separate": 0, "builder": 0}
+    path = run_dir / "work" / "screening.jsonl"
+    if not path.exists():
+        return counts
+    for line in path.read_text(encoding="utf-8").splitlines():
+        try:
+            row = json.loads(line)
+        except ValueError:
+            continue
+        if isinstance(row, dict):
+            counts["separate" if row.get("context") == "separate" else "builder"] += 1
+    return counts
 
 
 def diagnostic_handoff(run_dir: Path) -> dict | None:

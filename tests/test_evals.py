@@ -95,6 +95,20 @@ def test_gold_seen_reads_agent_sets(tmp_path):
     assert harness.gold_seen(FIXTURE, tmp_path) == {"2"}
 
 
+def test_gold_reserved_reads_the_allocation_until_release(tmp_path):
+    work = tmp_path / "work"
+    work.mkdir()
+    units = [{"id": "1", "members": ["1"], "purpose": "holdout"}, {"id": "2", "members": ["2"], "purpose": "development"}]
+    (work / "allocation.json").write_text(json.dumps({"units": units}), encoding="utf-8")
+    assert harness.gold_reserved(FIXTURE, tmp_path) == {"1"} & set(FIXTURE["gold_pmids"])
+    (work / "allocation-log.jsonl").write_text(json.dumps({"type": "release"}) + "\n", encoding="utf-8")
+    assert harness.gold_reserved(FIXTURE, tmp_path) == set()
+    (work / "screening.jsonl").write_text("\n".join(json.dumps(r) for r in [
+        {"pmid": "1", "decision": "include", "context": "separate"}, {"pmid": "2", "decision": "include"}]),
+        encoding="utf-8")
+    assert harness.screening_contexts(tmp_path) == {"separate": 1, "builder": 1}
+
+
 def test_stage_skill_copies_skill_but_not_evals(tmp_path):
     run = tmp_path / "run"
     run.mkdir()

@@ -38,13 +38,14 @@ not write your own status updates.
 Copy this checklist into your notes and work through it in order.
 
 ```
-[ ] 1 Intake        question, seeds, depth, limits (one message)    -> psb progress intake
-[ ] 2 Scope         protocol.json: concepts and roles; confirm       -> psb progress scope
-[ ] 3 Known records seeds, screened discoveries, benchmark            -> psb progress known-records
-[ ] 4 Vocabulary    MeSH + free text per searched concept            -> psb progress vocabulary
-[ ] 5 Test & revise psb eval, fix misses and noise, one at a time     -> psb progress test
-[ ] 6 Critic        fresh-context PRESS review; answer every finding -> psb progress critic
-[ ] 7 Deliver       psb report; hand off for PRESS peer review       -> psb progress deliver
+[ ] 1 Intake           question, seeds, depth, limits (one message)       -> psb progress intake
+[ ] 2 Scope            protocol.json: concepts, roles, eligibility; confirm -> psb progress scope
+[ ] 3 Known records    discover, screen, choose the allocation (psb allocate) -> psb progress known-records
+[ ] 4 Vocabulary       MeSH + free text per searched concept               -> psb progress vocabulary
+[ ] 5 Develop & revise psb eval, fix misses and noise, one at a time        -> psb progress test
+[ ] 6 Critic           fresh-context PRESS review; answer every finding    -> psb progress critic
+[ ] 7 Deliver          psb holdout-test (if held out), psb report, deliver unchanged, offer repair
+                                                                           -> psb progress deliver
 ```
 
 ### 1. Intake
@@ -93,24 +94,26 @@ that in `notes`.
 Resolve high-impact ambiguity (population versus outcome, intervention versus exposure)
 with the user; never pick one silently.
 
-### 3. Known relevant records
+### 3. Known records
 
-Read `references/known-records.md`. Known relevant records are how you measure recall, so
-build these sets before drafting (skip at `quick` depth when there are no seeds):
+Read `references/known-records.md` and follow it. In short, with eligibility already fixed:
 
-- `psb resolve` for DOIs or PMCIDs, then `psb set add seeds ... --role seed`.
-- At `standard` or `thorough` depth with few seeds, find more:
-  - prior systematic reviews on the topic, with `psb sample --purpose prior-reviews`. Their
-    included studies make the best benchmark.
-  - precise pilot searches, with `psb sample --purpose pilot`.
-  - `psb neighbors`.
+- Discover candidates: `psb resolve` for the user's identifiers; at `standard`/`thorough` depth
+  prior reviews, precise pilots and neighbours (budget ~150/400); at `quick` depth targeted
+  discovery up to ~30. A prior review's included studies come from its tables or supplements; its
+  reference list gives candidates only.
+- Screen every candidate and record every decision with `psb screen`, including a study `group`
+  key for reports of one study. When your host can start a fresh context, let it discover and
+  screen with `--screening` / `--context separate` (held-out records must never be shown to you).
+- Do not put eligible records into a set yet. Run `psb allocate --preview`: when it proposes a
+  holdout, relay its message verbatim and record the user's choice (`psb allocate --keep-holdout`
+  or `--all-development`; `--proceed-default` if they asked you not to wait). Otherwise
+  `psb allocate` freezes everything for development. A user's designated test set:
+  `psb allocate --reserve <PMIDs>`.
+- Records that cannot be screened into the pool go on a comparison list (`--purpose comparison`).
 
-  Screen candidates against the eligibility criteria before they enter a set. Record every
-  decision with `psb screen --include ... --exclude ... --uncertain ...`.
-- With 10 or more development records, hold some out: `psb set split seeds --fraction 0.3`.
-
-Seeds and screened records may change vocabulary and even which concepts are AND-ed. They may
-never change eligibility. If a record looks relevant but falls outside the scope, ask the user.
+Screened records may change vocabulary and even which concepts are AND-ed. They may never change
+eligibility. If a record looks relevant but falls outside the scope, ask the user.
 
 ### 4. Vocabulary
 
@@ -121,18 +124,19 @@ whose `id` equals the concept `id`:
   headings, and exploded versus unexploded counts. Tag headings explicitly with `[Mesh]`.
 - Free text in `[tiab]`: synonyms, entry terms, spelling variants, acronyms, plurals, safe
   truncation (at least four letters before `*`), and proximity where word order varies.
-- Objective terms from known records: `psb terms rank` (never from held-out sets).
+- Objective terms from development records: `psb terms rank` (held-out records are never mined).
 
 Every block needs both a MeSH layer and a text-word layer, because records not yet indexed
 have no MeSH.
 
-### 5. Test and revise
+### 5. Develop and revise
 
 Run `psb eval --note "<what changed and why>"` after every meaningful change. It reports lint
-and translation problems, a count for every line, recall per set, which blocks miss which
-records, leave-one-block-out ablation, and what changed since the previous version.
+and translation problems, a count for every line, development (and comparison) retrieval per set,
+which blocks miss which records, leave-one-block-out ablation, and what changed since the previous
+version. Held-out records are never evaluated here.
 
-- For every missed known record, run `psb terms miss`, then fix the failing block or record
+- For every missed development record, run `psb terms miss`, then fix the failing block or record
   why the record is out of reach. Never explain a miss away without looking.
 - Never silently lose a previously retrieved known record (`since_previous.known_lost`).
   Either revert, or say in the note why the loss is acceptable.
@@ -140,7 +144,8 @@ records, leave-one-block-out ablation, and what changed since the previous versi
   and `psb sample --purpose noise-check` to find noisy terms. Recall comes first.
 - A block whose removal gains known records (ablation) is a sign of over-structuring:
   reconsider its role in `protocol.json`.
-- Recovering a held-out validation miss makes that set part of development. Say so.
+- `psb` refuses to show, fetch, sample, mine or probe reserved records. Never try to learn
+  which records are held out or whether the strategy retrieves them.
 
 A phrase-index warning is a mandatory review, not proof of zero hits. Read the phrase decision
 tree in `references/validation.md`. Inspect the individual clause's translation; test a justified
@@ -173,9 +178,15 @@ If no fresh context is available, review the packet yourself and say so in the a
 
 ### 7. Deliver
 
-Read `references/reporting.md` and `references/validation.md`. Run `psb report` (`--fresh` is
-an equivalent spelling). It revalidates every line and heading live, checks the current critic,
-and writes `final-query.txt`, `audit.md`, and `validation-manifest.json` only if the gate passes.
+Read `references/reporting.md` and `references/validation.md`. If records are held out, run
+`psb holdout-test` once, after the critic review of the strategy you mean to deliver, and relay
+its message verbatim. Then run `psb report` (`--fresh` is an equivalent spelling). It
+revalidates every line and heading live, checks the current critic and the matching held-out
+receipt, and writes `final-query.txt`, `audit.md`, and `validation-manifest.json` only if the
+gate passes. Deliver the tested query **unchanged**, even when held-out records were missed; then
+offer the repair. If the user wants it, `psb holdout-release --reason "..."` returns the held-out
+records to development, the revised query gets a repair critic round, and it is delivered with the
+fixed wording that it was not independently tested.
 Deliver the generated query verbatim; do not reconstruct or edit it. Set `scope_confirmed` and
 `notes` truthfully before the report. After `psb report` succeeds, change nothing in the
 workspace. If you must, run `psb status`: it names what changed. A change to `notes` or
@@ -184,9 +195,12 @@ verification round, and `psb report`. Deliver only from this workspace; never co
 in `narrative.md`, because changing the generated audit invalidates its manifest. Give the user:
 
 - the text of `psb progress deliver`. It includes the strategy (single line, and line by line
-  with counts), recall on each known set with how independent each set is, and the statement
-  that this draft needs PRESS peer review by an information specialist before use;
+  with counts), the fixed interpretation of the held-out test and development checks, and the
+  statement that this draft needs PRESS peer review by an information specialist before use;
 - after it, the open risks and limitations from `narrative.md`.
+
+Never write your own interpretation of a retrieval result such as `x/x`. For a format the user
+asked for, the escape hatch in `references/reporting.md` applies to your own prose only.
 
 ## Rules
 
@@ -195,9 +209,11 @@ in `narrative.md`, because changing the generated audit invalidates its manifest
 3. Every searched concept has MeSH plus `[tiab]` terms. Do not rely on Automatic Term Mapping.
 4. No limits, filters, `NOT`, `[majr]`, subheadings or `:noexp` without a stated reason.
    Use validated filters (`references/filters.md`), never ad hoc study-design blocks.
-5. Mine terms only from `seed` and `relevant` sets, never from `validation` or `benchmark`.
-6. Label evidence honestly: development recall is not independent validation, relative recall
-   is not sensitivity, and the internal critic is not PRESS peer review.
+5. Mine terms only from development records. Held-out records are never mined, shown or probed;
+   comparison lists are not mined.
+6. Label evidence honestly: a development check is not independent validation, a held-out `x/x`
+   does not establish high recall, relative recall is not sensitivity, and the internal critic is
+   not PRESS peer review. Relay `psb`'s fixed interpretation instead of writing your own.
 7. Read `references/anti-patterns.md` before you finalise the scope and again before you deliver.
 8. Deliver a final query only after `psb report` returns `ok: true`. Otherwise fix the named
    blockers and re-evaluate, or give `psb report --diagnostic` output explicitly labelled unfinished.
@@ -216,6 +232,8 @@ in `narrative.md`, because changing the generated audit invalidates its manifest
 
 | | quick | standard (default) | thorough |
 |---|---|---|---|
-| Known records | seeds if given | seeds + discovery or a prior-review benchmark | both, larger screening budget |
-| Term mining | if seeds | yes | yes, plus `psb terms miss` on every miss |
+| Known records | seeds, targeted discovery up to ~30 screened | seeds + discovery, ~150 screened | seeds + discovery, ~400 screened |
+| Held-out test | never automatic; a user's test set means switching to standard | proposed when N ≥ 10 and U > 0 | as standard |
+| Term mining | development records, if any | yes | yes, plus `psb terms miss` on every miss |
 | Critic rounds | 1 + closing (+ verification) | 1-2 + closing (+ verification) | 1-3 + closing (+ verification) |
+| Repair after the held-out test | — | 1 + closing (+ verification) | 1 + closing (+ verification) |

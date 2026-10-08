@@ -147,7 +147,7 @@ def test_every_stage_reports_and_status_stops_reminding(ws, capsys):
     vocabulary = message("Step 4/7 Vocabulary · Summary")
     assert "- Asthma (asthma): 2 terms — 1 MeSH · 1 text-word · 0 other" in vocabulary
     assert "- Concepts not searched: Exacerbations (screen)" in vocabulary
-    assert ("- Known-record retrieval: development relevant 3/3 (100.0%), seeds 2/2 (100.0%)"
+    assert ("- Known-record retrieval: development sets: relevant 3/3 (100.0%), seeds 2/2 (100.0%)"
             in message("Step 5/7 Develop & revise · Evaluation v1"))
     assert "| Exacerbations | Screened | outcomes are reported unevenly |" in sent[2]
     assert "Round 1 (revision 1 of 2) packet written for v1" in message("Step 6/7 Critic · Round 1 packet")

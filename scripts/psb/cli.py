@@ -134,7 +134,7 @@ def cmd_fetch(args) -> dict:
     ws = workspace(args)
     pmids = pmid_args(ws, args.pmids, args.set)
     if not args.screening:
-        reserved.refuse(ws, pmids, "fetching them")
+        reserved.refuse(ws, pmids, "fetching")
     records = ws.ensure_records(pmids, private=args.screening)
     rows = [
         {"pmid": p, "year": r.get("year"), "title": r.get("title"), "publication_types": r.get("publication_types"),
@@ -187,7 +187,7 @@ def cmd_neighbors(args) -> dict:
     ws = workspace(args)
     pmids = pmid_args(ws, args.pmids, args.set)
     # Neighbours of a reserved record are derived from its content; reserved neighbours are skipped.
-    reserved.refuse(ws, pmids, "listing their neighbours")
+    reserved.refuse(ws, pmids, "listing neighbours")
     hidden = ws.reserved_pmids()
     known = {p for d in ws.sets().values() for p in d.get("pmids", [])} if args.exclude_known else set()
     known |= hidden
@@ -277,7 +277,7 @@ def cmd_set(args) -> dict:
         previous = ws.get_set(args.name) if ws.set_path(args.name).exists() else {}
         existing = previous.get("pmids", [])
         given = [p for p in normalize_pmids(args.pmids) if p not in existing]
-        reserved.refuse(ws, given, "adding them to a set")
+        reserved.refuse(ws, given, "adding to a set")
         late = allocation.late_companions(ws, given) if purpose == "development" else []
         given = [p for p in given if p not in late]
         pmids = existing + given

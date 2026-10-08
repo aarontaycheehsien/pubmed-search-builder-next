@@ -7,10 +7,12 @@ quality assurance, not PRESS peer review, and the audit must say so.
 ## Running a round
 
 1. `psb critic packet` writes `critic/packet-N.md`: the question, concept roles, the strategy with
-   line counts, recall on each set, missed records with failing blocks, ablation, and any findings
-   still open. It requires a complete current evaluation and includes all line translations, vocabulary evidence,
-   structured diagnostics, and a `review_sha256` binding. Changed scope, sets, effective dates or
-   interpretation require a new packet; count/timestamp changes alone do not.
+   line counts, development and comparison retrieval per set, missed records with failing blocks,
+   ablation, and any findings still open. It requires a complete current evaluation and includes all
+   line translations, vocabulary evidence, structured diagnostics, and a `review_sha256` binding.
+   Changed scope, sets, effective dates or interpretation require a new packet; count/timestamp
+   changes alone do not. Held-out records are never in the packet: it says only how many units are
+   reserved, and the reviewer must not ask for them. The held-out test runs after the review.
 2. Give only that file to a reviewer with a fresh context, so it does not share your reasoning:
    - Claude Code: start a subagent with a prompt like "Read <packet path> and follow its
      instructions. Reply with the JSON only." and save the reply as `critic/round-N.json`.
@@ -89,3 +91,11 @@ do not authorize delivery.
   `filter` finding cannot be overridden, nor can any technical blocker. An override answers one
   round: after a verification round, make it again if the finding is still open.
 - Otherwise deliver the diagnostic handoff.
+
+## Repair after the held-out test
+
+The held-out test never asks the critic for anything: misses are delivered unchanged with a repair
+offer. If the user asks for the repair, `psb holdout-release` starts a new **epoch**. Its rounds carry
+`"epoch": N` (the packet's template includes it) and are counted afresh: one revision round, then a
+closing round, and one verification round, at every depth. Earlier findings carry forward as usual.
+The packet marks the review as a repair review.

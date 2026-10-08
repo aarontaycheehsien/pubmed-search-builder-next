@@ -67,7 +67,7 @@ A search cutoff ("what PubMed held on date X", an update's previous search date)
 
 ## Mistake 5: Overfitting to seed studies
 
-Seed PMIDs are validation aids, not the whole target set. Do not narrow the strategy to retrieve only the wording used in a small seed set. Maintain breadth so the search retrieves unknown relevant studies.
+Seed PMIDs are development aids, not the whole target set, and retrieving them is a development check, not validation. Do not narrow the strategy to retrieve only the wording used in a small seed set. Maintain breadth so the search retrieves unknown relevant studies.
 
 Use seeds to:
 
@@ -83,9 +83,9 @@ Do not use seeds to:
 
 Evidence: [Bramer et al. 2018](https://doi.org/10.5195/jmla.2018.283).
 
-## Mistake 6: Ignoring failed seed retrieval
+## Mistake 6: Ignoring failed development retrieval
 
-If a proposed strategy misses an in-scope seed, do not explain it away without analysis. Identify which concept block fails to retrieve the seed and revise unless the seed is documented as out of scope.
+If a proposed strategy misses an in-scope development record, do not explain it away without analysis. Identify which concept block fails to retrieve it and revise unless the record is documented as out of scope. (A held-out miss is different: it is reported with the tested query unchanged, and the repair is offered afterwards.)
 
 `psb eval` lists the blocks that fail each missed record, and `psb terms miss` shows the
 record's MeSH headings and the wording your strategy lacks. Revise the failing block, or record
@@ -135,7 +135,7 @@ Reading seeds before setting the concept roles lets a small or biased set decide
 
 ## Mistake 13: Mining unscreened pilot or related records
 
-High-precision pilot hits, similar articles, citations, and high-overlap neighbours are candidates, not relevant studies. Screen each against the eligibility criteria before adding it to a set; only screened sets feed `psb terms rank`.
+High-precision pilot hits, similar articles, citations, and high-overlap neighbours are candidates, not relevant studies. Screen each against the eligibility criteria, record the decision, and allocate before mining; only development sets feed `psb terms rank`.
 
 ## Mistake 14: Calling automated QA PRESS peer review
 
@@ -179,6 +179,16 @@ Every term has to carry both ideas, so neither gets its vocabulary: no `16S`, `a
 `shotgun`, `NGS`, `high-throughput sequencing`, `bacterial community`. Better: a microbiome block
 and a sequencing block, each with MeSH and full free text, AND-ed. `psb lint` warns
 (`compound_block`) when most of a block's terms AND two ideas.
+
+## Mistake 18: Reading x/x as validation
+
+Bad: "The final strategy achieved 100% recall on the held-out validation set (6/6), so it is validated."
+
+Retrieving every held-out record shows that the query found those records. It does not establish high overall recall: a search that misses 5% of relevant studies still retrieves all of six independent test studies about 73.5% of the time, and a test assembled from a few sources may lack the terminology the search misses. Relay `psb`'s fixed interpretation (`references/reporting.md`) instead of writing your own, and never call development retrieval validation.
+
+## Mistake 19: Peeking at held-out records
+
+Fetching, sampling, mining or diagnosing a reserved record, searching for it by PMID, reading the screening store, or redrawing the allocation after a disappointing result all make the held-out test a development check. `psb` refuses most of these; do not work around it. If you did see a reserved record, declare it (`psb exposure declare`): the result is then reported with its independence limitation, never as an unexposed test.
 
 ## References
 
