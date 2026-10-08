@@ -20,12 +20,22 @@ Next: Step 2/7 Scope: split the question into concepts and decide which are sear
 ---
 
 **PSB · Step 2/7 Scope · Summary**
+Question: Which treatments reduce asthma attacks in children?
+
+| Concept | Role | Why |
+|---|---|---|
+| Asthma | Searched | condition, reliably indexed |
+| Children | Searched | population named in abstracts |
+| Exacerbations | Screened | outcomes are reported unevenly |
+
 2 searched · 1 screened · 0 optional concepts
-- Asthma (asthma): search — condition, reliably indexed
-- Children (child): search — population named in abstracts
-- Exacerbations (outcome): screen — outcomes are reported unevenly
-- Limits: English (translation budget)
-- Eligibility criteria: 2 include · 1 exclude
+Limits (applied to the search): English (translation budget)
+
+Eligibility criteria (applied at screening):
+- Include: children with asthma
+- Include: any intervention
+- Exclude: case reports
+
 Scope confirmed by the user.
 Next: Step 3/7 Known records: add seeds, look for prior reviews, run pilot and citation searches, and screen up to ~150 candidates (standard).
 

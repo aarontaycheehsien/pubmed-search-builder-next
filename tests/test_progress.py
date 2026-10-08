@@ -140,7 +140,7 @@ def test_every_stage_reports_and_status_stops_reminding(ws, capsys):
     assert "- Asthma (asthma): 2 terms — 1 MeSH · 1 text-word · 0 other" in sent[10]
     assert "- Concepts not searched: Exacerbations (screen)" in sent[10]
     assert "- Recall: seeds 2/2 (100.0%) · relevant 3/3 (100.0%)" in sent[11]
-    assert "- Exacerbations (outcome): screen — outcomes are reported unevenly" in sent[2]
+    assert "| Exacerbations | Screened | outcomes are reported unevenly |" in sent[2]
     assert "Round 1 (revision 1 of 2) packet written for v1" in sent[13]
     assert sent[-2].startswith("**PSB · Step 7/7 Deliver · Report**\nDelivered: final query validated live")
     final = sent[-1]
@@ -347,13 +347,62 @@ def test_scope_reminder_after_confirmation(ws, capsys):
     protocol = ws.protocol()
     protocol["scope_confirmed"] = False
     write_json(ws.root / "protocol.json", protocol)
-    assert text(capsys, "progress", "scope").endswith("Please confirm or correct these concept roles and limits.")
+    assert text(capsys, "progress", "scope").endswith("\n".join(progress.SCOPE_DECISION))
     code, status = psb(capsys, "status")
     assert not any("Step 2" in t for t in status["todo"])
     protocol["scope_confirmed"] = True
     write_json(ws.root / "protocol.json", protocol)
     code, status = psb(capsys, "status")
     assert "send the Step 2 summary again (it changed since it was sent): psb progress scope" in status["todo"]
+
+
+def test_scope_message_is_a_fixed_table(ws, capsys):
+    """Rows by role, escaped cells, criteria in full, and the question even when notes exist."""
+    protocol = ws.protocol()
+    protocol.update(scope_confirmed=False, notes="Defaults used for depth and limits.", limits=[], concepts=[
+        {"id": "setting", "name": "Primary care", "role": "optional", "rationale": "may narrow too far"},
+        {"id": "outcome", "name": "Exacerbations", "role": "screen", "rationale": "reported unevenly"},
+        {"id": "asthma", "name": "Asthma", "role": "search", "rationale": "condition | indexed"},
+        {"id": "odd", "name": "Odd", "role": "maybe"},
+        {"id": "child", "role": "search", "rationale": "population"},
+    ])
+    write_json(ws.root / "protocol.json", protocol)
+    assert text(capsys, "progress", "scope") == "\n".join([
+        "**PSB · Step 2/7 Scope · Summary**",
+        "Question: Which treatments reduce asthma attacks in children?",
+        "",
+        "| Concept | Role | Why |",
+        "|---|---|---|",
+        "| Asthma | Searched | condition \\| indexed |",
+        "| child | Searched | population |",
+        "| Exacerbations | Screened | reported unevenly |",
+        "| Primary care | Optional | may narrow too far |",
+        "| Odd | maybe (unrecognised) | not recorded |",
+        "",
+        "2 searched · 1 screened · 1 optional concepts",
+        "Limits (applied to the search): none",
+        "",
+        "Eligibility criteria (applied at screening):",
+        "- Include: children with asthma",
+        "- Include: any intervention",
+        "- Exclude: case reports",
+        "",
+        *progress.SCOPE_MEANING,
+        "",
+        *progress.SCOPE_DECISION,
+    ])
+
+
+def test_confirmed_scope_keeps_the_table_and_drops_the_question(ws, capsys):
+    protocol = ws.protocol()
+    protocol.update(eligibility={})
+    write_json(ws.root / "protocol.json", protocol)
+    message = text(capsys, "progress", "scope")
+    assert "| Concept | Role | Why |\n|---|---|---|\n| Asthma | Searched |" in message
+    assert "Eligibility criteria (applied at screening): none recorded" in message
+    assert progress.SCOPE_MEANING[0] not in message and progress.SCOPE_DECISION[0] not in message
+    assert message.endswith("Scope confirmed by the user.\nNext: Step 3/7 Known records: add seeds, look for prior "
+                            "reviews, run pilot and citation searches, and screen up to ~150 candidates (standard).")
 
 
 def test_a_corrupt_attempt_does_not_break_status(ws, capsys):

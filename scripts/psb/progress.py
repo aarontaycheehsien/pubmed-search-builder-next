@@ -49,6 +49,22 @@ FILES = "final-query.txt · audit.md · validation-manifest.json"
 PRESS = "This is a draft. It needs PRESS peer review by an information specialist before use."
 UNLOGGED = "Not from a logged psb search"
 NOT_MEASURED = "not measured (evaluation did not complete)"
+ROLE_LABELS = {"search": "Searched", "screen": "Screened", "optional": "Optional"}
+SCOPE_MEANING = [
+    "What this means:",
+    "- **Searched**: a block of the PubMed search. A record is found only if it matches every searched concept, "
+    "so each one narrows the results and can miss relevant studies that describe it differently.",
+    "- **Screened**: not in the search. It is judged when titles, abstracts and full texts are screened against "
+    "the eligibility criteria, so studies that report it unevenly are not lost.",
+    "- **Optional**: not in the main search. It may be tested as an extra block during the build to see what it "
+    "would add or lose.",
+]
+SCOPE_DECISION = [
+    "Your decision: reply **keep** to use this scope as it is, or tell me what to change:",
+    "- move a concept to another role (for example, screen it instead of searching it)",
+    "- add, remove or reword a concept",
+    "- add, change or remove a limit or an eligibility criterion",
+]
 
 
 class ProgressError(ValueError):
@@ -68,6 +84,10 @@ def _pct(value) -> str:
 def clean(text, limit: int) -> str:
     text = " ".join(str(text or "").split())
     return text if len(text) <= limit else text[: limit - 1].rstrip() + "…"
+
+
+def _cell(text, limit: int) -> str:
+    return clean(text, limit).replace("|", "\\|")
 
 
 def _ticks(text: str) -> int:
@@ -666,31 +686,42 @@ def _stage_intake(ws, data):
     ]
 
 
+def _role_rank(concept: dict) -> int:
+    role = concept.get("role")
+    return list(ROLE_LABELS).index(role) if isinstance(role, str) and role in ROLE_LABELS else len(ROLE_LABELS)
+
+
+def _role_label(role) -> str:
+    if isinstance(role, str) and role in ROLE_LABELS:
+        return ROLE_LABELS[role]
+    return f"{_cell(role, 40)} (unrecognised)" if clean(role, 40) else "missing"
+
+
 @event("stage:scope", 2)
 def _stage_scope(ws, data):
+    """The scope as a fixed table, then either the confirmation or the fixed keep-or-change question."""
     protocol = ws.protocol()
     concepts = [c for c in protocol.get("concepts") or [] if isinstance(c, dict)]
     if not concepts:
         raise ProgressError("protocol.json has no concepts; record them with roles first")
+    lines = [f"Question: {clean(protocol.get('question'), 300) or 'not recorded'}", "",
+             "| Concept | Role | Why |", "|---|---|---|"]
+    for c in sorted(concepts, key=_role_rank):  # stable: protocol order within each role
+        lines.append(f"| {_cell(c.get('name') or c.get('id'), 80)} | {_role_label(c.get('role'))} | "
+                     f"{_cell(c.get('rationale'), 140) or 'not recorded'} |")
     roles = [c.get("role") for c in concepts]
-    lines = [f"{_n(roles.count('search'))} searched · {_n(roles.count('screen'))} screened · "
-             f"{_n(roles.count('optional'))} optional concepts"]
-    for c in concepts:
-        rationale = clean(c.get("rationale"), 140)
-        lines.append(f"- {clean(c.get('name') or c.get('id'), 80)} ({c.get('id')}): {c.get('role')}"
-                     + (f" — {rationale}" if rationale else ""))
     limits = protocol.get("limits") or []
-    lines.append(f"- Limits: {'; '.join(_limit_text(l) for l in limits) if limits else 'none'}")
+    lines += ["", f"{_n(roles.count('search'))} searched · {_n(roles.count('screen'))} screened · "
+                  f"{_n(roles.count('optional'))} optional concepts",
+              f"Limits (applied to the search): {'; '.join(_limit_text(l) for l in limits) if limits else 'none'}"]
     eligibility = protocol.get("eligibility") if isinstance(protocol.get("eligibility"), dict) else {}
-    lines.append(f"- Eligibility criteria: {_n(len(eligibility.get('include') or []))} include · "
-                 f"{_n(len(eligibility.get('exclude') or []))} exclude")
+    criteria = [f"- {label.capitalize()}: {clean(item, 200)}" for label in ("include", "exclude")
+                for item in _list(eligibility.get(label)) if clean(item, 200)]
+    lines += ["", "Eligibility criteria (applied at screening):" + ("" if criteria else " none recorded"), *criteria]
     if protocol.get("scope_confirmed"):
-        lines += ["Scope confirmed by the user.", _next("scope", protocol.get("depth"))]
-    elif str(protocol.get("notes") or "").strip():
-        lines += [f"Proceeding without confirmation (notes: {clean(protocol.get('notes'), 200)}).",
-                  _next("scope", protocol.get("depth"))]
+        lines += ["", "Scope confirmed by the user.", _next("scope", protocol.get("depth"))]
     else:
-        lines.append("Please confirm or correct these concept roles and limits.")
+        lines += ["", *SCOPE_MEANING, "", *SCOPE_DECISION]
     return "Summary", lines
 
 

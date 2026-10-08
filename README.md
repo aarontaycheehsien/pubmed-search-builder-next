@@ -97,7 +97,7 @@ An NCBI API key is optional but raises the permitted request rate.
 | Step | Who | What happens |
 |---|---|---|
 | **1. Question / intake** | User | Provide the review question, eligibility criteria, optional known relevant articles, and required limits. |
-| **2. Scope** | Agent → User | The agent proposes which concepts should be searched, handled at screening, or treated as optional. The user approves or revises the plan. |
+| **2. Scope** | Agent → User | The agent proposes which concepts should be searched, handled at screening, or treated as optional, shown as a fixed table with the limits and eligibility criteria and a short explanation of each role. The user replies **keep** or says what to change. |
 | **3. Known records** | User + Agent | User-supplied seeds, screened relevant discoveries, held-out validation records, and eligible studies from prior reviews are organised into known-record sets for search development and retrieval testing. |
 | **4. Vocabulary** | Agent | Build each searched concept using verified MeSH plus free-text title/abstract terminology. |
 | **5. Test & revise** | Agent | Run candidate searches in PubMed, inspect translations and counts, measure retrieval of known records, diagnose misses, and revise. |

@@ -78,9 +78,18 @@ A block that names one direction of a process (switching back) is fragile; searc
 Every member the criteria list for a concept is searched by its own name.
 Decide roles from the question before reading any seed record.
 
-Show the user the concepts, roles and limits by running `psb progress scope`, and ask them to
-confirm. Set `scope_confirmed` when they do, and run `psb progress scope` again. If they asked
-you not to pause, proceed and say so in `notes`.
+Run `psb progress scope` and relay its text verbatim. It shows every concept in a fixed table of
+searched, screened and optional concepts, then the limits and eligibility criteria, explains
+what each role means, and asks the user to keep the scope or say what to change. Do not restate
+the table or explain the roles in your own words; put any ambiguity question after the message.
+Then wait for the reply:
+
+- **keep** (or another clear approval): set `scope_confirmed` and run `psb progress scope` again.
+- **a change**: update `protocol.json` and run `psb progress scope` again; it shows the revised
+  scope and asks again.
+
+If the user told you not to pause, relay the message, say that you are continuing, and record
+that in `notes`.
 Resolve high-impact ambiguity (population versus outcome, intervention versus exposure)
 with the user; never pick one silently.
 
