@@ -331,22 +331,29 @@ def check_round(ws: Workspace, path: Path) -> dict:
     return body
 
 
-def critic_packet(ws: Workspace) -> Path:
-    evaluation = latest_evaluation(ws)
-    if not evaluation["validation"]["complete"]:
-        raise WorkspaceError("run a complete psb eval before requesting critique")
-    rounds = critic_rounds(ws)
+def next_round(ws: Workspace, evaluation: dict, rounds: list[dict]) -> tuple[int, str]:
+    """The number and kind (``revision``, ``closing`` or ``verification``) of the next critic round."""
     number = max((r["round"] for r in rounds), default=0) + 1
     budget = revision_budget(ws.protocol().get("depth"))
     closings = [r for r in rounds if r.get("closing")]
-    verification = False
     if closings:
         if closings[-1].get("review_sha256") == evaluation["review_sha256"]:
             raise WorkspaceError("the closing round reviewed the current strategy; run psb report")
         if len(closings) >= MAX_CLOSING_ROUNDS:
             raise WorkspaceError("the verification round has been used; use report --diagnostic for the handoff")
-        verification = True
-    closing = verification or sum(bool(r.get("review_sha256")) for r in rounds) >= budget
+        return number, "verification"
+    return number, "closing" if sum(bool(r.get("review_sha256")) for r in rounds) >= budget else "revision"
+
+
+def critic_packet(ws: Workspace) -> Path:
+    evaluation = latest_evaluation(ws)
+    if not evaluation["validation"]["complete"]:
+        raise WorkspaceError("run a complete psb eval before requesting critique")
+    rounds = critic_rounds(ws)
+    number, kind = next_round(ws, evaluation, rounds)
+    budget = revision_budget(ws.protocol().get("depth"))
+    verification = kind == "verification"
+    closing = kind != "revision"
     template = {"round": number, **({"closing": True} if closing else {}),
                 "strategy_version": evaluation.get("version"), "review_sha256": evaluation["review_sha256"],
                 "domains": {d: {"verdict": "pass | revise", "note": "explanation"} for d in DOMAINS}, "findings": [],

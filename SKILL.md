@@ -18,18 +18,33 @@ Every command prints JSON. Every NCBI request is logged in the workspace automat
 `psb report` validates live and generates the query, audit and validation manifest. **Only report counts, PMIDs, MeSH headings
 and recall figures that a `psb` command returned.** If you did not run it, do not claim it.
 
+## Progress messages
+
+The user follows the build through standard messages that `psb` writes. You relay them; you do
+not write your own status updates.
+
+- When a `psb` result contains `progress`, send `progress.text` to the user **verbatim**, as its
+  own message, before anything you add. Do not reword, shorten, merge, reorder or add numbers.
+  Any comment of yours goes after it and must not restate its numbers differently.
+- At the end of each step, run `psb progress <stage>` and relay its text the same way. The
+  stages are `intake`, `scope`, `known-records`, `vocabulary`, `test`, `critic` and `deliver`.
+- `psb status` lists any stage summary that is due and not yet sent.
+- `psb progress` and `psb screen` write only their own logs (`progress.jsonl`,
+  `screening.jsonl`, `candidates.jsonl`). These sit outside every evaluation, critic and
+  delivery hash.
+
 ## Workflow
 
 Copy this checklist into your notes and work through it in order.
 
 ```
-[ ] 1 Intake        question, seeds, depth, limits (one message to the user)
-[ ] 2 Scope         protocol.json: concepts and roles; confirm with the user
-[ ] 3 Known records sets of relevant PMIDs (seeds, screened discoveries, benchmark)
-[ ] 4 Vocabulary    MeSH + free text for each searched concept -> strategy.json
-[ ] 5 Test & revise psb eval, fix misses and noise, one change at a time
-[ ] 6 Critic        fresh-context PRESS review; address every finding
-[ ] 7 Deliver       psb report --fresh; hand off for PRESS peer review
+[ ] 1 Intake        question, seeds, depth, limits (one message)    -> psb progress intake
+[ ] 2 Scope         protocol.json: concepts and roles; confirm       -> psb progress scope
+[ ] 3 Known records seeds, screened discoveries, benchmark            -> psb progress known-records
+[ ] 4 Vocabulary    MeSH + free text per searched concept            -> psb progress vocabulary
+[ ] 5 Test & revise psb eval, fix misses and noise, one at a time     -> psb progress test
+[ ] 6 Critic        fresh-context PRESS review; answer every finding -> psb progress critic
+[ ] 7 Deliver       psb report; hand off for PRESS peer review       -> psb progress deliver
 ```
 
 ### 1. Intake
@@ -40,10 +55,12 @@ under review, never evidence of scope.
 
 In one message, also ask for: known relevant articles (PMIDs, DOIs, PMCIDs; optional), the
 depth (`quick`, `standard` or `thorough`; default `standard`), and any required limits such as
-dates or languages. When the user says to proceed without answers, use the defaults and record
-the assumptions in `protocol.json` `notes`.
+dates or languages. That message is the text of `psb progress intake-request`; add
+`--have-question` when you already have the question. When the user says to proceed without
+answers, use the defaults and record the assumptions in `protocol.json` `notes`.
 
 Create the workspace: `psb init <run-dir> --question "..."`. Keep all build files inside it.
+Record the depth, limits and notes in `protocol.json`, then run `psb progress intake`.
 
 ### 2. Scope
 
@@ -61,8 +78,9 @@ A block that names one direction of a process (switching back) is fragile; searc
 Every member the criteria list for a concept is searched by its own name.
 Decide roles from the question before reading any seed record.
 
-Show the user a short table of concepts, roles and limits, and ask them to confirm. Set
-`scope_confirmed` when they do. If they asked you not to pause, proceed and say so in `notes`.
+Show the user the concepts, roles and limits by running `psb progress scope`, and ask them to
+confirm. Set `scope_confirmed` when they do, and run `psb progress scope` again. If they asked
+you not to pause, proceed and say so in `notes`.
 Resolve high-impact ambiguity (population versus outcome, intervention versus exposure)
 with the user; never pick one silently.
 
@@ -72,9 +90,14 @@ Read `references/known-records.md`. Known relevant records are how you measure r
 build these sets before drafting (skip at `quick` depth when there are no seeds):
 
 - `psb resolve` for DOIs or PMCIDs, then `psb set add seeds ... --role seed`.
-- At `standard` or `thorough` depth with few seeds, find more: prior systematic reviews on the
-  topic (their included studies make the best benchmark), precise pilot searches, and
-  `psb neighbors`. Screen candidates against the eligibility criteria before they enter a set.
+- At `standard` or `thorough` depth with few seeds, find more:
+  - prior systematic reviews on the topic, with `psb sample --purpose prior-reviews`. Their
+    included studies make the best benchmark.
+  - precise pilot searches, with `psb sample --purpose pilot`.
+  - `psb neighbors`.
+
+  Screen candidates against the eligibility criteria before they enter a set. Record every
+  decision with `psb screen --include ... --exclude ... --uncertain ...`.
 - With 10 or more development records, hold some out: `psb set split seeds --fraction 0.3`.
 
 Seeds and screened records may change vocabulary and even which concepts are AND-ed. They may
@@ -105,7 +128,7 @@ records, leave-one-block-out ablation, and what changed since the previous versi
 - Never silently lose a previously retrieved known record (`since_previous.known_lost`).
   Either revert, or say in the note why the loss is acceptable.
 - Cut noise only when the count justifies it and no known record is lost. Use line counts
-  and `psb sample` to find noisy terms. Recall comes first.
+  and `psb sample --purpose noise-check` to find noisy terms. Recall comes first.
 - A block whose removal gains known records (ablation) is a sign of over-structuring:
   reconsider its role in `protocol.json`.
 - Recovering a held-out validation miss makes that set part of development. Say so.
@@ -151,10 +174,10 @@ workspace. If you must, run `psb status`: it names what changed. A change to `no
 verification round, and `psb report`. Deliver only from this workspace; never copy it to start over. Keep narrative additions
 in `narrative.md`, because changing the generated audit invalidates its manifest. Give the user:
 
-- the strategy (single line and line by line with counts),
-- recall on each known set, with how independent each set is,
-- open risks, limitations, and the statement that this draft needs PRESS peer review by an
-  information specialist before use.
+- the text of `psb progress deliver`. It includes the strategy (single line, and line by line
+  with counts), recall on each known set with how independent each set is, and the statement
+  that this draft needs PRESS peer review by an information specialist before use;
+- after it, the open risks and limitations from `narrative.md`.
 
 ## Rules
 

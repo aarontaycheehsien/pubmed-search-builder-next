@@ -26,6 +26,7 @@ Do not edit `audit.md` or `final-query.txt`; their bytes are verified by the man
    `:noexp`, supplementary concepts); notable text-word choices; why limits were used.
 2. **How known records were found.** Sources, screening budget, how many screened and included,
    how the validation set was held out, and whether it later became part of development.
+   `psb progress known-records` gives these numbers; quote them rather than recounting.
 3. **Critic dispositions.** For each finding: what changed, or why it was rejected or accepted.
 4. **Open risks for the peer reviewer.** Fragile concepts, records out of reach, noisy terms kept
    on purpose, anything you were unsure about.

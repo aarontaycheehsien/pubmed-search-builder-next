@@ -247,6 +247,13 @@ python scripts/psb.py --workspace runs/demo report
 | `terms rank`, `terms miss` | Inspect candidate vocabulary and terminology in missed records. |
 | `critic packet`, `critic check`, `critic override` | Generate and validate PRESS-structured critique rounds. |
 | `report` | Perform final live validation and generate the protected query and audit. |
+| `screen` | Record screening decisions (include, exclude, uncertain) on candidate records. |
+| `progress` | Render the standard progress message for a workflow step, or list every message sent. |
+
+Progress messages are fixed templates over workspace state. Commands that search for candidates,
+screen, change sets, evaluate, run the critic or report attach one as `progress`. The agent relays
+`progress.text` to the user verbatim. These messages and their logs never affect the evaluation,
+critic or delivery hashes.
 | `log`, `cache`, `doctor` | Inspect provenance, cache, and configuration. |
 
 ## Tests

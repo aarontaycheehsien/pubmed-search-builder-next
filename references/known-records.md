@@ -23,14 +23,15 @@ excluded from the denominator and listed.
 
 Budget: screen at most about 150 candidates at `standard` and 400 at `thorough`.
 
-1. **Prior reviews.** Search for systematic reviews on the topic (a precise topic query AND
-   `systematic[sb]`). If one matches your scope, its included studies are the strongest benchmark.
+1. **Prior reviews.** Search for systematic reviews on the topic with
+   `psb sample --purpose prior-reviews "<precise topic query> AND systematic[sb]"`. If one
+   matches your scope, its included studies are the strongest benchmark.
    Get them from the user, the review's reference list (`psb neighbors <review PMID> --links refs`),
    or its tables, and screen each against your eligibility criteria. Save them as `benchmark`.
    A review of a broader or parent topic (forward switching, when you want switching back) is
    still worth mining for candidates: its included studies may report your topic as a subgroup.
 2. **Precise pilots.** Run two or three narrow, high-precision queries (the core concepts in
-   titles, for example) and screen what they return.
+   titles, for example) with `psb sample --purpose pilot`, and screen what they return.
 3. **Neighbours.** `psb neighbors --set seeds --links similar,citedin --exclude-known` ranks
    records linked to several known records first. Screen before use.
 
@@ -42,6 +43,12 @@ Screen each candidate's title and abstract (`psb fetch <pmids> --abstracts`) aga
 - include only when the record clearly meets every criterion you can judge from the abstract;
 - mark uncertain records uncertain and leave them out of every set;
 - keep a short reason for each include (it goes in the set's `note` or your working notes).
+
+Record every decision, including excludes and uncertain records:
+`psb screen --include ... --exclude ... --uncertain ... --reason "..."`. For a reason per
+record, pass `--file decisions.json`, a list of `{pmid, decision, reason}`. The record only feeds
+the progress messages: the screening counts, the source of each candidate and the budget used.
+It never adds a record to a set.
 
 Add includes with `psb set add relevant ... --role relevant --source "similar articles of seeds"`.
 Never add unscreened pilot hits or neighbours to a set: they are candidates, not evidence.
