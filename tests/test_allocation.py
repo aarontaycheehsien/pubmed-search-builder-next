@@ -81,6 +81,17 @@ def test_eight_units_stay_in_development_without_a_prompt(make_ws):
     assert ws.set_pmids("development") == set(POOL[:8]) and ws.reserved_pmids() == set()
 
 
+def test_no_eligible_records_freezes_an_empty_allocation(make_ws):
+    ws, _ = make_ws({"asthma*[tiab]": {"1"}})
+    proposal = allocation.propose(ws)
+    assert (proposal["N"], proposal["reason"]) == (0, "empty")
+    assert progress.render(ws, "allocation-preview", {"proposal": proposal})["text"].splitlines()[1] == \
+        "No holdout is proposed: no eligible reference records."
+    assert allocation.freeze(ws)["N"] == 0
+    from psb import holdout
+    assert holdout.message(ws)["case"] == "no_records"
+
+
 def test_the_choice_message_is_fixed_and_a_proposal_needs_a_choice(make_ws):
     ws, _ = make_pool(make_ws)
     proposal = allocation.propose(ws)
