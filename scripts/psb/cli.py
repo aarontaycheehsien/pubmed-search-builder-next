@@ -102,7 +102,7 @@ def cmd_status(args) -> dict:
         "last_eval": {"count": last.get("count"), "recall": {n: s.get("recall_percent") for n, s in (last.get("sets") or {}).items()}} if last else None,
         "critic_rounds": critic,
         "delivery": delivery,
-        "progress": sent,
+        "stage_summaries_sent": sent,
         "todo": todo,
     }
 
@@ -113,7 +113,7 @@ def cmd_count(args) -> dict:
     result = ws.pubmed.search(query)
     body = {"ok": True, **result}
     if args.purpose:
-        body["progress"] = progress.emit(ws, f"search:{args.purpose}", {"query": query, "count": result["count"]})
+        progress.attach(body, ws, f"search:{args.purpose}", {"query": query, "count": result["count"]})
     return body
 
 
@@ -138,7 +138,7 @@ def cmd_sample(args) -> dict:
     if not total:
         body = {"ok": True, "count": 0, "records": []}
         if args.purpose:
-            body["progress"] = progress.emit(ws, f"search:{args.purpose}", {"query": query, "count": 0, "shown": 0})
+            progress.attach(body, ws, f"search:{args.purpose}", {"query": query, "count": 0, "shown": 0})
         return body
     start = random.Random(args.seed).randrange(max(1, min(total, 9999) - args.n + 1)) if args.random else 0
     pmids = ws.pubmed.search(query, retmax=args.n, retstart=start)["pmids"]
@@ -148,11 +148,13 @@ def cmd_sample(args) -> dict:
         "records": [{"pmid": p, "year": r.get("year"), "title": r.get("title")} for p, r in records.items()],
     }
     if args.purpose:
-        data = {"query": query, "count": total, "shown": len(records), "retstart": start}
-        if args.purpose in progress.CANDIDATE_PURPOSES and records:
-            label = f"{progress.PURPOSES[args.purpose]} {progress.code(progress.clean(query, 80))}"
-            data["batch"] = progress.record_batch(ws, args.purpose, label, list(records), total=total, query=query)["batch"]
-        body["progress"] = progress.emit(ws, f"search:{args.purpose}", data)
+        def data() -> dict:
+            found = {"query": query, "count": total, "shown": len(records), "retstart": start}
+            if args.purpose in progress.CANDIDATE_PURPOSES and records:
+                label = f"{progress.PURPOSES[args.purpose]} {progress.code(progress.clean(query, 80))}"
+                found["batch"] = progress.record_batch(ws, args.purpose, label, list(records), total=total, query=query)["batch"]
+            return found
+        progress.attach(body, ws, f"search:{args.purpose}", data)
     return body
 
 
@@ -179,17 +181,18 @@ def cmd_neighbors(args) -> dict:
     rows = [{**e, "links": sorted(e["links"]), "from": sorted(set(e["from"]))} for e in candidates[: args.limit]]
     body = {"ok": True, "seeds": len(pmids), "candidates": len(candidates), "shown": len(rows), "rows": rows,
             "note": "Neighbours are candidates, not relevant records: screen them before using them for mining."}
-    links = [link.strip() for link in args.links.split(",")]
-    in_sets = {p for d in ws.sets().values() for p in d.get("pmids", [])}
-    data = {"links": links, "from": pmids, "sets": sorted(set(args.set or [])), "candidates": len(candidates),
-            "shown": len(rows), "exclude_known": args.exclude_known,
-            "per_link": {link: sum(1 for e in candidates if link in e["links"]) for link in links},
-            "known": sum(1 for p in scores if p in in_sets and p not in pmids)}
-    if rows:
-        data["batch"] = progress.record_batch(ws, "neighbors:" + ",".join(links), progress.neighbors_label(links, pmids, data["sets"]),
-                                              [r["pmid"] for r in rows], total=len(candidates), origin=pmids)["batch"]
-    body["progress"] = progress.emit(ws, "neighbors", data)
-    return body
+    def data() -> dict:
+        links = [link.strip() for link in args.links.split(",")]
+        in_sets = {p for d in ws.sets().values() for p in d.get("pmids", [])}
+        found = {"links": links, "from": pmids, "sets": sorted(set(args.set or [])), "candidates": len(candidates),
+                 "shown": len(rows), "exclude_known": args.exclude_known,
+                 "per_link": {link: sum(1 for e in candidates if link in e["links"]) for link in links},
+                 "known": sum(1 for p in scores if p in in_sets and p not in pmids)}
+        if rows:
+            found["batch"] = progress.record_batch(ws, "neighbors:" + ",".join(links), progress.neighbors_label(links, pmids, found["sets"]),
+                                                   [r["pmid"] for r in rows], total=len(candidates), origin=pmids)["batch"]
+        return found
+    return progress.attach(body, ws, "neighbors", data)
 
 
 def cmd_resolve(args) -> dict:
@@ -212,12 +215,14 @@ def cmd_resolve(args) -> dict:
     unresolved = [i for i in args.ids if i not in resolved]
     exists = ws.pubmed.existing(resolved.values()) if resolved else set()
     body = {"ok": True, "resolved": resolved, "not_in_pubmed_or_after_as_of": sorted(set(resolved.values()) - exists), "unresolved": unresolved}
-    data = {**body, "given": len(args.ids)}
-    found = sorted({p for p in resolved.values() if p in exists}, key=int)
-    if found:
-        data["batch"] = progress.record_batch(ws, "resolve", "Resolved identifiers", found, total=len(found))["batch"]
-    body["progress"] = progress.emit(ws, "resolve", data)
-    return body
+    def data() -> dict:
+        message = {**body, "given": len(args.ids)}
+        # Screening normalises PMIDs, so the batch must too, or attribution misses "00123".
+        found = sorted({p for p in normalize_pmids(list(resolved.values())) if p in exists}, key=int)
+        if found:
+            message["batch"] = progress.record_batch(ws, "resolve", "Resolved identifiers", found, total=len(found))["batch"]
+        return message
+    return progress.attach(body, ws, "resolve", data)
 
 
 def cmd_mesh(args) -> dict:
@@ -235,18 +240,16 @@ def cmd_set(args) -> dict:
         existing = ws.get_set(args.name)["pmids"] if ws.set_path(args.name).exists() else []
         pmids = existing + [p for p in normalize_pmids(args.pmids) if p not in existing]
         body = {"ok": True, **ws.save_set(args.name, args.role, pmids, source=args.source, note=args.note)}
-        body["progress"] = progress.emit(ws, "set", {"name": args.name, "role": args.role, "before": len(existing),
-                                                     "after": len(pmids), "added": pmids[len(existing):],
-                                                     "overlap": body["overlap_with_other_roles"]})
-        return body
+        return progress.attach(body, ws, "set", {"name": args.name, "role": args.role, "before": len(existing),
+                                                 "after": len(pmids), "added": pmids[len(existing):],
+                                                 "overlap": body["overlap_with_other_roles"]})
     if args.set_command == "remove":
         data = ws.get_set(args.name)
         drop = set(normalize_pmids(args.pmids))
         body = {"ok": True, **ws.save_set(args.name, data["role"], [p for p in data["pmids"] if p not in drop], source=data.get("source", ""), note=data.get("note", ""))}
-        body["progress"] = progress.emit(ws, "set", {"name": args.name, "role": data["role"], "before": len(data["pmids"]),
-                                                     "after": len(body["pmids"]), "removed": [p for p in data["pmids"] if p in drop],
-                                                     "overlap": body["overlap_with_other_roles"]})
-        return body
+        return progress.attach(body, ws, "set", {"name": args.name, "role": data["role"], "before": len(data["pmids"]),
+                                                 "after": len(body["pmids"]), "removed": [p for p in data["pmids"] if p in drop],
+                                                 "overlap": body["overlap_with_other_roles"]})
     # split: move a random fraction of one set into a held-out validation set
     data = ws.get_set(args.name)
     pmids = list(data["pmids"])
@@ -258,9 +261,8 @@ def cmd_set(args) -> dict:
     out = ws.save_set(args.into, "validation", held, source=f"split from {args.name} (seed {args.seed}, fraction {args.fraction})")
     body = {"ok": True, "development": len(pmids) - len(held), "validation": len(held), "validation_set": out["name"],
             "note": "Do not mine the validation set. Every psb eval shows its recall, so it is consulted repeatedly: report it as semi-independent."}
-    body["progress"] = progress.emit(ws, "split", {"name": args.name, "into": out["name"], "development": body["development"],
-                                                   "validation": body["validation"]})
-    return body
+    return progress.attach(body, ws, "split", {"name": args.name, "into": out["name"], "development": body["development"],
+                                               "validation": body["validation"]})
 
 
 def cmd_lint(args) -> dict:
@@ -286,7 +288,7 @@ def cmd_eval(args) -> dict:
     deliver.record_evaluation(ws, evaluation, note=args.note)
     attempt = ws.save_attempt(evaluation)
     output = dict(evaluation, attempt_id=attempt["attempt_id"])
-    output["progress"] = progress.emit(ws, "eval", {"evaluation": evaluation, "note": args.note})
+    progress.attach(output, ws, "eval", {"evaluation": evaluation, "note": args.note})
     if args.brief:
         output.pop("lines", None)
         output.pop("retrieved_known", None)
@@ -298,6 +300,7 @@ def cmd_terms(args) -> dict:
     ws = workspace(args)
     strategy = ws.strategy()
     if args.terms_command == "rank":
+        bad: list[str] = []
         if args.set:
             held_out = {n for n, d in ws.sets().items() if d.get("role") in {"validation", "benchmark"}}
             bad = [n for n in args.set if n in held_out]
@@ -311,10 +314,9 @@ def cmd_terms(args) -> dict:
         records = list(ws.ensure_records(pmids).values())
         body = {"ok": True, **terms.rank(ws.pubmed, records, strategy, fields=args.fields.split(","),
                                           budget=args.budget, min_df=args.min_df, include_covered=args.include_covered)}
-        body["progress"] = progress.emit(ws, "terms-rank", {"sets": sorted(set(args.set or [])), "records": body["records"],
-                                                            "candidates": body["candidates"], "already_covered": body["already_covered"],
-                                                            "scored": len(body["scored"])})
-        return body
+        return progress.attach(body, ws, "terms-rank", {"sets": sorted(set(args.set or [])), "held_out_mined": sorted(set(bad)),
+                                                        "records": body["records"], "candidates": body["candidates"],
+                                                        "already_covered": body["already_covered"], "scored": len(body["scored"])})
     versions = ws.versions()
     if not versions:
         raise UsageError("run psb eval first")
@@ -325,9 +327,8 @@ def cmd_terms(args) -> dict:
     body = {"ok": True, "version": versions[-1]["version"], "misses": terms.miss_report(records, evaluation, strategy),
             "note": "Vocabulary from missed records is a candidate. Adding a term to recover a validation miss "
                     "makes that set part of development; say so in the audit."}
-    body["progress"] = progress.emit(ws, "terms-miss", {"version": body["version"],
-                                                        "misses": [m for m in evaluation.get("misses", []) if m["pmid"] in missed]})
-    return body
+    return progress.attach(body, ws, "terms-miss", {"version": body["version"],
+                                                    "misses": [m for m in evaluation.get("misses", []) if m["pmid"] in missed]})
 
 
 def cmd_critic(args) -> dict:
@@ -335,22 +336,13 @@ def cmd_critic(args) -> dict:
     if args.critic_command == "packet":
         rounds = deliver.critic_rounds(ws)
         path = deliver.critic_packet(ws)
-        evaluation = deliver.latest_evaluation(ws)
-        number, kind = deliver.next_round(ws, evaluation, rounds)
         body = {"ok": True, "packet": str(path),
                 "next": "give only this file to a fresh-context reviewer (subagent) and save its JSON as "
                         f"critic/round-N.json; then run psb critic check"}
-        body["progress"] = progress.emit(ws, "critic-packet", {
-            "round": number, "kind": kind, "version": evaluation.get("version"), "packet": f"critic/{path.name}",
-            "revision": sum(bool(r.get("review_sha256")) and not r.get("closing") for r in rounds) + 1,
-            "budget": deliver.revision_budget(ws.protocol().get("depth"))})
-        return body
+        return progress.attach(body, ws, "critic-packet", {"rounds_before": rounds, "packet": path.name})
     if args.critic_command == "override":
-        finding = next((f for r in deliver.critic_rounds(ws) for f in r.get("findings") or []
-                        if isinstance(f, dict) and f.get("id") == args.finding), {})
         body = {"ok": True, **deliver.override_finding(ws, args.finding, args.reason)}
-        body["progress"] = progress.emit(ws, "critic-override", {"id": args.finding, "finding": finding})
-        return body
+        return progress.attach(body, ws, "critic-override", {"id": args.finding})
     paths = deliver.round_paths(ws)
     path = Path(args.round) if args.round else (paths[-1] if paths else None)
     if path is None:
@@ -358,27 +350,24 @@ def cmd_critic(args) -> dict:
     body = {"round_file": str(path), **deliver.check_round(ws, path)}
     data = read_json(path)
     if isinstance(data, dict) and type(data.get("round")) is int:
-        earlier = [r for r in deliver.critic_rounds(ws) if r["round"] < data["round"]]
-        kind = progress.round_kinds([*earlier, data])[-1]
-        body["progress"] = progress.emit(ws, "critic-check", {"round": data, "kind": kind, "check": body})
-    return body
+        return progress.attach(body, ws, "critic-check", {"round": data, "check": dict(body)})
+    return progress.attach(body, ws, "critic-invalid", {"file": path.name, "problems": body.get("problems")})
 
 
 def cmd_report(args) -> dict:
     ws = workspace(args)
     result = deliver.report(ws, diagnostic=args.diagnostic, note=args.note)
-    result["progress"] = progress.emit(ws, "report", {"result": result, "diagnostic": args.diagnostic})
-    return result
+    return progress.attach(result, ws, "report", {"result": dict(result), "diagnostic": args.diagnostic})
 
 
 def cmd_screen(args) -> dict:
     ws = workspace(args)
     entries = progress.record_screening(ws, include=args.include, exclude=args.exclude, uncertain=args.uncertain,
                                         reason=args.reason, file=args.file)
-    return {"ok": True, "recorded": len(entries),
+    body = {"ok": True, "recorded": len(entries),
             "decisions": {d: [e["pmid"] for e in entries if e["decision"] == d] for d in progress.DECISIONS},
-            "note": "Screening decisions are a record only: add includes to a set with psb set add.",
-            "progress": progress.emit(ws, "screen", {"entries": entries})}
+            "note": "Screening decisions are a record only: add includes to a set with psb set add."}
+    return progress.attach(body, ws, "screen", {"entries": entries})
 
 
 def cmd_progress(args) -> dict:

@@ -1,6 +1,9 @@
 """Standardised progress messages: fixed templates, deterministic text, no effect on delivery."""
 
 import json
+import os
+import re
+from pathlib import Path
 
 import pytest
 
@@ -115,7 +118,7 @@ def test_candidate_searches_are_announced(ws, capsys):
     assert text(capsys, "sample", "--purpose", "prior-reviews", "asthma*[tiab]") == (
         "**PSB · Step 3/7 Known records · Prior-review search**\n"
         "Prior-review search: 3 records for `asthma*[tiab]`\n"
-        "- Shown for screening: 3 records as candidate batch C2")
+        "- Shown: 3 reviews to check against the scope (batch C2)")
     assert text(capsys, "count", "--purpose", "noise-check", "child*[tiab]") == (
         "**PSB · Step 5/7 Test & revise · Noise check**\n"
         "Noise check: 4 records for `child*[tiab]`\n"
@@ -143,7 +146,7 @@ def test_every_stage_reports_and_status_stops_reminding(ws, capsys):
     final = sent[-1]
     assert "| seeds | seed" in final and progress.PRESS in final and "```text\n" in final
     code, status = psb(capsys, "status")
-    assert all(status["progress"].values()) and not any("psb progress" in t for t in status["todo"])
+    assert all(status["stage_summaries_sent"].values()) and not any("psb progress" in t for t in status["todo"])
 
 
 def test_messages_are_deterministic_and_logged(ws, capsys):
@@ -154,7 +157,7 @@ def test_messages_are_deterministic_and_logged(ws, capsys):
     code, out = psb(capsys, "progress", "list")
     texts = [m["text"] for m in out["messages"]]
     assert [m["seq"] for m in out["messages"]] == list(range(1, len(texts) + 1))
-    assert all("seq" not in t and "20" + "26-" not in t for t in texts)
+    assert not any(re.search(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}", t) for t in texts)
 
 
 def test_progress_files_never_touch_the_delivery(ws, capsys):
@@ -174,7 +177,7 @@ def test_status_reminds_without_blocking(ws, capsys):
     assert "send the Step 2 summary: psb progress scope" in status["todo"]
     text(capsys, "progress", "intake")
     code, status = psb(capsys, "status")
-    assert status["progress"]["intake"] and not any("progress intake" in t for t in status["todo"])
+    assert status["stage_summaries_sent"]["intake"] and not any("progress intake" in t for t in status["todo"])
 
 
 def test_screen_rejects_bad_input_and_latest_decision_wins(ws, capsys):
@@ -226,3 +229,142 @@ def test_non_ascii_text_reaches_stdout_as_utf8(ws, capsysbinary):
     assert cli.main(["progress", "intake"]) == 0
     raw = capsysbinary.readouterr().out
     assert "Sjögren’s syndrome → dry eye?" in json.loads(raw.decode("utf-8"))["progress"]["text"]
+
+
+GOLDEN = Path(__file__).parent / "golden" / "progress_sequence.md"
+
+
+def test_whole_message_sequence_matches_golden(ws, capsys):
+    """Every template, pinned. Regenerate deliberately with PSB_UPDATE_GOLDEN=1 and review the diff."""
+    sent = "\n\n---\n\n".join(build(ws, capsys)).replace(str(ws.root), "<workspace>") + "\n"
+    if os.environ.get("PSB_UPDATE_GOLDEN"):
+        GOLDEN.parent.mkdir(exist_ok=True)
+        GOLDEN.write_text(sent, encoding="utf-8")
+    assert sent == GOLDEN.read_text(encoding="utf-8")
+
+
+def prepared(ws, capsys):
+    text(capsys, "set", "add", "seeds", "1", "2", "--role", "seed")
+    write_json(ws.root / "strategy.json", STRATEGY)
+
+
+def test_blocked_eval_never_claims_missing_sets(ws, capsys):
+    text(capsys, "set", "add", "seeds", "1", "2", "--role", "seed")
+    write_json(ws.root / "strategy.json", {"blocks": [{"id": "asthma", "terms": ["cat*[tiab]"]}]})
+    code, out = psb(capsys, "eval", "--brief")
+    assert code == 1 and out["progress"]["text"] == (
+        "**PSB · Step 5/7 Test & revise · Evaluation v1**\n"
+        "v1: not measured\n"
+        "- Recall: not measured (evaluation did not complete)\n"
+        "- Checks: 1 blocker (short_truncation) · 1 need critic review · lint 1 error, 1 warning")
+
+
+def test_zero_hit_candidate_searches_are_worded_by_purpose(ws, capsys):
+    assert text(capsys, "sample", "--purpose", "pilot", "nothing[tiab]") == (
+        "**PSB · Step 3/7 Known records · Pilot search**\n"
+        "Pilot search: 0 records for `nothing[tiab]`\n"
+        "- No records to screen")
+    assert text(capsys, "sample", "--purpose", "prior-reviews", "nothing[tiab]").endswith("\n- No reviews to check")
+
+
+def test_blocked_report_diagnostic_and_not_delivered_summary(ws, capsys):
+    prepared(ws, capsys)
+    text(capsys, "eval", "--brief")
+    code, out = psb(capsys, "report")
+    assert code == 1 and out["progress"]["text"] == (
+        "**PSB · Step 7/7 Deliver · Report blocked**\n"
+        "Not delivered: 1 blocker\n"
+        "- Blockers: critic_missing\n"
+        "- Diagnostic output: diagnostic-audit.md (unfinished; not a final query)")
+    assert text(capsys, "progress", "deliver") == (
+        "**PSB · Step 7/7 Deliver · Not delivered**\n"
+        "No current delivery: no protected final query was issued\n"
+        "- Delivery check: missing validation-manifest.json\n"
+        "- Blockers at the last report: critic_missing\n"
+        "- Diagnostic output: diagnostic-audit.md (unfinished; not a final query)")
+    text(capsys, "critic", "packet")
+    review(ws)
+    code, out = psb(capsys, "report", "--diagnostic")
+    assert code == 1 and out["progress"]["text"] == (
+        "**PSB · Step 7/7 Deliver · Diagnostic check**\n"
+        "Diagnostic only: no blockers found; psb report would deliver\n"
+        "- Blockers: none\n"
+        "- Diagnostic output: diagnostic-audit.md (unfinished; not a final query)")
+
+
+def test_a_failing_message_never_changes_the_command_result(ws, capsys, monkeypatch):
+    def broken(ws, data):
+        raise TypeError("boom")
+    monkeypatch.setitem(progress.EVENTS, "set", (3, broken))
+    code, out = psb(capsys, "set", "add", "seeds", "1", "2", "--role", "seed")
+    assert code == 0 and out["ok"] and out["pmids"] == ["1", "2"] and ws.get_set("seeds")["pmids"] == ["1", "2"]
+    assert out["progress"]["text"] == (
+        "**PSB · Step 3/7 Known records · set**\n"
+        "Progress message unavailable (TypeError); the command itself ran: see its JSON result.")
+    assert progress.messages(ws)[-1]["error"] == "TypeError: boom"
+
+
+def test_malformed_critic_round_returns_json_not_a_crash(ws, capsys):
+    prepared(ws, capsys)
+    text(capsys, "eval", "--brief")
+    text(capsys, "critic", "packet")
+    write_json(ws.root / "critic" / "round-1.json", {"round": 1, "domains": [], "findings": "not a list"})
+    code, out = psb(capsys, "critic", "check")
+    assert code == 1 and not out["ok"] and out["problems"]
+    message = out["progress"]["text"]
+    assert message.startswith("**PSB · Step 6/7 Critic · Round 1 result**\nRound 1 (revision): 0 domains pass · 0 revise")
+    assert "- Findings: 0 must-fix · 0 should-fix · 0 document" in message and "- Check: " in message
+    write_json(ws.root / "critic" / "round-1.json", {"round": "one"})
+    code, out = psb(capsys, "critic", "check")
+    assert code == 1 and out["progress"]["text"] == (
+        "**PSB · Step 6/7 Critic · Round file invalid**\n"
+        "round-1.json was not checked: 1 problem: round must be an object with a positive integer round number\n"
+        "- Fix the round file and run psb critic check again")
+
+
+def test_mining_a_held_out_set_says_so(ws, capsys):
+    text(capsys, "set", "add", "validation", "5", "6", "--role", "validation")
+    write_json(ws.root / "strategy.json", STRATEGY)
+    message = text(capsys, "terms", "rank", "--set", "validation", "--allow-held-out", "--budget", "0")
+    assert message.splitlines()[1] == ("Mined candidate terms from 2 records (sets validation; includes held-out "
+                                       "validation, which now count as development)")
+    text(capsys, "set", "add", "seeds", "1", "2", "--role", "seed")
+    assert "; held-out sets excluded)" in text(capsys, "terms", "rank", "--budget", "0")
+
+
+def test_override_reports_the_latest_round_of_the_finding(ws, capsys):
+    finding = {"id": "F1", "domain": "translation", "finding": "AND-ed population", "recommendation": "screen it",
+               "status": "open"}
+    write_json(ws.root / "critic" / "round-1.json",
+               {"round": 1, "findings": [{**finding, "severity": "should-fix", "kind": "lexical"}]})
+    write_json(ws.root / "critic" / "round-2.json",
+               {"round": 2, "closing": True, "findings": [{**finding, "severity": "must-fix", "kind": "structural"}]})
+    message = text(capsys, "critic", "override", "F1", "--reason", "population is reliably indexed")
+    assert message.splitlines()[1] == "Overrode F1 (must-fix, structural) after the closing round"
+
+
+def test_scope_reminder_after_confirmation(ws, capsys):
+    protocol = ws.protocol()
+    protocol["scope_confirmed"] = False
+    write_json(ws.root / "protocol.json", protocol)
+    assert text(capsys, "progress", "scope").endswith("Please confirm or correct these concept roles and limits.")
+    code, status = psb(capsys, "status")
+    assert not any("Step 2" in t for t in status["todo"])
+    protocol["scope_confirmed"] = True
+    write_json(ws.root / "protocol.json", protocol)
+    code, status = psb(capsys, "status")
+    assert "send the Step 2 summary again (it changed since it was sent): psb progress scope" in status["todo"]
+
+
+def test_a_corrupt_attempt_does_not_break_status(ws, capsys):
+    (ws.root / "attempts").mkdir(exist_ok=True)
+    (ws.root / "attempts" / "broken.json").write_text("{", encoding="utf-8")
+    code, status = psb(capsys, "status")
+    assert code == 0 and any(t.startswith("progress state could not be read") for t in status["todo"])
+
+
+def test_resolved_pmids_with_leading_zeros_are_attributed(ws, capsys, monkeypatch):
+    monkeypatch.setattr(ws.pubmed, "existing", lambda pmids: {str(p).lstrip("0") for p in pmids})
+    text(capsys, "resolve", "0005")
+    assert progress.batches(ws)[-1]["pmids"] == ["5"]
+    assert "- Resolved identifiers (C1): 1 screened → 1 include" in text(capsys, "screen", "--include", "5")

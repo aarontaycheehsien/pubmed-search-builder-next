@@ -48,6 +48,7 @@ REPORT_PURPOSES = {"report", "diagnostic", "publication-failed"}
 FILES = "final-query.txt · audit.md · validation-manifest.json"
 PRESS = "This is a draft. It needs PRESS peer review by an information specialist before use."
 UNLOGGED = "Not from a logged psb search"
+NOT_MEASURED = "not measured (evaluation did not complete)"
 
 
 class ProgressError(ValueError):
@@ -82,6 +83,10 @@ def code(text: str) -> str:
 def _fence(text: str) -> list[str]:
     fence = "`" * max(3, _ticks(text) + 1)
     return [fence + "text", text, fence]
+
+
+def _list(value) -> list:
+    return value if isinstance(value, list) else []
 
 
 def _int_key(pmid: str):
@@ -297,6 +302,33 @@ def emit(ws: Workspace, name: str, data: dict | None = None) -> dict:
     return {**message, "seq": seq}
 
 
+def fallback(name: str, exc: BaseException) -> dict:
+    step = EVENTS[name][0] if name in EVENTS else 0
+    label = f"Step {step}/{TOTAL_STEPS} {STEPS[step]}" if step else "Progress"
+    text = (f"**PSB · {label} · {name}**\nProgress message unavailable ({type(exc).__name__}); "
+            "the command itself ran: see its JSON result.")
+    return {"event": name, "step": step, "text": text, "error": f"{type(exc).__name__}: {exc}"}
+
+
+def attach(body: dict, ws: Workspace, name: str, data=None) -> dict:
+    """Add the message for a command that has already done its work.
+
+    ``data`` is a dict, or a function returning one (so preparing the message, including any
+    candidate batch it records, is guarded too). A message never changes what the command did,
+    its ``ok`` or its exit code: on any failure the command carries a fixed fallback message.
+    """
+    try:
+        body["progress"] = emit(ws, name, data() if callable(data) else data)
+    except Exception as exc:  # noqa: BLE001 - the command's own result must stand
+        message = fallback(name, exc)
+        try:
+            _append(ws.root / "progress.jsonl", {**message, "seq": len(messages(ws)) + 1})
+        except Exception:  # noqa: BLE001
+            pass
+        body["progress"] = message
+    return body
+
+
 # -- automatic messages -----------------------------------------------------------------------
 
 @event("resolve", 3)
@@ -318,10 +350,14 @@ def _search_event(purpose: str):
         shown = data.get("shown")
         if shown is None:
             lines.append("- Count only; no records shown")
-        elif data.get("batch"):
-            lines.append(f"- Shown for screening: {_plural(shown, 'record')} as candidate batch {data['batch']}")
-        else:
+        elif purpose == "noise-check":
             lines.append(f"- Sampled {_plural(shown, 'record')} from offset {_n(data.get('retstart', 0))} to inspect noise")
+        elif purpose == "prior-reviews":
+            lines.append(f"- Shown: {_plural(shown, 'review')} to check against the scope (batch {data['batch']})"
+                         if shown and data.get("batch") else "- No reviews to check")
+        else:
+            lines.append(f"- Shown for screening: {_plural(shown, 'record')} as candidate batch {data['batch']}"
+                         if shown and data.get("batch") else "- No records to screen")
         return PURPOSES[purpose], lines
     return renderer
 
@@ -418,9 +454,12 @@ def _split(ws, data):
 @event("terms-rank", 4)
 def _terms_rank(ws, data):
     sets = data.get("sets")
+    held = sorted(data.get("held_out_mined") or [])
+    scope = ("sets " + ", ".join(sets)) if sets else "all seed and relevant sets"
+    scope += (f"; includes held-out {', '.join(held)}, which now count as development" if held
+              else "; held-out sets excluded")
     return "Term mining", [
-        f"Mined candidate terms from {_plural(data.get('records', 0), 'development record')} "
-        f"({'sets ' + ', '.join(sets) if sets else 'all seed and relevant sets'}; held-out sets excluded)",
+        f"Mined candidate terms from {_plural(data.get('records', 0), 'record')} ({scope})",
         f"- Candidate terms: {_n(data.get('candidates', 0))} · already in the strategy: {_n(data.get('already_covered', 0))}"
         f" · scored: {_n(data.get('scored', 0))}",
         "- Candidates, not additions: each is tested with psb eval before it is kept",
@@ -438,9 +477,14 @@ def _eval_lines(evaluation: dict, note: str) -> list[str]:
     lines = [head]
     if note.strip():
         lines.append(f"- Change: {clean(note, 160)}")
-    lines += [f"- Recall: {_recall(evaluation)}", f"- Missed known records: {_misses(evaluation)}"]
+    measured = evaluation.get("count") is not None
+    if measured:
+        lines += [f"- Recall: {_recall(evaluation)}", f"- Missed known records: {_misses(evaluation)}"]
+    else:
+        lines.append(f"- Recall: {NOT_MEASURED}")
     if since:
-        lines.append(f"- Since the last eval: lost {_pmids(since.get('known_lost'))} · gained {_pmids(since.get('known_gained'))}")
+        if measured:
+            lines.append(f"- Since the last eval: lost {_pmids(since.get('known_lost'))} · gained {_pmids(since.get('known_gained'))}")
         changes = []
         for block, change in (since.get("changes") or {}).items():
             if block == "_combine":
@@ -480,12 +524,16 @@ def _terms_miss(ws, data):
 
 @event("critic-packet", 6)
 def _critic_packet(ws, data):
-    kind = data.get("kind")
-    label = f"revision {data.get('revision')} of {data.get('budget')}" if kind == "revision" else kind
-    return f"Round {data.get('round')} packet", [
-        f"Round {data.get('round')} ({label}) packet written for v{data.get('version')}",
-        f"- Packet: {data.get('packet')}",
-        f"- A fresh-context reviewer reads only this packet; its reply is saved as critic/round-{data.get('round')}.json",
+    from .deliver import latest_evaluation, next_round, revision_budget
+    rounds = _list(data.get("rounds_before"))
+    evaluation = latest_evaluation(ws)
+    number, kind = next_round(ws, evaluation, rounds)
+    revision = sum(bool(r.get("review_sha256")) and not r.get("closing") for r in rounds if isinstance(r, dict)) + 1
+    label = f"revision {revision} of {revision_budget(ws.protocol().get('depth'))}" if kind == "revision" else kind
+    return f"Round {number} packet", [
+        f"Round {number} ({label}) packet written for v{evaluation.get('version')}",
+        f"- Packet: critic/{data.get('packet')}",
+        f"- A fresh-context reviewer reads only this packet; its reply is saved as critic/round-{number}.json",
     ]
 
 
@@ -495,38 +543,50 @@ def _finding_counts(findings: list[dict]) -> tuple[str, str]:
     return severity, status
 
 
+def _problems_line(problems: list) -> str:
+    shown = "; ".join(clean(p, 100) for p in problems[:3])
+    return (f"{_plural(len(problems), 'problem')}" + (f": {shown}" if shown else "")
+            + (f" and {len(problems) - 3} more" if len(problems) > 3 else ""))
+
+
 @event("critic-check", 6)
 def _critic_check(ws, data):
-    from .deliver import DOMAINS
-    round_data = data.get("round") or {}
+    from .deliver import DOMAINS, critic_rounds
+    round_data = data.get("round") if isinstance(data.get("round"), dict) else {}
+    number = round_data.get("round")
+    earlier = [r for r in critic_rounds(ws) if isinstance(r.get("round"), int) and r["round"] < number]
+    kind = round_kinds([*earlier, round_data])[-1]
     domains = round_data.get("domains") if isinstance(round_data.get("domains"), dict) else {}
-    verdicts = {d: (domains.get(d) or {}).get("verdict") if isinstance(domains.get(d), dict) else None for d in DOMAINS}
+    verdicts = {d: domains[d].get("verdict") if isinstance(domains.get(d), dict) else None for d in DOMAINS}
     revise = [d for d in DOMAINS if verdicts[d] == "revise"]
-    findings = [f for f in round_data.get("findings") or [] if isinstance(f, dict)]
-    findings.sort(key=lambda f: str(f.get("id")))
+    findings = sorted((f for f in _list(round_data.get("findings")) if isinstance(f, dict)), key=lambda f: str(f.get("id")))
     severity, status = _finding_counts(findings)
-    check = data.get("check") or {}
-    lines = [f"Round {round_data.get('round')} ({data.get('kind')}): {sum(v == 'pass' for v in verdicts.values())} domains pass · "
-             f"{len(revise)} revise",
+    check = data.get("check") if isinstance(data.get("check"), dict) else {}
+    lines = [f"Round {number} ({kind}): {sum(v == 'pass' for v in verdicts.values())} domains pass · {len(revise)} revise",
              f"- Revise: {', '.join(revise) or 'none'}",
              f"- Findings: {severity}",
              f"- Status: {status}",
-             f"- Open must-fix: {', '.join(sorted(check.get('open_must_fix') or [])) or 'none'}"]
-    problems = check.get("problems") or []
-    if check.get("ok"):
-        lines.append("- Check: passes")
-    else:
-        shown = "; ".join(clean(p, 100) for p in problems[:3])
-        lines.append(f"- Check: {_plural(len(problems), 'problem')}" + (f": {shown}" if shown else "")
-                     + (f" and {len(problems) - 3} more" if len(problems) > 3 else ""))
-    if check.get("overridable"):
-        lines.append(f"- Overridable after the closing round: {', '.join(sorted(check['overridable']))}")
-    return f"Round {round_data.get('round')} result", lines
+             f"- Open must-fix: {', '.join(sorted(map(str, _list(check.get('open_must_fix'))))) or 'none'}"]
+    lines.append("- Check: passes" if check.get("ok") else f"- Check: {_problems_line(_list(check.get('problems')))}")
+    if _list(check.get("overridable")):
+        lines.append(f"- Overridable after the closing round: {', '.join(sorted(map(str, check['overridable'])))}")
+    return f"Round {number} result", lines
+
+
+@event("critic-invalid", 6)
+def _critic_invalid(ws, data):
+    return "Round file invalid", [f"{data.get('file')} was not checked: {_problems_line(_list(data.get('problems')))}",
+                                  "- Fix the round file and run psb critic check again"]
 
 
 @event("critic-override", 6)
 def _critic_override(ws, data):
-    finding = data.get("finding") or {}
+    from .deliver import critic_rounds
+    finding: dict = {}
+    for r in critic_rounds(ws):  # the latest round's copy of the finding
+        for f in _list(r.get("findings")):
+            if isinstance(f, dict) and f.get("id") == data.get("id"):
+                finding = f
     return "Override", [f"Overrode {data.get('id')} ({finding.get('severity')}, {finding.get('kind')}) after the closing round",
                         "- The audit opens with the critic's objection and the reason, for the peer reviewer"]
 
@@ -647,7 +707,8 @@ def _stage_known(ws, data):
     sets = ws.sets()
     held = {p for d in sets.values() if d.get("role") not in DEVELOPMENT_ROLES for p in d.get("pmids", [])}
     development = {p for d in sets.values() if d.get("role") in DEVELOPMENT_ROLES for p in d.get("pmids", [])} - held
-    lines = [f"Known relevant records: {_n(len(development))} for development · {_n(len(held))} held out"]
+    lines = [f"Known relevant records: {_n(len(development))} for development · {_n(len(held))} held out "
+             "(validation and benchmark)"]
     for name in _set_order(sets):
         role = sets[name].get("role")
         lines.append(f"- {name} ({role}): {_plural(len(sets[name].get('pmids', [])), 'record')} — {ROLE_USE.get(role, 'unknown role')}")
@@ -745,13 +806,16 @@ def _stage_test(ws, data):
     for entry in versions:
         lost |= set((entry["evaluation"].get("since_previous") or {}).get("known_lost") or [])
     lost = (lost & set(latest.get("known_in_pubmed") or [])) - set(latest.get("retrieved_known") or [])
+    note = clean(versions[-1].get("note"), 160)
     lines = [f"{_plural(len(versions), 'version')} evaluated: {_n(first)} → {_n(latest.get('count'))} records",
-             f"- Latest: v{versions[-1]['version']}" + (f" — {clean(versions[-1].get('note'), 160)}" if str(versions[-1].get('note') or '').strip() else ""),
-             f"- Recall: {_recall(latest)}",
-             f"- Missed known records: {_misses(latest)}",
-             f"- Known records lost along the way and not recovered: {_pmids(lost)}",
-             f"- Checks: {_checks(latest)}",
-             _next("test", ws.protocol().get("depth"))]
+             f"- Latest: v{versions[-1]['version']}" + (f" — {note}" if note else "")]
+    if latest.get("count") is not None:
+        lines += [f"- Recall: {_recall(latest)}",
+                  f"- Missed known records: {_misses(latest)}",
+                  f"- Known records lost along the way and not recovered: {_pmids(lost)}"]
+    else:
+        lines.append(f"- Recall: {NOT_MEASURED}")
+    lines += [f"- Checks: {_checks(latest)}", _next("test", ws.protocol().get("depth"))]
     return "Summary", lines
 
 
@@ -777,7 +841,7 @@ def _stage_critic(ws, data):
              f"{_n(len(kinds) - kinds.count('revision'))} closing"]
     active: dict[str, dict] = {}
     for r, kind in zip(rounds, kinds):
-        findings = [f for f in r.get("findings") or [] if isinstance(f, dict)]
+        findings = [f for f in _list(r.get("findings")) if isinstance(f, dict)]
         severity, _ = _finding_counts(findings)
         lines.append(f"- Round {r.get('round')} ({kind}) on v{r.get('strategy_version')}: "
                      f"{_plural(len(findings), 'finding')} — {severity}")
@@ -823,8 +887,18 @@ def _stage_deliver(ws, data):
 
 # -- status reminder --------------------------------------------------------------------------
 
+RESEND_WHEN_CHANGED = ("scope", "deliver")  # the user must see the current version of these
+
+
 def stage_reminders(ws: Workspace) -> tuple[dict, list[str]]:
     """Which stage summaries were sent, and which are due but not sent. Never blocks anything."""
+    try:
+        return _stage_reminders(ws)
+    except Exception as exc:  # noqa: BLE001 - psb status must never fail because of progress files
+        return {}, [f"progress state could not be read ({type(exc).__name__}); psb progress list shows what was sent"]
+
+
+def _stage_reminders(ws: Workspace) -> tuple[dict, list[str]]:
     sent = {stage: [m for m in messages(ws) if m.get("event") == f"stage:{stage}"] for stage in STAGES}
     protocol = ws.protocol()
     strategy_blocks = bool(ws.strategy().blocks) if (ws.root / "strategy.json").exists() else False
@@ -838,10 +912,13 @@ def stage_reminders(ws: Workspace) -> tuple[dict, list[str]]:
         "deliver": any(a.get("purpose") in REPORT_PURPOSES for a in ws.attempts()),
     }
     todo = [f"send the Step {STAGES[s]} summary: psb progress {s}" for s in STAGES if due[s] and not sent[s]]
-    if due["deliver"] and sent["deliver"]:
-        try:
-            if render(ws, "stage:deliver")["text"] != sent["deliver"][-1].get("text"):
-                todo.append("send the Step 7 summary again (the delivery changed): psb progress deliver")
-        except (ProgressError, WorkspaceError, OSError, ValueError):
-            pass
+    for stage in RESEND_WHEN_CHANGED:
+        if due[stage] and sent[stage]:
+            try:
+                current = render(ws, f"stage:{stage}")["text"]
+            except (ProgressError, WorkspaceError, OSError, ValueError):
+                continue
+            if current != sent[stage][-1].get("text"):
+                todo.append(f"send the Step {STAGES[stage]} summary again (it changed since it was sent): "
+                            f"psb progress {stage}")
     return {stage: bool(rows) for stage, rows in sent.items()}, todo
