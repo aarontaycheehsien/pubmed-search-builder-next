@@ -37,13 +37,14 @@ Eligibility criteria (applied at screening):
 - Exclude: case reports
 
 Scope confirmed by the user.
-Next: Step 3/7 Known records: add seeds, look for prior reviews, run pilot and citation searches, and screen up to ~150 candidates (standard).
+Next: Step 3/7 Known records: screen seeds, look for prior reviews, run pilot and citation searches, screen up to ~150 candidates (standard), then choose the allocation (psb allocate).
 
 ---
 
 **PSB · Step 3/7 Known records · Set updated**
-Set seeds (seed): 0 → 2 records
-- Use: user-supplied; used for development and term mining
+Set seeds (development): 0 → 2 records
+- Use: used for term mining, diagnosing misses and repeated development checks
+- Origin: user-supplied
 - Added: 1, 2
 
 ---
@@ -80,21 +81,35 @@ Screened 1 candidate: 1 include · 0 exclude · 0 uncertain
 ---
 
 **PSB · Step 3/7 Known records · Set updated**
-Set relevant (relevant): 0 → 3 records
-- Use: screened in during the build; used for development and term mining
+Set relevant (development): 0 → 3 records
+- Use: used for term mining, diagnosing misses and repeated development checks
 - Added: 3, 5, 6
 
 ---
 
+**PSB · Step 3/7 Known records · Allocation**
+No holdout is proposed: fewer than 10 eligible units.
+- Eligible pool: 5 units (5 records); all of it is used for development
+- Unexposed units: 0 of 5
+- Next: psb allocate freezes this allocation
+
+---
+
+**PSB · Step 3/7 Known records · Allocation frozen**
+Frozen: 5 units (5 records) for development · 0 units (0 records) held out · no holdout proposed: fewer than 10 eligible units
+
+---
+
 **PSB · Step 3/7 Known records · Summary**
-Known relevant records: 5 for development · 0 held out (validation and benchmark)
-- seeds (seed): 2 records — user-supplied; used for development and term mining
-- relevant (relevant): 3 records — screened in during the build; used for development and term mining
-- Held-out validation set: none (development records: 5)
+Known records: 5 for development · 0 held out · 0 on comparison lists
+- relevant (development): 3 records — used for term mining, diagnosing misses and repeated development checks
+- seeds (development): 2 records — used for term mining, diagnosing misses and repeated development checks
+- Allocation: frozen: 5 units (5 records) for development · 0 units (0 records) held out · no holdout proposed: fewer than 10 eligible units
 - Candidate searches: 2 (1 neighbour search, 1 pilot search)
-- Screening: 5 screened → 3 include · 1 exclude · 1 uncertain
+- Screening: 5 screened → 3 include · 1 exclude · 1 uncertain (separate context 0 · builder 5)
 - Screening budget used: 5 of ~150 (standard)
-- Included but not in a set: none
+- Included after the allocation, not in a set: none
+- In a development set with no include decision: 1, 2
 Next: Step 4/7 Vocabulary: build MeSH and [tiab] terms for each searched concept.
 
 ---
@@ -107,23 +122,23 @@ Next: Step 4/7 Vocabulary: build MeSH and [tiab] terms for each searched concept
 - MeSH lookups: 0 · MeSH records inspected: 0
 - Term mining from development records: not run
 - Lint: 0 errors · 0 warnings
-Next: Step 5/7 Test & revise: evaluate counts and recall, and fix misses one change at a time.
+Next: Step 5/7 Develop & revise: check counts and development retrieval, and fix misses one change at a time.
 
 ---
 
-**PSB · Step 5/7 Test & revise · Evaluation v1**
+**PSB · Step 5/7 Develop & revise · Evaluation v1**
 v1: 5 records
 - Change: first draft
-- Recall: seeds 2/2 (100.0%) · relevant 3/3 (100.0%)
+- Known-record retrieval: development relevant 3/3 (100.0%), seeds 2/2 (100.0%)
 - Missed known records: none
 - Checks: 0 blockers · 0 need critic review · lint 0 errors, 0 warnings
 
 ---
 
-**PSB · Step 5/7 Test & revise · Summary**
+**PSB · Step 5/7 Develop & revise · Summary**
 1 version evaluated: 5 → 5 records
 - Latest: v1 — first draft
-- Recall: seeds 2/2 (100.0%) · relevant 3/3 (100.0%)
+- Known-record retrieval: development relevant 3/3 (100.0%), seeds 2/2 (100.0%)
 - Missed known records: none
 - Known records lost along the way and not recovered: none
 - Checks: 0 blockers · 0 need critic review · lint 0 errors, 0 warnings
@@ -154,13 +169,14 @@ Round 1 (revision): 6 domains pass · 0 revise
 - Findings by latest status: 0 open · 0 resolved · 0 rejected · 1 accepted-risk
 - Overridden: none
 - Latest round reviewed the latest evaluation: yes
-Next: Step 7/7 Deliver: live revalidation and the protected final query (psb report).
+Next: Step 7/7 Deliver: the held-out test when records are reserved (psb holdout-test), then live revalidation and the protected final query (psb report).
 
 ---
 
 **PSB · Step 7/7 Deliver · Report**
 Delivered: final query validated live, 5 records
-- Recall: seeds 2/2 (100.0%) · relevant 3/3 (100.0%)
+- Known-record retrieval: development relevant 3/3 (100.0%), seeds 2/2 (100.0%)
+- Held-out test: No held-out test was performed.
 - Critic: 1 round (internal PRESS-structured critique, not PRESS peer review); overridden findings: none
 - Files: final-query.txt · audit.md · validation-manifest.json
 - This is a draft. It needs PRESS peer review by an information specialist before use.
@@ -187,14 +203,21 @@ Line by line:
 | 6 | `#4 OR #5` | 5 | none |
 | 7 | `#3 AND #6` | 5 | none |
 
-Recall against known relevant records:
+Known-record retrieval and the held-out test:
 
-| Set | Role (independence) | In PubMed | Retrieved | Recall |
+- **Allocation:** Development: 5 units (5 records); held-out test: none; no holdout was proposed: fewer than 10 eligible units.
+- **Result:** No held-out test was performed.
+- **Test material and separation:** No holdout was proposed: fewer than 10 eligible units.
+- **Interpretation:** These records were available for developing or improving the search. Their retrieval is a development check, not independent validation. No held-out retrieval test was performed.
+- **Size context:** Not applicable: no held-out test was performed.
+- **Delivery and next step:** Not applicable: no held-out test was performed.
+
+Development checks:
+
+| Set | Purpose | In PubMed | Retrieved | Retrieved % |
 |---|---|---:|---:|---:|
-| relevant | relevant (records screened relevant during the build; used for development, not independent) | 3 | 3 | 100.0% |
-| seeds | seed (user-supplied known relevant records; used for development, not independent) | 2 | 2 | 100.0% |
-
-Relative recall, not sensitivity: development sets were used to build the strategy.
+| relevant | development | 3 | 3 | 100.0% |
+| seeds | development | 2 | 2 | 100.0% |
 
 - Critic: 1 round (internal PRESS-structured critique, not PRESS peer review); overridden findings: none
 - Files: final-query.txt · audit.md · validation-manifest.json

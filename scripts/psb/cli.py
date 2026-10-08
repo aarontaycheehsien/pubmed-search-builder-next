@@ -9,11 +9,12 @@ import random
 import sys
 from pathlib import Path
 
-from . import config, deliver, mesh, progress, terms, validation
+from . import allocation, config, deliver, holdout, mesh, progress, reserved, terms, validation
 from .evaluate import compare, evaluate
 from .ncbi import LINKNAMES, NcbiError, PubMed
 from .strategy import StrategyError, lint, numbered_lines, full_query
-from .workspace import ROLES, Workspace, WorkspaceError, find_root, normalize_pmids, now, read_json, sha256_text
+from .workspace import (LEGACY_ROLES, ORIGINS, PURPOSES, Workspace, WorkspaceError, find_root, normalize_pmids, now,
+                        purpose_label, purpose_of, read_json, sha256_text)
 
 
 class UsageError(RuntimeError):
@@ -77,6 +78,15 @@ def cmd_status(args) -> dict:
         todo.append("draft strategy.json blocks")
     if not sets and protocol.get("depth") != "quick":
         todo.append("add known relevant PMIDs (psb set add) so recall can be measured")
+    held = allocation.summary(ws)
+    included = any(row["decision"] == "include" for row in progress.decisions(ws).values())
+    if held is None and (sets or included):
+        todo.append("freeze the allocation of the known records (psb allocate --preview, then psb allocate)")
+    elif held and held["stale"]:
+        todo.append(f"the allocation is stale ({'; '.join(held['stale'])}): re-screen the reserved records, then "
+                    "psb allocate --rebind")
+    elif held and held["H"] and not held["released"] and not holdout.receipts(ws):
+        todo.append("after the critic review, run the held-out test (psb holdout-test) before psb report")
     if not versions:
         todo.append("run psb eval")
     elif versions[-1]["strategy_sha256"] != sha256_text(json.dumps(strategy.to_dict(), sort_keys=True)):
@@ -97,7 +107,9 @@ def cmd_status(args) -> dict:
         "depth": protocol.get("depth"),
         "concepts": [{"id": c.get("id"), "role": c.get("role")} for c in concepts],
         "blocks": [{"id": b.id, "terms": len(b.terms)} for b in strategy.blocks],
-        "sets": {name: {"role": d.get("role"), "size": len(d.get("pmids", []))} for name, d in sets.items()},
+        "sets": {name: {"purpose": purpose_label(d), "size": len(d.get("pmids", []))} for name, d in sets.items()},
+        "allocation": held,
+        "holdout_receipts": [{"number": r["number"], "status": r.get("status")} for r in holdout.receipts(ws)],
         "versions": len(versions),
         "last_eval": {"count": last.get("count"), "recall": {n: s.get("recall_percent") for n, s in (last.get("sets") or {}).items()}} if last else None,
         "critic_rounds": critic,
@@ -110,6 +122,7 @@ def cmd_status(args) -> dict:
 def cmd_count(args) -> dict:
     ws = workspace(args)
     query = query_arg(args)
+    reserved.check_query(ws, query)
     result = ws.pubmed.search(query)
     body = {"ok": True, **result}
     if args.purpose:
@@ -120,19 +133,26 @@ def cmd_count(args) -> dict:
 def cmd_fetch(args) -> dict:
     ws = workspace(args)
     pmids = pmid_args(ws, args.pmids, args.set)
-    records = ws.ensure_records(pmids)
+    if not args.screening:
+        reserved.refuse(ws, pmids, "fetching them")
+    records = ws.ensure_records(pmids, private=args.screening)
     rows = [
         {"pmid": p, "year": r.get("year"), "title": r.get("title"), "publication_types": r.get("publication_types"),
          "mesh": [h["name"] for h in r.get("mesh", [])][: args.mesh],
          **({"abstract": r.get("abstract")} if args.abstracts else {})}
         for p, r in records.items()
     ]
-    return {"ok": True, "found": len(records), "missing": [p for p in pmids if p not in records], "records": rows}
+    if not args.screening and records:
+        reserved.record(ws, list(records), "abstract" if args.abstracts else "title", "fetch")
+    return {"ok": True, "found": len(records), "missing": [p for p in pmids if p not in records], "records": rows,
+            **({"store": "screening (private to the separate screening context)"} if args.screening else {})}
 
 
 def cmd_sample(args) -> dict:
     ws = workspace(args)
     query = query_arg(args)
+    if not args.screening:
+        reserved.check_query(ws, query)
     first = ws.pubmed.search(query, retmax=0)
     total = first["count"]
     if not total:
@@ -141,8 +161,13 @@ def cmd_sample(args) -> dict:
             progress.attach(body, ws, f"search:{args.purpose}", {"query": query, "count": 0, "shown": 0})
         return body
     start = random.Random(args.seed).randrange(max(1, min(total, 9999) - args.n + 1)) if args.random else 0
-    pmids = ws.pubmed.search(query, retmax=args.n, retstart=start)["pmids"]
-    records = ws.ensure_records(pmids)
+    # Reserved records are skipped without a trace: over-fetch by their number so the page stays full.
+    hidden = 0 if args.screening else len(ws.reserved_pmids())
+    page = ws.pubmed.search(query, retmax=args.n + hidden, retstart=start)["pmids"]
+    pmids = page if args.screening else reserved.visible(ws, page)[: args.n]
+    records = ws.ensure_records(pmids, private=args.screening)
+    if not args.screening and records:
+        reserved.record(ws, list(records), "title", "sample")
     body = {
         "ok": True, "count": total, "retstart": start,
         "records": [{"pmid": p, "year": r.get("year"), "title": r.get("title")} for p, r in records.items()],
@@ -161,7 +186,11 @@ def cmd_sample(args) -> dict:
 def cmd_neighbors(args) -> dict:
     ws = workspace(args)
     pmids = pmid_args(ws, args.pmids, args.set)
+    # Neighbours of a reserved record are derived from its content; reserved neighbours are skipped.
+    reserved.refuse(ws, pmids, "listing their neighbours")
+    hidden = ws.reserved_pmids()
     known = {p for d in ws.sets().values() for p in d.get("pmids", [])} if args.exclude_known else set()
+    known |= hidden
     scores: dict[str, dict] = {}
     for link in args.links.split(","):
         link = link.strip()
@@ -238,34 +267,45 @@ def cmd_mesh(args) -> dict:
 def cmd_set(args) -> dict:
     ws = workspace(args)
     if args.set_command == "list":
-        return {"ok": True, "roles": ROLES, "sets": {n: {"role": d["role"], "size": len(d["pmids"]), "source": d.get("source")} for n, d in ws.sets().items()}}
+        return {"ok": True, "purposes": PURPOSES,
+                "sets": {n: {"purpose": purpose_label(d), "size": len(d.get("pmids", [])), "source": d.get("source")}
+                         for n, d in ws.sets().items()}}
     if args.set_command == "add":
-        existing = ws.get_set(args.name)["pmids"] if ws.set_path(args.name).exists() else []
-        pmids = existing + [p for p in normalize_pmids(args.pmids) if p not in existing]
-        body = {"ok": True, **ws.save_set(args.name, args.role, pmids, source=args.source, note=args.note)}
-        return progress.attach(body, ws, "set", {"name": args.name, "role": args.role, "before": len(existing),
-                                                 "after": len(pmids), "added": pmids[len(existing):],
-                                                 "overlap": body["overlap_with_other_roles"]})
+        purpose = LEGACY_ROLES.get(args.purpose or args.role, args.purpose or args.role)
+        if not purpose:
+            raise UsageError("give --purpose development or --purpose comparison")
+        previous = ws.get_set(args.name) if ws.set_path(args.name).exists() else {}
+        existing = previous.get("pmids", [])
+        given = [p for p in normalize_pmids(args.pmids) if p not in existing]
+        reserved.refuse(ws, given, "adding them to a set")
+        late = allocation.late_companions(ws, given) if purpose == "development" else []
+        given = [p for p in given if p not in late]
+        pmids = existing + given
+        origin = sorted(set(previous.get("origin") or []) | set(args.origin or []) |
+                        ({"user-supplied"} if args.role == "seed" else set()))
+        body = {"ok": True, **ws.save_set(args.name, purpose, pmids, source=args.source or previous.get("source", ""),
+                                          note=args.note or previous.get("note", ""), origin=origin)}
+        if late:
+            body["late_companions"] = len(late)
+            body["note"] = (f"{len(late)} record(s) report a study reserved for the held-out test: they were kept out "
+                            "of development, are never mined, and do not change the test's denominators")
+        if purpose == "development" and given:
+            # Development records are checked at every evaluation: their retrieval is fed back.
+            reserved.record(ws, given, "feedback", "set add")
+        return progress.attach(body, ws, "set", {"name": args.name, "purpose": purpose, "origin": origin,
+                                                 "before": len(existing), "after": len(pmids), "added": given,
+                                                 "late": len(late), "overlap": body["overlap_with_other_purposes"]})
     if args.set_command == "remove":
         data = ws.get_set(args.name)
         drop = set(normalize_pmids(args.pmids))
-        body = {"ok": True, **ws.save_set(args.name, data["role"], [p for p in data["pmids"] if p not in drop], source=data.get("source", ""), note=data.get("note", ""))}
-        return progress.attach(body, ws, "set", {"name": args.name, "role": data["role"], "before": len(data["pmids"]),
+        body = {"ok": True, **ws.save_set(args.name, purpose_of(data), [p for p in data["pmids"] if p not in drop],
+                                          source=data.get("source", ""), note=data.get("note", ""),
+                                          origin=data.get("origin") or [])}
+        return progress.attach(body, ws, "set", {"name": args.name, "purpose": purpose_of(data), "before": len(data["pmids"]),
                                                  "after": len(body["pmids"]), "removed": [p for p in data["pmids"] if p in drop],
-                                                 "overlap": body["overlap_with_other_roles"]})
-    # split: move a random fraction of one set into a held-out validation set
-    data = ws.get_set(args.name)
-    pmids = list(data["pmids"])
-    rng = random.Random(args.seed)
-    held = sorted(rng.sample(pmids, max(1, round(len(pmids) * args.fraction)))) if pmids else []
-    if len(pmids) - len(held) < 1:
-        raise UsageError("split would leave nothing for development")
-    ws.save_set(args.name, data["role"], [p for p in pmids if p not in held], source=data.get("source", ""), note=data.get("note", ""))
-    out = ws.save_set(args.into, "validation", held, source=f"split from {args.name} (seed {args.seed}, fraction {args.fraction})")
-    body = {"ok": True, "development": len(pmids) - len(held), "validation": len(held), "validation_set": out["name"],
-            "note": "Do not mine the validation set. Every psb eval shows its recall, so it is consulted repeatedly: report it as semi-independent."}
-    return progress.attach(body, ws, "split", {"name": args.name, "into": out["name"], "development": body["development"],
-                                               "validation": body["validation"]})
+                                                 "overlap": body["overlap_with_other_purposes"]})
+    raise UsageError("psb set split is withdrawn: records the builder has seen cannot become an independent test by "
+                     "moving them. Screen candidates in the separate context and use psb allocate.")
 
 
 def cmd_lint(args) -> dict:
@@ -305,19 +345,22 @@ def cmd_terms(args) -> dict:
     if args.terms_command == "rank":
         bad: list[str] = []
         if args.set:
-            held_out = {n for n, d in ws.sets().items() if d.get("role") in {"validation", "benchmark"}}
-            bad = [n for n in args.set if n in held_out]
-            if bad and not args.allow_held_out:
-                raise UsageError(f"{', '.join(bad)} is held out; mining it would make its recall meaningless")
-            pmids = pmid_args(ws, [], args.set)
+            comparison = {n for n, d in ws.sets().items() if purpose_of(d) == "comparison"}
+            bad = [n for n in args.set if n in comparison]
+            if bad and not args.include_comparison:
+                raise UsageError(f"{', '.join(bad)} is a comparison list; it is not mined unless you pass "
+                                 "--include-comparison")
+            pmids = reserved.visible(ws, pmid_args(ws, [], args.set))
         else:
-            pmids = ws.mining_pmids()
+            pmids = ws.mining_pmids(include_comparison=args.include_comparison)
+            bad = sorted(n for n, d in ws.sets().items() if purpose_of(d) == "comparison") if args.include_comparison else []
         if not pmids:
-            raise UsageError("no mining records: add a seed or relevant set")
+            raise UsageError("no mining records: add a development set")
         records = list(ws.ensure_records(pmids).values())
+        reserved.record(ws, [str(r.get("pmid")) for r in records], "indexing", "terms rank")
         body = {"ok": True, **terms.rank(ws.pubmed, records, strategy, fields=args.fields.split(","),
                                           budget=args.budget, min_df=args.min_df, include_covered=args.include_covered)}
-        return progress.attach(body, ws, "terms-rank", {"sets": sorted(set(args.set or [])), "held_out_mined": sorted(set(bad)),
+        return progress.attach(body, ws, "terms-rank", {"sets": sorted(set(args.set or [])), "comparison_mined": sorted(set(bad)),
                                                         "records": body["records"], "candidates": body["candidates"],
                                                         "already_covered": body["already_covered"], "scored": len(body["scored"])})
     versions = ws.versions()
@@ -325,11 +368,14 @@ def cmd_terms(args) -> dict:
         raise UsageError("run psb eval first")
     attempts = ws.attempts()
     evaluation = attempts[-1]["evaluation"] if attempts else versions[-1]["evaluation"]
-    missed = [m["pmid"] for m in evaluation.get("misses", []) if not args.set or set(m["sets"]) & set(args.set)]
+    missed = reserved.visible(ws, [m["pmid"] for m in evaluation.get("misses", [])
+                                   if not args.set or set(m["sets"]) & set(args.set)])
     records = list(ws.ensure_records(missed).values())
+    if records:
+        reserved.record(ws, [str(r.get("pmid")) for r in records], "indexing", "terms miss")
     body = {"ok": True, "version": versions[-1]["version"], "misses": terms.miss_report(records, evaluation, strategy),
-            "note": "Vocabulary from missed records is a candidate. Adding a term to recover a validation miss "
-                    "makes that set part of development; say so in the audit."}
+            "note": "Vocabulary from missed records is a candidate: test each term with psb eval. Held-out records "
+                    "are never diagnosed here; their misses are offered as a repair after the held-out test."}
     return progress.attach(body, ws, "terms-miss", {"version": body["version"],
                                                     "misses": [m for m in evaluation.get("misses", []) if m["pmid"] in missed]})
 
@@ -366,11 +412,67 @@ def cmd_report(args) -> dict:
 def cmd_screen(args) -> dict:
     ws = workspace(args)
     entries = progress.record_screening(ws, include=args.include, exclude=args.exclude, uncertain=args.uncertain,
-                                        reason=args.reason, file=args.file)
+                                        reason=args.reason, file=args.file, context=args.context, group=args.group,
+                                        origin=args.origin, evidence=args.evidence, source_ref=args.source_ref)
+    # A reserved record screened by the builder has been seen: record it rather than hide it.
+    seen = [e["pmid"] for e in entries if e.get("context") != "separate" and e["pmid"] in ws.reserved_pmids()]
+    if seen:
+        reserved.record(ws, seen, "screened", "screen")
     body = {"ok": True, "recorded": len(entries),
             "decisions": {d: [e["pmid"] for e in entries if e["decision"] == d] for d in progress.DECISIONS},
-            "note": "Screening decisions are a record only: add includes to a set with psb set add."}
+            "note": ("Screening decisions are a record only. Eligible records enter the allocation pool; psb allocate "
+                     "assigns them to development or the held-out test.")}
     return progress.attach(body, ws, "screen", {"entries": entries})
+
+
+def cmd_allocate(args) -> dict:
+    ws = workspace(args)
+    if args.rebind:
+        event = allocation.rebind(ws)
+        body = {"ok": True, "removed": len(event["removed"]), "allocation": allocation.summary(ws)}
+        return progress.attach(body, ws, "allocation", {"rebind": True})
+    if args.preview:
+        proposal = allocation.propose(ws, seed=args.seed)
+        body = {"ok": True, "N": proposal["N"], "U": proposal["U"], "H": proposal["H"], "reason": proposal["reason"],
+                "pool": proposal["pool"], "development": proposal["development"], "holdout": proposal["holdout"],
+                "studies": proposal["studies"], "unavailable": len(proposal["unavailable"]),
+                "on_comparison": len(proposal["on_comparison"]), "unscreened_development": proposal["unscreened"],
+                "next": ("relay the message and record the user's choice: psb allocate --keep-holdout or "
+                         "--all-development (--proceed-default when they asked you not to wait)") if proposal["H"]
+                        else "no holdout is proposed: psb allocate freezes every unit for development"}
+        return progress.attach(body, ws, "allocation-preview", {"proposal": proposal})
+    choice = ("keep-holdout" if args.keep_holdout else "all-development" if args.all_development
+              else "proceed-default" if args.proceed_default else None)
+    allocation.freeze(ws, choice=choice, seed=args.seed, reserve=args.reserve)
+    body = {"ok": True, "allocation": allocation.summary(ws)}
+    return progress.attach(body, ws, "allocation", {"rebind": False})
+
+
+def cmd_holdout_test(args) -> dict:
+    ws = workspace(args)
+    receipt = holdout.run(ws)
+    evaluation = deliver.latest_evaluation(ws)
+    message = holdout.message(ws, receipt, evaluation)
+    body = {"ok": receipt.get("status") != "incomplete", "receipt": receipt["number"], "status": receipt["status"],
+            "repeat": bool(receipt.get("repeat")), "interpretation": message["text"],
+            "next": ("psb report delivers the tested query unchanged" if receipt["status"] != "incomplete"
+                     else "the PubMed check did not complete: run psb holdout-test again")}
+    return progress.attach(body, ws, "holdout-test", {"text": message["text"], "status": receipt["status"]})
+
+
+def cmd_holdout_release(args) -> dict:
+    ws = workspace(args)
+    event = allocation.release(ws, args.reason)
+    body = {"ok": True, "released": len(event["members"]), "receipts_kept": event["receipts"],
+            "next": "revise the strategy with the released records as development, psb eval, then the repair critic round"}
+    return progress.attach(body, ws, "holdout-release", {"event": event})
+
+
+def cmd_exposure(args) -> dict:
+    ws = workspace(args)
+    entries = reserved.record(ws, normalize_pmids(args.pmids), args.kind, "declared", note=args.note, declared=True)
+    return {"ok": True, "recorded": len(entries),
+            "note": "Declared exposure counts as exposure: these records go to development, or qualify the held-out result."}
 
 
 def cmd_progress(args) -> dict:
@@ -433,6 +535,8 @@ def build_parser() -> argparse.ArgumentParser:
             p.add_argument("--n", type=int, default=10)
             p.add_argument("--random", action="store_true", help="sample from a random offset")
             p.add_argument("--seed", type=int, default=1)
+            p.add_argument("--screening", action="store_true",
+                           help="separate screening context only: records go to the private store, no exposure")
         p.set_defaults(func=func)
 
     p = sub.add_parser("fetch", help="fetch and store records")
@@ -440,6 +544,8 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--set", action="append")
     p.add_argument("--abstracts", action="store_true")
     p.add_argument("--mesh", type=int, default=12, help="MeSH headings shown per record")
+    p.add_argument("--screening", action="store_true",
+                   help="separate screening context only: records go to the private store, no exposure")
     p.set_defaults(func=cmd_fetch)
 
     p = sub.add_parser("neighbors", help="similar, citing, or cited records of known PMIDs")
@@ -465,23 +571,26 @@ def build_parser() -> argparse.ArgumentParser:
     q.add_argument("--no-counts", action="store_true")
     p.set_defaults(func=cmd_mesh)
 
-    p = sub.add_parser("set", help="PMID sets with roles")
+    p = sub.add_parser("set", help="PMID sets with a purpose (development or comparison)")
     ssub = p.add_subparsers(dest="set_command", required=True)
     ssub.add_parser("list")
     q = ssub.add_parser("add")
     q.add_argument("name")
     q.add_argument("pmids", nargs="+")
-    q.add_argument("--role", required=True, choices=sorted(ROLES))
+    group = q.add_mutually_exclusive_group(required=True)
+    group.add_argument("--purpose", choices=sorted(PURPOSES))
+    group.add_argument("--role", choices=sorted(LEGACY_ROLES), help="legacy name, mapped to a purpose")
+    q.add_argument("--origin", action="append", choices=ORIGINS)
     q.add_argument("--source", default="")
     q.add_argument("--note", default="")
     q = ssub.add_parser("remove")
     q.add_argument("name")
     q.add_argument("pmids", nargs="+")
-    q = ssub.add_parser("split")
-    q.add_argument("name")
-    q.add_argument("--into", default="validation")
-    q.add_argument("--fraction", type=float, default=0.3)
-    q.add_argument("--seed", type=int, default=1)
+    q = ssub.add_parser("split", help="withdrawn: use psb allocate")
+    q.add_argument("name", nargs="?")
+    q.add_argument("--into")
+    q.add_argument("--fraction", type=float)
+    q.add_argument("--seed", type=int)
     p.set_defaults(func=cmd_set)
 
     p = sub.add_parser("screen", help="record screening decisions on candidate records")
@@ -489,8 +598,39 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--exclude", nargs="+", default=[])
     p.add_argument("--uncertain", nargs="+", default=[])
     p.add_argument("--reason", default="", help="reason recorded with every decision in this call")
-    p.add_argument("--file", help="JSON list of {pmid, decision, reason}")
+    p.add_argument("--file", help="JSON list of {pmid, decision, reason, context, group, origin, evidence, source_ref}")
+    p.add_argument("--context", choices=progress.CONTEXTS,
+                   help="separate: screened only in the separate screening context (reasons kept private)")
+    p.add_argument("--group", help="study key shared by reports of one study (e.g. a registration ID)")
+    p.add_argument("--origin", action="append", choices=ORIGINS)
+    p.add_argument("--evidence", choices=progress.EVIDENCE, help="what the decision was based on")
+    p.add_argument("--source-ref", help="where inclusion was verified, e.g. Table 2 of PMID 123")
     p.set_defaults(func=cmd_screen)
+
+    p = sub.add_parser("exposure", help="declare records the builder has seen")
+    esub = p.add_subparsers(dest="exposure_command", required=True)
+    q = esub.add_parser("declare")
+    q.add_argument("pmids", nargs="+")
+    q.add_argument("--kind", required=True, choices=reserved.KINDS)
+    q.add_argument("--note", default="")
+    p.set_defaults(func=cmd_exposure)
+
+    p = sub.add_parser("allocate", help="freeze the split of eligible records into development and held-out units")
+    choice = p.add_mutually_exclusive_group()
+    choice.add_argument("--preview", action="store_true", help="counts only, and the choice message when a holdout is proposed")
+    choice.add_argument("--keep-holdout", action="store_true")
+    choice.add_argument("--all-development", action="store_true")
+    choice.add_argument("--proceed-default", action="store_true", help="keep the proposed holdout: the user asked not to be asked")
+    choice.add_argument("--reserve", nargs="+", help="the user's designated test records (replaces the automatic holdout)")
+    choice.add_argument("--rebind", action="store_true", help="after an eligibility or as_of change and re-screening")
+    p.add_argument("--seed", type=int, default=1)
+    p.set_defaults(func=cmd_allocate)
+
+    sub.add_parser("holdout-test", help="one retrieval test of the frozen query on the held-out records").set_defaults(
+        func=cmd_holdout_test)
+    p = sub.add_parser("holdout-release", help="return the held-out records to development to repair the search")
+    p.add_argument("--reason", required=True)
+    p.set_defaults(func=cmd_holdout_release)
 
     p = sub.add_parser("progress", help="the standard progress message for a workflow step")
     p.add_argument("stage", choices=["intake-request", *progress.STAGES, "list"])
@@ -513,7 +653,7 @@ def build_parser() -> argparse.ArgumentParser:
     q.add_argument("--budget", type=int, default=40, help="background counts to spend")
     q.add_argument("--min-df", type=int, default=2)
     q.add_argument("--include-covered", action="store_true")
-    q.add_argument("--allow-held-out", action="store_true")
+    q.add_argument("--include-comparison", action="store_true", help="also mine comparison lists")
     q = tsub.add_parser("miss", help="diagnose missed known records from the last eval")
     q.add_argument("--set", action="append")
     p.set_defaults(func=cmd_terms)

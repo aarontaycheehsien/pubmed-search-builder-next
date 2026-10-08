@@ -80,6 +80,8 @@ def build(ws, capsys):
             text(capsys, "screen", "--include", "5", "6", "--exclude", "7", "--uncertain", "8", "--reason", "abstract"),
             text(capsys, "screen", "--include", "3"),
             text(capsys, "set", "add", "relevant", "5", "6", "3", "--role", "relevant", "--source", "screened"),
+            text(capsys, "allocate", "--preview"),
+            text(capsys, "allocate"),
             text(capsys, "progress", "known-records")]
     write_json(ws.root / "strategy.json", STRATEGY)
     sent += [text(capsys, "progress", "vocabulary"),
@@ -120,7 +122,7 @@ def test_candidate_searches_are_announced(ws, capsys):
         "Prior-review search: 3 records for `asthma*[tiab]`\n"
         "- Shown: 3 reviews to check against the scope (batch C2)")
     assert text(capsys, "count", "--purpose", "noise-check", "child*[tiab]") == (
-        "**PSB · Step 5/7 Test & revise · Noise check**\n"
+        "**PSB · Step 5/7 Develop & revise · Noise check**\n"
         "Noise check: 4 records for `child*[tiab]`\n"
         "- Count only; no records shown")
     code, out = psb(capsys, "count", "child*[tiab]")
@@ -132,19 +134,28 @@ def test_every_stage_reports_and_status_stops_reminding(ws, capsys):
     headers = [m.splitlines()[0] for m in sent]
     for step, name in progress.STEPS.items():
         assert any(h.startswith(f"**PSB · Step {step}/7 {name} · ") for h in headers), name
-    known = sent[9]
-    assert "Known relevant records: 5 for development · 0 held out" in known
-    assert "- Screening: 5 screened → 3 include · 1 exclude · 1 uncertain" in known
+
+    def message(header):
+        return next(m for m in sent if m.startswith(f"**PSB · {header}**"))
+    known = message("Step 3/7 Known records · Summary")
+    assert "Known records: 5 for development · 0 held out · 0 on comparison lists" in known
+    assert "- Allocation: frozen: 5 units (5 records) for development · 0 units (0 records) held out · no holdout " \
+           "proposed: fewer than 10 eligible units" in known
+    assert "- Screening: 5 screened → 3 include · 1 exclude · 1 uncertain (separate context 0 · builder 5)" in known
     assert "- Candidate searches: 2 (1 neighbour search, 1 pilot search)" in known
     assert known.endswith("Next: Step 4/7 Vocabulary: build MeSH and [tiab] terms for each searched concept.")
-    assert "- Asthma (asthma): 2 terms — 1 MeSH · 1 text-word · 0 other" in sent[10]
-    assert "- Concepts not searched: Exacerbations (screen)" in sent[10]
-    assert "- Recall: seeds 2/2 (100.0%) · relevant 3/3 (100.0%)" in sent[11]
+    vocabulary = message("Step 4/7 Vocabulary · Summary")
+    assert "- Asthma (asthma): 2 terms — 1 MeSH · 1 text-word · 0 other" in vocabulary
+    assert "- Concepts not searched: Exacerbations (screen)" in vocabulary
+    assert ("- Known-record retrieval: development relevant 3/3 (100.0%), seeds 2/2 (100.0%)"
+            in message("Step 5/7 Develop & revise · Evaluation v1"))
     assert "| Exacerbations | Screened | outcomes are reported unevenly |" in sent[2]
-    assert "Round 1 (revision 1 of 2) packet written for v1" in sent[13]
+    assert "Round 1 (revision 1 of 2) packet written for v1" in message("Step 6/7 Critic · Round 1 packet")
     assert sent[-2].startswith("**PSB · Step 7/7 Deliver · Report**\nDelivered: final query validated live")
+    assert "- Held-out test: No held-out test was performed." in sent[-2]
     final = sent[-1]
-    assert "| seeds | seed" in final and progress.PRESS in final and "```text\n" in final
+    assert "| seeds | development |" in final and progress.PRESS in final and "```text\n" in final
+    assert "**Interpretation:** These records were available for developing or improving the search." in final
     code, status = psb(capsys, "status")
     assert all(status["stage_summaries_sent"].values()) and not any("psb progress" in t for t in status["todo"])
 
@@ -246,6 +257,7 @@ def test_whole_message_sequence_matches_golden(ws, capsys):
 def prepared(ws, capsys):
     text(capsys, "set", "add", "seeds", "1", "2", "--role", "seed")
     write_json(ws.root / "strategy.json", STRATEGY)
+    text(capsys, "allocate")
 
 
 def test_blocked_eval_never_claims_missing_sets(ws, capsys):
@@ -253,9 +265,9 @@ def test_blocked_eval_never_claims_missing_sets(ws, capsys):
     write_json(ws.root / "strategy.json", {"blocks": [{"id": "asthma", "terms": ["cat*[tiab]"]}]})
     code, out = psb(capsys, "eval", "--brief")
     assert code == 1 and out["progress"]["text"] == (
-        "**PSB · Step 5/7 Test & revise · Evaluation v1**\n"
+        "**PSB · Step 5/7 Develop & revise · Evaluation v1**\n"
         "v1: not measured\n"
-        "- Recall: not measured (evaluation did not complete)\n"
+        "- Known-record retrieval: not measured (evaluation did not complete)\n"
         "- Checks: 1 blocker (short_truncation) · 1 need critic review · lint 1 error, 1 warning")
 
 
@@ -322,14 +334,13 @@ def test_malformed_critic_round_returns_json_not_a_crash(ws, capsys):
         "- Fix the round file and run psb critic check again")
 
 
-def test_mining_a_held_out_set_says_so(ws, capsys):
-    text(capsys, "set", "add", "validation", "5", "6", "--role", "validation")
+def test_mining_a_comparison_list_says_so(ws, capsys):
+    text(capsys, "set", "add", "old", "5", "6", "--purpose", "comparison")
     write_json(ws.root / "strategy.json", STRATEGY)
-    message = text(capsys, "terms", "rank", "--set", "validation", "--allow-held-out", "--budget", "0")
-    assert message.splitlines()[1] == ("Mined candidate terms from 2 records (sets validation; includes held-out "
-                                       "validation, which now count as development)")
+    message = text(capsys, "terms", "rank", "--set", "old", "--include-comparison", "--budget", "0")
+    assert message.splitlines()[1] == "Mined candidate terms from 2 records (sets old; includes comparison old)"
     text(capsys, "set", "add", "seeds", "1", "2", "--role", "seed")
-    assert "; held-out sets excluded)" in text(capsys, "terms", "rank", "--budget", "0")
+    assert "; comparison lists excluded; held-out records are never mined)" in text(capsys, "terms", "rank", "--budget", "0")
 
 
 def test_override_reports_the_latest_round_of_the_finding(ws, capsys):
@@ -401,8 +412,9 @@ def test_confirmed_scope_keeps_the_table_and_drops_the_question(ws, capsys):
     assert "| Concept | Role | Why |\n|---|---|---|\n| Asthma | Searched |" in message
     assert "Eligibility criteria (applied at screening): none recorded" in message
     assert progress.SCOPE_MEANING[0] not in message and progress.SCOPE_DECISION[0] not in message
-    assert message.endswith("Scope confirmed by the user.\nNext: Step 3/7 Known records: add seeds, look for prior "
-                            "reviews, run pilot and citation searches, and screen up to ~150 candidates (standard).")
+    assert message.endswith("Scope confirmed by the user.\nNext: Step 3/7 Known records: screen seeds, look for prior "
+                            "reviews, run pilot and citation searches, screen up to ~150 candidates (standard), then "
+                            "choose the allocation (psb allocate).")
 
 
 def test_a_corrupt_attempt_does_not_break_status(ws, capsys):

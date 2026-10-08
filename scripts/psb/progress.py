@@ -22,21 +22,24 @@ from pathlib import Path
 
 from . import syntax
 from .strategy import lint
-from .workspace import Workspace, WorkspaceError, normalize_pmids, read_json
+from .workspace import ORIGINS, Workspace, WorkspaceError, normalize_pmids, purpose_label, purpose_of, read_json
 
 TOTAL_STEPS = 7
-STEPS = {1: "Intake", 2: "Scope", 3: "Known records", 4: "Vocabulary", 5: "Test & revise", 6: "Critic", 7: "Deliver"}
+STEPS = {1: "Intake", 2: "Scope", 3: "Known records", 4: "Vocabulary", 5: "Develop & revise", 6: "Critic", 7: "Deliver"}
+# "test" keeps naming Step 5 so legacy progress logs still read; the held-out test is psb holdout-test.
 STAGES = {"intake": 1, "scope": 2, "known-records": 3, "vocabulary": 4, "test": 5, "critic": 6, "deliver": 7}
-ROLE_ORDER = ("seed", "relevant", "validation", "benchmark")
-ROLE_USE = {
-    "seed": "user-supplied; used for development and term mining",
-    "relevant": "screened in during the build; used for development and term mining",
-    "validation": "held out from term mining; semi-independent check",
-    "benchmark": "a prior review's included studies; external benchmark, not mined",
+PURPOSE_ORDER = ("development", "comparison")
+PURPOSE_USE = {
+    "development": "used for term mining, diagnosing misses and repeated development checks",
+    "comparison": "outside the allocation pool; checked and reported separately, not mined, never a held-out test",
 }
-DEVELOPMENT_ROLES = {"seed", "relevant"}
-SCREEN_BUDGET = {"standard": 150, "thorough": 400}
+SCREEN_BUDGET = {"quick": 30, "standard": 150, "thorough": 400}
 DECISIONS = ("include", "exclude", "uncertain")
+CONTEXTS = ("separate", "builder")
+EVIDENCE = ("title", "abstract", "full-text")
+# The origin a candidate batch gives the records it showed.
+VIA_ORIGIN = {"prior-reviews": "prior-review", "pilot": "pilot-search", "resolve": "user-supplied",
+              "similar": "similar-articles", "refs": "citation-backward", "citedin": "citation-forward"}
 PURPOSES = {"prior-reviews": "Prior-review search", "pilot": "Pilot search", "noise-check": "Noise check"}
 CANDIDATE_PURPOSES = {"prior-reviews", "pilot"}
 LINK_TITLES = {"similar": "Similar articles", "refs": "Citation search, backward", "citedin": "Citation search, forward"}
@@ -127,20 +130,23 @@ def _plural(count: int, word: str, plural: str | None = None) -> str:
 
 def _set_order(sets: dict) -> list[str]:
     def key(name):
-        role = str((sets[name] or {}).get("role"))
-        return (ROLE_ORDER.index(role) if role in ROLE_ORDER else len(ROLE_ORDER), name)
+        purpose = purpose_of(sets[name] or {})
+        return (PURPOSE_ORDER.index(purpose) if purpose in PURPOSE_ORDER else len(PURPOSE_ORDER), name)
     return sorted(sets, key=key)
 
 
 def _recall(evaluation: dict) -> str:
+    """Retrieval of each known-record set, development first; held-out records are never here."""
     sets = evaluation.get("sets") or {}
     if not sets:
         return "not measured (no known-record sets)"
-    parts = []
+    groups: dict[str, list[str]] = {}
     for name in _set_order(sets):
         data = sets[name]
-        parts.append(f"{name} {_n(data.get('retrieved'))}/{_n(data.get('in_pubmed'))} ({_pct(data.get('recall_percent'))})")
-    return " · ".join(parts)
+        purpose = purpose_of(data)
+        groups.setdefault(purpose, []).append(
+            f"{name} {_n(data.get('retrieved'))}/{_n(data.get('in_pubmed'))} ({_pct(data.get('recall_percent'))})")
+    return " · ".join(f"{purpose} {', '.join(parts)}" for purpose, parts in groups.items())
 
 
 def _misses(evaluation: dict, cap: int = 10) -> str:
@@ -182,14 +188,19 @@ def _next(stage: str, depth: str | None) -> str:
     from .deliver import revision_budget
     text = {
         "intake": "Step 2/7 Scope: split the question into concepts and decide which are searched, screened or optional.",
-        "scope": ("Step 3/7 Known records: add any seed articles (no discovery at quick depth)." if depth == "quick" else
-                  f"Step 3/7 Known records: add seeds, look for prior reviews, run pilot and citation searches, and "
-                  f"screen up to ~{SCREEN_BUDGET.get(depth, 150)} candidates ({depth})."),
+        "scope": (f"Step 3/7 Known records: screen any seed articles, with targeted discovery up to "
+                  f"~{SCREEN_BUDGET['quick']} candidates (quick), then freeze the allocation (psb allocate)."
+                  if depth == "quick" else
+                  f"Step 3/7 Known records: screen seeds, look for prior reviews, run pilot and citation searches, "
+                  f"screen up to ~{SCREEN_BUDGET.get(depth, 150)} candidates ({depth}), then choose the allocation "
+                  "(psb allocate)."),
         "known-records": "Step 4/7 Vocabulary: build MeSH and [tiab] terms for each searched concept.",
-        "vocabulary": "Step 5/7 Test & revise: evaluate counts and recall, and fix misses one change at a time.",
+        "vocabulary": ("Step 5/7 Develop & revise: check counts and development retrieval, and fix misses one change "
+                       "at a time."),
         "test": (f"Step 6/7 Critic: fresh-context PRESS-structured review, up to {revision_budget(depth)} revision "
                  f"round(s) then a closing round ({depth})."),
-        "critic": "Step 7/7 Deliver: live revalidation and the protected final query (psb report).",
+        "critic": ("Step 7/7 Deliver: the held-out test when records are reserved (psb holdout-test), then live "
+                   "revalidation and the protected final query (psb report)."),
     }[stage]
     return "Next: " + text
 
@@ -215,6 +226,7 @@ def _append(path: Path, entry: dict) -> None:
     # One os.write to an O_APPEND descriptor, as Workspace.log does, so concurrent writers cannot
     # interleave a line.
     line = (json.dumps(entry, ensure_ascii=False) + "\n").encode("utf-8")
+    path.parent.mkdir(parents=True, exist_ok=True)
     fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o644)
     try:
         os.write(fd, line)
@@ -262,11 +274,37 @@ def attribution(ws: Workspace) -> dict[str, dict]:
     return found
 
 
+def _details(item: dict, defaults: dict) -> dict:
+    """The screening record's context, study group, origin, evidence basis and source reference."""
+    out = {}
+    context = item.get("context") or defaults.get("context") or "builder"
+    if context not in CONTEXTS:
+        raise ProgressError(f"context must be one of {', '.join(CONTEXTS)}")
+    out["context"] = context
+    group = item.get("group", defaults.get("group"))
+    out["group"] = clean(group, 120) or None
+    origin = item.get("origin", defaults.get("origin")) or []
+    origin = [origin] if isinstance(origin, str) else list(origin)
+    if any(o not in ORIGINS for o in origin):
+        raise ProgressError(f"origin must be one of {', '.join(ORIGINS)}")
+    out["origin"] = sorted(set(origin))
+    evidence = item.get("evidence", defaults.get("evidence"))
+    if evidence is not None and evidence not in EVIDENCE:
+        raise ProgressError(f"evidence must be one of {', '.join(EVIDENCE)}")
+    out["evidence"] = evidence
+    out["source_ref"] = clean(item.get("source_ref", defaults.get("source_ref")), 300) or None
+    return out
+
+
 def record_screening(ws: Workspace, *, include=(), exclude=(), uncertain=(), reason: str = "",
-                     file: str | None = None) -> list[dict]:
-    rows: list[tuple[str, str, str]] = []
+                     file: str | None = None, context: str | None = None, group: str | None = None,
+                     origin=None, evidence: str | None = None, source_ref: str | None = None) -> list[dict]:
+    """Append screening decisions. A decision made in the separate screening context keeps its reason
+    and source reference in the private store (screening/decisions.jsonl): they describe the record."""
+    defaults = {"context": context, "group": group, "origin": origin, "evidence": evidence, "source_ref": source_ref}
+    rows: list[tuple[str, str, str, dict]] = []
     for decision, values in (("include", include), ("exclude", exclude), ("uncertain", uncertain)):
-        rows += [(p, decision, reason.strip()) for p in normalize_pmids(values or [])]
+        rows += [(p, decision, reason.strip(), _details({}, defaults)) for p in normalize_pmids(values or [])]
     if file:
         data = read_json(Path(file))
         if not isinstance(data, list):
@@ -274,23 +312,38 @@ def record_screening(ws: Workspace, *, include=(), exclude=(), uncertain=(), rea
         for item in data:
             if not isinstance(item, dict) or item.get("decision") not in DECISIONS:
                 raise ProgressError(f"each decision needs a decision of {', '.join(DECISIONS)}: {item!r}")
-            rows += [(p, item["decision"], str(item.get("reason") or reason).strip())
+            rows += [(p, item["decision"], str(item.get("reason") or reason).strip(), _details(item, defaults))
                      for p in normalize_pmids([item.get("pmid", "")])]
     if not rows:
         raise ProgressError("give at least one PMID with --include, --exclude, --uncertain or --file")
     seen: dict[str, str] = {}
-    for pmid, decision, _ in rows:
+    for pmid, decision, _, _ in rows:
         if seen.setdefault(pmid, decision) != decision:
             raise ProgressError(f"PMID {pmid} has two decisions ({seen[pmid]} and {decision}) in one call")
-    unique = list({pmid: (pmid, decision, why) for pmid, decision, why in rows}.values())
+    unique = list({pmid: (pmid, decision, why, extra) for pmid, decision, why, extra in rows}.values())
     before = decisions(ws)
     entries = []
-    for pmid, decision, why in unique:
-        entry = {"pmid": pmid, "decision": decision, "reason": why,
-                 "previous": before[pmid]["decision"] if pmid in before else None}
+    for pmid, decision, why, extra in unique:
+        private = extra["context"] == "separate"
+        entry = {"pmid": pmid, "decision": decision, "reason": "" if private else why,
+                 "previous": before[pmid]["decision"] if pmid in before else None,
+                 **{k: v for k, v in extra.items() if k != "source_ref" or not private}}
+        if private:
+            entry["private"] = True
+            _append(ws.root / "screening" / "decisions.jsonl",
+                    {"pmid": pmid, "decision": decision, "reason": why, "source_ref": extra["source_ref"]})
         _append(ws.root / "screening.jsonl", entry)
         entries.append(entry)
     return entries
+
+
+def private_decisions(ws: Workspace) -> dict[str, dict]:
+    """The separate context's latest reason and source reference per PMID (never shown to the builder)."""
+    latest: dict[str, dict] = {}
+    for row in _read_jsonl(ws.root / "screening" / "decisions.jsonl"):
+        if str(row.get("pmid", "")).isdigit():
+            latest[str(row["pmid"])] = row
+    return latest
 
 
 # -- emitting ---------------------------------------------------------------------------------
@@ -411,8 +464,11 @@ def _budget_line(ws: Workspace, screened: int) -> str:
 
 
 def _included_unset(ws: Workspace) -> list[str]:
+    """Included records in no set and not allocated: reserved records are never listed."""
     in_sets = {p for data in ws.sets().values() for p in data.get("pmids", [])}
-    return [p for p, row in decisions(ws).items() if row["decision"] == "include" and p not in in_sets]
+    allocation = ws.allocation()
+    allocated = {p for u in (allocation or {}).get("units", []) for p in u.get("members", [])} | ws.reserved_pmids()
+    return [p for p, row in decisions(ws).items() if row["decision"] == "include" and p not in in_sets | allocated]
 
 
 def _by_source(ws: Workspace, rows: list[dict]) -> list[str]:
@@ -448,36 +504,101 @@ def _screen(ws, data):
 
 @event("set", 3)
 def _set(ws, data):
-    role = data.get("role")
-    lines = [f"Set {data.get('name')} ({role}): {_n(data.get('before', 0))} → {_plural(data.get('after', 0), 'record')}",
-             f"- Use: {ROLE_USE.get(role, 'unknown role')}"]
+    purpose = data.get("purpose")
+    lines = [f"Set {data.get('name')} ({purpose}): {_n(data.get('before', 0))} → {_plural(data.get('after', 0), 'record')}",
+             f"- Use: {PURPOSE_USE.get(purpose, 'unknown purpose')}"]
+    if data.get("origin"):
+        lines.append(f"- Origin: {', '.join(data['origin'])}")
     if data.get("added"):
         lines.append(f"- Added: {_pmids(data['added'])}")
     if data.get("removed"):
         lines.append(f"- Removed: {_pmids(data['removed'])}")
+    if data.get("late"):
+        lines.append(f"- Kept out: {_plural(data['late'], 'record')} reporting a study reserved for the held-out test")
     for other, pmids in sorted((data.get("overlap") or {}).items()):
-        lines.append(f"- Also in {other}, which has another role: {_pmids(pmids)}")
+        lines.append(f"- Also in {other}, which has another purpose: {_pmids(pmids)}")
     return "Set updated", lines
 
 
-@event("split", 3)
-def _split(ws, data):
-    total = data.get("development", 0) + data.get("validation", 0)
-    return "Hold-out", [
-        f"Held out {_n(data.get('validation', 0))} of {_plural(total, 'record')} from {data.get('name')} as "
-        f"{data.get('into')} (role validation)",
-        f"- {data.get('name')}: {_plural(data.get('development', 0), 'record')} remain for development and term mining",
-        f"- {data.get('into')}: not mined; semi-independent check, consulted at every eval",
-    ]
+# The allocation-choice message: fixed text around the counts. Relayed verbatim; asked once.
+CHOICE_EXPLAINED = (
+    "A held-out check can reveal retrieval gaps. Retrieving every reserved record would show that the query found "
+    "those records; it would not establish that all relevant literature was found. The reassurance depends on the "
+    "test's size, coverage, and separation from development.")
+CHOICE_QUESTION = "**Keep the proposed holdout**, or **use everything for development**?"
+CHOICE_TRADEOFF = "Using everything provides more development material but leaves no independent final test."
+
+
+def _separation(proposal: dict) -> str:
+    n, u = proposal["N"], proposal["U"]
+    return (f"{_plural(u, 'unit')} of {_n(n)} were screened only in the separate context and never shown to the builder; "
+            f"the held-out units are drawn from these. The other {_plural(n - u, 'unit')} were seen by the builder and "
+            "go to development")
+
+
+@event("allocation-preview", 3)
+def _allocation_preview(ws, data):
+    from .interpret import NO_HOLDOUT
+    proposal = data.get("proposal") or {}
+    units = lambda c: f"{_plural(c['units'], 'unit')} ({_plural(c['records'], 'record')})"  # noqa: E731
+    if not proposal.get("H"):
+        lines = [f"No holdout is proposed: {NO_HOLDOUT.get(proposal.get('reason'), 'not recorded')}.",
+                 f"- Eligible pool: {units(proposal['pool'])}; all of it is used for development",
+                 f"- Unexposed units: {_n(proposal.get('U', 0))} of {_n(proposal.get('N', 0))}",
+                 "- Next: psb allocate freezes this allocation"]
+        return "Allocation", lines
+    studies = (f"{_plural(proposal['studies'], 'study', 'studies')}" if proposal.get("studies") is not None
+               else "an unverified number of studies")
+    lines = ["**Choose how to use the eligible reference records**", "",
+             f"Eligible pool: **{_plural(proposal['pool']['records'], 'record')} representing {studies}.**", "",
+             f"- **Development: {units(proposal['development'])}** — used for term mining, diagnosing misses, and "
+             "improving the search.",
+             f"- **Held-out test: {units(proposal['holdout'])}** — reserved for one retrieval check after the query is "
+             "finalised.", "",
+             f"**Separation:** {_separation(proposal)}.", "",
+             CHOICE_EXPLAINED, "", CHOICE_QUESTION, "", CHOICE_TRADEOFF]
+    return "Choose the allocation", lines
+
+
+@event("allocation", 3)
+def _allocation(ws, data):
+    from .allocation import summary
+    held = summary(ws)
+    if held is None:
+        raise ProgressError("no allocation frozen")
+    text = _allocation_text(held)
+    lines = [text[:1].upper() + text[1:]]
+    if data.get("rebind"):
+        removed = sum(len(e.get("removed") or []) for e in ws.allocation_events() if e.get("type") == "rebind")
+        lines.append(f"- Re-bound to the current scope: {_plural(removed, 'reserved record')} removed in total")
+    if held["H"] and not held["released"]:
+        lines.append("- Held-out records are not shown, mined, sampled or diagnosed until the held-out test")
+    return "Allocation frozen", lines
+
+
+@event("holdout-test", 7)
+def _holdout_test(ws, data):
+    return "Held-out test", str(data.get("text") or "").split("\n")
+
+
+@event("holdout-release", 7)
+def _holdout_release(ws, data):
+    event = data.get("event") or {}
+    return "Held-out records released", [
+        f"Released {_plural(len(event.get('members') or []), 'held-out record')} to development: "
+        f"{clean(event.get('reason'), 200)}",
+        f"- Receipts kept: {', '.join(str(n) for n in event.get('receipts') or []) or 'none (released before testing)'}",
+        "- The revised query will have no independent held-out test; its review starts a repair epoch "
+        "(one revision round, then the closing round)"]
 
 
 @event("terms-rank", 4)
 def _terms_rank(ws, data):
     sets = data.get("sets")
-    held = sorted(data.get("held_out_mined") or [])
-    scope = ("sets " + ", ".join(sets)) if sets else "all seed and relevant sets"
-    scope += (f"; includes held-out {', '.join(held)}, which now count as development" if held
-              else "; held-out sets excluded")
+    mined = sorted(data.get("comparison_mined") or [])
+    scope = ("sets " + ", ".join(sets)) if sets else "all development sets"
+    scope += (f"; includes comparison {', '.join(mined)}" if mined
+              else "; comparison lists excluded; held-out records are never mined")
     return "Term mining", [
         f"Mined candidate terms from {_plural(data.get('records', 0), 'record')} ({scope})",
         f"- Candidate terms: {_n(data.get('candidates', 0))} · already in the strategy: {_n(data.get('already_covered', 0))}"
@@ -499,9 +620,9 @@ def _eval_lines(evaluation: dict, note: str) -> list[str]:
         lines.append(f"- Change: {clean(note, 160)}")
     measured = evaluation.get("count") is not None
     if measured:
-        lines += [f"- Recall: {_recall(evaluation)}", f"- Missed known records: {_misses(evaluation)}"]
+        lines += [f"- Known-record retrieval: {_recall(evaluation)}", f"- Missed known records: {_misses(evaluation)}"]
     else:
-        lines.append(f"- Recall: {NOT_MEASURED}")
+        lines.append(f"- Known-record retrieval: {NOT_MEASURED}")
     if since:
         if measured:
             lines.append(f"- Since the last eval: lost {_pmids(since.get('known_lost'))} · gained {_pmids(since.get('known_gained'))}")
@@ -544,12 +665,16 @@ def _terms_miss(ws, data):
 
 @event("critic-packet", 6)
 def _critic_packet(ws, data):
-    from .deliver import latest_evaluation, next_round, revision_budget
+    from .deliver import current_epoch, epoch_budget, latest_evaluation, next_round, round_epoch
     rounds = _list(data.get("rounds_before"))
     evaluation = latest_evaluation(ws)
     number, kind = next_round(ws, evaluation, rounds)
-    revision = sum(bool(r.get("review_sha256")) and not r.get("closing") for r in rounds if isinstance(r, dict)) + 1
-    label = f"revision {revision} of {revision_budget(ws.protocol().get('depth'))}" if kind == "revision" else kind
+    epoch = current_epoch(ws)
+    revision = sum(bool(r.get("review_sha256")) and not r.get("closing") for r in rounds
+                   if isinstance(r, dict) and round_epoch(r) == epoch) + 1
+    label = f"revision {revision} of {epoch_budget(ws, epoch)}" if kind == "revision" else kind
+    if epoch > 1:
+        label = f"repair {label}"
     return f"Round {number} packet", [
         f"Round {number} ({label}) packet written for v{evaluation.get('version')}",
         f"- Packet: critic/{data.get('packet')}",
@@ -632,6 +757,13 @@ def _critic_line(ws: Workspace, overridden: list[str]) -> str:
             f"overridden findings: {', '.join(sorted(overridden)) or 'none'}")
 
 
+def _held_result(manifest: dict) -> str:
+    """The Result line of the delivered interpretation; the whole text is in the Step 7 summary."""
+    text = str((manifest.get("holdout") or {}).get("text") or "")
+    line = next((l for l in text.split("\n") if l.startswith("- **Result:** ")), "")
+    return line.removeprefix("- **Result:** ") or "not recorded (legacy delivery)"
+
+
 @event("report", 7)
 def _report(ws, data):
     result = data.get("result") or {}
@@ -639,7 +771,8 @@ def _report(ws, data):
         evaluation = _attempt(ws, result.get("attempt_id"))
         manifest = read_json(ws.root / "validation-manifest.json")
         return "Report", [f"Delivered: final query validated live, {_n(evaluation.get('count'))} records",
-                          f"- Recall: {_recall(evaluation)}",
+                          f"- Known-record retrieval: {_recall(evaluation)}",
+                          f"- Held-out test: {_held_result(manifest)}",
                           _critic_line(ws, manifest.get("overridden_findings") or []),
                           f"- Files: {FILES}",
                           f"- {PRESS}"]
@@ -673,7 +806,8 @@ def _stage_intake(ws, data):
     protocol = ws.protocol()
     if not str(protocol.get("question") or "").strip():
         raise ProgressError("protocol.json has no question; record it first")
-    seeds = {p for d in ws.sets().values() if d.get("role") == "seed" for p in d.get("pmids", [])}
+    seeds = {p for d in ws.sets().values() if d.get("role") == "seed" or "user-supplied" in (d.get("origin") or [])
+             for p in d.get("pmids", [])}
     limits = protocol.get("limits") or []
     return "Summary", [
         f"Question: {clean(protocol.get('question'), 300)}",
@@ -734,21 +868,22 @@ def _kind(batch: dict) -> str:
 
 @event("stage:known-records", 3)
 def _stage_known(ws, data):
+    from .allocation import summary
     protocol = ws.protocol()
     sets = ws.sets()
-    held = {p for d in sets.values() if d.get("role") not in DEVELOPMENT_ROLES for p in d.get("pmids", [])}
-    development = {p for d in sets.values() if d.get("role") in DEVELOPMENT_ROLES for p in d.get("pmids", [])} - held
-    lines = [f"Known relevant records: {_n(len(development))} for development · {_n(len(held))} held out "
-             "(validation and benchmark)"]
+    held = summary(ws)
+    development = ws.set_pmids("development")
+    comparison = ws.set_pmids("comparison") - development
+    reserved = (held or {}).get("holdout", {}).get("records", 0) if held and not held["released"] else 0
+    lines = [f"Known records: {_n(len(development))} for development · {_n(reserved)} held out · "
+             f"{_n(len(comparison))} on comparison lists"]
     for name in _set_order(sets):
-        role = sets[name].get("role")
-        lines.append(f"- {name} ({role}): {_plural(len(sets[name].get('pmids', [])), 'record')} — {ROLE_USE.get(role, 'unknown role')}")
-    if not sets:
-        lines.append("- No known records: recall will not be estimated; the strategy is empirically unvalidated.")
-    validation_sets = [n for n in _set_order(sets) if sets[n].get("role") == "validation"]
-    lines.append("- Held-out validation set: " + (", ".join(
-        f"{n} ({_plural(len(sets[n].get('pmids', [])), 'record')})" for n in validation_sets)
-        if validation_sets else f"none (development records: {_n(len(development))})"))
+        purpose = purpose_of(sets[name])
+        lines.append(f"- {name} ({purpose_label(sets[name])}): {_plural(len(sets[name].get('pmids', [])), 'record')} — "
+                     f"{PURPOSE_USE.get(purpose, 'unknown purpose')}")
+    if not sets and not held:
+        lines.append("- No known records yet: without them the strategy is empirically unvalidated.")
+    lines.append(f"- Allocation: {_allocation_text(held)}")
     kinds: dict[str, int] = {}
     for batch in batches(ws):
         kinds[_kind(batch)] = kinds.get(_kind(batch), 0) + 1
@@ -756,17 +891,36 @@ def _stage_known(ws, data):
                  + (f" ({', '.join(f'{v} {k}' for k, v in sorted(kinds.items()))})" if kinds else ""))
     screened = list(decisions(ws).values())
     if screened:
-        lines.append(f"- Screening: {_n(len(screened))} screened → {_tally(screened)}")
+        separate = sum(1 for row in screened if row.get("context") == "separate")
+        lines.append(f"- Screening: {_n(len(screened))} screened → {_tally(screened)} "
+                     f"(separate context {_n(separate)} · builder {_n(len(screened) - separate)})")
     else:
         lines.append("- Screening: none recorded")
     lines.append(_budget_line(ws, len(screened)))
-    lines.append(f"- Included but not in a set: {_pmids(_included_unset(ws))}")
+    label = "Eligible, not yet allocated" if held is None else "Included after the allocation, not in a set"
+    lines.append(f"- {label}: {_pmids(_included_unset(ws))}")
     included = {p for p, row in decisions(ws).items() if row["decision"] == "include"}
-    unscreened = {p for d in sets.values() if d.get("role") in {"relevant", "benchmark"} for p in d.get("pmids", [])} - included
+    unscreened = development - included
     if unscreened:
-        lines.append(f"- In a relevant or benchmark set with no include decision: {_pmids(unscreened)}")
+        lines.append(f"- In a development set with no include decision: {_pmids(unscreened)}")
     lines.append(_next("known-records", protocol.get("depth")))
     return "Summary", lines
+
+
+def _allocation_text(held: dict | None) -> str:
+    """Counts only: the builder never sees which records are reserved."""
+    from .interpret import CHOICES, NO_HOLDOUT
+    if held is None:
+        return "not frozen yet (psb allocate --preview, then psb allocate)"
+    units = lambda c: f"{_plural(c['units'], 'unit')} ({_plural(c['records'], 'record')})"  # noqa: E731
+    text = f"frozen: {units(held['development'])} for development · {units(held['holdout'])} held out"
+    if held["released"]:
+        return text + " · released to development for repair"
+    reason = CHOICES.get(held.get("choice")) or f"no holdout proposed: {NO_HOLDOUT.get(held.get('reason'), 'not recorded')}"
+    text += f" · {reason}"
+    if held["stale"]:
+        text += f" · stale: {'; '.join(held['stale'])}"
+    return text
 
 
 def _command(argv: list) -> list[str]:
@@ -841,18 +995,22 @@ def _stage_test(ws, data):
     lines = [f"{_plural(len(versions), 'version')} evaluated: {_n(first)} → {_n(latest.get('count'))} records",
              f"- Latest: v{versions[-1]['version']}" + (f" — {note}" if note else "")]
     if latest.get("count") is not None:
-        lines += [f"- Recall: {_recall(latest)}",
+        lines += [f"- Known-record retrieval: {_recall(latest)}",
                   f"- Missed known records: {_misses(latest)}",
                   f"- Known records lost along the way and not recovered: {_pmids(lost)}"]
     else:
-        lines.append(f"- Recall: {NOT_MEASURED}")
+        lines.append(f"- Known-record retrieval: {NOT_MEASURED}")
     lines += [f"- Checks: {_checks(latest)}", _next("test", ws.protocol().get("depth"))]
     return "Summary", lines
 
 
 def round_kinds(rounds: list[dict]) -> list[str]:
-    kinds, closings = [], 0
+    """revision, closing or verification; closing rounds count afresh in each repair epoch."""
+    kinds, closings, epoch = [], 0, 1
     for r in rounds:
+        current = r.get("epoch", 1) if type(r.get("epoch", 1)) is int else 1
+        if current != epoch:
+            epoch, closings = current, 0
         if r.get("closing"):
             closings += 1
             kinds.append("closing" if closings == 1 else "verification")
@@ -896,12 +1054,16 @@ def _stage_deliver(ws, data):
         evaluation = _attempt(ws, manifest.get("attempt_id"))
         lines = [f"Delivered: {_n(evaluation.get('count'))} records; every line revalidated live", "",
                  "Search strategy (single line, for PubMed):", *_fence(manifest.get("query") or ""), "",
-                 "Line by line:", "", *_line_table(evaluation), "", "Recall against known relevant records:", ""]
-        if evaluation.get("sets"):
-            lines += _recall_table(evaluation)
-            lines += ["", "Relative recall, not sensitivity: development sets were used to build the strategy."]
+                 "Line by line:", "", *_line_table(evaluation), ""]
+        if delivery.get("legacy"):
+            lines += [f"{delivery['note'].capitalize()}.", "", "Recall against known relevant records:", ""]
+            lines += _recall_table(evaluation) if evaluation.get("sets") else ["Recall was not estimated."]
         else:
-            lines.append("Recall was not estimated; the strategy is empirically unvalidated.")
+            # The interpretation stored with the delivery: the same bytes the audit embeds.
+            lines += ["Known-record retrieval and the held-out test:", "",
+                      *str((manifest.get("holdout") or {}).get("text") or "").split("\n")]
+            if evaluation.get("sets"):
+                lines += ["", "Development checks:", "", *_recall_table(evaluation)]
         lines += ["", _critic_line(ws, manifest.get("overridden_findings") or []), f"- Files: {FILES}", f"- {PRESS}"]
         return "Final search", lines
     reports = [a for a in ws.attempts() if a.get("purpose") in REPORT_PURPOSES]

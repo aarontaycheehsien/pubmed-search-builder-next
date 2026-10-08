@@ -5,7 +5,10 @@ import hashlib
 import json
 from . import syntax
 
-POLICY_VERSION = "1"
+# Policy 2: known records have a purpose, held-out records live only in allocation.json, and a delivery
+# with a holdout rests on a held-out test receipt. Policy-1 deliveries still verify (``input_snapshot_v1``).
+POLICY_VERSION = "2"
+LEGACY_POLICY_VERSIONS = {"1"}
 BLOCKING_CODES = {"field_not_found", "truncation_dropped", "all_fields_fallback", "unknown_tag"}
 PHRASE_CODES = {"phrase_not_found", "quoted_phrase_not_found"}
 
@@ -61,8 +64,18 @@ def summarize(issues: list[dict], *, complete: bool) -> dict:
 
 
 def input_snapshot(ws) -> dict:
+    """Everything an evaluation rests on. Held-out records are not sets, so they appear here only as the
+    digest of the frozen allocation: a critic packet built from the inputs never names them."""
+    allocation = ws.allocation()
     return {"strategy": ws.strategy().to_dict(), "protocol": ws.protocol(), "sets": ws.sets(),
+            "allocation": digest(allocation) if allocation is not None else None,
             "as_of": ws.pubmed.as_of, "policy_version": POLICY_VERSION}
+
+
+def input_snapshot_v1(ws) -> dict:
+    """The policy-1 snapshot, kept so a legacy delivery still verifies."""
+    return {"strategy": ws.strategy().to_dict(), "protocol": ws.protocol(), "sets": ws.sets(),
+            "as_of": ws.pubmed.as_of, "policy_version": "1"}
 
 
 # Protocol fields that record the conversation, not what is searched. Editing them after a review

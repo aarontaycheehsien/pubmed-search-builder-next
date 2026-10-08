@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from psb import deliver
+from psb import allocation, deliver
 from psb.evaluate import evaluate
 from psb.workspace import WorkspaceError, write_json
 
@@ -17,6 +17,7 @@ def evaluated(make_ws):
     write_json(ws.root / "protocol.json", protocol)
     write_json(ws.root / "strategy.json", STRATEGY)
     ws.save_set("seeds", "seed", ["1", "3", "4"])
+    allocation.freeze(ws)  # two available units: no holdout is proposed
     evaluation = evaluate(ws)
     deliver.record_evaluation(ws, evaluation, note="first")
     ws.save_attempt(evaluation)
@@ -31,8 +32,21 @@ def test_packet_and_report_use_evaluated_numbers(make_ws):
     result = deliver.report(ws)
     assert result["ok"], result
     audit = (ws.root / "audit.md").read_text(encoding="utf-8")
-    assert "Total records: 3" in audit and "| seeds | seed" in audit and "Round 1 on version 1" in audit
+    assert "Total records: 3" in audit and "| seeds | development |" in audit and "Round 1 on version 1" in audit
     assert '("Asthma"[Mesh] OR asthma*[tiab])' in audit
+    assert "**Result:** No held-out test was performed." in audit
+    assert "No holdout was proposed: fewer than 10 eligible units." in audit
+
+
+def test_report_requires_the_allocation_step(make_ws):
+    ws, _ = make_ws(ATOMS, question="Treatments for asthma?")
+    write_json(ws.root / "strategy.json", STRATEGY)
+    ws.save_set("seeds", "seed", ["1", "3"])
+    evaluation = evaluate(ws)
+    deliver.record_evaluation(ws, evaluation, note="first")
+    ws.save_attempt(evaluation)
+    round_file(ws, 1, [])
+    assert "allocation_missing" in {b["code"] for b in deliver.report(ws)["blockers"]}
 
 
 def test_packet_leads_with_scope_and_translation_checks(make_ws):

@@ -2,8 +2,13 @@
 
     protocol.json    scope: question, concepts and their roles, eligibility, limits, as_of
     strategy.json    the current strategy (see strategy.py)
-    sets/<name>.json PMID sets with a role
+    sets/<name>.json PMID sets with a purpose (development or comparison)
     records.jsonl    fetched PubMed records, one per line, keyed by PMID
+    allocation.json  the frozen split of the eligible pool into development and held-out units
+    allocation-log.jsonl  late companions, re-binding and release after the freeze
+    exposure.jsonl   records whose content or retrieval the builder has seen
+    screening/       the separate screening context's private store (records, cache, reasons)
+    holdout/         held-out test receipts
     history/         each evaluated strategy version with its evaluation
     critic/          critic packets and rounds
     log.jsonl        every command and NCBI request, appended automatically
@@ -20,6 +25,7 @@ import json
 import os
 import time
 import uuid
+from contextlib import contextmanager
 from pathlib import Path
 
 from .cache import Cache
@@ -28,13 +34,19 @@ from .ncbi import PubMed
 from .strategy import Strategy
 
 MARKER = "protocol.json"
-ROLES = {
-    "seed": "user-supplied known relevant records; used for development, not independent",
-    "relevant": "records screened relevant during the build; used for development, not independent",
-    "validation": "relevant records held out from term mining; semi-independent",
-    "benchmark": "included studies of a prior review; external benchmark",
+# What a set of known records is for. Held-out records are never a set: allocation.json holds them,
+# so no command that lists, mines or evaluates sets can reach them.
+PURPOSES = {
+    "development": "used for term mining, diagnosing misses and repeated retrieval checks; not independent",
+    "comparison": "outside the allocation pool; checked and reported separately, not mined by default, "
+                  "never a held-out test",
 }
-MINING_ROLES = {"seed", "relevant"}
+# Sets written before held-out testing carry a role. They are mapped when read and never rewritten,
+# so a legacy delivery still verifies. A legacy validation set was scored at every evaluation, so it
+# is a comparison list, never an independent test.
+LEGACY_ROLES = {"seed": "development", "relevant": "development", "validation": "comparison", "benchmark": "comparison"}
+LEGACY_NOTE = "legacy: consulted during development"
+ORIGINS = ("user-supplied", "prior-review", "pilot-search", "similar-articles", "citation-backward", "citation-forward")
 
 PROTOCOL_TEMPLATE = {
     "question": "",
@@ -52,6 +64,24 @@ STRATEGY_TEMPLATE = {"blocks": [], "combine": None, "limits": []}
 
 class WorkspaceError(RuntimeError):
     pass
+
+
+def purpose_of(data: dict) -> str:
+    """A set's purpose, mapping a legacy role; ``unknown`` when neither is recognised."""
+    purpose = data.get("purpose")
+    if isinstance(purpose, str) and purpose in PURPOSES:
+        return purpose
+    role = data.get("role")
+    return LEGACY_ROLES.get(role, "unknown") if isinstance(role, str) else "unknown"
+
+
+def purpose_label(data: dict) -> str:
+    """How a set's use is described in messages and the audit."""
+    purpose = purpose_of(data)
+    role = None if data.get("purpose") else data.get("role")
+    if isinstance(role, str) and role in LEGACY_ROLES:
+        return f"{purpose} ({LEGACY_NOTE} as a {role} set)"
+    return purpose
 
 
 def now() -> str:
@@ -76,6 +106,35 @@ def write_json(path: Path, data: object) -> None:
     tmp = path.with_suffix(path.suffix + ".tmp")
     tmp.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     tmp.replace(path)
+
+
+def _read_jsonl(path: Path) -> list[dict]:
+    if not path.exists():
+        return []
+    rows = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            try:
+                row = json.loads(line)
+            except ValueError:
+                continue  # a line torn by a concurrent write
+            if isinstance(row, dict):
+                rows.append(row)
+    return rows
+
+
+def append_jsonl(path: Path, entry: dict) -> None:
+    """One os.write to an O_APPEND descriptor, so concurrent writers cannot interleave a line."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    line = (json.dumps(entry, ensure_ascii=False) + "\n").encode("utf-8")
+    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o644)
+    try:
+        os.write(fd, line)
+    finally:
+        os.close(fd)
+
+
+read_jsonl = _read_jsonl
 
 
 def find_root(start: str | Path | None = None) -> Path:
@@ -124,7 +183,7 @@ class Workspace:
         write_json(root / "strategy.json", STRATEGY_TEMPLATE)
         for name in ("sets", "history", "critic"):
             (root / name).mkdir(exist_ok=True)
-        (root / ".gitignore").write_text(".cache/\n", encoding="utf-8")
+        (root / ".gitignore").write_text(".cache/\nscreening/.cache/\n", encoding="utf-8")
         workspace = cls(root)
         workspace.log({"type": "init", "question": question.strip()})
         return workspace
@@ -206,29 +265,77 @@ class Workspace:
             raise WorkspaceError(f"no set named {name!r}")
         return read_json(path)  # type: ignore[return-value]
 
-    def save_set(self, name: str, role: str, pmids: list[str], *, source: str = "", note: str = "") -> dict:
-        if role not in ROLES:
-            raise WorkspaceError(f"role must be one of {', '.join(ROLES)}")
+    def save_set(self, name: str, purpose: str, pmids: list[str], *, source: str = "", note: str = "",
+                 origin: list[str] | None = None) -> dict:
+        """Write a set. A legacy role name (seed, relevant, validation, benchmark) is accepted and
+        stored as its purpose. No set can be held out: only ``psb allocate`` reserves records."""
+        purpose = LEGACY_ROLES.get(purpose, purpose)
+        if purpose == "holdout":
+            raise WorkspaceError("held-out records are reserved only by psb allocate, never by a set")
+        if purpose not in PURPOSES:
+            raise WorkspaceError(f"purpose must be one of {', '.join(PURPOSES)}")
+        bad = [o for o in origin or [] if o not in ORIGINS]
+        if bad:
+            raise WorkspaceError(f"origin must be one of {', '.join(ORIGINS)}")
         overlap = {
             other: sorted(set(pmids) & set(data.get("pmids", [])))
             for other, data in self.sets().items()
-            if other != name and data.get("role") != role
+            if other != name and purpose_of(data) != purpose
         }
-        data = {"role": role, "pmids": pmids, "source": source, "note": note, "updated": now()}
+        data = {"purpose": purpose, "pmids": pmids, "source": source, "note": note,
+                "origin": sorted(set(origin or [])), "updated": now()}
         write_json(self.set_path(name), data)
-        self.log({"type": "set", "name": name, "role": role, "size": len(pmids)})
-        return {"name": name, **data, "overlap_with_other_roles": {k: v for k, v in overlap.items() if v}}
+        self.log({"type": "set", "name": name, "purpose": purpose, "size": len(pmids)})
+        return {"name": name, **data, "overlap_with_other_purposes": {k: v for k, v in overlap.items() if v}}
 
-    def mining_pmids(self) -> list[str]:
-        """Known relevant records that term mining may use (never validation or benchmark)."""
-        held_out = {p for d in self.sets().values() if d.get("role") not in MINING_ROLES for p in d.get("pmids", [])}
-        pmids = [p for d in self.sets().values() if d.get("role") in MINING_ROLES for p in d.get("pmids", [])]
-        return sorted({p for p in pmids if p not in held_out}, key=int)
+    def set_pmids(self, *purposes: str) -> set[str]:
+        return {p for d in self.sets().values() if purpose_of(d) in purposes for p in d.get("pmids", [])}
+
+    def mining_pmids(self, *, include_comparison: bool = False) -> list[str]:
+        """Known records that term mining may use: development sets, plus comparison lists only when
+        asked. Held-out records are never in a set, so they can never be mined."""
+        purposes = ("development", "comparison") if include_comparison else ("development",)
+        return sorted(self.set_pmids(*purposes) - self.reserved_pmids(), key=int)
+
+    # -- allocation ----------------------------------------------------------------------
+
+    def allocation(self) -> dict | None:
+        """The frozen allocation, or None before ``psb allocate``. The file never changes once written."""
+        path = self.root / "allocation.json"
+        if not path.exists():
+            return None
+        data = read_json(path)
+        if not isinstance(data, dict) or not isinstance(data.get("units"), list):
+            raise WorkspaceError("allocation.json must be an object with a units list")
+        return data
+
+    def allocation_events(self) -> list[dict]:
+        """Events after the freeze: late companions, re-binding and release."""
+        return _read_jsonl(self.root / "allocation-log.jsonl")
+
+    def released(self) -> dict | None:
+        """The release that returned the held-out records to development, if any."""
+        return next((e for e in reversed(self.allocation_events()) if e.get("type") == "release"), None)
+
+    def reserved_pmids(self) -> set[str]:
+        """Records the builder may not see: held-out members and late companions, until released."""
+        allocation = self.allocation()
+        if not allocation or self.released():
+            return set()
+        events = self.allocation_events()
+        removed = {str(p) for e in events if e.get("type") == "rebind" for p in e.get("removed", [])}
+        held = {str(p) for u in allocation["units"] if isinstance(u, dict) and u.get("purpose") == "holdout"
+                for p in u.get("members", [])}
+        late = {str(e.get("pmid")) for e in events if e.get("type") == "late-companion"}
+        return (held - removed) | late
 
     # -- records -------------------------------------------------------------------------
 
-    def records(self) -> dict[str, dict]:
-        path = self.root / "records.jsonl"
+    def _records_path(self, private: bool) -> Path:
+        return self.root / "screening" / "records.jsonl" if private else self.root / "records.jsonl"
+
+    def records(self, *, private: bool = False) -> dict[str, dict]:
+        path = self._records_path(private)
         if not path.exists():
             return {}
         found = {}
@@ -238,17 +345,37 @@ class Workspace:
                 found[str(record.get("pmid"))] = record
         return found
 
-    def ensure_records(self, pmids: list[str]) -> dict[str, dict]:
-        """Records for ``pmids``, fetching and storing any not yet in records.jsonl."""
-        stored = self.records()
+    def ensure_records(self, pmids: list[str], *, private: bool = False) -> dict[str, dict]:
+        """Records for ``pmids``, fetching and storing any not yet stored.
+
+        ``private`` is the separate screening context's store (screening/records.jsonl with its own
+        NCBI cache). The builder's commands never read it, so screening there exposes nothing."""
+        stored = self.records(private=private)
         missing = [p for p in pmids if p not in stored]
         if missing:
-            fetched = self.pubmed.fetch(missing)
-            with (self.root / "records.jsonl").open("a", encoding="utf-8") as handle:
+            with self.private_cache(private):
+                fetched = self.pubmed.fetch(missing)
+            path = self._records_path(private)
+            path.parent.mkdir(parents=True, exist_ok=True)
+            with path.open("a", encoding="utf-8") as handle:
                 for record in fetched:
                     handle.write(json.dumps(record, ensure_ascii=False) + "\n")
                     stored[str(record["pmid"])] = record
         return {p: stored[p] for p in pmids if p in stored}
+
+    @contextmanager
+    def private_cache(self, private: bool = True):
+        """Route NCBI responses to the screening store's own cache while ``private``."""
+        if not private:
+            yield
+            return
+        client = self.pubmed
+        shared = client.cache
+        client.cache = Cache(self.root / "screening" / ".cache", enabled=self.use_cache)
+        try:
+            yield
+        finally:
+            client.cache = shared
 
     # -- history -------------------------------------------------------------------------
 

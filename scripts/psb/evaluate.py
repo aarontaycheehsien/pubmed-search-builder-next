@@ -2,7 +2,8 @@
 
 - lint and PubMed's translation of the whole query
 - counts for every line (term, block, combination, limit)
-- recall on every PMID set, labelled by how independent that set is
+- retrieval of every development and comparison set (never the held-out records, which are not
+  sets: only ``psb holdout-test`` scores them, once)
 - for each missed known record, the blocks that fail to retrieve it
 - leave-one-block-out ablation
 - the change since the previous evaluated version, including known records it lost
@@ -16,7 +17,7 @@ from __future__ import annotations
 from .ncbi import NcbiError
 from . import validation, mesh, syntax
 from .strategy import block_query, core_query, full_query, lint, numbered_lines
-from .workspace import ROLES, Workspace, now
+from .workspace import PURPOSES, Workspace, now, purpose_label, purpose_of
 
 
 def _recall(retrieved: int, total: int) -> float | None:
@@ -115,11 +116,13 @@ def _measure(ws: Workspace, result: dict, *, term_counts: bool) -> None:
         if not found["count"] and line["kind"] == "term":
             entry["issues"].append({"severity": "warning", "code": "zero_hits", "message": "Zero hits: inspect spelling, restrictions and Boolean role; do not infer redundancy from seeds", "query": query, "translation": found["translation"]})
         lines.append(entry)
-    sets = ws.sets()
+    reserved = ws.reserved_pmids()
+    sets = {name: {**data, "pmids": [p for p in data.get("pmids", []) if p not in reserved]}
+            for name, data in ws.sets().items()}
     known = sorted({p for data in sets.values() for p in data.get("pmids", [])})
     if not known:
         result["sets"] = {}
-        result["note"] = "no PMID sets: recall not measured (add seeds, relevant, validation or benchmark sets)"
+        result["note"] = "no known-record sets: retrieval not measured (add development or comparison sets)"
         return
 
     in_pubmed = pm.existing(known)
@@ -133,8 +136,9 @@ def _measure(ws: Workspace, result: dict, *, term_counts: bool) -> None:
         present = [p for p in pmids if p in in_pubmed]
         missed = [p for p in present if p not in hit_full]
         per_set[name] = {
-            "role": data.get("role"),
-            "independence": ROLES.get(str(data.get("role")), "unknown"),
+            "purpose": purpose_of(data),
+            "label": purpose_label(data),
+            "independence": PURPOSES.get(purpose_of(data), "unknown"),
             "size": len(pmids),
             "in_pubmed": len(present),
             "not_in_pubmed": [p for p in pmids if p not in in_pubmed],

@@ -78,4 +78,11 @@ def test_no_sets_reports_recall_not_measured(make_ws):
     ws, _ = make_ws(ATOMS)
     write_json(ws.root / "strategy.json", {"blocks": BLOCKS})
     result = evaluate(ws)
-    assert result["sets"] == {} and "recall not measured" in result["note"]
+    assert result["sets"] == {} and "retrieval not measured" in result["note"]
+
+
+def test_sets_carry_their_purpose_and_legacy_label(make_ws):
+    ws, _ = setup(make_ws, sets={"seeds": ("seed", ["1", "3"]), "old": ("validation", ["4"])})
+    result = evaluate(ws)
+    assert result["sets"]["seeds"]["purpose"] == "development" and result["sets"]["seeds"]["label"] == "development"
+    assert result["sets"]["old"]["purpose"] == "comparison"

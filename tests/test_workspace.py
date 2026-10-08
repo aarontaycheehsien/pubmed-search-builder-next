@@ -15,15 +15,32 @@ def test_normalize_pmids():
         normalize_pmids(["000"])
 
 
-def test_mining_excludes_held_out_records(tmp_path):
+def test_mining_uses_development_sets_only(tmp_path):
     ws = Workspace.create(tmp_path / "w", "Q")
     ws.save_set("seeds", "seed", ["1", "2", "3"])
-    ws.save_set("found", "relevant", ["3", "4"])
-    out = ws.save_set("validation", "validation", ["2"])
-    assert out["overlap_with_other_roles"] == {"seeds": ["2"]}
-    assert ws.mining_pmids() == ["1", "3", "4"]
+    ws.save_set("found", "development", ["3", "4"], origin=["pilot-search"])
+    out = ws.save_set("old", "validation", ["5"])
+    assert out["purpose"] == "comparison" and out["overlap_with_other_purposes"] == {}
+    assert ws.mining_pmids() == ["1", "2", "3", "4"]
+    assert ws.mining_pmids(include_comparison=True) == ["1", "2", "3", "4", "5"]
     with pytest.raises(WorkspaceError):
         ws.save_set("x", "gold", ["1"])
+    with pytest.raises(WorkspaceError, match="psb allocate"):
+        ws.save_set("x", "holdout", ["1"])
+    with pytest.raises(WorkspaceError, match="origin"):
+        ws.save_set("x", "development", ["1"], origin=["web"])
+
+
+def test_legacy_sets_are_mapped_on_read_and_never_rewritten(tmp_path):
+    ws = Workspace.create(tmp_path / "w", "Q")
+    raw = '{"role": "validation", "pmids": ["7"], "source": "split", "note": ""}\n'
+    (ws.root / "sets" / "old.json").write_text(raw, encoding="utf-8")
+    from psb.workspace import purpose_label, purpose_of
+    data = ws.get_set("old")
+    assert purpose_of(data) == "comparison"
+    assert purpose_label(data) == "comparison (legacy: consulted during development as a validation set)"
+    assert ws.mining_pmids() == []
+    assert (ws.root / "sets" / "old.json").read_text(encoding="utf-8") == raw
 
 
 def test_create_refuses_existing_workspace(tmp_path):
@@ -42,17 +59,20 @@ def test_cli_offline_flow(tmp_path, capsys):
     code, out = run(capsys, "init", root, "--question", "Asthma in children?")
     assert code == 0 and out["ok"]
     code, out = run(capsys, "--workspace", root, "set", "add", "seeds", "1", "2", "3", "4", "--role", "seed")
-    assert out["pmids"] == ["1", "2", "3", "4"]
+    assert out["pmids"] == ["1", "2", "3", "4"] and out["purpose"] == "development" and out["origin"] == ["user-supplied"]
     code, out = run(capsys, "--workspace", root, "set", "split", "seeds", "--fraction", "0.5", "--seed", "3")
-    assert out["development"] == 2 and out["validation"] == 2
+    assert code == 1 and "psb allocate" in out["error"]
+    code, out = run(capsys, "--workspace", root, "set", "add", "old", "9", "--purpose", "comparison")
+    assert out["purpose"] == "comparison"
     strategy = {"blocks": [{"id": "asthma", "name": "Asthma", "terms": ['"Asthma"[Mesh]', "asthma*[tiab]"]}]}
     (tmp_path / "run" / "strategy.json").write_text(json.dumps(strategy), encoding="utf-8")
     code, out = run(capsys, "--workspace", root, "lint")
     assert code == 0 and out["lines"][-1]["text"] == "#1 OR #2"
     code, out = run(capsys, "--workspace", root, "status")
-    assert "run psb eval" in out["todo"] and out["sets"]["validation"]["role"] == "validation"
-    code, out = run(capsys, "--workspace", root, "terms", "rank", "--set", "validation")
-    assert code == 1 and "held out" in out["error"]
+    assert "run psb eval" in out["todo"] and out["sets"]["old"]["purpose"] == "comparison"
+    assert any("psb allocate" in t for t in out["todo"])
+    code, out = run(capsys, "--workspace", root, "terms", "rank", "--set", "old")
+    assert code == 1 and "comparison list" in out["error"]
     log = (tmp_path / "run" / "log.jsonl").read_text(encoding="utf-8")
     assert '"type": "command"' in log
 

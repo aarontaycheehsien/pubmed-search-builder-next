@@ -8,10 +8,10 @@ import time
 from contextlib import contextmanager
 from pathlib import Path
 
-from . import validation
+from . import allocation, holdout, validation
 from .evaluate import evaluate, compare
 from .strategy import Strategy
-from .workspace import Workspace, WorkspaceError, ROLES, now, read_json, write_json, sha256_text
+from .workspace import Workspace, WorkspaceError, now, purpose_label, read_json, write_json, sha256_text
 
 DOMAINS = ["translation", "operators", "subject_headings", "text_words", "syntax", "limits_filters"]
 SEVERITIES = {"must-fix", "should-fix", "document"}
@@ -156,10 +156,11 @@ def _scope_section(evaluation: dict) -> list[str]:
 
 
 def _recall_table(evaluation: dict) -> list[str]:
-    rows = ["| Set | Role (independence) | In PubMed | Retrieved | Recall |", "|---|---|---:|---:|---:|"]
+    """Development and comparison retrieval. Legacy evaluations carry a role, labelled as legacy."""
+    rows = ["| Set | Purpose | In PubMed | Retrieved | Retrieved % |", "|---|---|---:|---:|---:|"]
     for name, data in (evaluation.get("sets") or {}).items():
         recall = "n/a" if data["recall_percent"] is None else f"{data['recall_percent']}%"
-        rows.append(f"| {name} | {data['role']} ({ROLES.get(data['role'], '')}) | {data['in_pubmed']} | {data['retrieved']} | {recall} |")
+        rows.append(f"| {name} | {data.get('label') or purpose_label(data)} | {data['in_pubmed']} | {data['retrieved']} | {recall} |")
     return rows
 
 
@@ -169,9 +170,11 @@ def _nonempty(value) -> bool:
 
 def _round_problems(data: dict) -> list[str]:
     problems = []
+    if not round_epoch(data):
+        problems.append("epoch must be a positive integer")
     domains = data.get("domains")
     if not isinstance(domains, dict):
-        return ["domains must be an object"]
+        return problems + ["domains must be an object"]
     for domain in DOMAINS:
         row = domains.get(domain)
         if not isinstance(row, dict) or not isinstance(row.get("verdict"), str) or row.get("verdict") not in {"pass", "revise"}:
@@ -205,6 +208,24 @@ def revision_budget(depth: str | None) -> int:
 
 # The closing round, plus one verification round when the strategy or scope changed after it.
 MAX_CLOSING_ROUNDS = 2
+# A repair after the held-out test is targeted and the strategy was already reviewed: each repair epoch
+# allows one revision round, then the closing and verification rounds, at every depth.
+REPAIR_BUDGET = 1
+
+
+def current_epoch(ws: Workspace) -> int:
+    """1, plus one for each release of held-out records for repair. Rounds count per epoch."""
+    return 1 + sum(1 for e in ws.allocation_events() if e.get("type") == "release")
+
+
+def round_epoch(data: dict) -> int:
+    epoch = data.get("epoch", 1)
+    return epoch if type(epoch) is int and epoch >= 1 else 0
+
+
+def epoch_budget(ws: Workspace, epoch: int | None = None) -> int:
+    epoch = current_epoch(ws) if epoch is None else epoch
+    return revision_budget(ws.protocol().get("depth")) if epoch == 1 else REPAIR_BUDGET
 
 
 def _closing_problems(rounds: list[dict]) -> list[tuple[int, str]]:
@@ -213,13 +234,19 @@ def _closing_problems(rounds: list[dict]) -> list[tuple[int, str]]:
     Without it, a last revision round that asks for changes is a dead end: fixing the strategy
     makes the critic stale with no round left, and leaving the findings open blocks delivery.
     The same dead end recurs if anything the critic reviewed changes after the closing round, so
-    one more closing round (a verification round) may follow it; nothing may follow that.
+    one more closing round (a verification round) may follow it; nothing may follow that within the
+    epoch. A release for repair starts a new epoch, whose rounds count afresh.
     """
     problems = []
     earlier: set[str] = set()
     closings = 0
+    epoch = 1
     for r in rounds:
         findings = round_findings(r)
+        if round_epoch(r) < epoch:
+            problems.append((r.get("round"), "a round cannot return to an earlier epoch"))
+        elif round_epoch(r) > epoch:
+            epoch, closings = round_epoch(r), 0
         if not r.get("closing") and closings:
             problems.append((r.get("round"), "a revision round cannot follow a closing round"))
         if r.get("closing"):
@@ -253,12 +280,15 @@ def review_gate(ws: Workspace, evaluation: dict, *, rounds: list[dict] | None = 
             active[f["id"]] = f
     for number, problem in _closing_problems(rounds):
         blockers.append(validation.issue("critic_invalid", "Invalid closing round", location=f"critic:{number}", evidence=[problem]))
+    epoch = current_epoch(ws)
+    if any(round_epoch(r) > epoch for r in rounds):
+        blockers.append(validation.issue("critic_invalid", "A critic round names a repair epoch that has not started"))
     if blockers:
         return {"blockers": blockers, "findings": list(active.values())}
     if latest.get("review_sha256") != evaluation.get("review_sha256"):
         blockers.append(validation.issue("critic_stale", "Critic must review the current inputs, translation and known-record retrieval"))
-    budget = revision_budget(evaluation["inputs"]["protocol"].get("depth"))
-    if sum(bool(r.get("review_sha256")) and not r.get("closing") for r in rounds) > budget:
+    budget = revision_budget(evaluation["inputs"]["protocol"].get("depth")) if epoch == 1 else REPAIR_BUDGET
+    if sum(bool(r.get("review_sha256")) and not r.get("closing") for r in rounds if round_epoch(r) == epoch) > budget:
         blockers.append(validation.issue("critic_budget", "Critic revision budget exhausted; use the closing round or deliver a diagnostic handoff"))
     # After the closing round no review is left to act on a should-fix finding, so it is delivered
     # as a documented open concern; only a must-fix finding still stops the query.
@@ -334,7 +364,9 @@ def check_round(ws: Workspace, path: Path) -> dict:
 def next_round(ws: Workspace, evaluation: dict, rounds: list[dict]) -> tuple[int, str]:
     """The number and kind (``revision``, ``closing`` or ``verification``) of the next critic round."""
     number = max((r["round"] for r in rounds), default=0) + 1
-    budget = revision_budget(ws.protocol().get("depth"))
+    epoch = current_epoch(ws)
+    budget = epoch_budget(ws, epoch)
+    rounds = [r for r in rounds if round_epoch(r) == epoch]
     closings = [r for r in rounds if r.get("closing")]
     if closings:
         if closings[-1].get("review_sha256") == evaluation["review_sha256"]:
@@ -345,16 +377,30 @@ def next_round(ws: Workspace, evaluation: dict, rounds: list[dict]) -> tuple[int
     return number, "closing" if sum(bool(r.get("review_sha256")) for r in rounds) >= budget else "revision"
 
 
+def _holdout_note(ws: Workspace) -> list[str]:
+    """What the critic is told about held-out records: their count, never their identity or retrieval."""
+    current = allocation.state(ws)
+    if current is None or not current["held"]:
+        return []
+    if current["released"]:
+        return ["**Repair review.** The held-out records were released into development to repair the search after "
+                "the held-out test. They are now development records; review the revised strategy as usual.", ""]
+    units = len(current["held"])
+    return [f"**Held-out test.** {units} unit{'s are' if units != 1 else ' is'} reserved for one retrieval test that "
+            "runs after this review. They are not in this packet and must not be requested or inferred.", ""]
+
+
 def critic_packet(ws: Workspace) -> Path:
     evaluation = latest_evaluation(ws)
     if not evaluation["validation"]["complete"]:
         raise WorkspaceError("run a complete psb eval before requesting critique")
     rounds = critic_rounds(ws)
     number, kind = next_round(ws, evaluation, rounds)
-    budget = revision_budget(ws.protocol().get("depth"))
+    epoch = current_epoch(ws)
+    budget = epoch_budget(ws, epoch)
     verification = kind == "verification"
     closing = kind != "revision"
-    template = {"round": number, **({"closing": True} if closing else {}),
+    template = {"round": number, **({"epoch": epoch} if epoch > 1 else {}), **({"closing": True} if closing else {}),
                 "strategy_version": evaluation.get("version"), "review_sha256": evaluation["review_sha256"],
                 "domains": {d: {"verdict": "pass | revise", "note": "explanation"} for d in DOMAINS}, "findings": [],
                 "issue_dispositions": [{"issue_id": i["id"], "status": "accepted-risk | rejected", "response": "reason", "evidence": "observations", **({"query": i.get("query"), "translation": i.get("translation")} if i["code"] in validation.PHRASE_CODES else {})} for i in evaluation["validation"]["review_required"]]}
@@ -369,7 +415,7 @@ def critic_packet(ws: Workspace) -> Path:
                         "where the change affects it. Do not raise new must-fix or should-fix findings; record any new "
                         "concern as severity 'document'. Keep \"closing\": true in the response.", ""]
     title = " (verification)" if verification else " (closing)" if closing else ""
-    lines = [f"# Critic packet, round {number}{title}", "", *closing_note,
+    lines = [f"# Critic packet, round {number}{title}", "", *closing_note, *_holdout_note(ws),
              "Review this draft as an information specialist using the six PRESS domains. "
              "Use only the packet. Do not answer the evidence question. Technical errors cannot be waived. "
              "Carry earlier finding IDs forward with explicit dispositions. For each finding provide id, domain, severity "
@@ -384,6 +430,35 @@ def critic_packet(ws: Workspace) -> Path:
     path = ws.root / "critic" / f"packet-{number}.md"
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return path
+
+
+HOLDOUT_BLOCKERS = {
+    "allocation_missing": "Freeze the allocation of the known records first (psb allocate)",
+    "allocation_stale": "The reserved records no longer match the scope; re-screen them and psb allocate --rebind",
+    "holdout_test_missing": "Run the held-out test (psb holdout-test) after the critic review",
+    "holdout_test_incomplete": "The held-out test did not complete; run psb holdout-test again",
+    "holdout_test_stale": "The held-out test ran on another interpretation of the query; run psb holdout-test again",
+    "holdout_strategy_changed": ("The strategy changed after the held-out test: restore the tested strategy, or "
+                                 "release the held-out records for repair (psb holdout-release)"),
+}
+
+
+def holdout_gate(ws: Workspace, evaluation: dict) -> tuple[dict | None, list[dict]]:
+    """The held-out receipt a delivery rests on, or blockers when the allocation or the test is missing.
+    Holdout misses never block: the tested query is delivered unchanged and a repair is offered."""
+    from .progress import decisions
+    state = allocation.state(ws)
+    if state is None:
+        known = bool(ws.sets()) or any(row["decision"] == "include" for row in decisions(ws).values())
+        return None, [validation.issue("allocation_missing", HOLDOUT_BLOCKERS["allocation_missing"])] if known else []
+    if not state["held"] or state["released"]:
+        return None, []
+    if state["stale"]:
+        return None, [validation.issue("allocation_stale", HOLDOUT_BLOCKERS["allocation_stale"], evidence=state["stale"])]
+    receipt, problem = holdout.matching(ws, evaluation, state)
+    if problem:
+        return None, [validation.issue(problem, HOLDOUT_BLOCKERS[problem])]
+    return receipt, []
 
 
 @contextmanager
@@ -427,6 +502,7 @@ def report(ws: Workspace, *, diagnostic: bool = False, note: str = "") -> dict:
         rounds = []
         overrides = []
         overridden = []
+        receipt = None
         try:
             evaluation = evaluate(ws, term_counts=True)
             evaluation["fresh"] = True
@@ -440,6 +516,8 @@ def report(ws: Workspace, *, diagnostic: bool = False, note: str = "") -> dict:
             review = review_gate(ws, evaluation, rounds=rounds, overrides=overrides)
             blockers.extend(review["blockers"])
             overridden = review.get("overridden", [])
+            receipt, held_blockers = holdout_gate(ws, evaluation)
+            blockers.extend(held_blockers)
         except (ValueError, OSError, WorkspaceError) as exc:
             blockers = [validation.issue("finalization_failed", "Finalization could not complete", evidence=str(exc))]
         finally:
@@ -452,13 +530,21 @@ def report(ws: Workspace, *, diagnostic: bool = False, note: str = "") -> dict:
                     "message": "Diagnostic output only; no protected final query was issued"}
         stage = ws.root / "attempts" / (attempt["attempt_id"] + "-delivery")
         stage.mkdir()
+        # One rendering of the held-out interpretation: the audit embeds it and the manifest carries it,
+        # so the delivery message relays the same bytes.
+        held = holdout.message(ws, receipt, evaluation)
         query_bytes = (evaluation["query"] + "\n").encode("utf-8")
-        audit_bytes = _audit(ws, evaluation, rounds, overridden).encode("utf-8")
+        audit_bytes = _audit(ws, evaluation, rounds, overridden, held, receipt).encode("utf-8")
         import hashlib
         hashes = {"final-query.txt": hashlib.sha256(query_bytes).hexdigest(), "audit.md": hashlib.sha256(audit_bytes).hexdigest()}
+        state = allocation.state(ws)
         manifest = {"status": "passed", "policy_version": validation.POLICY_VERSION, "attempt_id": attempt["attempt_id"],
                     "input_sha256": evaluation["input_sha256"], "review_sha256": evaluation["review_sha256"], "critic_sha256": critic_hash,
                     "created": now(), "query": evaluation["query"], "artifacts": hashes, "human_press_review": "pending",
+                    "allocation_sha256": state["sha256"] if state else None,
+                    "holdout": {"case": held["case"], "text": held["text"], "template_version": held["template_version"],
+                                **({"receipt": receipt["number"], "receipt_sha256": holdout.receipt_digest(ws, receipt["number"])}
+                                   if receipt else {})},
                     **({"overridden_findings": [f["id"] for f in overridden]} if overridden else {})}
         try:
             (stage / "final-query.txt").write_bytes(query_bytes)
@@ -501,11 +587,13 @@ def verify_delivery(ws: Workspace) -> dict:
     import hashlib
     try:
         manifest = read_json(ws.root / "validation-manifest.json")
-        if not isinstance(manifest, dict) or manifest.get("status") != "passed" or manifest.get("policy_version") != validation.POLICY_VERSION:
+        policy = manifest.get("policy_version") if isinstance(manifest, dict) else None
+        legacy = policy in validation.LEGACY_POLICY_VERSIONS
+        if not isinstance(manifest, dict) or manifest.get("status") != "passed" or not (policy == validation.POLICY_VERSION or legacy):
             raise WorkspaceError("missing current validation receipt")
         if (ws.root / ".report.lock").exists():
             raise WorkspaceError("publication is in progress or was interrupted")
-        snapshot = validation.input_snapshot(ws)
+        snapshot = validation.input_snapshot_v1(ws) if legacy else validation.input_snapshot(ws)
         if manifest.get("input_sha256") != validation.digest(snapshot):
             raise WorkspaceError("delivery inputs have changed" + _changed_hint(ws, manifest, snapshot))
         if manifest.get("critic_sha256") != critic_digest(critic_rounds(ws), critic_overrides(ws)):
@@ -516,6 +604,12 @@ def verify_delivery(ws: Workspace) -> dict:
                 raise WorkspaceError(f"{name} is incomplete or changed")
         if (ws.root / "final-query.txt").read_text(encoding="utf-8").strip() != manifest.get("query"):
             raise WorkspaceError("query does not match the validated receipt")
+        number = (manifest.get("holdout") or {}).get("receipt")
+        if number is not None and holdout.receipt_digest(ws, number) != manifest["holdout"].get("receipt_sha256"):
+            raise WorkspaceError("the held-out test receipt has changed")
+        if legacy:
+            return {"ok": True, "legacy": True, "query_file": str(ws.root / "final-query.txt"), "manifest": manifest,
+                    "note": f"legacy delivery (policy {policy}): its recall labels predate held-out testing"}
         return {"ok": True, "query_file": str(ws.root / "final-query.txt"), "manifest": manifest}
     except (WorkspaceError, OSError, ValueError, TypeError, AttributeError) as exc:
         return {"ok": False, "error": str(exc)}
@@ -536,7 +630,8 @@ def _overridden_section(overridden: list[dict]) -> list[str]:
     return lines + [""]
 
 
-def _audit(ws: Workspace, evaluation: dict, rounds: list[dict], overridden: list[dict] | None = None) -> str:
+def _audit(ws: Workspace, evaluation: dict, rounds: list[dict], overridden: list[dict] | None = None,
+           held: dict | None = None, receipt: dict | None = None) -> str:
     protocol = evaluation["inputs"]["protocol"]
     strategy = Strategy.from_dict(evaluation["inputs"]["strategy"])
     versions = ws.versions()
@@ -581,20 +676,27 @@ def _audit(ws: Workspace, evaluation: dict, rounds: list[dict], overridden: list
         evaluation["query"],
         "```",
         "",
-        "## Validation against known relevant records",
+        "## Known-record retrieval",
+        "",
+        "### Held-out test and interpretation",
+        "",
+        *(held or holdout.message(ws, receipt, evaluation))["text"].split("\n"),
         "",
     ]
+    if receipt and receipt.get("status") in {"complete", "empty"}:
+        lines += ["Held-out records (released to this audit after the test):", "", *holdout.records_section(ws, receipt), ""]
+    lines += ["### Development checks", ""]
     if evaluation.get("sets"):
         lines += _recall_table(evaluation)
-        lines += ["", "Relative recall against these sets is not absolute sensitivity. Development sets were used to "
-                  "build the strategy and cannot show how it performs on unseen records.", ""]
+        lines += ["", "Development records were used to build the strategy; their retrieval is a development check, "
+                  "not independent validation and not sensitivity. Comparison lists are reported separately.", ""]
         if evaluation.get("misses"):
             lines += ["Missed records:", ""]
             lines += [f"- PMID {m['pmid']} ({', '.join(m['sets'])}): not retrieved by {', '.join(m['failing_blocks']) or 'limits'}"
                       for m in evaluation["misses"]]
             lines.append("")
     else:
-        lines += ["No known relevant records were available, so recall was not estimated.", ""]
+        lines += ["No development or comparison records were available.", ""]
     if isinstance(evaluation.get("ablation"), list):
         lines += ["### Leave-one-block-out", "", "| Block dropped | Records | Known records gained |", "|---|---:|---:|"]
         lines += [f"| {a['drop']} | {a['count']:,} | {a['known_gained']} |" for a in evaluation["ablation"]]
