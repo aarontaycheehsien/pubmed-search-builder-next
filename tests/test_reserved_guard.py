@@ -8,7 +8,7 @@ import pytest
 from psb import allocation, cli, deliver, progress, reserved, validation
 from psb.evaluate import evaluate
 from psb.workspace import write_json
-from test_allocation import HELD, MESH_ONLY, POOL, make_pool, through_critic
+from test_allocation import HELD, MESH_ONLY, make_pool, through_critic
 
 
 @pytest.fixture

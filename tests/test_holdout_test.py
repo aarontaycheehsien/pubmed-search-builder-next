@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-from psb import allocation, cli, deliver, holdout, interpret, progress, reserved
+from psb import allocation, cli, deliver, holdout, interpret, reserved
 from psb.ncbi import NcbiError
 from psb.workspace import WorkspaceError, read_json, write_json
 from test_allocation import HELD, MESH_ONLY, make_pool, through_critic
