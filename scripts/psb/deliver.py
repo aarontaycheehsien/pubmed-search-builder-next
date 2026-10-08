@@ -65,6 +65,13 @@ def critic_rounds(ws: Workspace) -> list[dict]:
     return rounds
 
 
+def round_findings(data: dict) -> list[dict]:
+    """A round's well-formed findings. A malformed ``findings`` value is reported by
+    ``_round_problems``; every other reader treats it as empty instead of crashing."""
+    findings = data.get("findings")
+    return [f for f in findings if isinstance(f, dict)] if isinstance(findings, list) else []
+
+
 def critic_overrides(ws: Workspace) -> list[dict]:
     path = ws.root / "critic" / "overrides.json"
     if not path.exists():
@@ -99,7 +106,7 @@ def override_finding(ws: Workspace, finding_id: str, reason: str) -> dict:
     rounds = critic_rounds(ws)
     if not rounds:
         raise WorkspaceError("no critic round to override")
-    active = {f.get("id"): f for r in rounds for f in r.get("findings") or [] if isinstance(f, dict)}
+    active = {f.get("id"): f for r in rounds for f in round_findings(r)}
     problems = _override_problems(active.get(finding_id), bool(rounds[-1].get("closing")))
     if problems:
         raise WorkspaceError(f"{finding_id}: {problems[0]}")
@@ -212,7 +219,7 @@ def _closing_problems(rounds: list[dict]) -> list[tuple[int, str]]:
     earlier: set[str] = set()
     closings = 0
     for r in rounds:
-        findings = [f for f in r.get("findings") or [] if isinstance(f, dict)]
+        findings = round_findings(r)
         if not r.get("closing") and closings:
             problems.append((r.get("round"), "a revision round cannot follow a closing round"))
         if r.get("closing"):

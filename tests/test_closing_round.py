@@ -110,3 +110,15 @@ def test_after_closing_only_must_fix_blocks(make_ws):
     should = {**OPEN, "severity": "should-fix", "kind": "reporting"}
     write_round(ws, 3, [should], REVISE, closing=True)
     assert deliver.report(ws)["ok"]
+
+
+@pytest.mark.parametrize("findings", [5, {"F1": "missing synonym"}, None])
+def test_malformed_findings_are_reported_not_crashed_on(make_ws, findings):
+    ws = evaluated(make_ws)
+    path = write_round(ws, 1, findings, PASS)
+    result = deliver.check_round(ws, path)
+    assert not result["ok"] and "Invalid critic round" in result["problems"]
+    assert not deliver.report(ws)["ok"]
+    write_round(ws, 2, findings, PASS, closing=True)
+    with pytest.raises(WorkspaceError, match="no such finding"):
+        deliver.override_finding(ws, "F1", "disagree on evidence")

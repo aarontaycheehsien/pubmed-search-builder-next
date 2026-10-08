@@ -363,8 +363,9 @@ def test_a_corrupt_attempt_does_not_break_status(ws, capsys):
     assert code == 0 and any(t.startswith("progress state could not be read") for t in status["todo"])
 
 
-def test_resolved_pmids_with_leading_zeros_are_attributed(ws, capsys, monkeypatch):
-    monkeypatch.setattr(ws.pubmed, "existing", lambda pmids: {str(p).lstrip("0") for p in pmids})
-    text(capsys, "resolve", "0005")
+def test_resolved_pmids_with_leading_zeros_are_found_and_attributed(ws, capsys):
+    code, out = psb(capsys, "resolve", "0005", "000")
+    assert code == 0 and out["resolved"] == {"0005": "5"}
+    assert out["not_in_pubmed_or_after_as_of"] == [] and out["unresolved"] == ["000"]
     assert progress.batches(ws)[-1]["pmids"] == ["5"]
     assert "- Resolved identifiers (C1): 1 screened → 1 include" in text(capsys, "screen", "--include", "5")

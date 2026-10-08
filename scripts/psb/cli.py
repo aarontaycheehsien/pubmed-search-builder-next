@@ -206,7 +206,10 @@ def cmd_resolve(args) -> dict:
             continue
         clean = ident.strip()
         if clean.isdigit():
-            resolved[ident] = clean
+            # PubMed answers 0005[uid] as 5: store the PMID it will report, or the existence check
+            # wrongly calls the record missing. An all-zero identifier is not a PMID.
+            if clean.lstrip("0"):
+                resolved[ident] = clean.lstrip("0")
         elif clean.lower().startswith(("10.", "doi:", "https://doi.org/")):
             doi = clean.split("doi.org/")[-1].removeprefix("doi:").strip()
             hits = ws.pubmed.search(f'"{doi}"[doi]', retmax=2, dated=False)["pmids"]
