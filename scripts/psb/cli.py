@@ -9,11 +9,11 @@ import random
 import sys
 from pathlib import Path
 
-from . import config, deliver, mesh, terms, validation
+from . import config, deliver, mesh, progress, terms, validation
 from .evaluate import compare, evaluate
 from .ncbi import LINKNAMES, NcbiError, PubMed
 from .strategy import StrategyError, lint, numbered_lines, full_query
-from .workspace import ROLES, Workspace, WorkspaceError, find_root, normalize_pmids, now, sha256_text
+from .workspace import ROLES, Workspace, WorkspaceError, find_root, normalize_pmids, now, read_json, sha256_text
 
 
 class UsageError(RuntimeError):
@@ -87,6 +87,8 @@ def cmd_status(args) -> dict:
     delivery = deliver.verify_delivery(ws)
     if not delivery["ok"] and (ws.root / "validation-manifest.json").exists():
         todo.append(f"the delivery is no longer current: {delivery['error']}")
+    sent, reminders = progress.stage_reminders(ws)
+    todo += reminders
     return {
         "ok": True,
         "workspace": str(ws.root),
@@ -100,14 +102,19 @@ def cmd_status(args) -> dict:
         "last_eval": {"count": last.get("count"), "recall": {n: s.get("recall_percent") for n, s in (last.get("sets") or {}).items()}} if last else None,
         "critic_rounds": critic,
         "delivery": delivery,
+        "progress": sent,
         "todo": todo,
     }
 
 
 def cmd_count(args) -> dict:
     ws = workspace(args)
-    result = ws.pubmed.search(query_arg(args))
-    return {"ok": True, **result}
+    query = query_arg(args)
+    result = ws.pubmed.search(query)
+    body = {"ok": True, **result}
+    if args.purpose:
+        body["progress"] = progress.emit(ws, f"search:{args.purpose}", {"query": query, "count": result["count"]})
+    return body
 
 
 def cmd_fetch(args) -> dict:
@@ -129,14 +136,24 @@ def cmd_sample(args) -> dict:
     first = ws.pubmed.search(query, retmax=0)
     total = first["count"]
     if not total:
-        return {"ok": True, "count": 0, "records": []}
+        body = {"ok": True, "count": 0, "records": []}
+        if args.purpose:
+            body["progress"] = progress.emit(ws, f"search:{args.purpose}", {"query": query, "count": 0, "shown": 0})
+        return body
     start = random.Random(args.seed).randrange(max(1, min(total, 9999) - args.n + 1)) if args.random else 0
     pmids = ws.pubmed.search(query, retmax=args.n, retstart=start)["pmids"]
     records = ws.ensure_records(pmids)
-    return {
+    body = {
         "ok": True, "count": total, "retstart": start,
         "records": [{"pmid": p, "year": r.get("year"), "title": r.get("title")} for p, r in records.items()],
     }
+    if args.purpose:
+        data = {"query": query, "count": total, "shown": len(records), "retstart": start}
+        if args.purpose in progress.CANDIDATE_PURPOSES and records:
+            label = f"{progress.PURPOSES[args.purpose]} {progress.code(progress.clean(query, 80))}"
+            data["batch"] = progress.record_batch(ws, args.purpose, label, list(records), total=total, query=query)["batch"]
+        body["progress"] = progress.emit(ws, f"search:{args.purpose}", data)
+    return body
 
 
 def cmd_neighbors(args) -> dict:
@@ -160,8 +177,19 @@ def cmd_neighbors(args) -> dict:
         candidates = [e for e in candidates if e["pmid"] in dated]
     candidates.sort(key=lambda e: (-len(set(e["from"])), -e["best_score"], e["pmid"]))
     rows = [{**e, "links": sorted(e["links"]), "from": sorted(set(e["from"]))} for e in candidates[: args.limit]]
-    return {"ok": True, "seeds": len(pmids), "candidates": len(candidates), "shown": len(rows), "rows": rows,
+    body = {"ok": True, "seeds": len(pmids), "candidates": len(candidates), "shown": len(rows), "rows": rows,
             "note": "Neighbours are candidates, not relevant records: screen them before using them for mining."}
+    links = [link.strip() for link in args.links.split(",")]
+    in_sets = {p for d in ws.sets().values() for p in d.get("pmids", [])}
+    data = {"links": links, "from": pmids, "sets": sorted(set(args.set or [])), "candidates": len(candidates),
+            "shown": len(rows), "exclude_known": args.exclude_known,
+            "per_link": {link: sum(1 for e in candidates if link in e["links"]) for link in links},
+            "known": sum(1 for p in scores if p in in_sets and p not in pmids)}
+    if rows:
+        data["batch"] = progress.record_batch(ws, "neighbors:" + ",".join(links), progress.neighbors_label(links, pmids, data["sets"]),
+                                              [r["pmid"] for r in rows], total=len(candidates), origin=pmids)["batch"]
+    body["progress"] = progress.emit(ws, "neighbors", data)
+    return body
 
 
 def cmd_resolve(args) -> dict:
@@ -183,7 +211,13 @@ def cmd_resolve(args) -> dict:
                 resolved[ident] = hits[0]
     unresolved = [i for i in args.ids if i not in resolved]
     exists = ws.pubmed.existing(resolved.values()) if resolved else set()
-    return {"ok": True, "resolved": resolved, "not_in_pubmed_or_after_as_of": sorted(set(resolved.values()) - exists), "unresolved": unresolved}
+    body = {"ok": True, "resolved": resolved, "not_in_pubmed_or_after_as_of": sorted(set(resolved.values()) - exists), "unresolved": unresolved}
+    data = {**body, "given": len(args.ids)}
+    found = sorted({p for p in resolved.values() if p in exists}, key=int)
+    if found:
+        data["batch"] = progress.record_batch(ws, "resolve", "Resolved identifiers", found, total=len(found))["batch"]
+    body["progress"] = progress.emit(ws, "resolve", data)
+    return body
 
 
 def cmd_mesh(args) -> dict:
@@ -200,11 +234,19 @@ def cmd_set(args) -> dict:
     if args.set_command == "add":
         existing = ws.get_set(args.name)["pmids"] if ws.set_path(args.name).exists() else []
         pmids = existing + [p for p in normalize_pmids(args.pmids) if p not in existing]
-        return {"ok": True, **ws.save_set(args.name, args.role, pmids, source=args.source, note=args.note)}
+        body = {"ok": True, **ws.save_set(args.name, args.role, pmids, source=args.source, note=args.note)}
+        body["progress"] = progress.emit(ws, "set", {"name": args.name, "role": args.role, "before": len(existing),
+                                                     "after": len(pmids), "added": pmids[len(existing):],
+                                                     "overlap": body["overlap_with_other_roles"]})
+        return body
     if args.set_command == "remove":
         data = ws.get_set(args.name)
         drop = set(normalize_pmids(args.pmids))
-        return {"ok": True, **ws.save_set(args.name, data["role"], [p for p in data["pmids"] if p not in drop], source=data.get("source", ""), note=data.get("note", ""))}
+        body = {"ok": True, **ws.save_set(args.name, data["role"], [p for p in data["pmids"] if p not in drop], source=data.get("source", ""), note=data.get("note", ""))}
+        body["progress"] = progress.emit(ws, "set", {"name": args.name, "role": data["role"], "before": len(data["pmids"]),
+                                                     "after": len(body["pmids"]), "removed": [p for p in data["pmids"] if p in drop],
+                                                     "overlap": body["overlap_with_other_roles"]})
+        return body
     # split: move a random fraction of one set into a held-out validation set
     data = ws.get_set(args.name)
     pmids = list(data["pmids"])
@@ -214,8 +256,11 @@ def cmd_set(args) -> dict:
         raise UsageError("split would leave nothing for development")
     ws.save_set(args.name, data["role"], [p for p in pmids if p not in held], source=data.get("source", ""), note=data.get("note", ""))
     out = ws.save_set(args.into, "validation", held, source=f"split from {args.name} (seed {args.seed}, fraction {args.fraction})")
-    return {"ok": True, "development": len(pmids) - len(held), "validation": len(held), "validation_set": out["name"],
+    body = {"ok": True, "development": len(pmids) - len(held), "validation": len(held), "validation_set": out["name"],
             "note": "Do not mine the validation set. Every psb eval shows its recall, so it is consulted repeatedly: report it as semi-independent."}
+    body["progress"] = progress.emit(ws, "split", {"name": args.name, "into": out["name"], "development": body["development"],
+                                                   "validation": body["validation"]})
+    return body
 
 
 def cmd_lint(args) -> dict:
@@ -241,6 +286,7 @@ def cmd_eval(args) -> dict:
     deliver.record_evaluation(ws, evaluation, note=args.note)
     attempt = ws.save_attempt(evaluation)
     output = dict(evaluation, attempt_id=attempt["attempt_id"])
+    output["progress"] = progress.emit(ws, "eval", {"evaluation": evaluation, "note": args.note})
     if args.brief:
         output.pop("lines", None)
         output.pop("retrieved_known", None)
@@ -263,8 +309,12 @@ def cmd_terms(args) -> dict:
         if not pmids:
             raise UsageError("no mining records: add a seed or relevant set")
         records = list(ws.ensure_records(pmids).values())
-        return {"ok": True, **terms.rank(ws.pubmed, records, strategy, fields=args.fields.split(","),
+        body = {"ok": True, **terms.rank(ws.pubmed, records, strategy, fields=args.fields.split(","),
                                           budget=args.budget, min_df=args.min_df, include_covered=args.include_covered)}
+        body["progress"] = progress.emit(ws, "terms-rank", {"sets": sorted(set(args.set or [])), "records": body["records"],
+                                                            "candidates": body["candidates"], "already_covered": body["already_covered"],
+                                                            "scored": len(body["scored"])})
+        return body
     versions = ws.versions()
     if not versions:
         raise UsageError("run psb eval first")
@@ -272,29 +322,73 @@ def cmd_terms(args) -> dict:
     evaluation = attempts[-1]["evaluation"] if attempts else versions[-1]["evaluation"]
     missed = [m["pmid"] for m in evaluation.get("misses", []) if not args.set or set(m["sets"]) & set(args.set)]
     records = list(ws.ensure_records(missed).values())
-    return {"ok": True, "version": versions[-1]["version"], "misses": terms.miss_report(records, evaluation, strategy),
+    body = {"ok": True, "version": versions[-1]["version"], "misses": terms.miss_report(records, evaluation, strategy),
             "note": "Vocabulary from missed records is a candidate. Adding a term to recover a validation miss "
                     "makes that set part of development; say so in the audit."}
+    body["progress"] = progress.emit(ws, "terms-miss", {"version": body["version"],
+                                                        "misses": [m for m in evaluation.get("misses", []) if m["pmid"] in missed]})
+    return body
 
 
 def cmd_critic(args) -> dict:
     ws = workspace(args)
     if args.critic_command == "packet":
+        rounds = deliver.critic_rounds(ws)
         path = deliver.critic_packet(ws)
-        return {"ok": True, "packet": str(path),
+        evaluation = deliver.latest_evaluation(ws)
+        number, kind = deliver.next_round(ws, evaluation, rounds)
+        body = {"ok": True, "packet": str(path),
                 "next": "give only this file to a fresh-context reviewer (subagent) and save its JSON as "
                         f"critic/round-N.json; then run psb critic check"}
+        body["progress"] = progress.emit(ws, "critic-packet", {
+            "round": number, "kind": kind, "version": evaluation.get("version"), "packet": f"critic/{path.name}",
+            "revision": sum(bool(r.get("review_sha256")) and not r.get("closing") for r in rounds) + 1,
+            "budget": deliver.revision_budget(ws.protocol().get("depth"))})
+        return body
     if args.critic_command == "override":
-        return {"ok": True, **deliver.override_finding(ws, args.finding, args.reason)}
+        finding = next((f for r in deliver.critic_rounds(ws) for f in r.get("findings") or []
+                        if isinstance(f, dict) and f.get("id") == args.finding), {})
+        body = {"ok": True, **deliver.override_finding(ws, args.finding, args.reason)}
+        body["progress"] = progress.emit(ws, "critic-override", {"id": args.finding, "finding": finding})
+        return body
     paths = deliver.round_paths(ws)
     path = Path(args.round) if args.round else (paths[-1] if paths else None)
     if path is None:
         raise UsageError("no critic/round-*.json to check")
-    return {"round_file": str(path), **deliver.check_round(ws, path)}
+    body = {"round_file": str(path), **deliver.check_round(ws, path)}
+    data = read_json(path)
+    if isinstance(data, dict) and type(data.get("round")) is int:
+        earlier = [r for r in deliver.critic_rounds(ws) if r["round"] < data["round"]]
+        kind = progress.round_kinds([*earlier, data])[-1]
+        body["progress"] = progress.emit(ws, "critic-check", {"round": data, "kind": kind, "check": body})
+    return body
 
 
 def cmd_report(args) -> dict:
-    return deliver.report(workspace(args), diagnostic=args.diagnostic, note=args.note)
+    ws = workspace(args)
+    result = deliver.report(ws, diagnostic=args.diagnostic, note=args.note)
+    result["progress"] = progress.emit(ws, "report", {"result": result, "diagnostic": args.diagnostic})
+    return result
+
+
+def cmd_screen(args) -> dict:
+    ws = workspace(args)
+    entries = progress.record_screening(ws, include=args.include, exclude=args.exclude, uncertain=args.uncertain,
+                                        reason=args.reason, file=args.file)
+    return {"ok": True, "recorded": len(entries),
+            "decisions": {d: [e["pmid"] for e in entries if e["decision"] == d] for d in progress.DECISIONS},
+            "note": "Screening decisions are a record only: add includes to a set with psb set add.",
+            "progress": progress.emit(ws, "screen", {"entries": entries})}
+
+
+def cmd_progress(args) -> dict:
+    if args.stage == "intake-request":
+        return {"ok": True, "stage": args.stage,
+                "progress": progress.render(None, "intake-request", {"have_question": args.have_question})}
+    ws = workspace(args)
+    if args.stage == "list":
+        return {"ok": True, "messages": progress.messages(ws)}
+    return {"ok": True, "stage": args.stage, "progress": progress.emit(ws, f"stage:{args.stage}")}
 
 
 def cmd_log(args) -> dict:
@@ -341,6 +435,8 @@ def build_parser() -> argparse.ArgumentParser:
         p = sub.add_parser(name, help=help_text)
         p.add_argument("query", nargs="*")
         p.add_argument("--file")
+        p.add_argument("--purpose", choices=sorted(progress.PURPOSES),
+                       help="announce this search to the user (prior-reviews and pilot also record a candidate batch)")
         if name == "sample":
             p.add_argument("--n", type=int, default=10)
             p.add_argument("--random", action="store_true", help="sample from a random offset")
@@ -396,6 +492,19 @@ def build_parser() -> argparse.ArgumentParser:
     q.add_argument("--seed", type=int, default=1)
     p.set_defaults(func=cmd_set)
 
+    p = sub.add_parser("screen", help="record screening decisions on candidate records")
+    p.add_argument("--include", nargs="+", default=[])
+    p.add_argument("--exclude", nargs="+", default=[])
+    p.add_argument("--uncertain", nargs="+", default=[])
+    p.add_argument("--reason", default="", help="reason recorded with every decision in this call")
+    p.add_argument("--file", help="JSON list of {pmid, decision, reason}")
+    p.set_defaults(func=cmd_screen)
+
+    p = sub.add_parser("progress", help="the standard progress message for a workflow step")
+    p.add_argument("stage", choices=["intake-request", *progress.STAGES, "list"])
+    p.add_argument("--have-question", action="store_true", help="intake-request: the question is already known")
+    p.set_defaults(func=cmd_progress)
+
     sub.add_parser("lint", help="offline checks and the numbered line set").set_defaults(func=cmd_lint)
 
     p = sub.add_parser("eval", help="count, recall, misses, ablation, and change since last version")
@@ -446,6 +555,12 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main(argv: list[str] | None = None) -> int:
     argv = list(sys.argv[1:] if argv is None else argv)
+    # Progress text is relayed to the user verbatim: print real characters, not \u escapes.
+    if hasattr(sys.stdout, "reconfigure"):
+        try:
+            sys.stdout.reconfigure(encoding="utf-8")
+        except (ValueError, OSError):
+            pass
     parser = build_parser()
     args = parser.parse_args(argv)
     args.argv = argv
