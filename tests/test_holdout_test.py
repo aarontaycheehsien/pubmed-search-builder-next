@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-from psb import allocation, cli, deliver, holdout, interpret, reserved
+from psb import allocation, cli, deliver, holdout, interpret, progress, reserved
 from psb.ncbi import NcbiError
 from psb.workspace import WorkspaceError, read_json, write_json
 from test_allocation import HELD, MESH_ONLY, make_pool, through_critic
@@ -144,6 +144,23 @@ def test_exposure_after_the_reservation_qualifies_the_result(make_ws):
     assert ("**Independence limitation:** unit 113 (PMID 113: description declared after the reservation). These "
             "results must not be described as an unexposed independent test.") in text
     assert "Exposure: 1 unit with recorded exposure." in text
+
+
+def test_another_report_of_a_held_study_seen_after_the_freeze_qualifies_the_result(make_ws):
+    ws, _ = ready(make_ws)
+    progress.record_screening(ws, exclude=["150"], context="separate", group="S113")
+    progress.record_screening(ws, exclude=["150"])  # the builder screens a report of held study 113
+    progress.record_screening(ws, exclude=["151"], context="separate", group="S114")
+    reserved.record(ws, ["151"], "abstract", "fetch")  # and sees an excluded report of held study 114
+    progress.record_screening(ws, exclude=["152"], context="separate", group="S115")  # unseen: no line
+    receipt = holdout.run(ws)
+    assert receipt["exposure"] == [
+        {"unit": "113", "reasons": ["PMID 150: screened by the builder after the reservation (another report of "
+                                    "this study)"]},
+        {"unit": "114", "reasons": ["PMID 151: abstract shown by psb fetch after the reservation (another report of "
+                                    "this study)"]}]
+    text = holdout.message(ws, receipt)["text"]
+    assert "**Independence limitation:** unit 113 (PMID 150: screened by the builder after the reservation" in text
 
 
 def test_the_interpretation_drifts_only_with_a_new_binding(make_ws, monkeypatch):

@@ -20,7 +20,7 @@ import json
 
 from . import allocation, interpret, progress, reserved, validation
 from .ncbi import NcbiError
-from .workspace import Workspace, WorkspaceError, now, read_json, write_json
+from .workspace import Workspace, WorkspaceError, now, read_json, read_jsonl, write_json
 
 
 def receipts(ws: Workspace) -> list[dict]:
@@ -136,9 +136,16 @@ def _result(ws: Workspace, state: dict, in_pubmed: set[str], retrieved: set[str]
 
 
 def _exposure(ws: Workspace, state: dict) -> list[dict]:
-    """Every held-out unit's recorded exposure: before the reservation, after it, and through a late
-    companion the builder saw."""
-    after = reserved.events(ws)[int(state["allocation"]["bindings"].get("exposure_rows") or 0):]
+    """Every held-out unit's recorded exposure: before the reservation, after it, through a late
+    companion the builder saw, and through another report of its study that the builder saw or screened
+    after the reservation."""
+    bindings = state["allocation"]["bindings"]
+    after = reserved.events(ws)[int(bindings.get("exposure_rows") or 0):]
+    screened = [r for r in read_jsonl(ws.root / "screening.jsonl")[int(bindings.get("screening_rows") or 0):]
+                if str(r.get("pmid", "")).isdigit() and r.get("decision") in progress.DECISIONS
+                and r.get("context") != "separate"]
+    keys = allocation.study_keys(ws)
+    late = {str(e.get("pmid")) for e in state["late"]}
     rows = []
     for unit in state["held"]:
         reasons = [f"PMID {e['pmid']}: {', '.join(e['reasons'])}" for e in unit.get("exposure") or []]
@@ -146,9 +153,19 @@ def _exposure(ws: Workspace, state: dict) -> list[dict]:
             if str(event["pmid"]) in unit["members"]:
                 how = "declared" if event.get("declared") else f"shown by psb {event.get('via')}"
                 reasons.append(f"PMID {event['pmid']}: {event.get('kind')} {how} after the reservation")
-        for late in state["late"]:
-            if late.get("unit") == unit["id"] and late.get("exposed"):
-                reasons.append(f"PMID {late['pmid']}: a later report of this study was seen by the builder")
+        for companion in state["late"]:
+            if companion.get("unit") == unit["id"] and companion.get("exposed"):
+                reasons.append(f"PMID {companion['pmid']}: a later report of this study was seen by the builder")
+        # Other reports of the study (late companions have their own line above).
+        others = {p for p, key in keys.items()
+                  if unit.get("group") and key == unit["group"] and p not in unit["members"] and p not in late}
+        for event in after:
+            if str(event["pmid"]) in others:
+                how = "declared" if event.get("declared") else f"shown by psb {event.get('via')}"
+                reasons.append(f"PMID {event['pmid']}: {event.get('kind')} {how} after the reservation "
+                               "(another report of this study)")
+        for pmid in sorted({str(r["pmid"]) for r in screened} & others, key=int):
+            reasons.append(f"PMID {pmid}: screened by the builder after the reservation (another report of this study)")
         if reasons:
             rows.append({"unit": unit["id"], "reasons": reasons})
     return rows

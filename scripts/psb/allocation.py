@@ -2,12 +2,14 @@
 
 The pool is every record whose latest screening decision is include, plus every development-set
 member, less records not in PubMed by the effective date and records on a comparison list. Records
-that share a screening group key are reports of one study and form one unit; a record without a key
-is its own unit, and the study count is then unverified.
+that share a screening group key are reports of one study and form one unit; a record's key is the
+latest one screened for it, so a later decision without a key keeps it in its study. A record without
+a key is its own unit, and the study count is then unverified.
 
 A unit is unexposed only if every member was screened only in the separate context and no
-builder-facing command ever showed it (``reserved.py``). Unknown exposure is exposure. Exposed
-units go to development: moving a seen record out of development cannot make it independent.
+builder-facing command ever showed it, or any other report of its study (``reserved.py``). Unknown
+exposure is exposure. Exposed units go to development: moving a seen record out of development
+cannot make it independent.
 
     N = eligible units, U = unexposed units
     N < 10 or U = 0 (or quick depth) -> all development
@@ -56,6 +58,19 @@ def _screening_rows(ws: Workspace) -> dict[str, list[dict]]:
         if str(row.get("pmid", "")).isdigit() and row.get("decision") in progress.DECISIONS:
             rows.setdefault(str(row["pmid"]), []).append(row)
     return rows
+
+
+def study_keys(ws: Workspace, rows: dict[str, list[dict]] | None = None) -> dict[str, str]:
+    """Each record's study: the latest non-empty group key screened for it, in either context. A later
+    decision without a key keeps the record in its study (a builder decision rarely repeats the separate
+    context's key); a different key moves it."""
+    rows = _screening_rows(ws) if rows is None else rows
+    found = {}
+    for pmid, history in rows.items():
+        key = next((r["group"] for r in reversed(history) if r.get("group")), None)
+        if key:
+            found[pmid] = key
+    return found
 
 
 def _origins(ws: Workspace) -> dict[str, set[str]]:
@@ -108,14 +123,27 @@ def pool(ws: Workspace) -> dict:
             found.append(f"{event.get('kind')} {'declared' if event.get('declared') else 'shown by psb ' + str(event.get('via'))}")
         return found
 
+    keys = study_keys(ws, rows)
+    # A study's reports outside the pool (excluded, uncertain, unavailable, on a comparison list): seeing
+    # any of them exposes the study, so its eligible reports cannot be held out as unseen.
+    reports: dict[str, list[str]] = {}
+    for pmid, key in keys.items():
+        reports.setdefault(key, []).append(pmid)
+
+    def companion(pmid: str) -> list[str]:
+        found = reasons(pmid) + (["on a comparison list"] if pmid in comparison else [])
+        return [f"{reason} (another report of this study)" for reason in found]
+
     groups: dict[tuple[str, str], list[str]] = {}
     for pmid in members:
-        key = (latest.get(pmid) or {}).get("group")
+        key = keys.get(pmid)
         groups.setdefault(("group", key) if key else ("pmid", pmid), []).append(pmid)
     units = []
     for (kind, key), pmids in groups.items():
         pmids = sorted(pmids, key=int)
         exposed = {p: reasons(p) for p in pmids}
+        if kind == "group":
+            exposed.update({p: companion(p) for p in sorted(set(reports[key]) - set(pmids), key=int)})
         units.append({
             "id": pmids[0], "members": pmids, "group": key if kind == "group" else None,
             "grouping": "verified" if kind == "group" else "unverified",
@@ -312,13 +340,13 @@ def late_companions(ws: Workspace, pmids: list[str]) -> list[str]:
     groups = {u.get("group"): u for u in allocation["units"] if u.get("purpose") == "holdout" and u.get("group")}
     if not groups:
         return []
-    latest = progress.decisions(ws)
     rows = _screening_rows(ws)
+    keys = study_keys(ws, rows)
     exposure = reserved.by_pmid(ws)
     already = {str(e.get("pmid")) for e in ws.allocation_events() if e.get("type") == "late-companion"}
     found = []
     for pmid in pmids:
-        group = (latest.get(pmid) or {}).get("group")
+        group = keys.get(pmid)
         unit = groups.get(group) if group else None
         if unit is None or pmid in unit["members"]:
             continue

@@ -144,6 +144,63 @@ def test_reports_of_one_study_stay_together(make_ws):
     assert proposal["studies"] == 19
 
 
+def unit_of(proposal, pmid):
+    return next(u for u in proposal["units"] if pmid in u["members"])
+
+
+def test_a_decision_without_a_group_keeps_the_record_in_its_study(make_ws):
+    ws, _ = make_pool(make_ws)
+    progress.record_screening(ws, include=["105"], context="separate", group="S104")
+    progress.record_screening(ws, include=["105"])  # the builder screens one report, with no key
+    proposal = allocation.propose(ws)
+    unit = unit_of(proposal, "105")
+    assert unit["members"] == ["104", "105"] and unit["group"] == "S104" and unit["exposed"]
+    assert unit["exposure"] == [{"pmid": "105", "reasons": ["screened by the builder"]}]
+    assert (proposal["N"], proposal["U"]) == (19, 18)
+
+
+def test_a_different_group_still_moves_a_record(make_ws):
+    ws, _ = make_pool(make_ws)
+    progress.record_screening(ws, include=["105"], context="separate", group="S104")
+    progress.record_screening(ws, include=["105"], group="S-other")
+    proposal = allocation.propose(ws)
+    assert unit_of(proposal, "104")["members"] == ["104"] and not unit_of(proposal, "104")["exposed"]
+    assert unit_of(proposal, "105")["members"] == ["105"] and proposal["N"] == 20
+
+
+def test_seeing_an_ineligible_report_exposes_its_study(make_ws):
+    ws, _ = make_pool(make_ws)
+    progress.record_screening(ws, exclude=["150"], context="separate", group="S104")
+    assert not unit_of(allocation.propose(ws), "104")["exposed"]  # screened only in the separate context
+    progress.record_screening(ws, exclude=["150"])  # the builder screens it too
+    progress.record_screening(ws, uncertain=["151"], context="separate", group="S106")
+    reserved.record(ws, ["151"], "abstract", "fetch")
+    progress.record_screening(ws, include=["152"], context="separate", group="S107")
+    ws.save_set("old", "comparison", ["152"])
+    proposal = allocation.propose(ws)
+    assert unit_of(proposal, "104")["exposure"] == [
+        {"pmid": "150", "reasons": ["screened by the builder (another report of this study)"]}]
+    assert unit_of(proposal, "106")["exposure"] == [
+        {"pmid": "151", "reasons": ["abstract shown by psb fetch (another report of this study)"]}]
+    assert unit_of(proposal, "107")["exposure"] == [
+        {"pmid": "152", "reasons": ["on a comparison list (another report of this study)"]}]
+    assert (proposal["N"], proposal["U"]) == (20, 17)
+    assert not {"104", "106", "107"} & {u["id"] for u in proposal["units"] if u["purpose"] == "holdout"}
+
+
+def test_a_later_report_found_through_its_earlier_group_is_kept_out(make_ws, capsys, monkeypatch):
+    ws, _ = make_pool(make_ws)
+    allocation.freeze(ws, choice="keep-holdout")
+    monkeypatch.setattr(cli, "workspace", lambda args: ws)
+    progress.record_screening(ws, include=["150"], context="separate", group="S113")
+    progress.record_screening(ws, include=["150"])  # the builder rescreens it without a key
+    assert cli.main(["set", "add", "development", "150", "--purpose", "development"]) == 0
+    out = json.loads(capsys.readouterr().out)
+    assert out["late_companions"] == 1 and "150" not in out["pmids"] and "150" in ws.reserved_pmids()
+    assert allocation.state(ws)["late"][0]["unit"] == "113" and allocation.state(ws)["late"][0]["exposed"]
+    assert held(ws) == HELD
+
+
 def test_unknown_grouping_counts_pmids_and_leaves_studies_unverified(make_ws):
     ws, _ = make_pool(make_ws, grouped=False)
     proposal = allocation.propose(ws)

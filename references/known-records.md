@@ -110,12 +110,14 @@ Never redraw the holdout.
   allocation; it never adds a record to a set.
 - **Study groups.** Reports of the same study share a `group` key and form one allocation unit. A
   record without a key is its own unit, and the study count is then unverified (the allocation message
-  and the held-out result say so).
+  and the held-out result say so). A later decision without a key keeps the record in the study it was
+  given; pass another `--group` to move it.
 
 ## Exposure
 
 A study group is **exposed** if you have seen any member's title, abstract, indexing, full text,
-search-relevant description, or retrieval feedback. `psb` records exposure automatically whenever one
+search-relevant description, or retrieval feedback, including a report of the study that was not
+eligible (excluded, uncertain or on a comparison list). `psb` records exposure automatically whenever one
 of your commands shows content (`fetch`, `sample`, `terms rank`, `terms miss`, adding to a development
 set). Declare anything else: `psb exposure declare <PMIDs> --kind abstract|description|... --note "..."`.
 **Unknown exposure is exposure**: a record is unexposed only if every member was screened in the
