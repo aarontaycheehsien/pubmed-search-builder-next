@@ -137,7 +137,9 @@ denominators, or a bypassed check.
 
 ## What the audit contains
 
-- first, any must-fix finding delivered over an open critic objection (`psb critic override`)
+- first, any must-fix finding delivered over an open critic objection (`psb critic override`), and
+  any review extension the user granted ("Review budget extended at the user's request: <reason>",
+  from `psb critic extend`)
 - question, framework, concept roles, and whether the user confirmed the scope
 - PRISMA-S search details: database and platform, date the counts were run, `as_of` bound, total
   records, limits with rationale

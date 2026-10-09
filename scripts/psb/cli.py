@@ -118,6 +118,10 @@ def cmd_status(args) -> dict:
         todo.append(f"the delivery is no longer current: {delivery['error']}")
     sent, reminders = progress.stage_reminders(ws)
     todo += reminders
+    try:
+        left = deliver.rounds_left(ws)
+    except (WorkspaceError, ValueError, OSError) as exc:  # psb status never fails because of critic files
+        left = f"unknown ({exc})"
     return {
         "ok": True,
         "workspace": str(ws.root),
@@ -132,6 +136,7 @@ def cmd_status(args) -> dict:
         "versions": len(versions),
         "last_eval": {"count": last.get("count"), "recall": {n: s.get("recall_percent") for n, s in (last.get("sets") or {}).items()}} if last else None,
         "critic_rounds": critic,
+        "critic_rounds_left": left,
         "delivery": delivery,
         "stage_summaries_sent": sent,
         "todo": todo,
@@ -447,7 +452,7 @@ def cmd_critic(args) -> dict:
     ws = workspace(args)
     if args.critic_command == "packet":
         rounds = deliver.critic_rounds(ws)
-        path = deliver.critic_packet(ws)
+        path = deliver.critic_packet(ws, anyway=args.anyway)
         body = {"ok": True, "packet": str(path),
                 "next": "give only this file to a fresh-context reviewer (subagent) and save its JSON as "
                         f"critic/round-N.json; then run psb critic check"}
@@ -455,6 +460,9 @@ def cmd_critic(args) -> dict:
     if args.critic_command == "override":
         body = {"ok": True, **deliver.override_finding(ws, args.finding, args.reason)}
         return progress.attach(body, ws, "critic-override", {"id": args.finding})
+    if args.critic_command == "extend":
+        body = {"ok": True, **deliver.extend_review(ws, args.reason)}
+        return progress.attach(body, ws, "critic-extend", {"reason": args.reason, "after_round": body["after_round"]})
     paths = deliver.round_paths(ws)
     path = Path(args.round) if args.round else (paths[-1] if paths else None)
     if path is None:
@@ -750,12 +758,17 @@ def build_parser() -> argparse.ArgumentParser:
 
     p = sub.add_parser("critic", help="PRESS critic packet and round check")
     csub = p.add_subparsers(dest="critic_command", required=True)
-    csub.add_parser("packet", help="write critic/packet-N.md from the latest evaluated version")
+    q = csub.add_parser("packet", help="write critic/packet-N.md from the latest evaluated version")
+    q.add_argument("--anyway", action="store_true",
+                   help="issue the last revision, closing or verification round although technical blockers remain")
     q = csub.add_parser("check", help="validate a critic/round-N.json")
     q.add_argument("round", nargs="?")
     q = csub.add_parser("override", help="after the closing round, deliver over an open must-fix judgment you disagree with")
     q.add_argument("finding")
     q.add_argument("--reason", required=True, help="why the finding is wrong for this search, with the evidence")
+    q = csub.add_parser("extend", help="only when the user asks: one more review period after the verification round, "
+                                       "once per build")
+    q.add_argument("--reason", required=True, help="why the user granted it (what made the review stale)")
     p.set_defaults(func=cmd_critic)
 
     p = sub.add_parser("report", help="render audit.md from the workspace")

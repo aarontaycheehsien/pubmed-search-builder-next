@@ -82,9 +82,27 @@ def critic_overrides(ws: Workspace) -> list[dict]:
     return data
 
 
-def critic_digest(rounds: list[dict], overrides: list[dict]) -> str:
-    """The critic evidence a delivery rests on (rounds alone when nothing was overridden)."""
+def critic_extensions(ws: Workspace) -> list[dict]:
+    """The review extension the user granted after the verification round (at most one per build)."""
+    path = ws.root / "critic" / "extensions.json"
+    if not path.exists():
+        return []
+    data = read_json(path)
+    if not isinstance(data, list) or any(not isinstance(e, dict) for e in data):
+        raise WorkspaceError("critic/extensions.json must be a list of objects")
+    return data
+
+
+def critic_digest(rounds: list[dict], overrides: list[dict], extensions: list[dict] | None = None) -> str:
+    """The critic evidence a delivery rests on: rounds alone when nothing was overridden or extended, so
+    earlier deliveries keep their digest."""
+    if extensions:
+        return validation.digest({"rounds": rounds, "overrides": overrides, "extensions": extensions})
     return validation.digest(rounds) if not overrides else validation.digest({"rounds": rounds, "overrides": overrides})
+
+
+def critic_evidence(ws: Workspace) -> str:
+    return critic_digest(critic_rounds(ws), critic_overrides(ws), critic_extensions(ws))
 
 
 def _override_problems(finding: dict | None, closed_out: bool) -> list[str]:
@@ -209,13 +227,27 @@ def revision_budget(depth: str | None) -> int:
 # The closing round, plus one verification round when the strategy or scope changed after it.
 MAX_CLOSING_ROUNDS = 2
 # A repair after the held-out test is targeted and the strategy was already reviewed: each repair epoch
-# allows one revision round, then the closing and verification rounds, at every depth.
+# allows one revision round, then the closing and verification rounds, at every depth. A review
+# extension the user grants has the same budget.
 REPAIR_BUDGET = 1
 
 
+class ReviewExhausted(WorkspaceError):
+    """The verification round of the current review period is used, and the review is not current."""
+
+
 def current_epoch(ws: Workspace) -> int:
-    """1, plus one for each release of held-out records for repair. Rounds count per epoch."""
-    return 1 + sum(1 for e in ws.allocation_events() if e.get("type") == "release")
+    """1, plus one for each release of held-out records for repair and for a review extension the user
+    granted. Rounds count per epoch."""
+    return (1 + sum(1 for e in ws.allocation_events() if e.get("type") == "release")
+            + len(critic_extensions(ws)))
+
+
+def epoch_kind(ws: Workspace, epoch: int) -> str:
+    """``initial``, ``extension`` (opened by psb critic extend) or ``repair`` (opened by a release)."""
+    if epoch == 1:
+        return "initial"
+    return "extension" if any(e.get("epoch") == epoch for e in critic_extensions(ws)) else "repair"
 
 
 def round_epoch(data: dict) -> int:
@@ -372,9 +404,59 @@ def next_round(ws: Workspace, evaluation: dict, rounds: list[dict]) -> tuple[int
         if closings[-1].get("review_sha256") == evaluation["review_sha256"]:
             raise WorkspaceError("the closing round reviewed the current strategy; run psb report")
         if len(closings) >= MAX_CLOSING_ROUNDS:
-            raise WorkspaceError("the verification round has been used; use report --diagnostic for the handoff")
+            raise ReviewExhausted(
+                "the verification round has been used; use report --diagnostic for the handoff"
+                + ("; the review was already extended once for this build" if critic_extensions(ws) else
+                   ", or explain why the build is stuck and ask the user whether to extend the review (psb critic extend)"))
         return number, "verification"
     return number, "closing" if sum(bool(r.get("review_sha256")) for r in rounds) >= budget else "revision"
+
+
+def extend_review(ws: Workspace, reason: str) -> dict:
+    """One more review period, granted by the user, after the verification round is used and the review
+    is stale (for example, PubMed's translation or indexing drifted before psb report). It touches no
+    held-out record; a later release for repair opens its own epoch."""
+    if not _nonempty(reason):
+        raise WorkspaceError("give the reason the user granted the extension")
+    if critic_extensions(ws):
+        raise WorkspaceError("the review budget was already extended once for this build; use psb report --diagnostic "
+                             "for the handoff")
+    evaluation = latest_evaluation(ws)
+    rounds = critic_rounds(ws)
+    try:
+        number, kind = next_round(ws, evaluation, rounds)
+    except ReviewExhausted:
+        pass
+    except WorkspaceError as exc:
+        raise WorkspaceError(f"no extension is needed: {exc}") from None
+    else:
+        raise WorkspaceError(f"no extension is needed: round {number} ({kind}) is still available; run psb critic packet")
+    entry = {"reason": reason.strip(), "after_round": rounds[-1]["round"], "epoch": current_epoch(ws) + 1, "created": now()}
+    write_json(ws.root / "critic" / "extensions.json", [entry])
+    return {"extended": True, "epoch": entry["epoch"], "after_round": entry["after_round"],
+            "next": "run psb critic packet for the extension's revision round; the audit discloses the extension"}
+
+
+def rounds_left(ws: Workspace) -> str:
+    """The critic rounds left in the current review period, for psb status."""
+    epoch = current_epoch(ws)
+    budget = epoch_budget(ws, epoch)
+    rounds = [r for r in critic_rounds(ws) if round_epoch(r) == epoch]
+    used = sum(bool(r.get("review_sha256")) and not r.get("closing") for r in rounds)
+    closings = sum(bool(r.get("closing")) for r in rounds)
+    period = {"extension": "extension: ", "repair": "repair: "}.get(epoch_kind(ws, epoch), "")
+    if closings >= MAX_CLOSING_ROUNDS:
+        return period + ("none left — psb report if the last round reviewed the current evaluation; otherwise "
+                         + ("report --diagnostic or a critic override (the review was already extended)"
+                            if critic_extensions(ws) else
+                            "report --diagnostic, a critic override, or a review extension the user grants"))
+    if closings:
+        left = "closing used · verification left"
+    elif used >= budget:
+        left = "closing and verification left"
+    else:
+        left = f"{budget - used} revision{'s' if budget - used != 1 else ''}, closing and verification left"
+    return f"{period}revision {min(used, budget)}/{budget} used · {left}"
 
 
 def _holdout_note(ws: Workspace) -> list[str]:
@@ -390,12 +472,30 @@ def _holdout_note(ws: Workspace) -> list[str]:
             "runs after this review. They are not in this packet and must not be requested or inferred.", ""]
 
 
-def critic_packet(ws: Workspace) -> Path:
+def _last_rounds(ws: Workspace, rounds: list[dict], kind: str) -> bool:
+    """Whether the next round is the last revision round, the closing round or the verification round."""
+    if kind != "revision":
+        return True
+    epoch = current_epoch(ws)
+    used = sum(bool(r.get("review_sha256")) and not r.get("closing") for r in rounds if round_epoch(r) == epoch)
+    return used + 1 >= epoch_budget(ws, epoch)
+
+
+def critic_packet(ws: Workspace, *, anyway: bool = False) -> Path:
     evaluation = latest_evaluation(ws)
     if not evaluation["validation"]["complete"]:
         raise WorkspaceError("run a complete psb eval before requesting critique")
     rounds = critic_rounds(ws)
     number, kind = next_round(ws, evaluation, rounds)
+    # Technical blockers stop psb report whatever the critic says (review_gate never clears them; mandatory
+    # issue reviews are answered in issue_dispositions and do not count here). Spending one of the last
+    # rounds on a draft that cannot be delivered wastes it.
+    blockers = sorted({str(b.get("code")) for b in evaluation["validation"]["blockers"]})
+    if blockers and not anyway and _last_rounds(ws, rounds, kind):
+        label = "last revision" if kind == "revision" else kind
+        raise WorkspaceError(f"the latest evaluation has technical blockers no critic round can clear "
+                             f"({', '.join(blockers)}): fix them and psb eval before using the {label} round, or pass "
+                             "--anyway to use it now")
     epoch = current_epoch(ws)
     budget = epoch_budget(ws, epoch)
     verification = kind == "verification"
@@ -415,7 +515,12 @@ def critic_packet(ws: Workspace) -> Path:
                         "where the change affects it. Do not raise new must-fix or should-fix findings; record any new "
                         "concern as severity 'document'. Keep \"closing\": true in the response.", ""]
     title = " (verification)" if verification else " (closing)" if closing else ""
-    lines = [f"# Critic packet, round {number}{title}", "", *closing_note, *_holdout_note(ws),
+    extension = next((e for e in critic_extensions(ws) if e.get("epoch") == epoch), None)
+    extension_note = ([f"**Review extension.** The user extended the review budget after round {extension.get('after_round')}: "
+                       f"{str(extension.get('reason') or '').strip()}. This review period allows one revision round, then a "
+                       "closing round and a verification round. Review the current draft as usual.", ""]
+                      if extension else [])
+    lines = [f"# Critic packet, round {number}{title}", "", *extension_note, *closing_note, *_holdout_note(ws),
              "Review this draft as an information specialist using the six PRESS domains. "
              "Use only the packet. Do not answer the evidence question. Technical errors cannot be waived. "
              "Carry earlier finding IDs forward with explicit dispositions. For each finding provide id, domain, severity "
@@ -501,6 +606,7 @@ def report(ws: Workspace, *, diagnostic: bool = False, note: str = "") -> dict:
         evaluation = {}
         rounds = []
         overrides = []
+        extensions = []
         overridden = []
         receipt = None
         try:
@@ -512,7 +618,8 @@ def report(ws: Workspace, *, diagnostic: bool = False, note: str = "") -> dict:
                 blockers.append(validation.issue("validation_incomplete", "All final validation checks must complete"))
             rounds = critic_rounds(ws)
             overrides = critic_overrides(ws)
-            critic_hash = critic_digest(rounds, overrides)
+            extensions = critic_extensions(ws)
+            critic_hash = critic_digest(rounds, overrides, extensions)
             review = review_gate(ws, evaluation, rounds=rounds, overrides=overrides)
             blockers.extend(review["blockers"])
             overridden = review.get("overridden", [])
@@ -534,7 +641,7 @@ def report(ws: Workspace, *, diagnostic: bool = False, note: str = "") -> dict:
         # so the delivery message relays the same bytes.
         held = holdout.message(ws, receipt, evaluation)
         query_bytes = (evaluation["query"] + "\n").encode("utf-8")
-        audit_bytes = _audit(ws, evaluation, rounds, overridden, held, receipt).encode("utf-8")
+        audit_bytes = _audit(ws, evaluation, rounds, overridden, held, receipt, extensions).encode("utf-8")
         import hashlib
         hashes = {"final-query.txt": hashlib.sha256(query_bytes).hexdigest(), "audit.md": hashlib.sha256(audit_bytes).hexdigest()}
         state = allocation.state(ws)
@@ -550,7 +657,7 @@ def report(ws: Workspace, *, diagnostic: bool = False, note: str = "") -> dict:
             (stage / "final-query.txt").write_bytes(query_bytes)
             (stage / "audit.md").write_bytes(audit_bytes)
             write_json(stage / "validation-manifest.json", manifest)
-            if validation.digest(validation.input_snapshot(ws)) != evaluation["input_sha256"] or critic_digest(critic_rounds(ws), critic_overrides(ws)) != critic_hash:
+            if validation.digest(validation.input_snapshot(ws)) != evaluation["input_sha256"] or critic_evidence(ws) != critic_hash:
                 raise WorkspaceError("inputs or critic changed during finalization")
             for name in ("final-query.txt", "audit.md", "validation-manifest.json"):
                 (stage / name).replace(ws.root / name)
@@ -596,7 +703,7 @@ def verify_delivery(ws: Workspace) -> dict:
         snapshot = validation.input_snapshot_v1(ws) if legacy else validation.input_snapshot(ws)
         if manifest.get("input_sha256") != validation.digest(snapshot):
             raise WorkspaceError("delivery inputs have changed" + _changed_hint(ws, manifest, snapshot))
-        if manifest.get("critic_sha256") != critic_digest(critic_rounds(ws), critic_overrides(ws)):
+        if manifest.get("critic_sha256") != critic_evidence(ws):
             raise WorkspaceError("critic evidence has changed")
         for name in ("final-query.txt", "audit.md"):
             expected = manifest.get("artifacts", {}).get(name)
@@ -630,8 +737,20 @@ def _overridden_section(overridden: list[dict]) -> list[str]:
     return lines + [""]
 
 
+def _extension_section(extensions: list[dict]) -> list[str]:
+    """A review period the user added after the verification round: disclosed beside any override."""
+    if not extensions:
+        return []
+    lines = ["## Review budget extended", ""]
+    for e in extensions:
+        lines += [f"Review budget extended at the user's request: {str(e.get('reason') or '').strip()}", "",
+                  f"The extension followed round {e.get('after_round')} and allowed one more revision round, then a "
+                  "closing round and a verification round.", ""]
+    return lines
+
+
 def _audit(ws: Workspace, evaluation: dict, rounds: list[dict], overridden: list[dict] | None = None,
-           held: dict | None = None, receipt: dict | None = None) -> str:
+           held: dict | None = None, receipt: dict | None = None, extensions: list[dict] | None = None) -> str:
     protocol = evaluation["inputs"]["protocol"]
     strategy = Strategy.from_dict(evaluation["inputs"]["strategy"])
     versions = ws.versions()
@@ -645,6 +764,7 @@ def _audit(ws: Workspace, evaluation: dict, rounds: list[dict], overridden: list
         f"Generated {now()} by `psb report` from workspace files. Draft for human PRESS peer review.",
         "",
         *_overridden_section(overridden or []),
+        *_extension_section(extensions or []),
         "## Question and scope",
         "",
         f"- Question: {protocol.get('question')}",

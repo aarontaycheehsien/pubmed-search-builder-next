@@ -178,7 +178,14 @@ risks. If the closing round still asks for revision:
 - for an open must-fix judgment you disagree with on evidence (kinds lexical, structural, scope,
   reporting), `psb critic override <id> --reason "..."`; the audit opens with the objection and
   your reason for the peer reviewer. Syntax and filter findings cannot be overridden;
+- if nothing changed but `psb report` finds the review stale after the verification round (PubMed's
+  translation or indexing drifted), explain this to the user. Only if they explicitly ask,
+  `psb critic extend --reason "..."` opens one more review period, once per build; the audit discloses
+  it. Never run it on your own initiative;
 - otherwise produce diagnostic output.
+
+`psb status` shows the critic rounds left. `psb critic packet` refuses the last revision, closing or
+verification round while technical blockers remain (fix them and `psb eval`; `--anyway` overrides).
 
 If no fresh context is available, review the packet yourself and say so in the audit.
 

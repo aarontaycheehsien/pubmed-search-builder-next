@@ -251,7 +251,7 @@ python scripts/psb.py --workspace runs/demo report
 | `lint` | Run offline syntax and design checks. |
 | `eval` | Measure counts, development retrieval, failing blocks, ablation, and changes since the previous version. |
 | `terms rank`, `terms miss` | Inspect candidate vocabulary and terminology in missed development records. |
-| `critic packet`, `critic check`, `critic override` | Generate and validate PRESS-structured critique rounds. |
+| `critic packet`, `critic check`, `critic override`, `critic extend` | Generate and validate PRESS-structured critique rounds; `extend` adds one review period only when the user asks. |
 | `holdout-test` | Test the frozen query once against the held-out records. |
 | `holdout-release` | Return the held-out records to development to repair the search. |
 | `report` | Perform final live validation and generate the protected query and audit. |

@@ -64,7 +64,11 @@ Before accepting a change, check that `psb eval` shows no newly lost known recor
 finding's `status` and `response` in the next round's file. Stop when no substantive (`must-fix` or `should-fix`) finding is open; accepted risks need
 explanations. List remaining documentation findings in the audit. Every depth requires review;
 quick/standard/thorough allow 1/2/3 revision rounds, then one closing round. Make all planned
-changes before the last revision round, and check them with `psb report --diagnostic`.
+changes before the last revision round, and check them with `psb report --diagnostic`. `psb status`
+shows the rounds left (`critic_rounds_left`). `psb critic packet` refuses the last revision round,
+the closing round and the verification round while the latest evaluation has technical blockers,
+which no critic round can clear: fix them and `psb eval` first. `--anyway` issues the round regardless;
+use it only when you know the blocker will not reach `psb report`.
 
 ## Closing round
 
@@ -90,6 +94,12 @@ do not authorize delivery.
   Use it for a disagreement on evidence, never to skip work you could do. A `syntax` or
   `filter` finding cannot be overridden, nor can any technical blocker. An override answers one
   round: after a verification round, make it again if the finding is still open.
+- **Stale after the verification round, with nothing changed.** `psb report` re-evaluates live, so
+  PubMed's translation or a development record gaining indexing can make the review stale after the
+  last round. Explain this to the user. Only if they explicitly ask for it, `psb critic extend --reason
+  "..."` opens one more review period (one revision round, then a closing round and a verification
+  round), once per build; it never touches held-out records. Never run it on your own initiative: it
+  has the same standing as `--proceed-default`. The audit discloses it on its first page.
 - Otherwise deliver the diagnostic handoff.
 
 ## Repair after the held-out test
@@ -98,4 +108,5 @@ The held-out test never asks the critic for anything: misses are delivered uncha
 offer. If the user asks for the repair, `psb holdout-release` starts a new **epoch**. Its rounds carry
 `"epoch": N` (the packet's template includes it) and are counted afresh: one revision round, then a
 closing round, and one verification round, at every depth. Earlier findings carry forward as usual.
-The packet marks the review as a repair review.
+The packet marks the review as a repair review. A review extension (`psb critic extend`) is also an
+epoch with this budget, marked as an extension; a repair after it starts the next epoch.

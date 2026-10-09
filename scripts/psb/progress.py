@@ -960,7 +960,7 @@ def _terms_miss(ws, data):
 
 @event("critic-packet", 6)
 def _critic_packet(ws, data):
-    from .deliver import current_epoch, epoch_budget, latest_evaluation, next_round, round_epoch
+    from .deliver import current_epoch, epoch_budget, epoch_kind, latest_evaluation, next_round, round_epoch
     rounds = _list(data.get("rounds_before"))
     evaluation = latest_evaluation(ws)
     number, kind = next_round(ws, evaluation, rounds)
@@ -969,11 +969,27 @@ def _critic_packet(ws, data):
                    if isinstance(r, dict) and round_epoch(r) == epoch) + 1
     label = f"revision {revision} of {epoch_budget(ws, epoch)}" if kind == "revision" else kind
     if epoch > 1:
-        label = f"repair {label}"
+        label = f"{epoch_kind(ws, epoch)} {label}"
     return f"Round {number} packet", [
         f"Round {number} ({label}) packet written for v{evaluation.get('version')}",
         f"- Packet: critic/{data.get('packet')}",
         f"- A fresh-context reviewer reads only this packet; its reply is saved as critic/round-{number}.json",
+    ]
+
+
+def _extension_line(ws: Workspace) -> list[str]:
+    from .deliver import critic_extensions
+    return [f"- Review budget extended at the user's request: {clean(e.get('reason'), 200)}" for e in critic_extensions(ws)]
+
+
+@event("critic-extend", 6)
+def _critic_extend(ws, data):
+    return "Review extended", [
+        f"Review budget extended at the user's request: {clean(data.get('reason'), 200)}",
+        f"- One more review period after round {_n(data.get('after_round'))}: one revision round, then a closing round "
+        "and a verification round",
+        "- The audit discloses the extension on its first page; held-out records are not touched",
+        "- Next: psb critic packet",
     ]
 
 
@@ -1046,10 +1062,12 @@ def _attempt(ws: Workspace, attempt_id: str | None) -> dict:
 
 
 def _critic_line(ws: Workspace, overridden: list[str]) -> str:
-    from .deliver import critic_rounds
+    from .deliver import critic_extensions, critic_rounds
     rounds = critic_rounds(ws)
+    extended = "".join(f"; review budget extended at the user's request: {clean(e.get('reason'), 200)}"
+                       for e in critic_extensions(ws))
     return (f"- Critic: {_plural(len(rounds), 'round')} (internal PRESS-structured critique, not PRESS peer review); "
-            f"overridden findings: {', '.join(sorted(overridden)) or 'none'}")
+            f"overridden findings: {', '.join(sorted(overridden)) or 'none'}{extended}")
 
 
 def _held_result(manifest: dict) -> str:
@@ -1522,6 +1540,7 @@ def _stage_critic(ws, data):
     lines.append(f"- Findings by latest status: {status}")
     overrides = [o.get("id") for o in critic_overrides(ws) if o.get("round") == rounds[-1].get("round")]
     lines.append(f"- Overridden: {', '.join(sorted(map(str, overrides))) or 'none'}")
+    lines += _extension_line(ws)
     current = rounds[-1].get("review_sha256") == _latest_measured(ws).get("review_sha256")
     lines.append(f"- Latest round reviewed the latest evaluation: {'yes' if current else 'no'}")
     lines.append(_next("critic", ws.protocol().get("depth")))
