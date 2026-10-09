@@ -1,6 +1,6 @@
 ---
-name: pubmed-search-builder-holdout
-description: "Preview of pubmed-search-builder-next with known-record allocation and a one-shot held-out test. Use only when the user asks for pubmed-search-builder-holdout by name. Build, review, or update a high-sensitivity PubMed/MEDLINE Boolean search strategy for a systematic review, scoping review, rapid review, or other evidence synthesis. Use when the user wants a recall-first PubMed search developed from a plain-language review question: concept analysis, MeSH and free-text vocabulary, testing against known relevant records, a PRESS-structured critique, and a PRISMA-S style audit. Also use to review an existing PubMed strategy or re-run one for a review update. Do not use it to answer the review question itself."
+name: pubmed-search-builder-holdout-verbose
+description: "Preview of pubmed-search-builder-next with known-record allocation, a one-shot held-out test, private screening in a separate context and optional verbose progress messages. Use only when the user asks for pubmed-search-builder-holdout-verbose by name. Build, review, or update a high-sensitivity PubMed/MEDLINE Boolean search strategy for a systematic review, scoping review, rapid review, or other evidence synthesis. Use when the user wants a recall-first PubMed search developed from a plain-language review question: concept analysis, MeSH and free-text vocabulary, testing against known relevant records, a PRESS-structured critique, and a PRISMA-S style audit. Also use to review an existing PubMed strategy or re-run one for a review update. Do not use it to answer the review question itself."
 ---
 
 # PubMed search builder
