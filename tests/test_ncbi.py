@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 
 import pytest
 
-from psb import ncbi
+from psb import mesh, ncbi
 from psb.cache import Cache, cache_key
 from psb.http import Policy, Transport, TransportError, redact_url
 from psb.ncbi import NcbiError, PubMed, body_error, parse_article
@@ -73,6 +73,23 @@ def test_cache_serves_repeat_requests_and_excludes_credentials(tmp_path):
     assert len(transport.calls) == 1
     assert "SECRET" not in "".join(p.read_text() for p in tmp_path.glob("*/*.json"))
     assert cache_key("e", {"term": "x", "api_key": "1"}) == cache_key("e", {"term": "x", "api_key": "2"})
+
+
+def test_mesh_lookup_puts_the_exactly_named_heading_first():
+    """Live, `child` returned eight other headings before Child: the exact heading is probed and kept first."""
+    def heading(uid, name):
+        return {"uid": uid, "ds_meshui": f"D{uid[2:]}", "ds_meshterms": [name]}
+    summaries = {"68002648": heading("68002648", "Child"), "68065886": heading("68065886", "Neurodevelopmental Disorders"),
+                 "68063766": heading("68063766", "Pediatric Obesity")}
+    transport = ScriptedTransport([
+        json.dumps({"esearchresult": {"count": "1", "idlist": ["68002648"]}}).encode(),
+        json.dumps({"esearchresult": {"count": "50", "idlist": ["68065886", "68063766", "68002648"]}}).encode(),
+        json.dumps({"result": {"uids": ["68063766", "68065886", "68002648"], **summaries}}).encode(),  # another order
+    ])
+    found = mesh.lookup(PubMed(transport=transport), 'child "', limit=3)
+    assert [m["name"] for m in found["matches"]] == ["Child", "Neurodevelopmental Disorders", "Pediatric Obesity"]
+    assert [p["term"] for _, p in transport.calls[:2]] == ['"child"[mh]', 'child "']
+    assert transport.calls[2][1]["id"] == "68002648,68065886,68063766"  # deduplicated, still at most the limit
 
 
 def test_translation_issues():

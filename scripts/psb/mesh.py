@@ -29,8 +29,14 @@ def _brief(summary: dict) -> dict:
 
 
 def lookup(pm: PubMed, term: str, *, limit: int = 8) -> dict:
-    uids = pm.mesh_search(term, retmax=limit)
-    return {"query": term, "matches": [_brief(s) for s in pm.mesh_summary(uids)]}
+    # ESearch's order is not by relevance: `child` can return eight other headings before Child. The heading
+    # named exactly as the phrase is looked up first and kept at the top.
+    phrase = " ".join(term.replace('"', " ").split())
+    exact = pm.mesh_search(f'"{phrase}"[mh]', retmax=1) if phrase else []
+    uids = list(dict.fromkeys([*exact, *pm.mesh_search(term, retmax=limit)]))[:limit]
+    order = {str(uid): i for i, uid in enumerate(uids)}
+    summaries = sorted(pm.mesh_summary(uids), key=lambda s: order.get(str(s.get("uid")), len(order)))
+    return {"query": term, "matches": [_brief(s) for s in summaries]}
 
 
 def _resolve(pm: PubMed, identifier: str) -> dict:
