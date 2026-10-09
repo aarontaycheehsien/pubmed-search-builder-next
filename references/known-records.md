@@ -60,22 +60,46 @@ A held-out record must never have been shown to you. Discovery and screening sho
 context expose every record you look at (titles in `psb sample`, abstracts in `psb fetch`), so when
 your host can start a fresh context (a subagent or a separate session), let it discover and screen:
 
-- It runs `psb sample ... --screening` and `psb fetch ... --abstracts --screening`. These write to the
-  private store (`screening/`), not your `records.jsonl`, and record no exposure.
-- It records every decision with `psb screen --context separate --file decisions.json`, where each
-  entry is `{pmid, decision, reason, group, origin, evidence, source_ref}`. Its reasons and sources
-  stay in the private store until the held-out test.
-- It replies with PMIDs, decisions, origins and groups only: never titles, abstracts or descriptions.
+- It passes `--screening` on every discovery command: `psb sample --screening --purpose prior-reviews|pilot`,
+  `psb fetch --screening --abstracts`, `psb neighbors --screening`, `psb resolve --screening` and
+  `psb count --screening`. Records go to the private store (`screening/`), its requests use a private
+  cache and log, and no exposure is recorded. `sample --screening` needs the purpose, so its records are
+  recorded as a candidate batch for the allocation.
+- It records every decision with `psb screen --context separate --file decisions.json` (or a `context`
+  on each row), where each entry is `{pmid, decision, reason, group, origin, evidence, source_ref}`.
+  Its reasons and sources stay in the private store until the held-out test.
+- `psb` gives each of these commands a restricted progress message: fixed labels and counts, never a
+  query, record, decision, reason or group. The messages reach the user through `psb progress list`.
+- **Its whole reply is one fixed sentence**: `Discovery and screening complete.`, or
+  `Discovery and screening stopped before completion.` if it could not finish. Nothing else: no
+  progress texts, counts, PMIDs, group keys, source notes or errors.
 
-A prompt for it: "You screen candidate records for a PubMed search build. Read protocol.json for the
-eligibility criteria. Use only `python <skill>/scripts/psb.py --workspace <run-dir> sample|fetch
---screening` to see records, and record each decision with `psb screen --context separate`, giving a
-reason, the evidence basis (title, abstract or full-text), the origin, and a study key in `group`
-shared by reports of the same study (a trial registration ID, or a short key you choose). Reply with
-PMIDs, decisions and group keys only; never describe a record."
+A prompt for it: "You discover and screen candidate records for a PubMed search build. Read
+protocol.json for the eligibility criteria. Run `python <skill>/scripts/psb.py --workspace <run-dir>`
+with `--screening` on every sample, fetch, neighbors, resolve and count command, and
+`--purpose prior-reviews` or `--purpose pilot` on every sample. Record each decision with
+`psb screen --context separate`, giving a reason, the evidence basis (title, abstract or full-text),
+the origin, and a study key in `group` shared by reports of the same study (a trial registration ID, or
+a short key you choose). Your whole reply is exactly one sentence: `Discovery and screening complete.`
+when you finished, otherwise `Discovery and screening stopped before completion.` Say nothing else."
 
-Do not read `screening/` yourself. With no separate context available, screen yourself: every record
-is then exposed, no holdout is proposed, and the report says why.
+Before you start it, note the `seq` of the last progress message you relayed. When it returns:
+
+1. run `psb progress list`;
+2. relay verbatim, in `seq` order, every message whose `seq` is above that number;
+3. relay its sentence.
+
+If it stopped, tell the user and start it again if appropriate; do not ask it for diagnostics. Take
+progress only from `psb` output: do not read `screening/`, `candidates.jsonl`, `screening.jsonl`,
+`allocation.json`, caches or logs yourself. This separation is procedural; the shared files are not
+a security boundary. With no separate context available, screen yourself: every record is then
+exposed, no holdout is proposed, and the report says why.
+
+If private content reaches you anyway (a reply that describes a record, a message you should not have
+seen), declare it with `psb exposure declare <PMIDs> --kind ...` and screen any other report of the
+same study with its `group` key. Before the allocation, those groups go to development; after the
+freeze, the allocation stays as it is and the held-out result discloses the compromised separation.
+Never redraw the holdout.
 
 ## Screening rules
 

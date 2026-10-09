@@ -104,7 +104,7 @@ def test_screening_message_has_the_agreed_shape(ws, capsys):
         "Screened 5 candidates: 3 include · 1 exclude · 1 uncertain\n"
         "- Similar articles + backward citations from 2 records (set seeds) (C1): 4 screened → 2 include\n"
         "- Pilot search `asthma*[tiab]` (C2): 1 screened → 1 include\n"
-        "- Screening budget used: 5 of ~150 (standard)\n"
+        "- Records with a screening decision so far (all contexts): 5 of ~150 (standard)\n"
         "- Included but not yet in a set: 3, 5, 6")
 
 
@@ -313,7 +313,8 @@ def test_a_failing_message_never_changes_the_command_result(ws, capsys, monkeypa
     assert out["progress"]["text"] == (
         "**PSB · Step 3/7 Known records · set**\n"
         "Progress message unavailable (TypeError); the command itself ran: see its JSON result.")
-    assert progress.messages(ws)[-1]["error"] == "TypeError: boom"
+    # The persisted row names the class only: an exception's text can quote private content.
+    assert progress.messages(ws)[-1]["error"] == "TypeError" and "boom" not in json.dumps(progress.messages(ws))
 
 
 def test_malformed_critic_round_returns_json_not_a_crash(ws, capsys):

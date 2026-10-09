@@ -255,13 +255,25 @@ python scripts/psb.py --workspace runs/demo report
 | `holdout-test` | Test the frozen query once against the held-out records. |
 | `holdout-release` | Return the held-out records to development to repair the search. |
 | `report` | Perform final live validation and generate the protected query and audit. |
-| `progress` | Render the standard progress message for a workflow step, or list every message sent. |
+| `progress` | Render the standard progress message for a workflow step, list the messages sent, or set the progress mode (`progress mode verbose` or `standard`). |
 | `log`, `cache`, `doctor` | Inspect provenance, cache, and configuration. |
 
 Progress messages are fixed templates over workspace state. Commands that search for candidates,
 screen, change sets, allocate, evaluate, run the critic, test or report attach one as `progress`. The
 agent relays `progress.text` to the user verbatim. These messages and their logs never affect the
 evaluation, critic or delivery hashes.
+
+Commands run for the separate screening context (`--screening` on `count`, `sample`, `fetch`,
+`neighbors` and `resolve`; `screen --context separate` or `screen --file`) get a restricted message:
+fixed labels and counts, never a query, record, decision or reason. Their requests use a private cache
+and log, and `log.jsonl` keeps only their accounting fields. `progress list` and `log --tail` return
+public projections; rows written by older versions are filtered by their event or type name.
+
+Verbose mode is an opt-in, per-run preference (`progress mode verbose`, stored in
+`progress-settings.json`). It adds a short Details section, at most three rows and 800 characters, to
+the messages of discovery, MeSH, term-mining, evaluation and miss-diagnosis commands, built from each
+command's own results. It never adds requests or changes what is searched, screened or kept private.
+`python tests/bench_verbose.py` measures its cost offline.
 
 ## Tests
 

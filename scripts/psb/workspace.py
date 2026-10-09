@@ -7,11 +7,13 @@
     allocation.json  the frozen split of the eligible pool into development and held-out units
     allocation-log.jsonl  late companions, re-binding and release after the freeze
     exposure.jsonl   records whose content or retrieval the builder has seen
-    screening/       the separate screening context's private store (records, cache, reasons)
+    screening/       the separate screening context's private store (records, cache, reasons, batch
+                     provenance, and the full log rows of restricted invocations)
     holdout/         held-out test receipts
     history/         each evaluated strategy version with its evaluation
     critic/          critic packets and rounds
-    log.jsonl        every command and NCBI request, appended automatically
+    log.jsonl        every command and NCBI request, appended automatically (accounting fields only
+                     for a restricted invocation; see disclosure.py)
     .cache/          NCBI responses for this workspace only
 
 Everything else (reports, audits) is derived from these files and never read back as input.
@@ -30,10 +32,13 @@ from pathlib import Path
 
 from .cache import Cache
 from .config import read_env
+from .disclosure import DISCLOSURE_VERSION, accounting
 from .ncbi import PubMed
 from .strategy import Strategy
 
 MARKER = "protocol.json"
+# Builds the NCBI client from the cache and logger the workspace chose. Offline tests replace it.
+CLIENT = PubMed
 # What a set of known records is for. Held-out records are never a set: allocation.json holds them,
 # so no command that lists, mines or evaluates sets can reach them.
 PURPOSES = {
@@ -165,9 +170,13 @@ def normalize_pmids(values) -> list[str]:
 
 
 class Workspace:
-    def __init__(self, root: Path, *, use_cache: bool = True) -> None:
+    def __init__(self, root: Path, *, use_cache: bool = True, restricted: bool = False) -> None:
+        """``restricted``: this invocation serves the separate screening context (disclosure.py). Its NCBI
+        client uses the private cache, and its log rows keep only accounting fields in log.jsonl. It is
+        fixed for the object's life: each psb invocation builds its own Workspace."""
         self.root = root
         self.use_cache = use_cache and read_env("PSB_CACHE", "on").lower() not in {"off", "0", "false"}
+        self.restricted = restricted
         self._pubmed: PubMed | None = None
 
     # -- creation ------------------------------------------------------------------------
@@ -208,7 +217,12 @@ class Workspace:
         # terminal) can interleave and corrupt a line. A single os.write of the encoded bytes to
         # an O_APPEND descriptor is one kernel call, which the OS does not interleave with
         # another process's own single call to the same file.
-        line = (json.dumps({"ts": now(), **entry}, ensure_ascii=False) + "\n").encode("utf-8")
+        row = {"ts": now(), **entry, "disclosure_version": DISCLOSURE_VERSION}
+        if self.restricted:
+            # The full row first: when the private log cannot be written, nothing reaches log.jsonl.
+            append_jsonl(self.root / "screening" / "log.jsonl", row)
+            row = accounting(row)
+        line = (json.dumps(row, ensure_ascii=False) + "\n").encode("utf-8")
         fd = os.open(self.root / "log.jsonl", os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o644)
         try:
             os.write(fd, line)
@@ -235,8 +249,9 @@ class Workspace:
             # PSB_AS_OF (set by the eval harness) overrides the protocol, so a run cannot see
             # literature added after the source review's search, whatever the agent writes.
             as_of = os.environ.get("PSB_AS_OF") or self.protocol().get("as_of") or None
-            cache = Cache(self.root / ".cache", enabled=self.use_cache)
-            self._pubmed = PubMed(cache=cache, log=self.log, as_of=as_of)
+            # PubMed keeps the logger it is built with, so a restricted invocation chooses both here.
+            cache = Cache(self._cache_dir(self.restricted), enabled=self.use_cache)
+            self._pubmed = CLIENT(cache=cache, log=self.log, as_of=as_of)
         self._pubmed.as_of = os.environ.get("PSB_AS_OF") or self.protocol().get("as_of") or None
         return self._pubmed
 
@@ -363,15 +378,19 @@ class Workspace:
                     stored[str(record["pmid"])] = record
         return {p: stored[p] for p in pmids if p in stored}
 
+    def _cache_dir(self, private: bool) -> Path:
+        return self.root / "screening" / ".cache" if private else self.root / ".cache"
+
     @contextmanager
     def private_cache(self, private: bool = True):
-        """Route NCBI responses to the screening store's own cache while ``private``."""
-        if not private:
+        """Route NCBI responses to the screening store's own cache while ``private``. A restricted
+        workspace's client uses that cache already."""
+        if not private or self.restricted:
             yield
             return
         client = self.pubmed
         shared = client.cache
-        client.cache = Cache(self.root / "screening" / ".cache", enabled=self.use_cache)
+        client.cache = Cache(self._cache_dir(True), enabled=self.use_cache)
         try:
             yield
         finally:

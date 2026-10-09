@@ -66,6 +66,17 @@ def test_leakage_accepts_the_evaluators_inline_as_of_bound(tmp_path):
     assert harness.leakage(FIXTURE, tmp_path, "clean transcript") == [f"{len(evasions)} PubMed searches ran without the as_of bound"]
 
 
+def test_leakage_reads_the_separate_contexts_private_request_log(tmp_path):
+    work = tmp_path / "work"
+    (work / "screening").mkdir(parents=True)
+    # A restricted invocation leaves an accounting row in log.jsonl and the full row in screening/log.jsonl.
+    (work / "log.jsonl").write_text(json.dumps({"type": "ncbi", "endpoint": "esearch.fcgi", "cache": False}) + "\n",
+                                    encoding="utf-8")
+    full = {"type": "ncbi", "endpoint": "esearch.fcgi", "params": {"db": "pubmed", "term": "y"}, "cache": False}
+    (work / "screening" / "log.jsonl").write_text(json.dumps(full) + "\n", encoding="utf-8")
+    assert harness.leakage(FIXTURE, tmp_path, "clean transcript") == ["1 PubMed searches ran without the as_of bound"]
+
+
 def test_leakage_skips_a_log_line_torn_by_a_concurrent_writer(tmp_path):
     work = tmp_path / "work"
     work.mkdir()

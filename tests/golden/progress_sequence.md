@@ -67,7 +67,7 @@ Pilot search: 3 records for `asthma*[tiab]`
 **PSB · Step 3/7 Known records · Screening**
 Screened 4 candidates: 2 include · 1 exclude · 1 uncertain
 - Similar articles + backward citations from 2 records (set seeds) (C1): 4 screened → 2 include
-- Screening budget used: 4 of ~150 (standard)
+- Records with a screening decision so far (all contexts): 4 of ~150 (standard)
 - Included but not yet in a set: 5, 6
 
 ---
@@ -75,7 +75,7 @@ Screened 4 candidates: 2 include · 1 exclude · 1 uncertain
 **PSB · Step 3/7 Known records · Screening**
 Screened 1 candidate: 1 include · 0 exclude · 0 uncertain
 - Pilot search `asthma*[tiab]` (C2): 1 screened → 1 include
-- Screening budget used: 5 of ~150 (standard)
+- Records with a screening decision so far (all contexts): 5 of ~150 (standard)
 - Included but not yet in a set: 3, 5, 6
 
 ---
@@ -107,7 +107,7 @@ Known records: 5 for development · 0 held out · 0 on comparison lists
 - Allocation: frozen: 5 units (5 records) for development · 0 units (0 records) held out · no holdout proposed: fewer than 10 eligible units
 - Candidate searches: 2 (1 neighbour search, 1 pilot search)
 - Screening: 5 screened → 3 include · 1 exclude · 1 uncertain (separate context 0 · builder 5)
-- Screening budget used: 5 of ~150 (standard)
+- Records with a screening decision so far (all contexts): 5 of ~150 (standard)
 - Included after the allocation, not in a set: none
 - In a development set with no include decision: 1, 2
 Next: Step 4/7 Vocabulary: build MeSH and [tiab] terms for each searched concept.

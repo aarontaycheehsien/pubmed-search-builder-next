@@ -10,6 +10,11 @@ a random source or the message sequence number.
 
 None of these files is part of ``validation.input_snapshot``: they never affect evaluation,
 critic binding or delivery verification.
+
+A restricted invocation (one serving the separate screening context; see disclosure.py) gets a
+``separate:*`` message built from permitted facts only. Messages for the builder never list a record
+whose latest decision was made in the separate context, and never attribute screening yields to a
+batch from that context.
 """
 
 from __future__ import annotations
@@ -18,9 +23,12 @@ import hashlib
 import json
 import os
 import re
+import tempfile
+import unicodedata
 from pathlib import Path
 
 from . import syntax
+from .disclosure import DISCLOSURE_VERSION, OPERATIONS, command_tokens
 from .strategy import lint
 from .workspace import ORIGINS, Workspace, WorkspaceError, normalize_pmids, purpose_label, purpose_of, read_json
 
@@ -244,11 +252,28 @@ def batches(ws: Workspace) -> list[dict]:
 
 
 def record_batch(ws: Workspace, via: str, label: str, pmids: list[str], *, total: int,
-                 origin: list[str] | None = None, query: str | None = None) -> dict:
-    entry = {"batch": f"C{len(batches(ws)) + 1}", "via": via, "label": label, "from": list(origin or []),
-             "query": query, "total": total, "pmids": list(pmids)}
+                 origin: list[str] | None = None, query: str | None = None, private: bool = False) -> dict:
+    """Append a candidate batch; the allocation reads its ``via`` and ``pmids`` for origins. A batch
+    found in the separate context keeps a fixed label and no query or seeds in candidates.jsonl: its
+    raw provenance goes to screening/batches.jsonl under the same batch id."""
+    number = f"C{len(batches(ws)) + 1}"
+    if private:
+        _append(ws.root / "screening" / "batches.jsonl",
+                {"batch": number, "via": via, "label": label, "from": list(origin or []), "query": query})
+    entry = {"batch": number, "via": via, "label": method_label(via) if private else label,
+             "from": [] if private else list(origin or []), "query": None if private else query, "total": total,
+             "pmids": list(pmids), "private": private, "disclosure_version": DISCLOSURE_VERSION}
     _append(ws.root / "candidates.jsonl", entry)
     return entry
+
+
+def method_label(via: str) -> str:
+    """A batch's discovery method, from its fixed ``via`` code alone."""
+    if via.startswith("neighbors:"):
+        kinds = " + ".join(LINK_SHORT.get(l, "linked records") for l in via.split(":", 1)[1].split(","))
+        return kinds[:1].upper() + kinds[1:]
+    return {"prior-reviews": PURPOSES["prior-reviews"], "pilot": PURPOSES["pilot"],
+            "resolve": "Resolved identifiers"}.get(via, "Candidate search")
 
 
 def neighbors_label(links: list[str], origin: list[str], sets: list[str]) -> str:
@@ -364,43 +389,196 @@ def render(ws: Workspace | None, name: str, data: dict | None = None) -> dict:
         raise ProgressError(f"unknown progress event {name!r}")
     step, renderer = EVENTS[name]
     title, lines = renderer(ws, data or {})
-    text = "\n".join([f"**PSB · Step {step}/{TOTAL_STEPS} {STEPS[step]} · {title}**", *lines])
-    return {"event": name, "step": step, "text": text}
+    head = f"**PSB · Step {step}/{TOTAL_STEPS} {STEPS[step]} · {title}**" if step else f"**PSB · {title}**"
+    return {"event": name, "step": step, "text": "\n".join([head, *lines])}
 
 
-def emit(ws: Workspace, name: str, data: dict | None = None) -> dict:
-    message = render(ws, name, data)
+def _store(ws: Workspace, message: dict) -> dict:
     seq = len(messages(ws)) + 1
     _append(ws.root / "progress.jsonl", {**message, "seq": seq,
-                                          "sha256": hashlib.sha256(message["text"].encode("utf-8")).hexdigest()})
+                                          "sha256": hashlib.sha256(message["text"].encode("utf-8")).hexdigest(),
+                                          "disclosure_version": DISCLOSURE_VERSION})
     return {**message, "seq": seq}
 
 
+def emit(ws: Workspace, name: str, data: dict | None = None) -> dict:
+    return _store(ws, render(ws, name, data))
+
+
 def fallback(name: str, exc: BaseException) -> dict:
+    """A fixed message naming the exception class only: an exception's text can quote private content."""
     step = EVENTS[name][0] if name in EVENTS else 0
     label = f"Step {step}/{TOTAL_STEPS} {STEPS[step]}" if step else "Progress"
     text = (f"**PSB · {label} · {name}**\nProgress message unavailable ({type(exc).__name__}); "
             "the command itself ran: see its JSON result.")
-    return {"event": name, "step": step, "text": text, "error": f"{type(exc).__name__}: {exc}"}
+    return {"event": name, "step": step, "text": text, "error": type(exc).__name__}
 
 
-def attach(body: dict, ws: Workspace, name: str, data=None) -> dict:
+def attach(body: dict, ws: Workspace, name: str, data=None, *, verbose: bool | None = None) -> dict:
     """Add the message for a command that has already done its work.
 
-    ``data`` is a dict, or a function returning one (so preparing the message, including any
-    candidate batch it records, is guarded too). A message never changes what the command did,
-    its ``ok`` or its exit code: on any failure the command carries a fixed fallback message.
+    ``data`` is a dict, or a function returning one (so preparing the message is guarded too). A
+    message never changes what the command did, its ``ok`` or its exit code: on any failure the
+    command carries a fixed fallback message.
+
+    ``verbose``: add the event's bounded details (see ``DETAILS``). None reads the progress mode,
+    once, and only for an event that has details; standard mode does no detail work at all.
     """
     try:
-        body["progress"] = emit(ws, name, data() if callable(data) else data)
+        data = data() if callable(data) else data
+        message = render(ws, name, data)
+        if name in DETAILS:
+            if verbose is None:
+                mode, notice = read_mode(ws)
+                verbose = mode == "verbose"
+                if notice:
+                    body["progress_notice"] = notice
+            if verbose:
+                message, notice = _detailed(name, ws, data or {}, message)
+                if notice:
+                    body["progress_notice"] = notice
+        body["progress"] = _store(ws, message)
     except Exception as exc:  # noqa: BLE001 - the command's own result must stand
         message = fallback(name, exc)
+        if getattr(ws, "restricted", False):
+            try:  # the raw error stays with the separate context
+                ws.log({"type": "error", "event": name, "error": f"{type(exc).__name__}: {exc}"})
+            except Exception:  # noqa: BLE001
+                pass
         try:
-            _append(ws.root / "progress.jsonl", {**message, "seq": len(messages(ws)) + 1})
+            _append(ws.root / "progress.jsonl", {**message, "seq": len(messages(ws)) + 1,
+                                                  "disclosure_version": DISCLOSURE_VERSION})
         except Exception:  # noqa: BLE001
             pass
         body["progress"] = message
     return body
+
+
+def attach_restricted(body: dict, ws: Workspace, name: str, *, processed: int | None = None,
+                      recorded: int | None = None, separate_only: bool | None = None,
+                      links: list[str] | None = None) -> dict:
+    """The message of a restricted invocation. Only these named facts reach its template: never the
+    command's queries, seeds, records, decisions or reasons."""
+    facts = {"processed": processed, "recorded": recorded, "separate_only": separate_only,
+             "links": [l for l in links or [] if l in LINK_TITLES] or None}
+    # Never verbose: privacy comes before verbosity.
+    return attach(body, ws, f"separate:{name}", {k: v for k, v in facts.items() if v is not None}, verbose=False)
+
+
+# -- verbose mode -----------------------------------------------------------------------------
+# An opt-in, per-run preference (progress-settings.json) that adds a bounded "Details:" section to
+# the completion messages of the commands in DETAILS. The section is built from the command's own
+# in-memory results, never from new requests, and changes nothing the command did. Restricted
+# invocations and stage summaries never get one.
+
+SETTINGS = "progress-settings.json"
+MODES = ("standard", "verbose")
+SETTINGS_NOTICE = ("progress-settings.json is not a valid progress setting, so standard messages are used; "
+                   "set it again with psb progress mode standard or psb progress mode verbose")
+DETAIL_NOTICE = "Verbose details could not be prepared ({}); the standard message was sent"
+DETAIL_HEAD = "Details:"
+DETAIL_ROWS, DETAIL_WORDS, DETAIL_CHARS = 3, 80, 800
+SEVERITY = {"error": 0, "warning": 1}
+INFO = 2
+_MARKDOWN = re.compile(r"([\\`*_\[\]<>|#~])")
+# Each command's details: (ws, data) -> rows of (severity rank, source order, "- text").
+DETAILS: dict[str, object] = {}
+
+
+def read_mode(ws: Workspace) -> tuple[str, str | None]:
+    """The progress mode and, when the setting is invalid, the fixed notice for the command's JSON. A
+    missing file means standard; an invalid one is never repaired here."""
+    try:
+        data = json.loads((ws.root / SETTINGS).read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        return "standard", None
+    except (OSError, ValueError):
+        return "standard", SETTINGS_NOTICE
+    if (isinstance(data, dict) and set(data) == {"version", "mode"} and type(data["version"]) is int
+            and data["version"] == 1 and data["mode"] in MODES):
+        return data["mode"], None
+    return "standard", SETTINGS_NOTICE
+
+
+def write_mode(ws: Workspace, mode: str) -> None:
+    """Replace the setting atomically through a uniquely named temporary file."""
+    if mode not in MODES:
+        raise ProgressError(f"mode must be one of {', '.join(MODES)}")
+    fd, temporary = tempfile.mkstemp(prefix=".progress-settings-", suffix=".tmp", dir=ws.root)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as handle:
+            handle.write(json.dumps({"version": 1, "mode": mode}) + "\n")
+        os.replace(temporary, ws.root / SETTINGS)
+    except BaseException:
+        try:
+            os.unlink(temporary)
+        except OSError:
+            pass
+        raise
+
+
+def _plain(text, limit: int) -> str:
+    """Untrusted text on one line: control and format characters become spaces, then ``clean``."""
+    return clean("".join(" " if unicodedata.category(c)[0] == "C" else c for c in str(text or "")), limit)
+
+
+def _escaped(text, limit: int) -> str:
+    """Untrusted prose, cut first and escaped after, so no Markdown syntax is cut midway."""
+    return _MARKDOWN.sub(r"\\\1", _plain(text, limit))
+
+
+def _term(text, limit: int = 60) -> str:
+    return code(_plain(text, limit) or "?")
+
+
+def _omitted(count: int) -> str:
+    return f"- {_plural(count, 'more detail')} omitted"
+
+
+def _fits(lines: list[str]) -> bool:
+    text = "\n".join(lines)
+    return len(text.split()) <= DETAIL_WORDS and len(text) <= DETAIL_CHARS
+
+
+def section(rows: list[tuple[int, int, str]]) -> list[str]:
+    """At most three whole rows, actionable ones first (by severity, then source order), within 80 words
+    and 800 characters including the heading and the omission marker."""
+    ordered = [text for _, _, text in sorted(rows, key=lambda r: (r[0], r[1]))]
+    if not ordered:
+        return []
+    chosen: list[str] = []
+    for row in ordered[:DETAIL_ROWS]:
+        trial = [*chosen, row]
+        rest = len(ordered) - len(trial)
+        if not _fits([DETAIL_HEAD, *trial, *([_omitted(rest)] if rest else [])]):
+            break  # whole rows only, and never a lower-priority row ahead of one that did not fit
+        chosen = trial
+    rest = len(ordered) - len(chosen)
+    return [DETAIL_HEAD, *chosen, *([_omitted(rest)] if rest else [])]
+
+
+def _detailed(name: str, ws: Workspace, data: dict, message: dict) -> tuple[dict, str | None]:
+    """The message with its details, or the standard message and a fixed notice if they fail."""
+    try:
+        lines = section(DETAILS[name](ws, data))
+    except Exception as exc:  # noqa: BLE001 - details never fail the command or its standard message
+        return message, DETAIL_NOTICE.format(type(exc).__name__)
+    return ({**message, "text": "\n".join([message["text"], *lines])} if lines else message), None
+
+
+def details(name: str):
+    def register(function):
+        DETAILS[name] = function
+        return function
+    return register
+
+
+@event("progress-mode", 0)
+def _progress_mode(ws, data):
+    if data.get("mode") == "verbose":
+        return "Progress messages", ["Verbose: completion messages now add up to three bounded details. Searches, "
+                                     "screening and what stays private are unchanged."]
+    return "Progress messages", ["Standard: completion messages are back to their usual length."]
 
 
 # -- automatic messages -----------------------------------------------------------------------
@@ -459,9 +637,58 @@ def _neighbors(ws, data):
 
 def _budget_line(ws: Workspace, screened: int) -> str:
     depth = ws.protocol().get("depth") or "standard"
+    label = "Records with a screening decision so far (all contexts)"
     if depth in SCREEN_BUDGET:
-        return f"- Screening budget used: {_n(screened)} of ~{_n(SCREEN_BUDGET[depth])} ({depth})"
-    return f"- Screened so far: {_n(screened)} (no discovery budget at {depth} depth)"
+        return f"- {label}: {_n(screened)} of ~{_n(SCREEN_BUDGET[depth])} ({depth})"
+    return f"- {label}: {_n(screened)} (no discovery budget at {clean(depth, 40)} depth)"
+
+
+# -- the separate screening context ------------------------------------------------------------
+# A restricted invocation's message: fixed labels, the processed-record count, the cumulative number
+# of screening decisions with the budget, and whether allocation is pending. Two calls that differ
+# only in private content (queries, seeds, records, decisions, reasons, groups, file names) give the
+# same text.
+
+SEPARATE = "Run in the separate screening context; details are kept private."
+SEPARATE_EVENTS = {
+    "search:prior-reviews": (3, PURPOSES["prior-reviews"]), "search:pilot": (3, PURPOSES["pilot"]),
+    "search:noise-check": (5, PURPOSES["noise-check"]), "neighbors": (3, "Neighbour search"),
+    "resolve": (3, "Identifier resolution"), "fetch": (3, "Records retrieved"), "screen": (3, "Screening"),
+    "failed": (3, "Separate screening"),
+}
+
+
+def _separate_state(ws: Workspace) -> list[str]:
+    lines = [_budget_line(ws, len(decisions(ws)))]
+    if ws.allocation() is None:
+        lines.append("- Allocation is pending.")
+    return lines
+
+
+def _separate_event(name: str, title: str):
+    def renderer(ws, data):
+        if name == "screen":
+            recorded = _plural(data.get("recorded", 0), "candidate")
+            lead = (f"Recorded decisions for {recorded} in the separate screening context; details are kept private."
+                    if data.get("separate_only") else
+                    f"Recorded decisions for {recorded}; detailed attribution is withheld.")
+        elif name == "failed":
+            operation = data.get("operation") if data.get("operation") in OPERATIONS.values() else "A command"
+            lead = f"{operation} did not complete in the separate screening context; details are kept private."
+        else:
+            lead = SEPARATE
+        lines = [lead]
+        if data.get("processed") is not None:
+            lines.append(f"- {'Identifiers' if name == 'resolve' else 'Records'} processed: {_n(data['processed'])}")
+        if ws is not None:
+            lines += _separate_state(ws)
+        links = [LINK_TITLES[l] for l in data.get("links") or [] if l in LINK_TITLES]
+        return (" + ".join(links) if name == "neighbors" and links else title), lines
+    return renderer
+
+
+for _name, (_step, _title) in SEPARATE_EVENTS.items():
+    event(f"separate:{_name}", _step)(_separate_event(_name, _title))
 
 
 def _included_unset(ws: Workspace) -> list[str]:
@@ -472,18 +699,82 @@ def _included_unset(ws: Workspace) -> list[str]:
     return [p for p, row in decisions(ws).items() if row["decision"] == "include" and p not in in_sets | allocated]
 
 
+def builder_visible(ws: Workspace, pmids) -> list[str]:
+    """``pmids`` without records whose latest screening decision was made in the separate context: listed,
+    they would give the held-out records by subtraction once the development set is visible."""
+    latest = decisions(ws)
+    return [p for p in dict.fromkeys(str(p) for p in pmids) if (latest.get(p) or {}).get("context") != "separate"]
+
+
+def _separate_pending(ws: Workspace) -> int:
+    """Records whose latest separate-context decision is include and that the allocation has not yet
+    considered. Neither a builder decision nor a set change can move this count, so it gives no feedback
+    on a record the builder also handles."""
+    latest: dict[str, str] = {}
+    for row in _read_jsonl(ws.root / "screening.jsonl"):
+        if row.get("context") == "separate" and row.get("decision") in DECISIONS and str(row.get("pmid", "")).isdigit():
+            latest[str(row["pmid"])] = row["decision"]
+    allocation = ws.allocation() or {}
+    excluded = allocation.get("excluded") or {}
+    considered = ({str(p) for u in allocation.get("units", []) for p in u.get("members", [])}
+                  | {str(p) for key in ("unavailable", "on_comparison") for p in excluded.get(key) or []}
+                  | ws.reserved_pmids())
+    return sum(1 for p, decision in latest.items() if decision == "include" and p not in considered)
+
+
+def _unset(ws: Workspace) -> str:
+    """Included records waiting for a set or the allocation: the builder's own are listed, those from the
+    separate context only counted."""
+    shown = builder_visible(ws, _included_unset(ws))
+    pending = _separate_pending(ws)
+    if not pending:
+        return _pmids(shown)
+    counted = f"{_plural(pending, 'record')} from the separate screening context (not listed)"
+    return f"{_pmids(shown)}; plus {counted}" if shown else counted
+
+
+WITHHELD = "Separate-context or earlier discovery (attribution withheld)"
+
+
+def _builder_batch(batch: dict) -> bool:
+    """A batch the builder ran itself, recorded under the current disclosure policy."""
+    return batch.get("disclosure_version") == DISCLOSURE_VERSION and not batch.get("private")
+
+
+def _batch_number(batch: dict) -> int:
+    number = str(batch.get("batch", ""))[1:]
+    return int(number) if number.isdigit() else 0
+
+
 def _by_source(ws: Workspace, rows: list[dict]) -> list[str]:
+    """Screened records by the batch that first showed them, with each batch's include yield. Batches
+    from the separate context, and batches recorded before they were marked, fold into one row with no
+    yield, whoever screens: a yield would be eligibility feedback on a private query."""
     source = attribution(ws)
-    groups: dict[str, dict] = {}
+    groups: dict[tuple, dict] = {}
     for row in rows:
         batch = source.get(row["pmid"])
-        key = batch["batch"] if batch else ""
-        group = groups.setdefault(key, {"label": batch["label"] if batch else UNLOGGED, "screened": 0, "include": 0})
+        if batch is None:
+            key, label = (2, 0), UNLOGGED
+        elif _builder_batch(batch):
+            key, label = (0, _batch_number(batch)), f"{batch['label']} ({batch['batch']})"
+        else:
+            key, label = (1, 0), WITHHELD
+        group = groups.setdefault(key, {"label": label, "screened": 0, "include": 0})
         group["screened"] += 1
         group["include"] += row["decision"] == "include"
-    order = sorted(groups, key=lambda k: (k == "", int(k[1:]) if k else 0))
-    return [f"- {groups[k]['label']}{f' ({k})' if k else ''}: {_n(groups[k]['screened'])} screened → "
-            f"{_n(groups[k]['include'])} include" for k in order]
+    return [f"- {g['label']}: {_n(g['screened'])} screened"
+            + ("" if key[0] == 1 else f" → {_n(g['include'])} include") for key, g in sorted(groups.items())]
+
+
+def _previous_contexts(ws: Workspace, pmids: set[str]) -> dict[str, str]:
+    """The context of the decision before each PMID's latest one."""
+    history: dict[str, list[str]] = {}
+    for row in _read_jsonl(ws.root / "screening.jsonl"):
+        pmid = str(row.get("pmid", ""))
+        if pmid in pmids and row.get("decision") in DECISIONS:
+            history.setdefault(pmid, []).append(row.get("context") or "builder")
+    return {p: h[-2] for p, h in history.items() if len(h) > 1}
 
 
 def _tally(rows) -> str:
@@ -495,11 +786,14 @@ def _tally(rows) -> str:
 def _screen(ws, data):
     rows = data.get("entries") or []
     lines = [f"Screened {_plural(len(rows), 'candidate')}: {_tally(rows)}", *_by_source(ws, rows)]
-    changed = [r for r in rows if r.get("previous") and r["previous"] != r["decision"]]
+    # A change from a separate-context decision would reveal that decision: it is never mentioned.
+    earlier = _previous_contexts(ws, {r["pmid"] for r in rows})
+    changed = [r for r in rows if r.get("previous") and r["previous"] != r["decision"]
+               and earlier.get(r["pmid"]) != "separate"]
     if changed:
         lines.append(f"- Decisions changed from an earlier screen: {_pmids(r['pmid'] for r in changed)}")
     lines.append(_budget_line(ws, len(decisions(ws))))
-    lines.append(f"- Included but not yet in a set: {_pmids(_included_unset(ws))}")
+    lines.append(f"- Included but not yet in a set: {_unset(ws)}")
     return "Screening", lines
 
 
@@ -790,6 +1084,195 @@ def _report(ws, data):
     return title, lines
 
 
+# -- verbose details --------------------------------------------------------------------------
+# Rows come from the finished command's results only: no request, check or judgement is added. A
+# row says "returned" or "not run" rather than implying completeness it does not have.
+
+def _rank(issue: dict) -> int:
+    return SEVERITY.get(issue.get("severity"), INFO)
+
+
+def _search_details(ws, data):
+    rows: list[tuple[int, int, str]] = []
+    for issue in data.get("issues") or []:
+        rows.append((_rank(issue), len(rows), f"- PubMed translation {_plain(issue.get('severity') or 'note', 10)}: "
+                                              f"{_term(issue.get('code'), 40)}"))
+    shown, total = data.get("shown"), data.get("count")
+    if shown is not None:  # a count says "count only" in its standard line already
+        if not total:
+            method = "no records matched, so none were shown"
+        elif data.get("random"):
+            method = (f"{_plural(shown, 'record')} of {_n(total)} from offset {_n(data.get('retstart') or 0)}, the offset "
+                      f"chosen at random with seed {_n(data.get('seed'))}")
+        else:
+            method = f"the first {_plural(shown, 'record')} of {_n(total)}, in the order PubMed returned them"
+        rows.append((INFO, len(rows), f"- Method: {method}"))
+    if data.get("translation"):
+        rows.append((INFO, len(rows), f"- PubMed translation: {_term(data['translation'], 160)}"))
+    for record in data.get("records") or []:
+        rows.append((INFO, len(rows), f"- Example: PMID {_plain(record.get('pmid'), 12)}, {_term(record.get('title'), 100)}"))
+    return rows
+
+
+for _purpose in PURPOSES:
+    details(f"search:{_purpose}")(_search_details)
+
+
+@details("neighbors")
+def _neighbors_details(ws, data):
+    links = " and ".join(LINK_DETAIL.get(l, _plain(l, 20)) for l in data.get("links") or [])
+    rows = [(INFO, 0, f"- Method: {links} of {_plural(len(data.get('from') or []), 'record')}, up to "
+                      f"{_n(data.get('max_per_seed'))} per record and link, ranked by the number of linking "
+                      "records, then score")]
+    for i, row in enumerate(data.get("rows") or []):
+        rows.append((INFO, i + 1, f"- Example: PMID {_plain(row.get('pmid'), 12)}, linked from "
+                                  f"{_plural(len(row.get('from') or []), 'record')}"))
+    return rows
+
+
+@details("resolve")
+def _resolve_details(ws, data):
+    given = [str(i).strip() for i in [*(data.get("resolved") or {}), *(data.get("unresolved") or [])]]
+    routes = [text for test, text in (
+        (any(i.isdigit() for i in given), "PMIDs as given"),
+        (any(i.upper().startswith("PMC") for i in given), "PMCIDs through the PMC ID converter"),
+        (any(i.lower().startswith(("10.", "doi:", "https://doi.org/")) for i in given),
+         "DOIs by a [doi] search that must return exactly one record")) if test]
+    return [(INFO, 0, f"- Method: {'; '.join(routes) or 'no recognised identifier'}; every PMID then checked "
+                      "against PubMed")]
+
+
+@event("mesh-lookup", 4)
+def _mesh_lookup(ws, data):
+    matches = data.get("matches") or []
+    return "MeSH lookup", [f"{_term(data.get('query'), 120)}: {_plural(len(matches), 'candidate record')} returned"]
+
+
+@details("mesh-lookup")
+def _mesh_lookup_details(ws, data):
+    return [(INFO, i, f"- {_term(m.get('name'), 80)} ({_plain(m.get('ui'), 12) or 'no UI'}, "
+                      f"{_plain(m.get('type'), 20) or 'type not returned'})")
+            for i, m in enumerate(data.get("matches") or [])]
+
+
+@event("mesh-show", 4)
+def _mesh_show(ws, data):
+    record = data.get("record") or {}
+    counts = record.get("pubmed_count")
+    if isinstance(counts, dict):
+        line = "- PubMed counts: " + " · ".join(f"{_term(label, 20)} {_n(value)}" for label, value in counts.items())
+    else:
+        line = "- PubMed counts: " + ("not requested (--no-counts)" if data.get("no_counts") else "not returned")
+    return "MeSH record", [f"Details retrieved for {_term(record.get('name'), 120)} ({_plain(record.get('ui'), 12) or 'no UI'}, "
+                           f"{_plain(record.get('type'), 20) or 'type not returned'})", line]
+
+
+def _examples(values: list, limit: int = 3) -> str:
+    shown = ", ".join(_term(v, 40) for v in values[:limit])
+    return f", e.g. {shown}" if shown else ""
+
+
+@details("mesh-show")
+def _mesh_show_details(ws, data):
+    record = data.get("record") or {}
+    note = _escaped(record.get("scope_note"), 160)
+    entries = record.get("entry_terms") if isinstance(record.get("entry_terms"), list) else []
+    narrower = record.get("narrower")
+    rows = [(INFO, 0, f"- Scope note: {note}" if note else "- Scope note: none returned"),
+            (INFO, 1, f"- Entry terms: {_n(len(entries))} returned{_examples(entries)}")]
+    if isinstance(narrower, list):
+        capped = " (the list stops at 100)" if len(narrower) >= 100 else ""
+        rows.append((INFO, 2, f"- Narrower headings: {_n(len(narrower))} returned{capped}"
+                              f"{_examples([n.get('name') for n in narrower if isinstance(n, dict)])}"))
+    else:
+        rows.append((INFO, 2, "- Narrower headings: not retrieved"))
+    return rows
+
+
+@details("terms-rank")
+def _terms_rank_details(ws, data):
+    if data.get("comparison_mined"):
+        # The existing disclosure stands; examples could come from comparison records.
+        return [(INFO, 0, "- Examples withheld: comparison records were mined, so the candidates' development-only "
+                          "provenance is not established")]
+    scored = data.get("ranking") or []
+    if not scored:
+        reason = "no candidate terms were found" if not data.get("candidates") else \
+            f"no candidates were scored (background-count budget {_n(data.get('budget'))})"
+        return [(INFO, 0, f"- Examples: none; {reason}")]
+    rows = []
+    for i, row in enumerate(scored):
+        flags = [label for flag, label in (("generic", "generic"), ("noise_risk", "noise risk")) if row.get(flag)]
+        rows.append((INFO, i, f"- {_term(row.get('term'))} ({_plain(row.get('field'), 10)}): in {_n(row.get('df'))} of "
+                              f"{_n(data.get('records'))} records · {_n(row.get('background'))} in PubMed"
+                              + (f" · {', '.join(flags)}" if flags else "")))
+    return rows
+
+
+@details("eval")
+def _eval_details(ws, data):
+    evaluation = data.get("evaluation") or {}
+    if evaluation.get("count") is None:
+        return [(0, 0, "- Details: not available (the evaluation did not complete)")]
+    rows: list[tuple[int, int, str]] = []
+    add = lambda rank, text: rows.append((rank, len(rows), text))  # noqa: E731 - source order
+    for blocker in (evaluation.get("validation") or {}).get("blockers") or []:
+        add(0, f"- Blocker: {_term(blocker.get('code'), 40)} at {_plain(blocker.get('location'), 30)}")
+    for issue in evaluation.get("translation_issues") or []:
+        add(_rank(issue), f"- Final query {_plain(issue.get('severity') or 'note', 10)}: {_term(issue.get('code'), 40)}")
+    lines = evaluation.get("lines") or []
+    for line in lines:
+        for issue in line.get("issues") or []:
+            if issue.get("code") == "zero_hits":
+                add(_rank(issue), f"- Zero hits: line {_n(line.get('n'))} {_term(line.get('text') or line.get('query'), 80)}")
+            else:
+                add(_rank(issue), f"- Line {_n(line.get('n'))} {_plain(issue.get('severity') or 'note', 10)}: "
+                                  f"{_term(issue.get('code'), 40)}")
+    if data.get("term_counts") is False or not any(line.get("kind") == "term" for line in lines):
+        add(INFO, "- Term checks: not run (--no-term-counts)" if data.get("term_counts") is False
+            else "- Term checks: no term lines returned")
+    sets = evaluation.get("sets") or {}
+    coverage = evaluation.get("block_recall")
+    if not sets:
+        add(INFO, "- Block coverage: not measured (no known-record sets)")
+    elif isinstance(coverage, dict):
+        # block_recall counts development and comparison records together; per-set figures are above.
+        combined = any(purpose_of(s) == "comparison" for s in sets.values())
+        label = "combined known-record coverage" if combined else "development records"
+        for block, found in coverage.items():
+            add(INFO, f"- Block {_term(block, 40)}: {_n(found.get('retrieved'))}/{_n(found.get('of'))} ({label})")
+    ablation = evaluation.get("ablation")
+    if isinstance(ablation, str):
+        add(INFO, f"- Ablation: {_plain(ablation, 100)}")
+    elif sets and ablation is None:
+        add(INFO, "- Ablation: not run (one block)")
+    for row in ablation if isinstance(ablation, list) else []:
+        if row.get("known_gained"):
+            add(1, f"- Ablation: without {_term(row.get('drop'), 40)}, {_plural(row['known_gained'], 'more known record')} "
+                   f"retrieved ({_n(row.get('count'))} records)")
+        else:
+            add(INFO, f"- Ablation: without {_term(row.get('drop'), 40)}, no known record gained ({_n(row.get('count'))} records)")
+    return rows
+
+
+@details("terms-miss")
+def _terms_miss_details(ws, data):
+    development = ws.set_pmids("development")
+    rows = []
+    for i, miss in enumerate(data.get("report") or []):
+        pmid = str(miss.get("pmid"))
+        failing = ", ".join(_plain(b, 30) for b in miss.get("failing_blocks") or []) \
+            or ("limits" if miss.get("lost_to_limits") else "none")
+        if pmid not in development:
+            rows.append((1, i, f"- PMID {_plain(pmid, 12)}: fails {failing} (comparison record: no vocabulary examples)"))
+            continue
+        found = [*(miss.get("mesh_not_in_strategy") or [])[:1], *(miss.get("text_not_in_strategy") or [])[:2]]
+        rows.append((1, i, f"- PMID {_plain(pmid, 12)}: fails {failing}; "
+                           + (f"candidates {', '.join(_term(t, 40) for t in found)}" if found
+                              else "no uncovered vocabulary returned")))
+    return rows
+
+
 # -- stage summaries --------------------------------------------------------------------------
 
 @event("intake-request", 1)
@@ -899,9 +1382,10 @@ def _stage_known(ws, data):
         lines.append("- Screening: none recorded")
     lines.append(_budget_line(ws, len(screened)))
     label = "Eligible, not yet allocated" if held is None else "Included after the allocation, not in a set"
-    lines.append(f"- {label}: {_pmids(_included_unset(ws))}")
+    lines.append(f"- {label}: {_unset(ws)}")
     included = {p for p, row in decisions(ws).items() if row["decision"] == "include"}
-    unscreened = development - included
+    # A record decided last in the separate context is left out whatever its decision.
+    unscreened = builder_visible(ws, development - included)
     if unscreened:
         lines.append(f"- In a development set with no include decision: {_pmids(unscreened)}")
     lines.append(_next("known-records", protocol.get("depth")))
@@ -924,16 +1408,11 @@ def _allocation_text(held: dict | None) -> str:
     return text
 
 
-def _command(argv: list) -> list[str]:
-    words, skip = [], False
-    for token in argv or []:
-        if skip:
-            skip = False
-        elif token in {"--workspace", "--env-file"}:
-            skip = True
-        elif not str(token).startswith("-"):
-            words.append(str(token))
-    return words
+def _command(entry: dict) -> list[str]:
+    """A logged command's words: its canonical words, or those of an older row's argv. A restricted
+    invocation's row has no argv in log.jsonl."""
+    words = entry.get("command")
+    return [str(w) for w in words] if isinstance(words, list) else command_tokens(entry.get("argv"))
 
 
 @event("stage:vocabulary", 4)
@@ -960,7 +1439,7 @@ def _stage_vocabulary(ws, data):
     rest = [c for c in protocol.get("concepts") or [] if isinstance(c, dict) and c.get("id") not in blocked]
     lines.append("- Concepts not searched: " + (", ".join(f"{clean(c.get('name') or c.get('id'), 60)} ({c.get('role')})"
                                                           for c in rest) or "none"))
-    commands = [_command(e.get("argv")) for e in ws.log_entries() if e.get("type") == "command"]
+    commands = [_command(e) for e in ws.log_entries() if e.get("type") == "command"]
     lookups = sum(1 for c in commands if c[:2] == ["mesh", "lookup"])
     shows = sum(1 for c in commands if c[:2] == ["mesh", "show"])
     mined = sum(1 for c in commands if c[:2] == ["terms", "rank"])

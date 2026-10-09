@@ -29,6 +29,10 @@ not write your own status updates.
 - At the end of each step, run `psb progress <stage>` and relay its text the same way. The
   stages are `intake`, `scope`, `known-records`, `vocabulary`, `test`, `critic` and `deliver`.
 - `psb status` lists any stage summary that is due and not yet sent.
+- The separate screening context's messages reach the user through `psb progress list`: relay the
+  new ones when it returns (see `references/known-records.md`).
+- When the user asks for more detailed (verbose) progress, run `psb progress mode verbose` once,
+  relay its message, and read `references/verbose.md`. `psb progress mode standard` switches back.
 - `psb progress` and `psb screen` write only their own logs (`progress.jsonl`,
   `screening.jsonl`, `candidates.jsonl`). These sit outside every evaluation, critic and
   delivery hash.
@@ -105,6 +109,8 @@ Read `references/known-records.md` and follow it. In short, with eligibility alr
 - Screen every candidate and record every decision with `psb screen`, including a study `group`
   key for reports of one study. When your host can start a fresh context, let it discover and
   screen with `--screening` / `--context separate` (held-out records must never be shown to you).
+  Its whole reply is one fixed sentence; you relay its messages from `psb progress list`, and you
+  never read its files.
 - Do not put eligible records into a set yet. Run `psb allocate --preview`: when it proposes a
   holdout, relay its message verbatim and record the user's choice (`psb allocate --keep-holdout`
   or `--all-development`; `--proceed-default` if they asked you not to wait). Otherwise

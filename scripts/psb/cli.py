@@ -1,5 +1,9 @@
 """`psb` command line. Every command prints one JSON object; failures exit non-zero with
-``{"ok": false, "error": ...}``. Commands that touch PubMed log each request to the workspace."""
+``{"ok": false, "error": ...}``. Commands that touch PubMed log each request to the workspace.
+
+An invocation that serves the separate screening context is restricted (disclosure.py): ``main``
+decides that from the parsed arguments before anything else happens, and the invocation's own
+Workspace then routes its requests, cache and logs, and its messages say only what is permitted."""
 
 from __future__ import annotations
 
@@ -9,7 +13,7 @@ import random
 import sys
 from pathlib import Path
 
-from . import allocation, config, deliver, holdout, mesh, progress, reserved, terms, validation
+from . import allocation, config, deliver, disclosure, holdout, mesh, progress, reserved, terms, validation
 from .evaluate import compare, evaluate
 from .ncbi import LINKNAMES, NcbiError, PubMed
 from .strategy import StrategyError, lint, numbered_lines, full_query
@@ -29,9 +33,24 @@ def emit(data: object) -> None:
         sys.stdout.write(json.dumps(data, indent=2, ensure_ascii=True) + "\n")
 
 
+SUBCOMMANDS = {"mesh": "mesh_command", "set": "set_command", "terms": "terms_command", "critic": "critic_command",
+               "exposure": "exposure_command", "progress": "stage"}
+
+
+def command_words(args) -> list[str]:
+    """The command and its subcommand or progress stage: fixed words that never carry an argument."""
+    words = [args.command]
+    attr = SUBCOMMANDS.get(args.command)
+    if attr and getattr(args, attr, None):
+        words.append(getattr(args, attr))
+    return words
+
+
 def workspace(args) -> Workspace:
-    ws = Workspace(find_root(args.workspace), use_cache=not args.no_cache)
-    ws.log({"type": "command", "argv": args.argv})
+    # A restricted invocation's Workspace builds its client with the private cache and logger, and
+    # its command row keeps only the command words in log.jsonl (the argv goes to screening/log.jsonl).
+    ws = Workspace(find_root(args.workspace), use_cache=not args.no_cache, restricted=getattr(args, "restricted", False))
+    ws.log({"type": "command", "command": command_words(args), "argv": args.argv})
     return ws
 
 
@@ -125,8 +144,11 @@ def cmd_count(args) -> dict:
     reserved.check_query(ws, query)
     result = ws.pubmed.search(query)
     body = {"ok": True, **result}
-    if args.purpose:
-        progress.attach(body, ws, f"search:{args.purpose}", {"query": query, "count": result["count"]})
+    if args.purpose and args.restricted:
+        progress.attach_restricted(body, ws, f"search:{args.purpose}")
+    elif args.purpose:
+        progress.attach(body, ws, f"search:{args.purpose}", {"query": query, "count": result["count"],
+                                                            "translation": result["translation"], "issues": result["issues"]})
     return body
 
 
@@ -144,11 +166,18 @@ def cmd_fetch(args) -> dict:
     ]
     if not args.screening and records:
         reserved.record(ws, list(records), "abstract" if args.abstracts else "title", "fetch")
-    return {"ok": True, "found": len(records), "missing": [p for p in pmids if p not in records], "records": rows,
+    body = {"ok": True, "found": len(records), "missing": [p for p in pmids if p not in records], "records": rows,
             **({"store": "screening (private to the separate screening context)"} if args.screening else {})}
+    if args.restricted:
+        progress.attach_restricted(body, ws, "fetch", processed=len(records))
+    return body
 
 
 def cmd_sample(args) -> dict:
+    if args.restricted and args.purpose not in progress.CANDIDATE_PURPOSES:
+        # A private sample must leave a candidate batch: the allocation reads origins from it.
+        raise UsageError("sample --screening needs --purpose prior-reviews or --purpose pilot, so that its records "
+                         "are recorded as a candidate batch")
     ws = workspace(args)
     query = query_arg(args)
     if not args.screening:
@@ -157,8 +186,11 @@ def cmd_sample(args) -> dict:
     total = first["count"]
     if not total:
         body = {"ok": True, "count": 0, "records": []}
-        if args.purpose:
-            progress.attach(body, ws, f"search:{args.purpose}", {"query": query, "count": 0, "shown": 0})
+        if args.restricted:
+            progress.attach_restricted(body, ws, f"search:{args.purpose}", processed=0)
+        elif args.purpose:
+            progress.attach(body, ws, f"search:{args.purpose}", {"query": query, "count": 0, "shown": 0,
+                                                                "translation": first["translation"], "issues": first["issues"]})
         return body
     start = random.Random(args.seed).randrange(max(1, min(total, 9999) - args.n + 1)) if args.random else 0
     # Reserved records are skipped without a trace: over-fetch by their number so the page stays full.
@@ -172,14 +204,21 @@ def cmd_sample(args) -> dict:
         "ok": True, "count": total, "retstart": start,
         "records": [{"pmid": p, "year": r.get("year"), "title": r.get("title")} for p, r in records.items()],
     }
-    if args.purpose:
-        def data() -> dict:
-            found = {"query": query, "count": total, "shown": len(records), "retstart": start}
-            if args.purpose in progress.CANDIDATE_PURPOSES and records:
-                label = f"{progress.PURPOSES[args.purpose]} {progress.code(progress.clean(query, 80))}"
-                found["batch"] = progress.record_batch(ws, args.purpose, label, list(records), total=total, query=query)["batch"]
-            return found
-        progress.attach(body, ws, f"search:{args.purpose}", data)
+    # The batch is scientific provenance (allocation origins): recorded whatever the message does.
+    batch = None
+    if args.purpose in progress.CANDIDATE_PURPOSES and records:
+        label = f"{progress.PURPOSES[args.purpose]} {progress.code(progress.clean(query, 80))}"
+        batch = progress.record_batch(ws, args.purpose, label, list(records), total=total, query=query,
+                                      private=args.restricted)["batch"]
+    if args.restricted:
+        progress.attach_restricted(body, ws, f"search:{args.purpose}", processed=len(records))
+    elif args.purpose:
+        found = {"query": query, "count": total, "shown": len(records), "retstart": start, "random": args.random,
+                 "seed": args.seed, "translation": first["translation"], "issues": first["issues"],
+                 "records": body["records"]}
+        if batch:
+            found["batch"] = batch
+        progress.attach(body, ws, f"search:{args.purpose}", found)
     return body
 
 
@@ -210,16 +249,25 @@ def cmd_neighbors(args) -> dict:
     rows = [{**e, "links": sorted(e["links"]), "from": sorted(set(e["from"]))} for e in candidates[: args.limit]]
     body = {"ok": True, "seeds": len(pmids), "candidates": len(candidates), "shown": len(rows), "rows": rows,
             "note": "Neighbours are candidates, not relevant records: screen them before using them for mining."}
+    links = [link.strip() for link in args.links.split(",")]
+    sets = sorted(set(args.set or []))
+    batch = None
+    if rows:
+        batch = progress.record_batch(ws, "neighbors:" + ",".join(links), progress.neighbors_label(links, pmids, sets),
+                                      [r["pmid"] for r in rows], total=len(candidates), origin=pmids,
+                                      private=args.restricted)["batch"]
+    if args.restricted:
+        return progress.attach_restricted(body, ws, "neighbors", processed=len(rows), links=links)
+
     def data() -> dict:
-        links = [link.strip() for link in args.links.split(",")]
         in_sets = {p for d in ws.sets().values() for p in d.get("pmids", [])}
-        found = {"links": links, "from": pmids, "sets": sorted(set(args.set or [])), "candidates": len(candidates),
+        found = {"links": links, "from": pmids, "sets": sets, "candidates": len(candidates),
                  "shown": len(rows), "exclude_known": args.exclude_known,
                  "per_link": {link: sum(1 for e in candidates if link in e["links"]) for link in links},
-                 "known": sum(1 for p in scores if p in in_sets and p not in pmids)}
-        if rows:
-            found["batch"] = progress.record_batch(ws, "neighbors:" + ",".join(links), progress.neighbors_label(links, pmids, found["sets"]),
-                                                   [r["pmid"] for r in rows], total=len(candidates), origin=pmids)["batch"]
+                 "known": sum(1 for p in scores if p in in_sets and p not in pmids),
+                 "rows": rows, "max_per_seed": args.max_per_seed}
+        if batch:
+            found["batch"] = batch
         return found
     return progress.attach(body, ws, "neighbors", data)
 
@@ -247,21 +295,34 @@ def cmd_resolve(args) -> dict:
     unresolved = [i for i in args.ids if i not in resolved]
     exists = ws.pubmed.existing(resolved.values()) if resolved else set()
     body = {"ok": True, "resolved": resolved, "not_in_pubmed_or_after_as_of": sorted(set(resolved.values()) - exists), "unresolved": unresolved}
-    def data() -> dict:
-        message = {**body, "given": len(args.ids)}
-        # Screening normalises PMIDs, so the batch must too, or attribution misses "00123".
-        found = sorted({p for p in normalize_pmids(list(resolved.values())) if p in exists}, key=int)
-        if found:
-            message["batch"] = progress.record_batch(ws, "resolve", "Resolved identifiers", found, total=len(found))["batch"]
-        return message
-    return progress.attach(body, ws, "resolve", data)
+    # Screening normalises PMIDs, so the batch must too, or attribution misses "00123".
+    usable = [v for v in map(str, resolved.values()) if v.isdigit() and v.strip("0")]
+    found = sorted({p for p in normalize_pmids(usable) if p in exists}, key=int)
+    batch = progress.record_batch(ws, "resolve", "Resolved identifiers", found, total=len(found),
+                                  private=args.restricted)["batch"] if found else None
+    if args.restricted:
+        return progress.attach_restricted(body, ws, "resolve", processed=len(args.ids))
+    message = {**body, "given": len(args.ids)}
+    if batch:
+        message["batch"] = batch
+    return progress.attach(body, ws, "resolve", message)
 
 
 def cmd_mesh(args) -> dict:
     ws = workspace(args)
     if args.mesh_command == "lookup":
-        return {"ok": True, **mesh.lookup(ws.pubmed, " ".join(args.term), limit=args.limit)}
-    return {"ok": True, **mesh.show(ws.pubmed, " ".join(args.identifier), counts=not args.no_counts)}
+        body = {"ok": True, **mesh.lookup(ws.pubmed, " ".join(args.term), limit=args.limit)}
+        name, data = "mesh-lookup", {"query": body["query"], "matches": body["matches"]}
+    else:
+        body = {"ok": True, **mesh.show(ws.pubmed, " ".join(args.identifier), counts=not args.no_counts)}
+        name, data = "mesh-show", {"record": body, "no_counts": args.no_counts}
+    # MeSH commands have a message only in verbose mode, and are never restricted.
+    mode, notice = progress.read_mode(ws)
+    if notice:
+        body["progress_notice"] = notice
+    if mode == "verbose":
+        progress.attach(body, ws, name, data, verbose=True)
+    return body
 
 
 def cmd_set(args) -> dict:
@@ -331,7 +392,8 @@ def cmd_eval(args) -> dict:
     deliver.record_evaluation(ws, evaluation, note=args.note)
     attempt = ws.save_attempt(evaluation)
     output = dict(evaluation, attempt_id=attempt["attempt_id"])
-    progress.attach(output, ws, "eval", {"evaluation": evaluation, "note": args.note})
+    progress.attach(output, ws, "eval", {"evaluation": evaluation, "note": args.note,
+                                         "term_counts": not args.no_term_counts})
     if args.brief:
         output.pop("lines", None)
         output.pop("retrieved_known", None)
@@ -362,7 +424,8 @@ def cmd_terms(args) -> dict:
                                           budget=args.budget, min_df=args.min_df, include_covered=args.include_covered)}
         return progress.attach(body, ws, "terms-rank", {"sets": sorted(set(args.set or [])), "comparison_mined": sorted(set(bad)),
                                                         "records": body["records"], "candidates": body["candidates"],
-                                                        "already_covered": body["already_covered"], "scored": len(body["scored"])})
+                                                        "already_covered": body["already_covered"], "scored": len(body["scored"]),
+                                                        "budget": args.budget, "ranking": body["scored"]})
     versions = ws.versions()
     if not versions:
         raise UsageError("run psb eval first")
@@ -376,7 +439,7 @@ def cmd_terms(args) -> dict:
     body = {"ok": True, "version": versions[-1]["version"], "misses": terms.miss_report(records, evaluation, strategy),
             "note": "Vocabulary from missed records is a candidate: test each term with psb eval. Held-out records "
                     "are never diagnosed here; their misses are offered as a repair after the held-out test."}
-    return progress.attach(body, ws, "terms-miss", {"version": body["version"],
+    return progress.attach(body, ws, "terms-miss", {"version": body["version"], "report": body["misses"],
                                                     "misses": [m for m in evaluation.get("misses", []) if m["pmid"] in missed]})
 
 
@@ -422,6 +485,10 @@ def cmd_screen(args) -> dict:
             "decisions": {d: [e["pmid"] for e in entries if e["decision"] == d] for d in progress.DECISIONS},
             "note": ("Screening decisions are a record only. Eligible records enter the allocation pool; psb allocate "
                      "assigns them to development or the held-out test.")}
+    if args.restricted:
+        # Presentation only: each row keeps the context it was given (builder when none was).
+        return progress.attach_restricted(body, ws, "screen", recorded=len(entries),
+                                          separate_only=all(e.get("context") == "separate" for e in entries))
     return progress.attach(body, ws, "screen", {"entries": entries})
 
 
@@ -436,7 +503,8 @@ def cmd_allocate(args) -> dict:
         body = {"ok": True, "N": proposal["N"], "U": proposal["U"], "H": proposal["H"], "reason": proposal["reason"],
                 "pool": proposal["pool"], "development": proposal["development"], "holdout": proposal["holdout"],
                 "studies": proposal["studies"], "unavailable": len(proposal["unavailable"]),
-                "on_comparison": len(proposal["on_comparison"]), "unscreened_development": proposal["unscreened"],
+                "on_comparison": len(proposal["on_comparison"]),
+                "unscreened_development": progress.builder_visible(ws, proposal["unscreened"]),
                 "next": ("relay the message and record the user's choice: psb allocate --keep-holdout or "
                          "--all-development (--proceed-default when they asked you not to wait)") if proposal["H"]
                         else "no holdout is proposed: psb allocate freezes every unit for development"}
@@ -476,12 +544,24 @@ def cmd_exposure(args) -> dict:
 
 
 def cmd_progress(args) -> dict:
+    if args.value is not None and args.stage != "mode":
+        raise UsageError("only psb progress mode takes a value (verbose or standard)")
     if args.stage == "intake-request":
         return {"ok": True, "stage": args.stage,
                 "progress": progress.render(None, "intake-request", {"have_question": args.have_question})}
     ws = workspace(args)
     if args.stage == "list":
-        return {"ok": True, "messages": progress.messages(ws)}
+        # Public projections: rows written before the disclosure policy are filtered by event name.
+        shown, omitted = disclosure.public_messages(progress.messages(ws), frozenset(progress.EVENTS))
+        return {"ok": True, "messages": shown, "omitted": omitted,
+                **({"note": disclosure.OMITTED_NOTE} if omitted else {})}
+    if args.stage == "mode":
+        # Presentation only: never search depth, screening or what stays private.
+        if args.value is None:
+            mode, notice = progress.read_mode(ws)
+            return {"ok": True, "mode": mode, **({"progress_notice": notice} if notice else {})}
+        progress.write_mode(ws, args.value)
+        return {"ok": True, "mode": args.value, "progress": progress.emit(ws, "progress-mode", {"mode": args.value})}
     return {"ok": True, "stage": args.stage, "progress": progress.emit(ws, f"stage:{args.stage}")}
 
 
@@ -489,8 +569,10 @@ def cmd_log(args) -> dict:
     ws = Workspace(find_root(args.workspace))
     entries = ws.log_entries()
     ncbi = [e for e in entries if e.get("type") == "ncbi"]
+    # The counts include every row; the tail shows accounting fields only.
+    tail, omitted = disclosure.public_log(entries[-args.tail:], build_parser().vocabulary) if args.tail else ([], 0)
     return {"ok": True, "entries": len(entries), "ncbi_requests": len(ncbi),
-            "from_cache": sum(1 for e in ncbi if e.get("cache")), "tail": entries[-args.tail:] if args.tail else []}
+            "from_cache": sum(1 for e in ncbi if e.get("cache")), "tail": tail, "tail_omitted": omitted}
 
 
 def cmd_doctor(args) -> dict:
@@ -536,7 +618,10 @@ def build_parser() -> argparse.ArgumentParser:
             p.add_argument("--random", action="store_true", help="sample from a random offset")
             p.add_argument("--seed", type=int, default=1)
             p.add_argument("--screening", action="store_true",
-                           help="separate screening context only: records go to the private store, no exposure")
+                           help="separate screening context only (needs --purpose prior-reviews or pilot): records go "
+                                "to the private store, no exposure")
+        else:
+            p.add_argument("--screening", action="store_true", help=PRIVATE_HELP)
         p.set_defaults(func=func)
 
     p = sub.add_parser("fetch", help="fetch and store records")
@@ -555,10 +640,12 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--max-per-seed", type=int, default=50)
     p.add_argument("--limit", type=int, default=100)
     p.add_argument("--exclude-known", action="store_true", help="drop PMIDs already in a set")
+    p.add_argument("--screening", action="store_true", help=PRIVATE_HELP)
     p.set_defaults(func=cmd_neighbors)
 
     p = sub.add_parser("resolve", help="PMIDs from PMIDs, DOIs, or PMCIDs")
     p.add_argument("ids", nargs="+")
+    p.add_argument("--screening", action="store_true", help=PRIVATE_HELP)
     p.set_defaults(func=cmd_resolve)
 
     p = sub.add_parser("mesh", help="MeSH lookup and details")
@@ -632,8 +719,11 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--reason", required=True)
     p.set_defaults(func=cmd_holdout_release)
 
-    p = sub.add_parser("progress", help="the standard progress message for a workflow step")
-    p.add_argument("stage", choices=["intake-request", *progress.STAGES, "list"])
+    p = sub.add_parser("progress", help="the standard progress message for a workflow step, the message list, "
+                                        "or the progress mode")
+    stages = ["intake-request", *progress.STAGES, "list", "mode"]
+    p.add_argument("stage", choices=stages)
+    p.add_argument("value", nargs="?", choices=progress.MODES, help="with mode: verbose or standard")
     p.add_argument("--have-question", action="store_true", help="intake-request: the question is already known")
     p.set_defaults(func=cmd_progress)
 
@@ -682,7 +772,35 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("cache", help="inspect or clear the workspace cache")
     p.add_argument("--clear", action="store_true")
     p.set_defaults(func=cmd_cache)
+    # The words a public log row may show: each command and its subcommands or progress stages.
+    parser.vocabulary = {name: frozenset() for name in sub.choices}
+    parser.vocabulary.update(mesh=frozenset(msub.choices), set=frozenset(ssub.choices), terms=frozenset(tsub.choices),
+                             critic=frozenset(csub.choices), exposure=frozenset(esub.choices),
+                             progress=frozenset(stages))
     return parser
+
+
+PRIVATE_HELP = ("separate screening context only: private request log and cache; the progress message keeps the "
+                "details private")
+HANDLED = (WorkspaceError, StrategyError, UsageError, NcbiError, ValueError, OSError)
+
+
+def restricted_failure(args, exc: Exception) -> dict:
+    """The fixed message for a failed restricted invocation, also written to progress.jsonl. The raw error
+    goes to screening/log.jsonl; stdout keeps it for the separate context that ran the command."""
+    facts = {"operation": disclosure.operation(args)}
+    try:
+        ws = Workspace(find_root(args.workspace), use_cache=False, restricted=True)
+    except Exception:  # noqa: BLE001 - without a workspace the message is returned, not stored
+        return progress.render(None, "separate:failed", facts)
+    try:
+        ws.log({"type": "error", "command": command_words(args), "error": str(exc), "error_type": type(exc).__name__})
+    except Exception:  # noqa: BLE001 - a failed private write never brings the error back
+        pass
+    try:
+        return progress.emit(ws, "separate:failed", facts)
+    except Exception:  # noqa: BLE001
+        return progress.render(None, "separate:failed", facts)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -696,12 +814,19 @@ def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
     args.argv = argv
+    # Before any workspace is opened, anything is logged or any request is made; this call only.
+    args.restricted = disclosure.restricted(args)
     if args.env_file:
         config.use_env_file(args.env_file)
     try:
         result = args.func(args)
-    except (WorkspaceError, StrategyError, UsageError, NcbiError, ValueError, OSError) as exc:
-        emit({"ok": False, "error": str(exc), "error_type": type(exc).__name__})
+    except Exception as exc:  # noqa: BLE001 - every failure of a restricted invocation gets the fixed message
+        if not args.restricted and not isinstance(exc, HANDLED):
+            raise
+        failure = {"ok": False, "error": str(exc), "error_type": type(exc).__name__}
+        if args.restricted:
+            failure["progress"] = restricted_failure(args, exc)
+        emit(failure)
         return 1
     emit(result)
     return 0 if result.get("ok", True) else 1

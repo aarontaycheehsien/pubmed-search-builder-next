@@ -43,7 +43,7 @@ def test_samples_skip_reserved_records_and_keep_the_page_full(frozen, capsys):
     shown = [r["pmid"] for r in out["records"]]
     assert code == 0 and len(shown) == 5 and not set(shown) & set(HELD)
     assert not {e["pmid"] for e in reserved.events(ws)} & set(HELD)
-    code, out = run(capsys, "sample", "--screening", "--n", "25", "asthma*[tiab]")
+    code, out = run(capsys, "sample", "--screening", "--purpose", "pilot", "--n", "25", "asthma*[tiab]")
     assert set(HELD) <= {r["pmid"] for r in out["records"]}
 
 

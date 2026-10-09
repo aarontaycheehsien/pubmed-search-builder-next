@@ -320,10 +320,13 @@ def leakage(fixture: dict, run_dir: Path, transcript: str) -> list[str]:
     for marker in (fixture["id"].lower(), "clef tar", "synergy dataset", "qrels", "gold_pmids", "evals/fixtures"):
         if marker and marker in lowered:
             problems.append(f"transcript mentions {marker!r}")
-    log = run_dir / "work" / "log.jsonl"
-    if log.exists() and fixture.get("as_of"):
+    # The separate screening context's request rows keep their parameters only in its private log;
+    # log.jsonl holds their accounting rows, which have no params and so are never counted twice.
+    logs = [path for path in (run_dir / "work" / "log.jsonl", run_dir / "work" / "screening" / "log.jsonl")
+            if path.exists()]
+    if logs and fixture.get("as_of"):
         undated = 0
-        for line in log.read_text(encoding="utf-8").splitlines():
+        for line in (row for path in logs for row in path.read_text(encoding="utf-8").splitlines()):
             if not line.strip():
                 continue
             try:
