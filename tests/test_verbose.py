@@ -164,6 +164,17 @@ def test_mesh_messages_appear_only_in_verbose_mode(ws, capsys):
     assert "- PubMed counts: `[Mesh]` 3 · `[Mesh:noexp]` 0" in text(capsys, "mesh", "show", "Asthma")
 
 
+def test_mesh_lookup_lists_the_exact_heading_first():
+    """NCBI's order is not by relevance (live: `asthma` returned Asthma, Occupational before Asthma)."""
+    matches = [{"name": "Asthma, Occupational", "ui": "D059366", "type": "descriptor"},
+               {"name": "Dyspnea, Paroxysmal", "ui": "D004418", "type": "descriptor"},
+               {"name": "Asthma", "ui": "D001249", "type": "descriptor"},
+               {"name": "Status Asthmaticus", "ui": "D013224", "type": "descriptor"}]
+    rows = progress.section(progress.DETAILS["mesh-lookup"](None, {"query": "  ASTHMA ", "matches": matches}))
+    assert rows == ["Details:", "- `Asthma` (D001249, descriptor)", "- `Asthma, Occupational` (D059366, descriptor)",
+                    "- `Dyspnea, Paroxysmal` (D004418, descriptor)", "- 1 more detail omitted"]
+
+
 def test_mesh_details_label_supplementary_records_and_escape_untrusted_text(ws, capsys, monkeypatch):
     name = "Sjögren`s ‮compound\x07 " + "x" * 200
     children = [{"ds_meshui": f"D{n:06d}", "ds_meshterms": [f"Child {n}"]} for n in range(100)]

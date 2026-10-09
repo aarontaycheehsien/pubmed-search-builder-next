@@ -230,6 +230,7 @@ def test_private_workflow_never_reaches_builder_outputs(tmp_path, capsys, corpus
     assert preview["unscreened_development"] == ["1"]
     known = before["known"]["progress"]["text"]
     assert "- Eligible, not yet allocated: 18 records from the separate screening context (not listed)" in known
+    assert "No known records yet" not in known  # 18 eligible records are waiting for the allocation
     assert not any(p in known for p in v.pmids)
     assert "- Screening: 25 screened → 19 include · 6 exclude · 0 uncertain (separate context 24 · builder 1)" in known
 

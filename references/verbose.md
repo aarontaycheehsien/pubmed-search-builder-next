@@ -14,7 +14,7 @@ Completion messages of these commands end with a short **Details:** section:
 | Command | Details |
 |---|---|
 | `sample --purpose`, `count --purpose`, `neighbors`, `resolve` (your own discovery) | how the records were chosen, PubMed's translation, and example records |
-| `mesh lookup` | the candidate headings returned, with their record types (a message appears only in verbose mode) |
+| `mesh lookup` | the candidate headings returned, with their record types; a heading named exactly as the phrase comes first (a message appears only in verbose mode) |
 | `mesh show` | the scope note, and the entry terms and narrower headings returned (a message appears only in verbose mode) |
 | `terms rank` | example candidates from the ranking; none when comparison records were mined |
 | `eval` | blockers, translation warnings, zero-hit terms, block coverage and ablation findings |

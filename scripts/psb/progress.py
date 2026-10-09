@@ -1150,8 +1150,11 @@ def _mesh_lookup(ws, data):
 
 @details("mesh-lookup")
 def _mesh_lookup_details(ws, data):
-    return [(INFO, i, f"- {_term(m.get('name'), 80)} ({_plain(m.get('ui'), 12) or 'no UI'}, "
-                      f"{_plain(m.get('type'), 20) or 'type not returned'})")
+    # NCBI's order is not by relevance: a heading named exactly as the phrase comes first, then that order.
+    phrase = " ".join(str(data.get("query") or "").casefold().split())
+    return [(INFO, -1 if " ".join(str(m.get("name") or "").casefold().split()) == phrase else i,
+             f"- {_term(m.get('name'), 80)} ({_plain(m.get('ui'), 12) or 'no UI'}, "
+             f"{_plain(m.get('type'), 20) or 'type not returned'})")
             for i, m in enumerate(data.get("matches") or [])]
 
 
@@ -1365,7 +1368,7 @@ def _stage_known(ws, data):
         purpose = purpose_of(sets[name])
         lines.append(f"- {name} ({purpose_label(sets[name])}): {_plural(len(sets[name].get('pmids', [])), 'record')} — "
                      f"{PURPOSE_USE.get(purpose, 'unknown purpose')}")
-    if not sets and not held:
+    if not sets and not held and not _included_unset(ws):  # eligible records waiting for allocation are known
         lines.append("- No known records yet: without them the strategy is empirically unvalidated.")
     lines.append(f"- Allocation: {_allocation_text(held)}")
     kinds: dict[str, int] = {}
