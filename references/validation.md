@@ -77,7 +77,8 @@ delivered interpretation text.
 
 `psb report` always validates live and runs all checks. `--fresh` is a compatible alias. On success,
 deliver `final-query.txt` verbatim alongside `audit.md` and `validation-manifest.json`. The query
-includes effective entry-date restrictions so it matches the tested search. Put additional prose
+includes the effective `as_of` restriction (Create Date `[crdt]`; Entry Date `[edat]` in workspaces made
+before `cutoff.json`) so it matches the tested search. Put additional prose
 in `narrative.md`; editing generated artifacts invalidates their hashes. Counts reflect today's
 index with the specified date bound, not a reconstruction of historical indexing. A policy-1
 delivery (from before held-out testing) still verifies and is labelled legacy.

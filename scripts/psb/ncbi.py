@@ -1,8 +1,10 @@
 """NCBI E-utilities client for PubMed and MeSH.
 
 Every request is appended to the workspace log as a side effect, so provenance needs no
-separate bookkeeping step. When the workspace sets ``as_of``, every PubMed search is bounded
-to records added to PubMed on or before that date.
+separate bookkeeping step. When the workspace sets ``as_of``, every PubMed search is bounded to
+records created in PubMed on or before that date: Create Date [crdt]. Entry Date [edat] is reset
+to the publication date for a citation added more than a year after it, so it would admit records
+created later; workspaces made before cutoff.json keep it (``as_of_field``) for consistency.
 """
 
 from __future__ import annotations
@@ -131,6 +133,7 @@ class PubMed:
         cache: Cache | None = None,
         log: Callable[[dict], None] | None = None,
         as_of: str | None = None,
+        as_of_field: str = "crdt",
     ) -> None:
         self.email = read_env("NCBI_EMAIL")
         self.api_key = read_env("NCBI_API_KEY")
@@ -140,6 +143,7 @@ class PubMed:
         self.cache = cache or Cache(None)
         self.log = log or (lambda entry: None)
         self.as_of = as_of
+        self.as_of_field = as_of_field
         self.requests = 0
 
     # -- transport -------------------------------------------------------------------------
@@ -203,7 +207,7 @@ class PubMed:
         if sort:
             params["sort"] = sort
         if dated and self.as_of:
-            params.update({"datetype": "edat", "mindate": "1800/01/01", "maxdate": self.as_of.replace("-", "/")})
+            params.update({"datetype": self.as_of_field, "mindate": "1800/01/01", "maxdate": self.as_of.replace("-", "/")})
         data = self._json("esearch.fcgi", params, method="POST" if len(query) > POST_THRESHOLD else "GET")
         result = data.get("esearchresult")
         if (not isinstance(result, dict) or not str(result.get("count", "")).isdigit()
@@ -256,25 +260,6 @@ class PubMed:
                 raise NcbiError(f"efetch returned invalid XML: {exc}") from exc
             records.extend(parse_article(node) for node in root.findall("./PubmedArticle"))
         return records
-
-    def summaries(self, pmids: Iterable[str]) -> dict[str, dict]:
-        """Brief records keyed by PMID, including the Entrez date (when the record entered PubMed)."""
-        found: dict[str, dict] = {}
-        for chunk in chunks([str(p) for p in pmids], FETCH_CHUNK):
-            data = self._json("esummary.fcgi", {"db": "pubmed", "id": ",".join(chunk), "retmode": "json"},
-                              method="POST" if len(chunk) > 50 else "GET")
-            result = data.get("result", {})
-            for uid in result.get("uids", []):
-                item = result.get(uid) or {}
-                entrez = next((h.get("date", "") for h in item.get("history", []) if h.get("pubstatus") == "entrez"), "")
-                found[str(uid)] = {
-                    "pmid": str(uid),
-                    "title": item.get("title", ""),
-                    "pubdate": item.get("pubdate", ""),
-                    "entrez_date": entrez[:10].replace("/", "-"),
-                    "pubtypes": item.get("pubtype", []),
-                }
-        return found
 
     def links(self, pmid: str, link: str) -> list[dict]:
         """Neighbours of one PMID. ``link`` is similar, citedin, or refs."""

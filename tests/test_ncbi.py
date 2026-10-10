@@ -58,11 +58,15 @@ def test_rejected_query_is_not_retried():
         PubMed(transport=transport).search("x*[tiab]")
 
 
-def test_as_of_bounds_pubmed_searches():
-    transport = ScriptedTransport([esearch_body(1)])
+def test_as_of_bounds_pubmed_searches_on_create_date():
+    transport = ScriptedTransport([esearch_body(1), esearch_body(1), esearch_body(1)])
     PubMed(transport=transport, as_of="2018-05-01").search("asthma[tiab]")
     params = transport.calls[0][1]
-    assert (params["datetype"], params["maxdate"]) == ("edat", "2018/05/01")
+    assert (params["datetype"], params["mindate"], params["maxdate"]) == ("crdt", "1800/01/01", "2018/05/01")
+    PubMed(transport=transport, as_of="2018-05-01", as_of_field="edat").search("asthma[tiab]")  # an older workspace
+    assert transport.calls[1][1]["datetype"] == "edat"
+    PubMed(transport=transport).search("asthma[tiab]")  # no as_of: no date parameters at all
+    assert not {"datetype", "mindate", "maxdate"} & set(transport.calls[2][1])
 
 
 def test_cache_serves_repeat_requests_and_excludes_credentials(tmp_path):

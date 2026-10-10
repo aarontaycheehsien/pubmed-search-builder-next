@@ -3,7 +3,8 @@
 `psb report` always runs complete live validation, including vocabulary and the current critic.
 `--fresh` remains a compatible alias. On success it publishes `final-query.txt`, `audit.md`, and
 `validation-manifest.json` from the same evaluated snapshot. The exported query includes any
-explicit effective `as_of` entry-date restriction.
+explicit effective `as_of` create-date (`[crdt]`) restriction; a workspace made before `cutoff.json`
+keeps its entry-date (`[edat]`) restriction.
 
 ## Order at delivery
 

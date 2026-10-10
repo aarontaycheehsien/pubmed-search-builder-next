@@ -2,8 +2,8 @@
 
 It runs after the development checks and a current critic review, and once per binding:
 
-    query, strategy, review_sha256, as_of, allocation, held-out membership, eligibility,
-    policy version and template version
+    query, strategy, review_sha256, as_of (and its field when it is Create Date), allocation,
+    held-out membership, eligibility, policy version and template version
 
 A repeat run with the same binding returns the stored receipt. A new receipt is allowed only when the
 binding changed for a reason other than a strategy edit (PubMed's translation or the vocabulary
@@ -50,6 +50,8 @@ def binding(evaluation: dict, state: dict, protocol: dict) -> dict:
         "strategy_sha256": validation.digest(evaluation["inputs"]["strategy"]),
         "review_sha256": evaluation.get("review_sha256"),
         "as_of": evaluation.get("as_of"),
+        # Absent for Entry Date [edat], so a receipt bound before cutoff.json keeps matching.
+        **({"as_of_field": evaluation["as_of_field"]} if evaluation.get("as_of_field") else {}),
         "allocation_sha256": state["sha256"],
         "holdout_sha256": validation.digest(held_members(state)),
         "eligibility_sha256": allocation.eligibility_digest(protocol),

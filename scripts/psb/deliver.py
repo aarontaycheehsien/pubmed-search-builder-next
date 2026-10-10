@@ -649,6 +649,7 @@ def report(ws: Workspace, *, diagnostic: bool = False, note: str = "") -> dict:
                     "input_sha256": evaluation["input_sha256"], "review_sha256": evaluation["review_sha256"], "critic_sha256": critic_hash,
                     "created": now(), "query": evaluation["query"], "artifacts": hashes, "human_press_review": "pending",
                     "allocation_sha256": state["sha256"] if state else None,
+                    **({"as_of_field": evaluation["as_of_field"]} if evaluation.get("as_of_field") else {}),
                     "holdout": {"case": held["case"], "text": held["text"], "template_version": held["template_version"],
                                 **({"receipt": receipt["number"], "receipt_sha256": holdout.receipt_digest(ws, receipt["number"])}
                                    if receipt else {})},
@@ -781,7 +782,9 @@ def _audit(ws: Workspace, evaluation: dict, rounds: list[dict], overridden: list
         "",
         "- Database and platform: PubMed (NCBI E-utilities; includes MEDLINE and non-MEDLINE records)",
         f"- Date the final counts were run: {evaluation.get('run_date') or version['created'][:10]}",
-        f"- Records added to PubMed up to: {evaluation.get('as_of') or 'search date (no as-of bound)'}",
+        f"- Records added to PubMed up to: {evaluation.get('as_of') or 'search date (no as-of bound)'}"
+        + (f" (Create Date [{evaluation['as_of_field']}])" if evaluation.get("as_of_field") == "crdt"
+           else " (Entry Date [edat])" if evaluation.get("as_of") else ""),
         f"- Total records: {evaluation.get('count'):,}"
         + (f" ({evaluation.get('count_without_limits'):,} before limits)" if evaluation.get("count_without_limits") is not None else ""),
         "- Limits and filters: " + ("; ".join(f"`{l.clause}` ({l.rationale or 'no rationale recorded'})" for l in strategy.limits) or "none"),

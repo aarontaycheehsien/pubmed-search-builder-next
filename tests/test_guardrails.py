@@ -372,7 +372,9 @@ def test_artifacts_agree_and_include_effective_as_of(make_ws):
     manifest = read_json(ws.root / "validation-manifest.json")
     query = (ws.root / "final-query.txt").read_text(encoding="utf-8").strip()
     assert query == manifest["query"] == ws.attempts()[-1]["evaluation"]["query"]
-    assert '"2020/01/01"[edat]' in query and query in pm.queries
+    assert '("1800/01/01"[crdt] : "2020/01/01"[crdt])' in query and query in pm.queries
+    assert manifest["as_of_field"] == "crdt"
+    assert "- Records added to PubMed up to: 2020-01-01 (Create Date [crdt])" in Path(result["report"]).read_text(encoding="utf-8")
     assert query in Path(result["report"]).read_text(encoding="utf-8")
     for name, digest in manifest["artifacts"].items():
         assert hashlib.sha256((ws.root / name).read_bytes()).hexdigest() == digest

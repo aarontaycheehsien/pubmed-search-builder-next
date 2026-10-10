@@ -239,7 +239,11 @@ asked for, the escape hatch in `references/reporting.md` applies to your own pro
   do not rewrite it unless asked.
 - **Update a finished search:** set `as_of` in `protocol.json` to the previous search date to
   reproduce the original count, then clear it and re-run `psb eval` to see the growth. Report
-  changes in PubMed's translation (`translation_issues`) before trusting the new numbers.
+  changes in PubMed's translation (`translation_issues`) before trusting the new numbers. `as_of`
+  bounds on Create Date (`[crdt]`, when the record entered PubMed); for the records added since the
+  previous search, AND a Create Date range from the day after it, such as
+  `("2021/01/01"[crdt] : "3000"[crdt])` after a search on 2020-12-31, never a
+  `[dp]` or Entry Date (`[edat]`) range, which can be backdated to the publication date.
 
 ## Depth
 

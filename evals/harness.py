@@ -279,19 +279,21 @@ def _run_dir_pattern(run_dir: Path) -> re.Pattern:
     return re.compile(r"[\\/]+".join(re.escape(s) for s in segments), re.IGNORECASE)
 
 
-_INLINE_BOUND = re.compile(r'\s+AND\s+\(\s*"\d{4}/\d{2}/\d{2}"\[edat\]\s*:\s*"(\d{4})/(\d{2})/(\d{2})"\[edat\]\s*\)\s*$',
+# Create Date [crdt] for runs made with cutoff.json; Entry Date [edat] for older runs. Both ends name one field.
+_INLINE_BOUND = re.compile(r'\s+AND\s+\(\s*"\d{4}/\d{2}/\d{2}"\[(crdt|edat)\]\s*:\s*"(\d{4})/(\d{2})/(\d{2})"\[\1\]\s*\)\s*$',
                            re.IGNORECASE)
 
 
 def inline_bounded(term: str, as_of: str) -> bool:
-    """True when ``term`` is ``(query) AND (".."[edat] : "<date>"[edat])`` with date <= ``as_of``.
+    """True when ``term`` is ``(query) AND (".."[crdt] : "<date>"[crdt])`` with date <= ``as_of`` (or the
+    same with [edat], as runs made before cutoff.json wrote it).
 
     ``psb eval`` writes the as-of bound into the query text (``evaluate.effective_query``) rather
     than the ``maxdate`` parameter, so the delivered query carries it. That only bounds the search
     when the date range is AND-ed onto the whole query, so the prefix must be a single group.
     """
     match = _INLINE_BOUND.search(term)
-    if not match or "-".join(match.groups()) > as_of:
+    if not match or "-".join(match.groups()[1:]) > as_of:
         return False
     prefix = term[: match.start()].strip()
     if not (prefix.startswith("(") and prefix.endswith(")")):

@@ -44,12 +44,19 @@ def _term_diff(old: dict, new: dict) -> dict:
     return changes
 
 
-def effective_query(query: str, as_of: str | None) -> str:
+def effective_query(query: str, as_of: str | None, field: str = "crdt") -> str:
+    """The query bounded to records created in PubMed by ``as_of`` (Create Date [crdt]; a workspace made
+    before cutoff.json keeps Entry Date [edat])."""
     if not as_of:
         return query
     import datetime
     bound = datetime.date.fromisoformat(as_of).strftime("%Y/%m/%d")
-    return f'({query}) AND ("1800/01/01"[edat] : "{bound}"[edat])'
+    return f'({query}) AND ("1800/01/01"[{field}] : "{bound}"[{field}])'
+
+
+def cutoff_record(pm) -> dict:
+    """The cutoff field, recorded where an as_of bound is: absent means the legacy Entry Date [edat]."""
+    return {"as_of_field": pm.as_of_field} if pm.as_of and pm.as_of_field != "edat" else {}
 
 
 def evaluate(ws: Workspace, *, term_counts: bool = True) -> dict:
@@ -68,7 +75,7 @@ def evaluate(ws: Workspace, *, term_counts: bool = True) -> dict:
                     or a["tag"].split(":")[0].casefold() in syntax.ALIASES for a in syntax.atoms(i["term"]))) ]
         collected.extend(validation.identify(i, i.get("location") or "block:" + i.get("block", "strategy")) for i in result["lint"])
         if not any(i["blocking"] for i in collected):
-            result["query"] = effective_query(full_query(ws.strategy()), ws.pubmed.as_of)
+            result["query"] = effective_query(full_query(ws.strategy()), ws.pubmed.as_of, ws.pubmed.as_of_field)
             result["vocabulary"], vocabulary_issues = mesh.validate_query(ws.pubmed, result["query"], result["run_date"])
             collected.extend(vocabulary_issues)
             _measure(ws, result, term_counts=term_counts)
@@ -98,7 +105,7 @@ def _measure(ws: Workspace, result: dict, *, term_counts: bool) -> None:
     search = pm.search(full, dated=False)
     if search["count"] and not search.get("translation", "").strip():
         raise NcbiError("PubMed returned hits without a query translation")
-    result.update(as_of=pm.as_of, count=search["count"], translation=search["translation"],
+    result.update(as_of=pm.as_of, **cutoff_record(pm), count=search["count"], translation=search["translation"],
                   raw_diagnostics=search.get("raw_diagnostics"), translation_issues=search["issues"])
     if strategy.limits:
         result["count_without_limits"] = pm.count(core)
@@ -107,7 +114,7 @@ def _measure(ws: Workspace, result: dict, *, term_counts: bool) -> None:
     for line in numbered_lines(strategy):
         if line["kind"] == "term" and not term_counts:
             continue
-        query = effective_query(line["query"], pm.as_of)
+        query = effective_query(line["query"], pm.as_of, pm.as_of_field)
         found = pm.search(query, dated=False)
         entry = {**line, "query": query, "count": found["count"], "translation": found["translation"],
                  "raw_diagnostics": found.get("raw_diagnostics"), "issues": list(found["issues"])}

@@ -28,8 +28,10 @@ from __future__ import annotations
 import hashlib
 
 from . import progress, reserved, validation
+from .evaluate import cutoff_record
 from .interpret import NO_HOLDOUT
-from .workspace import Workspace, WorkspaceError, append_jsonl, normalize_pmids, now, purpose_of, read_jsonl, write_json
+from .workspace import (LEGACY_CUTOFF, Workspace, WorkspaceError, append_jsonl, normalize_pmids, now, purpose_of,
+                        read_jsonl, write_json)
 
 METHOD = "sha256-order-v1"
 TRIGGER = 10
@@ -257,6 +259,7 @@ def freeze(ws: Workspace, *, choice: str | None = None, seed: int = 1, reserve: 
         "excluded": {"unavailable": proposal["unavailable"], "on_comparison": proposal["on_comparison"],
                      "designated_removed": removed},
         "bindings": {"eligibility_sha256": eligibility_digest(protocol), "as_of": ws.pubmed.as_of,
+                     **cutoff_record(ws.pubmed),
                      "policy_version": validation.POLICY_VERSION,
                      "screening_rows": len(read_jsonl(ws.root / "screening.jsonl")),
                      "exposure_rows": len(reserved.events(ws))},
@@ -292,6 +295,8 @@ def bindings(ws: Workspace, allocation: dict) -> dict:
     for event in ws.allocation_events():
         if event.get("type") == "rebind":
             current.update(eligibility_sha256=event.get("eligibility_sha256"), as_of=event.get("as_of"))
+            current.pop("as_of_field", None)
+            current.update({k: v for k, v in event.items() if k == "as_of_field"})
     return current
 
 
@@ -303,6 +308,10 @@ def stale(ws: Workspace, allocation: dict) -> list[str]:
         found.append("eligibility changed after the allocation was frozen")
     if (bound.get("as_of") or None) != (ws.pubmed.as_of or None):
         found.append("the effective date (as_of) changed after the allocation was frozen")
+    elif ws.pubmed.as_of and (bound.get("as_of_field") or LEGACY_CUTOFF) != ws.pubmed.as_of_field:
+        # Records available by the date were decided on the bound field: another field changes the pool.
+        found.append(f"the effective date's field changed after the allocation was frozen "
+                     f"({bound.get('as_of_field') or LEGACY_CUTOFF}, now {ws.pubmed.as_of_field})")
     return found
 
 
@@ -387,7 +396,8 @@ def rebind(ws: Workspace) -> dict:
         elif pmid not in available:
             reasons[pmid] = "not in PubMed by the revised effective date"
     event = {"type": "rebind", "removed": sorted(reasons, key=int), "reasons": reasons,
-             "eligibility_sha256": eligibility_digest(ws.protocol()), "as_of": ws.pubmed.as_of, "at": now()}
+             "eligibility_sha256": eligibility_digest(ws.protocol()), "as_of": ws.pubmed.as_of,
+             **cutoff_record(ws.pubmed), "at": now()}
     append_jsonl(ws.root / "allocation-log.jsonl", event)
     return event
 

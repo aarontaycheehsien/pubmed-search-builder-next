@@ -14,6 +14,8 @@
     critic/          critic packets and rounds
     log.jsonl        every command and NCBI request, appended automatically (accounting fields only
                      for a restricted invocation; see disclosure.py)
+    cutoff.json      the date field an as_of cutoff uses: crdt (Create Date). Workspaces made before it
+                     have no file and keep edat (Entry Date), so their artifacts keep their meaning
     .cache/          NCBI responses for this workspace only
 
 Everything else (reports, audits) is derived from these files and never read back as input.
@@ -37,6 +39,12 @@ from .ncbi import PubMed
 from .strategy import Strategy
 
 MARKER = "protocol.json"
+# The date field of the as_of cutoff. Create Date [crdt] is when the record was first created in PubMed;
+# Entry Date [edat] is reset to the publication date for a citation added more than a year after it, so
+# an edat cutoff admits records created later. Older workspaces have no cutoff.json and keep edat.
+CUTOFF = "cutoff.json"
+CUTOFF_FIELDS = ("crdt", "edat")
+LEGACY_CUTOFF = "edat"
 # Builds the NCBI client from the cache and logger the workspace chose. Offline tests replace it.
 CLIENT = PubMed
 # What a set of known records is for. Held-out records are never a set: allocation.json holds them,
@@ -190,6 +198,7 @@ class Workspace:
         protocol = dict(PROTOCOL_TEMPLATE, question=question.strip())
         write_json(root / MARKER, protocol)
         write_json(root / "strategy.json", STRATEGY_TEMPLATE)
+        write_json(root / CUTOFF, {"version": 1, "field": "crdt"})
         for name in ("sets", "history", "critic"):
             (root / name).mkdir(exist_ok=True)
         (root / ".gitignore").write_text(".cache/\nscreening/.cache/\n", encoding="utf-8")
@@ -204,6 +213,16 @@ class Workspace:
         if not isinstance(data, dict):
             raise WorkspaceError("protocol.json must be an object")
         return data
+
+    def as_of_field(self) -> str:
+        """The date field an as_of cutoff uses: crdt for workspaces made with cutoff.json, edat for older ones."""
+        path = self.root / CUTOFF
+        if not path.exists():
+            return LEGACY_CUTOFF
+        data = read_json(path)
+        if not isinstance(data, dict) or data.get("field") not in CUTOFF_FIELDS:
+            raise WorkspaceError(f"{CUTOFF} must be an object whose field is one of {', '.join(CUTOFF_FIELDS)}")
+        return data["field"]
 
     def strategy_text(self) -> str:
         return (self.root / "strategy.json").read_text(encoding="utf-8")
@@ -251,8 +270,9 @@ class Workspace:
             as_of = os.environ.get("PSB_AS_OF") or self.protocol().get("as_of") or None
             # PubMed keeps the logger it is built with, so a restricted invocation chooses both here.
             cache = Cache(self._cache_dir(self.restricted), enabled=self.use_cache)
-            self._pubmed = CLIENT(cache=cache, log=self.log, as_of=as_of)
+            self._pubmed = CLIENT(cache=cache, log=self.log, as_of=as_of, as_of_field=self.as_of_field())
         self._pubmed.as_of = os.environ.get("PSB_AS_OF") or self.protocol().get("as_of") or None
+        self._pubmed.as_of_field = self.as_of_field()
         return self._pubmed
 
     @pubmed.setter

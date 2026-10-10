@@ -63,7 +63,7 @@ Avoid default limits for:
 
 Use limits only when essential and justified. Each limit is a potential source of bias and missed records. When a methodological filter (study design, age group, etc.) is required, use a validated filter from `filters.md` rather than an ad hoc block.
 
-A search cutoff ("what PubMed held on date X", an update's previous search date) belongs in `protocol.json` `as_of`, which bounds on Entrez date. Do not add a `[dp]` or `[Date - Publication]` limit for it: an article in PubMed before the cutoff can carry a later publication date (epub ahead of print, a later issue), and a publication-date limit drops it.
+A search cutoff ("what PubMed held on date X", an update's previous search date) belongs in `protocol.json` `as_of`, which bounds on Create Date `[crdt]`, when the record was first created in PubMed. Entry Date `[edat]` is reset to the publication date for a citation added more than a year later, so it would admit records created after the cutoff; workspaces made before `cutoff.json` keep it for consistency. Do not add a `[dp]` or `[Date - Publication]` limit for it: an article in PubMed before the cutoff can carry a later publication date (epub ahead of print, a later issue), and a publication-date limit drops it.
 
 ## Mistake 5: Overfitting to seed studies
 

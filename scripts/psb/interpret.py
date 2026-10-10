@@ -153,6 +153,8 @@ def _material(state: dict, receipt: dict | None) -> str:
     if receipt:
         dates += f"; tested {str(receipt.get('created') or '')[:10]}"
         dates += f" against PubMed records added up to {receipt['binding'].get('as_of') or 'the test date'}"
+        if receipt["binding"].get("as_of_field") == "crdt":  # receipts bound before cutoff.json keep their wording
+            dates += " (Create Date)"
     return (f"{sources}. Screening: {screening}. Grouping: {grouping}. Exposure: "
             f"{'none recorded' if not exposed else _n(exposed, 'unit') + ' with recorded exposure'}. Dates: {dates}.")
 

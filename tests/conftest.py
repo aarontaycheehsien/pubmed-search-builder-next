@@ -75,7 +75,7 @@ class FakePubMed(PubMed):
                 else:
                     words.append(token)
             text = " ".join(words)
-            if text.lower().endswith("[edat]"):
+            if text.lower().endswith(("[edat]", "[crdt]")):
                 return set(self.universe)
             if text.lower().endswith("[uid]"):
                 pmid = text[:-5]
