@@ -1,5 +1,9 @@
 # PubMed Search Builder (next)
 
+> **Preview branch.** This version installs as `pubmed-search-builder-holdout-verbose`. It adds
+> known-record allocation with a one-shot held-out test, private discovery and screening in a separate
+> agent context, and optional verbose progress messages.
+
 PubMed Search Builder is an agent skill for **Codex and Claude Code** that develops high-sensitivity PubMed search strategies for systematic reviews, scoping reviews, rapid reviews, and other evidence syntheses.
 
 Give it a review question and, optionally, known relevant papers. The agent develops the search iteratively, **pilots and tests candidate strategies directly in PubMed via its API**, diagnoses misses, revises the strategy, runs a PRESS-structured critique, validates the final query, and produces an auditable search ready for human review.
@@ -14,7 +18,7 @@ You provide the **review question** and can optionally supply **seed papers that
 
 If you do not have known relevant papers, the workflow can still proceed. At **standard** or **thorough** depth, the agent first tries to establish its own set of known relevant records. It may look for a suitable prior systematic review and screen its included studies, run narrow high-precision pilot searches, and expand from confirmed relevant records using PubMed relationships such as similar articles and citation links. Candidates are screened against the review's eligibility criteria before they are used.
 
-Most of these records are used to develop and check the search. When there are enough of them, and some were screened in a separate context so the agent building the search never saw them, a share is **held out** for one retrieval test of the finished query. You decide whether to keep that held-out test or use everything for development. If too few suitable records can be established, the search can still be built, but the audit makes clear that the empirical evidence for recall is limited or absent. At **quick** depth, discovery is limited to about 30 screened candidates and no held-out test is created automatically.
+Most of these records are used to develop and check the search. When there are enough of them, and some were screened in a separate context so the agent building the search never saw them, a share is **held out** for one retrieval test of the finished query. That separate context (a subagent, when the host has one) reports back only fixed progress messages, such as how many records it processed; never which records, which queries or which decisions. You decide whether to keep that held-out test or use everything for development. If too few suitable records can be established, the search can still be built, but the audit makes clear that the empirical evidence for recall is limited or absent. At **quick** depth, discovery is limited to about 30 screened candidates and no held-out test is created automatically.
 
 The agent then proposes which concepts should be represented in the PubMed search and which are better assessed during screening. **You approve or revise this scope decision before the main search is built.**
 
@@ -74,7 +78,9 @@ For example:
 
 > Please read `SKILL.md` and build a high-sensitivity PubMed search for my systematic review on the diagnostic accuracy of ultrasound for vesicoureteral reflux in children with urinary tract infection. These three papers are known to be relevant: [PMIDs]. Use standard depth.
 
-The agent handles the search-development workflow and pauses for your approval when it makes an important scope decision, unless you explicitly tell it to proceed without asking.
+The agent handles the search-development workflow and pauses for your approval of the scope and, when a held-out test is proposed, for your choice whether to keep it, unless you explicitly tell it to proceed without asking.
+
+Ask for **verbose progress messages** if you want more detail on each step (how candidates were found, MeSH headings returned, block coverage, example terms). The agent switches them on once for the run; they never change what is searched or kept private.
 
 ### Requirements
 
@@ -98,10 +104,10 @@ An NCBI API key is optional but raises the permitted request rate.
 |---|---|---|
 | **1. Question / intake** | User | Provide the review question, eligibility criteria, optional known relevant articles, and required limits. |
 | **2. Scope** | Agent → User | The agent proposes which concepts should be searched, handled at screening, or treated as optional, shown as a fixed table with the limits and eligibility criteria and a short explanation of each role. The user replies **keep** or says what to change. |
-| **3. Known records** | User + Agent | User-supplied papers and discovered candidates are screened against the eligibility criteria. The eligible records are allocated to development and, when a holdout is proposed, to a held-out test set; **the user chooses whether to keep the holdout**. |
+| **3. Known records** | User + Agent | User-supplied papers and discovered candidates are screened against the eligibility criteria, preferably by a separate agent context whose discovery and screening stay private. The eligible records are allocated to development and, when a holdout is proposed, to a held-out test set; **the user chooses whether to keep the holdout**. |
 | **4. Vocabulary** | Agent | Build each searched concept using verified MeSH plus free-text title/abstract terminology. |
 | **5. Develop & revise** | Agent | Run candidate searches in PubMed, inspect translations and counts, check retrieval of development records, diagnose misses, and revise. |
-| **6. Critique** | Agent | Run a fresh-context PRESS-structured internal critique and address each finding. |
+| **6. Critique** | Agent (→ User) | Run a fresh-context PRESS-structured internal critique and address each finding, within a fixed number of rounds per depth. If PubMed's translation or indexing changes after the last round, the review can be extended once, **only if the user asks**; the audit says so. |
 | **7. Validate & deliver** | Agent | Run the one held-out test (when records are reserved), re-run validation against PubMed, and deliver the tested query unchanged with a fixed interpretation of the result; a repair is offered afterwards. |
 | **8. Review** | Human | Review the draft and, where appropriate, obtain formal PRESS peer review from an information specialist. |
 
@@ -119,10 +125,10 @@ Every known record has a purpose. Where it came from (the user, a prior review, 
 | **Held-out test set** | Eligible records screened in a separate context and never shown to the agent | No | Once, after the critic review of the final query | One retrieval test of the frozen query, interpreted with fixed wording |
 | **Comparison list** | Records outside the allocation pool (unscreened lists, sets from older versions of this skill) | Not by default | At every evaluation, reported separately | Comparison only; never a held-out test |
 
-1. **Screen first.** Eligibility is fixed before any supplied paper is examined. Every candidate is screened, and reports of the same study are grouped so they are allocated together.
-2. **Know what the agent has seen.** A record is *exposed* if the agent building the search has seen its title, abstract, indexing, full text, a description of it, or whether the search retrieves it. Unknown exposure counts as exposure. Exposed records always go to development.
+1. **Screen first.** Eligibility is fixed before any supplied paper is examined. Every candidate is screened, and reports of the same study share a group key so they are allocated together; a later decision keeps a record in its study unless it is given another key.
+2. **Know what the agent has seen.** A record is *exposed* if the agent building the search has seen its title, abstract, indexing, full text, a description of it, or whether the search retrieves it. A study is exposed when the agent has seen any report of it, even one that was not eligible. Unknown exposure counts as exposure. Exposed records always go to development.
 3. **Allocate once.** With N eligible units and U unexposed units, a holdout is proposed only when N ≥ 10 and U > 0: H = min(round(0.3 × N), U), drawn reproducibly. For example, 20 unexposed units give 14 for development and 6 held out. The user keeps the holdout or uses everything for development; a test set the user designates replaces the automatic one.
-4. **Protect the holdout.** Until the test, held-out records are never shown, fetched, sampled, mined or diagnosed, and the critic is told only how many there are.
+4. **Protect the holdout.** Until the test, held-out records are never shown, fetched, sampled, mined or diagnosed, and the critic is told only how many there are. The separate context's own messages carry fixed labels and counts only, and summaries the agent sees count its records without listing them, so the held-out records cannot be worked out by subtraction.
 5. **Test once and report with fixed wording.** The frozen query is tested once. The result is reported with fixed wording that keeps "6/6" from being read as proof of high recall: retrieving every held-out record shows that those records were found, not that all relevant literature was. Misses are reported with the tested query unchanged, and a repair is offered; a repaired query never claims the earlier test.
 
 ## What you get
@@ -135,7 +141,7 @@ A successful run produces:
 - identification of missed records and the concept blocks responsible;
 - the development and revision history;
 - documented scope and search-design decisions;
-- a PRESS-structured internal critique and the response to each finding;
+- a PRESS-structured internal critique and the response to each finding, with any finding delivered over the critic's objection and any review extension disclosed on the audit's first page;
 - a PRISMA-S-style audit of the PubMed search; and
 - machine-readable validation information showing that the delivered query is the query that was actually checked.
 
@@ -186,7 +192,8 @@ Full evaluation methods are documented in [`evals/README.md`](evals/README.md), 
 PubMed Search Builder is deliberately conservative about what its evaluation demonstrates.
 
 - **Relative recall is not proof of complete recall.** Retrieval can only be measured against the known relevant records available for a test. A held-out test that retrieves every reserved record shows that those records were found; it does not establish that all relevant literature was.
-- **Known records can influence development.** Records the agent saw are development records. A held-out test exists only when some eligible records were screened in a separate context and never shown to the agent; without such a context, no holdout is proposed and the report says so. This separation is enforced procedurally by the tool, not as a security boundary.
+- **Known records can influence development.** Records the agent saw are development records. A held-out test exists only when some eligible records were screened in a separate context and never shown to the agent; without such a context, no holdout is proposed and the report says so. This separation is enforced procedurally by the tool, not as a security boundary: the separate context's messages and logs reveal no private queries or decisions, but the agent building the search must still not open the private screening files.
+- **Study grouping depends on the screener.** Reports of one study are allocated together only when they share a group key; two different keys for the same study cannot be matched automatically.
 - **High recall can mean larger result sets.** This is a recall-first workflow and may accept additional screening workload when that reduces the risk of missing relevant studies.
 - **The internal PRESS-structured critic is not formal PRESS peer review.** Final searches should still receive human review where the review protocol requires it.
 - **PubMed is only one source.** A systematic or scoping review may require other databases, registries, citation searching, and grey-literature sources.
@@ -203,6 +210,8 @@ It retains the methodology of the earlier project but replaces much of its **exc
 - **Provenance as a side effect.** NCBI requests are recorded automatically. Reports are built from the workspace rather than reconstructed from chat prose.
 - **One key per concept.** A concept keeps the same identifier from scope definition through strategy construction and reporting.
 - **Protected delivery.** `psb report` performs live validation and blocks delivery when technical defects or required reviews remain unresolved.
+- **Private by construction.** Whether a command serves the separate screening context is decided from its arguments before anything else runs (`--screening` on `count`, `sample`, `fetch`, `neighbors` and `resolve`; `screen --context separate` or `screen --file`). Such a command uses a private cache and log, keeps only accounting fields in `log.jsonl`, and gets a progress message with fixed labels and counts. `progress list` and `log --tail` return public projections; rows written by older versions are filtered by their event or type name.
+- **Fixed progress messages.** Commands that search for candidates, screen, change sets, allocate, evaluate, run the critic, test or report attach a message rendered from fixed templates, which the agent relays verbatim. Verbose mode (`progress mode verbose`, stored in `progress-settings.json`) adds a Details section of at most three rows and 800 characters, built from the command's own results with no extra requests. None of this affects evaluation, critic or delivery hashes.
 - **Standard library only.** Python 3.10+, with no Python package dependencies required by the search tool itself.
 
 ## CLI quick start
@@ -223,12 +232,20 @@ python scripts/psb.py --workspace runs/demo mesh lookup "vesicoureteral reflux"
 python scripts/psb.py --workspace runs/demo \
   screen --include 12345678 23456789 --origin user-supplied --reason "meets all criteria"
 
+# In a separate screening context (a subagent), discovery and screening stay private:
+python scripts/psb.py --workspace runs/demo sample --screening --purpose pilot "<precise query>"
+python scripts/psb.py --workspace runs/demo fetch --screening --abstracts 34567890 45678901
+python scripts/psb.py --workspace runs/demo screen --context separate --file decisions.json
+# Back in the building context: relay the new messages
+python scripts/psb.py --workspace runs/demo progress list
+
 python scripts/psb.py --workspace runs/demo allocate --preview
 python scripts/psb.py --workspace runs/demo allocate      # or --keep-holdout / --all-development
 
 python scripts/psb.py --workspace runs/demo eval --note "first draft"
 
 python scripts/psb.py --workspace runs/demo critic packet
+python scripts/psb.py --workspace runs/demo status          # includes the critic rounds left
 
 # Save the reviewer's response as critic/round-1.json, then run critic check.
 
@@ -240,10 +257,10 @@ python scripts/psb.py --workspace runs/demo report
 
 | Command | Purpose |
 |---|---|
-| `init`, `status` | Create a workspace; show what is complete and what remains. |
-| `count`, `sample`, `fetch` | Run queries and inspect PubMed records and translations. |
-| `neighbors`, `resolve` | Find related records and resolve DOIs/PMCIDs to PMIDs. |
-| `mesh lookup`, `mesh show` | Inspect MeSH descriptors, entry terms, narrower headings, and counts. |
+| `init`, `status` | Create a workspace; show what is complete, what remains, and the critic rounds left. |
+| `count`, `sample`, `fetch` | Run queries and inspect PubMed records and translations (`--screening` in the separate context). |
+| `neighbors`, `resolve` | Find related records and resolve DOIs/PMCIDs to PMIDs (`--screening` in the separate context). |
+| `mesh lookup`, `mesh show` | Inspect MeSH descriptors (the heading named exactly as the phrase first), entry terms, narrower headings, and counts. |
 | `set add/remove/list` | Manage development sets and comparison lists (`set split` is withdrawn: use `allocate`). |
 | `screen` | Record screening decisions, with screening context, study group, origin, evidence basis and source. |
 | `exposure declare` | Record that the agent has seen a record outside `psb`. |
@@ -251,29 +268,15 @@ python scripts/psb.py --workspace runs/demo report
 | `lint` | Run offline syntax and design checks. |
 | `eval` | Measure counts, development retrieval, failing blocks, ablation, and changes since the previous version. |
 | `terms rank`, `terms miss` | Inspect candidate vocabulary and terminology in missed development records. |
-| `critic packet`, `critic check`, `critic override`, `critic extend` | Generate and validate PRESS-structured critique rounds; `extend` adds one review period only when the user asks. |
+| `critic packet`, `critic check`, `critic override`, `critic extend` | Generate and validate PRESS-structured critique rounds. `packet` keeps the last rounds until technical blockers are fixed (`--anyway` overrides); `extend` adds one review period only when the user asks. |
 | `holdout-test` | Test the frozen query once against the held-out records. |
 | `holdout-release` | Return the held-out records to development to repair the search. |
 | `report` | Perform final live validation and generate the protected query and audit. |
 | `progress` | Render the standard progress message for a workflow step, list the messages sent, or set the progress mode (`progress mode verbose` or `standard`). |
 | `log`, `cache`, `doctor` | Inspect provenance, cache, and configuration. |
 
-Progress messages are fixed templates over workspace state. Commands that search for candidates,
-screen, change sets, allocate, evaluate, run the critic, test or report attach one as `progress`. The
-agent relays `progress.text` to the user verbatim. These messages and their logs never affect the
-evaluation, critic or delivery hashes.
-
-Commands run for the separate screening context (`--screening` on `count`, `sample`, `fetch`,
-`neighbors` and `resolve`; `screen --context separate` or `screen --file`) get a restricted message:
-fixed labels and counts, never a query, record, decision or reason. Their requests use a private cache
-and log, and `log.jsonl` keeps only their accounting fields. `progress list` and `log --tail` return
-public projections; rows written by older versions are filtered by their event or type name.
-
-Verbose mode is an opt-in, per-run preference (`progress mode verbose`, stored in
-`progress-settings.json`). It adds a short Details section, at most three rows and 800 characters, to
-the messages of discovery, MeSH, term-mining, evaluation and miss-diagnosis commands, built from each
-command's own results. It never adds requests or changes what is searched, screened or kept private.
-`python tests/bench_verbose.py` measures its cost offline.
+Progress messages, the separate screening context and verbose mode are described under
+[Technical design](#technical-design).
 
 ## Tests
 
@@ -281,7 +284,11 @@ command's own results. It never adds requests or changes what is searched, scree
 uv run --with pytest python -m pytest
 ```
 
-Offline tests use a fake PubMed corpus to test Boolean evaluation and workflow guardrails.
+Offline tests use a fake PubMed corpus to test Boolean evaluation and workflow guardrails. The
+screening-disclosure tests run the real NCBI client, with its request log and caches, over an
+in-memory corpus, and check that private queries, records, reasons and group keys never reach a
+message, list or log the building agent reads. `python tests/bench_verbose.py` measures what verbose
+messages add, offline.
 
 An opt-in live smoke test is also available:
 
