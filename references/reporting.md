@@ -147,6 +147,8 @@ denominators, or a bypassed check.
 - the strategy line by line with counts, and as one line for copying into PubMed
 - the fixed interpretation, then (after a held-out test) each held-out record with its screening
   reason and source, released from the private screening store
+- how the known records were found: for each discovery route, the records, screened, eligible, and
+  development and held-out retrieval (a record found by several routes counts under each)
 - development checks per set with purpose, missed development records and the blocks that miss them
 - leave-one-block-out results and the development history
 - critic rounds and finding status

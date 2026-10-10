@@ -11,7 +11,7 @@ from pathlib import Path
 from . import allocation, holdout, validation
 from .evaluate import evaluate, compare
 from .strategy import Strategy
-from .workspace import Workspace, WorkspaceError, now, purpose_label, read_json, write_json, sha256_text
+from .workspace import Workspace, WorkspaceError, now, purpose_label, purpose_of, read_json, write_json, sha256_text
 
 DOMAINS = ["translation", "operators", "subject_headings", "text_words", "syntax", "limits_filters"]
 SEVERITIES = {"must-fix", "should-fix", "document"}
@@ -752,6 +752,49 @@ def _extension_section(extensions: list[dict]) -> list[str]:
     return lines
 
 
+def _routes_section(ws: Workspace, evaluation: dict, receipt: dict | None) -> list[str]:
+    """How the known records were found, by discovery route: written only into audit.md, which psb report
+    publishes after the held-out test, so every route can be named."""
+    from . import progress
+    found = allocation.routes(ws)
+    if not any(found.values()):
+        return []
+    latest = progress.decisions(ws)
+    sets = (evaluation.get("inputs") or {}).get("sets") or {}
+    development = {str(p) for d in sets.values() if isinstance(d, dict) and purpose_of(d) == "development"
+                   for p in d.get("pmids", [])}
+    present = development & {str(p) for p in evaluation.get("known_in_pubmed") or []}
+    hits = {str(p) for p in evaluation.get("retrieved_known") or []}
+    held: dict[str, bool] = {}
+    if receipt and receipt.get("status") == "complete":
+        unavailable = set((receipt.get("records") or {}).get("unavailable") or [])
+        held = {p: p in (u.get("retrieved") or []) for u in receipt.get("units") or [] for p in u["members"]
+                if p not in unavailable}
+    rows: dict[str, dict[str, int]] = {}
+    for pmid in set(found) | present | set(held):
+        names = [progress.ROUTE_LABELS.get(n, n) for n in found.get(pmid, {})] or [progress.NO_ROUTE]
+        for label in names:
+            row = rows.setdefault(label, dict.fromkeys(("found", "screened", "eligible", "dev", "dev_hit", "held",
+                                                        "held_hit"), 0))
+            row["found"] += 1
+            row["screened"] += pmid in latest
+            row["eligible"] += (latest.get(pmid) or {}).get("decision") == "include"
+            row["dev"] += pmid in present
+            row["dev_hit"] += pmid in present and pmid in hits
+            row["held"] += pmid in held
+            row["held_hit"] += held.get(pmid, False)
+    lines = ["### How the known records were found", "",
+             "| Route | Records | Screened | Eligible | Development retrieved | Held out retrieved |",
+             "|---|---:|---:|---:|---:|---:|"]
+    for label, r in sorted(rows.items(), key=lambda i: progress._route_order(i[0])):
+        dev = "{}/{}".format(r["dev_hit"], r["dev"]) if r["dev"] else "—"
+        held_out = "{}/{}".format(r["held_hit"], r["held"]) if r["held"] else "—"
+        lines.append(f"| {label} | {r['found']} | {r['screened']} | {r['eligible']} | {dev} | {held_out} |")
+    return lines + ["", "A record found by several routes counts under each. Records from pilot searches and similar "
+                        "articles share vocabulary with the search; prior-review, citation and user-supplied records "
+                        "test it more independently.", ""]
+
+
 def _audit(ws: Workspace, evaluation: dict, rounds: list[dict], overridden: list[dict] | None = None,
            held: dict | None = None, receipt: dict | None = None, extensions: list[dict] | None = None) -> str:
     protocol = evaluation["inputs"]["protocol"]
@@ -810,7 +853,7 @@ def _audit(ws: Workspace, evaluation: dict, rounds: list[dict], overridden: list
     ]
     if receipt and receipt.get("status") in {"complete", "empty"}:
         lines += ["Held-out records (released to this audit after the test):", "", *holdout.records_section(ws, receipt), ""]
-    lines += ["### Development checks", ""]
+    lines += [*_routes_section(ws, evaluation, receipt), "### Development checks", ""]
     if evaluation.get("sets"):
         lines += _recall_table(evaluation)
         lines += ["", "Development records were used to build the strategy; their retrieval is a development check, "

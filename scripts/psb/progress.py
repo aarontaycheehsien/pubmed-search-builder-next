@@ -158,6 +158,69 @@ def _recall(evaluation: dict) -> str:
     return " · ".join(f"{group}: {', '.join(parts)}" for group, parts in groups.items())
 
 
+ROUTE_LABELS = {"user-supplied": "user-supplied", "prior-review": "prior review", "pilot-search": "pilot search",
+                "similar-articles": "similar articles", "citation-backward": "backward citations",
+                "citation-forward": "forward citations"}
+ROUTE_BUCKET = "separate screening context"
+NO_ROUTE = "not recorded"
+
+
+def _route_order(label: str) -> int:
+    order = [*ROUTE_LABELS.values(), ROUTE_BUCKET, NO_ROUTE]
+    return order.index(label) if label in order else len(order)
+
+
+def _labels(routes: dict[str, bool], disclosed: bool) -> list[str]:
+    """A record's route labels. Until the held-out test, routes only the separate context gave are not
+    named: the record counts in one bucket instead."""
+    named = [ROUTE_LABELS.get(name, name) for name, private in routes.items() if disclosed or not private]
+    return named or ([ROUTE_BUCKET] if routes else [NO_ROUTE])
+
+
+def route_retrieval(ws: Workspace, evaluation: dict) -> str | None:
+    """Development retrieval by discovery route, or None when no development record has a route. Shown
+    by presentation only: the evaluation and its hashes are untouched."""
+    from .allocation import routes
+    from .holdout import routes_disclosed
+    sets = (evaluation.get("inputs") or {}).get("sets") or {}
+    development = {str(p) for d in sets.values() if isinstance(d, dict) and purpose_of(d) == "development"
+                   for p in d.get("pmids", [])}
+    present = development & {str(p) for p in evaluation.get("known_in_pubmed") or []}
+    hits = {str(p) for p in evaluation.get("retrieved_known") or []}
+    found, disclosed = routes(ws), routes_disclosed(ws)
+    counts: dict[str, list[int]] = {}
+    for pmid in present:
+        for label in _labels(found.get(pmid, {}), disclosed):
+            count = counts.setdefault(label, [0, 0])
+            count[0] += pmid in hits
+            count[1] += 1
+    if not counts or set(counts) == {NO_ROUTE}:
+        return None
+    parts = " · ".join(f"{label} {_n(h)}/{_n(t)}" for label, (h, t) in sorted(counts.items(), key=lambda i: _route_order(i[0])))
+    note = ("routes of records found only in the separate context are named after the held-out test"
+            if ROUTE_BUCKET in counts else "a record found by several routes counts under each")
+    return f"- Development retrieval by route: {parts} ({note})"
+
+
+def held_route_retrieval(receipt: dict | None) -> str | None:
+    """Held-out retrieval by the routes of each unit, from the receipt (after the test only)."""
+    if not receipt or receipt.get("status") != "complete":
+        return None
+    unavailable = set((receipt.get("records") or {}).get("unavailable") or [])
+    counts: dict[str, list[int]] = {}
+    for unit in receipt.get("units") or []:
+        if not set(unit.get("members") or []) - unavailable:
+            continue
+        for label in [ROUTE_LABELS.get(o, o) for o in unit.get("origins") or []] or [NO_ROUTE]:
+            count = counts.setdefault(label, [0, 0])
+            count[0] += bool(unit.get("retrieved"))
+            count[1] += 1
+    if not counts:
+        return None
+    parts = " · ".join(f"{label} {_n(h)}/{_n(t)}" for label, (h, t) in sorted(counts.items(), key=lambda i: _route_order(i[0])))
+    return f"- Held-out retrieval by route (units): {parts}"
+
+
 def _misses(evaluation: dict, cap: int = 10) -> str:
     misses = sorted(evaluation.get("misses") or [], key=lambda m: _int_key(m["pmid"]))
     if not misses:
@@ -1336,6 +1399,9 @@ def _eval_details(ws, data):
         label = "combined known-record coverage" if combined else "development records"
         for block, found in coverage.items():
             add(INFO, f"- Block {_term(block, 40)}: {_n(found.get('retrieved'))}/{_n(found.get('of'))} ({label})")
+    by_route = route_retrieval(ws, evaluation) if sets else None
+    if by_route:
+        add(INFO, by_route)
     ablation = evaluation.get("ablation")
     if isinstance(ablation, str):
         add(INFO, f"- Ablation: {_plain(ablation, 100)}")
@@ -1605,7 +1671,8 @@ def _stage_test(ws, data):
     if latest.get("count") is not None:
         lines += [f"- Known-record retrieval: {_recall(latest)}",
                   f"- Missed known records: {_misses(latest)}",
-                  f"- Known records lost along the way and not recovered: {_pmids(lost)}"]
+                  f"- Known records lost along the way and not recovered: {_pmids(lost)}",
+                  *filter(None, [route_retrieval(ws, latest)])]
     else:
         lines.append(f"- Known-record retrieval: {NOT_MEASURED}")
     lines += [f"- Checks: {_checks(latest)}", _next("test", ws.protocol().get("depth"))]
@@ -1654,6 +1721,12 @@ def _stage_critic(ws, data):
     return "Summary", lines
 
 
+def _delivered_receipt(ws: Workspace, manifest: dict) -> dict | None:
+    from .holdout import receipts
+    number = (manifest.get("holdout") or {}).get("receipt")
+    return next((r for r in receipts(ws) if r["number"] == number), None) if number is not None else None
+
+
 @event("stage:deliver", 7)
 def _stage_deliver(ws, data):
     from .deliver import _line_table, _recall_table, verify_delivery
@@ -1673,6 +1746,10 @@ def _stage_deliver(ws, data):
                       *str((manifest.get("holdout") or {}).get("text") or "").split("\n")]
             if evaluation.get("sets"):
                 lines += ["", "Development checks:", "", *_recall_table(evaluation)]
+            receipt = _delivered_receipt(ws, manifest)
+            routes = [line for line in (route_retrieval(ws, evaluation), held_route_retrieval(receipt)) if line]
+            if routes:
+                lines += ["", *routes]
         lines += ["", _critic_line(ws, manifest.get("overridden_findings") or []), f"- Files: {FILES}", f"- {PRESS}"]
         return "Final search", lines
     reports = [a for a in ws.attempts() if a.get("purpose") in REPORT_PURPOSES]

@@ -236,7 +236,7 @@ def test_eval_details_put_warnings_first_and_label_coverage(ws, capsys):
         "- Zero hits: line 8 `nothing[tiab]`",
         "- Ablation: without `trial`, 1 more known record retrieved (5 records)",
         "- Block `asthma`: 5/5 (development records)",
-        "- 4 more details omitted"]
+        "- 5 more details omitted"]  # including development retrieval by route
     assert eval_details(ws, capsys, three, "--no-term-counts")[0] == "- Ablation: without `trial`, 1 more known record retrieved (5 records)"
     assert eval_details(ws, capsys, STRATEGY, "--no-term-counts")[0] == "- Term checks: not run (--no-term-counts)"
     text(capsys, "set", "add", "old", "2", "7", "--purpose", "comparison")  # overlapping, and one outside development
@@ -259,6 +259,7 @@ def test_eval_details_say_what_was_not_run(ws, capsys, monkeypatch):
     data = {"evaluation": evaluate.evaluate(ws, term_counts=False), "term_counts": False}
     rows = [r for _, _, r in sorted(progress.DETAILS["eval"](ws, data))]
     assert rows == ["- Term checks: not run (--no-term-counts)", "- Block `asthma`: 2/2 (development records)",
+                    "- Development retrieval by route: user-supplied 2/2 (a record found by several routes counts under each)",
                     "- Ablation: not run (one block)"]
     combined = {**STRATEGY, "combine": "asthma AND child"}
     write_json(ws.root / "strategy.json", combined)

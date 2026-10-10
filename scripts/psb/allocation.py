@@ -28,6 +28,7 @@ from __future__ import annotations
 import hashlib
 
 from . import progress, reserved, validation
+from .disclosure import DISCLOSURE_VERSION
 from .evaluate import cutoff_record
 from .interpret import NO_HOLDOUT
 from .workspace import (LEGACY_CUTOFF, Workspace, WorkspaceError, append_jsonl, normalize_pmids, now, purpose_of,
@@ -75,25 +76,40 @@ def study_keys(ws: Workspace, rows: dict[str, list[dict]] | None = None) -> dict
     return found
 
 
-def _origins(ws: Workspace) -> dict[str, set[str]]:
-    """Each PMID's origins: what the screener recorded, the candidate batch that showed it, and the
-    origin of any development set holding it."""
-    found: dict[str, set[str]] = {}
+def routes(ws: Workspace) -> dict[str, dict[str, bool]]:
+    """Each PMID's discovery routes (origins), each marked private when only the separate context gave
+    it: the candidate batch that showed the record (a batch from the separate context, or one recorded
+    before batches were marked, is private), the origin of any development set holding it (the builder's
+    own), and the origin the screener recorded (private for a separate-context decision)."""
+    found: dict[str, dict[str, bool]] = {}
+
+    def add(pmid: str, names, private: bool) -> None:
+        entry = found.setdefault(str(pmid), {})
+        for name in names:
+            entry[name] = entry.get(name, True) and private
+
     for batch in progress.batches(ws):
         via = str(batch.get("via") or "")
         links = via.split(":", 1)[1].split(",") if via.startswith("neighbors:") else [via]
         names = {progress.VIA_ORIGIN[l] for l in links if l in progress.VIA_ORIGIN}
+        private = bool(batch.get("private")) or batch.get("disclosure_version") != DISCLOSURE_VERSION
         for pmid in batch.get("pmids") or []:
-            found.setdefault(str(pmid), set()).update(names)
+            add(pmid, names, private)
     for data in ws.sets().values():
         if purpose_of(data) == "development":
             role_origin = {"user-supplied"} if data.get("role") == "seed" else set()
             for pmid in data.get("pmids", []):
-                found.setdefault(str(pmid), set()).update(set(data.get("origin") or []) | role_origin)
+                add(pmid, set(data.get("origin") or []) | role_origin, False)
     for pmid, rows in _screening_rows(ws).items():
         for row in rows:
-            found.setdefault(pmid, set()).update(row.get("origin") or [])
+            add(pmid, row.get("origin") or [], row.get("context") == "separate")
     return found
+
+
+def _origins(ws: Workspace) -> dict[str, set[str]]:
+    """Each PMID's origins: what the screener recorded, the candidate batch that showed it, and the
+    origin of any development set holding it."""
+    return {pmid: set(names) for pmid, names in routes(ws).items()}
 
 
 def pool(ws: Workspace) -> dict:

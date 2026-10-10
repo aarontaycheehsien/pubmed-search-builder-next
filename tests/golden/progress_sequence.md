@@ -162,6 +162,7 @@ v1: 5 records
 - Known-record retrieval: development sets: relevant 3/3 (100.0%), seeds 2/2 (100.0%)
 - Missed known records: none
 - Known records lost along the way and not recovered: none
+- Development retrieval by route: user-supplied 2/2 · pilot search 3/3 · similar articles 2/2 · backward citations 2/2 (a record found by several routes counts under each)
 - Checks: 0 blockers · 0 need critic review · lint 0 errors, 0 warnings
 Next: Step 6/7 Critic: fresh-context PRESS-structured review, up to 2 revision round(s) then a closing round (standard).
 
@@ -239,6 +240,8 @@ Development checks:
 |---|---|---:|---:|---:|---:|
 | relevant | development | 3 | 3 | 100.0% | 5 |
 | seeds | development | 2 | 2 | 100.0% | 5 |
+
+- Development retrieval by route: user-supplied 2/2 · pilot search 3/3 · similar articles 2/2 · backward citations 2/2 (a record found by several routes counts under each)
 
 - Critic: 1 round (internal PRESS-structured critique, not PRESS peer review); overridden findings: none
 - Files: final-query.txt · audit.md · validation-manifest.json

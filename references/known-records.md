@@ -20,6 +20,9 @@ record has a purpose, and some are held out for one final test.
 MeSH similarity; they are not a citation search. Origin never establishes independence: a prior
 review's included studies can serve development or testing, and similar-article or pilot-search
 records share vocabulary with development records or your own queries (the held-out message says so).
+The Step 5 and Step 7 summaries break development retrieval down by route, and the audit shows how the
+known records were found. Until the held-out test, records found only in the separate context count
+together as "separate screening context"; their routes are named after the test.
 
 ## Order
 

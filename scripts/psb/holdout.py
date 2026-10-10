@@ -32,6 +32,17 @@ def receipts(ws: Workspace) -> list[dict]:
     return sorted(found, key=lambda r: r["number"])
 
 
+def routes_disclosed(ws: Workspace) -> bool:
+    """Whether builder-facing reports may name the discovery routes of privately found records: always,
+    except while held-out records wait for their test. Until then, naming which development records the
+    separate context's searches found (and so their yields) would describe the searches that also found
+    the held-out records."""
+    state = allocation.state(ws)
+    if state is None or not state["held"] or state["released"]:
+        return True
+    return any(r.get("status") in {"complete", "empty"} for r in receipts(ws))
+
+
 def receipt_path(ws: Workspace, number: int):
     return ws.root / "holdout" / f"receipt-{number}.json"
 
