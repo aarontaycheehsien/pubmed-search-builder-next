@@ -1306,11 +1306,14 @@ def _intake_request(ws, data):
     if not data.get("have_question"):
         asks.append(("The review question in plain language", []))
     if not data.get("have_articles"):
-        asks.append(("Known relevant articles (PMIDs, DOIs or PMCIDs), if you have any (optional)", []))
+        asks.append(("Known relevant articles (PMIDs, DOIs or PMCIDs), if any (optional). These help identify useful "
+                     "search terms and check whether the search retrieves studies it should find.", []))
     if not data.get("have_depth"):
-        asks.append(("Depth: quick, standard (default) or thorough", [
-            f"quick: targeted discovery, up to ~{SCREEN_BUDGET['quick']} candidates screened; no automatic "
-            f"held-out test; {rounds('quick')}, then a closing round; fastest",
+        asks.append(("Depth: quick, standard (default) or thorough\n   Screening means checking retrieved articles for "
+                     "relevance to help improve and test the search strategy. More screening allows more extensive "
+                     "testing and refinement.", [
+            f"quick: targeted discovery, up to ~{SCREEN_BUDGET['quick']} retrieved articles checked for relevance; "
+            f"no automatic held-out test; {rounds('quick')}, then a closing round; fastest",
             f"standard: prior reviews, pilot and citation searches, up to ~{SCREEN_BUDGET['standard']} candidates "
             "screened; a held-out test is proposed when at least 10 eligible studies were screened privately; "
             f"{rounds('standard')}, then a closing round",

@@ -1,9 +1,10 @@
 **PSB · Step 1/7 Intake · Request**
 To build the search I need:
 1. The review question in plain language
-2. Known relevant articles (PMIDs, DOIs or PMCIDs), if you have any (optional)
+2. Known relevant articles (PMIDs, DOIs or PMCIDs), if any (optional). These help identify useful search terms and check whether the search retrieves studies it should find.
 3. Depth: quick, standard (default) or thorough
-   - quick: targeted discovery, up to ~30 candidates screened; no automatic held-out test; 1 critic revision round, then a closing round; fastest
+   Screening means checking retrieved articles for relevance to help improve and test the search strategy. More screening allows more extensive testing and refinement.
+   - quick: targeted discovery, up to ~30 retrieved articles checked for relevance; no automatic held-out test; 1 critic revision round, then a closing round; fastest
    - standard: prior reviews, pilot and citation searches, up to ~150 candidates screened; a held-out test is proposed when at least 10 eligible studies were screened privately; 2 critic revision rounds, then a closing round
    - thorough: as standard, up to ~400 candidates screened; 3 critic revision rounds, then a closing round; takes longest
 4. Required limits, such as dates or languages, if any
