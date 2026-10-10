@@ -1298,12 +1298,39 @@ def _terms_miss_details(ws, data):
 
 @event("intake-request", 1)
 def _intake_request(ws, data):
-    asks = [] if data.get("have_question") else ["The review question in plain language"]
-    asks += ["Known relevant articles (PMIDs, DOIs or PMCIDs), if you have any (optional)",
-             "Depth: quick, standard (default) or thorough",
-             "Required limits, such as dates or languages, if any"]
-    return "Request", ["To build the search I need:", *[f"{i}. {a}" for i, a in enumerate(asks, 1)],
-                       'Reply "proceed" to use the defaults for anything you leave out.']
+    """Asks only for what the user has not already given (``have_question``, ``have_articles``,
+    ``have_depth``, ``have_limits``, ``have_mode``), with what each depth and the verbose mode change."""
+    from .deliver import revision_budget
+    rounds = lambda depth: _plural(revision_budget(depth), "critic revision round")  # noqa: E731
+    asks: list[tuple[str, list[str]]] = []
+    if not data.get("have_question"):
+        asks.append(("The review question in plain language", []))
+    if not data.get("have_articles"):
+        asks.append(("Known relevant articles (PMIDs, DOIs or PMCIDs), if you have any (optional)", []))
+    if not data.get("have_depth"):
+        asks.append(("Depth: quick, standard (default) or thorough", [
+            f"quick: targeted discovery, up to ~{SCREEN_BUDGET['quick']} candidates screened; no automatic "
+            f"held-out test; {rounds('quick')}, then a closing round; fastest",
+            f"standard: prior reviews, pilot and citation searches, up to ~{SCREEN_BUDGET['standard']} candidates "
+            "screened; a held-out test is proposed when at least 10 eligible studies were screened privately; "
+            f"{rounds('standard')}, then a closing round",
+            f"thorough: as standard, up to ~{SCREEN_BUDGET['thorough']} candidates screened; "
+            f"{rounds('thorough')}, then a closing round; takes longest"]))
+    if not data.get("have_limits"):
+        asks.append(("Required limits, such as dates or languages, if any", []))
+    if not data.get("have_mode"):
+        asks.append(("Progress messages: standard (default) or verbose", [
+            "standard: short messages at each step",
+            "verbose: up to three extra detail lines on search, MeSH, term-mining and evaluation messages (how "
+            "records were found, headings returned, block coverage); it never changes what is searched, "
+            "screened or kept private, and you can switch at any time"]))
+    if not asks:
+        return "Request", ["I have what I need to start."]
+    lines = ["To build the search I need:"]
+    for number, (ask, notes) in enumerate(asks, 1):
+        lines += [f"{number}. {ask}", *[f"   - {note}" for note in notes]]
+    return "Request", [*lines, 'Reply "proceed" to use the defaults (standard depth, standard messages, no limits) '
+                               "for anything you leave out."]
 
 
 @event("stage:intake", 1)
@@ -1319,6 +1346,7 @@ def _stage_intake(ws, data):
         f"- Depth: {protocol.get('depth') or 'standard'}",
         f"- Required limits: {'; '.join(_limit_text(l) for l in limits) if limits else 'none'}",
         f"- Known articles recorded: {_plural(len(seeds), 'seed PMID') if seeds else 'none yet (added in Step 3)'}",
+        f"- Progress messages: {read_mode(ws)[0]}",
         f"- Assumptions and notes: {clean(protocol.get('notes'), 300) or 'none'}",
         f"- Workspace: {ws.root}",
         _next("intake", protocol.get("depth")),

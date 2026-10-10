@@ -59,12 +59,17 @@ If the user pasted a Boolean strategy, still ask for the question: the strategy 
 under review, never evidence of scope.
 
 In one message, also ask for: known relevant articles (PMIDs, DOIs, PMCIDs; optional), the
-depth (`quick`, `standard` or `thorough`; default `standard`), and any required limits such as
-dates or languages. That message is the text of `psb progress intake-request`; add
-`--have-question` when you already have the question. When the user says to proceed without
-answers, use the defaults and record the assumptions in `protocol.json` `notes`.
+depth (`quick`, `standard` or `thorough`; default `standard`), any required limits such as
+dates or languages, and whether to use standard or verbose progress messages. That message is the
+text of `psb progress intake-request`, which also explains what each depth and verbose mode change.
+Ask only for what the user's first message did not already give: add `--have-question`,
+`--have-articles`, `--have-depth`, `--have-limits` or `--have-mode` for each item it answered
+(including "no known articles" or "no limits"). If it answered all of them, do not send the request.
+When the user says to proceed without answers, use the defaults (standard depth, standard messages,
+no limits) and record the assumptions in `protocol.json` `notes`.
 
 Create the workspace: `psb init <run-dir> --question "..."`. Keep all build files inside it.
+If the user chose verbose messages, run `psb progress mode verbose` now and relay its message.
 Record the depth, limits and notes in `protocol.json`, then run `psb progress intake`.
 
 ### 2. Scope

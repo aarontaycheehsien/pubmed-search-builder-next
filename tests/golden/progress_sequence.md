@@ -3,8 +3,14 @@ To build the search I need:
 1. The review question in plain language
 2. Known relevant articles (PMIDs, DOIs or PMCIDs), if you have any (optional)
 3. Depth: quick, standard (default) or thorough
+   - quick: targeted discovery, up to ~30 candidates screened; no automatic held-out test; 1 critic revision round, then a closing round; fastest
+   - standard: prior reviews, pilot and citation searches, up to ~150 candidates screened; a held-out test is proposed when at least 10 eligible studies were screened privately; 2 critic revision rounds, then a closing round
+   - thorough: as standard, up to ~400 candidates screened; 3 critic revision rounds, then a closing round; takes longest
 4. Required limits, such as dates or languages, if any
-Reply "proceed" to use the defaults for anything you leave out.
+5. Progress messages: standard (default) or verbose
+   - standard: short messages at each step
+   - verbose: up to three extra detail lines on search, MeSH, term-mining and evaluation messages (how records were found, headings returned, block coverage); it never changes what is searched, screened or kept private, and you can switch at any time
+Reply "proceed" to use the defaults (standard depth, standard messages, no limits) for anything you leave out.
 
 ---
 
@@ -13,6 +19,7 @@ Question: Which treatments reduce asthma attacks in children?
 - Depth: standard
 - Required limits: English (translation budget)
 - Known articles recorded: none yet (added in Step 3)
+- Progress messages: standard
 - Assumptions and notes: none
 - Workspace: <workspace>
 Next: Step 2/7 Scope: split the question into concepts and decide which are searched, screened or optional.

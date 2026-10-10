@@ -556,7 +556,9 @@ def cmd_progress(args) -> dict:
         raise UsageError("only psb progress mode takes a value (verbose or standard)")
     if args.stage == "intake-request":
         return {"ok": True, "stage": args.stage,
-                "progress": progress.render(None, "intake-request", {"have_question": args.have_question})}
+                "progress": progress.render(None, "intake-request", {
+                    "have_question": args.have_question, "have_articles": args.have_articles,
+                    "have_depth": args.have_depth, "have_limits": args.have_limits, "have_mode": args.have_mode})}
     ws = workspace(args)
     if args.stage == "list":
         # Public projections: rows written before the disclosure policy are filtered by event name.
@@ -733,6 +735,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("stage", choices=stages)
     p.add_argument("value", nargs="?", choices=progress.MODES, help="with mode: verbose or standard")
     p.add_argument("--have-question", action="store_true", help="intake-request: the question is already known")
+    for item, what in (("articles", "known articles (or that there are none)"), ("depth", "the depth"),
+                       ("limits", "the limits (or that there are none)"), ("mode", "standard or verbose messages")):
+        p.add_argument(f"--have-{item}", action="store_true", help=f"intake-request: the user already gave {what}")
     p.set_defaults(func=cmd_progress)
 
     sub.add_parser("lint", help="offline checks and the numbered line set").set_defaults(func=cmd_lint)

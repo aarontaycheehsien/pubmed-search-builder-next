@@ -233,6 +233,38 @@ def test_free_text_is_cleaned_and_fenced():
     assert progress.render(None, "intake-request", {"have_question": True})["text"].splitlines()[2].startswith("1. Known relevant")
 
 
+def test_the_intake_request_asks_only_for_what_is_missing(capsys):
+    def request(*flags):
+        assert cli.main(["progress", "intake-request", *flags]) == 0
+        return json.loads(capsys.readouterr().out)["progress"]["text"].splitlines()
+    full = request()
+    asks = [l for l in full if re.match(r"\d+\. ", l)]
+    assert asks == ["1. The review question in plain language",
+                    "2. Known relevant articles (PMIDs, DOIs or PMCIDs), if you have any (optional)",
+                    "3. Depth: quick, standard (default) or thorough",
+                    "4. Required limits, such as dates or languages, if any",
+                    "5. Progress messages: standard (default) or verbose"]
+    assert "   - quick: targeted discovery, up to ~30 candidates screened; no automatic held-out test; 1 critic " \
+           "revision round, then a closing round; fastest" in full
+    assert any(l.startswith("   - thorough: as standard, up to ~400 candidates screened; 3 critic revision rounds")
+               for l in full)
+    assert any(l.startswith("   - verbose: up to three extra detail lines") for l in full)
+    assert full[-1].startswith('Reply "proceed" to use the defaults (standard depth, standard messages, no limits)')
+    some = request("--have-question", "--have-depth", "--have-mode")
+    assert [l for l in some if re.match(r"\d+\. ", l)] == [
+        "1. Known relevant articles (PMIDs, DOIs or PMCIDs), if you have any (optional)",
+        "2. Required limits, such as dates or languages, if any"]
+    assert not any("quick:" in l or "verbose:" in l for l in some)
+    assert request("--have-question", "--have-articles", "--have-depth", "--have-limits", "--have-mode") == [
+        "**PSB · Step 1/7 Intake · Request**", "I have what I need to start."]
+
+
+def test_the_intake_summary_shows_the_progress_mode(ws, capsys):
+    assert "- Progress messages: standard" in text(capsys, "progress", "intake")
+    psb(capsys, "progress", "mode", "verbose")
+    assert "- Progress messages: verbose" in text(capsys, "progress", "intake")
+
+
 def test_non_ascii_text_reaches_stdout_as_utf8(ws, capsysbinary):
     protocol = ws.protocol()
     protocol["question"] = "Sjögren’s syndrome → dry eye?"

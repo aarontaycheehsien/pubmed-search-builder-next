@@ -1,6 +1,7 @@
 # Verbose progress messages
 
-Read this only when the user has asked for more detailed progress messages.
+Read this only when the user has asked for more detailed progress messages, either in their first
+message, in reply to the Step 1 request (which offers the choice), or later in the build.
 
 `psb progress mode verbose` stores the preference for this run in `progress-settings.json`;
 `psb progress mode standard` switches back, and `psb progress mode` shows the current setting. Set it
