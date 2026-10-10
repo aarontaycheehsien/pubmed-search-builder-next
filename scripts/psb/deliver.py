@@ -175,10 +175,12 @@ def _scope_section(evaluation: dict) -> list[str]:
 
 def _recall_table(evaluation: dict) -> list[str]:
     """Development and comparison retrieval. Legacy evaluations carry a role, labelled as legacy."""
-    rows = ["| Set | Purpose | In PubMed | Retrieved | Retrieved % |", "|---|---|---:|---:|---:|"]
+    rows = ["| Set | Purpose | In PubMed | Retrieved | Retrieved % | Records Retrieved |", "|---|---|---:|---:|---:|---:|"]
+    total = evaluation.get("count")
+    total = "n/a" if total is None else f"{total:,}"
     for name, data in (evaluation.get("sets") or {}).items():
         recall = "n/a" if data["recall_percent"] is None else f"{data['recall_percent']}%"
-        rows.append(f"| {name} | {data.get('label') or purpose_label(data)} | {data['in_pubmed']} | {data['retrieved']} | {recall} |")
+        rows.append(f"| {name} | {data.get('label') or purpose_label(data)} | {data['in_pubmed']} | {data['retrieved']} | {recall} | {total} |")
     return rows
 
 
