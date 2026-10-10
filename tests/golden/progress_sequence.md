@@ -214,10 +214,10 @@ Known-record retrieval and the held-out test:
 
 Development checks:
 
-| Set | Purpose | In PubMed | Retrieved | Retrieved % |
-|---|---|---:|---:|---:|
-| relevant | development | 3 | 3 | 100.0% |
-| seeds | development | 2 | 2 | 100.0% |
+| Set | Purpose | In PubMed | Retrieved | Retrieved % | Records Retrieved |
+|---|---|---:|---:|---:|---:|
+| relevant | development | 3 | 3 | 100.0% | 5 |
+| seeds | development | 2 | 2 | 100.0% | 5 |
 
 - Critic: 1 round (internal PRESS-structured critique, not PRESS peer review); overridden findings: none
 - Files: final-query.txt · audit.md · validation-manifest.json
