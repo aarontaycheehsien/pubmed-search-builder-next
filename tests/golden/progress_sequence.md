@@ -63,28 +63,39 @@ Found 4 candidate records linked to 2 known records (set seeds)
 - Reference lists (backward): 2
 - Already in a known-record set: 0 (excluded)
 - Shown for screening: 4 records as candidate batch C1
+- Screening queue: 4 candidates found (4 similar articles + backward citations) · 0 screened · 4 waiting
+- Screening budget (decisions in all contexts): 0 of ~150 used · ~150 left (standard)
+- Why: studies screened in become the known records that check whether the final search finds what it should; some screened only in the separate context can be held out unseen for one final test.
+- Next: screen the 4 waiting candidates.
 
 ---
 
 **PSB · Step 3/7 Known records · Pilot search**
 Pilot search: 3 records for `asthma*[tiab]`
 - Shown for screening: 3 records as candidate batch C2
+- Screening queue: 6 candidates found (4 similar articles + backward citations, 2 pilot search) · 0 screened · 6 waiting
+- Screening budget (decisions in all contexts): 0 of ~150 used · ~150 left (standard)
+- Next: screen the 6 waiting candidates.
 
 ---
 
 **PSB · Step 3/7 Known records · Screening**
 Screened 4 candidates: 2 include · 1 exclude · 1 uncertain
 - Similar articles + backward citations from 2 records (set seeds) (C1): 4 screened → 2 include
-- Records with a screening decision so far (all contexts): 4 of ~150 (standard)
 - Included but not yet in a set: 5, 6
+- Screening queue: 6 candidates found (4 similar articles + backward citations, 2 pilot search) · 4 screened · 2 waiting
+- Screening budget (decisions in all contexts): 4 of ~150 used · ~146 left (standard)
+- Next: screen the 2 waiting candidates.
 
 ---
 
 **PSB · Step 3/7 Known records · Screening**
 Screened 1 candidate: 1 include · 0 exclude · 0 uncertain
 - Pilot search `asthma*[tiab]` (C2): 1 screened → 1 include
-- Records with a screening decision so far (all contexts): 5 of ~150 (standard)
 - Included but not yet in a set: 3, 5, 6
+- Screening queue: 6 candidates found (4 similar articles + backward citations, 2 pilot search) · 5 screened · 1 waiting
+- Screening budget (decisions in all contexts): 5 of ~150 used · ~145 left (standard)
+- Next: screen the 1 waiting candidate.
 
 ---
 
@@ -115,7 +126,9 @@ Known records: 5 for development · 0 held out · 0 on comparison lists
 - Allocation: frozen: 5 units (5 records) for development · 0 units (0 records) held out · no holdout proposed: fewer than 10 eligible units
 - Candidate searches: 2 (1 neighbour search, 1 pilot search)
 - Screening: 5 screened → 3 include · 1 exclude · 1 uncertain (separate context 0 · builder 5)
-- Records with a screening decision so far (all contexts): 5 of ~150 (standard)
+- Screening queue: 6 candidates found (4 similar articles + backward citations, 2 pilot search) · 5 screened · 1 waiting
+- Screening budget (decisions in all contexts): 5 of ~150 used · ~145 left (standard)
+- Why: studies screened in become the known records that check whether the final search finds what it should; some screened only in the separate context can be held out unseen for one final test.
 - Included after the allocation, not in a set: none
 - In a development set with no include decision: 1, 2
 Next: Step 4/7 Vocabulary: build MeSH and [tiab] terms for each searched concept.

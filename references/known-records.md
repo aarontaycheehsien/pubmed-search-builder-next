@@ -70,6 +70,9 @@ your host can start a fresh context (a subagent or a separate session), let it d
   Its reasons and sources stay in the private store until the held-out test.
 - `psb` gives each of these commands a restricted progress message: fixed labels and counts, never a
   query, record, decision, reason or group. The messages reach the user through `psb progress list`.
+  Every Step 3 discovery and screening message, yours and the separate context's, also shows the
+  screening queue (candidates found by each method, screened, waiting), the budget used and left, and
+  what comes next; counts only, never how many were judged eligible.
 - **Its whole reply is one fixed sentence**: `Discovery and screening complete.`, or
   `Discovery and screening stopped before completion.` if it could not finish. Nothing else: no
   progress texts, counts, PMIDs, group keys, source notes or errors.

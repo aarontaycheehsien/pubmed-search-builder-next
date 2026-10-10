@@ -14,6 +14,7 @@ import pytest
 
 from conftest import record
 from psb import allocation, cli, deliver, disclosure, progress, reserved, validation
+from psb.progress import WHY
 from psb.workspace import Workspace, write_json
 from test_closing_round import PASS, write_round
 
@@ -23,7 +24,6 @@ PROTOCOL = {"depth": "standard", "scope_confirmed": True, "as_of": None,
             "concepts": [{"id": "asthma", "name": "Asthma", "role": "search", "rationale": "the condition"}],
             "eligibility": {"include": ["asthma trials"], "exclude": []}}
 STRATEGY = {"blocks": [{"id": "asthma", "name": "Asthma", "terms": ['"Asthma"[Mesh]', "asthma*[tiab]"]}], "limits": []}
-STATE = ["- Records with a screening decision so far (all contexts): {n} of ~150 (standard)", "- Allocation is pending."]
 
 
 class Private:
@@ -177,22 +177,38 @@ def test_private_workflow_never_reaches_builder_outputs(tmp_path, capsys, corpus
 
     # Each restricted invocation says only what is permitted, and its stored row is the same text.
     head = "**PSB · Step 3/7 Known records · {}**"
-    lead = "Run in the separate screening context; details are kept private."
+    found = "(2 resolved identifiers, 4 prior-review search, 15 pilot search, 3 similar articles + backward citations)"
+    queue = lambda n, screened: f"- Screening queue: {n} {'candidate' if n == 1 else 'candidates'} found " + {  # noqa: E731
+        2: "(2 resolved identifiers)", 6: "(2 resolved identifiers, 4 prior-review search)",
+        21: "(2 resolved identifiers, 4 prior-review search, 15 pilot search)", 24: found}[n] + \
+        f" · {screened} screened · {n - screened} waiting"
+    budget = lambda used: f"- Screening budget (decisions in all contexts): {used} of ~150 used · ~{150 - used} left (standard)"  # noqa: E731
+    more = ("- Next: find more candidates (prior reviews, pilot searches, similar articles, citations) while the budget "
+            "allows, or move on to the allocation, where you choose how the eligible records are used.")
+    private = "the search and the records stay private."
     expected = [
-        [head.format("Identifier resolution"), lead, "- Identifiers processed: 2", *STATE],
-        [head.format("Prior-review search"), lead, "- Records processed: 5", *STATE],
-        [head.format("Pilot search"), lead, "- Records processed: 15", *STATE],
-        [head.format("Pilot search"), lead, "- Records processed: 0", *STATE],
-        [head.format("Similar articles + Citation search, backward"), lead, "- Records processed: 4", *STATE],
-        [head.format("Records retrieved"), lead, "- Records processed: 24", *STATE],
-        [head.format("Pilot search"), lead, *STATE],
-        [head.format("Screening"), "Recorded decisions for 24 candidates in the separate screening context; details "
-                                   "are kept private.", *STATE],
-        [head.format("Screening"), "Recorded decisions for 2 candidates; detailed attribution is withheld.", *STATE],
+        [head.format("Identifier resolution"), "Processed 2 identifiers in the separate screening context; the resolved "
+         "records join the screening queue and stay private.", queue(2, 0), budget(0), WHY, "- Next: screen the 2 waiting candidates."],
+        [head.format("Prior-review search"), f"Found 5 candidate records for screening in the separate screening context; {private}",
+         queue(6, 0), budget(0), "- Next: screen the 6 waiting candidates."],
+        [head.format("Pilot search"), f"Found 15 candidate records for screening in the separate screening context; {private}",
+         queue(21, 0), budget(0), "- Next: screen the 21 waiting candidates."],
+        [head.format("Pilot search"), "Found no candidate records in the separate screening context; the search stays private.",
+         queue(21, 0), budget(0), "- Next: screen the 21 waiting candidates."],
+        [head.format("Similar articles + Citation search, backward"), "Found 4 candidate records linked to known records "
+         f"for screening in the separate screening context; {private}", queue(24, 0), budget(0),
+         "- Next: screen the 24 waiting candidates."],
+        [head.format("Records retrieved"), "Retrieved 24 records for screening in the separate screening context; which "
+         "records stay private.", queue(24, 0), budget(0), "- Next: screen the 24 waiting candidates."],
+        [head.format("Pilot search"), "Counted a search in the separate screening context; nothing was added to the "
+         "screening queue, and the query stays private.", queue(24, 0), budget(0), "- Next: screen the 24 waiting candidates."],
+        [head.format("Screening"), "Recorded decisions for 24 candidates in the separate screening context; which records "
+         "and why stay private.", queue(24, 24), budget(24), more],
+        [head.format("Screening"), "Recorded decisions for 2 candidates; detailed attribution is withheld.",
+         queue(24, 24), budget(25), more],
     ]
-    counts = [0, 0, 0, 0, 0, 0, 0, 24, 25]
-    for out, lines, n in zip(done, expected, counts):
-        assert out["progress"]["text"] == "\n".join(lines).format(n=n)
+    for out, lines in zip(done, expected):
+        assert out["progress"]["text"] == "\n".join(lines)
     stored = {m["seq"]: m for m in progress.messages(Workspace(root))}
     assert all(stored[o["progress"]["seq"]]["text"] == o["progress"]["text"] for o in done)
 
@@ -203,7 +219,7 @@ def test_private_workflow_never_reaches_builder_outputs(tmp_path, capsys, corpus
         assert out["progress"]["text"] == "\n".join([
             "**PSB · Step 3/7 Known records · Separate screening**",
             f"{operation} did not complete in the separate screening context; details are kept private.",
-            *STATE]).format(n=25)
+            queue(24, 24), budget(25), "- Next: the separate context can run the command again."])
     stored = {m["seq"]: m for m in progress.messages(Workspace(root))}
     assert all(set(stored[o["progress"]["seq"]]) == {"event", "step", "text", "seq", "sha256", "disclosure_version"}
                for o in failed)
@@ -246,7 +262,8 @@ def test_private_workflow_never_reaches_builder_outputs(tmp_path, capsys, corpus
 
     # A later private include is counted, never listed.
     code, late = psb(capsys, root, "screen", "--context", "separate", "--include", "999")
-    assert code == 0 and "- Allocation is pending." not in late["progress"]["text"]
+    assert code == 0 and late["progress"]["text"].endswith(
+        "- Next: records found now go to development; the allocation does not change.")
     after = views(capsys, root)
     assert ("- Included after the allocation, not in a set: 1 record from the separate screening context (not listed)"
             in after["known"]["progress"]["text"])
@@ -330,8 +347,12 @@ def test_a_builder_screen_of_privately_screened_records_gives_no_feedback(tmp_pa
         "**PSB · Step 3/7 Known records · Screening**",
         "Screened 1 candidate: 1 include · 0 exclude · 0 uncertain",
         f"- {progress.WITHHELD}: 1 screened",
-        "- Records with a screening decision so far (all contexts): 25 of ~150 (standard)",
-        "- Included but not yet in a set: 105; plus 18 records from the separate screening context (not listed)"])
+        "- Included but not yet in a set: 105; plus 18 records from the separate screening context (not listed)",
+        "- Screening queue: 24 candidates found (2 resolved identifiers, 4 prior-review search, 15 pilot search, "
+        "3 similar articles + backward citations) · 24 screened · 0 waiting",
+        "- Screening budget (decisions in all contexts): 25 of ~150 used · ~125 left (standard)",
+        "- Next: find more candidates (prior reviews, pilot searches, similar articles, citations) while the budget "
+        "allows, or move on to the allocation, where you choose how the eligible records are used."])
 
 
 # -- routing: request log and cache ---------------------------------------------------------------

@@ -593,7 +593,7 @@ def _resolve(ws, data):
     lines.append(f"- Unresolved: {', '.join(unresolved[:10]) + (f' and {len(unresolved) - 10} more' if len(unresolved) > 10 else '') if unresolved else 'none'}")
     if data.get("batch"):
         lines.append(f"- Recorded as candidate batch {data['batch']}")
-    return "Identifiers resolved", lines
+    return "Identifiers resolved", [*lines, *_progress_lines(ws)]
 
 
 def _search_event(purpose: str):
@@ -610,6 +610,8 @@ def _search_event(purpose: str):
         else:
             lines.append(f"- Shown for screening: {_plural(shown, 'record')} as candidate batch {data['batch']}"
                          if shown and data.get("batch") else "- No records to screen")
+        if purpose != "noise-check":
+            lines += _progress_lines(ws)
         return PURPOSES[purpose], lines
     return renderer
 
@@ -632,15 +634,71 @@ def _neighbors(ws, data):
                  + (" (excluded)" if data.get("exclude_known") else " (still listed)"))
     lines.append(f"- Shown for screening: {_plural(data.get('shown', 0), 'record')}"
                  + (f" as candidate batch {data['batch']}" if data.get("batch") else ""))
-    return " + ".join(LINK_TITLES.get(l, l) for l in links), lines
+    return " + ".join(LINK_TITLES.get(l, l) for l in links), [*lines, *_progress_lines(ws)]
 
 
 def _budget_line(ws: Workspace, screened: int) -> str:
     depth = ws.protocol().get("depth") or "standard"
-    label = "Records with a screening decision so far (all contexts)"
+    label = "Screening budget (decisions in all contexts)"
     if depth in SCREEN_BUDGET:
-        return f"- {label}: {_n(screened)} of ~{_n(SCREEN_BUDGET[depth])} ({depth})"
-    return f"- {label}: {_n(screened)} (no discovery budget at {clean(depth, 40)} depth)"
+        budget = SCREEN_BUDGET[depth]
+        left = f"~{_n(budget - screened)} left" if screened < budget else "budget reached"
+        return f"- {label}: {_n(screened)} of ~{_n(budget)} used · {left} ({depth})"
+    return f"- {label}: {_n(screened)} used (no discovery budget at {clean(depth, 40)} depth)"
+
+
+# -- Step 3 progress ---------------------------------------------------------------------------
+# Every discovery and screening message in Step 3, the agent's own and the separate context's, says
+# where the work stands: the screening queue by the method that found each candidate, the budget used
+# and left, and what comes next; the first one of the run also says why it matters. Counts and fixed
+# method labels only: never which records, queries or decisions, nor how many were judged eligible.
+
+WHY = ("- Why: studies screened in become the known records that check whether the final search finds what it "
+       "should; some screened only in the separate context can be held out unseen for one final test.")
+STEP3_EVENTS = frozenset({"search:prior-reviews", "search:pilot", "neighbors", "resolve", "screen",
+                          *(f"separate:{name}" for name in ("search:prior-reviews", "search:pilot", "neighbors",
+                                                             "resolve", "fetch", "screen"))})
+
+
+def _queue(ws: Workspace) -> tuple[dict[str, int], int, int]:
+    """Candidates found by each method (a record found twice counts under the earliest batch), how many
+    of them have a screening decision, and how many are waiting."""
+    found: dict[str, int] = {}
+    latest = decisions(ws)
+    screened = 0
+    for pmid, batch in attribution(ws).items():
+        label = method_label(str(batch.get("via") or ""))
+        label = label[:1].lower() + label[1:]
+        found[label] = found.get(label, 0) + 1
+        screened += pmid in latest
+    return found, screened, sum(found.values()) - screened
+
+
+def _progress_lines(ws: Workspace, *, failed: bool = False) -> list[str]:
+    found, screened, waiting = _queue(ws)
+    total = sum(found.values())
+    methods = ", ".join(f"{_n(count)} {label}" for label, count in found.items())
+    lines = [f"- Screening queue: {_plural(total, 'candidate')} found ({methods}) · {_n(screened)} screened · "
+             f"{_n(waiting)} waiting" if total else "- Screening queue: no candidates found by a search yet"]
+    used = len(decisions(ws))
+    lines.append(_budget_line(ws, used))
+    if not any(m.get("event") in STEP3_EVENTS for m in messages(ws)):
+        lines.append(WHY)
+    depth = ws.protocol().get("depth") or "standard"
+    if failed:
+        lines.append("- Next: the separate context can run the command again.")
+    elif ws.allocation() is not None:
+        lines.append("- Next: records found now go to development; the allocation does not change.")
+    elif waiting:
+        lines.append(f"- Next: screen the {_plural(waiting, 'waiting candidate')}.")
+    elif depth in SCREEN_BUDGET and used >= SCREEN_BUDGET[depth]:
+        lines.append("- Next: the screening budget is reached; the allocation comes next, where you choose how the "
+                     "eligible records are used.")
+    else:
+        lines.append("- Next: find more candidates (prior reviews, pilot searches, similar articles, citations) while "
+                     "the budget allows, or move on to the allocation, where you choose how the eligible records are "
+                     "used.")
+    return lines
 
 
 # -- the separate screening context ------------------------------------------------------------
@@ -659,29 +717,46 @@ SEPARATE_EVENTS = {
 
 
 def _separate_state(ws: Workspace) -> list[str]:
+    """The noise check (Step 5) keeps its short form."""
     lines = [_budget_line(ws, len(decisions(ws)))]
     if ws.allocation() is None:
         lines.append("- Allocation is pending.")
     return lines
 
 
+def _separate_lead(name: str, data: dict) -> str:
+    """What the command accomplished, from its permitted count."""
+    processed = data.get("processed")
+    if name == "screen":
+        recorded = _plural(data.get("recorded", 0), "candidate")
+        return (f"Recorded decisions for {recorded} in the separate screening context; which records and why stay "
+                "private." if data.get("separate_only") else
+                f"Recorded decisions for {recorded}; detailed attribution is withheld.")
+    if name == "failed":
+        operation = data.get("operation") if data.get("operation") in OPERATIONS.values() else "A command"
+        return f"{operation} did not complete in the separate screening context; details are kept private."
+    if name == "fetch":
+        return (f"Retrieved {_plural(processed or 0, 'record')} for screening in the separate screening context; "
+                "which records stay private.")
+    if name == "resolve":
+        return (f"Processed {_plural(processed or 0, 'identifier')} in the separate screening context; the resolved "
+                "records join the screening queue and stay private.")
+    if processed is None:
+        return ("Counted a search in the separate screening context; nothing was added to the screening queue, and "
+                "the query stays private.")
+    if not processed:
+        return "Found no candidate records in the separate screening context; the search stays private."
+    where = "linked to known records " if name == "neighbors" else ""
+    return (f"Found {_plural(processed, 'candidate record')} {where}for screening in the separate screening context; "
+            "the search and the records stay private.")
+
+
 def _separate_event(name: str, title: str):
     def renderer(ws, data):
-        if name == "screen":
-            recorded = _plural(data.get("recorded", 0), "candidate")
-            lead = (f"Recorded decisions for {recorded} in the separate screening context; details are kept private."
-                    if data.get("separate_only") else
-                    f"Recorded decisions for {recorded}; detailed attribution is withheld.")
-        elif name == "failed":
-            operation = data.get("operation") if data.get("operation") in OPERATIONS.values() else "A command"
-            lead = f"{operation} did not complete in the separate screening context; details are kept private."
+        if name == "search:noise-check":
+            lines = [SEPARATE, *(_separate_state(ws) if ws is not None else [])]
         else:
-            lead = SEPARATE
-        lines = [lead]
-        if data.get("processed") is not None:
-            lines.append(f"- {'Identifiers' if name == 'resolve' else 'Records'} processed: {_n(data['processed'])}")
-        if ws is not None:
-            lines += _separate_state(ws)
+            lines = [_separate_lead(name, data), *(_progress_lines(ws, failed=name == "failed") if ws is not None else [])]
         links = [LINK_TITLES[l] for l in data.get("links") or [] if l in LINK_TITLES]
         return (" + ".join(links) if name == "neighbors" and links else title), lines
     return renderer
@@ -792,9 +867,8 @@ def _screen(ws, data):
                and earlier.get(r["pmid"]) != "separate"]
     if changed:
         lines.append(f"- Decisions changed from an earlier screen: {_pmids(r['pmid'] for r in changed)}")
-    lines.append(_budget_line(ws, len(decisions(ws))))
     lines.append(f"- Included but not yet in a set: {_unset(ws)}")
-    return "Screening", lines
+    return "Screening", [*lines, *_progress_lines(ws)]
 
 
 @event("set", 3)
@@ -1432,7 +1506,9 @@ def _stage_known(ws, data):
                      f"(separate context {_n(separate)} · builder {_n(len(screened) - separate)})")
     else:
         lines.append("- Screening: none recorded")
+    lines.append(_progress_lines(ws)[0])  # the screening queue, by the method that found each candidate
     lines.append(_budget_line(ws, len(screened)))
+    lines.append(WHY)
     label = "Eligible, not yet allocated" if held is None else "Included after the allocation, not in a set"
     lines.append(f"- {label}: {_unset(ws)}")
     included = {p for p, row in decisions(ws).items() if row["decision"] == "include"}

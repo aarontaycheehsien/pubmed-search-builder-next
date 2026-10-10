@@ -104,8 +104,11 @@ def test_screening_message_has_the_agreed_shape(ws, capsys):
         "Screened 5 candidates: 3 include · 1 exclude · 1 uncertain\n"
         "- Similar articles + backward citations from 2 records (set seeds) (C1): 4 screened → 2 include\n"
         "- Pilot search `asthma*[tiab]` (C2): 1 screened → 1 include\n"
-        "- Records with a screening decision so far (all contexts): 5 of ~150 (standard)\n"
-        "- Included but not yet in a set: 3, 5, 6")
+        "- Included but not yet in a set: 3, 5, 6\n"
+        "- Screening queue: 6 candidates found (4 similar articles + backward citations, 2 pilot search) · 5 screened "
+        "· 1 waiting\n"
+        "- Screening budget (decisions in all contexts): 5 of ~150 used · ~145 left (standard)\n"
+        "- Next: screen the 1 waiting candidate.")
 
 
 def test_candidate_searches_are_announced(ws, capsys):
@@ -116,11 +119,20 @@ def test_candidate_searches_are_announced(ws, capsys):
         "- Similar articles: 3\n"
         "- Reference lists (backward): 2\n"
         "- Already in a known-record set: 0 (excluded)\n"
-        "- Shown for screening: 4 records as candidate batch C1")
+        "- Shown for screening: 4 records as candidate batch C1\n"
+        "- Screening queue: 4 candidates found (4 similar articles + backward citations) · 0 screened · 4 waiting\n"
+        "- Screening budget (decisions in all contexts): 0 of ~150 used · ~150 left (standard)\n"
+        f"{progress.WHY}\n"
+        "- Next: screen the 4 waiting candidates.")
     assert text(capsys, "sample", "--purpose", "prior-reviews", "asthma*[tiab]") == (
         "**PSB · Step 3/7 Known records · Prior-review search**\n"
         "Prior-review search: 3 records for `asthma*[tiab]`\n"
-        "- Shown: 3 reviews to check against the scope (batch C2)")
+        "- Shown: 3 reviews to check against the scope (batch C2)\n"
+        # Record 6 was found by the neighbour search first, so it counts there.
+        "- Screening queue: 6 candidates found (4 similar articles + backward citations, 2 prior-review search) · "
+        "0 screened · 6 waiting\n"
+        "- Screening budget (decisions in all contexts): 0 of ~150 used · ~150 left (standard)\n"
+        "- Next: screen the 6 waiting candidates.")
     assert text(capsys, "count", "--purpose", "noise-check", "child*[tiab]") == (
         "**PSB · Step 5/7 Develop & revise · Noise check**\n"
         "Noise check: 4 records for `child*[tiab]`\n"
@@ -310,11 +322,38 @@ def test_blocked_eval_never_claims_missing_sets(ws, capsys):
 
 
 def test_zero_hit_candidate_searches_are_worded_by_purpose(ws, capsys):
-    assert text(capsys, "sample", "--purpose", "pilot", "nothing[tiab]") == (
-        "**PSB · Step 3/7 Known records · Pilot search**\n"
-        "Pilot search: 0 records for `nothing[tiab]`\n"
-        "- No records to screen")
-    assert text(capsys, "sample", "--purpose", "prior-reviews", "nothing[tiab]").endswith("\n- No reviews to check")
+    assert text(capsys, "sample", "--purpose", "pilot", "nothing[tiab]").splitlines()[1:4] == [
+        "Pilot search: 0 records for `nothing[tiab]`", "- No records to screen",
+        "- Screening queue: no candidates found by a search yet"]
+    assert "\n- No reviews to check\n" in text(capsys, "sample", "--purpose", "prior-reviews", "nothing[tiab]")
+
+
+def test_step3_messages_say_where_the_work_stands(ws, capsys):
+    """Next follows the state; Why appears once, in the first Step 3 message, and in the Step 3 summary."""
+    first = text(capsys, "screen", "--include", "1")  # user-supplied: not found by a search
+    assert progress.WHY in first and first.endswith(
+        "- Screening queue: no candidates found by a search yet\n"
+        "- Screening budget (decisions in all contexts): 1 of ~150 used · ~149 left (standard)\n"
+        f"{progress.WHY}\n"
+        "- Next: find more candidates (prior reviews, pilot searches, similar articles, citations) while the budget "
+        "allows, or move on to the allocation, where you choose how the eligible records are used.")
+    assert progress.WHY not in text(capsys, "sample", "--purpose", "pilot", "asthma*[tiab]")
+    protocol = ws.protocol()
+    write_json(ws.root / "protocol.json", {**protocol, "depth": "quick"})
+    for batch in range(1, 30):  # 29 more decisions reach the quick budget of ~30
+        progress.record_screening(ws, exclude=[str(1000 + batch)])
+    message = text(capsys, "screen", "--include", "3", "6")
+    assert "- Screening budget (decisions in all contexts): 32 of ~30 used · budget reached (quick)" in message
+    assert message.endswith("- Next: the screening budget is reached; the allocation comes next, where you choose how "
+                            "the eligible records are used.")
+    write_json(ws.root / "protocol.json", {**protocol, "depth": "custom"})
+    assert "- Screening budget (decisions in all contexts): 32 used (no discovery budget at custom depth)" in \
+        text(capsys, "screen", "--exclude", "1001")
+    write_json(ws.root / "protocol.json", protocol)
+    text(capsys, "allocate")
+    assert text(capsys, "screen", "--include", "5").endswith(
+        "- Next: records found now go to development; the allocation does not change.")
+    assert progress.WHY in text(capsys, "progress", "known-records")
 
 
 def test_blocked_report_diagnostic_and_not_delivered_summary(ws, capsys):
