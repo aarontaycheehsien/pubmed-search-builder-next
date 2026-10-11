@@ -20,9 +20,9 @@ You need **Python 3.10+**, internet access to NCBI E-utilities, and **Codex or C
 
 For example, send this to your agent:
 
-> Read `SKILL.md` in this repository and build a high-sensitivity PubMed search for a systematic review of school-based food and nutrition education interventions and adolescent food consumption. Use **standard** depth and **verbose** progress. Ask me to confirm which concepts belong in the search before building it. I have no seed papers to supply.
+> Read `SKILL.md` in this repository and build a high-sensitivity PubMed search for a systematic review of school-based food and nutrition education interventions and adolescent food consumption.
 
-The agent runs the commands; **you do not need to operate the CLI yourself**. You can supply known relevant records as PMIDs, DOIs or PMCIDs, plus inclusion/exclusion criteria and genuinely required date or language limits. The workflow supports reviewing or updating an existing strategy too.
+The agent runs the commands; **you do not need to operate the CLI yourself**. During intake, it asks for any **known relevant papers** (PMIDs, DOIs or PMCIDs; optional), your preferred **depth** (quick, standard or thorough), any required **date or language limits**, and whether you want **standard or verbose progress messages**. You do not need to specify these in the opening prompt. The agent also asks you to approve or revise the proposed search scope before building the strategy. You can provide inclusion/exclusion criteria at intake. The workflow supports reviewing or updating an existing strategy too.
 
 To check local configuration:
 
