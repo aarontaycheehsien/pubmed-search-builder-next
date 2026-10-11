@@ -72,7 +72,9 @@ The workflow has **seven numbered stages**. Step 3 has two parts, **3a (discover
 
 **The essential loop:** construct → execute → measure → diagnose → revise. A final draft is delivered only if the required checks pass. If the held-out test reveals a miss, the tested query is reported **unchanged** first; a subsequent repair is explicitly labelled as no longer independently tested against those records.
 
-![Human decisions and agent work](docs/pubmed-search-builder-human-agent-workflow.svg)
+![Human decisions and agent actions, including allocation and the option to repair a missed held-out record](docs/pubmed-search-builder-human-agent-workflow.svg)
+
+The allocation decision is offered **only when an eligible holdout is possible**. After final delivery, **Repair** is offered only if the held-out test missed records. A repair uses the released records for further development, so it cannot count as a fresh independent test on those same records.
 
 ## What progress looks like
 
