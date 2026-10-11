@@ -8,9 +8,9 @@ PubMed Search Builder is an agent skill for **Codex and Claude Code**. Give it a
 
 **Why not just ask an LLM for a Boolean string?** A convincing-looking search can contain non-existent MeSH headings, over-restrictive AND blocks, unsuitable field tags or PubMed translations that differ from the intended search. This workflow tests the search against PubMed and records what happened; it does **not** establish that every relevant paper was found.
 
-![Seven-step PubMed search development workflow](docs/pubmed-search-builder-workflow.svg)
+![PubMed Search Builder workflow: screening, allocation, development, and optional repair](docs/pubmed-search-builder-workflow-repair.webp)
 
-The diagram separates **Step 3a (discover and screen known records)** from **Step 3b (allocate eligible records)**. These are two parts of the existing seven-stage workflow, not an additional numbered workflow stage.
+The diagram separates **Step 3a (discover and screen known records)** from **Step 3b (allocate eligible records)**. These are two parts of the existing seven-stage workflow, not an additional numbered stage. **If the held-out test misses records**, the agent first delivers the original tested query unchanged, then offers an optional **Repair**: release the held-out records into development, revise and re-review the search, and deliver the revised query clearly labelled as *not independently tested* against those records. A [simpler editable SVG workflow](docs/pubmed-search-builder-workflow.svg) is also available.
 
 ## Quick start
 
