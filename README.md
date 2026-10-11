@@ -10,6 +10,8 @@ PubMed Search Builder is an agent skill for **Codex and Claude Code**. Give it a
 
 ![Seven-step PubMed search development workflow](docs/pubmed-search-builder-workflow.svg)
 
+The diagram separates **Step 3a (discover and screen known records)** from **Step 3b (allocate eligible records)**. These are two parts of the existing seven-stage workflow, not an additional numbered workflow stage.
+
 ## Quick start
 
 You need **Python 3.10+**, internet access to NCBI E-utilities, and **Codex or Claude Code**. No additional Python packages are required for the core search tool.
