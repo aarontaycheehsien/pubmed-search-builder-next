@@ -9,14 +9,14 @@
 <text x="79" y="144" class="tag">YOUR DECISIONS</text>
 <text x="754" y="144" class="tag">WHAT THE AGENT DOES</text>
 <text x="79" y="200" class="heading">1. Provide the review question</text>
-<text x="79" y="228" class="text">Add eligibility criteria, limits and optional seed papers.</text>
+<text x="79" y="228" class="text">Criteria, limits and known papers are optional; agent asks.</text>
 <text x="79" y="304" class="heading">2. Approve the scope</text>
 <text x="79" y="332" class="text">Check searched, screened and optional concepts.</text>
 <text x="79" y="408" class="heading">3. Decide on the holdout</text>
 <text x="79" y="436" class="text">When offered, keep an unseen test set or use all</text>
 <text x="79" y="462" class="text">records for search development.</text>
-<text x="79" y="536" class="heading">4. Arrange human review</text>
-<text x="79" y="562" class="text">Inspect the draft; seek formal PRESS peer review.</text>
+<text x="79" y="536" class="heading">4. Review delivery and repair</text>
+<text x="79" y="562" class="text">If misses occur, choose Repair; seek human PRESS review.</text>
 <text x="754" y="200" class="heading">Discover and screen eligible records</text>
 <text x="754" y="228" class="text">Use separate screening where available.</text>
 <text x="754" y="304" class="heading">Build and test the strategy</text>
@@ -24,7 +24,7 @@
 <text x="754" y="408" class="heading">Perform an internal critique</text>
 <text x="754" y="436" class="text">Resolve findings before final delivery.</text>
 <text x="754" y="536" class="heading">Test and deliver</text>
-<text x="754" y="562" class="text">One held-out test if reserved; validate and audit.</text>
+<text x="754" y="562" class="text">Test held-out records if reserved; audit and offer Repair.</text>
 <path d="M636 329 H716" stroke="#176e91" stroke-width="4"/>
 <path d="M703 320 L717 329 L703 338" fill="none" stroke="#176e91" stroke-width="4"/>
 <rect x="48" y="612" width="1263" height="48" rx="11" fill="#edf4f7"/>
