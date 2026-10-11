@@ -78,7 +78,11 @@ The workflow has **seven numbered stages**. Step 3 has two parts, **3a (discover
 
 The tool generates consistent messages for each of the seven stages. For instance, the stage headings include `PSB · Step 2/7 Scope`, `PSB · Step 3/7 Known records`, and `PSB · Step 5/7 Develop & revise`. The messages identify what has happened and what comes next.
 
-Choose **standard** messages for short updates or **verbose** messages for up to three additional detail lines on discovery, MeSH lookups, term mining and evaluation. Verbose mode changes what is *shown*, **not** what is searched or screened. Private screening messages never disclose their hidden records or queries, even in verbose mode. See [the progress-message specification](references/verbose.md) and [example messages from a synthetic test corpus](tests/golden/progress_sequence.md).
+![Rendered screenshot of the PubMed Search Builder progress transcript showing the scope summary and known-record discovery](docs/progress-sequence-screenshot.webp)
+
+*Example progress messages from [`tests/golden/progress_sequence.md`](tests/golden/progress_sequence.md), shown in a locally rendered GitHub-style excerpt. This is a **synthetic test fixture**, not a screenshot of a live PubMed search or a direct capture of GitHub's website. The displayed counts are illustrative.*
+
+Choose **standard** messages for short updates or **verbose** messages for up to three additional detail lines on discovery, MeSH lookups, term mining and evaluation. Verbose mode changes what is *shown*, **not** what is searched or screened. Private screening messages never disclose their hidden records or queries, even in verbose mode. See [the progress-message specification](references/verbose.md) and [the complete example progress sequence](tests/golden/progress_sequence.md).
 
 ## Choose a search depth
 
