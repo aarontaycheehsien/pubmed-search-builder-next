@@ -1,68 +1,95 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="640" viewBox="0 0 1600 640" role="img" aria-labelledby="title desc">
-<title id="title">Seven-stage PubMed Search Builder workflow</title>
-<desc id="desc">Intake, user-approved scope, known record screening and allocation, vocabulary, iterative PubMed testing, internal critique, and final held-out test and delivery.</desc>
-<defs><marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6Z" fill="#176e91"/></marker></defs>
-<style>.title{font:700 39px Arial,sans-serif;fill:#143047}.sub{font:19px Arial,sans-serif;fill:#4c6577}.number{font:700 21px Arial,sans-serif;fill:white}.heading{font:700 25px Arial,sans-serif;fill:#143047}.smallcap{font:700 12px Arial,sans-serif;letter-spacing:1px;fill:#176e91}.body{font:16px Arial,sans-serif;fill:#456071}.foot{font:18px Arial,sans-serif;fill:#143047}</style>
-<rect width="1600" height="640" fill="white"/>
-<text class="title" x="28" y="66">PubMed Search Builder: from question to tested search</text>
-<text class="sub" x="28" y="106">Seven stages • live PubMed queries • human decisions at scope and allocation</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1420" height="946" viewBox="0 0 1420 946" role="img" aria-labelledby="title desc">
+<title id="title">PubMed Search Builder workflow with a distinct allocation step</title>
+<desc id="desc">The seven-stage workflow shows eight cards because Step 3 has two explicit substeps: 3a Discover and screen known records, followed by 3b Allocate eligible records between development and held-out testing. The arrows flow across the upper row, down, and back along the lower row to final delivery.</desc>
+<defs>
+<marker id="arrow" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto"><path d="M 0 0 L 8 4 L 0 8 Z" fill="#2a708f"/></marker>
+<marker id="arrow-green" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto"><path d="M 0 0 L 8 4 L 0 8 Z" fill="#16815b"/></marker>
+</defs>
+<style>.title{font:700 39px Arial,sans-serif;fill:#15354c}.subtitle{font:19px Arial,sans-serif;fill:#4a667b}.number{font:700 21px Arial,sans-serif;fill:white}.heading{font:700 25px Arial,sans-serif;fill:#17374b}.smallcap{font:700 13px Arial,sans-serif;letter-spacing:.8px}.body{font:18px Arial,sans-serif;fill:#3f6073}.footer{font:19px Arial,sans-serif;fill:#21485c}.footnote{font:16px Arial,sans-serif;fill:#526b7c}</style>
+<rect width="1420" height="946" fill="white"/>
+<text class="title" x="32" y="61">PubMed Search Builder: from question to tested search</text>
+<text class="subtitle" x="32" y="104">Seven stages, with discovery/screening and allocation shown separately within Step 3</text>
 <g>
-<rect x="28" y="150" width="202" height="250" rx="20" fill="#eef6fb" stroke="#ccd9e5" stroke-width="1.5"/>
-<circle cx="63" cy="185" r="20" fill="#176e91"/><text x="63" y="192" class="number" text-anchor="middle">1</text>
-<text x="47" y="247" class="heading">Intake</text>
-<text x="47" y="276" class="smallcap">QUESTION + LIMITS</text>
-<text x="47" y="319" class="body">Review question, criteria,</text><text x="47" y="344" class="body">known papers, depth</text>
+<rect x="32" y="163" width="310" height="232" rx="20" fill="#eff5fa" stroke="#ccdae5" stroke-width="1.5"/>
+<circle cx="70" cy="201" r="23" fill="#206d91"/>
+<text class="number" x="70" y="209" text-anchor="middle">1</text>
+<text class="heading" x="54" y="257">Intake</text>
+<text class="smallcap" x="54" y="286" fill="#206d91">QUESTION AND LIMITS</text>
+<text class="body" x="54" y="331">Ask for the review question,</text>
+<text class="body" x="54" y="359">depth, limits and optional papers</text>
 </g>
 <g>
-<rect x="247" y="150" width="202" height="250" rx="20" fill="#f4f7fb" stroke="#ccd9e5" stroke-width="1.5"/>
-<circle cx="282" cy="185" r="20" fill="#176e91"/><text x="282" y="192" class="number" text-anchor="middle">2</text>
-<text x="266" y="247" class="heading">Scope</text>
-<text x="266" y="276" class="smallcap">USER APPROVAL</text>
-<text x="266" y="319" class="body">Search vs screening</text><text x="266" y="344" class="body">concepts; confirm roles</text>
+<rect x="379" y="163" width="310" height="232" rx="20" fill="#eff5fa" stroke="#ccdae5" stroke-width="1.5"/>
+<circle cx="417" cy="201" r="23" fill="#206d91"/>
+<text class="number" x="417" y="209" text-anchor="middle">2</text>
+<text class="heading" x="401" y="257">Scope</text>
+<text class="smallcap" x="401" y="286" fill="#206d91">USER CONFIRMS</text>
+<text class="body" x="401" y="331">Choose searched, screened</text>
+<text class="body" x="401" y="359">and optional concepts</text>
 </g>
 <g>
-<rect x="466" y="150" width="202" height="250" rx="20" fill="#eef6fb" stroke="#ccd9e5" stroke-width="1.5"/>
-<circle cx="501" cy="185" r="20" fill="#176e91"/><text x="501" y="192" class="number" text-anchor="middle">3</text>
-<text x="485" y="247" class="heading">Known records</text>
-<text x="485" y="276" class="smallcap">SCREEN + ALLOCATE</text>
-<text x="485" y="319" class="body">Find eligible studies;</text><text x="485" y="344" class="body">choose holdout if feasible</text>
+<rect x="726" y="163" width="310" height="232" rx="20" fill="#eff5fa" stroke="#ccdae5" stroke-width="1.5"/>
+<circle cx="764" cy="201" r="25" fill="#206d91"/>
+<text class="number" x="764" y="209" text-anchor="middle">3a</text>
+<text class="heading" x="748" y="257">Known records</text>
+<text class="smallcap" x="748" y="286" fill="#206d91">DISCOVER AND SCREEN</text>
+<text class="body" x="748" y="331">Find candidates and assess</text>
+<text class="body" x="748" y="359">eligibility against the scope</text>
 </g>
 <g>
-<rect x="685" y="150" width="202" height="250" rx="20" fill="#f4f7fb" stroke="#ccd9e5" stroke-width="1.5"/>
-<circle cx="720" cy="185" r="20" fill="#176e91"/><text x="720" y="192" class="number" text-anchor="middle">4</text>
-<text x="704" y="247" class="heading">Vocabulary</text>
-<text x="704" y="276" class="smallcap">VERIFIED TERMS</text>
-<text x="704" y="319" class="body">Check MeSH headings</text><text x="704" y="344" class="body">and title/abstract terms</text>
+<rect x="1073" y="163" width="310" height="232" rx="20" fill="#e7f5ec" stroke="#16815b" stroke-width="2.5"/>
+<circle cx="1111" cy="201" r="25" fill="#16815b"/>
+<text class="number" x="1111" y="209" text-anchor="middle">3b</text>
+<text class="heading" x="1095" y="257">Allocation</text>
+<text class="smallcap" x="1095" y="286" fill="#16815b">USER CHOOSES IF OFFERED</text>
+<text class="body" x="1095" y="331">Assign eligible studies to</text>
+<text class="body" x="1095" y="359">development or held-out test</text>
 </g>
 <g>
-<rect x="904" y="150" width="202" height="250" rx="20" fill="#eef6fb" stroke="#ccd9e5" stroke-width="1.5"/>
-<circle cx="939" cy="185" r="20" fill="#176e91"/><text x="939" y="192" class="number" text-anchor="middle">5</text>
-<text x="923" y="247" class="heading">Develop</text>
-<text x="923" y="276" class="smallcap">TEST + REVISE</text>
-<text x="923" y="319" class="body">Run PubMed; diagnose</text><text x="923" y="344" class="body">misses and revise</text>
+<rect x="1073" y="506" width="310" height="232" rx="20" fill="#eff5fa" stroke="#ccdae5" stroke-width="1.5"/>
+<circle cx="1111" cy="544" r="23" fill="#206d91"/>
+<text class="number" x="1111" y="552" text-anchor="middle">4</text>
+<text class="heading" x="1095" y="600">Vocabulary</text>
+<text class="smallcap" x="1095" y="629" fill="#206d91">VERIFY TERMS</text>
+<text class="body" x="1095" y="674">MeSH headings and</text>
+<text class="body" x="1095" y="702">title/abstract vocabulary</text>
 </g>
 <g>
-<rect x="1123" y="150" width="202" height="250" rx="20" fill="#f4f7fb" stroke="#ccd9e5" stroke-width="1.5"/>
-<circle cx="1158" cy="185" r="20" fill="#176e91"/><text x="1158" y="192" class="number" text-anchor="middle">6</text>
-<text x="1142" y="247" class="heading">Critique</text>
-<text x="1142" y="276" class="smallcap">INTERNAL REVIEW</text>
-<text x="1142" y="319" class="body">PRESS-structured</text><text x="1142" y="344" class="body">critique and responses</text>
+<rect x="726" y="506" width="310" height="232" rx="20" fill="#eff5fa" stroke="#ccdae5" stroke-width="1.5"/>
+<circle cx="764" cy="544" r="23" fill="#206d91"/>
+<text class="number" x="764" y="552" text-anchor="middle">5</text>
+<text class="heading" x="748" y="600">Develop &amp; revise</text>
+<text class="smallcap" x="748" y="629" fill="#206d91">EMPIRICAL TESTING</text>
+<text class="body" x="748" y="674">Run searches; check known</text>
+<text class="body" x="748" y="702">records and diagnose misses</text>
 </g>
 <g>
-<rect x="1342" y="150" width="202" height="250" rx="20" fill="#eef6fb" stroke="#ccd9e5" stroke-width="1.5"/>
-<circle cx="1377" cy="185" r="20" fill="#176e91"/><text x="1377" y="192" class="number" text-anchor="middle">7</text>
-<text x="1361" y="247" class="heading">Deliver</text>
-<text x="1361" y="276" class="smallcap">TEST + VALIDATE</text>
-<text x="1361" y="319" class="body">One held-out test if</text><text x="1361" y="344" class="body">reserved; audit + query</text>
+<rect x="379" y="506" width="310" height="232" rx="20" fill="#eff5fa" stroke="#ccdae5" stroke-width="1.5"/>
+<circle cx="417" cy="544" r="23" fill="#206d91"/>
+<text class="number" x="417" y="552" text-anchor="middle">6</text>
+<text class="heading" x="401" y="600">Critique</text>
+<text class="smallcap" x="401" y="629" fill="#206d91">INTERNAL PRESS REVIEW</text>
+<text class="body" x="401" y="674">Review strategy in a fresh</text>
+<text class="body" x="401" y="702">context; address findings</text>
 </g>
-<path d="M 230 270 H 243" stroke="#176e91" stroke-width="3" marker-end="url(#arrow)"/>
-<path d="M 449 270 H 462" stroke="#176e91" stroke-width="3" marker-end="url(#arrow)"/>
-<path d="M 668 270 H 681" stroke="#176e91" stroke-width="3" marker-end="url(#arrow)"/>
-<path d="M 887 270 H 900" stroke="#176e91" stroke-width="3" marker-end="url(#arrow)"/>
-<path d="M 1106 270 H 1119" stroke="#176e91" stroke-width="3" marker-end="url(#arrow)"/>
-<path d="M 1325 270 H 1338" stroke="#176e91" stroke-width="3" marker-end="url(#arrow)"/>
-<rect x="28" y="444" width="1540" height="122" rx="18" fill="#edf4f7"/>
-<text x="54" y="482" class="foot" font-weight="bold">Development loop: construct → execute → measure → diagnose → revise</text>
-<text x="54" y="516" class="foot">Held-out records remain unseen during development; a frozen strategy is tested once, when a holdout exists.</text>
-<text x="54" y="545" class="sub">Final output: executable PubMed strategy • line counts • retrieval checks • PRESS-structured internal critique • audit</text>
+<g>
+<rect x="32" y="506" width="310" height="232" rx="20" fill="#eff5fa" stroke="#ccdae5" stroke-width="1.5"/>
+<circle cx="70" cy="544" r="23" fill="#206d91"/>
+<text class="number" x="70" y="552" text-anchor="middle">7</text>
+<text class="heading" x="54" y="600">Deliver</text>
+<text class="smallcap" x="54" y="629" fill="#206d91">TEST AND VALIDATE</text>
+<text class="body" x="54" y="674">Held-out test once if reserved;</text>
+<text class="body" x="54" y="702">live validation, query + audit</text>
+</g>
+<path d="M 342 278 L 375 278" fill="none" stroke="#2a708f" stroke-width="3.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 689 278 L 722 278" fill="none" stroke="#2a708f" stroke-width="3.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1036 278 L 1069 278" fill="none" stroke="#2a708f" stroke-width="3.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1228 395 L 1228 502" fill="none" stroke="#16815b" stroke-width="4" marker-end="url(#arrow-green)"/>
+<path d="M 1073 621 L 1040 621" fill="none" stroke="#2a708f" stroke-width="3.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 726 621 L 693 621" fill="none" stroke="#2a708f" stroke-width="3.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 379 621 L 346 621" fill="none" stroke="#2a708f" stroke-width="3.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="32" y="765" width="1351" height="132" rx="17" fill="#edf4f7"/>
+<text x="58" y="806" class="footer" font-weight="bold">Development loop: construct → execute → measure → diagnose → revise</text>
+<text x="58" y="845" class="footer">Held-out records remain unseen during development and are tested once, when a holdout exists.</text>
+<text x="58" y="877" class="footnote">Final draft: PubMed strategy • line-by-line counts • known-record checks • internal critique • audit</text>
 </svg>
