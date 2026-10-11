@@ -59,7 +59,8 @@ PURPOSES = {
 # is a comparison list, never an independent test.
 LEGACY_ROLES = {"seed": "development", "relevant": "development", "validation": "comparison", "benchmark": "comparison"}
 LEGACY_NOTE = "legacy: consulted during development"
-ORIGINS = ("user-supplied", "prior-review", "pilot-search", "similar-articles", "citation-backward", "citation-forward")
+ORIGINS = ("user-supplied", "prior-review", "pilot-search", "similar-articles", "citation-backward", "citation-forward",
+           "semantic-search")
 
 PROTOCOL_TEMPLATE = {
     "question": "",

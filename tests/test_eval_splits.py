@@ -88,6 +88,27 @@ def test_heldout_cards_drop_misses_and_uses_are_logged(evals_dir):
     assert entry["topic"] == "T2" and entry["at"]
 
 
+def test_compare_runs_enforces_heldout_guard_and_records_look(evals_dir, monkeypatch, capsys):
+    from conftest import FakePubMed
+    from psb.workspace import write_json
+    run.cmd_freeze(argparse.Namespace(topics=["T2"]))
+    a, b = evals_dir / "a", evals_dir / "b"
+    for directory in (a, b):
+        write_json(directory / "work" / "allocation.json", {"units": []})
+        (directory / "work" / "final-query.txt").write_text("asthma[tiab]", encoding="utf-8")
+    monkeypatch.setattr(run, "_verify", lambda directory, asof: {"ok": True, "query_file": str(directory / "work" / "final-query.txt")})
+    monkeypatch.setattr(harness, "client", lambda fixture: FakePubMed({"asthma[tiab]": {"1", "2"}}))
+    args = argparse.Namespace(topic="T2", heldout=False, run_a=str(a), run_b=str(b), condition="noseed")
+    with pytest.raises(SystemExit, match="--heldout"):
+        run.cmd_compare_runs(args)
+    args.heldout = True
+    capsys.readouterr()
+    assert run.cmd_compare_runs(args) == 0
+    result = json.loads(capsys.readouterr().out)
+    assert "missed" not in json.dumps(result)
+    assert "compare-runs" in harness.HELDOUT_LEDGER.read_text(encoding="utf-8")
+
+
 def test_tree_hash_tracks_content_but_not_env_or_caches(tmp_path):
     (tmp_path / "scripts" / "__pycache__").mkdir(parents=True)
     (tmp_path / "SKILL.md").write_text("v1\n", encoding="utf-8")

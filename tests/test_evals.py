@@ -31,6 +31,45 @@ def test_score_excludes_seeds_and_reports_unseen_recall():
     assert (result["gold_seen_by_agent"], result["unseen_retrieved"], result["unseen_recall_percent"]) == (1, 1, 50.0)
 
 
+def test_strict_unseen_excludes_exposed_records_outside_sets():
+    result = harness.score(FIXTURE, "asthma[tiab]", seen={"2"}, exposed={"2", "3"}, pm=fake())
+    assert result["unseen_recall_percent"] == 66.7
+    assert result["strict_unseen_total"] == 2
+    assert result["strict_unseen_retrieved"] == 1
+    assert result["strict_unseen_recall_percent"] == 50.0
+    empty = harness.score(FIXTURE, "asthma[tiab]", exposed=set(FIXTURE["gold_pmids"]), pm=fake())
+    assert empty["strict_unseen_recall_percent"] is None
+
+
+def test_exposure_includes_builder_uncertain_excluded_and_nongold_companions(tmp_path):
+    from psb.workspace import append_jsonl, write_json
+    work = tmp_path / "work"
+    append_jsonl(work / "exposure.jsonl", {"pmid": "99", "kind": "abstract"})
+    append_jsonl(work / "screening.jsonl", {"pmid": "99", "group": "trial", "context": "builder", "decision": "exclude"})
+    append_jsonl(work / "screening.jsonl", {"pmid": "1", "group": "trial", "context": "separate", "decision": "include"})
+    append_jsonl(work / "screening.jsonl", {"pmid": "2", "context": "builder", "decision": "uncertain"})
+    append_jsonl(work / "screening.jsonl", {"pmid": "3", "context": "separate", "decision": "include"})
+    write_json(work / "sets" / "development.json", {"pmids": ["4"]})
+    assert harness.gold_exposed(FIXTURE, tmp_path) == {"1", "2", "4"}
+
+
+def test_common_unseen_pair_uses_union_and_never_returns_gold_identities():
+    result = harness.score_common_unseen(FIXTURE, "asthma[tiab]", "child[tiab]", exposed_a={"1"},
+                                        exposed_b={"2"}, pm=fake())
+    assert result["a"]["strict_unseen_total"] == result["b"]["strict_unseen_total"] == 2
+    assert result["a"]["strict_unseen_retrieved"] == result["b"]["strict_unseen_retrieved"] == 1
+    assert result["gold_gained"] == result["gold_lost"] == 1
+    assert "missed" not in json.dumps(result) and "pmids" not in json.dumps(result)
+
+
+def test_semantic_experiment_is_opt_in_and_preserves_total_budget():
+    normal = drivers.prompt_for(FIXTURE, seeds=[], depth="standard")
+    assert "Enable the experimental" not in normal
+    treatment = drivers.prompt_for(FIXTURE, seeds=[], depth="standard", semantic_miss_hunt=True)
+    assert "do not increase the total budget" in treatment
+    assert "one bounded repair round" in treatment
+
+
 def test_prompt_never_contains_gold_beyond_seeds():
     prompt = drivers.prompt_for(FIXTURE, seeds=[], depth="standard")
     assert "Asthma in children?" in prompt and "- children" in prompt

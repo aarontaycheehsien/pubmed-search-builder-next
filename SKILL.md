@@ -142,6 +142,12 @@ have no MeSH.
 
 ### 5. Develop and revise
 
+If the user or evaluation condition enables **experimental semantic miss hunting**, read
+`references/semantic-miss-hunting.md`. Reserve its screening allowance during Step 3 from the
+existing total budget. After a current provisional `psb eval`, run one `psb miss-hunt` batch,
+screen only candidate misses, and make one justified repair round before Step 6. This is
+opt-in; it never estimates absolute recall or changes the held-out allocation.
+
 Run `psb eval --note "<what changed and why>"` after every meaningful change. It reports lint
 and translation problems, a count for every line, development (and comparison) retrieval per set,
 which blocks miss which records, leave-one-block-out ablation, and what changed since the previous

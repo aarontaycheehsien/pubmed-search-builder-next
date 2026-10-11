@@ -36,6 +36,13 @@ The agent then:
 
 You receive the final PubMed strategy, line-by-line counts, retrieval results for known relevant papers, documented decisions and limitations, and a PRISMA-S-style audit.
 
+An opt-in [experimental Step 5 semantic miss hunt](references/semantic-miss-hunting.md) uses
+OpenAlex to find candidates absent from the provisional strategy. It queues at most 30 records
+within the existing screening budget, protects the frozen holdout, and leaves eligibility and
+query revisions to the agent. Enable it explicitly; it is not an estimate of absolute recall.
+See the [evaluation instructions](evals/README.md#experimental-step-5-semantic-miss-hunting)
+for controlled comparisons and strict unseen scoring.
+
 ![How you and the agent work together](docs/pubmed-search-builder-human-agent-workflow.svg)
 
 ## Why use it?

@@ -34,7 +34,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import drivers  # noqa: E402
 import harness  # noqa: E402
-from psb import config, deliver  # noqa: E402
+from psb import config, deliver, miss_hunt  # noqa: E402
 from psb.workspace import Workspace  # noqa: E402
 
 DEFAULT_RUNS_ROOT = Path(tempfile.gettempdir()) / "psb-evals"
@@ -187,6 +187,28 @@ def cmd_score(args) -> int:
     return 0
 
 
+def cmd_compare_runs(args) -> int:
+    fixture = harness.load_fixture(args.topic)
+    split = guard_topic(fixture, allow_heldout=args.heldout)
+    if split == "heldout":
+        harness.record_heldout_look({"topic": fixture["id"], "command": "compare-runs", "condition": args.condition})
+    runs = [Path(args.run_a), Path(args.run_b)]
+    queries = []
+    for directory in runs:
+        if not (directory / "work" / "allocation.json").exists():
+            raise SystemExit("common-unseen comparison requires PSB runs with allocation/exposure accounting")
+        path = find_strategy_file(directory, require_protected=True, effective_as_of=fixture.get("as_of"))
+        if path is None:
+            raise SystemExit("both runs need a current protected final delivery")
+        queries.append(path.read_text(encoding="utf-8"))
+    result = harness.score_common_unseen(
+        fixture, *queries, exposed_a=harness.gold_exposed(fixture, runs[0]),
+        exposed_b=harness.gold_exposed(fixture, runs[1]),
+        exclude=set(fixture.get("seeds") or []) if args.condition == "seeded" else set())
+    print(json.dumps(result, indent=2))
+    return 0
+
+
 def child_env(skill_dir: Path, as_of: str | None) -> dict:
     env = {k: v for k, v in os.environ.items() if not k.startswith(("CLAUDECODE", "CLAUDE_CODE_ENTRYPOINT"))}
     for key, value in config.parse_env_file(skill_dir / ".env").items():
@@ -210,7 +232,8 @@ def generate_once(args, fixture: dict, split: str, *, skill_dir: Path, skill_nam
     staged = drivers.stage_skill(skill_dir, run_dir)
     skill_hash = harness.tree_hash(staged)  # before the run: an agent may write inside its skill copy
     (run_dir / "work").mkdir()
-    prompt = drivers.prompt_for(fixture, seeds=seeds, depth=args.depth)
+    prompt = drivers.prompt_for(fixture, seeds=seeds, depth=args.depth,
+                                semantic_miss_hunt=getattr(args, "semantic_miss_hunt", False))
     (run_dir / "prompt.txt").write_text(prompt, encoding="utf-8")
     print(f"  {fixture['id']} {label}\n  run dir: {run_dir}", flush=True)
     extra = {"effort": args.effort} if args.driver == "codex" and args.effort else {}
@@ -226,6 +249,7 @@ def generate_once(args, fixture: dict, split: str, *, skill_dir: Path, skill_nam
             "harness": provenance["harness"], "driver_version": provenance["driver_version"],
             "run": {k: v for k, v in run.items() if k != "final_message"},
             "final_message": run.get("final_message", "")}
+    card["semantic_miss_hunt_enabled"] = getattr(args, "semantic_miss_hunt", False)
     protected = (skill_dir / "scripts" / "psb" / "validation.py").exists()
     strategy_path = find_strategy_file(run_dir, require_protected=protected, effective_as_of=fixture.get("as_of"))
     if strategy_path is not None:
@@ -233,7 +257,10 @@ def generate_once(args, fixture: dict, split: str, *, skill_dir: Path, skill_nam
         seen = harness.gold_seen(fixture, run_dir) - set(seeds)
         card["strategy"] = " ".join(query.split())
         card["strategy_path"] = strategy_path.relative_to(run_dir).as_posix()
-        card.update(harness.score(fixture, query, exclude=set(seeds), seen=seen))
+        exposed = (harness.gold_exposed(fixture, run_dir)
+                   if protected and (run_dir / "work" / "allocation.json").exists() else None)
+        card.update(harness.score(fixture, query, exclude=set(seeds), seen=seen, exposed=exposed))
+        card["semantic_miss_hunt"] = miss_hunt.summary(Workspace(run_dir / "work")) if protected else {"performed": False}
         card["gold_reserved_by_agent"] = len(harness.gold_reserved(fixture, run_dir) - set(seeds))
         card["screening_contexts"] = harness.screening_contexts(run_dir)
         card["leakage"] = harness.leakage(fixture, run_dir, transcript)
@@ -276,6 +303,8 @@ def cmd_generate(args) -> int:
     split = guard_topic(fixture, allow_heldout=args.heldout)
     skill_dir = Path(args.skill).resolve()
     skill_name = args.skill_name or skill_dir.name
+    if getattr(args, "semantic_miss_hunt", False) and not args.skill_name:
+        skill_name += "-semantic-step5"
     seeds = list(fixture.get("seeds") or []) if args.condition == "seeded" else []
     if args.condition == "seeded" and not seeds:
         raise SystemExit(f"{fixture['id']} has no seeds")
@@ -337,8 +366,8 @@ def mean_of(values: list) -> float | None:
 
 
 def results_table(groups: dict[tuple, list[dict]]) -> list[str]:
-    lines = ["| Topic | Source | Condition | Version | Runs | Recall % | Unseen recall % | Results | NNR | Cost $ |",
-             "|---|---|---|---|---:|---|---|---:|---:|---:|"]
+    lines = ["| Topic | Source | Condition | Version | Runs | Recall % | Unseen recall % | Strict unseen recall % | Results | NNR | Cost $ |",
+             "|---|---|---|---|---:|---|---|---|---:|---:|---:|"]
     for (topic, source, condition, driver, version), group in sorted(groups.items()):
         statuses = [harness.run_status(c) for c in group]
         ok = [c for c, s in zip(group, statuses) if s == "ok"]
@@ -349,7 +378,8 @@ def results_table(groups: dict[tuple, list[dict]]) -> list[str]:
         label = source + (f" ({driver})" if driver else "")
         lines.append(
             f"| {topic[:40]} | {label} | {condition} | {version} | {runs} | {spread([c['recall_percent'] for c in ok])} "
-            f"| {spread([c.get('unseen_recall_percent') for c in ok])} | {spread([c.get('count') for c in ok])} "
+            f"| {spread([c.get('unseen_recall_percent') for c in ok])} "
+            f"| {spread([c.get('strict_unseen_recall_percent') for c in ok])} | {spread([c.get('count') for c in ok])} "
             f"| {spread([c.get('nnr') for c in ok])} | {spread([c.get('run', {}).get('cost_usd') for c in ok])} |")
     return lines
 
@@ -409,7 +439,9 @@ def cmd_report(args) -> int:
         f"Generated {stamp()} by `python evals/run.py report{' --all-versions' if args.all_versions else ''}`.",
         "",
         "Recall is over gold records in PubMed on or before `as_of`; in the seeded condition the three seeds are "
-        "excluded. `unseen` recall leaves out gold records the agent itself screened into its sets. NNR is total "
+        "excluded. `unseen` recall leaves out gold records the agent itself screened into its sets. "
+        "Strict unseen recall also excludes recorded exposure, builder screening and recognised study companions; "
+        "it is unavailable for older runs without allocation accounting. NNR is total "
         "results divided by gold retrieved: a workload proxy, not precision. Generated rows show the mean (min-max) "
         "over `ok` runs.",
         "",
@@ -455,6 +487,13 @@ def main() -> int:
     p.add_argument("--condition", choices=["noseed", "seeded"], default="noseed")
     p.add_argument("--heldout", action="store_true", help="allow a held-out topic (logged; misses not shown)")
     p.set_defaults(func=cmd_score)
+    p = sub.add_parser("compare-runs", help="score two protected PSB runs on a common unexposed gold subset")
+    p.add_argument("topic")
+    p.add_argument("--run-a", required=True)
+    p.add_argument("--run-b", required=True)
+    p.add_argument("--condition", choices=["noseed", "seeded"], default="noseed")
+    p.add_argument("--heldout", action="store_true", help="allow a held-out topic (logged; aggregate scores only)")
+    p.set_defaults(func=cmd_compare_runs)
     p = sub.add_parser("generate")
     p.add_argument("topic")
     p.add_argument("--driver", choices=sorted(drivers.DRIVERS), default="claude")
@@ -471,6 +510,7 @@ def main() -> int:
     p.add_argument("--retry-infra", type=int, default=0, help="retry a run that failed on quota/rate limits up to N times")
     p.add_argument("--retry-wait", type=int, default=300, help="seconds to wait before an infra retry")
     p.add_argument("--keep-run-dirs", action="store_true", help="keep a delivered run's directory (default: delete it)")
+    p.add_argument("--semantic-miss-hunt", action="store_true", help="enable one Step 5 semantic batch within the existing budget")
     p.set_defaults(func=cmd_generate)
     p = sub.add_parser("freeze", help="add never-run topics to the held-out set")
     p.add_argument("topics", nargs="+")

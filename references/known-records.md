@@ -16,7 +16,9 @@ record has a purpose, and some are held out for one final test.
 "held-out seeds" or "validation set".
 
 **Origin** is recorded separately from purpose: `user-supplied`, `prior-review`, `pilot-search`,
-`similar-articles`, `citation-backward`, `citation-forward`. Similar articles are ranked by text and
+`similar-articles`, `citation-backward`, `citation-forward`, `semantic-search` (experimental Step 5).
+When semantic miss hunting is enabled, reserve up to 30 screenings from the existing total
+allowance for Step 5; see `semantic-miss-hunting.md`. Similar articles are ranked by text and
 MeSH similarity; they are not a citation search. Origin never establishes independence: a prior
 review's included studies can serve development or testing, and similar-article or pilot-search
 records share vocabulary with development records or your own queries (the held-out message says so).

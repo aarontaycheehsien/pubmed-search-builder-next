@@ -209,7 +209,7 @@ def client(fixture: dict, *, use_cache: bool = True) -> PubMed:
 
 
 def score(fixture: dict, query: str, *, exclude: set[str] | None = None, seen: set[str] | None = None,
-          pm: PubMed | None = None) -> dict:
+          exposed: set[str] | None = None, pm: PubMed | None = None) -> dict:
     """Recall of ``query`` on the fixture's gold set, within the fixture's ``as_of`` window.
 
     ``exclude``: gold records given to the agent (seeds), left out of the denominator.
@@ -241,7 +241,30 @@ def score(fixture: dict, query: str, *, exclude: set[str] | None = None, seen: s
         result["gold_seen_by_agent"] = len(reachable & seen)
         result["unseen_retrieved"] = len(found & unseen)
         result["unseen_recall_percent"] = round(100 * len(found & unseen) / len(unseen), 1) if unseen else None
+    if exposed is not None:
+        untouched = reachable - exposed
+        result.update(gold_exposed_by_agent=len(reachable & exposed), strict_unseen_total=len(untouched),
+                      strict_unseen_retrieved=len(found & untouched),
+                      strict_unseen_recall_percent=round(100 * len(found & untouched) / len(untouched), 1)
+                      if untouched else None)
     return result
+
+
+def score_common_unseen(fixture: dict, query_a: str, query_b: str, *, exposed_a: set[str],
+                       exposed_b: set[str], exclude: set[str] | None = None, pm: PubMed | None = None) -> dict:
+    """Aggregate-only paired score on a shared untouched denominator; never reveal gold identities."""
+    pm = pm or client(fixture)
+    exposed = exposed_a | exposed_b
+    a = score(fixture, query_a, exclude=exclude, exposed=exposed, pm=pm)
+    b = score(fixture, query_b, exclude=exclude, exposed=exposed, pm=pm)
+    fields = ("count", "gold_reachable", "retrieved", "recall_percent", "strict_unseen_total",
+              "strict_unseen_retrieved", "strict_unseen_recall_percent")
+    reachable = pm.existing(set(fixture["gold_pmids"]) - (exclude or set()))
+    found_a, found_b = pm.among(query_a, reachable), pm.among(query_b, reachable)
+    return {"a": {k: a[k] for k in fields}, "b": {k: b[k] for k in fields},
+            "gold_gained": len(found_b - found_a), "gold_lost": len(found_a - found_b),
+            "result_count_delta": b["count"] - a["count"],
+            "result_count_ratio": b["count"] / a["count"] if a["count"] else None}
 
 
 def tiab(term: str) -> str:
@@ -355,6 +378,36 @@ def gold_seen(fixture: dict, run_dir: Path) -> set[str]:
         except ValueError:
             continue
     return seen & set(fixture["gold_pmids"])
+
+
+def gold_exposed(fixture: dict, run_dir: Path) -> set[str]:
+    """Exposure, builder screening (including uncertain/excluded), sets and known study companions.
+
+    Never reads private discovery responses. Group keys are accounting, not record content.
+    Historical runs without exposure accounting cannot establish strict independence.
+    """
+    from psb.workspace import read_jsonl
+    work = run_dir / "work"
+    exposed = {str(e["pmid"]) for e in read_jsonl(work / "exposure.jsonl") if e.get("pmid")}
+    # Include non-gold members too: they can expose a gold report of the same study.
+    for path in (work / "sets").glob("*.json"):
+        exposed.update(str(p) for p in json.loads(path.read_text(encoding="utf-8")).get("pmids", []))
+    groups = {}
+    allocation = work / "allocation.json"
+    if allocation.exists():
+        for unit in json.loads(allocation.read_text(encoding="utf-8")).get("units", []):
+            for p in unit.get("members", []):
+                if unit.get("group"):
+                    groups[str(p)] = unit["group"]
+    for row in read_jsonl(work / "screening.jsonl"):
+        p = str(row.get("pmid", ""))
+        if row.get("group"):
+            groups[p] = row["group"]
+        if row.get("context") != "separate":
+            exposed.add(p)
+    exposed_groups = {groups[p] for p in exposed if p in groups}
+    exposed.update(p for p, group in groups.items() if group in exposed_groups)
+    return exposed & set(fixture["gold_pmids"])
 
 
 def gold_reserved(fixture: dict, run_dir: Path) -> set[str]:

@@ -96,3 +96,43 @@ Gold sets are small (6-116 records), so one missed record can move recall by sev
 agent runs vary. Compare sources with several runs per topic and look at per-topic wins and
 losses rather than one mean. A component earns its place in the skill only when it improves
 recall or workload across topics at an acceptable cost.
+
+## Experimental Step 5 semantic miss hunting
+
+Enable with `generate --semantic-miss-hunt`. The prompt reserves up to 30 screenings from the
+existing total allowance for one semantic batch and one repair round before the critic/test.
+Only the PSB OpenAlex adapter is permitted for external discovery; gold records remain
+evaluator-only. Configure `OPENALEX_API_KEY` and provider network access separately from NCBI.
+Use distinct source labels, the same model, date, depth and total budget, and repeat on dev topics:
+
+```bash
+python evals/run.py generate <dev-topic> --driver codex --skill-name control --runs 3 --keep-run-dirs
+python evals/run.py generate <dev-topic> --driver codex --skill-name semantic-step5 --semantic-miss-hunt --runs 3 --keep-run-dirs
+python evals/run.py report --pair generated:control generated:semantic-step5
+python evals/run.py compare-runs <dev-topic> --run-a <control-run-dir> --run-b <treatment-run-dir>
+```
+
+`compare-runs` requires two current protected PSB deliveries and reports aggregate gold gained/lost,
+retrieval count changes and recall on a common unexposed gold subset. Match question, seed condition,
+model and budget before pairing. Use `--condition seeded` for seeded runs. Held-out topics require
+`--heldout`; every comparison is logged and no identities are returned. Keep dev run directories
+to retain response archives and permit paired re-scoring. Separate builds measure end-to-end
+effects; for a controlled Step 5 diagnostic, copy the same pre-discovery workspace checkpoint
+for both arms and give them equal remaining screening allowance.
+
+New scorecards retain the original set-based `unseen_recall_percent` and add `strict_unseen_total`,
+`strict_unseen_retrieved`, `strict_unseen_recall_percent` and `gold_exposed_by_agent`. These exclude
+recorded exposure, builder screening (including uncertain/excluded records), sets, and recognised
+study companions. Separate-context-only held-out records stay unexposed. Runs without allocation
+accounting have no strict score; absent legacy exposure logs do not prove independence. Both
+measures still depend on complete exposure declarations and recognised study grouping.
+
+The paired strict score excludes the union of both runs' exposed gold records from both
+denominators. Per-run strict scores alone have changing denominators. Screening and filtering
+counts appear under `semantic_miss_hunt` in scorecards and in the audit. Null cost means unmeasured.
+
+The adapter archives identifier responses, prompts, timestamps and hashes, checks PubMed Create
+Date availability, and filters protected records before returning candidates. These are current
+semantic rankings and PubMed metadata restricted to date-eligible records, not historical
+snapshots. Final gold recall and retrieval cost remain primary; eligible misses per screened
+record are diagnostic. Offline implementation tests make no claim about effectiveness.

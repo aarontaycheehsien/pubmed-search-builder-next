@@ -126,12 +126,18 @@ def error_text(run_dir: Path, tail_bytes: int = 4000) -> str:
     return "\n".join(parts)
 
 
-def prompt_for(fixture: dict, *, seeds: list[str], depth: str) -> str:
+def prompt_for(fixture: dict, *, seeds: list[str], depth: str, semantic_miss_hunt: bool = False) -> str:
     eligibility = ""
     if fixture.get("eligibility"):
         eligibility = "Eligibility criteria:\n" + "\n".join(f"- {item}" for item in fixture["eligibility"]) + "\n"
     known = (f"Known relevant articles (PMIDs): {', '.join(seeds)}" if seeds
              else "I don't have any known relevant articles.")
+    experiment = ("\nEnable the experimental Step 5 semantic miss hunt. Read references/semantic-miss-hunting.md. "
+                  "Reserve up to 30 of the existing total screening allowance for it during Step 3; "
+                  "do not increase the total budget. Use one batch of up to three eligibility-based prompts, "
+                  "then one bounded repair round before the critic and held-out test. "
+                  "Only the psb miss-hunt OpenAlex adapter is permitted for external discovery.\n"
+                  if semantic_miss_hunt else "")
     return f"""You are testing a skill for building PubMed search strategies. The skill is in ./skill:
 read ./skill/SKILL.md and follow it. Run the skill's scripts from this directory.
 
@@ -145,6 +151,7 @@ Question: {fixture['question']}
 
 Use {depth} depth. I can't answer questions during this run, so don't wait for me: make
 reasonable decisions, record your assumptions, and carry on to the end.
+{experiment}
 \"\"\"
 
 Harness rules:

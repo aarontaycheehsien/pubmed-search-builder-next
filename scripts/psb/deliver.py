@@ -797,6 +797,7 @@ def _routes_section(ws: Workspace, evaluation: dict, receipt: dict | None) -> li
 
 def _audit(ws: Workspace, evaluation: dict, rounds: list[dict], overridden: list[dict] | None = None,
            held: dict | None = None, receipt: dict | None = None, extensions: list[dict] | None = None) -> str:
+    from .miss_hunt import audit_lines
     protocol = evaluation["inputs"]["protocol"]
     strategy = Strategy.from_dict(evaluation["inputs"]["strategy"])
     versions = ws.versions()
@@ -811,6 +812,7 @@ def _audit(ws: Workspace, evaluation: dict, rounds: list[dict], overridden: list
         "",
         *_overridden_section(overridden or []),
         *_extension_section(extensions or []),
+        *audit_lines(ws),
         "## Question and scope",
         "",
         f"- Question: {protocol.get('question')}",

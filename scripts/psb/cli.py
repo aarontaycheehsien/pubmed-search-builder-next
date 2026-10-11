@@ -13,7 +13,7 @@ import random
 import sys
 from pathlib import Path
 
-from . import allocation, config, deliver, disclosure, holdout, mesh, progress, reserved, terms, validation
+from . import allocation, config, deliver, disclosure, holdout, mesh, miss_hunt, progress, reserved, terms, validation
 from .evaluate import compare, evaluate
 from .ncbi import LINKNAMES, NcbiError, PubMed
 from .strategy import StrategyError, lint, numbered_lines, full_query
@@ -275,6 +275,15 @@ def cmd_neighbors(args) -> dict:
             found["batch"] = batch
         return found
     return progress.attach(body, ws, "neighbors", data)
+
+
+def cmd_miss_hunt(args) -> dict:
+    ws = workspace(args)
+    if args.summary:
+        return {"ok": True, **miss_hunt.summary(ws)}
+    queries = read_json(Path(args.queries))
+    body = miss_hunt.run(ws, queries, limit=args.limit, per_query=args.per_query)
+    return progress.attach(body, ws, "miss-hunt", {"counts": body["counts"]})
 
 
 def cmd_resolve(args) -> dict:
@@ -615,6 +624,14 @@ def build_parser() -> argparse.ArgumentParser:
     p.set_defaults(func=cmd_init)
 
     sub.add_parser("status", help="what exists and what is still to do").set_defaults(func=cmd_status)
+
+    p = sub.add_parser("miss-hunt", help="experimental Step 5 semantic discovery outside the current strategy")
+    choice = p.add_mutually_exclusive_group(required=True)
+    choice.add_argument("--queries", help="JSON list of 1–3 eligibility-based semantic queries")
+    choice.add_argument("--summary", action="store_true", help="report discovery and screening accounting")
+    p.add_argument("--limit", type=int, default=30, help="screening queue cap (1–30, within remaining build budget)")
+    p.add_argument("--per-query", type=int, default=50, help="OpenAlex candidates per query (1–50)")
+    p.set_defaults(func=cmd_miss_hunt)
 
     for name, func, help_text in (("count", cmd_count, "count a query and show PubMed's translation"),
                                   ("sample", cmd_sample, "fetch a few records a query retrieves")):

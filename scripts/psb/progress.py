@@ -48,7 +48,8 @@ CONTEXTS = ("separate", "builder")
 EVIDENCE = ("title", "abstract", "full-text")
 # The origin a candidate batch gives the records it showed.
 VIA_ORIGIN = {"prior-reviews": "prior-review", "pilot": "pilot-search", "resolve": "user-supplied",
-              "similar": "similar-articles", "refs": "citation-backward", "citedin": "citation-forward"}
+              "similar": "similar-articles", "refs": "citation-backward", "citedin": "citation-forward",
+              "semantic-miss": "semantic-search"}
 PURPOSES = {"prior-reviews": "Prior-review search", "pilot": "Pilot search", "noise-check": "Noise check"}
 CANDIDATE_PURPOSES = {"prior-reviews", "pilot"}
 LINK_TITLES = {"similar": "Similar articles", "refs": "Citation search, backward", "citedin": "Citation search, forward"}
@@ -160,7 +161,7 @@ def _recall(evaluation: dict) -> str:
 
 ROUTE_LABELS = {"user-supplied": "user-supplied", "prior-review": "prior review", "pilot-search": "pilot search",
                 "similar-articles": "similar articles", "citation-backward": "backward citations",
-                "citation-forward": "forward citations"}
+                "citation-forward": "forward citations", "semantic-search": "semantic search"}
 ROUTE_BUCKET = "separate screening context"
 NO_ROUTE = "not recorded"
 
@@ -336,7 +337,7 @@ def method_label(via: str) -> str:
         kinds = " + ".join(LINK_SHORT.get(l, "linked records") for l in via.split(":", 1)[1].split(","))
         return kinds[:1].upper() + kinds[1:]
     return {"prior-reviews": PURPOSES["prior-reviews"], "pilot": PURPOSES["pilot"],
-            "resolve": "Resolved identifiers"}.get(via, "Candidate search")
+            "resolve": "Resolved identifiers", "semantic-miss": "Semantic miss hunting"}.get(via, "Candidate search")
 
 
 def neighbors_label(links: list[str], origin: list[str], sets: list[str]) -> str:
@@ -645,6 +646,16 @@ def _progress_mode(ws, data):
 
 
 # -- automatic messages -----------------------------------------------------------------------
+
+@event("miss-hunt", 5)
+def _miss_hunt(ws, data):
+    counts = data.get("counts", {})
+    return "Experimental semantic miss hunting", [
+        f"- Queued {_plural(counts.get('queued', 0), 'candidate')} absent from the frozen provisional strategy",
+        "- Screen for eligibility before adding to development; uncertain records need targeted resolution",
+        "- The held-out allocation is unchanged; this does not estimate absolute recall",
+        _budget_line(ws, len(decisions(ws))),
+    ]
 
 @event("resolve", 3)
 def _resolve(ws, data):

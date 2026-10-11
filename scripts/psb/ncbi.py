@@ -240,7 +240,12 @@ class PubMed:
         found: set[str] = set()
         for chunk in chunks(sorted(set(pmids)), UID_CHUNK):
             combined = f"({query}) AND ({uid_block(chunk)})" if query else uid_block(chunk)
-            found.update(self.search(combined, retmax=len(chunk))["pmids"])
+            result = self.search(combined, retmax=len(chunk))
+            if any(i.get("severity") == "error" for i in result.get("issues", [])):
+                raise NcbiError("PubMed rejected the candidate membership query")
+            if result["count"] != len(set(result["pmids"])) or not set(result["pmids"]) <= set(chunk):
+                raise NcbiError("PubMed returned an incomplete or inconsistent candidate membership result")
+            found.update(result["pmids"])
         return found
 
     def existing(self, pmids: Iterable[str]) -> set[str]:
