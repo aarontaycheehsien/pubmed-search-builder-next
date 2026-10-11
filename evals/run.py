@@ -34,8 +34,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import drivers  # noqa: E402
 import harness  # noqa: E402
-from psb import config, deliver, miss_hunt  # noqa: E402
-from psb.workspace import Workspace  # noqa: E402
+import pairing  # noqa: E402
+from psb import config, deliver, miss_hunt, progress  # noqa: E402
+from psb.workspace import Workspace, WorkspaceError, read_json, write_json  # noqa: E402
 
 DEFAULT_RUNS_ROOT = Path(tempfile.gettempdir()) / "psb-evals"
 MIN_RUNS = 3
@@ -193,6 +194,10 @@ def cmd_compare_runs(args) -> int:
     if split == "heldout":
         harness.record_heldout_look({"topic": fixture["id"], "command": "compare-runs", "condition": args.condition})
     runs = [Path(args.run_a), Path(args.run_b)]
+    try:
+        metadata = pairing.validate(runs, fixture, args.condition)
+    except harness.HarnessError as exc:
+        raise SystemExit(str(exc)) from None
     queries = []
     for directory in runs:
         if not (directory / "work" / "allocation.json").exists():
@@ -202,9 +207,11 @@ def cmd_compare_runs(args) -> int:
             raise SystemExit("both runs need a current protected final delivery")
         queries.append(path.read_text(encoding="utf-8"))
     result = harness.score_common_unseen(
-        fixture, *queries, exposed_a=harness.gold_exposed(fixture, runs[0]),
-        exposed_b=harness.gold_exposed(fixture, runs[1]),
+        fixture, *queries, exposed_a=set(metadata[0]["exposed_gold"]),
+        exposed_b=set(metadata[1]["exposed_gold"]),
         exclude=set(fixture.get("seeds") or []) if args.condition == "seeded" else set())
+    result["experiment_status"] = [m["experiment_status"] for m in metadata]
+    result["design"] = "checkpoint" if metadata[0].get("checkpoint") else "end-to-end"
     print(json.dumps(result, indent=2))
     return 0
 
@@ -232,13 +239,43 @@ def generate_once(args, fixture: dict, split: str, *, skill_dir: Path, skill_nam
     staged = drivers.stage_skill(skill_dir, run_dir)
     skill_hash = harness.tree_hash(staged)  # before the run: an agent may write inside its skill copy
     (run_dir / "work").mkdir()
+    checkpoint = None
+    if getattr(args, "checkpoint_from", None):
+        checkpoint = pairing.restore_checkpoint(args.checkpoint_from, run_dir, fixture, args,
+                                                skill_hash=skill_hash, driver_version=provenance["driver_version"])
+    write_json(run_dir / "work" / "experiment-budget.json", {"limit": progress.SCREEN_BUDGET[args.depth]})
     prompt = drivers.prompt_for(fixture, seeds=seeds, depth=args.depth,
                                 semantic_miss_hunt=getattr(args, "semantic_miss_hunt", False))
+    if getattr(args, "checkpoint_only", False):
+        prompt += ("\nCHECKPOINT CONDITION: Reserve at least 30 screenings from the total allowance. "
+                   "Stop after the allocation, vocabulary and successful complete provisional psb eval, "
+                   "before semantic discovery, any critic round, held-out test or report. "
+                   "This stop point overrides the final-delivery instruction. Leave workspace files intact.\n")
+    elif checkpoint:
+        prompt += ("\nMATCHED CONTINUATION: ./work already contains the sealed provisional checkpoint. "
+                   "Resume Step 5 from it; do not initialise, redraw allocation or repeat Steps 1–4. "
+                   "Use the remaining screening allowance for one discovery/repair round, then critic and delivery. "
+                   "Read protocol.json, strategy.json and public development records; never read screening/. "
+                   + ("Use semantic miss hunting. Reserve five screenings for incremental repair checks.\n"
+                      if getattr(args, "semantic_miss_hunt", False)
+                      else "Use existing pilot, similar-article and citation discovery; do not use semantic retrieval.\n"))
     (run_dir / "prompt.txt").write_text(prompt, encoding="utf-8")
+    pairing.start(run_dir, fixture, args, skill_hash=skill_hash, driver_version=provenance["driver_version"], checkpoint=checkpoint)
     print(f"  {fixture['id']} {label}\n  run dir: {run_dir}", flush=True)
     extra = {"effort": args.effort} if args.driver == "codex" and args.effort else {}
     run = drivers.DRIVERS[args.driver](prompt, run_dir, env=child_env(skill_dir, fixture.get("as_of")),
                                        timeout=args.timeout, model=args.model, **extra)
+    if getattr(args, "checkpoint_only", False):
+        try:
+            data = pairing.finish_checkpoint(run_dir, fixture, run)
+        except (harness.HarnessError, WorkspaceError, ValueError, OSError) as exc:
+            data = {"status": "infra" if run.get("returncode") and run.get("seconds", 0) < 60 else "no-delivery",
+                    "error": str(exc)}
+            receipt = pairing.path_for(run_dir)
+            write_json(receipt, {**read_json(receipt), **data})
+        print(json.dumps({"checkpoint_status": data["status"], "run_dir": str(run_dir),
+                          "error": data.get("error")}, indent=2))
+        return data
     transcript = ""
     for name in ("transcript.json", "transcript.jsonl"):
         if (run_dir / name).exists():
@@ -278,6 +315,8 @@ def generate_once(args, fixture: dict, split: str, *, skill_dir: Path, skill_nam
     card["status"] = harness.run_status(card, drivers.error_text(run_dir),
                                         low_disk=harness.free_bytes(run_dir) < harness.LOW_DISK_BYTES)
     card["valid"] = card["status"] == "ok"
+    pair_record = pairing.complete(run_dir, fixture, card)
+    card["experiment_status"] = pair_record["experiment_status"]
     out = save(fixture["id"], label, seal(card, split))
     if split == "heldout":
         harness.record_heldout_look({"topic": fixture["id"], "command": "generate", "run_label": label,
@@ -293,7 +332,8 @@ def generate_once(args, fixture: dict, split: str, *, skill_dir: Path, skill_nam
           f"({card.get('retrieved')}/{card.get('gold_reachable')}) unseen={card.get('unseen_recall_percent')}% "
           f"count={card.get('count')} cost=${card['run'].get('cost_usd')} seconds={card['run'].get('seconds')} "
           f"leakage={card.get('leakage')}\n  scorecard: {out}", flush=True)
-    if card["status"] == "ok" and not getattr(args, "keep_run_dirs", False):  # scorecard and audit are saved; failures stay for diagnosis
+    if (card["status"] == "ok" and not getattr(args, "keep_run_dirs", False)
+            and not getattr(args, "semantic_miss_hunt", False)):
         shutil.rmtree(run_dir, ignore_errors=True)
     return card
 
@@ -301,6 +341,11 @@ def generate_once(args, fixture: dict, split: str, *, skill_dir: Path, skill_nam
 def cmd_generate(args) -> int:
     fixture = harness.load_fixture(args.topic)
     split = guard_topic(fixture, allow_heldout=args.heldout)
+    checkpoint_mode = getattr(args, "checkpoint_only", False) or getattr(args, "checkpoint_from", None)
+    if checkpoint_mode and (split != "dev" or not args.model or args.depth == "quick"):
+        raise SystemExit("checkpoint experiments require a dev topic, explicit --model and standard/thorough depth")
+    if getattr(args, "checkpoint_only", False) and getattr(args, "semantic_miss_hunt", False):
+        raise SystemExit("enable semantic miss hunting on the continuation, not the checkpoint")
     skill_dir = Path(args.skill).resolve()
     skill_name = args.skill_name or skill_dir.name
     if getattr(args, "semantic_miss_hunt", False) and not args.skill_name:
@@ -324,7 +369,7 @@ def cmd_generate(args) -> int:
                 break
             print(f"  infrastructure failure; retrying in {args.retry_wait}s", flush=True)
             time.sleep(args.retry_wait)
-        if card["status"] != "ok":
+        if card["status"] not in {"ok", "checkpoint"} or card.get("experiment_status") == "incomplete":
             status = 2
     return status
 
@@ -365,16 +410,24 @@ def mean_of(values: list) -> float | None:
     return statistics.mean(values) if values else None
 
 
+def experiment_complete(card: dict) -> bool:
+    return (card.get("experiment_status") not in {"incomplete", "invalid"}
+            and (not card.get("semantic_miss_hunt_enabled") or card.get("semantic_miss_hunt", {}).get("performed")))
+
+
 def results_table(groups: dict[tuple, list[dict]]) -> list[str]:
     lines = ["| Topic | Source | Condition | Version | Runs | Recall % | Unseen recall % | Strict unseen recall % | Results | NNR | Cost $ |",
              "|---|---|---|---|---:|---|---|---|---:|---:|---:|"]
     for (topic, source, condition, driver, version), group in sorted(groups.items()):
         statuses = [harness.run_status(c) for c in group]
-        ok = [c for c, s in zip(group, statuses) if s == "ok"]
+        ok = [c for c, s in zip(group, statuses) if s == "ok" and experiment_complete(c)]
+        incomplete = sum(s == "ok" and not experiment_complete(c) for c, s in zip(group, statuses))
         attempted = sum(s != "infra" for s in statuses)
         infra = len(group) - attempted
         thin = source.startswith("generated:") and len(ok) < MIN_RUNS
         runs = f"{len(ok)}/{attempted}" + (f" +{infra} infra" if infra else "") + (" †" if thin else "")
+        if incomplete:
+            runs += f" ({incomplete} incomplete experiment)"
         label = source + (f" ({driver})" if driver else "")
         lines.append(
             f"| {topic[:40]} | {label} | {condition} | {version} | {runs} | {spread([c['recall_percent'] for c in ok])} "
@@ -390,7 +443,7 @@ def paired_table(groups: dict[tuple, list[dict]], a: str, b: str) -> list[str]:
     for (topic, source, condition, driver, _), group in groups.items():
         if source in (a, b):
             ok.setdefault((driver, condition, topic, source), []).extend(
-                c for c in group if harness.run_status(c) == "ok")
+                c for c in group if harness.run_status(c) == "ok" and experiment_complete(c))
     lines = []
     for driver, condition in sorted({(d, c) for d, c, _, _ in ok}):
         paired = sorted({t for d, c, t, _ in ok if (d, c) == (driver, condition)
@@ -443,7 +496,8 @@ def cmd_report(args) -> int:
         "Strict unseen recall also excludes recorded exposure, builder screening and recognised study companions; "
         "it is unavailable for older runs without allocation accounting. NNR is total "
         "results divided by gold retrieved: a workload proxy, not precision. Generated rows show the mean (min-max) "
-        "over `ok` runs.",
+        "over `ok` runs with completed experiments. Incomplete semantic treatments are reported but excluded. "
+        "Source-level comparisons are descriptive; use `compare-runs` to verify matched experimental settings.",
         "",
         "Version is a hash of the skill as staged into the run (`legacy`: scored before versions were recorded). "
         + ("Every version is shown." if args.all_versions else
@@ -511,6 +565,9 @@ def main() -> int:
     p.add_argument("--retry-wait", type=int, default=300, help="seconds to wait before an infra retry")
     p.add_argument("--keep-run-dirs", action="store_true", help="keep a delivered run's directory (default: delete it)")
     p.add_argument("--semantic-miss-hunt", action="store_true", help="enable one Step 5 semantic batch within the existing budget")
+    stop = p.add_mutually_exclusive_group()
+    stop.add_argument("--checkpoint-only", action="store_true", help="stop at a provisional strategy with 30 screenings remaining")
+    stop.add_argument("--checkpoint-from", help="continue a sealed checkpoint run with matched scope/model/budget")
     p.set_defaults(func=cmd_generate)
     p = sub.add_parser("freeze", help="add never-run topics to the held-out set")
     p.add_argument("topics", nargs="+")

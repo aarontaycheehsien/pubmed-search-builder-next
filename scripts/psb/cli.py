@@ -278,9 +278,14 @@ def cmd_neighbors(args) -> dict:
 
 
 def cmd_miss_hunt(args) -> dict:
+    from . import semantic_repair
     ws = workspace(args)
     if args.summary:
         return {"ok": True, **miss_hunt.summary(ws)}
+    if args.repair_decisions:
+        return semantic_repair.save_decisions(ws, read_json(Path(args.repair_decisions)))
+    if args.check_repair:
+        return semantic_repair.check_repair(ws, sample_size=args.sample_size)
     queries = read_json(Path(args.queries))
     body = miss_hunt.run(ws, queries, limit=args.limit, per_query=args.per_query)
     return progress.attach(body, ws, "miss-hunt", {"counts": body["counts"]})
@@ -629,6 +634,9 @@ def build_parser() -> argparse.ArgumentParser:
     choice = p.add_mutually_exclusive_group(required=True)
     choice.add_argument("--queries", help="JSON list of 1–3 eligibility-based semantic queries")
     choice.add_argument("--summary", action="store_true", help="report discovery and screening accounting")
+    choice.add_argument("--repair-decisions", help="JSON diagnoses, dispositions and generalisation evidence")
+    choice.add_argument("--check-repair", action="store_true", help="measure revision and queue incremental screening")
+    p.add_argument("--sample-size", type=int, default=5, help="incremental sample (0–10), within shared budget")
     p.add_argument("--limit", type=int, default=30, help="screening queue cap (1–30, within remaining build budget)")
     p.add_argument("--per-query", type=int, default=50, help="OpenAlex candidates per query (1–50)")
     p.set_defaults(func=cmd_miss_hunt)

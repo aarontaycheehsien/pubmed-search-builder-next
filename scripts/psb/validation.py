@@ -66,10 +66,16 @@ def summarize(issues: list[dict], *, complete: bool) -> dict:
 def input_snapshot(ws) -> dict:
     """Everything an evaluation rests on. Held-out records are not sets, so they appear here only as the
     digest of the frozen allocation: a critic packet built from the inputs never names them."""
+    from . import semantic_repair
+    from .miss_hunt import RECEIPT
+    from .workspace import read_json
     allocation = ws.allocation()
+    semantic = (semantic_repair.evidence(ws) if (ws.root / RECEIPT).exists()
+                and read_json(ws.root / RECEIPT).get("version", 1) >= 2 else None)
     return {"strategy": ws.strategy().to_dict(), "protocol": ws.protocol(), "sets": ws.sets(),
             "allocation": digest(allocation) if allocation is not None else None,
-            "as_of": ws.pubmed.as_of, "policy_version": POLICY_VERSION}
+            "as_of": ws.pubmed.as_of, "policy_version": POLICY_VERSION,
+            **({"semantic_evidence": semantic} if semantic is not None else {})}
 
 
 def input_snapshot_v1(ws) -> dict:

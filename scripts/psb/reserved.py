@@ -24,13 +24,19 @@ _NUMBER = re.compile(r"(?<![\w.])0*(\d+)(?![\w.])")
 
 
 def record(ws: Workspace, pmids: Iterable[str], kind: str, via: str, *, note: str = "",
-           declared: bool = False) -> list[dict]:
+           declared: bool = False, event_key: str | None = None) -> list[dict]:
     """Append one exposure event per PMID."""
     if kind not in KINDS:
         raise WorkspaceError(f"exposure kind must be one of {', '.join(KINDS)}")
     entries = []
+    previous = {(e.get("event_key"), e["pmid"]): e for e in events(ws)} if event_key else {}
     for pmid in dict.fromkeys(str(p) for p in pmids):
+        if (event_key, pmid) in previous:
+            entries.append(previous[event_key, pmid])
+            continue
         entry = {"pmid": pmid, "kind": kind, "via": via, "declared": declared, "note": note.strip(), "at": now()}
+        if event_key:
+            entry["event_key"] = event_key
         append_jsonl(ws.root / "exposure.jsonl", entry)
         entries.append(entry)
     return entries

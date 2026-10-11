@@ -8,8 +8,8 @@ a random source or the message sequence number.
     candidates.jsonl  candidate batches surfaced by neighbors, sample --purpose and resolve
     screening.jsonl   screening decisions recorded by psb screen (the latest per PMID counts)
 
-None of these files is part of ``validation.input_snapshot``: they never affect evaluation,
-critic binding or delivery verification.
+Ordinary progress files do not affect validation. Experimental semantic repairs bind their
+relevant screening decisions to evaluation, critic review and delivery verification.
 
 A restricted invocation (one serving the separate screening context; see disclosure.py) gets a
 ``separate:*`` message built from permitted facts only. Messages for the builder never list a record
@@ -49,7 +49,7 @@ EVIDENCE = ("title", "abstract", "full-text")
 # The origin a candidate batch gives the records it showed.
 VIA_ORIGIN = {"prior-reviews": "prior-review", "pilot": "pilot-search", "resolve": "user-supplied",
               "similar": "similar-articles", "refs": "citation-backward", "citedin": "citation-forward",
-              "semantic-miss": "semantic-search"}
+              "semantic-miss": "semantic-search", "semantic-repair": "semantic-search"}
 PURPOSES = {"prior-reviews": "Prior-review search", "pilot": "Pilot search", "noise-check": "Noise check"}
 CANDIDATE_PURPOSES = {"prior-reviews", "pilot"}
 LINK_TITLES = {"similar": "Similar articles", "refs": "Citation search, backward", "citedin": "Citation search, forward"}
@@ -316,10 +316,17 @@ def batches(ws: Workspace) -> list[dict]:
 
 
 def record_batch(ws: Workspace, via: str, label: str, pmids: list[str], *, total: int,
-                 origin: list[str] | None = None, query: str | None = None, private: bool = False) -> dict:
+                 origin: list[str] | None = None, query: str | None = None, private: bool = False,
+                 event_key: str | None = None) -> dict:
     """Append a candidate batch; the allocation reads its ``via`` and ``pmids`` for origins. A batch
     found in the separate context keeps a fixed label and no query or seeds in candidates.jsonl: its
     raw provenance goes to screening/batches.jsonl under the same batch id."""
+    if event_key:
+        previous = next((b for b in batches(ws) if b.get("event_key") == event_key), None)
+        if previous is not None:
+            if previous.get("pmids") != list(pmids) or previous.get("via") != via:
+                raise ProgressError("candidate batch retry does not match the original event")
+            return previous
     number = f"C{len(batches(ws)) + 1}"
     if private:
         _append(ws.root / "screening" / "batches.jsonl",
@@ -327,6 +334,8 @@ def record_batch(ws: Workspace, via: str, label: str, pmids: list[str], *, total
     entry = {"batch": number, "via": via, "label": method_label(via) if private else label,
              "from": [] if private else list(origin or []), "query": None if private else query, "total": total,
              "pmids": list(pmids), "private": private, "disclosure_version": DISCLOSURE_VERSION}
+    if event_key:
+        entry["event_key"] = event_key
     _append(ws.root / "candidates.jsonl", entry)
     return entry
 
@@ -353,6 +362,16 @@ def decisions(ws: Workspace) -> dict[str, dict]:
         if row.get("decision") in DECISIONS and str(row.get("pmid", "")).isdigit():
             latest[str(row["pmid"])] = row
     return latest
+
+
+def screening_budget(ws):
+    path = ws.root / "experiment-budget.json"
+    if path.exists():
+        value = read_json(path).get("limit")
+        if type(value) is not int or value <= 0:
+            raise ProgressError("experiment screening limit must be a positive integer")
+        return value
+    return SCREEN_BUDGET.get(ws.protocol().get("depth"), 150)
 
 
 def attribution(ws: Workspace) -> dict[str, dict]:
@@ -412,6 +431,10 @@ def record_screening(ws: Workspace, *, include=(), exclude=(), uncertain=(), rea
             raise ProgressError(f"PMID {pmid} has two decisions ({seen[pmid]} and {decision}) in one call")
     unique = list({pmid: (pmid, decision, why, extra) for pmid, decision, why, extra in rows}.values())
     before = decisions(ws)
+    experimental = ((ws.root / "experiment-budget.json").exists()
+                    or (ws.root / "screening/semantic-miss-hunt/request.json").exists())
+    if experimental and len(set(before) | {r[0] for r in unique}) > screening_budget(ws):
+        raise ProgressError("screening would exceed the experiment's shared candidate budget")
     entries = []
     for pmid, decision, why, extra in unique:
         private = extra["context"] == "separate"

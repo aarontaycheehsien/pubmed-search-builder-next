@@ -80,8 +80,11 @@ def run(ws: Workspace, queries: list[str], *, limit: int = MAX_SCREEN,
         reserved.check_query(ws, query)
     ws.strategy().validate()
     versions = ws.versions()
+    current_inputs = {k: v for k, v in validation.input_snapshot(ws).items() if k != "semantic_evidence"}
+    previous_inputs = {k: v for k, v in (versions[-1]["evaluation"].get("inputs") or {}).items()
+                       if k != "semantic_evidence"} if versions else {}
     if (not versions or not versions[-1]["evaluation"].get("ok")
-            or versions[-1]["evaluation"].get("input_sha256") != validation.digest(validation.input_snapshot(ws))):
+            or current_inputs != previous_inputs):
         raise WorkspaceError("run psb eval on the current strategy and inputs before miss hunting")
     path = ws.root / RECEIPT
     if path.exists():
@@ -110,8 +113,12 @@ def _run(ws, queries, limit, per_query, client):
             raise WorkspaceError("interrupted miss hunt is bound to its original queries, strategy and cutoff")
     else:
         write_json(state_path, {"request": request, "started_at": now()})
+    pending = private / "pending.json"
+    if pending.exists():
+        # Membership and selection were already measured. Finish only the journal writes.
+        return _finish(ws, read_json(pending))
     screened = progress.decisions(ws)
-    remaining = max(0, progress.SCREEN_BUDGET.get(ws.protocol().get("depth"), 150) - len(screened))
+    remaining = max(0, progress.screening_budget(ws) - len(screened))
     if not remaining:
         raise WorkspaceError("the build screening budget is exhausted; reserve allowance before Step 5")
     limit = min(limit, remaining)
@@ -161,7 +168,8 @@ def _run(ws, queries, limit, per_query, client):
         raise WorkspaceError("screening changed during miss hunting; retry to recalculate the remaining budget")
     hidden = _protected(ws, misses)
     selected = [p for p in misses if p not in hidden][:limit]
-    receipt = {"version": 1, "provider": "openalex-semantic", "completed_at": now(),
+    receipt = {"version": 2, "provider": "openalex-semantic", "completed_at": now(),
+               "event_key": "semantic-" + validation.digest(request),
                "query": effective_query(query, ws.pubmed.as_of, ws.pubmed.as_of_field),
                "strategy_sha256": validation.digest(ws.strategy().to_dict()),
                "as_of": ws.pubmed.as_of, "as_of_field": ws.pubmed.as_of_field,
@@ -177,17 +185,25 @@ def _run(ws, queries, limit, per_query, client):
                "provider_cost_usd": None,
                "note": "Current semantic index and PubMed metadata, restricted to date-eligible records; "
                        "not a historical snapshot or an estimate of absolute recall."}
+    write_json(pending, receipt)
+    return _finish(ws, receipt)
+
+
+def _finish(ws, receipt):
+    selected = [r["pmid"] for r in receipt["candidates"]]
+    if set(selected) & _known_protected(ws):
+        raise WorkspaceError("protection changed during interrupted discovery; no candidates can be exposed")
+    key = receipt["event_key"]
     if selected:
-        progress.record_batch(ws, "semantic-miss", "Semantic miss hunting", selected, total=len(selected))
-        reserved.record(ws, selected, "feedback", "miss-hunt")
+        progress.record_batch(ws, "semantic-miss", "Semantic miss hunting", selected, total=len(selected), event_key=key)
+        reserved.record(ws, selected, "feedback", "miss-hunt", event_key=key)
     write_json(ws.root / RECEIPT, receipt)
-    ws.log({"type": "semantic-miss-hunt", "strategy_sha256": receipt["strategy_sha256"],
-            "queued": len(selected)})
     return {"ok": True, **receipt, "next": "Fetch and screen queued PMIDs. Add confirmed eligible records to "
             "development only, diagnose with psb eval and psb terms miss, then justify any revision."}
 
 
 def summary(ws: Workspace) -> dict:
+    from . import semantic_repair
     path = ws.root / RECEIPT
     if not path.exists():
         return {"performed": False, "attempted": (ws.root / PRIVATE / "request.json").exists()}
@@ -203,6 +219,7 @@ def summary(ws: Workspace) -> dict:
                                             for p in selected & ws.set_pmids("development")),
             "screening_decisions": len(rows),
             "full_text_decisions": sum(r.get("evidence") == "full-text" for r in rows),
+            "repair": semantic_repair.summary(ws),
             "provider_cost_usd": receipt["provider_cost_usd"], "note": receipt["note"]}
 
 

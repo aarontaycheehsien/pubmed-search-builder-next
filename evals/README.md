@@ -106,19 +106,40 @@ evaluator-only. Configure `OPENALEX_API_KEY` and provider network access separat
 Use distinct source labels, the same model, date, depth and total budget, and repeat on dev topics:
 
 ```bash
-python evals/run.py generate <dev-topic> --driver codex --skill-name control --runs 3 --keep-run-dirs
-python evals/run.py generate <dev-topic> --driver codex --skill-name semantic-step5 --semantic-miss-hunt --runs 3 --keep-run-dirs
+python evals/run.py generate <dev-topic> --driver codex --model <model> --skill-name control --runs 3 --keep-run-dirs
+python evals/run.py generate <dev-topic> --driver codex --model <model> --skill-name semantic-step5 --semantic-miss-hunt --runs 3 --keep-run-dirs
 python evals/run.py report --pair generated:control generated:semantic-step5
 python evals/run.py compare-runs <dev-topic> --run-a <control-run-dir> --run-b <treatment-run-dir>
 ```
 
-`compare-runs` requires two current protected PSB deliveries and reports aggregate gold gained/lost,
+`compare-runs` requires two current protected PSB deliveries with evaluator-owned receipts in
+`evals/.pairing/` and reports aggregate gold gained/lost,
 retrieval count changes and recall on a common unexposed gold subset. Match question, seed condition,
 model and budget before pairing. Use `--condition seeded` for seeded runs. Held-out topics require
 `--heldout`; every comparison is logged and no identities are returned. Keep dev run directories
 to retain response archives and permit paired re-scoring. Separate builds measure end-to-end
-effects; for a controlled Step 5 diagnostic, copy the same pre-discovery workspace checkpoint
-for both arms and give them equal remaining screening allowance.
+effects. Comparisons reject mismatched fixture, cutoff, seeds, model/effort, driver version,
+skill hash, depth, budget or checkpoint, failed/leaking runs, changed deliveries and missing
+metadata. An explicit `--model` is required for pairing. Semantic-enabled runs that never
+complete discovery receive `experiment_status: incomplete` and cannot enter a matched comparison.
+Legacy/manual runs cannot establish matching. The registry stays outside the builder workspace;
+preserve it along with the run directories. Exposure denominators are frozen when each run ends.
+
+For a controlled Step 5 diagnostic, seal one provisional checkpoint and fork both arms from it:
+
+```bash
+python evals/run.py generate <dev-topic> --driver codex --model <model> --checkpoint-only --runs 1 --skill-name checkpoint
+python evals/run.py generate <dev-topic> --driver codex --model <model> --checkpoint-from <checkpoint-run-dir> --skill-name control --runs 1 --keep-run-dirs
+python evals/run.py generate <dev-topic> --driver codex --model <model> --checkpoint-from <checkpoint-run-dir> --skill-name semantic-step5 --semantic-miss-hunt --runs 1 --keep-run-dirs
+python evals/run.py compare-runs <dev-topic> --run-a <control-run-dir> --run-b <treatment-run-dir>
+```
+
+Checkpoint experiments are development-only and require standard/thorough depth. The checkpoint
+must have a current successful complete evaluation, a frozen allocation and at least 30 screenings
+left, before discovery, critic or held-out test. The harness checks leakage and seals the workspace
+hash; continuations require unchanged contents, skill and configuration. Both arms share the same
+remaining allowance; the semantic arm reserves five screenings for incremental repair evidence.
+Repeat with independent checkpoints and multiple development topics. Do not tune using held-out misses.
 
 New scorecards retain the original set-based `unseen_recall_percent` and add `strict_unseen_total`,
 `strict_unseen_retrieved`, `strict_unseen_recall_percent` and `gold_exposed_by_agent`. These exclude

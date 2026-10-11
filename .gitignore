@@ -8,3 +8,4 @@ __pycache__/
 runs/
 .cache/
 uv.lock
+evals/.pairing/

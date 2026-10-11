@@ -135,7 +135,8 @@ def prompt_for(fixture: dict, *, seeds: list[str], depth: str, semantic_miss_hun
     experiment = ("\nEnable the experimental Step 5 semantic miss hunt. Read references/semantic-miss-hunting.md. "
                   "Reserve up to 30 of the existing total screening allowance for it during Step 3; "
                   "do not increase the total budget. Use one batch of up to three eligibility-based prompts, "
-                  "then one bounded repair round before the critic and held-out test. "
+                  "Reserve five of those screenings for the incremental repair sample. "
+                  "Use miss-hunt --limit 25, then one bounded repair round and --check-repair before the critic and held-out test. "
                   "Only the psb miss-hunt OpenAlex adapter is permitted for external discovery.\n"
                   if semantic_miss_hunt else "")
     return f"""You are testing a skill for building PubMed search strategies. The skill is in ./skill:

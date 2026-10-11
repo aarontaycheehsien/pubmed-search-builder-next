@@ -298,11 +298,12 @@ def _closing_problems(rounds: list[dict]) -> list[tuple[int, str]]:
 
 def review_gate(ws: Workspace, evaluation: dict, *, rounds: list[dict] | None = None,
                 overrides: list[dict] | None = None) -> dict:
-    blockers = []
+    from .semantic_repair import gate
+    blockers = gate(ws)
     rounds = critic_rounds(ws) if rounds is None else rounds
     overrides = critic_overrides(ws) if overrides is None else overrides
     if not rounds:
-        return {"blockers": [validation.issue("critic_missing", "A current internal critic is required at every depth")], "findings": []}
+        return {"blockers": blockers + [validation.issue("critic_missing", "A current internal critic is required at every depth")], "findings": []}
     latest = rounds[-1]
     active = {}
     for r in rounds:
@@ -484,6 +485,7 @@ def _last_rounds(ws: Workspace, rounds: list[dict], kind: str) -> bool:
 
 
 def critic_packet(ws: Workspace, *, anyway: bool = False) -> Path:
+    from .semantic_repair import critic_lines
     evaluation = latest_evaluation(ws)
     if not evaluation["validation"]["complete"]:
         raise WorkspaceError("run a complete psb eval before requesting critique")
@@ -531,7 +533,7 @@ def critic_packet(ws: Workspace, *, anyway: bool = False) -> Path:
              "Phrase warnings require clause-specific interpretation review. ~0 allows any order; no wildcards in proximity. "
              "Prefer explicit tested expressions; do not delete terms merely because seeds are already covered. "
              "A retained warning needs a reason and evidence. Rewrites/removals require another complete evaluation.", "",
-             *_scope_section(evaluation), *_line_table(evaluation), "", "## Complete evidence", "", "```json", json.dumps(evaluation, indent=2, ensure_ascii=False),
+             *_scope_section(evaluation), *_line_table(evaluation), *critic_lines(ws), "", "## Complete evidence", "", "```json", json.dumps(evaluation, indent=2, ensure_ascii=False),
              "```", "", "## Earlier critic rounds", "", "```json", json.dumps(rounds, indent=2, ensure_ascii=False), "```", "",
              "## Response JSON", "", "```json", json.dumps(template, indent=2, ensure_ascii=False), "```"]
     path = ws.root / "critic" / f"packet-{number}.md"
@@ -600,6 +602,7 @@ def _diagnostic(ws: Workspace, evaluation: dict, blockers: list[dict]) -> Path:
 
 
 def report(ws: Workspace, *, diagnostic: bool = False, note: str = "") -> dict:
+    from .semantic_repair import evidence
     with _publication_lock(ws):
         _archive(ws)
         cache = ws.pubmed.cache
@@ -642,6 +645,7 @@ def report(ws: Workspace, *, diagnostic: bool = False, note: str = "") -> dict:
         # One rendering of the held-out interpretation: the audit embeds it and the manifest carries it,
         # so the delivery message relays the same bytes.
         held = holdout.message(ws, receipt, evaluation)
+        semantic_evidence = evidence(ws)
         query_bytes = (evaluation["query"] + "\n").encode("utf-8")
         audit_bytes = _audit(ws, evaluation, rounds, overridden, held, receipt, extensions).encode("utf-8")
         import hashlib
@@ -651,6 +655,7 @@ def report(ws: Workspace, *, diagnostic: bool = False, note: str = "") -> dict:
                     "input_sha256": evaluation["input_sha256"], "review_sha256": evaluation["review_sha256"], "critic_sha256": critic_hash,
                     "created": now(), "query": evaluation["query"], "artifacts": hashes, "human_press_review": "pending",
                     "allocation_sha256": state["sha256"] if state else None,
+                    "semantic_evidence": semantic_evidence,
                     **({"as_of_field": evaluation["as_of_field"]} if evaluation.get("as_of_field") else {}),
                     "holdout": {"case": held["case"], "text": held["text"], "template_version": held["template_version"],
                                 **({"receipt": receipt["number"], "receipt_sha256": holdout.receipt_digest(ws, receipt["number"])}
@@ -662,6 +667,8 @@ def report(ws: Workspace, *, diagnostic: bool = False, note: str = "") -> dict:
             write_json(stage / "validation-manifest.json", manifest)
             if validation.digest(validation.input_snapshot(ws)) != evaluation["input_sha256"] or critic_evidence(ws) != critic_hash:
                 raise WorkspaceError("inputs or critic changed during finalization")
+            if evidence(ws) != semantic_evidence:
+                raise WorkspaceError("semantic evidence changed during finalization")
             for name in ("final-query.txt", "audit.md", "validation-manifest.json"):
                 (stage / name).replace(ws.root / name)
         except (OSError, WorkspaceError) as exc:
@@ -695,6 +702,7 @@ def _changed_hint(ws: Workspace, manifest: dict, snapshot: dict) -> str:
 def verify_delivery(ws: Workspace) -> dict:
     """Read-only receipt check for consumers; never trust an orphaned or stale query file."""
     import hashlib
+    from .semantic_repair import evidence
     try:
         manifest = read_json(ws.root / "validation-manifest.json")
         policy = manifest.get("policy_version") if isinstance(manifest, dict) else None
@@ -708,6 +716,8 @@ def verify_delivery(ws: Workspace) -> dict:
             raise WorkspaceError("delivery inputs have changed" + _changed_hint(ws, manifest, snapshot))
         if manifest.get("critic_sha256") != critic_evidence(ws):
             raise WorkspaceError("critic evidence has changed")
+        if "semantic_evidence" in manifest and manifest["semantic_evidence"] != evidence(ws):
+            raise WorkspaceError("semantic discovery or repair evidence has changed")
         for name in ("final-query.txt", "audit.md"):
             expected = manifest.get("artifacts", {}).get(name)
             if hashlib.sha256((ws.root / name).read_bytes()).hexdigest() != expected:

@@ -4,7 +4,7 @@ import json
 import pytest
 
 from conftest import record
-from psb import allocation, cli, deliver, holdout, miss_hunt, progress, reserved
+from psb import allocation, cli, deliver, holdout, miss_hunt, progress, reserved, semantic_repair
 from psb.evaluate import evaluate
 from psb.http import TransportError
 from psb.ncbi import NcbiError
@@ -79,7 +79,8 @@ def test_reserved_records_and_known_companions_never_reach_receipt(make_ws):
     result = miss_hunt.run(ws, ["topic"], client=provider)
     assert [c["pmid"] for c in result["candidates"]] == ["998"]
     text = json.dumps(result)
-    assert HELD[0] not in text and "999" not in text
+    # Exact identifiers, not coincidental digit substrings in timestamps or SHA-256 digests.
+    assert json.dumps(HELD[0]) not in text and '"999"' not in text
     assert not ({e["pmid"] for e in reserved.events(ws)} & {HELD[0], "999"})
     assert "999" in ws.reserved_pmids()
 
@@ -158,6 +159,7 @@ def test_miss_hunt_survives_critic_holdout_and_protected_delivery(make_ws):
     pm.universe.add("998")
     miss_hunt.run(ws, ["topic"], client=Provider({"topic": [work("998")]}))
     progress.record_screening(ws, uncertain=["998"], evidence="abstract", origin=["semantic-search"])
+    semantic_repair.check_repair(ws)
     through_critic(ws)
     holdout.run(ws)
     result = deliver.report(ws)

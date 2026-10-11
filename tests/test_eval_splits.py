@@ -91,11 +91,22 @@ def test_heldout_cards_drop_misses_and_uses_are_logged(evals_dir):
 def test_compare_runs_enforces_heldout_guard_and_records_look(evals_dir, monkeypatch, capsys):
     from conftest import FakePubMed
     from psb.workspace import write_json
+    from psb import validation
+    import pairing
     run.cmd_freeze(argparse.Namespace(topics=["T2"]))
     a, b = evals_dir / "a", evals_dir / "b"
     for directory in (a, b):
         write_json(directory / "work" / "allocation.json", {"units": []})
+        write_json(directory / "work" / "validation-manifest.json", {"test": True})
         (directory / "work" / "final-query.txt").write_text("asthma[tiab]", encoding="utf-8")
+        metadata = {"version": 1, "fixture_sha256": harness.fixture_hash(harness.load_fixture("T2")),
+                    "condition": "noseed", "as_of": FIXTURE["as_of"], "status": "ok", "leakage": [],
+                    "model": "test-model", "screening_budget": 150, "screening_used": 20,
+                    "driver": "codex", "driver_version": "1", "skill_hash": "skill", "checkpoint": None,
+                    "effort": "medium", "depth": "standard", "seeds": [], "semantic_enabled": False,
+                    "delivery_sha256": validation.digest({"test": True}), "strategy_sha256": validation.digest("asthma[tiab]"),
+                    "exposed_gold": [], "experiment_status": "completed"}
+        write_json(pairing.path_for(directory), metadata)
     monkeypatch.setattr(run, "_verify", lambda directory, asof: {"ok": True, "query_file": str(directory / "work" / "final-query.txt")})
     monkeypatch.setattr(harness, "client", lambda fixture: FakePubMed({"asthma[tiab]": {"1", "2"}}))
     args = argparse.Namespace(topic="T2", heldout=False, run_a=str(a), run_b=str(b), condition="noseed")
