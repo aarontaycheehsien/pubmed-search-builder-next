@@ -50,6 +50,8 @@ PRESS = "This is a draft. It needs PRESS peer review by an information specialis
 UNLOGGED = "Not from a logged psb search"
 NOT_MEASURED = "not measured (evaluation did not complete)"
 ROLE_LABELS = {"search": "Searched", "screen": "Screened", "optional": "Optional"}
+CAUSE_LABELS = {"phrase_gap": "phrase gap", "embedded_stem": "word inside a longer word",
+                "no_abstract": "no abstract", "no_block_wording": "no wording for the block"}
 SCOPE_MEANING = [
     "What this means:",
     "- **Searched**: a block of the PubMed search. A record is found only if it matches every searched concept, "
@@ -537,8 +539,12 @@ def _terms_miss(ws, data):
             by_set[name] = by_set.get(name, 0) + 1
     lines = [f"Diagnosed {_plural(len(misses), 'missed known record')} from v{data.get('version')}",
              f"- Missed: {_pmids(m['pmid'] for m in misses)}",
-             f"- By set: {', '.join(f'{k} {v}' for k, v in sorted(by_set.items())) or 'none'}",
-             "- Each miss is fixed in its failing block or recorded as out of reach"]
+             f"- By set: {', '.join(f'{k} {v}' for k, v in sorted(by_set.items())) or 'none'}"]
+    causes = data.get("causes") or {}
+    if causes:
+        lines.append("- Likely cause, per failing block: "
+                     + " · ".join(f"{CAUSE_LABELS.get(k, k)} {_n(v)}" for k, v in sorted(causes.items())))
+    lines.append("- Each miss is fixed in its failing block or recorded as out of reach")
     return "Miss diagnosis", lines
 
 

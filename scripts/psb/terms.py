@@ -11,8 +11,9 @@ from __future__ import annotations
 import re
 from collections import defaultdict
 
+from . import syntax
 from .ncbi import PubMed
-from .strategy import Strategy
+from .strategy import Block, Strategy
 
 PUBMED_TOTAL = 38_000_000
 NOISE_BACKGROUND = 100_000
@@ -55,8 +56,8 @@ def record_text(record: dict) -> str:
     return " ".join([str(record.get("title", "")), str(record.get("abstract", "")), " ".join(record.get("keywords", []))])
 
 
-def _phrases(record: dict) -> set[str]:
-    tokens = [t.lower() for t in TOKEN.findall(record_text(record))]
+def _grams(text: str) -> set[str]:
+    tokens = [t.lower() for t in TOKEN.findall(text)]
     grams = set()
     for size in (1, 2, 3):
         for i in range(len(tokens) - size + 1):
@@ -69,6 +70,10 @@ def _phrases(record: dict) -> set[str]:
                 continue
             grams.add(" ".join(gram))
     return grams
+
+
+def _phrases(record: dict) -> set[str]:
+    return _grams(record_text(record))
 
 
 def _acronyms(record: dict) -> set[str]:
@@ -224,16 +229,176 @@ def rank(pm: PubMed, records: list[dict], strategy: Strategy, *, fields: list[st
     }
 
 
+# -- why a block missed a record ----------------------------------------------------------------
+
+TEXT_FIELDS = {"tiab", "ti", "ab", "tw", "ot"}
+MAX_GAP = 3    # widest gap (words between a phrase's words) still reported as a near miss
+MIN_EMBED = 5  # shorter stems sit inside too many unrelated words (rate: moderate, accurate)
+CAUSES = {
+    "phrase_gap": "The block has the phrase, but the record separates or reorders its words, or uses only part "
+                  "of it. Test the suggested proximity or shorter phrase with psb eval.",
+    "embedded_stem": "The block's word occurs only inside a longer word (virus: rotavirus). PubMed cannot "
+                     "truncate on the left: name those words, or the family they belong to, in the block.",
+    "no_abstract": "The record has no abstract, so only its title and MeSH can match. Check mesh_not_in_strategy.",
+    "no_block_wording": "Nothing in the title, abstract or keywords matches or nearly matches the block. Read the "
+                        "record. If it names the concept in other words, add them (text_not_in_strategy, "
+                        "mesh_not_in_strategy). If it does not name the concept at all, no term can reach it while "
+                        "this block is AND-ed: record it as out of reach instead of widening the block.",
+}
+_WORD = re.compile(r"[a-z0-9]+")
+_DISTANCE = re.compile(r":~(\d+)$")
+
+
+def _matcher(word: str):
+    if "*" not in word:
+        return lambda token: token == word
+    pattern = re.compile("[a-z0-9]*".join(re.escape(part) for part in word.split("*")) + "$")
+    return lambda token: bool(pattern.match(token))
+
+
+def text_atoms(block: Block) -> list[dict]:
+    """The block's free-text terms as word lists: ``"hip pain"[tiab:~2]`` -> hip, pain, distance 2."""
+    found = []
+    for term in block.terms:
+        for atom in syntax.atoms(term):
+            if atom["field"] not in TEXT_FIELDS:
+                continue
+            words = [w for w in (re.sub(r"[^a-z0-9*]", "", raw) for raw in re.split(r"[\s-]+", atom["text"].lower()))
+                     if w.strip("*")]
+            if not words:
+                continue
+            distance = _DISTANCE.search(atom["tag"].replace(" ", ""))
+            found.append({"term": f"{atom['text']}[{atom['tag']}]", "words": words, "field": atom["field"],
+                          "distance": int(distance[1]) if distance else None, "matchers": [_matcher(w) for w in words]})
+    return found
+
+
+def _segments(record: dict) -> list[list[str]]:
+    """Title, abstract and each keyword as separate token runs: a phrase cannot span two of them."""
+    parts = [str(record.get("title", "")), str(record.get("abstract", "")), *map(str, record.get("keywords", []))]
+    return [tokens for tokens in (_WORD.findall(part.lower()) for part in parts) if tokens]
+
+
+def _adjacent(tokens: list[str], matchers: list) -> int | None:
+    size = len(matchers)
+    return next((i for i in range(len(tokens) - size + 1) if all(m(tokens[i + k]) for k, m in enumerate(matchers))), None)
+
+
+def _nearest(tokens: list[str], matchers: list) -> tuple[int, int] | None:
+    """The smallest window that holds a different token for every word of the phrase, in any order."""
+    positions = [[i for i, token in enumerate(tokens) if m(token)] for m in matchers]
+    if not all(positions):
+        return None
+    best = None
+    for left in sorted({p for plist in positions for p in plist}):
+        used: set[int] = set()
+        for plist in positions:
+            pick = next((p for p in plist if p >= left and p not in used), None)
+            if pick is None:
+                break
+            used.add(pick)
+        else:
+            if left in used and (best is None or max(used) - left < best[1] - best[0]):
+                best = (left, max(used))
+    return best
+
+
+def _phrase_gap(segments: list[list[str]], atom: dict) -> dict | None:
+    """The phrase's words all occur close together, but not the way the term requires."""
+    matchers = atom["matchers"]
+    if len(matchers) < 2:
+        return None
+    best = None
+    for tokens in segments:
+        if atom["distance"] is None and _adjacent(tokens, matchers) is not None:
+            return None  # present as written: whatever failed, it was not the wording
+        window = _nearest(tokens, matchers)
+        if window:
+            gap = window[1] - window[0] + 1 - len(matchers)
+            if best is None or gap < best["words_between"]:
+                best = {"term": atom["term"], "found": " ".join(tokens[window[0]: window[1] + 1]), "words_between": gap}
+    if best is None or best["words_between"] > MAX_GAP or (atom["distance"] is not None and best["words_between"] <= atom["distance"]):
+        return None
+    if any("*" in word for word in atom["words"]):
+        best["try"] = ("PubMed ignores proximity when a phrase has a wildcard: list the variants as proximity "
+                       f"phrases ([tiab:~{best['words_between']}]), or search the distinctive word on its own")
+    else:
+        field = atom["field"] if atom["field"] in {"ti", "tiab"} else "tiab"
+        best["try"] = f"\"{' '.join(atom['words'])}\"[{field}:~{best['words_between']}]"
+    return best
+
+
+def _partial_phrase(segments: list[list[str]], atom: dict) -> dict | None:
+    """Part of a three-word-or-longer phrase is present as written; the rest is nowhere near it."""
+    words, matchers = atom["words"], atom["matchers"]
+    for size in range(len(words) - 1, 1, -1):
+        for start in range(len(words) - size + 1):
+            if any(_adjacent(tokens, matchers[start: start + size]) is not None for tokens in segments):
+                part = words[start: start + size]
+                return {"term": atom["term"], "matched": " ".join(part), "absent": words[:start] + words[start + size:],
+                        "try": f"\"{' '.join(part)}\"[tiab]"}
+    return None
+
+
+def _embedded_stem(segments: list[list[str]], atom: dict) -> dict | None:
+    """A one-word term that occurs only inside longer words, which right truncation cannot reach."""
+    if len(atom["words"]) != 1:
+        return None
+    stem = atom["words"][0].rstrip("*")
+    if "*" in stem or len(stem) < MIN_EMBED:
+        return None
+    inside = sorted({token for tokens in segments for token in tokens if stem in token and not token.startswith(stem)})
+    return {"term": atom["term"], "inside": inside[:8]} if inside else None
+
+
+def diagnose_block(record: dict, block: Block) -> dict:
+    """Why this block's free text did not match the record, from the record's own wording."""
+    segments = _segments(record)
+    atoms = text_atoms(block)
+    gaps = [g for g in (_phrase_gap(segments, a) for a in atoms) if g]
+    near = {g["term"] for g in gaps}
+    partial = [p for p in (_partial_phrase(segments, a) for a in atoms if a["term"] not in near and len(a["words"]) >= 3) if p]
+    embedded = [e for e in (_embedded_stem(segments, a) for a in atoms) if e]
+    cause = ("phrase_gap" if gaps or partial else "embedded_stem" if embedded
+             else "no_abstract" if not str(record.get("abstract", "")).strip() else "no_block_wording")
+    found = {"block": block.id, "cause": cause}
+    for key, rows in (("phrase_gaps", gaps), ("partial_phrases", partial), ("embedded_stems", embedded)):
+        if rows:
+            found[key] = sorted(rows, key=lambda r: (r.get("words_between", 0), r["term"]))[:5]
+    return found
+
+
+def _uncovered_text(record: dict, strategy: Strategy, memo: dict, limit: int) -> list[str]:
+    """Wording the strategy lacks: author keywords and the title first, the abstract after them.
+
+    A record yields hundreds of abstract n-grams; listed alphabetically they bury the few words
+    that say what the paper is about.
+    """
+    def by_size(grams: set[str]) -> list[str]:
+        return sorted(grams, key=lambda t: ({2: 0, 1: 1}.get(len(t.split()), 2), t))
+
+    ordered = [" ".join(str(k).lower().split()) for k in record.get("keywords", [])]
+    ordered += by_size(_grams(str(record.get("title", ""))))
+    ordered += sorted(a.lower() for a in _acronyms(record))
+    ordered += by_size(_grams(str(record.get("abstract", ""))))
+    kept: list[str] = []
+    for term in ordered:
+        if term and term not in kept and not noise_reason(term, "tiab") and not covered(term, "tiab", strategy, memo):
+            kept.append(term)
+            if len(kept) >= limit:
+                break
+    return kept
+
+
 def miss_report(records: list[dict], evaluation: dict, strategy: Strategy, *, per_record: int = 15) -> list[dict]:
-    """For each missed known record: failing blocks, its indexing, and vocabulary the strategy lacks."""
+    """For each missed known record: failing blocks, why each failed, and vocabulary the strategy lacks."""
     failing = {m["pmid"]: m for m in evaluation.get("misses", [])}
+    blocks = {block.id: block for block in strategy.blocks}
     memo: dict = {}
     report = []
     for record in records:
         pmid = str(record.get("pmid"))
         miss = failing.get(pmid, {})
-        phrases = sorted(_phrases(record) | _acronyms(record), key=lambda t: (-len(t.split()), t))
-        uncovered = [t for t in phrases if not noise_reason(t, "tiab") and not covered(t, "tiab", strategy, memo)]
         mesh = [h["name"] for h in record.get("mesh", [])]
         report.append(
             {
@@ -241,9 +406,12 @@ def miss_report(records: list[dict], evaluation: dict, strategy: Strategy, *, pe
                 "title": record.get("title", ""),
                 "failing_blocks": miss.get("failing_blocks", []),
                 "lost_to_limits": miss.get("lost_to_limits", False),
+                "diagnosis": [diagnose_block(record, blocks[b]) for b in miss.get("failing_blocks", []) if b in blocks],
                 "mesh_not_in_strategy": [m for m in mesh if not covered(m, "mesh", strategy, memo) and not noise_reason(m, "mesh")],
                 "keywords": record.get("keywords", []),
-                "text_not_in_strategy": uncovered[:per_record],
+                "text_not_in_strategy": _uncovered_text(record, strategy, memo, per_record),
+                "has_abstract": bool(str(record.get("abstract", "")).strip()),
+                "has_mesh": bool(mesh),
                 "indexing_status": record.get("status", ""),
             }
         )

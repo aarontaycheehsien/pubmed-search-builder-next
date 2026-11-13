@@ -327,10 +327,17 @@ def cmd_terms(args) -> dict:
     evaluation = attempts[-1]["evaluation"] if attempts else versions[-1]["evaluation"]
     missed = [m["pmid"] for m in evaluation.get("misses", []) if not args.set or set(m["sets"]) & set(args.set)]
     records = list(ws.ensure_records(missed).values())
-    body = {"ok": True, "version": versions[-1]["version"], "misses": terms.miss_report(records, evaluation, strategy),
-            "note": "Vocabulary from missed records is a candidate. Adding a term to recover a validation miss "
+    report = terms.miss_report(records, evaluation, strategy)
+    causes: dict[str, int] = {}
+    for row in report:
+        for found in row["diagnosis"]:
+            causes[found["cause"]] = causes.get(found["cause"], 0) + 1
+    body = {"ok": True, "version": versions[-1]["version"], "misses": report,
+            "causes": {name: terms.CAUSES[name] for name in terms.CAUSES if name in causes},
+            "note": "diagnosis gives, for each failing block, the likeliest reason it missed the record. "
+                    "Vocabulary from missed records is a candidate. Adding a term to recover a validation miss "
                     "makes that set part of development; say so in the audit."}
-    return progress.attach(body, ws, "terms-miss", {"version": body["version"],
+    return progress.attach(body, ws, "terms-miss", {"version": body["version"], "causes": causes,
                                                     "misses": [m for m in evaluation.get("misses", []) if m["pmid"] in missed]})
 
 

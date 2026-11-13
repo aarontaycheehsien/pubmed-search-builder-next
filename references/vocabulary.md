@@ -39,6 +39,11 @@ phrase; quote phrases to be explicit.
 - Prefer the longest safe stem (`neurostimulat*` rather than `stimulat*`), and check line counts
   in `psb eval` for noisy stems.
 - PubMed rejects a query with more than 256 wildcards, with an error that looks like an outage.
+- There is no left truncation: `virus*` finds viruses, not rotavirus, polyomavirus or
+  coronavirus. When a concept word is also the tail of compound words (-virus, -itis, -oma, -mab,
+  -statin, schoolchild), the text layer needs those words or their families by name; MeSH
+  explosion covers them only for indexed records. `psb terms miss` reports this as
+  `embedded_stem`.
 
 ### Proximity
 
@@ -50,6 +55,14 @@ phrase; quote phrases to be explicit.
 - Test a few values of N; larger N adds recall and noise.
 - Use proximity for multi-word concepts whose wording varies, truncation for single-word
   morphology, and combine them with OR across the block.
+- A quoted or tagged phrase matches only those words in that order with nothing between them:
+  `"high throughput sequencing"[tiab]` misses "high-throughput DNA sequencing". For a phrase
+  authors can interrupt or reorder, add the proximity form (`[tiab:~1]` to `[tiab:~3]`).
+- A long phrase requires every word. `cognitive behavio* therap*[tiab]` misses
+  "cognitive-behavioral approaches" and "cognitive behavioural group treatment". When the
+  distinctive part is specific on its own (`"cognitive behavio*"[tiab]`), search that and drop
+  the head noun; check the line count.
+- `psb terms miss` reports both as `phrase_gap`, with the form to test.
 
 ### Acronyms
 

@@ -133,7 +133,15 @@ and translation problems, a count for every line, recall per set, which blocks m
 records, leave-one-block-out ablation, and what changed since the previous version.
 
 - For every missed known record, run `psb terms miss`, then fix the failing block or record
-  why the record is out of reach. Never explain a miss away without looking.
+  why the record is out of reach. Never explain a miss away without looking. Its `diagnosis`
+  names the likeliest cause for each failing block:
+  - `phrase_gap`: the record separates, reorders or shortens a phrase the block has. Test the
+    suggested proximity or shorter phrase.
+  - `embedded_stem`: the block's word occurs only inside a longer word (`virus*` does not find
+    rotavirus). PubMed cannot truncate on the left: name those words or their family.
+  - `no_abstract` or `no_block_wording`: read the record. If it names the concept in other
+    words, add them. If it does not name the concept at all, no term can reach it while the
+    block is AND-ed: record it as out of reach. Do not widen a block for such a record.
 - Never silently lose a previously retrieved known record (`since_previous.known_lost`).
   Either revert, or say in the note why the loss is acceptable.
 - Cut noise only when the count justifies it and no known record is lost. Use line counts

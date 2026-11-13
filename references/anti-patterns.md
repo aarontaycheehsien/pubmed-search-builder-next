@@ -87,9 +87,14 @@ Evidence: [Bramer et al. 2018](https://doi.org/10.5195/jmla.2018.283).
 
 If a proposed strategy misses an in-scope seed, do not explain it away without analysis. Identify which concept block fails to retrieve the seed and revise unless the seed is documented as out of scope.
 
-`psb eval` lists the blocks that fail each missed record, and `psb terms miss` shows the
-record's MeSH headings and the wording your strategy lacks. Revise the failing block, or record
-why the record is out of reach.
+`psb eval` lists the blocks that fail each missed record, and `psb terms miss` gives the likeliest
+cause for each failing block, the record's MeSH headings and the wording your strategy lacks.
+Revise the failing block, or record why the record is out of reach.
+
+The opposite mistake is as costly: widening a block until it catches a record whose title and
+abstract never name the concept (`no_block_wording` after you have read the record). No term can
+retrieve that record while the block is AND-ed, and each broad term added for it multiplies the
+result. Record it as out of reach, with the reason, and leave the block alone.
 
 ## Mistake 7: Being overconfident about ambiguous questions
 
