@@ -12,6 +12,22 @@ python evals/run.py score CD011926 --strategy-file my_strategy.txt
 python evals/run.py report                        # writes evals/RESULTS.md
 ```
 
+## Replay: testing the tools without an agent
+
+```bash
+python evals/replay.py miss Kwok_2020 --card evals/results/Kwok_2020/<card>.json
+python evals/replay.py optional van_de_Schoot_2018 --card <card>.json --blocks blocks.json
+```
+
+`replay.py` rebuilds a workspace from a strategy an agent really delivered, with the answer key
+as the known records, and runs psb's own diagnostics on it: `miss` gives the cause `psb terms miss`
+reports for each missed gold record, `optional` measures candidate blocks as optional blocks. It
+reads the answer key, so it refuses anything but a development topic, and what it shows is what
+the tools would have told an agent, not what an agent did. It costs NCBI requests only: run it
+before paying for agent runs, and use a cheaper model (`generate --model ...`, with its own
+`--skill-name`) to compare a change against `main` before a held-out run. See
+`docs/recall-precision-plan.md`.
+
 ## Fixtures
 
 `fixtures/<suite>/<id>.json`:
