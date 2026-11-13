@@ -68,12 +68,14 @@ Read `references/scope.md`. Fill `protocol.json`:
 
 - `concepts`: each candidate concept with `id`, `name`, `role` and `rationale`.
   Roles: `search` (an AND-ed block), `screen` (handled at screening, not searched), `optional`
-  (a possible block to test, not in the main strategy).
+  (not searched; drafted as an optional block so `psb eval` measures what AND-ing it would
+  save and lose).
 - `eligibility`: include and exclude criteria for screening.
 - `limits`: only limits the question truly requires, each with a reason.
 
-Only AND a concept that passes the admission test in `references/scope.md`; when in doubt, do
-not AND it. Outcomes, comparators, settings and study designs are usually `screen`.
+Only AND a concept that passes the admission test in `references/scope.md`. When in doubt, do
+not guess either way: make it `optional` and measure it in step 5. Outcomes, comparators,
+settings and study designs are usually `screen`.
 A block that names one direction of a process (switching back) is fragile; search the process.
 Every member the criteria list for a concept is searched by its own name.
 Decide roles from the question before reading any seed record.
@@ -126,6 +128,10 @@ whose `id` equals the concept `id`:
 Every block needs both a MeSH layer and a text-word layer, because records not yet indexed
 have no MeSH.
 
+Draft each `optional` concept the same way, under `optional` in `strategy.json` (same shape as
+a block). Give it the broad descriptive layer a fragile concept needs. An optional block is
+never part of the query.
+
 ### 5. Test and revise
 
 Run `psb eval --note "<what changed and why>"` after every meaningful change. It reports lint
@@ -148,6 +154,13 @@ records, leave-one-block-out ablation, and what changed since the previous versi
   and `psb sample --purpose noise-check` to find noisy terms. Recall comes first.
 - A block whose removal gains known records (ablation) is a sign of over-structuring:
   reconsider its role in `protocol.json`.
+- `optional_blocks` shows, for each optional block, the count if it were AND-ed, the known
+  records that would be lost, and a 95% bound on the share lost. The bound rests only on known
+  records that no keyword search led to; records from pilot searches cannot show what a block
+  loses. Decide with the rule in `references/scope.md`. To AND it, move it to `blocks` and set
+  its role to `search`; otherwise leave it under `optional`, so the audit shows it was tested.
+- A one-block search is a result to measure, not a default. Before you settle on one, test the
+  most reliably named unsearched concept as an optional block.
 - Recovering a held-out validation miss makes that set part of development. Say so.
 
 A phrase-index warning is a mandatory review, not proof of zero hits. Read the phrase decision

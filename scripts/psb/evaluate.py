@@ -5,6 +5,7 @@
 - recall on every PMID set, labelled by how independent that set is
 - for each missed known record, the blocks that fail to retrieve it
 - leave-one-block-out ablation
+- for each optional block, what AND-ing it would do to the count and to the known records
 - the change since the previous evaluated version, including known records it lost
 
 The numbers are recomputed every time; nothing here is read back from an earlier report
@@ -15,8 +16,18 @@ from __future__ import annotations
 
 from .ncbi import NcbiError
 from . import validation, mesh, syntax
-from .strategy import block_query, core_query, full_query, lint, numbered_lines
+from .progress import attribution
+from .strategy import block_query, core_query, full_query, lint, numbered_lines, query_with_optional
 from .workspace import ROLES, Workspace, now
+
+# A known record is independent of the searcher's wording when no psb search led to it: the user
+# supplied it, or it is on a review's reference list. A record found by a keyword search names the
+# searched words by construction, and its similar and citing articles inherit that bias, so neither
+# can show what a block built on those words would lose. The bound is computed on independent
+# records only. With none lost out of n it is 1 - 0.05 ** (1 / n): 26% at 10, 14% at 20, 10% at 30.
+INDEPENDENT_ROUTES = {"resolve", "neighbors:refs"}
+OPTIONAL_MIN_INDEPENDENT = 20
+OPTIONAL_MIN_REDUCTION = 25.0
 
 
 def _recall(retrieved: int, total: int) -> float | None:
@@ -40,7 +51,106 @@ def _term_diff(old: dict, new: dict) -> dict:
         changes["_combine"] = {"before": old.get("combine"), "after": new.get("combine")}
     if old.get("limits") != new.get("limits"):
         changes["_limits"] = {"before": old.get("limits"), "after": new.get("limits")}
+    if old.get("optional") != new.get("optional"):
+        changes["_optional"] = {"before": [b.get("id") for b in old.get("optional") or []],
+                                "after": [b.get("id") for b in new.get("optional") or []]}
     return changes
+
+
+def loss_upper_bound(lost: int, total: int, confidence: float = 0.95) -> float | None:
+    """One-sided exact (Clopper-Pearson) upper bound, in percent, on the share of records lost."""
+    if total <= 0:
+        return None
+    if lost >= total:
+        return 100.0
+
+    def at_most(p: float) -> float:  # P(X <= lost) for X ~ Binomial(total, p)
+        term = cumulative = (1 - p) ** total
+        for k in range(lost):
+            term *= (total - k) / (k + 1) * p / (1 - p)
+            cumulative += term
+        return cumulative
+
+    low, high = lost / total, 1.0
+    for _ in range(60):
+        middle = (low + high) / 2
+        low, high = (middle, high) if at_most(middle) > 1 - confidence else (low, middle)
+    return round(100 * high, 1)
+
+
+def _optional_reading(entry: dict) -> str:
+    known = entry.get("known")
+    saving = (f"the result falls from {entry['count_now']:,} to {entry['count_if_added']:,}"
+              + (f" ({entry['reduction_percent']}% fewer)" if entry.get("reduction_percent") is not None else ""))
+    if not known:
+        return f"AND-ing this block: {saving}. No known records, so nothing shows what it would lose: do not AND it on the count alone."
+    kept = known["retrieved_now"]
+    if known["lost_if_added"]:
+        return (f"AND-ing this block would lose {len(known['lost_if_added'])} of the {kept} known records retrieved now "
+                f"({saving}). Keep it out of the search, or broaden it and test again.")
+    if entry.get("reduction_percent") is not None and entry["reduction_percent"] < OPTIONAL_MIN_REDUCTION:
+        return f"AND-ing this block loses no known record but saves little: {saving}. Leave it out."
+    independent = known["by_route"]["independent"]["retrieved_now"]
+    bound = known["loss_upper_95_percent"]
+    if independent < OPTIONAL_MIN_INDEPENDENT:
+        return (f"AND-ing this block loses none of the {kept} known records retrieved now and {saving}. That is weak "
+                f"evidence: only {independent} of them were found independently of a keyword search (user seeds, a "
+                "review's reference list). The rest name the searched words by construction, so they cannot show what "
+                "this block would lose"
+                + (f"; on the independent records alone, up to {bound}% of relevant records could still be lost (95% bound)"
+                   if bound is not None else "; the loss is unmeasured")
+                + ". Find independent known records and test again. AND it without them only if the result is otherwise "
+                  "too large to screen, and report the loss as an open, unmeasured risk.")
+    return (f"AND-ing this block loses none of the {kept} known records retrieved now, {independent} of them found "
+            f"independently of a keyword search (95% bound on the share lost: {bound}%), and {saving}. It is a "
+            "candidate for a searched block: decide and record the reason.")
+
+
+def _optional_entry(pm, strategy, block, result: dict, routes: dict, in_pubmed, hit_full, sets) -> dict:
+    alone = pm.search(effective_query(block_query(block), pm.as_of), dated=False)
+    added = effective_query(query_with_optional(strategy, block), pm.as_of)
+    count = pm.count(added) if alone["count"] else 0
+    entry = {"id": block.id, "name": block.name, "terms": len(block.terms), "count_alone": alone["count"],
+             "count_now": result["count"], "count_if_added": count,
+             "reduction_percent": round(100 * (1 - count / result["count"]), 1) if result["count"] else None,
+             "issues": [{"code": i["code"], "severity": i["severity"], "evidence": i.get("evidence")} for i in alone["issues"]]}
+    if in_pubmed:
+        kept = pm.among(added, hit_full) if alone["count"] else set()
+        lost = sorted(hit_full - kept, key=int)
+        in_block = pm.among(block_query(block), in_pubmed) if alone["count"] else set()
+        free = {p for p in hit_full if routes.get(p, "resolve") in INDEPENDENT_ROUTES}  # in no batch: supplied directly
+        by_route = {route: {"retrieved_now": len(members), "lost_if_added": len(members - kept)}
+                    for route, members in (("independent", free), ("keyword_derived", hit_full - free))}
+        entry["known"] = {
+            "retrieved_now": len(hit_full), "lost_if_added": lost,
+            "lost_by_set": {name: sorted(set(data.get("pmids", [])) & set(lost), key=int) for name, data in (sets or {}).items()
+                            if set(data.get("pmids", [])) & set(lost)},
+            "loss_upper_95_percent": loss_upper_bound(len(free - kept), len(free)),
+            "by_route": by_route,
+            "block_recall": {"retrieved": len(in_block), "of": len(in_pubmed), "recall_percent": _recall(len(in_block), len(in_pubmed))},
+            "missed_now_but_in_block": sorted(in_block - hit_full, key=int),
+        }
+    entry["reading"] = _optional_reading(entry)
+    return entry
+
+
+def _measure_optional(ws: Workspace, strategy, result: dict, *, in_pubmed: set[str] | None = None,
+                      hit_full: set[str] | None = None, sets: dict | None = None) -> None:
+    """What AND-ing each optional block would do. Diagnostic only: nothing here reaches the query."""
+    if not strategy.optional:
+        return
+    pm = ws.pubmed
+    routes = {pmid: str(batch.get("via")) for pmid, batch in attribution(ws).items()}
+    rows = []
+    for block in strategy.optional:
+        try:
+            entry = _optional_entry(pm, strategy, block, result, routes, in_pubmed, hit_full, sets)
+        except NcbiError as exc:
+            # A block that is never delivered must not stop an evaluation or a delivery.
+            entry = {"id": block.id, "name": block.name, "terms": len(block.terms), "error": str(exc),
+                     "reading": "Not measured: PubMed did not answer for this optional block. Nothing can be concluded about it."}
+        rows.append(entry)
+    result["optional_blocks"] = rows
 
 
 def effective_query(query: str, as_of: str | None) -> str:
@@ -120,6 +230,7 @@ def _measure(ws: Workspace, result: dict, *, term_counts: bool) -> None:
     if not known:
         result["sets"] = {}
         result["note"] = "no PMID sets: recall not measured (add seeds, relevant, validation or benchmark sets)"
+        _measure_optional(ws, strategy, result)
         return
 
     in_pubmed = pm.existing(known)
@@ -172,6 +283,7 @@ def _measure(ws: Workspace, result: dict, *, term_counts: bool) -> None:
         result["ablation"] = ablation
     elif strategy.combine:
         result["ablation"] = "skipped: ablation needs the default AND combination"
+    _measure_optional(ws, strategy, result, in_pubmed=in_pubmed, hit_full=hit_full, sets=sets)
     return
 
 

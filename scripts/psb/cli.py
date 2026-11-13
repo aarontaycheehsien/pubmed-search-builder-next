@@ -97,6 +97,7 @@ def cmd_status(args) -> dict:
         "depth": protocol.get("depth"),
         "concepts": [{"id": c.get("id"), "role": c.get("role")} for c in concepts],
         "blocks": [{"id": b.id, "terms": len(b.terms)} for b in strategy.blocks],
+        **({"optional_blocks": [{"id": b.id, "terms": len(b.terms)} for b in strategy.optional]} if strategy.optional else {}),
         "sets": {name: {"role": d.get("role"), "size": len(d.get("pmids", []))} for name, d in sets.items()},
         "versions": len(versions),
         "last_eval": {"count": last.get("count"), "recall": {n: s.get("recall_percent") for n, s in (last.get("sets") or {}).items()}} if last else None,

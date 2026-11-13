@@ -418,3 +418,26 @@ def test_resolved_pmids_with_leading_zeros_are_found_and_attributed(ws, capsys):
     assert out["not_in_pubmed_or_after_as_of"] == [] and out["unresolved"] == ["000"]
     assert progress.batches(ws)[-1]["pmids"] == ["5"]
     assert "- Resolved identifiers (C1): 1 screened → 1 include" in text(capsys, "screen", "--include", "5")
+
+
+def test_eval_and_test_summary_report_optional_blocks_only_when_defined(ws, capsys):
+    psb(capsys, "set", "add", "seeds", "1", "2", "5", "--role", "seed")
+    write_json(ws.root / "strategy.json", {"blocks": [STRATEGY["blocks"][0]]})
+    assert "Optional block" not in text(capsys, "eval", "--brief")
+    write_json(ws.root / "strategy.json", {"blocks": [STRATEGY["blocks"][0]], "optional": [STRATEGY["blocks"][1]]})
+    line = ("- Optional block Children (child), if AND-ed: 5 → 5 records · known records lost 0 of 3 · "
+            "found independently of a keyword search: 3 (95% bound on share lost: 63.2%)")
+    message = text(capsys, "eval", "--brief")
+    assert line in message and "- Strategy changes: optional blocks changed" in message
+    assert line in text(capsys, "progress", "test")
+    assert "- Optional, measured but not searched: Children (child): 2 terms" in text(capsys, "progress", "vocabulary")
+
+
+def test_miss_diagnosis_message_counts_causes(ws, capsys):
+    psb(capsys, "set", "add", "seeds", "1", "4", "--role", "seed")
+    write_json(ws.root / "strategy.json", STRATEGY)
+    psb(capsys, "eval", "--brief")
+    code, out = psb(capsys, "terms", "miss")
+    assert code == 0 and out["misses"][0]["pmid"] == "4"
+    assert {d["cause"] for d in out["misses"][0]["diagnosis"]} == {"no_block_wording"} and set(out["causes"]) == {"no_block_wording"}
+    assert "- Likely cause, per failing block: no wording for the block 2" in out["progress"]["text"]

@@ -513,6 +513,8 @@ def _eval_lines(evaluation: dict, note: str) -> list[str]:
                 changes.append("combination changed")
             elif block == "_limits":
                 changes.append("limits changed")
+            elif block == "_optional":
+                changes.append("optional blocks changed")
             elif change.get("block") == "added":
                 changes.append(f"{block} added")
             elif change.get("block") == "removed":
@@ -520,7 +522,31 @@ def _eval_lines(evaluation: dict, note: str) -> list[str]:
             else:
                 changes.append(f"{block} +{len(change.get('terms_added', []))}/-{len(change.get('terms_removed', []))} terms")
         lines.append(f"- Strategy changes: {'; '.join(changes) or 'none'}")
+    lines += _optional_lines(evaluation)
     lines.append(f"- Checks: {_checks(evaluation)}")
+    return lines
+
+
+def _optional_lines(evaluation: dict) -> list[str]:
+    """One line per optional block: what AND-ing it would do. Absent when none is defined."""
+    lines = []
+    for row in evaluation.get("optional_blocks") or []:
+        if row.get("error"):
+            lines.append(f"- Optional block {clean(row.get('name') or row.get('id'), 60)} ({row.get('id')}): not measured "
+                         "(PubMed did not answer)")
+            continue
+        text = (f"- Optional block {clean(row.get('name') or row.get('id'), 60)} ({row.get('id')}), if AND-ed: "
+                f"{_n(row.get('count_now'))} → {_n(row.get('count_if_added'))} records")
+        known = row.get("known")
+        if known:
+            free = (known.get("by_route") or {}).get("independent") or {}
+            bound = known.get("loss_upper_95_percent")
+            text += (f" · known records lost {_n(len(known.get('lost_if_added') or []))} of {_n(known.get('retrieved_now'))}"
+                     f" · found independently of a keyword search: {_n(free.get('retrieved_now'))}"
+                     + (f" (95% bound on share lost: {_pct(bound)})" if bound is not None else " (loss unmeasured)"))
+        else:
+            text += " · no known records to test it against"
+        lines.append(text)
     return lines
 
 
@@ -807,6 +833,9 @@ def _stage_vocabulary(ws, data):
                 other += 1
         lines.append(f"- {clean(block.name or block.id, 80)} ({block.id}): {_plural(len(block.terms), 'term')} — "
                      f"{_n(mesh)} MeSH · {_n(text)} text-word · {_n(other)} other")
+    for block in strategy.optional:
+        lines.append(f"- Optional, measured but not searched: {clean(block.name or block.id, 80)} ({block.id}): "
+                     f"{_plural(len(block.terms), 'term')}")
     blocked = {b.id for b in strategy.blocks}
     rest = [c for c in protocol.get("concepts") or [] if isinstance(c, dict) and c.get("id") not in blocked]
     lines.append("- Concepts not searched: " + (", ".join(f"{clean(c.get('name') or c.get('id'), 60)} ({c.get('role')})"
@@ -850,6 +879,7 @@ def _stage_test(ws, data):
         lines += [f"- Recall: {_recall(latest)}",
                   f"- Missed known records: {_misses(latest)}",
                   f"- Known records lost along the way and not recovered: {_pmids(lost)}"]
+        lines += _optional_lines(latest)
     else:
         lines.append(f"- Recall: {NOT_MEASURED}")
     lines += [f"- Checks: {_checks(latest)}", _next("test", ws.protocol().get("depth"))]

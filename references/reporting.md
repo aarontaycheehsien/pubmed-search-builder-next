@@ -13,6 +13,8 @@ explicit effective `as_of` entry-date restriction. The audit includes:
 - the strategy line by line with counts, and as one line for copying into PubMed
 - recall on each known set with its role, missed records and the blocks that miss them
 - leave-one-block-out results
+- each optional block: the count if it were AND-ed, known records lost, and the 95% bound from
+  independently found records
 - the development history (every evaluated version, its change, lost records, and note)
 - critic rounds and finding status
 - standard limitations and the provenance line (NCBI requests, cache use, strategy hash)

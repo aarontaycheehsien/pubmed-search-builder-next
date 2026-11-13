@@ -83,3 +83,25 @@ def test_check_round_enforces_verdicts_and_carries_open_findings(make_ws):
     assert any(b["code"] == "critic_invalid" for b in result["blockers"])
     third = round_file(ws, 3, [{"id": "F1", "severity": "must-fix", "kind": "lexical", "status": "rejected"}])
     assert "needs a response" in json.dumps(deliver.check_round(ws, third))
+
+
+def test_optional_block_evidence_reaches_the_critic_and_the_audit(make_ws):
+    ws, _ = make_ws({**ATOMS, "child*[tiab]": {"1", "2"}}, question="Treatments for asthma in children?")
+    protocol = ws.protocol()
+    protocol["concepts"] = [{"id": "asthma", "name": "Asthma", "role": "search", "rationale": "topic anchor"},
+                            {"id": "child", "name": "Children", "role": "optional", "rationale": "age often only in full text"}]
+    write_json(ws.root / "protocol.json", protocol)
+    write_json(ws.root / "strategy.json", {**STRATEGY, "optional": [{"id": "child", "name": "Children", "terms": ["child*[tiab]"]}]})
+    ws.save_set("seeds", "seed", ["1", "3"])
+    evaluation = evaluate(ws)
+    deliver.record_evaluation(ws, evaluation, note="first")
+    ws.save_attempt(evaluation)
+    packet = deliver.critic_packet(ws).read_text(encoding="utf-8")
+    assert '"optional_blocks"' in packet and "concept roles rest on measurement" in packet
+    round_file(ws, 1, [])
+    result = deliver.report(ws)
+    assert result["ok"], result
+    audit = (ws.root / "audit.md").read_text(encoding="utf-8")
+    assert "### Optional blocks (measured, not searched)" in audit
+    assert "| Children (child) | 3 | 2 | 1 / 2 | 1 / 2 | 97.5% |" in audit
+    assert "child" not in (ws.root / "final-query.txt").read_text(encoding="utf-8")

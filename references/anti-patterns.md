@@ -185,6 +185,21 @@ Every term has to carry both ideas, so neither gets its vocabulary: no `16S`, `a
 and a sequencing block, each with MeSH and full free text, AND-ed. `psb lint` warns
 (`compound_block`) when most of a block's terms AND two ideas.
 
+## Mistake 18: Deciding a concept's role without measuring it
+
+"When in doubt, do not AND it" protects recall only up to the point where the result can still
+be screened. A one-block search that returns tens of thousands of records has not protected
+recall; it has moved the loss to screening. The reverse guess, AND-ing a block because it looks
+safe, loses records silently.
+
+Bad, for "PTSD symptom trajectories after a traumatic event": one PTSD block, with the
+trajectory concept screened because methods are "fragile". Relevant papers call the condition
+PTSD, distress or acute stress, and nearly all of them name trajectories or growth mixture
+modelling.
+
+Better: draft the doubtful concept as an optional block and read `optional_blocks` in
+`psb eval`. Follow the rule in "Measure before you decide" in `scope.md`, and record the numbers.
+
 ## References
 
 - Adam GP, et al. Literature search sandbox: a large language model that generates search queries for systematic reviews. *JAMIA Open* 2024. [doi:10.1093/jamiaopen/ooae098](https://doi.org/10.1093/jamiaopen/ooae098).
