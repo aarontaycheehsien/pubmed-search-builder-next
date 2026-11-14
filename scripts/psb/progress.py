@@ -145,6 +145,22 @@ def _recall(evaluation: dict) -> str:
     return " · ".join(parts)
 
 
+def _free_recall(evaluation: dict) -> list[str]:
+    """Recall on the known records no keyword search led to, the only ones that can estimate it."""
+    free = evaluation.get("known_without_keyword_search")
+    if not free or not evaluation.get("sets"):
+        return []
+    if not free.get("in_pubmed"):
+        return ["- Known records found without a keyword search: none, so the recall above checks the wording and "
+                "does not estimate recall"]
+    head = f"- Known records found without a keyword search: {_n(free.get('retrieved'))}/{_n(free.get('in_pubmed'))} retrieved"
+    held = free.get("held_out") or {}
+    if not held.get("in_pubmed"):
+        return [head + " · all were used to build the strategy, so this does not estimate recall"]
+    return [head + f" · held out from the build: {_n(held.get('retrieved'))}/{_n(held.get('in_pubmed'))}, so recall is at "
+            f"least {_pct(held.get('recall_lower_95_percent'))} (95% bound)"]
+
+
 def _misses(evaluation: dict, cap: int = 10) -> str:
     misses = sorted(evaluation.get("misses") or [], key=lambda m: _int_key(m["pmid"]))
     if not misses:
@@ -501,7 +517,7 @@ def _eval_lines(evaluation: dict, note: str) -> list[str]:
         lines.append(f"- Change: {clean(note, 160)}")
     measured = evaluation.get("count") is not None
     if measured:
-        lines += [f"- Recall: {_recall(evaluation)}", f"- Missed known records: {_misses(evaluation)}"]
+        lines += [f"- Recall: {_recall(evaluation)}", *_free_recall(evaluation), f"- Missed known records: {_misses(evaluation)}"]
     else:
         lines.append(f"- Recall: {NOT_MEASURED}")
     if since:
@@ -539,7 +555,7 @@ def _optional_lines(evaluation: dict) -> list[str]:
                 f"{_n(row.get('count_now'))} → {_n(row.get('count_if_added'))} records")
         known = row.get("known")
         if known:
-            free = (known.get("by_route") or {}).get("independent") or {}
+            free = (known.get("by_route") or {}).get("without_keyword_search") or {}
             bound = known.get("loss_upper_95_percent")
             text += (f" · known records lost {_n(len(known.get('lost_if_added') or []))} of {_n(known.get('retrieved_now'))}"
                      f" · found independently of a keyword search: {_n(free.get('retrieved_now'))}"

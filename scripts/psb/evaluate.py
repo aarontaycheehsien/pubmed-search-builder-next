@@ -18,7 +18,7 @@ from .ncbi import NcbiError
 from . import validation, mesh, syntax
 from .progress import attribution
 from .strategy import block_query, core_query, full_query, lint, numbered_lines, query_with_optional
-from .workspace import ROLES, Workspace, now
+from .workspace import MINING_ROLES, ROLES, Workspace, now
 
 # A known record is independent of the searcher's wording when no psb search led to it: the user
 # supplied it, or it is on a review's reference list. A record found by a keyword search names the
@@ -26,6 +26,10 @@ from .workspace import ROLES, Workspace, now
 # can show what a block built on those words would lose. The bound is computed on independent
 # records only. With none lost out of n it is 1 - 0.05 ** (1 / n): 26% at 10, 14% at 20, 10% at 30.
 INDEPENDENT_ROUTES = {"resolve", "neighbors:refs"}
+NO_INDEPENDENT_RECORDS = ("Every known record came from a keyword search, or from the similar or citing articles of one. "
+                          "Such records name the searched words by construction, so the recall figures check the "
+                          "strategy's wording; they do not estimate recall. A prior review's reference list "
+                          "(psb neighbors <review PMID> --links refs) gives records that do not depend on your wording.")
 OPTIONAL_MIN_INDEPENDENT = 20
 OPTIONAL_MIN_REDUCTION = 25.0
 
@@ -78,6 +82,39 @@ def loss_upper_bound(lost: int, total: int, confidence: float = 0.95) -> float |
     return round(100 * high, 1)
 
 
+def without_keyword_search(ws: Workspace, pmids) -> set[str]:
+    """The known records no psb search led to: supplied directly (in no batch), resolved, or on a reference list."""
+    routes = {pmid: str(batch.get("via")) for pmid, batch in attribution(ws).items()}
+    return {p for p in pmids if routes.get(p, "resolve") in INDEPENDENT_ROUTES}
+
+
+def _free_recall(free: set[str], held_out: set[str], hit: set[str]) -> dict:
+    """Recall on records that neither a keyword search nor the build itself can have favoured.
+
+    A record used for mining is retrieved because the strategy was built on it, and a record found
+    by a search is retrieved because it uses the searched words. Only a record that is neither
+    (a held-out seed, a review's included study) says anything about records not yet seen.
+    """
+    tested = free & held_out
+    bound = loss_upper_bound(len(tested - hit), len(tested))
+    found = {"in_pubmed": len(free), "retrieved": len(free & hit),
+             "held_out": {"in_pubmed": len(tested), "retrieved": len(tested & hit),
+                          "recall_lower_95_percent": None if bound is None else round(100 - bound, 1)}}
+    if not free:
+        found["reading"] = NO_INDEPENDENT_RECORDS
+    elif not tested:
+        found["reading"] = (f"{found['retrieved']} of the {len(free)} known records found without a keyword search are "
+                            "retrieved, but all of them were used to build the strategy, so this checks the build and "
+                            "does not estimate recall. Hold some out (psb set split) or add a review's included "
+                            "studies as a benchmark set.")
+    else:
+        held = found["held_out"]
+        found["reading"] = (f"{held['retrieved']} of the {held['in_pubmed']} held-out known records found without a keyword "
+                            f"search are retrieved: on their evidence recall is at least {held['recall_lower_95_percent']}% "
+                            "(95% bound; it is as wide as the number of such records makes it).")
+    return found
+
+
 def _optional_reading(entry: dict) -> str:
     known = entry.get("known")
     saving = (f"the result falls from {entry['count_now']:,} to {entry['count_if_added']:,}"
@@ -90,7 +127,7 @@ def _optional_reading(entry: dict) -> str:
                 f"({saving}). Keep it out of the search, or broaden it and test again.")
     if entry.get("reduction_percent") is not None and entry["reduction_percent"] < OPTIONAL_MIN_REDUCTION:
         return f"AND-ing this block loses no known record but saves little: {saving}. Leave it out."
-    independent = known["by_route"]["independent"]["retrieved_now"]
+    independent = known["by_route"]["without_keyword_search"]["retrieved_now"]
     bound = known["loss_upper_95_percent"]
     if independent < OPTIONAL_MIN_INDEPENDENT:
         return (f"AND-ing this block loses none of the {kept} known records retrieved now and {saving}. That is weak "
@@ -106,7 +143,7 @@ def _optional_reading(entry: dict) -> str:
             "candidate for a searched block: decide and record the reason.")
 
 
-def _optional_entry(pm, strategy, block, result: dict, routes: dict, in_pubmed, hit_full, sets) -> dict:
+def _optional_entry(pm, strategy, block, result: dict, free_known: set, in_pubmed, hit_full, sets) -> dict:
     alone = pm.search(effective_query(block_query(block), pm.as_of), dated=False)
     added = effective_query(query_with_optional(strategy, block), pm.as_of)
     count = pm.count(added) if alone["count"] else 0
@@ -118,9 +155,9 @@ def _optional_entry(pm, strategy, block, result: dict, routes: dict, in_pubmed, 
         kept = pm.among(added, hit_full) if alone["count"] else set()
         lost = sorted(hit_full - kept, key=int)
         in_block = pm.among(block_query(block), in_pubmed) if alone["count"] else set()
-        free = {p for p in hit_full if routes.get(p, "resolve") in INDEPENDENT_ROUTES}  # in no batch: supplied directly
+        free = hit_full & free_known
         by_route = {route: {"retrieved_now": len(members), "lost_if_added": len(members - kept)}
-                    for route, members in (("independent", free), ("keyword_derived", hit_full - free))}
+                    for route, members in (("without_keyword_search", free), ("from_keyword_search", hit_full - free))}
         entry["known"] = {
             "retrieved_now": len(hit_full), "lost_if_added": lost,
             "lost_by_set": {name: sorted(set(data.get("pmids", [])) & set(lost), key=int) for name, data in (sets or {}).items()
@@ -140,11 +177,11 @@ def _measure_optional(ws: Workspace, strategy, result: dict, *, in_pubmed: set[s
     if not strategy.optional:
         return
     pm = ws.pubmed
-    routes = {pmid: str(batch.get("via")) for pmid, batch in attribution(ws).items()}
+    free_known = without_keyword_search(ws, in_pubmed or set())
     rows = []
     for block in strategy.optional:
         try:
-            entry = _optional_entry(pm, strategy, block, result, routes, in_pubmed, hit_full, sets)
+            entry = _optional_entry(pm, strategy, block, result, free_known, in_pubmed, hit_full, sets)
         except NcbiError as exc:
             # A block that is never delivered must not stop an evaluation or a delivery.
             entry = {"id": block.id, "name": block.name, "terms": len(block.terms), "error": str(exc),
@@ -238,6 +275,9 @@ def _measure(ws: Workspace, result: dict, *, term_counts: bool) -> None:
     hit_core = pm.among(core, in_pubmed) if strategy.limits else hit_full
     hit_block = {b.id: pm.among(block_query(b), in_pubmed) for b in strategy.blocks}
 
+    free_known = without_keyword_search(ws, in_pubmed)
+    mined = {p for data in sets.values() if data.get("role") in MINING_ROLES for p in data.get("pmids", [])}
+    result["known_without_keyword_search"] = _free_recall(free_known, in_pubmed - mined, hit_full)
     per_set = {}
     for name, data in sets.items():
         pmids = [p for p in data.get("pmids", [])]
@@ -252,6 +292,8 @@ def _measure(ws: Workspace, result: dict, *, term_counts: bool) -> None:
             "retrieved": len(present) - len(missed),
             "recall_percent": _recall(len(present) - len(missed), len(present)),
             "missed": missed,
+            "without_keyword_search": {"in_pubmed": len(set(present) & free_known),
+                                       "retrieved": len(set(present) & free_known & hit_full)},
         }
     result["sets"] = per_set
     result["retrieved_known"] = sorted(hit_full)

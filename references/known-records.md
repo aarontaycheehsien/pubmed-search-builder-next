@@ -13,6 +13,14 @@ decides what the number means, so each set has a role.
 `psb eval` reports recall for every set. Records not in PubMed (or added after `as_of`) are
 excluded from the denominator and listed.
 
+How a record was found matters as much as its role. A record found by one of your keyword
+searches uses the words you searched, and so do its similar and citing articles: retrieving it
+again proves nothing about relevant papers worded differently. Only records no keyword search
+led to (user seeds, a review's reference list) can show that. `psb eval` counts them as
+`known_without_keyword_search`, and gives a lower bound on recall only from those that were also
+held out of the build. When there are none it says so: the recall figures then check your
+wording and do not estimate recall. Report it that way.
+
 ## Seeds
 
 - Resolve DOIs and PMCIDs with `psb resolve`; add PMIDs with `psb set add seeds ... --role seed`.
@@ -30,8 +38,16 @@ Budget: screen at most about 150 candidates at `standard` and 400 at `thorough`.
    or its tables, and screen each against your eligibility criteria. Save them as `benchmark`.
    A review of a broader or parent topic (forward switching, when you want switching back) is
    still worth mining for candidates: its included studies may report your topic as a subgroup.
+   - This step is the only source of records that do not depend on your own wording when the
+     user gave no seeds, so do not give up after one query. PubMed holds a reference list mostly
+     for reviews that are in PMC: the sample marks them `in_pmc`, and `psb neighbors` says when a
+     review has none. If the first review has no list, try the next; if no review matches the
+     scope, use the reference lists of two or three reviews on overlapping or broader topics.
+   - Run `--links refs` on its own, not together with `similar` or `citedin`, so the records it
+     finds are logged as coming from a reference list.
 2. **Precise pilots.** Run two or three narrow, high-precision queries (the core concepts in
-   titles, for example) with `psb sample --purpose pilot`, and screen what they return.
+   titles, for example) with `psb sample --purpose pilot`, and screen what they return. Pilot
+   hits are for mining vocabulary. They cannot validate the strategy or an optional block.
 3. **Neighbours.** `psb neighbors --set seeds --links similar,citedin --exclude-known` ranks
    records linked to several known records first. Screen before use.
 

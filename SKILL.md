@@ -138,6 +138,10 @@ Run `psb eval --note "<what changed and why>"` after every meaningful change. It
 and translation problems, a count for every line, recall per set, which blocks miss which
 records, leave-one-block-out ablation, and what changed since the previous version.
 
+- Read `known_without_keyword_search` before you believe a recall figure. Records your own
+  searches found use your own words; only user seeds and a review's reference list can show
+  what the strategy misses, and only those held out of the build give a lower bound on recall.
+  When there are none, say that recall is not estimated.
 - For every missed known record, run `psb terms miss`, then fix the failing block or record
   why the record is out of reach. Never explain a miss away without looking. Its `diagnosis`
   names the likeliest cause for each failing block:

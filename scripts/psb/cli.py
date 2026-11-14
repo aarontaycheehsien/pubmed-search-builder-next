@@ -148,6 +148,14 @@ def cmd_sample(args) -> dict:
         "ok": True, "count": total, "retstart": start,
         "records": [{"pmid": p, "year": r.get("year"), "title": r.get("title")} for p, r in records.items()],
     }
+    if args.purpose == "prior-reviews":
+        # PubMed holds a reference list mostly for records that are also in PMC.
+        for row in body["records"]:
+            row["in_pmc"] = bool(records[row["pmid"]].get("pmcid"))
+        body["note"] = ("in_pmc marks the reviews whose reference list PubMed is likely to hold "
+                        "(psb neighbors <PMID> --links refs). A reference list is the main source of known records "
+                        "that do not depend on your own search wording: prefer those reviews, and use a review of an "
+                        "overlapping or broader topic when none matches the scope exactly.")
     if args.purpose:
         def data() -> dict:
             found = {"query": query, "count": total, "shown": len(records), "retstart": start}
@@ -164,12 +172,16 @@ def cmd_neighbors(args) -> dict:
     pmids = pmid_args(ws, args.pmids, args.set)
     known = {p for d in ws.sets().values() for p in d.get("pmids", [])} if args.exclude_known else set()
     scores: dict[str, dict] = {}
+    no_refs: list[str] = []
     for link in args.links.split(","):
         link = link.strip()
         if link not in LINKNAMES:
             raise UsageError(f"unknown link {link!r}; use {', '.join(LINKNAMES)}")
         for pmid in pmids:
-            for row in ws.pubmed.links(pmid, link)[: args.max_per_seed]:
+            linked = ws.pubmed.links(pmid, link)
+            if link == "refs" and not linked:
+                no_refs.append(pmid)
+            for row in linked[: args.max_per_seed]:
                 entry = scores.setdefault(row["pmid"], {"pmid": row["pmid"], "from": [], "links": set(), "best_score": 0})
                 entry["from"].append(pmid)
                 entry["links"].add(link)
@@ -182,6 +194,11 @@ def cmd_neighbors(args) -> dict:
     rows = [{**e, "links": sorted(e["links"]), "from": sorted(set(e["from"]))} for e in candidates[: args.limit]]
     body = {"ok": True, "seeds": len(pmids), "candidates": len(candidates), "shown": len(rows), "rows": rows,
             "note": "Neighbours are candidates, not relevant records: screen them before using them for mining."}
+    if no_refs:
+        body["no_reference_list"] = no_refs
+        body["note"] += (" PubMed holds no reference list for " + ", ".join(no_refs) + ": it has them mostly for records "
+                         "in PMC. Try another review (psb sample --purpose prior-reviews marks in_pmc), or ask the user "
+                         "for the included studies.")
     def data() -> dict:
         links = [link.strip() for link in args.links.split(",")]
         in_sets = {p for d in ws.sets().values() for p in d.get("pmids", [])}

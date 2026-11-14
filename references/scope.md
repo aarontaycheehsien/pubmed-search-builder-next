@@ -51,14 +51,15 @@ query. `psb eval` reports for it, in `optional_blocks`:
 
 - `count_if_added` and `reduction_percent`: the result with the block AND-ed in;
 - `known.lost_if_added`: the known records, now retrieved, that the block would lose;
-- `known.by_route`: the same, split by how each record was found. `independent` records are
-  those no keyword search led to: user seeds, and the reference list of a prior review
-  (`psb neighbors --links refs`). `keyword_derived` records came from a pilot search or from the
-  similar and citing articles of its hits. They name the searched words by construction, so they
-  cannot show what a block built on those words would lose, however many there are;
-- `known.loss_upper_95_percent`: on the independent records only, the largest share of relevant
-  records the block could plausibly lose (0 lost of 10 still allows 26%; of 20, 14%; of 30,
-  10%). Null when there are no independent records: the loss is then unmeasured;
+- `known.by_route`: the same, split by how each record was found. `without_keyword_search`
+  records are those no keyword search led to: user seeds, and the reference list of a prior
+  review (`psb neighbors --links refs`). `from_keyword_search` records came from a pilot search
+  or from the similar and citing articles of its hits. They name the searched words by
+  construction, so they cannot show what a block built on those words would lose, however many
+  there are;
+- `known.loss_upper_95_percent`: on the records found without a keyword search only, the largest
+  share of relevant records the block could plausibly lose (0 lost of 10 still allows 26%; of
+  20, 14%; of 30, 10%). Null when there are no such records: the loss is then unmeasured;
 - `known.block_recall`: how many known records name the concept at all;
 - `known.missed_now_but_in_block`: records the current search misses that this block finds. If
   there are several, this concept may be more reliably named than a block you are searching.
@@ -66,11 +67,11 @@ query. `psb eval` reports for it, in `optional_blocks`:
 AND the block (move it to `blocks`, set the role to `search`) when all of these hold:
 
 1. no known record is lost, in any set;
-2. at least about 20 independent known records are retrieved now;
+2. at least about 20 known records found without a keyword search are retrieved now;
 3. the result falls by at least a quarter.
 
-With fewer independent records the loss is unmeasured, whatever the total says. First look for
-independent records: the included studies of a prior review are the usual source. AND the block
+With fewer such records the loss is unmeasured, whatever the total says. First look for more:
+the reference list of a prior review is the usual source (`known-records.md`). AND the block
 without them only when the result is otherwise too large to screen, make the block as broad as
 the count allows, and report the loss in `narrative.md` as an open, unmeasured risk. Never
 describe "none of N keyword-found records lost" as evidence that the block is safe.

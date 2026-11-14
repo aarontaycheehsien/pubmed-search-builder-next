@@ -441,3 +441,18 @@ def test_miss_diagnosis_message_counts_causes(ws, capsys):
     assert code == 0 and out["misses"][0]["pmid"] == "4"
     assert {d["cause"] for d in out["misses"][0]["diagnosis"]} == {"no_block_wording"} and set(out["causes"]) == {"no_block_wording"}
     assert "- Likely cause, per failing block: no wording for the block 2" in out["progress"]["text"]
+
+
+def test_prior_review_sample_marks_reviews_with_a_reference_list(ws, capsys):
+    next(iter(ws.pubmed.records.values()))["pmcid"] = "PMC1"
+    code, out = psb(capsys, "sample", "--purpose", "prior-reviews", "asthma*[tiab]")
+    assert code == 0 and [r["in_pmc"] for r in out["records"]].count(True) == 1 and "in_pmc" in out["note"]
+    code, out = psb(capsys, "sample", "--purpose", "pilot", "asthma*[tiab]")
+    assert "in_pmc" not in out["records"][0]
+
+
+def test_neighbors_says_when_pubmed_has_no_reference_list(ws, capsys):
+    code, out = psb(capsys, "neighbors", "1", "2", "--links", "refs")
+    assert code == 0 and out["no_reference_list"] == ["2"] and "no reference list for 2" in out["note"]
+    code, out = psb(capsys, "neighbors", "1", "--links", "refs")
+    assert "no_reference_list" not in out

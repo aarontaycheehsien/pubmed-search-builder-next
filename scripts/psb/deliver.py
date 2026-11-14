@@ -175,7 +175,7 @@ def _optional_table(evaluation: dict) -> list[str]:
             continue
         known = row.get("known")
         lost = f"{len(known['lost_if_added'])} / {known['retrieved_now']}" if known else "no known records"
-        free = known["by_route"]["independent"] if known else None
+        free = known["by_route"]["without_keyword_search"] if known else None
         independent = f"{free['lost_if_added']} / {free['retrieved_now']}" if free else "n/a"
         bound = f"{known['loss_upper_95_percent']}%" if known and known.get("loss_upper_95_percent") is not None else "unmeasured"
         lines.append(f"| {row.get('name') or row['id']} ({row['id']}) | {row['count_now']:,} | {row['count_if_added']:,} | {lost} | {independent} | {bound} |")
@@ -183,10 +183,16 @@ def _optional_table(evaluation: dict) -> list[str]:
 
 
 def _recall_table(evaluation: dict) -> list[str]:
-    rows = ["| Set | Role (independence) | In PubMed | Retrieved | Recall |", "|---|---|---:|---:|---:|"]
+    rows = ["| Set | Role (independence) | In PubMed | Retrieved | Recall | Found without a keyword search: retrieved / in PubMed |",
+            "|---|---|---:|---:|---:|---:|"]
     for name, data in (evaluation.get("sets") or {}).items():
         recall = "n/a" if data["recall_percent"] is None else f"{data['recall_percent']}%"
-        rows.append(f"| {name} | {data['role']} ({ROLES.get(data['role'], '')}) | {data['in_pubmed']} | {data['retrieved']} | {recall} |")
+        free = data.get("without_keyword_search") or {}
+        rows.append(f"| {name} | {data['role']} ({ROLES.get(data['role'], '')}) | {data['in_pubmed']} | {data['retrieved']} | {recall} "
+                    f"| {free.get('retrieved', 'n/a')} / {free.get('in_pubmed', 'n/a')} |")
+    free = evaluation.get("known_without_keyword_search")
+    if free:
+        rows += ["", free["reading"]]
     return rows
 
 

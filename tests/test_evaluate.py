@@ -128,8 +128,8 @@ def test_optional_block_bound_rests_on_records_no_keyword_search_led_to(make_ws)
     record_batch(ws, "pilot", "Pilot search", ["1", "2"], total=2, query="asthma child")
     record_batch(ws, "neighbors:similar", "Similar articles", ["3"], total=1, origin=["1"])  # inherits the pilot's wording
     known = evaluate(ws)["optional_blocks"][0]["known"]
-    assert known["by_route"] == {"independent": {"retrieved_now": 1, "lost_if_added": 1},  # 4: supplied, in no batch
-                                 "keyword_derived": {"retrieved_now": 3, "lost_if_added": 1}}
+    assert known["by_route"] == {"without_keyword_search": {"retrieved_now": 1, "lost_if_added": 1},  # 4: supplied, in no batch
+                                 "from_keyword_search": {"retrieved_now": 3, "lost_if_added": 1}}
     assert known["loss_upper_95_percent"] == 100.0
 
 
@@ -141,7 +141,7 @@ def test_lossless_optional_block_on_keyword_found_records_reports_the_loss_as_un
     assert "only 0 of them were found independently" in row["reading"] and "the loss is unmeasured" in row["reading"]
     ws.save_set("seeds", "seed", [str(n) for n in (1, 2)])
     record_batch(ws, "neighbors:refs", "Review references", ["1", "2"], total=2, origin=["9"])  # later batch: pilot still first
-    assert evaluate(ws)["optional_blocks"][0]["known"]["by_route"]["independent"]["retrieved_now"] == 0
+    assert evaluate(ws)["optional_blocks"][0]["known"]["by_route"]["without_keyword_search"]["retrieved_now"] == 0
 
 
 def test_optional_block_without_known_records_gives_counts_only(make_ws):
@@ -199,3 +199,32 @@ def test_optional_block_that_pubmed_rejects_does_not_stop_the_evaluation(make_ws
     assert row["error"] == "PubMed rejected the query" and row["reading"].startswith("Not measured")
     assert "not measured" in progress._optional_lines(result)[0]
     assert "| Children (child) | not measured | not measured | n/a | n/a | n/a |" in deliver._optional_table(result)
+
+
+# -- recall that means something: records no keyword search led to, held out of the build ---------
+
+def test_recall_is_not_estimated_from_records_a_keyword_search_found(make_ws):
+    ws, _ = setup(make_ws, sets={"relevant": ("relevant", ["1", "2"])})
+    record_batch(ws, "pilot", "Pilot search", ["1", "2"], total=2, query="asthma child")
+    free = evaluate(ws)["known_without_keyword_search"]
+    assert free["in_pubmed"] == 0 and "do not estimate recall" in free["reading"]
+
+
+def test_recall_is_not_estimated_from_records_the_strategy_was_built_on(make_ws):
+    ws, _ = setup(make_ws)
+    ws.save_set("seeds", "seed", ["1", "2"])
+    result = evaluate(ws)
+    free = result["known_without_keyword_search"]
+    assert (free["in_pubmed"], free["retrieved"], free["held_out"]["in_pubmed"]) == (2, 2, 0)
+    assert "used to build the strategy" in free["reading"] and free["held_out"]["recall_lower_95_percent"] is None
+    assert result["sets"]["seeds"]["without_keyword_search"] == {"in_pubmed": 2, "retrieved": 2}
+
+
+def test_recall_lower_bound_comes_from_held_out_records_found_without_a_search(make_ws):
+    ws, _ = setup(make_ws)
+    ws.save_set("seeds", "seed", ["1"])
+    ws.save_set("benchmark", "benchmark", ["2", "3"])
+    record_batch(ws, "neighbors:refs", "Review references", ["2", "3"], total=2, origin=["9"])
+    free = evaluate(ws)["known_without_keyword_search"]
+    assert free["held_out"] == {"in_pubmed": 2, "retrieved": 1, "recall_lower_95_percent": 2.5}
+    assert "1 of the 2 held-out known records" in free["reading"]

@@ -115,6 +115,7 @@ Next: Step 5/7 Test & revise: evaluate counts and recall, and fix misses one cha
 v1: 5 records
 - Change: first draft
 - Recall: seeds 2/2 (100.0%) · relevant 3/3 (100.0%)
+- Known records found without a keyword search: 1/1 retrieved · all were used to build the strategy, so this does not estimate recall
 - Missed known records: none
 - Checks: 0 blockers · 0 need critic review · lint 0 errors, 0 warnings
 
@@ -189,10 +190,12 @@ Line by line:
 
 Recall against known relevant records:
 
-| Set | Role (independence) | In PubMed | Retrieved | Recall |
-|---|---|---:|---:|---:|
-| relevant | relevant (records screened relevant during the build; used for development, not independent) | 3 | 3 | 100.0% |
-| seeds | seed (user-supplied known relevant records; used for development, not independent) | 2 | 2 | 100.0% |
+| Set | Role (independence) | In PubMed | Retrieved | Recall | Found without a keyword search: retrieved / in PubMed |
+|---|---|---:|---:|---:|---:|
+| relevant | relevant (records screened relevant during the build; used for development, not independent) | 3 | 3 | 100.0% | 0 / 0 |
+| seeds | seed (user-supplied known relevant records; used for development, not independent) | 2 | 2 | 100.0% | 1 / 1 |
+
+1 of the 1 known records found without a keyword search are retrieved, but all of them were used to build the strategy, so this checks the build and does not estimate recall. Hold some out (psb set split) or add a review's included studies as a benchmark set.
 
 Relative recall, not sensitivity: development sets were used to build the strategy.
 
