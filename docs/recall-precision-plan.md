@@ -101,10 +101,58 @@ two-block search returns 1,653 records at 97.4%, against 32,074 at 92.1% deliver
 ## Agent runs on a cheaper model (development topics)
 
 Claude Sonnet, no seeds, standard depth, scored with `harness.score` against the answer key.
-`main` is 704317b. "First version" is commits 1 to 3 of this patch as first written (the loss
-bound counted every known record). "This patch" is all of it. Each cell is records and recall.
+`main` is 704317b.
 
-| Topic | main, run 1 | main, run 2 | first version | this patch |
+### The whole branch against main, two runs a side
+
+Each cell is records and recall.
+
+| Topic | main, run 1 | main, run 2 | branch, run 1 | branch, run 2 |
+|---|---:|---:|---:|---:|
+| van_de_Schoot_2018 | 35,263 · 94.7% | 35,405 · 94.7% | 10,004 · 94.7% | 9,255 · 94.7% |
+| Bos_2018 | 9,885 · 100% | 12,691 · 100% | 9,229 · 100% | 7,454 · 100% |
+| Welling_2021 | 152,755 · 100% | 130,810 · 100% | 23,866 · 98.1% | 31,440 · 98.1% |
+| Kwok_2020 | 1,572 · 94.8% | 6,816 · 96.6% | 6,332 · 96.6% | 1,562 · 97.4% |
+
+| Across the eight runs of each arm | main | branch |
+|---|---:|---:|
+| Mean recall | 97.6% | 97.5% |
+| Mean of the per-topic mean record counts | 48,150 | 12,393 |
+| Runs with known records no keyword search led to | 1 | 7 |
+| Runs that measured an optional block | 0 | 7 |
+| Runs that ran `--term-impact` (of those above 10,000 records at some point) | not available | 6 of 7 |
+
+What this shows, and what it does not:
+
+- **Fewer records at about the same recall.** The result fell by 73% on van_de_Schoot and 80%
+  on Welling, by a quarter on Bos, and was unchanged on Kwok, where both arms vary fourfold
+  between runs. Recall was identical on two topics and higher on Kwok.
+- **Welling cost one gold record.** Both branch runs AND-ed an outcome block and both missed
+  the same record (32242089), 1 of 53. That is the price of 24,000 to 31,000 records in place
+  of 131,000 to 153,000, and each run reported the residual risk: the measured loss bounds
+  were 19.3% (14 independent records) and 10.9% (26). Whether that trade is right is the
+  reviewer's call; the branch makes it visible, where the first version hid it.
+- **The mechanisms were used.** Seven of eight branch runs screened a review's reference list
+  into a benchmark set; two reached more than 20 such records. Six of the seven runs whose result
+  passed 10,000 records ran `--term-impact` after the prompt (the seventh AND-ed a block instead), sampled what the top terms alone found,
+  and cut them: bare `posttraumatic[tiab]` (orthopaedic and surgical records), `epidemic*` and
+  `outbreak*` (48% of one COVID result), `confinement`.
+- **The two records every arm missed on van_de_Schoot** (20061839, 20836603) call the
+  condition "distress" or "acute stress". No run had them among its known records, so no
+  diagnostic could point at them. Known-record discovery still bounds recall.
+- **Two runs a side is not three, and this is not the harness.** The agents were subagents
+  sharing one machine, with the as-of date pinned in the staged launcher and a same-context
+  critic. The size of the Welling and van_de_Schoot differences is far outside the run-to-run
+  spread seen here; the Bos and Kwok differences are not. Nothing here says anything about
+  held-out topics or about the usual model.
+
+### Earlier versions of the branch (one run each)
+
+Claude Sonnet, no seeds, standard depth, scored with `harness.score` against the answer key.
+`main` is 704317b. "First version" is commits 1 to 3 of this patch as first written (the loss
+bound counted every known record). "Commits 1 to 9" is the branch before the term-impact prompt. Each cell is records and recall.
+
+| Topic | main, run 1 | main, run 2 | first version | commits 1 to 9 |
 |---|---:|---:|---:|---:|
 | van_de_Schoot_2018 | 35,263 · 94.7% | 35,405 · 94.7% | 10,554 · 94.7% | 32,266 · 94.7% |
 | Bos_2018 | 9,885 · 100% | 12,691 · 100% | 7,976 · 100% | 14,369 · 100% |
@@ -113,7 +161,7 @@ bound counted every known record). "This patch" is all of it. Each cell is recor
 
 Known records found without a keyword search, per run (the only ones that can test anything):
 
-| Topic | main, run 1 | main, run 2 | first version | this patch |
+| Topic | main, run 1 | main, run 2 | first version | commits 1 to 9 |
 |---|---:|---:|---:|---:|
 | van_de_Schoot_2018 | 0 of 11 | 9 of 27 | 12 of 31 | 13 of 30 |
 | Bos_2018 | 0 of 13 | 0 of 13 | 2 of 17 | 6 of 18 |
@@ -123,12 +171,12 @@ Known records found without a keyword search, per run (the only ones that can te
 One further pair on Haiku, van_de_Schoot only: `main` 8,404 records at 89.5%, first version
 32,440 at 94.7%.
 
-What this shows, and what it does not:
+What these earlier runs showed, and why the branch changed after them:
 
 - **The first version bought precision with an unmeasured loss.** It cut records on all four
   topics, and on Welling it lost 4 of 53 gold records after its measurement had reported none
   of 95 known records lost. All 95 came from pilot searches and their similar articles.
-- **This patch is the recall-safe version, and its precision gain is not demonstrated.** With
+- **Commits 1 to 9 were recall-safe, without a demonstrated precision gain.** With
   the bound restricted to records no keyword search led to, the Welling run found a review's
   reference list (16 records), saw that the two outcome blocks would lose 13 and 6 of 28 known
   records, and kept both out: 100% recall, and a result as large as `main`. On Kwok the run had
@@ -136,7 +184,7 @@ What this shows, and what it does not:
   as the first version, with four times its records. Recall equals or exceeds `main` on every
   topic; the result is smaller than both `main` runs on two topics, larger on one, between
   them on one.
-- **Independent known records became common:** three of four runs of this patch had them,
+- **Independent known records became common:** three of four runs of commits 1 to 9 had them,
   against one of eight on `main`. None reached the 20 that `scope.md` asks for before AND-ing
   a block on evidence, so the two runs that did AND one used the "otherwise too large to
   screen" clause and recorded an unmeasured risk.
@@ -150,23 +198,25 @@ What this shows, and what it does not:
 - One run a side, two for `main`, cannot separate the patch from run-to-run variance: the two
   `main` runs on Kwok differ by a factor of four in records. These runs were not made by
   `evals/run.py`: the agents were subagents sharing one machine, with the as-of date pinned in
-  the staged launcher and a same-context critic. The planned third `main` run and second and
-  third runs of this patch were stopped by an account usage limit.
+  the staged launcher and a same-context critic. The planned third `main` run and further runs
+  of that version were stopped by an account usage limit.
 
 ## What is still open
 
-1. **Precision without independent records.** The measurement is now honest and conservative.
-   On a topic like Welling it leaves a 126,000-record result. The lever that remains is noise
-   inside the one block (`--term-impact`). Agents did not use it unprompted; whether the new
-   prompt changes that is the first thing the next comparison should show.
-2. **Twenty independent records is rarely reachable without seeds.** The most a run found was
-   16. Either the threshold comes down, with the bound stated (0 lost of 13 still allows 21%),
-   or a no-seed run accepts large results. That is a judgement about the review, not about the
-   tool, and belongs with the user at intake.
-3. **`psb eval --brief` is still very large.** Four agents wrote their own summariser. A short
-   form would reduce what a cheaper model has to read.
-4. **`SKILL.md` did not give the `strategy.json` format.** Two `main` runs read it from the
-   source. `scope.md` now has an example and the vocabulary step points to it.
+1. **The threshold of 20 independent records.** Two of eight branch runs reached it. The other
+   five that AND-ed a block used the "otherwise too large to screen" clause with 8 to 14 such
+   records and an unmeasured-risk note. If that clause is used this often it is the real rule:
+   either say so in `scope.md`, with the bound always stated, or leave the decision to the
+   user at intake.
+2. **Known-record discovery.** The records every arm missed were never in a known set. Review
+   reference lists help (seven of eight runs), but a review of a neighbouring topic gives a
+   benchmark skewed toward that topic, which two runs flagged.
+3. **`psb eval --brief` is still very large.** Several agents wrote their own summariser. A
+   short form would reduce what a cheaper model has to read.
+4. **`large_result` appears once.** After term impact has been measured it is not shown again,
+   even if the result is still above 10,000. One run found that confusing.
+5. **Closing critic round.** Several runs noted that the depth table suggests a closing round
+   at standard depth while `psb report` accepts one revision round. That predates this branch.
 
 ## How to test, cheapest first
 
