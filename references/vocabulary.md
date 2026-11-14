@@ -16,6 +16,14 @@ that use unexpected words, and text words find records that are not yet (or neve
 5. Add MeSH that known records carry: `psb terms rank` lists headings common in your
    relevant sets; `psb fetch` shows each record's headings.
 6. Avoid `[majr]` and `Heading/subheading` combinations in recall-first searches.
+7. Check `year_introduced` and `previous_indexing` in `psb mesh show`. A heading only indexes
+   records from the year it was introduced; when the literature is older than the heading, add
+   the headings listed under previous indexing, or the earlier records rest on text words alone.
+8. Drugs and chemicals: `psb terms rank` also lists substance names (`field: nm`) that known
+   records carry in their chemical list, including supplementary concepts that have no heading.
+   Search them as `"name"[nm]`. For a drug class, `"Class Name"[pa]` (pharmacological action)
+   retrieves every substance PubMed assigns that action, descriptors and supplementary concepts
+   alike, which exploding the class heading does not: use both, and check the count.
 
 ## Title and abstract words
 

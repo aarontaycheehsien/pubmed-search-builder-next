@@ -110,7 +110,7 @@ def _term_patterns(strategy: Strategy) -> tuple[list[re.Pattern], set[str]]:
             for phrase, tag in re.findall(r'"?([^"\[\]()]+?)"?\s*\[([^\]]+)\]', term):
                 tag = tag.lower()
                 clean = re.split(r"\b(?:OR|AND|NOT)\b", phrase)[-1].strip()
-                if tag.startswith(("mesh", "mh", "majr")):
+                if tag.startswith(("mesh", "mh", "majr", "nm", "substance")):
                     mesh.add(normalize(clean))
                     continue
                 words = [w for w in re.split(r"[\s-]+", clean.lower()) if w]
@@ -130,17 +130,43 @@ def covered(term: str, field: str, strategy: Strategy, cache: dict | None = None
         if cache is not None:
             cache[key] = (patterns, mesh)
     norm = normalize(term)
-    if field == "mesh":
+    if field in {"mesh", "nm"}:
         return norm in mesh
     return any(p.search(norm) for p in patterns)
 
 
 # -- ranking ------------------------------------------------------------------------------------
 
+def _singular(norm: str) -> str:
+    """Fold the plural of a phrase's last word, so trajectory and trajectories count as one term."""
+    head, _, last = norm.rpartition(" ")
+    if len(last) > 4 and last.endswith("ies"):
+        last = last[:-3] + "y"
+    elif len(last) > 4 and last.endswith(("ses", "xes", "zes", "ches", "shes")):
+        last = last[:-2]
+    elif len(last) > 4 and last.endswith("s") and not last.endswith(("ss", "us", "is")):
+        last = last[:-1]
+    return f"{head} {last}".strip()
+
+
+def _truncated(variants: list[str]) -> str | None:
+    """One truncated form for the variants of a term, when their last words share four letters or more."""
+    heads = {v.rpartition(" ")[0] for v in variants}
+    lasts = [v.rpartition(" ")[2] for v in variants]
+    stem = lasts[0]
+    for word in lasts[1:]:
+        while not word.startswith(stem):
+            stem = stem[:-1]
+    if len(heads) != 1 or len(stem) < 4 or "-" in stem:
+        return None
+    return f"{heads.pop()} {stem}*".strip()
+
+
 def candidates(records: list[dict], fields: list[str]) -> list[dict]:
     df: dict[tuple[str, str], set[str]] = defaultdict(set)
     display: dict[tuple[str, str], str] = {}
     sources: dict[tuple[str, str], set[str]] = defaultdict(set)
+    forms: dict[tuple[str, str], dict[str, int]] = defaultdict(lambda: defaultdict(int))
     for record in records:
         items: list[tuple[str, str, str]] = []
         if "tiab" in fields:
@@ -148,29 +174,40 @@ def candidates(records: list[dict], fields: list[str]) -> list[dict]:
             items += [(t, "tiab", "acronym") for t in _acronyms(record)]
             items += [(t, "tiab", "keyword") for t in record.get("keywords", [])]
         if "mesh" in fields:
+            headings = {normalize(h["name"]) for h in record.get("mesh", []) if h.get("name")}
             items += [(h["name"], "mesh", "mesh") for h in record.get("mesh", []) if h.get("name")]
+            # A substance that is also one of the record's headings is already counted as MeSH.
+            items += [(name, "nm", "substance") for name in record.get("substances", []) if normalize(name) not in headings]
         for term, field, source in items:
             term = " ".join(str(term).split())
             if noise_reason(term, field):
                 continue
-            key = (field, normalize(term))
+            norm = normalize(term)
+            key = (field, _singular(norm) if field == "tiab" else norm)
             display.setdefault(key, term)
+            forms[key][norm] += 1
             sources[key].add(source)
             df[key].add(str(record.get("pmid", "")))
     total = max(len(records), 1)
-    return [
-        {"term": display[k], "field": k[0], "df": len(v), "coverage": round(len(v) / total, 3),
-         "sources": sorted(sources[k]), "pmids": sorted(v)}
-        for k, v in df.items()
-    ]
+    rows = []
+    for k, v in df.items():
+        row = {"term": display[k], "field": k[0], "df": len(v), "coverage": round(len(v) / total, 3),
+               "sources": sorted(sources[k]), "pmids": sorted(v)}
+        if len(forms[k]) > 1:  # singular and plural seen: report both, and search them as one truncated term
+            row["variants"] = sorted(forms[k], key=lambda form: (-forms[k][form], form))
+            row["term"] = row["variants"][0]
+            row["truncated"] = _truncated(row["variants"])
+        rows.append(row)
+    return rows
 
 
 def select_diverse(rows: list[dict], budget: int) -> list[dict]:
     """Spend the background-count budget round-robin across MeSH, keyword, acronym and phrase
     candidates, preferring terms that cover records not yet covered."""
-    buckets: dict[str, list[dict]] = {"mesh": [], "keyword": [], "acronym": [], "phrase": []}
+    buckets: dict[str, list[dict]] = {"mesh": [], "substance": [], "keyword": [], "acronym": [], "phrase": []}
     for row in rows:
-        name = "mesh" if row["field"] == "mesh" else next((s for s in ("keyword", "acronym", "phrase") if s in row["sources"]), "phrase")
+        name = {"mesh": "mesh", "nm": "substance"}.get(row["field"]) or next(
+            (s for s in ("keyword", "acronym", "phrase") if s in row["sources"]), "phrase")
         buckets[name].append(row)
     chosen: list[dict] = []
     covered_pmids: set[str] = set()
@@ -195,6 +232,8 @@ def background_query(term: str, field: str) -> str:
     clean = term.strip('"')
     if field == "mesh":
         return f'"{clean}"[Mesh]'
+    if field == "nm":
+        return f'"{clean}"[nm]'
     return f'"{clean}"[tiab]' if " " in clean else f"{clean}[tiab]"
 
 
@@ -208,7 +247,7 @@ def rank(pm: PubMed, records: list[dict], strategy: Strategy, *, fields: list[st
     pool.sort(key=lambda r: (-r["df"], 0 if r["field"] == "mesh" else 1, r["term"].lower()))
     scored = select_diverse(pool, budget)
     for row in scored:
-        query = background_query(row["term"], row["field"])
+        query = background_query(row.get("truncated") or row["term"], row["field"])
         background = pm.count(query)
         row["query"] = query
         row["background"] = background
@@ -408,6 +447,8 @@ def miss_report(records: list[dict], evaluation: dict, strategy: Strategy, *, pe
                 "lost_to_limits": miss.get("lost_to_limits", False),
                 "diagnosis": [diagnose_block(record, blocks[b]) for b in miss.get("failing_blocks", []) if b in blocks],
                 "mesh_not_in_strategy": [m for m in mesh if not covered(m, "mesh", strategy, memo) and not noise_reason(m, "mesh")],
+                "substances_not_in_strategy": [s for s in record.get("substances", []) if not covered(s, "nm", strategy, memo)
+                                               and not covered(s, "mesh", strategy, memo)],
                 "keywords": record.get("keywords", []),
                 "text_not_in_strategy": _uncovered_text(record, strategy, memo, per_record),
                 "has_abstract": bool(str(record.get("abstract", "")).strip()),

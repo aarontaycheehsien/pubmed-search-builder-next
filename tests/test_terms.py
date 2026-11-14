@@ -141,3 +141,39 @@ def test_missing_vocabulary_lists_keywords_and_title_before_the_abstract():
     found = row["text_not_in_strategy"]
     assert found[:2] == ["growth mixture modeling", "latent trajectories"]
     assert max(map(found.index, ["distress", "trajectories of distress"])) < found.index("aardvark abacus")
+
+
+# -- mining gaps: substance names and plurals ------------------------------------------------------
+
+def test_candidates_fold_singular_and_plural_and_offer_one_truncated_term():
+    recs = [record("1", "A trajectory of distress"), record("2", "Trajectories of distress"), record("3", "Symptom trajectories")]
+    rows = {r["term"]: r for r in terms.candidates(recs, ["tiab"])}
+    row = rows["trajectories"]
+    assert row["df"] == 3 and row["variants"] == ["trajectories", "trajectory"] and row["truncated"] == "trajector*"
+    assert "trajectory" not in rows and "variants" not in rows["distress"]
+    assert terms._singular("growth curves") == "growth curve" and terms._singular("viruses") == "virus"
+    assert terms._singular("analysis") == "analysis" and terms._singular("status") == "status"
+
+
+def test_rank_counts_the_truncated_form_in_pubmed(make_ws):
+    ws, _ = make_ws({"trajector*[tiab]": {"1", "2", "3", "4"}, "x[tiab]": {"1"}})
+    recs = [record("1", "A trajectory of distress"), record("2", "Trajectories of distress")]
+    strategy = Strategy.from_dict({"blocks": [{"id": "b", "name": "", "terms": ["x[tiab]"]}]})
+    scored = {r["term"]: r for r in terms.rank(ws.pubmed, recs, strategy, fields=["tiab"])["scored"]}
+    assert scored["trajectories"]["query"] == "trajector*[tiab]" and scored["trajectories"]["background"] == 4
+
+
+def test_substance_names_are_mined_unless_already_a_heading_of_the_record():
+    recs = [dict(record("1", "Cetirizine trial", mesh=["Histamine H1 Antagonists"]), substances=["Histamine H1 Antagonists", "levocetirizine"]),
+            dict(record("2", "Another trial"), substances=["levocetirizine"])]
+    rows = [r for r in terms.candidates(recs, ["tiab", "mesh"]) if r["field"] == "nm"]
+    assert [(r["term"], r["df"], r["sources"]) for r in rows] == [("levocetirizine", 2, ["substance"])]
+    assert terms.background_query("levocetirizine", "nm") == '"levocetirizine"[nm]'
+    assert not [r for r in terms.candidates(recs, ["tiab"]) if r["field"] == "nm"]
+
+
+def test_miss_report_lists_substances_the_strategy_lacks():
+    strategy = Strategy.from_dict({"blocks": [{"id": "b", "name": "", "terms": ['"cetirizine"[nm]', "x[tiab]"]}]})
+    rec = dict(record("1", "A trial"), substances=["cetirizine", "levocetirizine"])
+    [row] = terms.miss_report([rec], {"misses": [{"pmid": "1", "failing_blocks": ["b"]}]}, strategy)
+    assert row["substances_not_in_strategy"] == ["levocetirizine"]

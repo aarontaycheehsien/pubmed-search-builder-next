@@ -89,6 +89,8 @@ def test_parse_article():
     <PublicationTypeList><PublicationType>Randomized Controlled Trial</PublicationType></PublicationTypeList></Article>
     <MeshHeadingList><MeshHeading><DescriptorName UI="D001249" MajorTopicYN="Y">Asthma</DescriptorName>
     <QualifierName>therapy</QualifierName></MeshHeading></MeshHeadingList>
+    <ChemicalList><Chemical><RegistryNumber>0</RegistryNumber><NameOfSubstance UI="D018926">Anti-Asthmatic Agents</NameOfSubstance></Chemical></ChemicalList>
+    <SupplMeshList><SupplMeshName Type="Chemical" UI="C1">montelukast</SupplMeshName></SupplMeshList>
     <KeywordList><Keyword>wheeze</Keyword></KeywordList></MedlineCitation>
     <PubmedData><ArticleIdList><ArticleId IdType="doi">10.1/x</ArticleId></ArticleIdList></PubmedData></PubmedArticle>"""
     record = parse_article(ET.fromstring(xml))
@@ -96,6 +98,7 @@ def test_parse_article():
     assert record["abstract"] == "METHODS: We did it." and record["doi"] == "10.1/x"
     assert record["mesh"][0] == {"ui": "D001249", "name": "Asthma", "major": True, "qualifiers": ["therapy"]}
     assert record["keywords"] == ["wheeze"] and record["status"] == "MEDLINE"
+    assert record["substances"] == ["Anti-Asthmatic Agents", "montelukast"]
 
 
 def test_transport_retries_transient_http_and_redacts():
