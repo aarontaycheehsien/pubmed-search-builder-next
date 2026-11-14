@@ -716,7 +716,7 @@ def _intake_request(ws, data):
     asks = [] if data.get("have_question") else ["The review question in plain language"]
     asks += ["Known relevant articles (PMIDs, DOIs or PMCIDs), if you have any (optional)",
              "Depth: quick, standard (default) or thorough",
-             "Required limits, such as dates or languages, if any"]
+             "Required limits, such as study designs (for example randomised trials only), dates or languages, if any"]
     return "Request", ["To build the search I need:", *[f"{i}. {a}" for i, a in enumerate(asks, 1)],
                        'Reply "proceed" to use the defaults for anything you leave out.']
 

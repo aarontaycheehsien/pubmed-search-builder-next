@@ -55,7 +55,7 @@ under review, never evidence of scope.
 
 In one message, also ask for: known relevant articles (PMIDs, DOIs, PMCIDs; optional), the
 depth (`quick`, `standard` or `thorough`; default `standard`), and any required limits such as
-dates or languages. That message is the text of `psb progress intake-request`; add
+study designs, dates or languages. That message is the text of `psb progress intake-request`; add
 `--have-question` when you already have the question. When the user says to proceed without
 answers, use the defaults and record the assumptions in `protocol.json` `notes`.
 

@@ -3,7 +3,7 @@ To build the search I need:
 1. The review question in plain language
 2. Known relevant articles (PMIDs, DOIs or PMCIDs), if you have any (optional)
 3. Depth: quick, standard (default) or thorough
-4. Required limits, such as dates or languages, if any
+4. Required limits, such as study designs (for example randomised trials only), dates or languages, if any
 Reply "proceed" to use the defaults for anything you leave out.
 
 ---
