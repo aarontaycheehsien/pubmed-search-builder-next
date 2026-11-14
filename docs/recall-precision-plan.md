@@ -49,8 +49,20 @@ record no term can reach.
    on the share lost is computed only on known records that no keyword search led to; without
    any, the loss is reported as unmeasured (see the Welling_2021 run below for why). `scope.md`
    has the decision rule; the critic packet and the audit carry the evidence.
-3. **`evals/replay.py`** runs both diagnostics on a strategy an agent really delivered, with the
+3. **`evals/replay.py`** runs the diagnostics on a strategy an agent really delivered, with the
    answer key as the known records. Development topics only. No agent and no model.
+4. **Known records no keyword search led to.** `psb eval` reports
+   `known_without_keyword_search`: user seeds and review reference lists, how many are
+   retrieved, and a 95% lower bound on recall from those also held out of the build. With none,
+   it says the recall figures check the wording and do not estimate recall. To make such
+   records easier to get, the prior-review sample marks reviews in PMC, `psb neighbors` names
+   records that have no reference list, and `known-records.md` says to try further reviews.
+5. **`psb eval --term-impact`** removes each term in turn and reports the records, and the
+   known records, that only it retrieves, with a query file to sample what it alone finds.
+6. **Mining gaps.** `terms rank` proposes substance names (`[nm]`) and folds singular and
+   plural into one truncated candidate; `vocabulary.md` covers previous indexing, `[pa]`, and
+   narrower headings as the family list for a word that only ends compounds.
+7. **Study design is asked at intake**, so a validated filter can be tested as a limit.
 
 ## Replay on development topics (live PubMed, as-of dates from the fixtures)
 
@@ -77,92 +89,86 @@ records) gives 5,516 records at 96.6%.
 | Bos_2018 (one block) | 91,189 | dementia or cognition | 11,981 | 0 of 9 | 28.3% | too few known records to rely on |
 | Welling_2021 (run 1) | 155,668 | lifestyle block of run 2 | 32,005 | 5 of 53 | 18.8% | keep out |
 
+**Term impact** (Welling_2021, the one-block card of 155,668 records, 39 terms): `pandemic*[tiab]`
+alone adds 20,299 records (13.0%), `confinement[tiab]` 19,677 (12.6%) and
+`"social isolation"[tiab]` 7,377 (4.7%). None is the only route to a gold record.
+
 On van_de_Schoot the trajectory-label block retrieves 37 of 38 gold records on its own, more
 than the delivered PTSD block (35 of 38), and all three current misses. With the first block
 broadened to match (distress, acute stress, traumatic stress and two MeSH headings), the
 two-block search returns 1,653 records at 97.4%, against 32,074 at 92.1% delivered.
 
-## Agent runs on a cheaper model (development topics, one run a side)
+## Agent runs on a cheaper model (development topics)
 
-Unpatched `main` (704317b) against this patch, no seeds, standard depth, scored with
-`harness.score` against the answer key. The model was Claude Sonnet unless marked.
+Claude Sonnet, no seeds, standard depth, scored with `harness.score` against the answer key.
+`main` is 704317b. "First version" is commits 1 to 3 of this patch as first written (the loss
+bound counted every known record). "This patch" is all of it. Each cell is records and recall.
 
-| Topic | main: records | main: recall | patch: records | patch: recall | What the patch run did |
-|---|---:|---:|---:|---:|---|
-| van_de_Schoot_2018 | 35,263 | 94.7% (36/38) | 10,554 | 94.7% (36/38) | measured the trajectory block (0 of 30 lost, 11 of them from a review's reference list), AND-ed it |
-| Bos_2018 | 9,885 | 100% (9/9) | 7,976 | 100% (9/9) | measured the outcome block (0 of 17 lost, 7 of them not from a pilot search), AND-ed it |
-| Kwok_2020 | 1,572 | 94.8% (110/116) | 1,519 | 98.3% (114/116) | proximity phrases and named virus families, from the new `vocabulary.md` text |
-| Welling_2021 | 152,755 | 100% (53/53) | 22,729 | 92.5% (49/53) | measured the outcome block (0 of 95 lost, none independent), AND-ed it |
-| van_de_Schoot_2018 (Haiku) | 8,404 | 89.5% (34/38) | 32,440 | 94.7% (36/38) | measured two blocks, each lost known records, kept both out |
+| Topic | main, run 1 | main, run 2 | first version | this patch |
+|---|---:|---:|---:|---:|
+| van_de_Schoot_2018 | 35,263 · 94.7% | 35,405 · 94.7% | 10,554 · 94.7% | 32,266 · 94.7% |
+| Bos_2018 | 9,885 · 100% | 12,691 · 100% | 7,976 · 100% | 14,369 · 100% |
+| Welling_2021 | 152,755 · 100% | 130,810 · 100% | 22,729 · 92.5% | 126,454 · 100% |
+| Kwok_2020 | 1,572 · 94.8% | 6,816 · 96.6% | 1,519 · 98.3% | 5,932 · 98.3% |
 
-What this does and does not show:
+Known records found without a keyword search, per run (the only ones that can test anything):
 
-- Every patch run used the optional-block measurement without being told to beyond the skill
-  text, and decided by it. On `main`, the Sonnet run on van_de_Schoot left the trajectory block
-  out, reporting that its known records were too few to check it and that the skill did not say
-  how to test an optional block; it used `psb count`.
-- On Kwok the gain came from the instructions, not the diagnosis command: no known record was
-  missed during the build, so `psb terms miss` never ran. The two records still missed are the
-  ones replay labels `no_block_wording`.
-- **Welling is a failure of the first version of this patch.** The measurement said none of 95
-  known records would be lost, with a 95% bound of 3.1%; the block lost 4 of 53 gold records
-  (7.5%). All 95 came from pilot searches and their similar articles, so they named the outcome
-  words by construction. The bound now counts only records no keyword search led to, and the
-  same evidence reads "loss unmeasured". That makes the report honest; it does not make the
-  block safe. A run with no independent known records still has to choose between a result too
-  large to screen and an unmeasured loss.
-- Haiku on `main` AND-ed the trajectory block on judgement and lost two more gold records than
-  any other run on that topic; with the patch it measured, saw a loss, and kept the block out.
-- One run a side cannot separate the patch from run-to-run variance, which
-  `evals/RESULTS.md` shows is large. These runs were also not made by `evals/run.py`: the
-  agents were subagents sharing one machine, with the as-of date pinned in the staged launcher
-  and a same-context critic. Treat them as a smoke test and repeat them with the harness
-  (below) before believing the size of any difference.
+| Topic | main, run 1 | main, run 2 | first version | this patch |
+|---|---:|---:|---:|---:|
+| van_de_Schoot_2018 | 0 of 11 | 9 of 27 | 12 of 31 | 13 of 30 |
+| Bos_2018 | 0 of 13 | 0 of 13 | 2 of 17 | 6 of 18 |
+| Welling_2021 | 0 of 10 | 0 of 23 | 0 of 95 | 16 of 28 |
+| Kwok_2020 | 0 of 19 | 0 of 16 | 0 of 31 | 0 of 28 |
 
-## Plan: what to fix next, in order
+One further pair on Haiku, van_de_Schoot only: `main` 8,404 records at 89.5%, first version
+32,440 at 94.7%.
 
-0. **Independent known records in no-seed runs (both).** Welling shows the limit is the known
-   set, not the measurement. Two of the four Sonnet patch runs found a review reference list;
-   two had none, and `psb neighbors --links refs` returned nothing for a relevant review in two
-   other runs. Until a run has records no keyword search led to, recall figures and optional
-   blocks alike rest on circular evidence. Where: `known-records.md` (search for reviews on
-   overlapping topics when none matches; say plainly that pilot-found records do not validate
-   anything), and report the independent count beside every recall figure (item 2). Test: the
-   share of no-seed development runs that end with ten or more independent records.
+What this shows, and what it does not:
 
-Each item states where it goes and how to tell whether it earned its place.
+- **The first version bought precision with an unmeasured loss.** It cut records on all four
+  topics, and on Welling it lost 4 of 53 gold records after its measurement had reported none
+  of 95 known records lost. All 95 came from pilot searches and their similar articles.
+- **This patch is the recall-safe version, and its precision gain is not demonstrated.** With
+  the bound restricted to records no keyword search led to, the Welling run found a review's
+  reference list (16 records), saw that the two outcome blocks would lose 13 and 6 of 28 known
+  records, and kept both out: 100% recall, and a result as large as `main`. On Kwok the run had
+  no such records, read the virus block's loss as unmeasured, and left it out: recall as high
+  as the first version, with four times its records. Recall equals or exceeds `main` on every
+  topic; the result is smaller than both `main` runs on two topics, larger on one, between
+  them on one.
+- **Independent known records became common:** three of four runs of this patch had them,
+  against one of eight on `main`. None reached the 20 that `scope.md` asks for before AND-ing
+  a block on evidence, so the two runs that did AND one used the "otherwise too large to
+  screen" clause and recorded an unmeasured risk.
+- **`--term-impact` was never run by an agent**, so its only evidence is the replay above. Two
+  runs cut noise by hand instead. If it is to be used, the skill has to say when more firmly,
+  or the progress message has to prompt it when the result is large.
+- On Kwok the recall gain came from the `vocabulary.md` text on proximity and families; no
+  known record was missed during those builds, so `psb terms miss` never ran there.
+- One run a side, two for `main`, cannot separate the patch from run-to-run variance: the two
+  `main` runs on Kwok differ by a factor of four in records. These runs were not made by
+  `evals/run.py`: the agents were subagents sharing one machine, with the as-of date pinned in
+  the staged launcher and a same-context critic. The planned third `main` run and second and
+  third runs of this patch were stopped by an account usage limit.
 
-1. **Marginal contribution of each term (precision).** `lines` reports stand-alone counts;
-   `vocabulary.md` already says the final result is the thing to manage. Add, behind
-   `psb eval --term-impact`, for each term: the final count without it, and the known records
-   only it retrieves (two requests per term). A term with a large marginal count and no unique
-   known record is the noise candidate to sample. Where: `evaluate._measure`, one entry per
-   term line. Test: replay on Welling_2021 and Brouwer_2019 should name the few terms that
-   carry most of the result.
-2. **Recall by discovery route, with bounds, for every set (recall estimate).** Pilot searches
-   find records that use the searched words, so recall on them is circular. `by_route` exists
-   for optional blocks; extend it to the recall table and add the exact bound on independent
-   records, so "100% of 9" reads as "at least 72%" and "100% of 95 pilot-found records" reads
-   as unmeasured. Where: `evaluate._measure`, `deliver._recall_table`,
-   `progress._recall`. Test: unit tests; no agent run needed.
-3. **Mining gaps (recall on drug topics).** `ncbi.parse_article` drops `ChemicalList` and
-   supplementary concept names, so `terms rank` cannot propose `[nm]`; `terms.candidates` counts
-   singular and plural separately against `min_df`; `mesh show` returns `year_introduced` and
-   `previous_indexing` but `vocabulary.md` never says to add the earlier heading. Also document
-   `[pa]` for drug classes. Test: `terms rank` on a drug topic's seeds proposes substance names.
-4. **Members of a concept whose name is a word-ending.** The `embedded_stem` cause says what is
-   missing; the fix is a family list. `mesh show` already lists narrower headings: say in
-   `vocabulary.md` to use their names as text words when the stem embeds. Test: replay on
-   Kwok_2020.
-5. **Study design at intake (precision).** The intake message asks for dates and languages.
-   Add study design, so a review of trials can test a validated filter as a limit; `psb eval`
-   already reports what a limit removes. Test: agent runs on the Cohen topics are held out, so
-   use a development trial topic (van_Dis_2020).
+## What is still open
+
+1. **Precision without independent records.** The measurement is now honest and conservative.
+   On a topic like Welling it leaves a 126,000-record result. The lever that remains is noise
+   inside the one block (`--term-impact`), which agents did not use.
+2. **Twenty independent records is rarely reachable without seeds.** The most a run found was
+   16. Either the threshold comes down, with the bound stated (0 lost of 13 still allows 21%),
+   or a no-seed run accepts large results. That is a judgement about the review, not about the
+   tool, and belongs with the user at intake.
+3. **`psb eval --brief` is still very large.** Four agents wrote their own summariser. A short
+   form would reduce what a cheaper model has to read.
+4. **`SKILL.md` does not give the `strategy.json` format.** Two `main` runs read it from the
+   source. `scope.md` now has an example; the skill text should point to it.
 
 ## How to test, cheapest first
 
 1. `python -m pytest` (offline, seconds).
-2. `python evals/replay.py ...` on the development cards (NCBI requests only, under a minute
+2. `python evals/replay.py ...` on the development cards (NCBI requests only, about a minute
    each). A diagnostic that says nothing useful here is not worth an agent run.
 3. Agent runs on a cheaper model, baseline against patch, development topics, three runs a
    side. `report` groups by source, driver and skill version, not by model, so give
@@ -171,16 +177,19 @@ Each item states where it goes and how to tell whether it earned its place.
    ```bash
    git worktree add ../psb-main main
    for t in van_de_Schoot_2018 Bos_2018 Welling_2021 Kwok_2020 van_Dis_2020; do
-     python evals/run.py generate $t --driver claude --model haiku --skill ../psb-main --skill-name main-haiku --runs 3
-     python evals/run.py generate $t --driver claude --model haiku --skill . --skill-name patch-haiku --runs 3
+     python evals/run.py generate $t --driver claude --model sonnet --skill ../psb-main --skill-name main-sonnet --runs 3
+     python evals/run.py generate $t --driver claude --model sonnet --skill . --skill-name patch-sonnet --runs 3
    done
-   python evals/run.py report --pair generated:patch-haiku generated:main-haiku
+   python evals/run.py report --pair generated:patch-sonnet generated:main-sonnet
    ```
 
-   With Codex, pass a cheaper `--model` and `--effort low`. A cheaper model ranks the two arms;
-   it does not show what the usual model would deliver.
+   Sonnet followed the skill to a protected delivery in every run here; Haiku did too, in two
+   runs, with more erratic structural choices. With Codex, pass a cheaper `--model` and
+   `--effort low`. A cheaper model ranks the two arms; it does not show what the usual model
+   would deliver.
 4. Only for a change that survives step 3: the usual model on the held-out topics, once, three
    runs a side, as `evals/README.md` requires.
 
-Keep or revert each commit on its own: the two code changes are separate commits so their
-effect can be attributed.
+Keep or revert each commit on its own: every change is a separate commit so its effect can be
+attributed. To test the first three commits against the rest, check out the commit before
+"known records: count the ones no keyword search led to".
