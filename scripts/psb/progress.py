@@ -539,6 +539,11 @@ def _eval_lines(evaluation: dict, note: str) -> list[str]:
                 changes.append(f"{block} +{len(change.get('terms_added', []))}/-{len(change.get('terms_removed', []))} terms")
         lines.append(f"- Strategy changes: {'; '.join(changes) or 'none'}")
     lines += _optional_lines(evaluation)
+    impact = evaluation.get("term_impact") or {}
+    top = [row for row in impact.get("terms") or [] if row.get("records_only_here") and not row.get("known_only_here")][:3]
+    if top:
+        lines.append("- Terms that alone add the most records and no known record: "
+                     + " · ".join(f"{code(clean(row['term'], 60))} {_n(row['records_only_here'])} ({_pct(row.get('share_percent'))})" for row in top))
     lines.append(f"- Checks: {_checks(evaluation)}")
     return lines
 

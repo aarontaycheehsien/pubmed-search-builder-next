@@ -17,7 +17,7 @@ from __future__ import annotations
 from .ncbi import NcbiError
 from . import validation, mesh, syntax
 from .progress import attribution
-from .strategy import block_query, core_query, full_query, lint, numbered_lines, query_with_optional
+from .strategy import Block, Strategy, block_query, core_query, full_query, lint, numbered_lines, query_with_optional
 from .workspace import MINING_ROLES, ROLES, Workspace, now
 
 # A known record is independent of the searcher's wording when no psb search led to it: the user
@@ -190,6 +190,51 @@ def _measure_optional(ws: Workspace, strategy, result: dict, *, in_pubmed: set[s
     result["optional_blocks"] = rows
 
 
+IMPACT_SAMPLES = 8
+
+
+def _term_impact(ws: Workspace, strategy: Strategy, result: dict, hit_full: set[str]) -> dict:
+    """What each term alone adds to the final result: records only it retrieves, known records only it retrieves.
+
+    A term's own count says little: most of what it finds, other terms or other blocks find or
+    exclude. The records that leave the result when the term is removed are the ones it costs.
+    """
+    pm = ws.pubmed
+    count = result["count"]
+    rows = []
+    for block in strategy.blocks:
+        if len(block.terms) < 2:
+            continue  # the block's only term: removing it removes the block, which ablation covers
+        for index, term in enumerate(block.terms):
+            blocks = [Block(b.id, b.name, [t for i, t in enumerate(b.terms) if b.id != block.id or i != index]) for b in strategy.blocks]
+            without = effective_query(full_query(Strategy(blocks, strategy.combine, strategy.limits)), pm.as_of)
+            remaining = pm.count(without)
+            rows.append({"block": block.id, "term": term, "records_only_here": max(count - remaining, 0),
+                         "share_percent": round(100 * max(count - remaining, 0) / count, 1) if count else None,
+                         "known_only_here": sorted(hit_full - pm.among(without, hit_full), key=int) if hit_full else [],
+                         "without": without})
+    rows.sort(key=lambda r: (-r["records_only_here"], r["block"], r["term"]))
+    folder = ws.root / "impact"
+    folder.mkdir(exist_ok=True)
+    for old in folder.glob("*.txt"):
+        old.unlink()
+    suspects = [r for r in rows if r["records_only_here"] and not r["known_only_here"]]
+    for rank, row in enumerate(suspects[:IMPACT_SAMPLES], 1):
+        path = folder / f"{rank:02d}-{row['block']}.txt"
+        path.write_text(f"({result['query']}) NOT ({row['without']})\n", encoding="utf-8")
+        row["sample_file"] = str(path)
+    for row in rows:
+        del row["without"]
+    share = round(sum(r["records_only_here"] for r in suspects[:IMPACT_SAMPLES]) * 100 / count, 1) if count else 0.0
+    reading = ("No term adds records that nothing else finds without also being the only route to a known record."
+               if not suspects else
+               f"{len(suspects)} terms each add records nothing else finds and are the only route to no known record; the top "
+               f"{min(len(suspects), IMPACT_SAMPLES)} account for {share}% of the result. That marks a term as a candidate, "
+               "not as noise: look at what it alone finds (psb sample --purpose noise-check --file <sample_file> --random) "
+               "and drop it only if that is off-topic. Keep any term with known_only_here.")
+    return {"count": count, "terms": rows, "reading": reading}
+
+
 def effective_query(query: str, as_of: str | None) -> str:
     if not as_of:
         return query
@@ -198,7 +243,7 @@ def effective_query(query: str, as_of: str | None) -> str:
     return f'({query}) AND ("1800/01/01"[edat] : "{bound}"[edat])'
 
 
-def evaluate(ws: Workspace, *, term_counts: bool = True) -> dict:
+def evaluate(ws: Workspace, *, term_counts: bool = True, term_impact: bool = False) -> dict:
     inputs = validation.input_snapshot(ws)
     result = {"inputs": inputs, "input_sha256": validation.digest(inputs), "run_date": now(),
               "lint": lint(ws.strategy(), concepts=inputs["protocol"].get("concepts") or []),
@@ -218,6 +263,11 @@ def evaluate(ws: Workspace, *, term_counts: bool = True) -> dict:
             result["vocabulary"], vocabulary_issues = mesh.validate_query(ws.pubmed, result["query"], result["run_date"])
             collected.extend(vocabulary_issues)
             _measure(ws, result, term_counts=term_counts)
+            if term_impact:
+                try:
+                    result["term_impact"] = _term_impact(ws, ws.strategy(), result, set(result.get("retrieved_known") or []))
+                except NcbiError as exc:  # a diagnostic: it must not stop the evaluation
+                    result["term_impact"] = {"error": str(exc), "reading": "Not measured: PubMed did not answer."}
             complete = term_counts and not any(r.get("status") == "unverified" for r in result["vocabulary"])
     except (NcbiError, ValueError) as exc:
         collected.append(validation.issue("validation_unavailable", "Evaluation could not complete", evidence=str(exc)))

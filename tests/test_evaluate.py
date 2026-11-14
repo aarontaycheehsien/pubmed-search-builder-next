@@ -228,3 +228,39 @@ def test_recall_lower_bound_comes_from_held_out_records_found_without_a_search(m
     free = evaluate(ws)["known_without_keyword_search"]
     assert free["held_out"] == {"in_pubmed": 2, "retrieved": 1, "recall_lower_95_percent": 2.5}
     assert "1 of the 2 held-out known records" in free["reading"]
+
+
+# -- term impact: what each term alone adds to the final result ------------------------------------
+
+def test_term_impact_reports_records_and_known_records_only_one_term_retrieves(make_ws):
+    ws, _ = setup(make_ws, blocks=[BLOCKS[0]], sets={"seeds": ("seed", ["1", "3"])})
+    assert "term_impact" not in evaluate(ws)  # opt-in: it costs two requests per term
+    impact = evaluate(ws, term_impact=True)["term_impact"]
+    rows = {row["term"]: row for row in impact["terms"]}
+    mesh, text_word = rows['"Asthma"[Mesh]'], rows["asthma*[tiab]"]
+    assert (mesh["records_only_here"], mesh["share_percent"], mesh["known_only_here"]) == (1, 25.0, ["3"])
+    assert (text_word["records_only_here"], text_word["known_only_here"]) == (1, [])
+    assert "sample_file" not in mesh  # the only route to a known record is never a noise candidate
+    sample = (ws.root / "impact" / "01-asthma.txt").read_text(encoding="utf-8")
+    assert text_word["sample_file"].endswith("01-asthma.txt") and " NOT (" in sample and "asthma*[tiab]" in sample.split(" NOT (")[0]
+    assert "1 terms each add records nothing else finds" in impact["reading"]
+
+
+def test_term_impact_skips_a_blocks_only_term_and_survives_an_ncbi_error(make_ws):
+    from psb.ncbi import NcbiError
+
+    lone = [{"id": "asthma", "name": "", "terms": ["asthma*[tiab]"]}, BLOCKS[1]]
+    ws, fake = setup(make_ws, blocks=lone)
+    terms_measured = {row["term"] for row in evaluate(ws, term_impact=True)["term_impact"]["terms"]}
+    assert terms_measured == {'"Child"[Mesh]', "child*[tiab]"}
+    answer, calls = fake.count, []
+
+    def count(query, **kwargs):
+        calls.append(query)
+        if len(calls) > 3:
+            raise NcbiError("PubMed is busy")
+        return answer(query, **kwargs)
+
+    fake.count = count
+    result = evaluate(ws, term_impact=True)
+    assert result["ok"] and result["term_impact"]["error"] == "PubMed is busy"

@@ -305,7 +305,7 @@ def _eval_signature(evaluation: dict) -> tuple:
 
 def cmd_eval(args) -> dict:
     ws = workspace(args)
-    evaluation = evaluate(ws, term_counts=not args.no_term_counts)
+    evaluation = evaluate(ws, term_counts=not args.no_term_counts, term_impact=getattr(args, "term_impact", False))
     deliver.record_evaluation(ws, evaluation, note=args.note)
     attempt = ws.save_attempt(evaluation)
     output = dict(evaluation, attempt_id=attempt["attempt_id"])
@@ -528,6 +528,8 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--note", default="", help="why this version changed")
     p.add_argument("--no-term-counts", action="store_true")
     p.add_argument("--brief", action="store_true", help="omit per-line counts")
+    p.add_argument("--term-impact", action="store_true",
+                   help="also measure the records and known records each term alone adds (two requests per term)")
     p.set_defaults(func=cmd_eval)
 
     p = sub.add_parser("terms", help="term mining")

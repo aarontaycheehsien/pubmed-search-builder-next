@@ -81,6 +81,11 @@ count; pair the acronym with a context term, or drop it if the spelled-out forms
 - `truncation_dropped`: the stem is too short; lengthen it or list the variants.
 - A line with a very large count inside an AND-ed block is usually fine; a large count in the
   final result is the thing to manage. Cut noise only when no known record is lost.
+- `psb eval --term-impact` measures that directly: `records_only_here` is what leaves the final
+  result when one term is removed, `known_only_here` the known records that leave with it. A
+  term with a large share and no known record of its own is a candidate, not a verdict: sample
+  what it alone finds from its `sample_file` and judge that. It costs two requests per term,
+  so run it when the result is too large, not on every eval.
 
 ## Controlled vocabulary versus text word gaps (Bramer)
 

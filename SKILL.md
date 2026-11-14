@@ -154,8 +154,12 @@ records, leave-one-block-out ablation, and what changed since the previous versi
     block is AND-ed: record it as out of reach. Do not widen a block for such a record.
 - Never silently lose a previously retrieved known record (`since_previous.known_lost`).
   Either revert, or say in the note why the loss is acceptable.
-- Cut noise only when the count justifies it and no known record is lost. Use line counts
-  and `psb sample --purpose noise-check` to find noisy terms. Recall comes first.
+- Cut noise only when the count justifies it and no known record is lost. When the result is
+  larger than the user can screen, run `psb eval --term-impact`: for each term it gives the
+  records only that term retrieves and the known records only it retrieves, which a term's own
+  line count does not show. Look at what a high-impact term alone finds
+  (`psb sample --purpose noise-check --file <sample_file> --random`) before dropping it.
+  Recall comes first.
 - A block whose removal gains known records (ablation) is a sign of over-structuring:
   reconsider its role in `protocol.json`.
 - `optional_blocks` shows, for each optional block, the count if it were AND-ed, the known

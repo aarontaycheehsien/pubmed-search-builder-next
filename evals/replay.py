@@ -3,11 +3,13 @@
 
     python evals/replay.py miss TOPIC --card evals/results/TOPIC/<card>.json
     python evals/replay.py optional TOPIC --card <card>.json --blocks blocks.json
+    python evals/replay.py impact TOPIC --card <card>.json
 
 ``miss`` runs ``psb terms miss`` on the gold records the card's strategy missed, and tallies the
 cause it gives for each failing block. ``optional`` measures candidate blocks (a JSON list of
 ``{"id", "name", "terms"}``) as optional blocks of that strategy, with the gold set as the known
-records: what AND-ing each would do to the count and to recall.
+records: what AND-ing each would do to the count and to recall. ``impact`` runs
+``psb eval --term-impact``: the records, and the gold records, that each term alone retrieves.
 
 Both read the answer key, so they refuse anything but a development topic. They show what the
 tools would have told an agent on a strategy an agent really delivered: a test of the tools that
@@ -104,7 +106,7 @@ def workspace(fixture: dict, card: dict, optional: list[dict]) -> Workspace:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("command", choices=["miss", "optional"])
+    parser.add_argument("command", choices=["miss", "optional", "impact"])
     parser.add_argument("topic")
     parser.add_argument("--card", required=True, help="a scorecard under evals/results/ with a delivered strategy")
     parser.add_argument("--blocks", help="optional: JSON list of candidate blocks {id, name, terms}")
@@ -119,7 +121,7 @@ def main() -> int:
     if fixture.get("as_of"):
         os.environ["PSB_AS_OF"] = fixture["as_of"]
     ws = workspace(fixture, card, optional)
-    evaluation = evaluate(ws, term_counts=False)
+    evaluation = evaluate(ws, term_counts=False, term_impact=args.command == "impact")
     if not evaluation["ok"]:
         print(json.dumps(evaluation["validation"]["blockers"], indent=2))
         return 1
@@ -129,6 +131,8 @@ def main() -> int:
            "gold": {k: gold[k] for k in ("in_pubmed", "retrieved", "recall_percent")}}
     if args.command == "optional":
         out["optional_blocks"] = evaluation["optional_blocks"]
+    elif args.command == "impact":
+        out["term_impact"] = evaluation["term_impact"]
     else:
         records = list(ws.ensure_records(gold["missed"]).values())
         report = terms.miss_report(records, evaluation, ws.strategy())
