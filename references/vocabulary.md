@@ -50,8 +50,9 @@ phrase; quote phrases to be explicit.
 - There is no left truncation: `virus*` finds viruses, not rotavirus, polyomavirus or
   coronavirus. When a concept word is also the tail of compound words (-virus, -itis, -oma, -mab,
   -statin, schoolchild), the text layer needs those words or their families by name; MeSH
-  explosion covers them only for indexed records. `psb terms miss` reports this as
-  `embedded_stem`.
+  explosion covers them only for indexed records. `psb mesh show` lists the heading's narrower
+  headings: their names are the family list to add as text words. `psb terms miss` reports this
+  as `embedded_stem`.
 
 ### Proximity
 
