@@ -141,8 +141,10 @@ What this shows, and what it does not:
   a block on evidence, so the two runs that did AND one used the "otherwise too large to
   screen" clause and recorded an unmeasured risk.
 - **`--term-impact` was never run by an agent**, so its only evidence is the replay above. Two
-  runs cut noise by hand instead. If it is to be used, the skill has to say when more firmly,
-  or the progress message has to prompt it when the result is large.
+  runs cut noise by hand instead. After these runs, `psb eval` was changed to return
+  `large_result` above 10,000 records until term impact has been measured, with a line in the
+  progress message, and `SKILL.md` to require it once before the critic step. No agent run has
+  tested that prompt.
 - On Kwok the recall gain came from the `vocabulary.md` text on proximity and families; no
   known record was missed during those builds, so `psb terms miss` never ran there.
 - One run a side, two for `main`, cannot separate the patch from run-to-run variance: the two
@@ -155,15 +157,16 @@ What this shows, and what it does not:
 
 1. **Precision without independent records.** The measurement is now honest and conservative.
    On a topic like Welling it leaves a 126,000-record result. The lever that remains is noise
-   inside the one block (`--term-impact`), which agents did not use.
+   inside the one block (`--term-impact`). Agents did not use it unprompted; whether the new
+   prompt changes that is the first thing the next comparison should show.
 2. **Twenty independent records is rarely reachable without seeds.** The most a run found was
    16. Either the threshold comes down, with the bound stated (0 lost of 13 still allows 21%),
    or a no-seed run accepts large results. That is a judgement about the review, not about the
    tool, and belongs with the user at intake.
 3. **`psb eval --brief` is still very large.** Four agents wrote their own summariser. A short
    form would reduce what a cheaper model has to read.
-4. **`SKILL.md` does not give the `strategy.json` format.** Two `main` runs read it from the
-   source. `scope.md` now has an example; the skill text should point to it.
+4. **`SKILL.md` did not give the `strategy.json` format.** Two `main` runs read it from the
+   source. `scope.md` now has an example and the vocabulary step points to it.
 
 ## How to test, cheapest first
 

@@ -264,3 +264,18 @@ def test_term_impact_skips_a_blocks_only_term_and_survives_an_ncbi_error(make_ws
     fake.count = count
     result = evaluate(ws, term_impact=True)
     assert result["ok"] and result["term_impact"]["error"] == "PubMed is busy"
+
+
+def test_large_result_prompts_term_impact_until_it_has_been_measured(make_ws, monkeypatch):
+    import psb.evaluate as module
+    from psb import progress
+
+    ws, _ = setup(make_ws, blocks=[BLOCKS[0]], sets={"seeds": ("seed", ["1", "3"])})
+    assert "large_result" not in evaluate(ws)  # four records: nothing to prompt
+    monkeypatch.setattr(module, "LARGE_RESULT", 3)
+    result = evaluate(ws)
+    assert result["large_result"]["count"] == 4 and "--term-impact" in result["large_result"]["advice"]
+    assert any("Large result" in line for line in progress._eval_lines(result, ""))
+    measured = evaluate(ws, term_impact=True)
+    assert "large_result" not in measured and "term_impact" in measured
+    assert "large_result" not in evaluate(ws)  # measured once in this workspace: no further prompt

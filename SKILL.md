@@ -117,7 +117,8 @@ never change eligibility. If a record looks relevant but falls outside the scope
 ### 4. Vocabulary
 
 Read `references/vocabulary.md`. For each `search` concept, build one block in `strategy.json`
-whose `id` equals the concept `id`:
+whose `id` equals the concept `id` (the file's format is shown at the end of
+`references/scope.md`):
 
 - MeSH: `psb mesh lookup`, then `psb mesh show` for entry terms, tree position, narrower
   headings, and exploded versus unexploded counts. Tag headings explicitly with `[Mesh]`.
@@ -154,10 +155,11 @@ records, leave-one-block-out ablation, and what changed since the previous versi
     block is AND-ed: record it as out of reach. Do not widen a block for such a record.
 - Never silently lose a previously retrieved known record (`since_previous.known_lost`).
   Either revert, or say in the note why the loss is acceptable.
-- Cut noise only when the count justifies it and no known record is lost. When the result is
-  larger than the user can screen, run `psb eval --term-impact`: for each term it gives the
-  records only that term retrieves and the known records only it retrieves, which a term's own
-  line count does not show. Look at what a high-impact term alone finds
+- Cut noise only when the count justifies it and no known record is lost. When `psb eval`
+  returns `large_result` (more than 10,000 records), or the result is larger than the user
+  can screen, run `psb eval --term-impact` once before the critic step. For each term it gives
+  the records only that term retrieves and the known records only it retrieves, which a
+  term's own line count does not show. Look at what a high-impact term alone finds
   (`psb sample --purpose noise-check --file <sample_file> --random`) before dropping it.
   Recall comes first.
 - A block whose removal gains known records (ablation) is a sign of over-structuring:
