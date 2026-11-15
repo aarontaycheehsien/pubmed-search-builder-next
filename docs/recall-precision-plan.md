@@ -103,48 +103,61 @@ two-block search returns 1,653 records at 97.4%, against 32,074 at 92.1% deliver
 Claude Sonnet, no seeds, standard depth, scored with `harness.score` against the answer key.
 `main` is 704317b.
 
-### The whole branch against main, two runs a side
+### The whole branch against main, three runs a side
 
-Each cell is records and recall.
+Each cell is records and recall. The branch arm is commit bf6943b (everything up to the
+term-impact prompt).
 
-| Topic | main, run 1 | main, run 2 | branch, run 1 | branch, run 2 |
-|---|---:|---:|---:|---:|
-| van_de_Schoot_2018 | 35,263 · 94.7% | 35,405 · 94.7% | 10,004 · 94.7% | 9,255 · 94.7% |
-| Bos_2018 | 9,885 · 100% | 12,691 · 100% | 9,229 · 100% | 7,454 · 100% |
-| Welling_2021 | 152,755 · 100% | 130,810 · 100% | 23,866 · 98.1% | 31,440 · 98.1% |
-| Kwok_2020 | 1,572 · 94.8% | 6,816 · 96.6% | 6,332 · 96.6% | 1,562 · 97.4% |
+| Topic | main | branch |
+|---|---|---|
+| van_de_Schoot_2018 | 35,263 · 35,405 · 67,383, all 94.7% | 10,004 · 9,255 · 9,964, all 94.7% |
+| Bos_2018 | 9,885 · 12,691 · 52,766, all 100% | 9,229 · 7,454 · 7,702, all 100% |
+| Welling_2021 | 152,755 · 130,810 · 139,917, all 100% | 23,866 · 31,440 · 26,130, all 98.1% |
+| Kwok_2020 | 1,572 (94.8%) · 6,816 (96.6%) · 6,272 (96.6%) | 6,332 (96.6%) · 1,562 (97.4%) · 1,288 (94.8%) |
 
-| Across the eight runs of each arm | main | branch |
+| Across the twelve runs of each arm | main | branch |
 |---|---:|---:|
-| Mean recall | 97.6% | 97.5% |
-| Mean of the per-topic mean record counts | 48,150 | 12,393 |
-| Runs with known records no keyword search led to | 1 | 7 |
-| Runs that measured an optional block | 0 | 7 |
-| Runs that ran `--term-impact` (of those above 10,000 records at some point) | not available | 6 of 7 |
+| Mean recall | 97.7% | 97.3% |
+| Gold records missed, of 648 | 20 | 22 |
+| Mean of the per-topic median record counts | 48,571 | 11,340 |
+| Runs with known records no keyword search led to | 2 | 11 |
+| Runs that measured an optional block with `psb eval` | not available | 11 |
+| Runs that ran `--term-impact` | not available | 10 |
 
 What this shows, and what it does not:
 
-- **Fewer records at about the same recall.** The result fell by 73% on van_de_Schoot and 80%
-  on Welling, by a quarter on Bos, and was unchanged on Kwok, where both arms vary fourfold
-  between runs. Recall was identical on two topics and higher on Kwok.
-- **Welling cost one gold record.** Both branch runs AND-ed an outcome block and both missed
-  the same record (32242089), 1 of 53. That is the price of 24,000 to 31,000 records in place
-  of 131,000 to 153,000, and each run reported the residual risk: the measured loss bounds
-  were 19.3% (14 independent records) and 10.9% (26). Whether that trade is right is the
-  reviewer's call; the branch makes it visible, where the first version hid it.
-- **The mechanisms were used.** Seven of eight branch runs screened a review's reference list
-  into a benchmark set; two reached more than 20 such records. Six of the seven runs whose result
-  passed 10,000 records ran `--term-impact` after the prompt (the seventh AND-ed a block instead), sampled what the top terms alone found,
-  and cut them: bare `posttraumatic[tiab]` (orthopaedic and surgical records), `epidemic*` and
-  `outbreak*` (48% of one COVID result), `confinement`.
-- **The two records every arm missed on van_de_Schoot** (20061839, 20836603) call the
+- **About a quarter of the records at about the same recall.** On van_de_Schoot, Bos and
+  Welling every branch run returned fewer records than every `main` run. The branch is also
+  far steadier: van_de_Schoot spans 9,255 to 10,004 on the branch and 35,263 to 67,383 on
+  `main`; Bos 7,454 to 9,229 against 9,885 to 52,766. On `main` the size of the result depends
+  on whether the agent happens to AND a second block on judgement.
+- **Welling costs one gold record, the same one each time.** All three branch runs AND-ed an
+  outcome block and missed 32242089, "Endocrine and metabolic link to coronavirus infection",
+  whose record carries no lifestyle or well-being wording for any outcome block to match. That
+  is 1 of 53 for a result one fifth the size. Each run reported the risk it had measured:
+  bounds of 19.3%, 10.9% and 6.3% on 14, 26 and 46 independent records.
+- **Kwok shows no effect, and one caution.** Both arms vary fourfold between runs and their
+  recall overlaps. The third branch run wrote a narrower method block than the other two and
+  missed two gold records they kept. It also dropped `pyrosequencing`, `"novel virus*"` and
+  `"viral diversity"` after `--term-impact` showed no known record depending on them and its
+  samples looked off-topic. Restoring the three (checked against the answer key) recovers one
+  gold record, 25918239, for 383 more records. A term-impact cut is only as safe as the known
+  set is wide.
+- **The mechanisms were used.** Eleven of twelve branch runs built a benchmark from a review's
+  reference list (two of twelve on `main`) and measured an optional block; three reached the
+  20 independent records the rule asked for, eight AND-ed for workload with 8 to 14. Ten ran
+  `--term-impact` and cut what its samples showed: bare `posttraumatic[tiab]` (orthopaedic and
+  surgical records), `leukoencephalopath*` (18.5% of one result), `epidemic*` and `outbreak*`
+  (48% of one COVID result), `confinement`.
+- **The two records every run missed on van_de_Schoot** (20061839, 20836603) call the
   condition "distress" or "acute stress". No run had them among its known records, so no
   diagnostic could point at them. Known-record discovery still bounds recall.
-- **Two runs a side is not three, and this is not the harness.** The agents were subagents
-  sharing one machine, with the as-of date pinned in the staged launcher and a same-context
-  critic. The size of the Welling and van_de_Schoot differences is far outside the run-to-run
-  spread seen here; the Bos and Kwok differences are not. Nothing here says anything about
-  held-out topics or about the usual model.
+- **This is not the harness, and not the usual model.** The agents were subagents sharing one
+  machine, with the as-of date pinned in the staged launcher and a same-context critic. Three
+  runs a side on four development topics supports the direction and rough size of the effect
+  on record counts; it does not support small differences in recall, and it says nothing about
+  held-out topics. Two commits made after these runs (the shorter `--brief` output and the
+  restated rule in `scope.md`) have not been run by any agent.
 
 ### Earlier versions of the branch (one run each)
 
@@ -203,19 +216,17 @@ What these earlier runs showed, and why the branch changed after them:
 
 ## What is still open
 
-1. **The threshold of 20 independent records.** Two of eight branch runs reached it. The other
-   five that AND-ed a block used the "otherwise too large to screen" clause with 8 to 14 such
-   records and an unmeasured-risk note. If that clause is used this often it is the real rule:
-   either say so in `scope.md`, with the bound always stated, or leave the decision to the
-   user at intake.
-2. **Known-record discovery.** The records every arm missed were never in a known set. Review
-   reference lists help (seven of eight runs), but a review of a neighbouring topic gives a
-   benchmark skewed toward that topic, which two runs flagged.
-3. **`psb eval --brief` is still very large.** Several agents wrote their own summariser. A
-   short form would reduce what a cheaper model has to read.
-4. **`large_result` appears once.** After term impact has been measured it is not shown again,
-   even if the result is still above 10,000. One run found that confusing.
-5. **Closing critic round.** Several runs noted that the depth table suggests a closing round
+1. **Known-record discovery.** The records every arm missed were never in a known set. Review
+   reference lists help (eleven of twelve runs), but a review of a neighbouring topic gives a
+   benchmark skewed toward that topic, which several runs flagged.
+2. **Term-impact cuts on a narrow known set.** One Kwok run cut a term that was the only
+   route to a gold record no run had among its known records. A firmer rule (keep a term that
+   names a method or member the criteria name, whatever its impact) might have kept it; it has
+   not been written or tested.
+3. **AND-ing for workload.** Eight of eleven AND decisions rested on 8 to 14 independent
+   records. `scope.md` now names this as its own ground with conditions; whether the user
+   should be asked at intake how many records they can screen is undecided.
+4. **Closing critic round.** Several runs noted that the depth table suggests a closing round
    at standard depth while `psb report` accepts one revision round. That predates this branch.
 
 ## How to test, cheapest first
