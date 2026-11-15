@@ -64,17 +64,33 @@ query. `psb eval` reports for it, in `optional_blocks`:
 - `known.missed_now_but_in_block`: records the current search misses that this block finds. If
   there are several, this concept may be more reliably named than a block you are searching.
 
-AND the block (move it to `blocks`, set the role to `search`) when all of these hold:
+There are two grounds for AND-ing an optional block (moving it to `blocks` with the role
+`search`). The concept's `rationale` and `narrative.md` must say which one was used.
+
+**On evidence.** All of these hold:
 
 1. no known record is lost, in any set;
 2. at least about 20 known records found without a keyword search are retrieved now;
 3. the result falls by at least a quarter.
 
-With fewer such records the loss is unmeasured, whatever the total says. First look for more:
-the reference list of a prior review is the usual source (`known-records.md`). AND the block
-without them only when the result is otherwise too large to screen, make the block as broad as
-the count allows, and report the loss in `narrative.md` as an open, unmeasured risk. Never
-describe "none of N keyword-found records lost" as evidence that the block is safe.
+The bound is then the measured risk. Report it.
+
+**For workload.** With fewer such records the loss is unmeasured, whatever the total says. This
+is the usual position when the user gave no seeds. AND-ing the block is then a choice to trade
+an unknown share of recall for a result that can be screened, and it is legitimate only when
+all of these hold:
+
+1. no known record is lost, in any set;
+2. the result without the block is too large for the user to screen. Ask if the user is
+   available; otherwise state the size you assumed was too large;
+3. you looked for more such records first: the reference lists of at least two reviews
+   (`known-records.md`);
+4. the block is as broad as the count allows;
+5. the `rationale` and `narrative.md` state that the block was AND-ed for workload, how many
+   records found without a keyword search it was tested on, the bound (or "unmeasured"), and
+   the count without the block, so the user can reverse the decision.
+
+Never describe "none of N keyword-found records lost" as evidence that the block is safe.
 
 If a known record is lost, broaden the block and test again, or leave it optional. Record the
 decision and the numbers in the concept's `rationale`. A concept left optional stays in the
