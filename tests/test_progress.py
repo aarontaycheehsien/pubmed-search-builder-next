@@ -456,3 +456,16 @@ def test_neighbors_says_when_pubmed_has_no_reference_list(ws, capsys):
     assert code == 0 and out["no_reference_list"] == ["2"] and "no reference list for 2" in out["note"]
     code, out = psb(capsys, "neighbors", "1", "--links", "refs")
     assert "no_reference_list" not in out
+
+
+def test_brief_eval_leaves_the_bulky_evidence_in_the_saved_attempt(ws, capsys):
+    psb(capsys, "set", "add", "seeds", "1", "2", "--role", "seed")
+    write_json(ws.root / "strategy.json", STRATEGY)
+    code, brief = psb(capsys, "eval", "--brief")
+    assert code == 0 and not {"lines", "vocabulary", "inputs", "translation", "retrieved_known"} & set(brief)
+    assert brief["omitted"]["keys"] == ["lines", "retrieved_known", "vocabulary", "inputs", "translation"]
+    assert {"count", "sets", "misses", "validation", "known_without_keyword_search", "query"} <= set(brief)
+    saved = json.loads((ws.root / "attempts" / f"{brief['attempt_id']}.json").read_text(encoding="utf-8"))["evaluation"]
+    assert {"lines", "vocabulary", "inputs"} <= set(saved)
+    code, full = psb(capsys, "eval")
+    assert {"lines", "vocabulary", "inputs"} <= set(full) and "omitted" not in full

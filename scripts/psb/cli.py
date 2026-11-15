@@ -311,8 +311,11 @@ def cmd_eval(args) -> dict:
     output = dict(evaluation, attempt_id=attempt["attempt_id"])
     progress.attach(output, ws, "eval", {"evaluation": evaluation, "note": args.note})
     if args.brief:
-        output.pop("lines", None)
-        output.pop("retrieved_known", None)
+        # What an agent reads after each revision: counts, recall, misses, diagnostics, issues. The
+        # bulky evidence (every line's translation, the MeSH check of every heading, the inputs it
+        # wrote itself) stays in the saved attempt.
+        omitted = [key for key in ("lines", "retrieved_known", "vocabulary", "inputs", "translation") if output.pop(key, None) is not None]
+        output["omitted"] = {"keys": omitted, "where": f"psb eval without --brief, or attempts/{attempt['attempt_id']}.json"}
     output.pop("known_in_pubmed", None)
     return output
 
@@ -527,7 +530,8 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("eval", help="count, recall, misses, ablation, and change since last version")
     p.add_argument("--note", default="", help="why this version changed")
     p.add_argument("--no-term-counts", action="store_true")
-    p.add_argument("--brief", action="store_true", help="omit per-line counts")
+    p.add_argument("--brief", action="store_true",
+                   help="omit per-line counts, translations, the MeSH check and the inputs (all kept in the saved attempt)")
     p.add_argument("--term-impact", action="store_true",
                    help="also measure the records and known records each term alone adds (two requests per term)")
     p.set_defaults(func=cmd_eval)

@@ -278,4 +278,6 @@ def test_large_result_prompts_term_impact_until_it_has_been_measured(make_ws, mo
     assert any("Large result" in line for line in progress._eval_lines(result, ""))
     measured = evaluate(ws, term_impact=True)
     assert "large_result" not in measured and "term_impact" in measured
-    assert "large_result" not in evaluate(ws)  # measured once in this workspace: no further prompt
+    later = evaluate(ws)  # measured once in this workspace: still reported, no longer prompted
+    assert later["large_result"]["term_impact_measured"] and "again only if" in later["large_result"]["advice"]
+    assert not any("Large result" in line for line in progress._eval_lines(later, ""))

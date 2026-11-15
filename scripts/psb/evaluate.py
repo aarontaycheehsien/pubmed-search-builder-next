@@ -271,13 +271,17 @@ def evaluate(ws: Workspace, *, term_counts: bool = True, term_impact: bool = Fal
                     result["term_impact"] = _term_impact(ws, ws.strategy(), result, set(result.get("retrieved_known") or []))
                 except NcbiError as exc:  # a diagnostic: it must not stop the evaluation
                     result["term_impact"] = {"error": str(exc), "reading": "Not measured: PubMed did not answer."}
-            elif (result.get("count") or 0) > LARGE_RESULT and not any((ws.root / "impact").glob("*.txt")):
+            elif (result.get("count") or 0) > LARGE_RESULT:
+                measured = any((ws.root / "impact").glob("*.txt"))
                 result["large_result"] = {
-                    "count": result["count"], "threshold": LARGE_RESULT,
-                    "advice": "The result is large and term impact has not been measured in this workspace. Run "
-                              "psb eval --term-impact once before the critic step: it shows which terms alone add the "
-                              "most records and whether any known record depends on them. Cut only what its samples "
-                              "show to be off-topic."}
+                    "count": result["count"], "threshold": LARGE_RESULT, "term_impact_measured": measured,
+                    "advice": ("The result is still large. Term impact was measured for an earlier version of the "
+                               "strategy: run psb eval --term-impact again only if the blocks have changed much since."
+                               if measured else
+                               "The result is large and term impact has not been measured in this workspace. Run "
+                               "psb eval --term-impact once before the critic step: it shows which terms alone add the "
+                               "most records and whether any known record depends on them. Cut only what its samples "
+                               "show to be off-topic.")}
             complete = term_counts and not any(r.get("status") == "unverified" for r in result["vocabulary"])
     except (NcbiError, ValueError) as exc:
         collected.append(validation.issue("validation_unavailable", "Evaluation could not complete", evidence=str(exc)))

@@ -541,7 +541,7 @@ def _eval_lines(evaluation: dict, note: str) -> list[str]:
     lines += _optional_lines(evaluation)
     impact = evaluation.get("term_impact") or {}
     top = [row for row in impact.get("terms") or [] if row.get("records_only_here") and not row.get("known_only_here")][:3]
-    if evaluation.get("large_result"):
+    if evaluation.get("large_result") and not evaluation["large_result"].get("term_impact_measured"):
         lines.append("- Large result: which terms carry it has not been measured yet (psb eval --term-impact)")
     if top:
         lines.append("- Terms that alone add the most records and no known record: "
