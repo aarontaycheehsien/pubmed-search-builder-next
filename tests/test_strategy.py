@@ -10,8 +10,8 @@ from psb.strategy import (
 )
 
 
-def make(blocks, combine=None, limits=None):
-    return Strategy.from_dict({"blocks": blocks, "combine": combine, "limits": limits or []})
+def make(blocks, combine=None, limits=None, optional=None):
+    return Strategy.from_dict({"blocks": blocks, "combine": combine, "limits": limits or [], "optional": optional or []})
 
 
 TWO = [
@@ -104,3 +104,32 @@ def test_lint_flags_a_block_whose_terms_and_two_ideas():
     split = Strategy.from_dict({"blocks": [{"id": "v", "terms": ["virus*[tiab]", '"Viruses"[Mesh]']},
                                            {"id": "m", "terms": ["metagenom*[tiab]", '"high AND low"[tiab]']}]})
     assert "compound_block" not in {i["code"] for i in lint(split)}
+
+
+def test_optional_blocks_stay_out_of_the_query_and_the_line_set():
+    strategy = make(TWO, optional=[{"id": "o", "name": "Outcome", "terms": ["mortality[tiab]"]}])
+    assert "mortality" not in full_query(strategy) and all("mortality" not in l["text"] for l in numbered_lines(strategy))
+    assert strategy.to_dict()["optional"] == [{"id": "o", "name": "Outcome", "terms": ["mortality[tiab]"]}]
+    assert "optional" not in make(TWO).to_dict()  # absent when unused: existing strategies keep their hash
+
+
+def test_optional_block_structure_and_lint():
+    clash = make(TWO, optional=[{"id": TWO[0]["id"], "name": "", "terms": ["x[tiab]"]}, {"id": "o", "name": "", "terms": []}])
+    errors = " ".join(clash.structural_errors())
+    assert "already used" in errors and "optional block 'o' has no terms" in errors
+    strategy = make(TWO, optional=[{"id": "o", "name": "", "terms": ["mortality", "cat*[tiab]"]}])
+    concepts = [{"id": b["id"], "role": "search"} for b in TWO] + [{"id": "o", "role": "optional"}, {"id": "p", "role": "optional"}]
+    issues = [i for i in lint(strategy, concepts=concepts) if i.get("location") == "optional:o"]
+    by_code = {i["code"]: i["severity"] for i in issues}
+    assert by_code == {"untagged": "info", "short_truncation": "error"}  # warnings are notes; errors still stop the eval
+    assert "optional_untested" in codes(lint(strategy, concepts=concepts))  # concept p has no block to measure
+
+
+def test_one_block_search_with_unsearched_concepts_is_noted_until_one_is_measured():
+    one = [{"id": "c", "name": "", "terms": ['"Asthma"[Mesh]', "asthma*[tiab]"]}]
+    concepts = [{"id": "c", "role": "search"}, {"id": "o", "role": "screen"}]
+    assert "single_block_untested" in codes(lint(make(one), concepts=concepts))
+    measured = make(one, optional=[{"id": "o", "name": "", "terms": ["mortality[tiab]"]}])
+    found = codes(lint(measured, concepts=concepts))
+    assert "single_block_untested" not in found and "optional_block_role" not in found
+    assert "single_block_untested" not in codes(lint(make(TWO), concepts=concepts))

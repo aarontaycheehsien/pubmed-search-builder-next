@@ -97,6 +97,7 @@ def cmd_status(args) -> dict:
         "depth": protocol.get("depth"),
         "concepts": [{"id": c.get("id"), "role": c.get("role")} for c in concepts],
         "blocks": [{"id": b.id, "terms": len(b.terms)} for b in strategy.blocks],
+        **({"optional_blocks": [{"id": b.id, "terms": len(b.terms)} for b in strategy.optional]} if strategy.optional else {}),
         "sets": {name: {"role": d.get("role"), "size": len(d.get("pmids", []))} for name, d in sets.items()},
         "versions": len(versions),
         "last_eval": {"count": last.get("count"), "recall": {n: s.get("recall_percent") for n, s in (last.get("sets") or {}).items()}} if last else None,
@@ -147,6 +148,14 @@ def cmd_sample(args) -> dict:
         "ok": True, "count": total, "retstart": start,
         "records": [{"pmid": p, "year": r.get("year"), "title": r.get("title")} for p, r in records.items()],
     }
+    if args.purpose == "prior-reviews":
+        # PubMed holds a reference list mostly for records that are also in PMC.
+        for row in body["records"]:
+            row["in_pmc"] = bool(records[row["pmid"]].get("pmcid"))
+        body["note"] = ("in_pmc marks the reviews whose reference list PubMed is likely to hold "
+                        "(psb neighbors <PMID> --links refs). A reference list is the main source of known records "
+                        "that do not depend on your own search wording: prefer those reviews, and use a review of an "
+                        "overlapping or broader topic when none matches the scope exactly.")
     if args.purpose:
         def data() -> dict:
             found = {"query": query, "count": total, "shown": len(records), "retstart": start}
@@ -163,12 +172,16 @@ def cmd_neighbors(args) -> dict:
     pmids = pmid_args(ws, args.pmids, args.set)
     known = {p for d in ws.sets().values() for p in d.get("pmids", [])} if args.exclude_known else set()
     scores: dict[str, dict] = {}
+    no_refs: list[str] = []
     for link in args.links.split(","):
         link = link.strip()
         if link not in LINKNAMES:
             raise UsageError(f"unknown link {link!r}; use {', '.join(LINKNAMES)}")
         for pmid in pmids:
-            for row in ws.pubmed.links(pmid, link)[: args.max_per_seed]:
+            linked = ws.pubmed.links(pmid, link)
+            if link == "refs" and not linked:
+                no_refs.append(pmid)
+            for row in linked[: args.max_per_seed]:
                 entry = scores.setdefault(row["pmid"], {"pmid": row["pmid"], "from": [], "links": set(), "best_score": 0})
                 entry["from"].append(pmid)
                 entry["links"].add(link)
@@ -181,6 +194,11 @@ def cmd_neighbors(args) -> dict:
     rows = [{**e, "links": sorted(e["links"]), "from": sorted(set(e["from"]))} for e in candidates[: args.limit]]
     body = {"ok": True, "seeds": len(pmids), "candidates": len(candidates), "shown": len(rows), "rows": rows,
             "note": "Neighbours are candidates, not relevant records: screen them before using them for mining."}
+    if no_refs:
+        body["no_reference_list"] = no_refs
+        body["note"] += (" PubMed holds no reference list for " + ", ".join(no_refs) + ": it has them mostly for records "
+                         "in PMC. Try another review (psb sample --purpose prior-reviews marks in_pmc), or ask the user "
+                         "for the included studies.")
     def data() -> dict:
         links = [link.strip() for link in args.links.split(",")]
         in_sets = {p for d in ws.sets().values() for p in d.get("pmids", [])}
@@ -287,14 +305,17 @@ def _eval_signature(evaluation: dict) -> tuple:
 
 def cmd_eval(args) -> dict:
     ws = workspace(args)
-    evaluation = evaluate(ws, term_counts=not args.no_term_counts)
+    evaluation = evaluate(ws, term_counts=not args.no_term_counts, term_impact=getattr(args, "term_impact", False))
     deliver.record_evaluation(ws, evaluation, note=args.note)
     attempt = ws.save_attempt(evaluation)
     output = dict(evaluation, attempt_id=attempt["attempt_id"])
     progress.attach(output, ws, "eval", {"evaluation": evaluation, "note": args.note})
     if args.brief:
-        output.pop("lines", None)
-        output.pop("retrieved_known", None)
+        # What an agent reads after each revision: counts, recall, misses, diagnostics, issues. The
+        # bulky evidence (every line's translation, the MeSH check of every heading, the inputs it
+        # wrote itself) stays in the saved attempt.
+        omitted = [key for key in ("lines", "retrieved_known", "vocabulary", "inputs", "translation") if output.pop(key, None) is not None]
+        output["omitted"] = {"keys": omitted, "where": f"psb eval without --brief, or attempts/{attempt['attempt_id']}.json"}
     output.pop("known_in_pubmed", None)
     return output
 
@@ -327,10 +348,17 @@ def cmd_terms(args) -> dict:
     evaluation = attempts[-1]["evaluation"] if attempts else versions[-1]["evaluation"]
     missed = [m["pmid"] for m in evaluation.get("misses", []) if not args.set or set(m["sets"]) & set(args.set)]
     records = list(ws.ensure_records(missed).values())
-    body = {"ok": True, "version": versions[-1]["version"], "misses": terms.miss_report(records, evaluation, strategy),
-            "note": "Vocabulary from missed records is a candidate. Adding a term to recover a validation miss "
+    report = terms.miss_report(records, evaluation, strategy)
+    causes: dict[str, int] = {}
+    for row in report:
+        for found in row["diagnosis"]:
+            causes[found["cause"]] = causes.get(found["cause"], 0) + 1
+    body = {"ok": True, "version": versions[-1]["version"], "misses": report,
+            "causes": {name: terms.CAUSES[name] for name in terms.CAUSES if name in causes},
+            "note": "diagnosis gives, for each failing block, the likeliest reason it missed the record. "
+                    "Vocabulary from missed records is a candidate. Adding a term to recover a validation miss "
                     "makes that set part of development; say so in the audit."}
-    return progress.attach(body, ws, "terms-miss", {"version": body["version"],
+    return progress.attach(body, ws, "terms-miss", {"version": body["version"], "causes": causes,
                                                     "misses": [m for m in evaluation.get("misses", []) if m["pmid"] in missed]})
 
 
@@ -502,7 +530,10 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("eval", help="count, recall, misses, ablation, and change since last version")
     p.add_argument("--note", default="", help="why this version changed")
     p.add_argument("--no-term-counts", action="store_true")
-    p.add_argument("--brief", action="store_true", help="omit per-line counts")
+    p.add_argument("--brief", action="store_true",
+                   help="omit per-line counts, translations, the MeSH check and the inputs (all kept in the saved attempt)")
+    p.add_argument("--term-impact", action="store_true",
+                   help="also measure the records and known records each term alone adds (two requests per term)")
     p.set_defaults(func=cmd_eval)
 
     p = sub.add_parser("terms", help="term mining")

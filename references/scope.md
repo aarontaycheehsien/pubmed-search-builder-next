@@ -31,21 +31,81 @@ A concept becomes an AND-ed block (`role: search`) only if all of these hold:
    filter.
 5. No high-impact ambiguity about it remains.
 
-If any answer is "no" or "unsure", make it `screen` or `optional`. Outcomes, comparators,
-narrow settings, subgroups, severity and study design fail by default unless the question makes
-them the topic itself (for example, a review about a specific cause of death).
+If any answer is "no", make it `screen`. If an answer is "unsure", make it `optional` and
+measure it (below). Outcomes, comparators, narrow settings, subgroups, severity and study design
+fail by default unless the question makes them the topic itself (for example, a review about a
+specific cause of death).
 
 Evidence: C and O elements have lower retrieval potential in PubMed (Frandsen 2020,
 doi:10.1016/j.jclinepi.2020.07.005); two-block searches found more relevant reviews than
 four-block searches (Ho 2016, doi:10.1371/journal.pone.0167170).
 
+## Measure before you decide: optional blocks
+
+Leaving a concept out is as much a decision as AND-ing it, and it has a cost: a search too large
+to screen finds nothing. Rule 3 of the admission test (is it named reliably?) is an empirical
+question, so answer it with a measurement whenever known records exist.
+
+Give an `optional` concept a block under `optional` in `strategy.json`. It is never part of the
+query. `psb eval` reports for it, in `optional_blocks`:
+
+- `count_if_added` and `reduction_percent`: the result with the block AND-ed in;
+- `known.lost_if_added`: the known records, now retrieved, that the block would lose;
+- `known.by_route`: the same, split by how each record was found. `without_keyword_search`
+  records are those no keyword search led to: user seeds, and the reference list of a prior
+  review (`psb neighbors --links refs`). `from_keyword_search` records came from a pilot search
+  or from the similar and citing articles of its hits. They name the searched words by
+  construction, so they cannot show what a block built on those words would lose, however many
+  there are;
+- `known.loss_upper_95_percent`: on the records found without a keyword search only, the largest
+  share of relevant records the block could plausibly lose (0 lost of 10 still allows 26%; of
+  20, 14%; of 30, 10%). Null when there are no such records: the loss is then unmeasured;
+- `known.block_recall`: how many known records name the concept at all;
+- `known.missed_now_but_in_block`: records the current search misses that this block finds. If
+  there are several, this concept may be more reliably named than a block you are searching.
+
+There are two grounds for AND-ing an optional block (moving it to `blocks` with the role
+`search`). The concept's `rationale` and `narrative.md` must say which one was used.
+
+**On evidence.** All of these hold:
+
+1. no known record is lost, in any set;
+2. at least about 20 known records found without a keyword search are retrieved now;
+3. the result falls by at least a quarter.
+
+The bound is then the measured risk. Report it.
+
+**For workload.** With fewer such records the loss is unmeasured, whatever the total says. This
+is the usual position when the user gave no seeds. AND-ing the block is then a choice to trade
+an unknown share of recall for a result that can be screened, and it is legitimate only when
+all of these hold:
+
+1. no known record is lost, in any set;
+2. the result without the block is too large for the user to screen. Ask if the user is
+   available; otherwise state the size you assumed was too large;
+3. you looked for more such records first: the reference lists of at least two reviews
+   (`known-records.md`);
+4. the block is as broad as the count allows;
+5. the `rationale` and `narrative.md` state that the block was AND-ed for workload, how many
+   records found without a keyword search it was tested on, the bound (or "unmeasured"), and
+   the count without the block, so the user can reverse the decision.
+
+Never describe "none of N keyword-found records lost" as evidence that the block is safe.
+
+If a known record is lost, broaden the block and test again, or leave it optional. Record the
+decision and the numbers in the concept's `rationale`. A concept left optional stays in the
+audit as a tested alternative.
+
 ## Fragile concepts
 
 A concept is fragile when failing to find its usual label is weak evidence that a paper lacks
-it: workflows, behaviours, service settings, methods, and newly named constructs. Treat fragile
-concepts as `screen` unless the question cannot be searched without them. If one must be
-searched, give it a broad layer of descriptive phrases as well as its labels, and watch its
-ablation result: a block whose removal gains known records is losing relevant papers.
+it: workflows, behaviours, service settings, methods, and newly named constructs. Do not AND a
+fragile concept on judgement; make it `optional`, give it a broad layer of descriptive phrases
+as well as its labels, and measure it. Fragility belongs to the wording, not the category: in a
+review of symptom trajectories the method (trajectory, growth mixture, latent class) can be
+named in every relevant abstract while the condition is named three different ways. For a
+fragile concept you do search, watch its ablation result: a block whose removal gains known
+records is losing relevant papers.
 
 ### Direction, sequence and events in a subset
 
@@ -99,5 +159,20 @@ concepts are AND-ed:
 }
 ```
 
-The block `id` in `strategy.json` must equal the concept `id`. `psb lint` warns when a `search`
-concept has no block or a `screen` concept is AND-ed.
+To measure a concept instead of guessing, set its role to `optional` and draft it in
+`strategy.json` beside the searched blocks:
+
+```json
+{
+  "blocks": [{"id": "reflux", "name": "Vesicoureteral reflux", "terms": ["..."]},
+             {"id": "test", "name": "DMSA scan or ultrasound", "terms": ["..."]}],
+  "optional": [{"id": "children_uti", "name": "Children with UTI",
+                "terms": ["\"Child\"[Mesh]", "\"Infant\"[Mesh]", "child*[tiab]", "infan*[tiab]", "pediatric*[tiab]", "paediatric*[tiab]"]}],
+  "combine": null,
+  "limits": []
+}
+```
+
+The block `id` in `strategy.json` must equal the concept `id`, for `blocks` and for `optional`
+alike. `psb lint` warns when a `search` concept has no block or a `screen` concept is AND-ed, and
+notes an `optional` concept with no block to measure and a one-block search with nothing tested.

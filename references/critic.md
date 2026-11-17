@@ -26,10 +26,10 @@ quality assurance, not PRESS peer review, and the audit must say so.
 
 | Key | PRESS element | Ask |
 |---|---|---|
-| `translation` | Translation of the question | Do the AND-ed blocks match the concepts? Is anything AND-ed that should be screened? Is every member the criteria name searched by its bare name? Does a block require one direction of a process? (`scope.md`) |
+| `translation` | Translation of the question | Do the AND-ed blocks match the concepts? Is anything AND-ed that should be screened? Is every member the criteria name searched by its bare name? Does a block require one direction of a process? Do `optional_blocks` and `ablation` support each concept's role, and is a one-block search with a large result left unmeasured? (`scope.md`) |
 | `operators` | Boolean and proximity operators | Are OR and AND used correctly? Any NOT? Proximity distances sensible? |
 | `subject_headings` | Subject headings | Right descriptors, explosion, missing narrower or related headings, supplementary concepts? |
-| `text_words` | Text-word searching | Missing synonyms, spellings, plurals, acronyms; truncation too short or too broad? |
+| `text_words` | Text-word searching | Missing synonyms, spellings, plurals, acronyms; truncation too short or too broad? For a large result, was `term_impact` measured and were the terms that carry it sampled? |
 | `syntax` | Spelling, syntax, line numbers | Field tags, quotes, parentheses, translation warnings? |
 | `limits_filters` | Limits and filters | Is each limit justified, validated, and tested for lost records? |
 
@@ -52,7 +52,7 @@ Read `validation.md` for the phrase-review decision tree.
 | Kind | What to do |
 |---|---|
 | `lexical` | Change terms in the named block; `psb eval`. |
-| `structural` | Revisit the concept's role with the admission test in `scope.md`; update `protocol.json`; `psb eval`. |
+| `structural` | Revisit the concept's role with the admission test in `scope.md`; measure it as an optional block; update `protocol.json`; `psb eval`. |
 | `scope` | Ask the user. Never change eligibility on the critic's word alone. |
 | `filter` | Compare with and without the limit in `psb eval`; keep it only if justified. |
 | `syntax` | Fix; `psb lint` and `psb eval`. |

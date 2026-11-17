@@ -109,6 +109,9 @@ def parse_article(article: ET.Element) -> dict[str, object]:
         "pmcid": ids.get("pmc", ""),
         "publication_types": [_text(n) for n in art.findall("./PublicationTypeList/PublicationType")] if art is not None else [],
         "mesh": mesh,
+        # Substance names ([nm]): the chemical list and supplementary concepts, which MeSH headings do not cover.
+        "substances": sorted({_text(n) for path in ("./ChemicalList/Chemical/NameOfSubstance", "./SupplMeshList/SupplMeshName")
+                              for n in citation.findall(path) if _text(n)}) if citation is not None else [],
         "keywords": [_text(n) for n in citation.findall("./KeywordList/Keyword")] if citation is not None else [],
         "status": citation.attrib.get("Status", "") if citation is not None else "",
     }

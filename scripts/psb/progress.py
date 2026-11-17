@@ -50,6 +50,8 @@ PRESS = "This is a draft. It needs PRESS peer review by an information specialis
 UNLOGGED = "Not from a logged psb search"
 NOT_MEASURED = "not measured (evaluation did not complete)"
 ROLE_LABELS = {"search": "Searched", "screen": "Screened", "optional": "Optional"}
+CAUSE_LABELS = {"phrase_gap": "phrase gap", "embedded_stem": "word inside a longer word",
+                "no_abstract": "no abstract", "no_block_wording": "no wording for the block"}
 SCOPE_MEANING = [
     "What this means:",
     "- **Searched**: a block of the PubMed search. A record is found only if it matches every searched concept, "
@@ -141,6 +143,22 @@ def _recall(evaluation: dict) -> str:
         data = sets[name]
         parts.append(f"{name} {_n(data.get('retrieved'))}/{_n(data.get('in_pubmed'))} ({_pct(data.get('recall_percent'))})")
     return " · ".join(parts)
+
+
+def _free_recall(evaluation: dict) -> list[str]:
+    """Recall on the known records no keyword search led to, the only ones that can estimate it."""
+    free = evaluation.get("known_without_keyword_search")
+    if not free or not evaluation.get("sets"):
+        return []
+    if not free.get("in_pubmed"):
+        return ["- Known records found without a keyword search: none, so the recall above checks the wording and "
+                "does not estimate recall"]
+    head = f"- Known records found without a keyword search: {_n(free.get('retrieved'))}/{_n(free.get('in_pubmed'))} retrieved"
+    held = free.get("held_out") or {}
+    if not held.get("in_pubmed"):
+        return [head + " · all were used to build the strategy, so this does not estimate recall"]
+    return [head + f" · held out from the build: {_n(held.get('retrieved'))}/{_n(held.get('in_pubmed'))}, so recall is at "
+            f"least {_pct(held.get('recall_lower_95_percent'))} (95% bound)"]
 
 
 def _misses(evaluation: dict, cap: int = 10) -> str:
@@ -499,7 +517,7 @@ def _eval_lines(evaluation: dict, note: str) -> list[str]:
         lines.append(f"- Change: {clean(note, 160)}")
     measured = evaluation.get("count") is not None
     if measured:
-        lines += [f"- Recall: {_recall(evaluation)}", f"- Missed known records: {_misses(evaluation)}"]
+        lines += [f"- Recall: {_recall(evaluation)}", *_free_recall(evaluation), f"- Missed known records: {_misses(evaluation)}"]
     else:
         lines.append(f"- Recall: {NOT_MEASURED}")
     if since:
@@ -511,6 +529,8 @@ def _eval_lines(evaluation: dict, note: str) -> list[str]:
                 changes.append("combination changed")
             elif block == "_limits":
                 changes.append("limits changed")
+            elif block == "_optional":
+                changes.append("optional blocks changed")
             elif change.get("block") == "added":
                 changes.append(f"{block} added")
             elif change.get("block") == "removed":
@@ -518,7 +538,38 @@ def _eval_lines(evaluation: dict, note: str) -> list[str]:
             else:
                 changes.append(f"{block} +{len(change.get('terms_added', []))}/-{len(change.get('terms_removed', []))} terms")
         lines.append(f"- Strategy changes: {'; '.join(changes) or 'none'}")
+    lines += _optional_lines(evaluation)
+    impact = evaluation.get("term_impact") or {}
+    top = [row for row in impact.get("terms") or [] if row.get("records_only_here") and not row.get("known_only_here")][:3]
+    if evaluation.get("large_result") and not evaluation["large_result"].get("term_impact_measured"):
+        lines.append("- Large result: which terms carry it has not been measured yet (psb eval --term-impact)")
+    if top:
+        lines.append("- Terms that alone add the most records and no known record: "
+                     + " · ".join(f"{code(clean(row['term'], 60))} {_n(row['records_only_here'])} ({_pct(row.get('share_percent'))})" for row in top))
     lines.append(f"- Checks: {_checks(evaluation)}")
+    return lines
+
+
+def _optional_lines(evaluation: dict) -> list[str]:
+    """One line per optional block: what AND-ing it would do. Absent when none is defined."""
+    lines = []
+    for row in evaluation.get("optional_blocks") or []:
+        if row.get("error"):
+            lines.append(f"- Optional block {clean(row.get('name') or row.get('id'), 60)} ({row.get('id')}): not measured "
+                         "(PubMed did not answer)")
+            continue
+        text = (f"- Optional block {clean(row.get('name') or row.get('id'), 60)} ({row.get('id')}), if AND-ed: "
+                f"{_n(row.get('count_now'))} → {_n(row.get('count_if_added'))} records")
+        known = row.get("known")
+        if known:
+            free = (known.get("by_route") or {}).get("without_keyword_search") or {}
+            bound = known.get("loss_upper_95_percent")
+            text += (f" · known records lost {_n(len(known.get('lost_if_added') or []))} of {_n(known.get('retrieved_now'))}"
+                     f" · found independently of a keyword search: {_n(free.get('retrieved_now'))}"
+                     + (f" (95% bound on share lost: {_pct(bound)})" if bound is not None else " (loss unmeasured)"))
+        else:
+            text += " · no known records to test it against"
+        lines.append(text)
     return lines
 
 
@@ -537,8 +588,12 @@ def _terms_miss(ws, data):
             by_set[name] = by_set.get(name, 0) + 1
     lines = [f"Diagnosed {_plural(len(misses), 'missed known record')} from v{data.get('version')}",
              f"- Missed: {_pmids(m['pmid'] for m in misses)}",
-             f"- By set: {', '.join(f'{k} {v}' for k, v in sorted(by_set.items())) or 'none'}",
-             "- Each miss is fixed in its failing block or recorded as out of reach"]
+             f"- By set: {', '.join(f'{k} {v}' for k, v in sorted(by_set.items())) or 'none'}"]
+    causes = data.get("causes") or {}
+    if causes:
+        lines.append("- Likely cause, per failing block: "
+                     + " · ".join(f"{CAUSE_LABELS.get(k, k)} {_n(v)}" for k, v in sorted(causes.items())))
+    lines.append("- Each miss is fixed in its failing block or recorded as out of reach")
     return "Miss diagnosis", lines
 
 
@@ -663,7 +718,7 @@ def _intake_request(ws, data):
     asks = [] if data.get("have_question") else ["The review question in plain language"]
     asks += ["Known relevant articles (PMIDs, DOIs or PMCIDs), if you have any (optional)",
              "Depth: quick, standard (default) or thorough",
-             "Required limits, such as dates or languages, if any"]
+             "Required limits, such as study designs (for example randomised trials only), dates or languages, if any"]
     return "Request", ["To build the search I need:", *[f"{i}. {a}" for i, a in enumerate(asks, 1)],
                        'Reply "proceed" to use the defaults for anything you leave out.']
 
@@ -801,6 +856,9 @@ def _stage_vocabulary(ws, data):
                 other += 1
         lines.append(f"- {clean(block.name or block.id, 80)} ({block.id}): {_plural(len(block.terms), 'term')} — "
                      f"{_n(mesh)} MeSH · {_n(text)} text-word · {_n(other)} other")
+    for block in strategy.optional:
+        lines.append(f"- Optional, measured but not searched: {clean(block.name or block.id, 80)} ({block.id}): "
+                     f"{_plural(len(block.terms), 'term')}")
     blocked = {b.id for b in strategy.blocks}
     rest = [c for c in protocol.get("concepts") or [] if isinstance(c, dict) and c.get("id") not in blocked]
     lines.append("- Concepts not searched: " + (", ".join(f"{clean(c.get('name') or c.get('id'), 60)} ({c.get('role')})"
@@ -844,6 +902,7 @@ def _stage_test(ws, data):
         lines += [f"- Recall: {_recall(latest)}",
                   f"- Missed known records: {_misses(latest)}",
                   f"- Known records lost along the way and not recovered: {_pmids(lost)}"]
+        lines += _optional_lines(latest)
     else:
         lines.append(f"- Recall: {NOT_MEASURED}")
     lines += [f"- Checks: {_checks(latest)}", _next("test", ws.protocol().get("depth"))]

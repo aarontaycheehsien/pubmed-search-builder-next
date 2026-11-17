@@ -418,3 +418,54 @@ def test_resolved_pmids_with_leading_zeros_are_found_and_attributed(ws, capsys):
     assert out["not_in_pubmed_or_after_as_of"] == [] and out["unresolved"] == ["000"]
     assert progress.batches(ws)[-1]["pmids"] == ["5"]
     assert "- Resolved identifiers (C1): 1 screened → 1 include" in text(capsys, "screen", "--include", "5")
+
+
+def test_eval_and_test_summary_report_optional_blocks_only_when_defined(ws, capsys):
+    psb(capsys, "set", "add", "seeds", "1", "2", "5", "--role", "seed")
+    write_json(ws.root / "strategy.json", {"blocks": [STRATEGY["blocks"][0]]})
+    assert "Optional block" not in text(capsys, "eval", "--brief")
+    write_json(ws.root / "strategy.json", {"blocks": [STRATEGY["blocks"][0]], "optional": [STRATEGY["blocks"][1]]})
+    line = ("- Optional block Children (child), if AND-ed: 5 → 5 records · known records lost 0 of 3 · "
+            "found independently of a keyword search: 3 (95% bound on share lost: 63.2%)")
+    message = text(capsys, "eval", "--brief")
+    assert line in message and "- Strategy changes: optional blocks changed" in message
+    assert line in text(capsys, "progress", "test")
+    assert "- Optional, measured but not searched: Children (child): 2 terms" in text(capsys, "progress", "vocabulary")
+
+
+def test_miss_diagnosis_message_counts_causes(ws, capsys):
+    psb(capsys, "set", "add", "seeds", "1", "4", "--role", "seed")
+    write_json(ws.root / "strategy.json", STRATEGY)
+    psb(capsys, "eval", "--brief")
+    code, out = psb(capsys, "terms", "miss")
+    assert code == 0 and out["misses"][0]["pmid"] == "4"
+    assert {d["cause"] for d in out["misses"][0]["diagnosis"]} == {"no_block_wording"} and set(out["causes"]) == {"no_block_wording"}
+    assert "- Likely cause, per failing block: no wording for the block 2" in out["progress"]["text"]
+
+
+def test_prior_review_sample_marks_reviews_with_a_reference_list(ws, capsys):
+    next(iter(ws.pubmed.records.values()))["pmcid"] = "PMC1"
+    code, out = psb(capsys, "sample", "--purpose", "prior-reviews", "asthma*[tiab]")
+    assert code == 0 and [r["in_pmc"] for r in out["records"]].count(True) == 1 and "in_pmc" in out["note"]
+    code, out = psb(capsys, "sample", "--purpose", "pilot", "asthma*[tiab]")
+    assert "in_pmc" not in out["records"][0]
+
+
+def test_neighbors_says_when_pubmed_has_no_reference_list(ws, capsys):
+    code, out = psb(capsys, "neighbors", "1", "2", "--links", "refs")
+    assert code == 0 and out["no_reference_list"] == ["2"] and "no reference list for 2" in out["note"]
+    code, out = psb(capsys, "neighbors", "1", "--links", "refs")
+    assert "no_reference_list" not in out
+
+
+def test_brief_eval_leaves_the_bulky_evidence_in_the_saved_attempt(ws, capsys):
+    psb(capsys, "set", "add", "seeds", "1", "2", "--role", "seed")
+    write_json(ws.root / "strategy.json", STRATEGY)
+    code, brief = psb(capsys, "eval", "--brief")
+    assert code == 0 and not {"lines", "vocabulary", "inputs", "translation", "retrieved_known"} & set(brief)
+    assert brief["omitted"]["keys"] == ["lines", "retrieved_known", "vocabulary", "inputs", "translation"]
+    assert {"count", "sets", "misses", "validation", "known_without_keyword_search", "query"} <= set(brief)
+    saved = json.loads((ws.root / "attempts" / f"{brief['attempt_id']}.json").read_text(encoding="utf-8"))["evaluation"]
+    assert {"lines", "vocabulary", "inputs"} <= set(saved)
+    code, full = psb(capsys, "eval")
+    assert {"lines", "vocabulary", "inputs"} <= set(full) and "omitted" not in full

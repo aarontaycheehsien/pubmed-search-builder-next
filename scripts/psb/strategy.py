@@ -5,9 +5,13 @@
     {"blocks": [{"id": "condition", "name": "Vesicoureteral reflux",
                  "terms": ["\\"Vesico-Ureteral Reflux\\"[Mesh]", "vesicoureteral reflux*[tiab]"]}],
      "combine": null,            # null = AND of all blocks; or e.g. "condition AND (test OR imaging)"
-     "limits": [{"clause": "NOT (animals[mh] NOT humans[mh])", "rationale": "..."}]}
+     "limits": [{"clause": "NOT (animals[mh] NOT humans[mh])", "rationale": "..."}],
+     "optional": [{"id": "children", "name": "Children", "terms": ["child*[tiab]"]}]}
 
 A block ``id`` is the one key for a concept everywhere: protocol, strategy, evaluation, report.
+
+``optional`` blocks are never part of the query. ``psb eval`` measures what AND-ing each one would
+do to the result count and to the known records, so a concept's role rests on a measurement.
 """
 
 from __future__ import annotations
@@ -44,31 +48,40 @@ class Strategy:
     blocks: list[Block]
     combine: str | None = None
     limits: list[Limit] = field(default_factory=list)
+    optional: list[Block] = field(default_factory=list)
 
     @classmethod
     def from_dict(cls, data: dict) -> "Strategy":
         if not isinstance(data, dict):
             raise StrategyError("strategy must be a JSON object")
-        blocks = []
-        for raw in data.get("blocks") or []:
-            if not isinstance(raw, dict):
-                raise StrategyError("each block must be an object")
-            terms = [str(t).strip() for t in raw.get("terms") or [] if str(t).strip()]
-            blocks.append(Block(str(raw.get("id", "")).strip(), str(raw.get("name", "")).strip(), terms))
+
+        def read_blocks(key: str) -> list[Block]:
+            found = []
+            for raw in data.get(key) or []:
+                if not isinstance(raw, dict):
+                    raise StrategyError("each block must be an object")
+                terms = [str(t).strip() for t in raw.get("terms") or [] if str(t).strip()]
+                found.append(Block(str(raw.get("id", "")).strip(), str(raw.get("name", "")).strip(), terms))
+            return found
+
+        blocks = read_blocks("blocks")
         limits = [
             Limit(str(item.get("clause", "")).strip(), str(item.get("rationale", "")).strip())
             for item in data.get("limits") or []
             if isinstance(item, dict) and str(item.get("clause", "")).strip()
         ]
         combine = data.get("combine")
-        return cls(blocks, str(combine).strip() if combine else None, limits)
+        return cls(blocks, str(combine).strip() if combine else None, limits, read_blocks("optional"))
 
     def to_dict(self) -> dict:
-        return {
+        data = {
             "blocks": [{"id": b.id, "name": b.name, "terms": list(b.terms)} for b in self.blocks],
             "combine": self.combine,
             "limits": [{"clause": l.clause, "rationale": l.rationale} for l in self.limits],
         }
+        if self.optional:  # absent when unused, so strategies without it keep their hash
+            data["optional"] = [{"id": b.id, "name": b.name, "terms": list(b.terms)} for b in self.optional]
+        return data
 
     def block(self, block_id: str) -> Block:
         for block in self.blocks:
@@ -89,6 +102,15 @@ class Strategy:
             seen.add(block.id)
             if not block.terms:
                 errors.append(f"block {block.id!r} has no terms")
+        tested = set()
+        for block in self.optional:
+            if not ID_PATTERN.fullmatch(block.id) or block.id.upper() in OPERATORS:
+                errors.append(f"invalid optional block id {block.id!r} (letters, digits, underscore; not AND/OR/NOT)")
+            if block.id in seen or block.id in tested:
+                errors.append(f"optional block id {block.id!r} is already used")
+            tested.add(block.id)
+            if not block.terms:
+                errors.append(f"optional block {block.id!r} has no terms")
         if self.combine:
             errors.extend(message for _, message in syntax.problems(self.combine, combination=True))
             words = set(re.findall(r"[A-Za-z][A-Za-z0-9_]*", self.combine)) - OPERATORS
@@ -156,6 +178,11 @@ def apply_limits(query: str, limits: list[Limit]) -> str:
 
 def full_query(strategy: Strategy) -> str:
     return apply_limits(core_query(strategy), strategy.limits)
+
+
+def query_with_optional(strategy: Strategy, block: Block) -> str:
+    """The full query as it would be with one optional block AND-ed in."""
+    return apply_limits(f"({core_query(strategy)}) AND {block_query(block)}", strategy.limits)
 
 
 def numbered_lines(strategy: Strategy) -> list[dict]:
@@ -258,6 +285,18 @@ def lint(strategy: Strategy, *, concepts: list[dict] | None = None) -> list[dict
     if full.count("*") > wildcards.MAX_WILDCARDS:
         issues.append({"severity": "error", "code": "too_many_wildcards",
                        "message": f"{full.count('*')} wildcards; PubMed rejects more than {wildcards.MAX_WILDCARDS}"})
+    for block in strategy.optional:
+        # An optional block is sent to PubMed but never delivered: its syntax errors still stop the
+        # evaluation, its warnings are notes (they need no critic disposition).
+        for issue in (i for term in block.terms for i in term_issues(term)):
+            if issue["severity"] == "warning":
+                issue["severity"] = "info"
+            issues.append({**issue, "block": block.id, "location": f"optional:{block.id}"})
+        stars = full.count("*") + block_query(block).count("*")
+        if full and full.count("*") <= wildcards.MAX_WILDCARDS < stars:
+            issues.append({"severity": "error", "code": "too_many_wildcards", "location": f"optional:{block.id}",
+                           "message": f"{stars} wildcards with optional block {block.id!r} added; PubMed rejects "
+                                      f"more than {wildcards.MAX_WILDCARDS}"})
     if full:
         for code, message in syntax.problems(full):
             issues.append({"severity": "error", "code": code, "message": message, "location": "final"})
@@ -277,6 +316,24 @@ def lint(strategy: Strategy, *, concepts: list[dict] | None = None) -> list[dict
         for extra in sorted(block_ids - known):
             issues.append({"severity": "warning", "code": "block_without_concept",
                            "message": f"block {extra!r} is not a protocol concept; add it to protocol.json with a role"})
+        tested = {b.id for b in strategy.optional}
+        roles = {str(c.get("id")): c.get("role") for c in concepts}
+        for block_id in sorted(tested):
+            if roles.get(block_id) not in {"optional", "screen"}:
+                issues.append({"severity": "info", "code": "optional_block_role", "location": f"optional:{block_id}",
+                               "message": f"optional block {block_id!r} should be a protocol concept with role "
+                                          "'optional' or 'screen'; move it to blocks when its role becomes 'search'"})
+        untested = sorted(i for i, role in roles.items() if role == "optional" and i not in tested and i not in block_ids)
+        if untested:
+            issues.append({"severity": "info", "code": "optional_untested",
+                           "message": f"optional concept(s) {', '.join(untested)} have no block under 'optional' in "
+                                      "strategy.json, so psb eval cannot measure what AND-ing them would cost or save"})
+        unsearched = [c for c in concepts if c.get("role") in {"screen", "optional"}]
+        if len(strategy.blocks) == 1 and not strategy.combine and not tested and unsearched:
+            issues.append({"severity": "info", "code": "single_block_untested",
+                           "message": "one searched block and no optional block tested: before settling on a "
+                                      "one-concept search, draft the most reliably named unsearched concept as an "
+                                      "optional block and let psb eval measure it"})
         for concept in concepts:
             if concept.get("role") in {"screen", "optional"} and concept.get("id") in block_ids and not strategy.combine:
                 issues.append({"severity": "warning", "code": "screen_concept_searched",

@@ -7,7 +7,10 @@ the count before and after limits and any known record the limits remove.
 ## Decision order
 
 1. Is a filter needed at all? Usually not for scoping reviews, maps, small topics, or when
-   study design is not an eligibility criterion.
+   study design is not an eligibility criterion. When the user does restrict the review to a
+   design (the intake asks), a validated filter is the one large cut in the result that comes
+   with a published sensitivity: test it as a limit rather than AND-ing a design block of your
+   own. A large result is not by itself a reason to add one.
 2. What exactly should it find (RCTs, diagnostic studies, reviews, humans, an age group)?
 3. Use a published, validated filter written for PubMed, in its sensitivity-maximising version.
 4. Add it as a limit, run `psb eval`, and check which known records it removes.

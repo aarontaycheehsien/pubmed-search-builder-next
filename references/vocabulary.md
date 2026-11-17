@@ -16,6 +16,14 @@ that use unexpected words, and text words find records that are not yet (or neve
 5. Add MeSH that known records carry: `psb terms rank` lists headings common in your
    relevant sets; `psb fetch` shows each record's headings.
 6. Avoid `[majr]` and `Heading/subheading` combinations in recall-first searches.
+7. Check `year_introduced` and `previous_indexing` in `psb mesh show`. A heading only indexes
+   records from the year it was introduced; when the literature is older than the heading, add
+   the headings listed under previous indexing, or the earlier records rest on text words alone.
+8. Drugs and chemicals: `psb terms rank` also lists substance names (`field: nm`) that known
+   records carry in their chemical list, including supplementary concepts that have no heading.
+   Search them as `"name"[nm]`. For a drug class, `"Class Name"[pa]` (pharmacological action)
+   retrieves every substance PubMed assigns that action, descriptors and supplementary concepts
+   alike, which exploding the class heading does not: use both, and check the count.
 
 ## Title and abstract words
 
@@ -39,6 +47,12 @@ phrase; quote phrases to be explicit.
 - Prefer the longest safe stem (`neurostimulat*` rather than `stimulat*`), and check line counts
   in `psb eval` for noisy stems.
 - PubMed rejects a query with more than 256 wildcards, with an error that looks like an outage.
+- There is no left truncation: `virus*` finds viruses, not rotavirus, polyomavirus or
+  coronavirus. When a concept word is also the tail of compound words (-virus, -itis, -oma, -mab,
+  -statin, schoolchild), the text layer needs those words or their families by name; MeSH
+  explosion covers them only for indexed records. `psb mesh show` lists the heading's narrower
+  headings: their names are the family list to add as text words. `psb terms miss` reports this
+  as `embedded_stem`.
 
 ### Proximity
 
@@ -50,6 +64,14 @@ phrase; quote phrases to be explicit.
 - Test a few values of N; larger N adds recall and noise.
 - Use proximity for multi-word concepts whose wording varies, truncation for single-word
   morphology, and combine them with OR across the block.
+- A quoted or tagged phrase matches only those words in that order with nothing between them:
+  `"high throughput sequencing"[tiab]` misses "high-throughput DNA sequencing". For a phrase
+  authors can interrupt or reorder, add the proximity form (`[tiab:~1]` to `[tiab:~3]`).
+- A long phrase requires every word. `cognitive behavio* therap*[tiab]` misses
+  "cognitive-behavioral approaches" and "cognitive behavioural group treatment". When the
+  distinctive part is specific on its own (`"cognitive behavio*"[tiab]`), search that and drop
+  the head noun; check the line count.
+- `psb terms miss` reports both as `phrase_gap`, with the form to test.
 
 ### Acronyms
 
@@ -68,6 +90,11 @@ count; pair the acronym with a context term, or drop it if the spelled-out forms
 - `truncation_dropped`: the stem is too short; lengthen it or list the variants.
 - A line with a very large count inside an AND-ed block is usually fine; a large count in the
   final result is the thing to manage. Cut noise only when no known record is lost.
+- `psb eval --term-impact` measures that directly: `records_only_here` is what leaves the final
+  result when one term is removed, `known_only_here` the known records that leave with it. A
+  term with a large share and no known record of its own is a candidate, not a verdict: sample
+  what it alone finds from its `sample_file` and judge that. It costs two requests per term,
+  so run it when the result is too large, not on every eval.
 
 ## Controlled vocabulary versus text word gaps (Bramer)
 

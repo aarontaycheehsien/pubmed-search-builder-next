@@ -243,8 +243,8 @@ python scripts/psb.py --workspace runs/demo report
 | `mesh lookup`, `mesh show` | Inspect MeSH descriptors, entry terms, narrower headings, and counts. |
 | `set add/remove/split/list` | Manage known-record sets. |
 | `lint` | Run offline syntax and design checks. |
-| `eval` | Measure counts, known-record recall, failing blocks, ablation, and changes since the previous version. |
-| `terms rank`, `terms miss` | Inspect candidate vocabulary and terminology in missed records. |
+| `eval` | Measure counts, known-record recall, failing blocks, ablation, what AND-ing each optional block would save and lose, and changes since the previous version. |
+| `terms rank`, `terms miss` | Inspect candidate vocabulary, and for each missed record the likeliest reason each failing block missed it. |
 | `critic packet`, `critic check`, `critic override` | Generate and validate PRESS-structured critique rounds. |
 | `report` | Perform final live validation and generate the protected query and audit. |
 | `screen` | Record screening decisions (include, exclude, uncertain) on candidate records. |

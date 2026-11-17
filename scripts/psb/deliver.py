@@ -151,15 +151,48 @@ def _scope_section(evaluation: dict) -> list[str]:
              "concept is covered by its own bare name, not only by a phrase narrowed with the parent's wording "
              "(`mediation`, not only `\"mediation model*\"`); (2) a searched block that names one direction or step "
              "of a process, or an event in some participants (switching back, discontinuation), is fragile: "
-             "recommend searching the process in either direction and screening the direction.", ""]
+             "recommend searching the process in either direction and screening the direction; (3) concept roles "
+             "rest on measurement where one exists: `optional_blocks` in the evidence shows what AND-ing each optional "
+             "block would do to the count and to the known records, and `ablation` what each searched block costs. "
+             "A one-block search with a large result and an untested, reliably named concept is a structural finding; "
+             "so is a block AND-ed although its measurement shows known records lost.", ""]
     return rows
 
 
+def _optional_table(evaluation: dict) -> list[str]:
+    rows = evaluation.get("optional_blocks") or []
+    if not rows:
+        return []
+    lines = ["### Optional blocks (measured, not searched)", "",
+             "Each row is the effect of AND-ing a concept that is not part of the strategy. Independent records are known "
+             "records that no keyword search led to (user seeds, a review's reference list); only they can show what a "
+             "block would lose, and the 95% bound is the largest share of relevant records it could lose on their evidence.", "",
+             "| Block | Records now | Records if AND-ed | Known lost / retrieved now | Independent lost / retrieved now | 95% bound on share lost |",
+             "|---|---:|---:|---:|---:|---:|"]
+    for row in rows:
+        if row.get("error"):
+            lines.append(f"| {row.get('name') or row['id']} ({row['id']}) | not measured | not measured | n/a | n/a | n/a |")
+            continue
+        known = row.get("known")
+        lost = f"{len(known['lost_if_added'])} / {known['retrieved_now']}" if known else "no known records"
+        free = known["by_route"]["without_keyword_search"] if known else None
+        independent = f"{free['lost_if_added']} / {free['retrieved_now']}" if free else "n/a"
+        bound = f"{known['loss_upper_95_percent']}%" if known and known.get("loss_upper_95_percent") is not None else "unmeasured"
+        lines.append(f"| {row.get('name') or row['id']} ({row['id']}) | {row['count_now']:,} | {row['count_if_added']:,} | {lost} | {independent} | {bound} |")
+    return lines + [""]
+
+
 def _recall_table(evaluation: dict) -> list[str]:
-    rows = ["| Set | Role (independence) | In PubMed | Retrieved | Recall |", "|---|---|---:|---:|---:|"]
+    rows = ["| Set | Role (independence) | In PubMed | Retrieved | Recall | Found without a keyword search: retrieved / in PubMed |",
+            "|---|---|---:|---:|---:|---:|"]
     for name, data in (evaluation.get("sets") or {}).items():
         recall = "n/a" if data["recall_percent"] is None else f"{data['recall_percent']}%"
-        rows.append(f"| {name} | {data['role']} ({ROLES.get(data['role'], '')}) | {data['in_pubmed']} | {data['retrieved']} | {recall} |")
+        free = data.get("without_keyword_search") or {}
+        rows.append(f"| {name} | {data['role']} ({ROLES.get(data['role'], '')}) | {data['in_pubmed']} | {data['retrieved']} | {recall} "
+                    f"| {free.get('retrieved', 'n/a')} / {free.get('in_pubmed', 'n/a')} |")
+    free = evaluation.get("known_without_keyword_search")
+    if free:
+        rows += ["", free["reading"]]
     return rows
 
 
@@ -599,6 +632,7 @@ def _audit(ws: Workspace, evaluation: dict, rounds: list[dict], overridden: list
         lines += ["### Leave-one-block-out", "", "| Block dropped | Records | Known records gained |", "|---|---:|---:|"]
         lines += [f"| {a['drop']} | {a['count']:,} | {a['known_gained']} |" for a in evaluation["ablation"]]
         lines.append("")
+    lines += _optional_table(evaluation)
     lines += ["## Development history", "", "| Version | Records | Change | Known lost | Note |", "|---:|---:|---|---|---|"]
     for entry in versions:
         diff = entry["evaluation"].get("since_previous") or {}

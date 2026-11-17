@@ -79,3 +79,205 @@ def test_no_sets_reports_recall_not_measured(make_ws):
     write_json(ws.root / "strategy.json", {"blocks": BLOCKS})
     result = evaluate(ws)
     assert result["sets"] == {} and "recall not measured" in result["note"]
+
+
+# -- optional blocks: what AND-ing a concept would do, measured without changing the query --------
+
+from psb import validation  # noqa: E402
+from psb.evaluate import loss_upper_bound  # noqa: E402
+from psb.progress import record_batch  # noqa: E402
+
+CHILD = {"id": "child", "name": "Children", "terms": ['"Child"[Mesh]', "child*[tiab]"]}
+
+
+def optional_setup(make_ws, pmids=("1", "2", "3", "4"), optional=(CHILD,)):
+    ws, fake = make_ws(ATOMS)
+    write_json(ws.root / "strategy.json", {"blocks": [BLOCKS[0]], "combine": None, "limits": [], "optional": list(optional)})
+    ws.save_set("seeds", "seed", list(pmids))
+    return ws, fake
+
+
+def test_optional_block_reports_count_and_known_records_lost(make_ws):
+    ws, _ = optional_setup(make_ws)
+    result = evaluate(ws)
+    assert result["ok"] and result["count"] == 4  # the asthma block alone: the optional block is not searched
+    assert "child" not in result["query"].lower()
+    [row] = result["optional_blocks"]
+    assert (row["id"], row["count_alone"], row["count_now"], row["count_if_added"], row["reduction_percent"]) == ("child", 4, 4, 2, 50.0)
+    known = row["known"]
+    assert known["retrieved_now"] == 4 and known["lost_if_added"] == ["3", "4"] and known["lost_by_set"] == {"seeds": ["3", "4"]}
+    assert known["block_recall"] == {"retrieved": 2, "of": 4, "recall_percent": 50.0}
+    assert "would lose 2 of the 4" in row["reading"]
+
+
+def test_lossless_optional_block_on_few_records_is_not_called_safe(make_ws):
+    ws, _ = optional_setup(make_ws, pmids=("1", "2"))
+    [row] = evaluate(ws)["optional_blocks"]
+    assert row["known"]["lost_if_added"] == [] and row["known"]["loss_upper_95_percent"] == 77.6
+    assert "weak evidence: only 2 of them were found independently" in row["reading"] and "up to 77.6%" in row["reading"]
+
+
+def test_optional_block_says_which_misses_it_would_have_matched(make_ws):
+    ws, _ = optional_setup(make_ws, pmids=("1", "5"))  # 5 is about children, and the asthma block misses it
+    [row] = evaluate(ws)["optional_blocks"]
+    assert row["known"]["missed_now_but_in_block"] == ["5"]
+
+
+def test_optional_block_bound_rests_on_records_no_keyword_search_led_to(make_ws):
+    ws, _ = optional_setup(make_ws)
+    record_batch(ws, "pilot", "Pilot search", ["1", "2"], total=2, query="asthma child")
+    record_batch(ws, "neighbors:similar", "Similar articles", ["3"], total=1, origin=["1"])  # inherits the pilot's wording
+    known = evaluate(ws)["optional_blocks"][0]["known"]
+    assert known["by_route"] == {"without_keyword_search": {"retrieved_now": 1, "lost_if_added": 1},  # 4: supplied, in no batch
+                                 "from_keyword_search": {"retrieved_now": 3, "lost_if_added": 1}}
+    assert known["loss_upper_95_percent"] == 100.0
+
+
+def test_lossless_optional_block_on_keyword_found_records_reports_the_loss_as_unmeasured(make_ws):
+    ws, _ = optional_setup(make_ws, pmids=("1", "2"))
+    record_batch(ws, "pilot", "Pilot search", ["1", "2"], total=2, query="asthma child")
+    [row] = evaluate(ws)["optional_blocks"]
+    assert row["known"]["lost_if_added"] == [] and row["known"]["loss_upper_95_percent"] is None
+    assert "only 0 of them were found independently" in row["reading"] and "the loss is unmeasured" in row["reading"]
+    ws.save_set("seeds", "seed", [str(n) for n in (1, 2)])
+    record_batch(ws, "neighbors:refs", "Review references", ["1", "2"], total=2, origin=["9"])  # later batch: pilot still first
+    assert evaluate(ws)["optional_blocks"][0]["known"]["by_route"]["without_keyword_search"]["retrieved_now"] == 0
+
+
+def test_optional_block_without_known_records_gives_counts_only(make_ws):
+    ws, _ = make_ws(ATOMS)
+    write_json(ws.root / "strategy.json", {"blocks": [BLOCKS[0]], "optional": [CHILD]})
+    [row] = evaluate(ws)["optional_blocks"]
+    assert row["count_if_added"] == 2 and "known" not in row and "count alone" in row["reading"]
+
+
+def test_optional_blocks_do_not_change_the_query_or_the_review_binding(make_ws):
+    plain, _ = make_ws(ATOMS)
+    write_json(plain.root / "strategy.json", {"blocks": [BLOCKS[0]]})
+    plain.save_set("seeds", "seed", ["1", "2", "3", "4"])
+    before = evaluate(plain)
+    assert "optional" not in before["inputs"]["strategy"] and "optional_blocks" not in before
+    write_json(plain.root / "strategy.json", {"blocks": [BLOCKS[0]], "optional": [CHILD]})
+    after = evaluate(plain)
+    assert after["query"] == before["query"] and after["retrieved_known"] == before["retrieved_known"]
+    assert after["input_sha256"] != before["input_sha256"]  # the optional block is an input: edit it, then re-evaluate
+    # Its counts are not part of what the critic binds to: a count that moves does not make a review stale.
+    moved = dict(after, optional_blocks=[dict(after["optional_blocks"][0], count_if_added=1)])
+    assert validation.review_fingerprint(moved) == after["review_sha256"]
+
+
+def test_optional_block_change_is_reported_since_previous(make_ws):
+    ws, _ = optional_setup(make_ws, optional=())
+    ws.save_version(evaluate(ws), "baseline")
+    write_json(ws.root / "strategy.json", {"blocks": [BLOCKS[0]], "optional": [CHILD]})
+    diff = compare(ws.versions()[-1], evaluate(ws), ws.strategy().to_dict())
+    assert diff["changes"]["_optional"] == {"before": [], "after": ["child"]} and not diff["regression"]
+
+
+def test_loss_upper_bound_matches_exact_binomial_values():
+    assert loss_upper_bound(0, 10) == 25.9 and loss_upper_bound(0, 20) == 13.9 and loss_upper_bound(0, 30) == 9.5
+    assert loss_upper_bound(1, 20) == 21.6 and loss_upper_bound(2, 50) == 12.1
+    assert loss_upper_bound(0, 0) is None and loss_upper_bound(5, 5) == 100.0
+
+
+def test_optional_block_that_pubmed_rejects_does_not_stop_the_evaluation(make_ws):
+    from psb import deliver, progress
+    from psb.ncbi import NcbiError
+
+    ws, fake = optional_setup(make_ws)
+    answer = fake.search
+
+    def search(query, **kwargs):
+        if "child" in query.lower():
+            raise NcbiError("PubMed rejected the query")
+        return answer(query, **kwargs)
+
+    fake.search = search
+    result = evaluate(ws)
+    assert result["ok"] and result["validation"]["complete"] and result["count"] == 4
+    [row] = result["optional_blocks"]
+    assert row["error"] == "PubMed rejected the query" and row["reading"].startswith("Not measured")
+    assert "not measured" in progress._optional_lines(result)[0]
+    assert "| Children (child) | not measured | not measured | n/a | n/a | n/a |" in deliver._optional_table(result)
+
+
+# -- recall that means something: records no keyword search led to, held out of the build ---------
+
+def test_recall_is_not_estimated_from_records_a_keyword_search_found(make_ws):
+    ws, _ = setup(make_ws, sets={"relevant": ("relevant", ["1", "2"])})
+    record_batch(ws, "pilot", "Pilot search", ["1", "2"], total=2, query="asthma child")
+    free = evaluate(ws)["known_without_keyword_search"]
+    assert free["in_pubmed"] == 0 and "do not estimate recall" in free["reading"]
+
+
+def test_recall_is_not_estimated_from_records_the_strategy_was_built_on(make_ws):
+    ws, _ = setup(make_ws)
+    ws.save_set("seeds", "seed", ["1", "2"])
+    result = evaluate(ws)
+    free = result["known_without_keyword_search"]
+    assert (free["in_pubmed"], free["retrieved"], free["held_out"]["in_pubmed"]) == (2, 2, 0)
+    assert "used to build the strategy" in free["reading"] and free["held_out"]["recall_lower_95_percent"] is None
+    assert result["sets"]["seeds"]["without_keyword_search"] == {"in_pubmed": 2, "retrieved": 2}
+
+
+def test_recall_lower_bound_comes_from_held_out_records_found_without_a_search(make_ws):
+    ws, _ = setup(make_ws)
+    ws.save_set("seeds", "seed", ["1"])
+    ws.save_set("benchmark", "benchmark", ["2", "3"])
+    record_batch(ws, "neighbors:refs", "Review references", ["2", "3"], total=2, origin=["9"])
+    free = evaluate(ws)["known_without_keyword_search"]
+    assert free["held_out"] == {"in_pubmed": 2, "retrieved": 1, "recall_lower_95_percent": 2.5}
+    assert "1 of the 2 held-out known records" in free["reading"]
+
+
+# -- term impact: what each term alone adds to the final result ------------------------------------
+
+def test_term_impact_reports_records_and_known_records_only_one_term_retrieves(make_ws):
+    ws, _ = setup(make_ws, blocks=[BLOCKS[0]], sets={"seeds": ("seed", ["1", "3"])})
+    assert "term_impact" not in evaluate(ws)  # opt-in: it costs two requests per term
+    impact = evaluate(ws, term_impact=True)["term_impact"]
+    rows = {row["term"]: row for row in impact["terms"]}
+    mesh, text_word = rows['"Asthma"[Mesh]'], rows["asthma*[tiab]"]
+    assert (mesh["records_only_here"], mesh["share_percent"], mesh["known_only_here"]) == (1, 25.0, ["3"])
+    assert (text_word["records_only_here"], text_word["known_only_here"]) == (1, [])
+    assert "sample_file" not in mesh  # the only route to a known record is never a noise candidate
+    sample = (ws.root / "impact" / "01-asthma.txt").read_text(encoding="utf-8")
+    assert text_word["sample_file"].endswith("01-asthma.txt") and " NOT (" in sample and "asthma*[tiab]" in sample.split(" NOT (")[0]
+    assert "1 terms each add records nothing else finds" in impact["reading"]
+
+
+def test_term_impact_skips_a_blocks_only_term_and_survives_an_ncbi_error(make_ws):
+    from psb.ncbi import NcbiError
+
+    lone = [{"id": "asthma", "name": "", "terms": ["asthma*[tiab]"]}, BLOCKS[1]]
+    ws, fake = setup(make_ws, blocks=lone)
+    terms_measured = {row["term"] for row in evaluate(ws, term_impact=True)["term_impact"]["terms"]}
+    assert terms_measured == {'"Child"[Mesh]', "child*[tiab]"}
+    answer, calls = fake.count, []
+
+    def count(query, **kwargs):
+        calls.append(query)
+        if len(calls) > 3:
+            raise NcbiError("PubMed is busy")
+        return answer(query, **kwargs)
+
+    fake.count = count
+    result = evaluate(ws, term_impact=True)
+    assert result["ok"] and result["term_impact"]["error"] == "PubMed is busy"
+
+
+def test_large_result_prompts_term_impact_until_it_has_been_measured(make_ws, monkeypatch):
+    import psb.evaluate as module
+    from psb import progress
+
+    ws, _ = setup(make_ws, blocks=[BLOCKS[0]], sets={"seeds": ("seed", ["1", "3"])})
+    assert "large_result" not in evaluate(ws)  # four records: nothing to prompt
+    monkeypatch.setattr(module, "LARGE_RESULT", 3)
+    result = evaluate(ws)
+    assert result["large_result"]["count"] == 4 and "--term-impact" in result["large_result"]["advice"]
+    assert any("Large result" in line for line in progress._eval_lines(result, ""))
+    measured = evaluate(ws, term_impact=True)
+    assert "large_result" not in measured and "term_impact" in measured
+    later = evaluate(ws)  # measured once in this workspace: still reported, no longer prompted
+    assert later["large_result"]["term_impact_measured"] and "again only if" in later["large_result"]["advice"]
+    assert not any("Large result" in line for line in progress._eval_lines(later, ""))

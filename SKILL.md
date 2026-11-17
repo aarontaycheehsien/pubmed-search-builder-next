@@ -55,7 +55,7 @@ under review, never evidence of scope.
 
 In one message, also ask for: known relevant articles (PMIDs, DOIs, PMCIDs; optional), the
 depth (`quick`, `standard` or `thorough`; default `standard`), and any required limits such as
-dates or languages. That message is the text of `psb progress intake-request`; add
+study designs, dates or languages. That message is the text of `psb progress intake-request`; add
 `--have-question` when you already have the question. When the user says to proceed without
 answers, use the defaults and record the assumptions in `protocol.json` `notes`.
 
@@ -68,12 +68,14 @@ Read `references/scope.md`. Fill `protocol.json`:
 
 - `concepts`: each candidate concept with `id`, `name`, `role` and `rationale`.
   Roles: `search` (an AND-ed block), `screen` (handled at screening, not searched), `optional`
-  (a possible block to test, not in the main strategy).
+  (not searched; drafted as an optional block so `psb eval` measures what AND-ing it would
+  save and lose).
 - `eligibility`: include and exclude criteria for screening.
 - `limits`: only limits the question truly requires, each with a reason.
 
-Only AND a concept that passes the admission test in `references/scope.md`; when in doubt, do
-not AND it. Outcomes, comparators, settings and study designs are usually `screen`.
+Only AND a concept that passes the admission test in `references/scope.md`. When in doubt, do
+not guess either way: make it `optional` and measure it in step 5. Outcomes, comparators,
+settings and study designs are usually `screen`.
 A block that names one direction of a process (switching back) is fragile; search the process.
 Every member the criteria list for a concept is searched by its own name.
 Decide roles from the question before reading any seed record.
@@ -115,7 +117,8 @@ never change eligibility. If a record looks relevant but falls outside the scope
 ### 4. Vocabulary
 
 Read `references/vocabulary.md`. For each `search` concept, build one block in `strategy.json`
-whose `id` equals the concept `id`:
+whose `id` equals the concept `id` (the file's format is shown at the end of
+`references/scope.md`):
 
 - MeSH: `psb mesh lookup`, then `psb mesh show` for entry terms, tree position, narrower
   headings, and exploded versus unexploded counts. Tag headings explicitly with `[Mesh]`.
@@ -126,20 +129,48 @@ whose `id` equals the concept `id`:
 Every block needs both a MeSH layer and a text-word layer, because records not yet indexed
 have no MeSH.
 
+Draft each `optional` concept the same way, under `optional` in `strategy.json` (same shape as
+a block). Give it the broad descriptive layer a fragile concept needs. An optional block is
+never part of the query.
+
 ### 5. Test and revise
 
 Run `psb eval --note "<what changed and why>"` after every meaningful change. It reports lint
 and translation problems, a count for every line, recall per set, which blocks miss which
 records, leave-one-block-out ablation, and what changed since the previous version.
 
+- Read `known_without_keyword_search` before you believe a recall figure. Records your own
+  searches found use your own words; only user seeds and a review's reference list can show
+  what the strategy misses, and only those held out of the build give a lower bound on recall.
+  When there are none, say that recall is not estimated.
 - For every missed known record, run `psb terms miss`, then fix the failing block or record
-  why the record is out of reach. Never explain a miss away without looking.
+  why the record is out of reach. Never explain a miss away without looking. Its `diagnosis`
+  names the likeliest cause for each failing block:
+  - `phrase_gap`: the record separates, reorders or shortens a phrase the block has. Test the
+    suggested proximity or shorter phrase.
+  - `embedded_stem`: the block's word occurs only inside a longer word (`virus*` does not find
+    rotavirus). PubMed cannot truncate on the left: name those words or their family.
+  - `no_abstract` or `no_block_wording`: read the record. If it names the concept in other
+    words, add them. If it does not name the concept at all, no term can reach it while the
+    block is AND-ed: record it as out of reach. Do not widen a block for such a record.
 - Never silently lose a previously retrieved known record (`since_previous.known_lost`).
   Either revert, or say in the note why the loss is acceptable.
-- Cut noise only when the count justifies it and no known record is lost. Use line counts
-  and `psb sample --purpose noise-check` to find noisy terms. Recall comes first.
+- Cut noise only when the count justifies it and no known record is lost. When `psb eval`
+  returns `large_result` (more than 10,000 records), or the result is larger than the user
+  can screen, run `psb eval --term-impact` once before the critic step. For each term it gives
+  the records only that term retrieves and the known records only it retrieves, which a
+  term's own line count does not show. Look at what a high-impact term alone finds
+  (`psb sample --purpose noise-check --file <sample_file> --random`) before dropping it.
+  Recall comes first.
 - A block whose removal gains known records (ablation) is a sign of over-structuring:
   reconsider its role in `protocol.json`.
+- `optional_blocks` shows, for each optional block, the count if it were AND-ed, the known
+  records that would be lost, and a 95% bound on the share lost. The bound rests only on known
+  records that no keyword search led to; records from pilot searches cannot show what a block
+  loses. Decide with the rule in `references/scope.md`. To AND it, move it to `blocks` and set
+  its role to `search`; otherwise leave it under `optional`, so the audit shows it was tested.
+- A one-block search is a result to measure, not a default. Before you settle on one, test the
+  most reliably named unsearched concept as an optional block.
 - Recovering a held-out validation miss makes that set part of development. Say so.
 
 A phrase-index warning is a mandatory review, not proof of zero hits. Read the phrase decision
