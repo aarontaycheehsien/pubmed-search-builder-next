@@ -214,6 +214,46 @@ What these earlier runs showed, and why the branch changed after them:
   the staged launcher and a same-context critic. The planned third `main` run and further runs
   of that version were stopped by an account usage limit.
 
+## Held-out topics, one run a side
+
+All ten held-out topics, once each for `main` (704317b) and the branch (295778b), Claude
+Sonnet subagents, no seeds, standard depth, scored with `harness.score`. Each use is logged in
+`evals/heldout-ledger.jsonl`. Following `evals/README.md`, the missed records, the agents'
+messages and the run folders were not kept or inspected; only counts and recall are reported.
+Every run delivered; no leakage was detected. Each cell is records and recall (gold found).
+
+| Topic | main | branch |
+|---|---:|---:|
+| healthcare-nudging | 6,201 · 12.8% (11/86) | 8,064 · 12.8% (11/86) |
+| social-prescribing-older-adults | 917 · 100% (10/10) | 701 · 100% (10/10) |
+| work-directed-return-to-work | 43,178 · 100% (11/11) | 9,921 · 100% (11/11) |
+| housing-first-criminal-justice | 1,667 · 100% (5/5) | 1,631 · 100% (5/5) |
+| school-restorative-practice | 1,148 · 100% (6/6) | 741 · 83.3% (5/6) |
+| Cohen_2006_ADHD | 6,089 · 95.0% (19/20) | 3,632 · 95.0% (19/20) |
+| Cohen_2006_ACEInhibitors | 31,117 · 100% (41/41) | 31,403 · 100% (41/41) |
+| Cohen_2006_Antihistamines | 2,425 · 87.5% (14/16) | 2,432 · 87.5% (14/16) |
+| Cohen_2006_UrinaryIncontinence | 1,759 · 82.5% (33/40) | 2,557 · 80.0% (32/40) |
+| Cohen_2006_Estrogens | 29,925 · 95.0% (76/80) | 45,060 · 100% (80/80) |
+| **Total** | **124,426 · 226/315** | **106,142 · 228/315** |
+
+What this shows:
+
+- **Recall: no difference.** 226 against 228 gold records of 315; the branch lost one on two
+  topics and gained four on one. Single runs cannot separate that from run-to-run variance.
+- **Precision: the development-topic gain did not carry over.** The branch's result was smaller
+  on five topics and larger on five; the geometric mean ratio of record counts is 0.85, and
+  the total is driven by one topic (work-directed, 43,178 against 9,921). On development
+  topics the branch cut median records about fourfold; here the effect is small and mixed.
+  Most held-out results were already under 10,000 records, so the large-result prompt did not
+  apply to them.
+- **Independent known records again became more common:** six of ten branch runs had records
+  found without a keyword search, five of them also held out of the build, against two of ten
+  `main` runs (one held out). That is the measurement the patch was meant to enable.
+- **healthcare-nudging fails on both arms at 12.8%.** That is a problem in the skill, not in
+  this patch, and since it is a held-out topic its misses must not be used to fix it.
+- Same limits as the development runs: one run a side, subagents rather than `evals/run.py`,
+  and not the usual model.
+
 ## What is still open
 
 1. **Known-record discovery.** The records every arm missed were never in a known set. Review
