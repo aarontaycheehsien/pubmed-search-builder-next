@@ -101,3 +101,14 @@ def test_stage_skill_copies_skill_but_not_evals(tmp_path):
     staged = drivers.stage_skill(harness.REPO, run)
     assert (staged / "SKILL.md").exists() and (staged / "scripts" / "psb.py").exists()
     assert not (staged / "evals").exists() and not (staged / "tests").exists()
+
+
+def test_leakage_flags_openalex_searches_without_the_as_of_bound(tmp_path):
+    work = tmp_path / "work"
+    work.mkdir()
+    entries = [{"type": "openalex", "path": "/works", "params": {"filter": "ids.pmid:1|2"}},
+               {"type": "openalex", "path": "/works", "params": {"filter": "cites:W1,to_publication_date:2015-01-01"}},
+               {"type": "openalex", "path": "/works/pmid:5", "params": {"select": "id"}},
+               {"type": "openalex", "path": "/works", "params": {"search": "asthma", "filter": "type:review"}}]
+    (work / "log.jsonl").write_text("\n".join(json.dumps(e) for e in entries), encoding="utf-8")
+    assert harness.leakage(FIXTURE, tmp_path, "clean transcript") == ["1 OpenAlex searches ran without the as_of bound"]
