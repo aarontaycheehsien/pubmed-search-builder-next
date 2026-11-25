@@ -10,6 +10,10 @@ decides what the number means, so each set has a role.
 | `validation` | relevant records held out from mining | no | semi-independent (it is still consulted every eval) |
 | `benchmark` | included studies of a prior review, screened for your scope | no | external relative recall |
 
+OpenAlex is a second source of the same kinds of record. It is used only to find candidates,
+which are mapped back to PMIDs; works with no PMID are outside PubMed's denominator and are
+listed, not scored.
+
 `psb eval` reports recall for every set. Records not in PubMed (or added after `as_of`) are
 excluded from the denominator and listed.
 
@@ -20,6 +24,16 @@ led to (user seeds, a review's reference list) can show that. `psb eval` counts 
 `known_without_keyword_search`, and gives a lower bound on recall only from those that were also
 held out of the build. When there are none it says so: the recall figures then check your
 wording and do not estimate recall. Report it that way.
+
+A reference list counts the same whichever index holds it: `neighbors:refs` (PubMed) and
+`openalex:refs` (OpenAlex) are both independent. Two further tiers are reported on their own:
+
+| Tier | Route | In the recall bound? |
+|---|---|---|
+| Forward citations of independent records | `--links citedin` from records that are themselves independent | no: citing papers share a research community and its vocabulary, and favour highly cited work |
+| Frame sample | `psb sample --source openalex --purpose frame` | its own estimate, within the frame only |
+
+Citing records of a pilot hit stay keyword-dependent, as now.
 
 ## Seeds
 
@@ -45,11 +59,32 @@ Budget: screen at most about 150 candidates at `standard` and 400 at `thorough`.
      scope, use the reference lists of two or three reviews on overlapping or broader topics.
    - Run `--links refs` on its own, not together with `similar` or `citedin`, so the records it
      finds are logged as coming from a reference list.
+   - PubMed has no list for most reviews outside PMC. `psb sample --purpose prior-reviews` reports
+     `refs_openalex`, the references OpenAlex holds for each review; follow those with
+     `psb neighbors <PMID or DOI> --links refs --source openalex`. A review with no list in either
+     index has no deposited list, not no references: use its tables or ask the user.
+   - `psb sample --source openalex --purpose prior-reviews "<topic words>"` searches OpenAlex for
+     reviews, including those in education, social science and nursing venues outside PubMed.
+     The review is found by keyword; its reference list is still independent.
+   - One review's reference list gives a benchmark with that review's scope. When `psb eval`
+     reports that one review supplies more than 60% of the records found through reference
+     lists, add a second review that covers a different searched concept.
 2. **Precise pilots.** Run two or three narrow, high-precision queries (the core concepts in
    titles, for example) with `psb sample --purpose pilot`, and screen what they return. Pilot
    hits are for mining vocabulary. They cannot validate the strategy or an optional block.
 3. **Neighbours.** `psb neighbors --set seeds --links similar,citedin --exclude-known` ranks
    records linked to several known records first. Screen before use.
+4. **Where the known set is thin** (`thorough`). `psb known profile` compares the OpenAlex
+   topics and decades of the known set with a spread sample of the current result, and names
+   topics and decades that hold a sizeable share of the result and no known record. Look for a
+   review there. The profile is not evidence of recall; never report it as such.
+5. **Frame sample** (`thorough`). `psb sample --source openalex --purpose frame --topic T... --n 50`
+   draws a seeded random sample of PubMed records in one or two OpenAlex topics that cover the
+   question. It does not show whether the strategy retrieves them, and you must not check before
+   screening. Screen every record, add every include to a `validation` set
+   (`--source "OpenAlex frame sample"`), and `psb eval` reports recall within the frame with a 95%
+   bound. Adding only the misses, or only the hits, biases the estimate; `psb eval` says the
+   estimate is incomplete while any sampled record is unscreened or any include is in no set.
 
 ## Screening candidates
 

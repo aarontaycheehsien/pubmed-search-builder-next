@@ -1,7 +1,24 @@
 # Diversifying known records with OpenAlex: plan
 
-Status: proposal, nothing implemented. Motivated by development topics only; no held-out
-strategy, audit or miss was read.
+Status: implemented offline (commits on this branch), tested against recorded responses only.
+No live NCBI or OpenAlex run has been made yet: this environment's network blocks both hosts.
+Motivated by development topics only; no held-out strategy, audit or miss was read.
+
+## What was built, and where it departs from the proposal
+
+| Step | Built | Departure |
+|---|---|---|
+| 1 Client | `scripts/psb/openalex.py`; requests logged as `type: openalex` and cached in the workspace | none |
+| 2 Reference lists | `psb neighbors <PMID, DOI or W id> --links refs --source openalex` (route `openalex:refs`, tier A); `sample --purpose prior-reviews` reports `refs_openalex` | the PubMed command suggests the OpenAlex call when it finds no list, rather than calling it, so each batch keeps one route |
+| 3 Reviews outside PubMed | `psb sample --source openalex --purpose prior-reviews` | none |
+| 4 Anchor concentration | `known_without_keyword_search.anchors`; warning above 60% from at least 5 records | none |
+| 5 Profile | `psb known profile` | the result sample is ten slices at random offsets, not one, so it is not drawn from a few years |
+| 6 Tier B | `--links citedin --source openalex` (and PubMed `citedin`) from independent origins, reported as `known_from_citation_of_independent` | forward citations only: backward citations of any record were already independent under the existing rule |
+| 7 Frame sample | `psb sample --source openalex --purpose frame --topic T...`; `known_from_frame_sample` in `psb eval` | frame membership counts every frame batch, not the earliest batch, or records a pilot showed first (likely hits) would drop out and bias the estimate downwards |
+| 8 Reporting | audit section "Citation searching for known records" in TARCiS terms; OpenAlex requests in the provenance line | `reporting.md` says these searches must not be reported as PRISMA-S citation searching for the review |
+
+Also added: an origin published after the as-of date is not followed (it may be the review being
+reproduced), and the eval harness flags OpenAlex searches that ran without the as-of bound.
 
 ## The problem
 
@@ -41,7 +58,7 @@ to each route and report them separately in `known_without_keyword_search`:
 | Tier | Routes | In the recall lower bound? |
 |---|---|---|
 | A | user seeds; PubMed or OpenAlex reference lists of a review | yes, as now |
-| B | OpenAlex citing or cited works of a tier-A record | no: reported on its own until evaluation shows it behaves like tier A |
+| B | citing works (PubMed or OpenAlex) of a tier-A record | no: reported on its own until evaluation shows it behaves like tier A |
 | C | OpenAlex topic or keyword searches | no: treated like a pilot |
 | keyword | pilots, `similar`, neighbours of pilot hits | no, as now |
 
