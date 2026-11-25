@@ -12,7 +12,7 @@ from pathlib import Path
 
 SKILL_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_ENV_FILE = SKILL_ROOT / ".env"
-ALLOWED = frozenset({"NCBI_EMAIL", "NCBI_API_KEY", "NCBI_TOOL", "PSB_CACHE"})
+ALLOWED = frozenset({"NCBI_EMAIL", "NCBI_API_KEY", "NCBI_TOOL", "PSB_CACHE", "OPENALEX_API_KEY"})
 _KEY = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 
 _env_file: Path = DEFAULT_ENV_FILE

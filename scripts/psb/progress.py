@@ -22,7 +22,7 @@ from pathlib import Path
 
 from . import syntax
 from .strategy import lint
-from .workspace import Workspace, WorkspaceError, normalize_pmids, read_json
+from .workspace import Workspace, WorkspaceError, normalize_pmids, now, read_json
 
 TOTAL_STEPS = 7
 STEPS = {1: "Intake", 2: "Scope", 3: "Known records", 4: "Vocabulary", 5: "Test & revise", 6: "Critic", 7: "Deliver"}
@@ -37,8 +37,10 @@ ROLE_USE = {
 DEVELOPMENT_ROLES = {"seed", "relevant"}
 SCREEN_BUDGET = {"standard": 150, "thorough": 400}
 DECISIONS = ("include", "exclude", "uncertain")
-PURPOSES = {"prior-reviews": "Prior-review search", "pilot": "Pilot search", "noise-check": "Noise check"}
-CANDIDATE_PURPOSES = {"prior-reviews", "pilot"}
+PURPOSES = {"prior-reviews": "Prior-review search", "pilot": "Pilot search", "noise-check": "Noise check",
+            "frame": "Frame sample"}
+CANDIDATE_PURPOSES = {"prior-reviews", "pilot", "frame"}
+SOURCE_NAMES = {"pubmed": "PubMed", "openalex": "OpenAlex"}
 LINK_TITLES = {"similar": "Similar articles", "refs": "Citation search, backward", "citedin": "Citation search, forward"}
 LINK_SHORT = {"similar": "similar articles", "refs": "backward citations", "citedin": "forward citations"}
 LINK_DETAIL = {"similar": "similar articles", "refs": "reference lists (backward)", "citedin": "citing records (forward)"}
@@ -152,13 +154,38 @@ def _free_recall(evaluation: dict) -> list[str]:
         return []
     if not free.get("in_pubmed"):
         return ["- Known records found without a keyword search: none, so the recall above checks the wording and "
-                "does not estimate recall"]
+                "does not estimate recall", *_tier_lines(evaluation)]
     head = f"- Known records found without a keyword search: {_n(free.get('retrieved'))}/{_n(free.get('in_pubmed'))} retrieved"
     held = free.get("held_out") or {}
     if not held.get("in_pubmed"):
-        return [head + " · all were used to build the strategy, so this does not estimate recall"]
-    return [head + f" · held out from the build: {_n(held.get('retrieved'))}/{_n(held.get('in_pubmed'))}, so recall is at "
-            f"least {_pct(held.get('recall_lower_95_percent'))} (95% bound)"]
+        return [head + " · all were used to build the strategy, so this does not estimate recall", *_tier_lines(evaluation)]
+    lines = [head + f" · held out from the build: {_n(held.get('retrieved'))}/{_n(held.get('in_pubmed'))}, so recall is at "
+             f"least {_pct(held.get('recall_lower_95_percent'))} (95% bound)"]
+    return lines + _tier_lines(evaluation)
+
+
+def _tier_lines(evaluation: dict) -> list[str]:
+    """Anchor concentration, forward citations of independent records, and the frame sample."""
+    lines = []
+    anchors = (evaluation.get("known_without_keyword_search") or {}).get("anchors") or {}
+    if anchors.get("concentrated"):
+        top = anchors["top"]
+        lines.append(f"- One review supplies {_n(top['records'])} of the {_n(anchors['from_reference_lists'])} known records "
+                     f"found through reference lists ({_pct(top['share_percent'])}, {top['anchor']}): add a second review "
+                     "that covers a different searched concept")
+    cited = evaluation.get("known_from_citation_of_independent") or {}
+    if cited.get("in_pubmed"):
+        lines.append(f"- Forward citations of independent records: {_n(cited.get('retrieved'))}/{_n(cited.get('in_pubmed'))} "
+                     "retrieved (reported on their own; not part of the recall bound)")
+    frame = evaluation.get("known_from_frame_sample") or {}
+    if frame.get("screened_in"):
+        text = (f"- Frame sample: {_n(frame.get('retrieved'))}/{_n(frame.get('in_pubmed'))} screened-in records retrieved")
+        if frame.get("recall_lower_95_percent") is not None:
+            text += f" · recall within the frame at least {_pct(frame['recall_lower_95_percent'])} (95% bound)"
+        if frame.get("missing_from_sets"):
+            text += f" · {_n(len(frame['missing_from_sets']))} screened in but not in a set: the estimate is incomplete"
+        lines.append(text)
+    return lines
 
 
 def _misses(evaluation: dict, cap: int = 10) -> str:
@@ -249,17 +276,23 @@ def batches(ws: Workspace) -> list[dict]:
 
 
 def record_batch(ws: Workspace, via: str, label: str, pmids: list[str], *, total: int,
-                 origin: list[str] | None = None, query: str | None = None) -> dict:
+                 origin: list[str] | None = None, query: str | None = None,
+                 origins: dict[str, list[str]] | None = None) -> dict:
+    """Append a candidate batch. ``origins`` maps each PMID to the known records it was linked
+    from, so a record can be traced to the review whose reference list held it."""
     entry = {"batch": f"C{len(batches(ws)) + 1}", "via": via, "label": label, "from": list(origin or []),
-             "query": query, "total": total, "pmids": list(pmids)}
+             "query": query, "total": total, "pmids": list(pmids), "at": now()}
+    if origins:
+        entry["origins"] = {str(p): sorted(set(map(str, o))) for p, o in origins.items() if str(p) in set(map(str, pmids))}
     _append(ws.root / "candidates.jsonl", entry)
     return entry
 
 
-def neighbors_label(links: list[str], origin: list[str], sets: list[str]) -> str:
+def neighbors_label(links: list[str], origin: list[str], sets: list[str], index: str = "pubmed") -> str:
     source = f" ({'set' if len(sets) == 1 else 'sets'} {', '.join(sets)})" if sets else ""
     kinds = " + ".join(LINK_SHORT.get(l, l) for l in links)
-    return kinds[:1].upper() + kinds[1:] + f" from {_plural(len(origin), 'record')}{source}"
+    via = f" in {SOURCE_NAMES.get(index, index)}" if index != "pubmed" else ""
+    return kinds[:1].upper() + kinds[1:] + f"{via} from {_plural(len(origin), 'record')}{source}"
 
 
 def decisions(ws: Workspace) -> dict[str, dict]:
@@ -400,7 +433,7 @@ def _search_event(purpose: str):
     return renderer
 
 
-for _purpose, _step in (("prior-reviews", 3), ("pilot", 3), ("noise-check", 5)):
+for _purpose, _step in (("prior-reviews", 3), ("pilot", 3), ("noise-check", 5), ("frame", 3)):
     event(f"search:{_purpose}", _step)(_search_event(_purpose))
 
 
@@ -410,15 +443,25 @@ def _neighbors(ws, data):
     origin = data.get("from") or []
     sets = data.get("sets") or []
     source = f" ({'set ' if len(sets) == 1 else 'sets '}{', '.join(sets)})" if sets else ""
+    index = data.get("index") or "pubmed"
     lines = [f"Found {_plural(data.get('candidates', 0), 'candidate record')} linked to "
-             f"{_plural(len(origin), 'known record')}{source}"]
+             f"{_plural(len(origin), 'known record')}{source}"
+             + (f" in {SOURCE_NAMES.get(index, index)}" if index != "pubmed" else "")]
     for link in links:
         lines.append(f"- {LINK_DETAIL.get(link, link).capitalize()}: {_n((data.get('per_link') or {}).get(link, 0))}")
+    if data.get("not_in_pubmed") is not None:
+        lines.append(f"- Linked works with no PMID (outside PubMed, not candidates): {_n(data.get('not_in_pubmed'))}")
+    if data.get("no_reference_list"):
+        lines.append(f"- No reference list in {SOURCE_NAMES.get(index, index)}: {', '.join(data['no_reference_list'][:10])}"
+                     " (no list, not no references)")
+    if data.get("not_found"):
+        lines.append(f"- Not found in {SOURCE_NAMES.get(index, index)}: {', '.join(data['not_found'][:10])}")
     lines.append(f"- Already in a known-record set: {_n(data.get('known', 0))}"
                  + (" (excluded)" if data.get("exclude_known") else " (still listed)"))
     lines.append(f"- Shown for screening: {_plural(data.get('shown', 0), 'record')}"
                  + (f" as candidate batch {data['batch']}" if data.get("batch") else ""))
-    return " + ".join(LINK_TITLES.get(l, l) for l in links), lines
+    title = " + ".join(LINK_TITLES.get(l, l) for l in links)
+    return (title + f" ({SOURCE_NAMES.get(index, index)})" if index != "pubmed" else title), lines
 
 
 def _budget_line(ws: Workspace, screened: int) -> str:
@@ -784,6 +827,9 @@ def _kind(batch: dict) -> str:
     via = str(batch.get("via"))
     if via.startswith("neighbors:"):
         return "neighbour search"
+    if via.startswith("openalex:"):
+        kind = via.split(":", 1)[1]
+        return {"prior-reviews": "OpenAlex prior-review search", "frame": "OpenAlex frame sample"}.get(kind, "OpenAlex neighbour search")
     return {"prior-reviews": "prior-review search", "pilot": "pilot search", "resolve": "identifier resolution"}.get(via, via)
 
 

@@ -9,9 +9,10 @@ import random
 import sys
 from pathlib import Path
 
-from . import config, deliver, mesh, progress, terms, validation
+from . import config, deliver, discover, mesh, progress, terms, validation
 from .evaluate import compare, evaluate
 from .ncbi import LINKNAMES, NcbiError, PubMed
+from .openalex import OpenAlexError
 from .strategy import StrategyError, lint, numbered_lines, full_query
 from .workspace import ROLES, Workspace, WorkspaceError, find_root, normalize_pmids, now, read_json, sha256_text
 
@@ -111,6 +112,8 @@ def cmd_status(args) -> dict:
 def cmd_count(args) -> dict:
     ws = workspace(args)
     query = query_arg(args)
+    if args.purpose == "frame":
+        raise UsageError("a frame sample is drawn from OpenAlex: psb sample --source openalex --purpose frame --topic T...")
     result = ws.pubmed.search(query)
     body = {"ok": True, **result}
     if args.purpose:
@@ -133,6 +136,18 @@ def cmd_fetch(args) -> dict:
 
 def cmd_sample(args) -> dict:
     ws = workspace(args)
+    if args.source == "openalex":
+        if args.purpose == "frame":
+            if args.query or args.file:
+                raise UsageError("a frame sample takes --topic, not a query")
+            return discover.frame_sample(ws, args.topic or [], n=args.n, seed=args.seed)
+        if args.purpose != "prior-reviews":
+            raise UsageError("OpenAlex sampling supports --purpose prior-reviews and --purpose frame only")
+        return discover.prior_reviews(ws, query_arg(args), n=args.n)
+    if args.purpose == "frame":
+        raise UsageError("a frame sample is drawn from OpenAlex: add --source openalex")
+    if args.topic:
+        raise UsageError("--topic needs --source openalex --purpose frame")
     query = query_arg(args)
     first = ws.pubmed.search(query, retmax=0)
     total = first["count"]
@@ -156,6 +171,16 @@ def cmd_sample(args) -> dict:
                         "(psb neighbors <PMID> --links refs). A reference list is the main source of known records "
                         "that do not depend on your own search wording: prefer those reviews, and use a review of an "
                         "overlapping or broader topic when none matches the scope exactly.")
+        if body["records"] and not args.no_openalex:
+            counts = discover.reference_counts(ws, [row["pmid"] for row in body["records"]])
+            if "counts" in counts:
+                for row in body["records"]:
+                    row["refs_openalex"] = counts["counts"].get(row["pmid"])
+                body["note"] += (" refs_openalex is the number of references OpenAlex holds for the review (null: not in "
+                                 "OpenAlex); a review that PubMed has no list for may still have one there "
+                                 "(psb neighbors <PMID> --links refs --source openalex).")
+            else:
+                body["openalex"] = "unavailable: " + counts["error"]
     if args.purpose:
         def data() -> dict:
             found = {"query": query, "count": total, "shown": len(records), "retstart": start}
@@ -169,6 +194,11 @@ def cmd_sample(args) -> dict:
 
 def cmd_neighbors(args) -> dict:
     ws = workspace(args)
+    if args.source == "openalex":
+        links = [link.strip() for link in args.links.split(",") if link.strip()]
+        return discover.neighbors(ws, discover.identifiers(ws, args.pmids, args.set), links=links,
+                                  max_per_seed=args.max_per_seed, limit=args.limit, exclude_known=args.exclude_known,
+                                  set_names=args.set or [])
     pmids = pmid_args(ws, args.pmids, args.set)
     known = {p for d in ws.sets().values() for p in d.get("pmids", [])} if args.exclude_known else set()
     scores: dict[str, dict] = {}
@@ -197,8 +227,9 @@ def cmd_neighbors(args) -> dict:
     if no_refs:
         body["no_reference_list"] = no_refs
         body["note"] += (" PubMed holds no reference list for " + ", ".join(no_refs) + ": it has them mostly for records "
-                         "in PMC. Try another review (psb sample --purpose prior-reviews marks in_pmc), or ask the user "
-                         "for the included studies.")
+                         "in PMC. OpenAlex often holds one: psb neighbors " + " ".join(no_refs) + " --links refs --source "
+                         "openalex. Otherwise try another review (psb sample --purpose prior-reviews marks in_pmc and "
+                         "refs_openalex), or ask the user for the included studies.")
     def data() -> dict:
         links = [link.strip() for link in args.links.split(",")]
         in_sets = {p for d in ws.sets().values() for p in d.get("pmids", [])}
@@ -208,7 +239,8 @@ def cmd_neighbors(args) -> dict:
                  "known": sum(1 for p in scores if p in in_sets and p not in pmids)}
         if rows:
             found["batch"] = progress.record_batch(ws, "neighbors:" + ",".join(links), progress.neighbors_label(links, pmids, found["sets"]),
-                                                   [r["pmid"] for r in rows], total=len(candidates), origin=pmids)["batch"]
+                                                   [r["pmid"] for r in rows], total=len(candidates), origin=pmids,
+                                                   origins={r["pmid"]: r["from"] for r in rows})["batch"]
         return found
     return progress.attach(body, ws, "neighbors", data)
 
@@ -411,12 +443,20 @@ def cmd_progress(args) -> dict:
     return {"ok": True, "stage": args.stage, "progress": progress.emit(ws, f"stage:{args.stage}")}
 
 
+def cmd_known(args) -> dict:
+    ws = workspace(args)
+    return discover.profile(ws, n=args.n, seed=args.seed)
+
+
 def cmd_log(args) -> dict:
     ws = Workspace(find_root(args.workspace))
     entries = ws.log_entries()
     ncbi = [e for e in entries if e.get("type") == "ncbi"]
+    openalex = [e for e in entries if e.get("type") == "openalex"]
     return {"ok": True, "entries": len(entries), "ncbi_requests": len(ncbi),
-            "from_cache": sum(1 for e in ncbi if e.get("cache")), "tail": entries[-args.tail:] if args.tail else []}
+            "from_cache": sum(1 for e in ncbi if e.get("cache")), "openalex_requests": len(openalex),
+            "openalex_from_cache": sum(1 for e in openalex if e.get("cache")),
+            "tail": entries[-args.tail:] if args.tail else []}
 
 
 def cmd_doctor(args) -> dict:
@@ -461,6 +501,11 @@ def build_parser() -> argparse.ArgumentParser:
             p.add_argument("--n", type=int, default=10)
             p.add_argument("--random", action="store_true", help="sample from a random offset")
             p.add_argument("--seed", type=int, default=1)
+            p.add_argument("--source", choices=["pubmed", "openalex"], default="pubmed",
+                           help="openalex: prior reviews in OpenAlex, or a frame sample (--purpose frame --topic T...)")
+            p.add_argument("--topic", action="append", help="frame sample: an OpenAlex topic ID (repeat for a second)")
+            p.add_argument("--no-openalex", action="store_true",
+                           help="prior-reviews: do not ask OpenAlex how many references each review has")
         p.set_defaults(func=func)
 
     p = sub.add_parser("fetch", help="fetch and store records")
@@ -477,7 +522,16 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--max-per-seed", type=int, default=50)
     p.add_argument("--limit", type=int, default=100)
     p.add_argument("--exclude-known", action="store_true", help="drop PMIDs already in a set")
+    p.add_argument("--source", choices=["pubmed", "openalex"], default="pubmed",
+                   help="openalex: reference lists (refs) and citing works (citedin) from OpenAlex; origins may be DOIs or OpenAlex IDs")
     p.set_defaults(func=cmd_neighbors)
+
+    p = sub.add_parser("known", help="diagnostics on the known-record sets")
+    ksub = p.add_subparsers(dest="known_command", required=True)
+    q = ksub.add_parser("profile", help="OpenAlex topics and decades of the known set against a sample of the result")
+    q.add_argument("--n", type=int, default=200, help="records sampled from the current result")
+    q.add_argument("--seed", type=int, default=1)
+    p.set_defaults(func=cmd_known)
 
     p = sub.add_parser("resolve", help="PMIDs from PMIDs, DOIs, or PMCIDs")
     p.add_argument("ids", nargs="+")
@@ -591,7 +645,7 @@ def main(argv: list[str] | None = None) -> int:
         config.use_env_file(args.env_file)
     try:
         result = args.func(args)
-    except (WorkspaceError, StrategyError, UsageError, NcbiError, ValueError, OSError) as exc:
+    except (WorkspaceError, StrategyError, UsageError, NcbiError, OpenAlexError, ValueError, OSError) as exc:
         emit({"ok": False, "error": str(exc), "error_type": type(exc).__name__})
         return 1
     emit(result)
