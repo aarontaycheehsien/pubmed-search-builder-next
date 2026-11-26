@@ -83,10 +83,10 @@ see a loss only on its own known records, so the rule needs the same check as an
 ### Idea 2 with a text ranker
 
 Words common in the stand-in known records and rare in PubMed became a ranking query, and each cut
-was ranked by PubMed's relevance order on it. 19 of 72 cuts lost gold (68 records in all).
+was ranked by PubMed's relevance order on it. 19 of 72 cuts lost gold (65 records in all).
 
 - Cuts of 1,000 records or fewer (11): the top 200 held at least one lost record in 10, and the top
-  50 in 5. Across them, 41 of 50 lost records were in the top 200.
+  50 in 5. Across them, 41 of 47 lost records were in the top 200.
 - Cuts of more than 1,000 records (8): none of 18 lost records was in the top 200. Nearly every
   record in these cuts matched a ranking word, so the ranking did not separate them.
 - The estimate from the top 50 plus a random 30 was close to the truth only where the top 50 held
