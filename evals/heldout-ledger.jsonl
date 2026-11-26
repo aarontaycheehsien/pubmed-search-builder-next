@@ -101,3 +101,4 @@
 {"at": "20261117T182214Z", "topic": "Cohen_2006_Estrogens", "command": "generate (agent-tool subagent, scored with harness.score)", "run_label": "ho-main-sonnet-1", "skill_hash": "4d6b46653ce3f3dfd8a60c9875be088a33f5ff346f129d33caf356224ef73cbc", "driver": "claude subagent", "model": "sonnet", "condition": "noseed", "status": "ok"}
 {"at": "20261117T182217Z", "topic": "Cohen_2006_Estrogens", "command": "generate (agent-tool subagent, scored with harness.score)", "run_label": "ho-pr-sonnet-1", "skill_hash": "70f307702f2b739c3b5db1c7908fa5dac45ff2cf6c190c1cce7ce026722d63ae", "driver": "claude subagent", "model": "sonnet", "condition": "noseed", "status": "ok"}
 {"at": "20261126T105255Z", "topic": "healthcare-nudging", "command": "score", "condition": "noseed"}
+{"at": "20261126T112029Z", "topic": "healthcare-nudging", "command": "score", "condition": "noseed"}

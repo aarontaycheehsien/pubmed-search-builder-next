@@ -1,0 +1,40 @@
+{
+  "topic": "healthcare-nudging",
+  "source": "interactive:ours",
+  "driver": "claude-code (interactive session)",
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "interactive-exclude-reminders-20261126",
+  "scored": "20261126",
+  "split": "heldout",
+  "skill": {
+    "commit": "64dab7e40b35acb26a5b1800c174eb0030b8507a",
+    "note": "skill run from this checkout of the repository"
+  },
+  "scope_decisions": [
+    "User supplied the fixture's eligibility criteria verbatim and the as_of date.",
+    "User excluded reminders and similar interventions from scope: read as clinical reminders, alerts and prompts, clinical decision support, and audit and feedback. Peer comparison and social-norm feedback kept as nudges (stated assumption)."
+  ],
+  "strategy": "((\"Economics, Behavioral\"[Mesh] OR (\"Fees and Charges\"[Mesh] AND (\"Practice Patterns, Physicians'\"[Mesh] OR ordering[tiab] OR \"order entry\"[tiab])) OR nudg*[tiab] OR \"choice architecture\"[tiab] OR \"choice architect*\"[tiab] OR \"behavioral economic*\"[tiab] OR \"behavioural economic*\"[tiab] OR \"behavioral insight*\"[tiab] OR \"behavioural insight*\"[tiab] OR \"default option*\"[tiab] OR \"default order*\"[tiab] OR \"default setting*\"[tiab] OR \"default choice*\"[tiab] OR defaults[tiab] OR \"default dose*\"[tiab] OR \"default prescri*\"[tiab] OR \"default duration*\"[tiab] OR \"change default\"[tiab:~2] OR \"changing default\"[tiab:~2] OR \"changed default\"[tiab:~2] OR \"changes default\"[tiab:~2] OR \"active choice*\"[tiab] OR \"active choosing\"[tiab] OR \"order set*\"[tiab] OR \"standardized order*\"[tiab] OR \"standardised order*\"[tiab] OR \"standard order*\"[tiab] OR \"admission order*\"[tiab] OR \"preprinted order*\"[tiab] OR \"pre-printed order*\"[tiab] OR \"order template*\"[tiab] OR \"hard stop*\"[tiab] OR \"soft stop*\"[tiab] OR prepopulated[tiab] OR \"pre-populated\"[tiab] OR \"pre-checked\"[tiab] OR \"price display*\"[tiab] OR \"cost display*\"[tiab] OR \"price information\"[tiab] OR \"charge information\"[tiab] OR \"price transparency\"[tiab] OR \"price displayed\"[tiab:~2] OR \"prices displayed\"[tiab:~2] OR \"charges displayed\"[tiab:~2] OR \"peer comparison*\"[tiab] OR \"peer benchmark*\"[tiab] OR \"accountable justification*\"[tiab] OR \"precommitment\"[tiab] OR \"pre-commitment\"[tiab] OR \"public commitment*\"[tiab] OR \"commitment letter*\"[tiab] OR \"posted commitment*\"[tiab] OR \"commitment device*\"[tiab] OR \"risk framing\"[tiab] OR \"framing physician\"[tiab:~3] OR \"framing physicians\"[tiab:~3] OR \"framing clinician\"[tiab:~3] OR \"framing clinicians\"[tiab:~3] OR \"framing doctor\"[tiab:~3] OR \"framing doctors\"[tiab:~3] OR \"framing provider\"[tiab:~3] OR \"framing providers\"[tiab:~3] OR \"framing residents\"[tiab:~3] OR \"framing nurses\"[tiab:~3] OR \"framing surgeons\"[tiab:~3] OR \"framing prescribing\"[tiab:~3] OR \"display prices\"[tiab:~2] OR \"displaying price\"[tiab:~2] OR \"opt-out testing\"[tiab:~2] OR \"opt-out test\"[tiab:~2] OR \"opt-out screening\"[tiab:~2] OR \"opt-out vaccination\"[tiab:~2] OR \"opt-out approach\"[tiab:~2] OR \"opt-out default\"[tiab:~2] OR \"opt-in testing\"[tiab:~2] OR \"opt-in test\"[tiab:~2] OR \"opt-in screening\"[tiab:~2] OR \"opt-in approach\"[tiab:~2] OR \"opt-in default\"[tiab:~2] OR ((\"social norm*\"[tiab] OR \"descriptive norm*\"[tiab] OR \"injunctive norm*\"[tiab] OR \"normative feedback\"[tiab] OR \"normative comparison*\"[tiab]) AND (\"Practice Patterns, Physicians'\"[Mesh] OR physician*[tiab] OR clinician*[tiab] OR prescrib*[tiab] OR ordering[tiab] OR provider*[tiab])) OR ((preselected[tiab] OR \"pre-selected\"[tiab] OR prechecked[tiab]) AND (\"Practice Patterns, Physicians'\"[Mesh] OR physician*[tiab] OR clinician*[tiab] OR prescrib*[tiab] OR ordering[tiab] OR provider*[tiab])) OR \"cost transparency\"[tiab] OR \"charge display*\"[tiab] OR \"cost displayed\"[tiab:~2] OR \"costs displayed\"[tiab:~2] OR \"displaying cost\"[tiab:~2] OR \"displaying costs\"[tiab:~2] OR \"display costs\"[tiab:~2] OR \"libertarian paternalis*\"[tiab] OR (CPOE[tiab] AND (default*[tiab] OR \"order set*\"[tiab] OR display*[tiab] OR design*[tiab] OR price*[tiab] OR cost*[tiab])) OR \"written justification*\"[tiab] OR \"required justification*\"[tiab] OR \"justification required\"[tiab:~2] OR \"free-text justification*\"[tiab] OR (default[tiab] AND (\"Practice Patterns, Physicians'\"[Mesh] OR physician*[tiab] OR clinician*[tiab] OR prescrib*[tiab] OR ordering[tiab] OR provider*[tiab])) OR ((\"Medical Order Entry Systems\"[Mesh] OR \"order entry\"[tiab]) AND (default*[tiab] OR \"order set*\"[tiab] OR display*[tiab] OR price*[tiab] OR cost*[tiab])) OR \"framing nurse\"[tiab:~3] OR \"framing practitioners\"[tiab:~3] OR \"framing prescription\"[tiab:~3] OR \"displaying prices\"[tiab:~2] OR \"display price\"[tiab:~2])) AND (\"1800/01/01\"[edat] : \"2017/12/18\"[edat])",
+  "as_of": "2017-12-18",
+  "count": 7721,
+  "gold_scored": 86,
+  "gold_reachable": 86,
+  "retrieved": 17,
+  "recall_percent": 19.8,
+  "nnr": 454.2,
+  "translation_issues": [],
+  "unseen_recall_percent": null,
+  "unseen_recall_note": "Not computed: run.py score takes no known-record sets, and computing it by hand would mean reading the held-out answer key.",
+  "build": {
+    "versions": 6,
+    "critic_rounds": 3,
+    "known_records": 20,
+    "validation_became_development": false,
+    "internal_relative_recall_percent": 100.0,
+    "internal_recall_lower_95_percent": 36.8
+  },
+  "isolation": "Not a run.py generate run. Built in the same session as interactive-include-reminders-20261126, after that run's score (70/86) was known but without access to which gold records it found. Kept out of evals/results so run.py report does not count it.",
+  "valid": false,
+  "status": "manual"
+}
