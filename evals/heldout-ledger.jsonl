@@ -109,3 +109,4 @@
 {"at": "20261126T123319Z", "topic": "healthcare-nudging", "command": "score", "condition": "noseed"}
 {"at": "20261126T123319Z", "topic": "healthcare-nudging", "command": "score", "condition": "noseed"}
 {"at": "20261126T123330Z", "topic": "healthcare-nudging", "command": "score", "condition": "noseed"}
+{"at": "20261126T232808Z", "topic": "Cohen_2006_ACEInhibitors", "command": "experiment ideas_heldout (ideas 6 and 2)", "kept": "aggregate counts only"}
