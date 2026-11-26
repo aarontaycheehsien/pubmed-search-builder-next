@@ -1,0 +1,4505 @@
+{
+  "date": "2026-11-26",
+  "settings": {
+    "generic_k": 5,
+    "seed": 1,
+    "known_share": 0.3,
+    "rank_terms": 20,
+    "tail_n": 30
+  },
+  "idea_6": [
+    {
+      "topic": "Appenzeller-Herzog_2019",
+      "card": "lean-fixes-codex-noseed-20261002T131327Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 21,
+      "delivered": {
+        "count": 3329,
+        "gold_retrieved": 21
+      },
+      "hybrid": {
+        "count": 2961,
+        "gold_retrieved": 20
+      },
+      "hybrid_no_title": {
+        "count": 2925,
+        "gold_retrieved": 20
+      },
+      "and_qualifier": {
+        "count": 2588,
+        "gold_retrieved": 20
+      },
+      "generic_terms": [
+        {
+          "term": "treatment[tiab]",
+          "records_only_it_retrieves": 401
+        },
+        {
+          "term": "\"Hepatolenticular Degeneration\"[Mesh]",
+          "records_only_it_retrieves": 354
+        },
+        {
+          "term": "therap*[tiab]",
+          "records_only_it_retrieves": 280
+        },
+        {
+          "term": "\"Penicillamine\"[Mesh]",
+          "records_only_it_retrieves": 208
+        },
+        {
+          "term": "\"Wilson disease\"[tiab]",
+          "records_only_it_retrieves": 158
+        }
+      ]
+    },
+    {
+      "topic": "Appenzeller-Herzog_2019",
+      "card": "lean-fixes-codex-noseed-20261002T133319Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 21,
+      "delivered": {
+        "count": 7282,
+        "gold_retrieved": 21
+      },
+      "hybrid": {
+        "count": 5845,
+        "gold_retrieved": 21
+      },
+      "hybrid_no_title": {
+        "count": 5083,
+        "gold_retrieved": 21
+      },
+      "and_qualifier": {
+        "count": 2789,
+        "gold_retrieved": 20
+      },
+      "generic_terms": [
+        {
+          "term": "\"Hepatolenticular Degeneration\"[Mesh]",
+          "records_only_it_retrieves": 1173
+        },
+        {
+          "term": "\"Wilson disease\"[tiab:~0]",
+          "records_only_it_retrieves": 439
+        },
+        {
+          "term": "\"hepatolenticular degeneration\"[tiab:~0]",
+          "records_only_it_retrieves": 27
+        },
+        {
+          "term": "\"Wilson's disease\"[tiab]",
+          "records_only_it_retrieves": 24
+        },
+        {
+          "term": "\"Kinnier Wilson\"[tiab:~1]",
+          "records_only_it_retrieves": 22
+        }
+      ]
+    },
+    {
+      "topic": "Appenzeller-Herzog_2019",
+      "card": "lean-fixes-codex-noseed-20261002T134712Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 21,
+      "delivered": {
+        "count": 4098,
+        "gold_retrieved": 21
+      },
+      "hybrid": {
+        "count": 3669,
+        "gold_retrieved": 20
+      },
+      "hybrid_no_title": {
+        "count": 3450,
+        "gold_retrieved": 20
+      },
+      "and_qualifier": {
+        "count": 3405,
+        "gold_retrieved": 20
+      },
+      "generic_terms": [
+        {
+          "term": "Wilson*[tiab]",
+          "records_only_it_retrieves": 1666
+        },
+        {
+          "term": "treat*[tiab]",
+          "records_only_it_retrieves": 1140
+        },
+        {
+          "term": "therap*[tiab]",
+          "records_only_it_retrieves": 386
+        },
+        {
+          "term": "\"Hepatolenticular Degeneration\"[Mesh]",
+          "records_only_it_retrieves": 261
+        },
+        {
+          "term": "\"Penicillamine\"[Mesh]",
+          "records_only_it_retrieves": 195
+        }
+      ]
+    },
+    {
+      "topic": "Appenzeller-Herzog_2019",
+      "card": "lean-optimal-codex-noseed-20260927T103138Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 21,
+      "delivered": {
+        "count": 7586,
+        "gold_retrieved": 21
+      },
+      "hybrid": {
+        "count": 7586,
+        "gold_retrieved": 21
+      },
+      "hybrid_no_title": {
+        "count": 7586,
+        "gold_retrieved": 21
+      },
+      "and_qualifier": {
+        "count": 2912,
+        "gold_retrieved": 20
+      },
+      "generic_terms": []
+    },
+    {
+      "topic": "Appenzeller-Herzog_2019",
+      "card": "ours-codex-noseed-20260927T102549Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 21,
+      "delivered": {
+        "count": 4064,
+        "gold_retrieved": 21
+      },
+      "hybrid": {
+        "count": 3765,
+        "gold_retrieved": 20
+      },
+      "hybrid_no_title": {
+        "count": 3746,
+        "gold_retrieved": 20
+      },
+      "and_qualifier": {
+        "count": 3427,
+        "gold_retrieved": 20
+      },
+      "generic_terms": [
+        {
+          "term": "treat*[tiab]",
+          "records_only_it_retrieves": 1189
+        },
+        {
+          "term": "Wilson[tiab]",
+          "records_only_it_retrieves": 849
+        },
+        {
+          "term": "therap*[tiab]",
+          "records_only_it_retrieves": 424
+        },
+        {
+          "term": "\"Hepatolenticular Degeneration\"[Mesh]",
+          "records_only_it_retrieves": 274
+        },
+        {
+          "term": "\"Penicillamine\"[Mesh]",
+          "records_only_it_retrieves": 171
+        }
+      ]
+    },
+    {
+      "topic": "Bos_2018",
+      "card": "lean-optimal-codex-noseed-20260927T103822Z",
+      "qualifier_written_after_seeing_results": true,
+      "gold": 9,
+      "delivered": {
+        "count": 5332,
+        "gold_retrieved": 9
+      },
+      "hybrid": {
+        "count": 5323,
+        "gold_retrieved": 9
+      },
+      "hybrid_no_title": {
+        "count": 5322,
+        "gold_retrieved": 9
+      },
+      "and_qualifier": {
+        "count": 5300,
+        "gold_retrieved": 9
+      },
+      "generic_terms": [
+        {
+          "term": "\"white matter change*\"[tiab]",
+          "records_only_it_retrieves": 405
+        },
+        {
+          "term": "\"Dementia\"[Mesh]",
+          "records_only_it_retrieves": 351
+        },
+        {
+          "term": "\"cognitive impairment\"[tiab]",
+          "records_only_it_retrieves": 279
+        },
+        {
+          "term": "\"white matter abnormalit*\"[tiab]",
+          "records_only_it_retrieves": 236
+        },
+        {
+          "term": "\"cognition\"[tiab]",
+          "records_only_it_retrieves": 161
+        }
+      ]
+    },
+    {
+      "topic": "Bos_2018",
+      "card": "pubmed-search-builder-next-claude-noseed-20260926T202830Z",
+      "skipped": "the strategy has a top-level NOT; replay handles AND-ed blocks only"
+    },
+    {
+      "topic": "Bos_2018",
+      "card": "pubmed-search-builder-next-codex-noseed-20260927T002230Z",
+      "qualifier_written_after_seeing_results": true,
+      "gold": 9,
+      "delivered": {
+        "count": 91189,
+        "gold_retrieved": 9
+      },
+      "hybrid": {
+        "count": 48754,
+        "gold_retrieved": 9
+      },
+      "hybrid_no_title": {
+        "count": 48059,
+        "gold_retrieved": 9
+      },
+      "and_qualifier": {
+        "count": 12590,
+        "gold_retrieved": 9
+      },
+      "generic_terms": [
+        {
+          "term": "\"Cerebral Hemorrhage\"[Mesh]",
+          "records_only_it_retrieves": 27722
+        },
+        {
+          "term": "\"cerebral infarct*\"[tiab]",
+          "records_only_it_retrieves": 6576
+        },
+        {
+          "term": "\"Cerebral Small Vessel Diseases\"[Mesh]",
+          "records_only_it_retrieves": 4613
+        },
+        {
+          "term": "\"Brain Infarction\"[Mesh]",
+          "records_only_it_retrieves": 3319
+        },
+        {
+          "term": "\"White Matter\"[Mesh]",
+          "records_only_it_retrieves": 3107
+        }
+      ]
+    },
+    {
+      "topic": "Bos_2018",
+      "card": "pubmed-search-builder-next-codex-noseed-20260927T004221Z",
+      "qualifier_written_after_seeing_results": true,
+      "gold": 9,
+      "delivered": {
+        "count": 83203,
+        "gold_retrieved": 9
+      },
+      "hybrid": {
+        "count": 24282,
+        "gold_retrieved": 9
+      },
+      "hybrid_no_title": {
+        "count": 19087,
+        "gold_retrieved": 9
+      },
+      "and_qualifier": {
+        "count": 10876,
+        "gold_retrieved": 9
+      },
+      "generic_terms": [
+        {
+          "term": "\"Cerebral Hemorrhage\"[Mesh]",
+          "records_only_it_retrieves": 27778
+        },
+        {
+          "term": "\"Cerebral Infarction\"[Mesh]",
+          "records_only_it_retrieves": 18061
+        },
+        {
+          "term": "\"cerebral infarct*\"[tiab]",
+          "records_only_it_retrieves": 6900
+        },
+        {
+          "term": "\"Cerebral Small Vessel Diseases\"[Mesh]",
+          "records_only_it_retrieves": 4629
+        },
+        {
+          "term": "\"brain infarct*\"[tiab]",
+          "records_only_it_retrieves": 1636
+        }
+      ]
+    },
+    {
+      "topic": "Bos_2018",
+      "card": "pubmed-search-builder-next-codex-noseed-20260927T200529Z",
+      "qualifier_written_after_seeing_results": true,
+      "gold": 9,
+      "delivered": {
+        "count": 54341,
+        "gold_retrieved": 9
+      },
+      "hybrid": {
+        "count": 20991,
+        "gold_retrieved": 9
+      },
+      "hybrid_no_title": {
+        "count": 20347,
+        "gold_retrieved": 9
+      },
+      "and_qualifier": {
+        "count": 10354,
+        "gold_retrieved": 9
+      },
+      "generic_terms": [
+        {
+          "term": "Brain Infarction[Mesh]",
+          "records_only_it_retrieves": 29603
+        },
+        {
+          "term": "Cerebral Small Vessel Diseases[Mesh]",
+          "records_only_it_retrieves": 4658
+        },
+        {
+          "term": "\"white matter lesions\"[tiab]",
+          "records_only_it_retrieves": 2020
+        },
+        {
+          "term": "\"white matter changes\"[tiab]",
+          "records_only_it_retrieves": 1147
+        },
+        {
+          "term": "\"white matter abnormalities\"[tiab]",
+          "records_only_it_retrieves": 1146
+        }
+      ]
+    },
+    {
+      "topic": "Brouwer_2019",
+      "card": "lean-fixes-codex-noseed-20261002T131327Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 54,
+      "delivered": {
+        "count": 60709,
+        "gold_retrieved": 54
+      },
+      "hybrid": {
+        "count": 34865,
+        "gold_retrieved": 54
+      },
+      "hybrid_no_title": {
+        "count": 32593,
+        "gold_retrieved": 54
+      },
+      "and_qualifier": {
+        "count": 28676,
+        "gold_retrieved": 53
+      },
+      "generic_terms": [
+        {
+          "term": "depress*[tiab]",
+          "records_only_it_retrieves": 32492
+        },
+        {
+          "term": "recover*[tiab]",
+          "records_only_it_retrieves": 14938
+        },
+        {
+          "term": "episode*[tiab]",
+          "records_only_it_retrieves": 13237
+        },
+        {
+          "term": "recurr*[tiab]",
+          "records_only_it_retrieves": 4981
+        },
+        {
+          "term": "remission*[tiab]",
+          "records_only_it_retrieves": 4707
+        }
+      ]
+    },
+    {
+      "topic": "Brouwer_2019",
+      "card": "lean-fixes-codex-noseed-20261002T133810Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 54,
+      "delivered": {
+        "count": 26641,
+        "gold_retrieved": 53
+      },
+      "hybrid": {
+        "count": 19131,
+        "gold_retrieved": 52
+      },
+      "hybrid_no_title": {
+        "count": 18211,
+        "gold_retrieved": 52
+      },
+      "and_qualifier": {
+        "count": 18209,
+        "gold_retrieved": 52
+      },
+      "generic_terms": [
+        {
+          "term": "depress*[tiab]",
+          "records_only_it_retrieves": 17057
+        },
+        {
+          "term": "vulnerab*[tiab]",
+          "records_only_it_retrieves": 9282
+        },
+        {
+          "term": "recur*[tiab]",
+          "records_only_it_retrieves": 7257
+        },
+        {
+          "term": "relaps*[tiab]",
+          "records_only_it_retrieves": 3634
+        },
+        {
+          "term": "Recurrence[Mesh]",
+          "records_only_it_retrieves": 1747
+        }
+      ]
+    },
+    {
+      "topic": "Brouwer_2019",
+      "card": "lean-fixes-codex-noseed-20261002T135326Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 54,
+      "delivered": {
+        "count": 17535,
+        "gold_retrieved": 52
+      },
+      "hybrid": {
+        "count": 9925,
+        "gold_retrieved": 51
+      },
+      "hybrid_no_title": {
+        "count": 9011,
+        "gold_retrieved": 51
+      },
+      "and_qualifier": {
+        "count": 9011,
+        "gold_retrieved": 51
+      },
+      "generic_terms": [
+        {
+          "term": "depress*[tiab]",
+          "records_only_it_retrieves": 8006
+        },
+        {
+          "term": "recurr*[tiab]",
+          "records_only_it_retrieves": 7434
+        },
+        {
+          "term": "relaps*[tiab]",
+          "records_only_it_retrieves": 3869
+        },
+        {
+          "term": "Recurrence[Mesh]",
+          "records_only_it_retrieves": 1922
+        },
+        {
+          "term": "Depression[Mesh]",
+          "records_only_it_retrieves": 409
+        }
+      ]
+    },
+    {
+      "topic": "Brouwer_2019",
+      "card": "lean-optimal-codex-noseed-20260927T104249Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 54,
+      "delivered": {
+        "count": 17582,
+        "gold_retrieved": 52
+      },
+      "hybrid": {
+        "count": 12829,
+        "gold_retrieved": 52
+      },
+      "hybrid_no_title": {
+        "count": 12120,
+        "gold_retrieved": 52
+      },
+      "and_qualifier": {
+        "count": 9022,
+        "gold_retrieved": 51
+      },
+      "generic_terms": [
+        {
+          "term": "recurr*[tiab]",
+          "records_only_it_retrieves": 5038
+        },
+        {
+          "term": "\"Recurrence\"[Mesh]",
+          "records_only_it_retrieves": 1919
+        },
+        {
+          "term": "depress*[tiab]",
+          "records_only_it_retrieves": 1905
+        },
+        {
+          "term": "relaps*[tiab]",
+          "records_only_it_retrieves": 723
+        },
+        {
+          "term": "\"Depressive Disorder\"[Mesh]",
+          "records_only_it_retrieves": 558
+        }
+      ]
+    },
+    {
+      "topic": "Brouwer_2019",
+      "card": "ours-codex-noseed-20260927T103947Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 54,
+      "delivered": {
+        "count": 17415,
+        "gold_retrieved": 52
+      },
+      "hybrid": {
+        "count": 10033,
+        "gold_retrieved": 51
+      },
+      "hybrid_no_title": {
+        "count": 9096,
+        "gold_retrieved": 51
+      },
+      "and_qualifier": {
+        "count": 9001,
+        "gold_retrieved": 51
+      },
+      "generic_terms": [
+        {
+          "term": "recurren*[tiab]",
+          "records_only_it_retrieves": 6974
+        },
+        {
+          "term": "depress*[tiab]",
+          "records_only_it_retrieves": 6908
+        },
+        {
+          "term": "relaps*[tiab]",
+          "records_only_it_retrieves": 3878
+        },
+        {
+          "term": "\"Recurrence\"[Mesh]",
+          "records_only_it_retrieves": 1932
+        },
+        {
+          "term": "\"Depressive Disorder\"[Mesh]",
+          "records_only_it_retrieves": 460
+        }
+      ]
+    },
+    {
+      "topic": "CD010657",
+      "card": "lean-optimal-codex-noseed-20260927T093949Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 35,
+      "delivered": {
+        "count": 995,
+        "gold_retrieved": 35
+      },
+      "hybrid": {
+        "count": 993,
+        "gold_retrieved": 35
+      },
+      "hybrid_no_title": {
+        "count": 992,
+        "gold_retrieved": 35
+      },
+      "and_qualifier": {
+        "count": 991,
+        "gold_retrieved": 35
+      },
+      "generic_terms": [
+        {
+          "term": "\"Vesico-Ureteral Reflux\"[Mesh]",
+          "records_only_it_retrieves": 178
+        },
+        {
+          "term": "\"Urinary Tract Infection\"[tiab]",
+          "records_only_it_retrieves": 131
+        },
+        {
+          "term": "\"Vesicoureteral Reflux\"[tiab]",
+          "records_only_it_retrieves": 126
+        },
+        {
+          "term": "\"Urinary Tract Infections\"[Mesh]",
+          "records_only_it_retrieves": 98
+        },
+        {
+          "term": "ultrasound*[tiab]",
+          "records_only_it_retrieves": 97
+        }
+      ]
+    },
+    {
+      "topic": "CD010657",
+      "card": "ours-codex-noseed-20260927T093804Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 35,
+      "delivered": {
+        "count": 2061,
+        "gold_retrieved": 35
+      },
+      "hybrid": {
+        "count": 1918,
+        "gold_retrieved": 35
+      },
+      "hybrid_no_title": {
+        "count": 1908,
+        "gold_retrieved": 35
+      },
+      "and_qualifier": {
+        "count": 1884,
+        "gold_retrieved": 35
+      },
+      "generic_terms": [
+        {
+          "term": "\"Vesico-Ureteral Reflux\"[Mesh]",
+          "records_only_it_retrieves": 387
+        },
+        {
+          "term": "\"Radionuclide Imaging\"[Mesh]",
+          "records_only_it_retrieves": 284
+        },
+        {
+          "term": "vesicoureteral reflux[tiab]",
+          "records_only_it_retrieves": 283
+        },
+        {
+          "term": "\"Ultrasonography\"[Mesh]",
+          "records_only_it_retrieves": 180
+        },
+        {
+          "term": "ultrasound[tiab]",
+          "records_only_it_retrieves": 162
+        }
+      ]
+    },
+    {
+      "topic": "CD010657",
+      "card": "ours-codex-noseed-20260928T032137Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 35,
+      "delivered": {
+        "count": 1783,
+        "gold_retrieved": 35
+      },
+      "hybrid": {
+        "count": 1675,
+        "gold_retrieved": 35
+      },
+      "hybrid_no_title": {
+        "count": 1667,
+        "gold_retrieved": 35
+      },
+      "and_qualifier": {
+        "count": 1654,
+        "gold_retrieved": 35
+      },
+      "generic_terms": [
+        {
+          "term": "\"Vesico-Ureteral Reflux\"[Mesh]",
+          "records_only_it_retrieves": 309
+        },
+        {
+          "term": "vesicoureteral reflux[tiab]",
+          "records_only_it_retrieves": 278
+        },
+        {
+          "term": "\"Ultrasonography\"[Mesh]",
+          "records_only_it_retrieves": 274
+        },
+        {
+          "term": "ultrasound[tiab]",
+          "records_only_it_retrieves": 163
+        },
+        {
+          "term": "ultrasonography[tiab]",
+          "records_only_it_retrieves": 104
+        }
+      ]
+    },
+    {
+      "topic": "CD011431",
+      "card": "lean-fixes-codex-noseed-20261002T131327Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 26,
+      "delivered": {
+        "count": 1453,
+        "gold_retrieved": 26
+      },
+      "hybrid": {
+        "count": 1269,
+        "gold_retrieved": 26
+      },
+      "hybrid_no_title": {
+        "count": 1207,
+        "gold_retrieved": 26
+      },
+      "and_qualifier": {
+        "count": 1033,
+        "gold_retrieved": 26
+      },
+      "generic_terms": [
+        {
+          "term": "lactate dehydrogenase[tiab]",
+          "records_only_it_retrieves": 172
+        },
+        {
+          "term": "malaria[tiab]",
+          "records_only_it_retrieves": 110
+        },
+        {
+          "term": "Reagent Kits, Diagnostic[Mesh]",
+          "records_only_it_retrieves": 103
+        },
+        {
+          "term": "rapid diagnostic tests[tiab]",
+          "records_only_it_retrieves": 91
+        },
+        {
+          "term": "plasmodium[tiab]",
+          "records_only_it_retrieves": 88
+        }
+      ]
+    },
+    {
+      "topic": "CD011431",
+      "card": "lean-fixes-codex-noseed-20261002T133957Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 26,
+      "delivered": {
+        "count": 1172,
+        "gold_retrieved": 26
+      },
+      "hybrid": {
+        "count": 1108,
+        "gold_retrieved": 26
+      },
+      "hybrid_no_title": {
+        "count": 1092,
+        "gold_retrieved": 26
+      },
+      "and_qualifier": {
+        "count": 932,
+        "gold_retrieved": 26
+      },
+      "generic_terms": [
+        {
+          "term": "\"Reagent Kits, Diagnostic\"[Mesh]",
+          "records_only_it_retrieves": 110
+        },
+        {
+          "term": "malaria[tiab]",
+          "records_only_it_retrieves": 82
+        },
+        {
+          "term": "\"antigen detection\"[tiab]",
+          "records_only_it_retrieves": 57
+        },
+        {
+          "term": "dipstick*[tiab]",
+          "records_only_it_retrieves": 49
+        },
+        {
+          "term": "immunochromatograph*[tiab]",
+          "records_only_it_retrieves": 47
+        }
+      ]
+    },
+    {
+      "topic": "CD011431",
+      "card": "lean-fixes-codex-noseed-20261002T140222Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 26,
+      "delivered": {
+        "count": 1102,
+        "gold_retrieved": 26
+      },
+      "hybrid": {
+        "count": 992,
+        "gold_retrieved": 26
+      },
+      "hybrid_no_title": {
+        "count": 984,
+        "gold_retrieved": 26
+      },
+      "and_qualifier": {
+        "count": 885,
+        "gold_retrieved": 26
+      },
+      "generic_terms": [
+        {
+          "term": "Reagent Kits, Diagnostic[Mesh]",
+          "records_only_it_retrieves": 127
+        },
+        {
+          "term": "malaria[tiab]",
+          "records_only_it_retrieves": 88
+        },
+        {
+          "term": "rapid diagnostic tests[tiab]",
+          "records_only_it_retrieves": 83
+        },
+        {
+          "term": "rapid diagnostic test[tiab]",
+          "records_only_it_retrieves": 59
+        },
+        {
+          "term": "dipstick[tiab]",
+          "records_only_it_retrieves": 44
+        }
+      ]
+    },
+    {
+      "topic": "CD011431",
+      "card": "lean-optimal-codex-noseed-20260927T095703Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 26,
+      "delivered": {
+        "count": 1868,
+        "gold_retrieved": 26
+      },
+      "hybrid": {
+        "count": 1380,
+        "gold_retrieved": 26
+      },
+      "hybrid_no_title": {
+        "count": 1284,
+        "gold_retrieved": 26
+      },
+      "and_qualifier": {
+        "count": 1245,
+        "gold_retrieved": 26
+      },
+      "generic_terms": [
+        {
+          "term": "(rapid[tiab] AND (diagnos*[tiab] OR test*[tiab] OR detect*[tiab]))",
+          "records_only_it_retrieves": 759
+        },
+        {
+          "term": "\"Malaria\"[tiab]",
+          "records_only_it_retrieves": 294
+        },
+        {
+          "term": "\"Reagent Kits, Diagnostic\"[Mesh]",
+          "records_only_it_retrieves": 78
+        },
+        {
+          "term": "\"Malaria\"[Mesh]",
+          "records_only_it_retrieves": 78
+        },
+        {
+          "term": "\"ovale\"[tiab]",
+          "records_only_it_retrieves": 45
+        }
+      ]
+    },
+    {
+      "topic": "CD011431",
+      "card": "ours-codex-noseed-20260927T095032Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 26,
+      "delivered": {
+        "count": 6100,
+        "gold_retrieved": 26
+      },
+      "hybrid": {
+        "count": 1993,
+        "gold_retrieved": 26
+      },
+      "hybrid_no_title": {
+        "count": 1866,
+        "gold_retrieved": 26
+      },
+      "and_qualifier": {
+        "count": 1847,
+        "gold_retrieved": 26
+      },
+      "generic_terms": [
+        {
+          "term": "\"Antigens, Protozoan\"[Mesh]",
+          "records_only_it_retrieves": 4974
+        },
+        {
+          "term": "plasmodium[tiab]",
+          "records_only_it_retrieves": 795
+        },
+        {
+          "term": "malaria[tiab]",
+          "records_only_it_retrieves": 228
+        },
+        {
+          "term": "\"Reagent Kits, Diagnostic\"[Mesh]",
+          "records_only_it_retrieves": 89
+        },
+        {
+          "term": "\"Malaria\"[Mesh]",
+          "records_only_it_retrieves": 65
+        }
+      ]
+    },
+    {
+      "topic": "CD011926",
+      "card": "lean-optimal-claude-noseed-20260926T202829Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 29,
+      "delivered": {
+        "count": 2177,
+        "gold_retrieved": 29
+      },
+      "hybrid": {
+        "count": 1179,
+        "gold_retrieved": 29
+      },
+      "hybrid_no_title": {
+        "count": 1056,
+        "gold_retrieved": 29
+      },
+      "and_qualifier": {
+        "count": 502,
+        "gold_retrieved": 29
+      },
+      "generic_terms": [
+        {
+          "term": "molecular[tiab]",
+          "records_only_it_retrieves": 411
+        },
+        {
+          "term": "sepsis[tiab]",
+          "records_only_it_retrieves": 334
+        },
+        {
+          "term": "\"Infant, Newborn\"[Mesh]",
+          "records_only_it_retrieves": 334
+        },
+        {
+          "term": "neonat*[tiab]",
+          "records_only_it_retrieves": 254
+        },
+        {
+          "term": "\"Sepsis\"[Mesh]",
+          "records_only_it_retrieves": 253
+        }
+      ]
+    },
+    {
+      "topic": "CD011926",
+      "card": "lean-optimal-codex-noseed-20260927T095814Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 29,
+      "delivered": {
+        "count": 1992,
+        "gold_retrieved": 28
+      },
+      "hybrid": {
+        "count": 1476,
+        "gold_retrieved": 28
+      },
+      "hybrid_no_title": {
+        "count": 1410,
+        "gold_retrieved": 28
+      },
+      "and_qualifier": {
+        "count": 1240,
+        "gold_retrieved": 28
+      },
+      "generic_terms": [
+        {
+          "term": "\"Infant, Newborn\"[Mesh]",
+          "records_only_it_retrieves": 505
+        },
+        {
+          "term": "Sensitivity[tiab]",
+          "records_only_it_retrieves": 330
+        },
+        {
+          "term": "\"Sepsis\"[Mesh]",
+          "records_only_it_retrieves": 291
+        },
+        {
+          "term": "molecular[tiab]",
+          "records_only_it_retrieves": 264
+        },
+        {
+          "term": "neonat*[tiab]",
+          "records_only_it_retrieves": 193
+        }
+      ]
+    },
+    {
+      "topic": "CD011926",
+      "card": "pubmed-search-builder-next-claude-noseed-20260926T201405Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 29,
+      "delivered": {
+        "count": 2054,
+        "gold_retrieved": 29
+      },
+      "hybrid": {
+        "count": 1123,
+        "gold_retrieved": 29
+      },
+      "hybrid_no_title": {
+        "count": 940,
+        "gold_retrieved": 29
+      },
+      "and_qualifier": {
+        "count": 509,
+        "gold_retrieved": 29
+      },
+      "generic_terms": [
+        {
+          "term": "sepsis[tiab]",
+          "records_only_it_retrieves": 343
+        },
+        {
+          "term": "molecular[tiab]",
+          "records_only_it_retrieves": 320
+        },
+        {
+          "term": "neonat*[tiab]",
+          "records_only_it_retrieves": 308
+        },
+        {
+          "term": "\"Infant, Newborn\"[Mesh]",
+          "records_only_it_retrieves": 290
+        },
+        {
+          "term": "infant*[tiab]",
+          "records_only_it_retrieves": 212
+        }
+      ]
+    },
+    {
+      "topic": "CD011926",
+      "card": "pubmed-search-builder-next-codex-noseed-20260927T002229Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 29,
+      "delivered": {
+        "count": 1484,
+        "gold_retrieved": 28
+      },
+      "hybrid": {
+        "count": 716,
+        "gold_retrieved": 28
+      },
+      "hybrid_no_title": {
+        "count": 663,
+        "gold_retrieved": 28
+      },
+      "and_qualifier": {
+        "count": 405,
+        "gold_retrieved": 28
+      },
+      "generic_terms": [
+        {
+          "term": "\"Sepsis\"[Mesh]",
+          "records_only_it_retrieves": 420
+        },
+        {
+          "term": "\"Infant\"[Mesh]",
+          "records_only_it_retrieves": 389
+        },
+        {
+          "term": "sepsis[tiab]",
+          "records_only_it_retrieves": 308
+        },
+        {
+          "term": "PCR[tiab]",
+          "records_only_it_retrieves": 117
+        },
+        {
+          "term": "neonat*[tiab]",
+          "records_only_it_retrieves": 109
+        }
+      ]
+    },
+    {
+      "topic": "Donners_2021",
+      "card": "lean-optimal-codex-noseed-20260927T105350Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 15,
+      "delivered": {
+        "count": 233,
+        "gold_retrieved": 15
+      },
+      "hybrid": {
+        "count": 233,
+        "gold_retrieved": 15
+      },
+      "hybrid_no_title": {
+        "count": 233,
+        "gold_retrieved": 15
+      },
+      "and_qualifier": {
+        "count": 221,
+        "gold_retrieved": 14
+      },
+      "generic_terms": []
+    },
+    {
+      "topic": "Donners_2021",
+      "card": "ours-codex-noseed-20260927T105105Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 15,
+      "delivered": {
+        "count": 234,
+        "gold_retrieved": 15
+      },
+      "hybrid": {
+        "count": 229,
+        "gold_retrieved": 15
+      },
+      "hybrid_no_title": {
+        "count": 223,
+        "gold_retrieved": 14
+      },
+      "and_qualifier": {
+        "count": 222,
+        "gold_retrieved": 14
+      },
+      "generic_terms": [
+        {
+          "term": "emicizumab[tiab]",
+          "records_only_it_retrieves": 51
+        },
+        {
+          "term": "emicizumab[nm]",
+          "records_only_it_retrieves": 20
+        },
+        {
+          "term": "ACE910[tiab]",
+          "records_only_it_retrieves": 6
+        },
+        {
+          "term": "Hemlibra[tiab]",
+          "records_only_it_retrieves": 3
+        },
+        {
+          "term": "\"anti-factor IXa/X bispecific antibody\"[tiab]",
+          "records_only_it_retrieves": 1
+        }
+      ]
+    },
+    {
+      "topic": "Donners_2021",
+      "card": "ours-codex-noseed-20260928T032644Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 15,
+      "delivered": {
+        "count": 242,
+        "gold_retrieved": 15
+      },
+      "hybrid": {
+        "count": 237,
+        "gold_retrieved": 15
+      },
+      "hybrid_no_title": {
+        "count": 232,
+        "gold_retrieved": 14
+      },
+      "and_qualifier": {
+        "count": 231,
+        "gold_retrieved": 14
+      },
+      "generic_terms": [
+        {
+          "term": "emicizumab[tiab]",
+          "records_only_it_retrieves": 43
+        },
+        {
+          "term": "emicizumab[nm]",
+          "records_only_it_retrieves": 19
+        },
+        {
+          "term": "(\"factor VIII\"[tiab] AND bispecific[tiab] AND (mimetic[tiab] OR mimic*[tiab]))",
+          "records_only_it_retrieves": 5
+        },
+        {
+          "term": "Hemlibra[tiab]",
+          "records_only_it_retrieves": 3
+        },
+        {
+          "term": "ACE910[tiab]",
+          "records_only_it_retrieves": 3
+        }
+      ]
+    },
+    {
+      "topic": "Kwok_2020",
+      "card": "lean-fixes-codex-noseed-20261002T131327Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 116,
+      "delivered": {
+        "count": 1060,
+        "gold_retrieved": 110
+      },
+      "hybrid": {
+        "count": 1059,
+        "gold_retrieved": 110
+      },
+      "hybrid_no_title": {
+        "count": 1058,
+        "gold_retrieved": 110
+      },
+      "and_qualifier": {
+        "count": 1057,
+        "gold_retrieved": 110
+      },
+      "generic_terms": [
+        {
+          "term": "\"High-Throughput Nucleotide Sequencing\"[Mesh]",
+          "records_only_it_retrieves": 127
+        },
+        {
+          "term": "\"Viruses\"[Mesh]",
+          "records_only_it_retrieves": 102
+        },
+        {
+          "term": "metagenom*[tiab]",
+          "records_only_it_retrieves": 95
+        },
+        {
+          "term": "\"deep sequencing\"[tiab]",
+          "records_only_it_retrieves": 83
+        },
+        {
+          "term": "virus*[tiab]",
+          "records_only_it_retrieves": 71
+        }
+      ]
+    },
+    {
+      "topic": "Kwok_2020",
+      "card": "lean-fixes-codex-noseed-20261002T134415Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 116,
+      "delivered": {
+        "count": 8299,
+        "gold_retrieved": 108
+      },
+      "hybrid": {
+        "count": 6310,
+        "gold_retrieved": 108
+      },
+      "hybrid_no_title": {
+        "count": 6310,
+        "gold_retrieved": 108
+      },
+      "and_qualifier": {
+        "count": 6310,
+        "gold_retrieved": 108
+      },
+      "generic_terms": [
+        {
+          "term": "Animals[Mesh]",
+          "records_only_it_retrieves": 6788
+        },
+        {
+          "term": "Genomics[Mesh]",
+          "records_only_it_retrieves": 2865
+        },
+        {
+          "term": "Viruses[Mesh]",
+          "records_only_it_retrieves": 838
+        },
+        {
+          "term": "virus*[tiab]",
+          "records_only_it_retrieves": 712
+        },
+        {
+          "term": "High-Throughput Nucleotide Sequencing[Mesh]",
+          "records_only_it_retrieves": 617
+        }
+      ]
+    },
+    {
+      "topic": "Kwok_2020",
+      "card": "lean-fixes-codex-noseed-20261002T141345Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 116,
+      "delivered": {
+        "count": 773,
+        "gold_retrieved": 109
+      },
+      "hybrid": {
+        "count": 773,
+        "gold_retrieved": 109
+      },
+      "hybrid_no_title": {
+        "count": 773,
+        "gold_retrieved": 109
+      },
+      "and_qualifier": {
+        "count": 773,
+        "gold_retrieved": 109
+      },
+      "generic_terms": [
+        {
+          "term": "\"High-Throughput Nucleotide Sequencing\"[Mesh]",
+          "records_only_it_retrieves": 150
+        },
+        {
+          "term": "metagenom*[tiab]",
+          "records_only_it_retrieves": 94
+        },
+        {
+          "term": "\"Viruses\"[Mesh]",
+          "records_only_it_retrieves": 64
+        },
+        {
+          "term": "virus*[tiab]",
+          "records_only_it_retrieves": 50
+        },
+        {
+          "term": "chicken*[tiab]",
+          "records_only_it_retrieves": 25
+        }
+      ]
+    },
+    {
+      "topic": "Kwok_2020",
+      "card": "lean-optimal-codex-noseed-20260927T110837Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 116,
+      "delivered": {
+        "count": 757,
+        "gold_retrieved": 105
+      },
+      "hybrid": {
+        "count": 756,
+        "gold_retrieved": 105
+      },
+      "hybrid_no_title": {
+        "count": 756,
+        "gold_retrieved": 105
+      },
+      "and_qualifier": {
+        "count": 754,
+        "gold_retrieved": 105
+      },
+      "generic_terms": [
+        {
+          "term": "\"deep sequencing\"[tiab]",
+          "records_only_it_retrieves": 114
+        },
+        {
+          "term": "\"Viruses\"[Mesh]",
+          "records_only_it_retrieves": 65
+        },
+        {
+          "term": "chicken*[tiab]",
+          "records_only_it_retrieves": 57
+        },
+        {
+          "term": "metagenom*[tiab]",
+          "records_only_it_retrieves": 41
+        },
+        {
+          "term": "porcine[tiab]",
+          "records_only_it_retrieves": 39
+        }
+      ]
+    },
+    {
+      "topic": "Kwok_2020",
+      "card": "ours-codex-noseed-20260927T110601Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 116,
+      "delivered": {
+        "count": 824,
+        "gold_retrieved": 105
+      },
+      "hybrid": {
+        "count": 824,
+        "gold_retrieved": 105
+      },
+      "hybrid_no_title": {
+        "count": 824,
+        "gold_retrieved": 105
+      },
+      "and_qualifier": {
+        "count": 824,
+        "gold_retrieved": 105
+      },
+      "generic_terms": [
+        {
+          "term": "((virus*[tiab] OR viral[tiab] OR phage*[tiab]) AND (\"deep sequencing\"[tiab] OR \"next generation sequencing\"[tiab] OR \"high throughput sequencing\"[tiab] OR \"shotgun sequencing\"[tiab] OR \"unbiased sequencing\"[tiab] OR \"sequence independent\"[tiab] OR \"sequence-independent\"[tiab]))",
+          "records_only_it_retrieves": 299
+        },
+        {
+          "term": "(\"Viruses\"[Mesh] AND \"High-Throughput Nucleotide Sequencing\"[Mesh])",
+          "records_only_it_retrieves": 103
+        },
+        {
+          "term": "(metagenom*[tiab] AND (virus*[tiab] OR viral[tiab] OR virom*[tiab] OR phage*[tiab]))",
+          "records_only_it_retrieves": 89
+        },
+        {
+          "term": "chicken*[tiab]",
+          "records_only_it_retrieves": 29
+        },
+        {
+          "term": "livestock[tiab]",
+          "records_only_it_retrieves": 22
+        }
+      ]
+    },
+    {
+      "topic": "Liu_2023_VR_nursing",
+      "card": "lean-optimal-codex-noseed-20260927T101600Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 6,
+      "delivered": {
+        "count": 743,
+        "gold_retrieved": 6
+      },
+      "hybrid": {
+        "count": 658,
+        "gold_retrieved": 6
+      },
+      "hybrid_no_title": {
+        "count": 644,
+        "gold_retrieved": 6
+      },
+      "and_qualifier": {
+        "count": 552,
+        "gold_retrieved": 6
+      },
+      "generic_terms": [
+        {
+          "term": "\"virtual simulation\"[tiab]",
+          "records_only_it_retrieves": 85
+        },
+        {
+          "term": "(student*[tiab] AND (nurs*[tiab] OR nurse*[tiab]))",
+          "records_only_it_retrieves": 83
+        },
+        {
+          "term": "\"Education, Nursing\"[Mesh]",
+          "records_only_it_retrieves": 79
+        },
+        {
+          "term": "\"Virtual Reality\"[tiab]",
+          "records_only_it_retrieves": 55
+        },
+        {
+          "term": "\"computer simulation\"[tiab]",
+          "records_only_it_retrieves": 39
+        }
+      ]
+    },
+    {
+      "topic": "Liu_2023_VR_nursing",
+      "card": "ours-codex-noseed-20260927T101306Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 6,
+      "delivered": {
+        "count": 2605,
+        "gold_retrieved": 6
+      },
+      "hybrid": {
+        "count": 2069,
+        "gold_retrieved": 6
+      },
+      "hybrid_no_title": {
+        "count": 2066,
+        "gold_retrieved": 6
+      },
+      "and_qualifier": {
+        "count": 2002,
+        "gold_retrieved": 6
+      },
+      "generic_terms": [
+        {
+          "term": "\"Simulation Training\"[Mesh]",
+          "records_only_it_retrieves": 1741
+        },
+        {
+          "term": "\"Education, Nursing\"[Mesh]",
+          "records_only_it_retrieves": 681
+        },
+        {
+          "term": "\"Computer Simulation\"[Mesh]",
+          "records_only_it_retrieves": 270
+        },
+        {
+          "term": "\"Students, Nursing\"[Mesh]",
+          "records_only_it_retrieves": 72
+        },
+        {
+          "term": "\"nursing students\"[tiab]",
+          "records_only_it_retrieves": 71
+        }
+      ]
+    },
+    {
+      "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+      "card": "lean-fixes-codex-noseed-20261002T131327Z",
+      "qualifier_written_after_seeing_results": true,
+      "gold": 9,
+      "delivered": {
+        "count": 12410,
+        "gold_retrieved": 9
+      },
+      "hybrid": {
+        "count": 12410,
+        "gold_retrieved": 9
+      },
+      "hybrid_no_title": {
+        "count": 12410,
+        "gold_retrieved": 9
+      },
+      "and_qualifier": {
+        "count": 12410,
+        "gold_retrieved": 9
+      },
+      "generic_terms": [
+        {
+          "term": "school*[tiab]",
+          "records_only_it_retrieves": 8704
+        },
+        {
+          "term": "nutrition*[tiab]",
+          "records_only_it_retrieves": 1723
+        },
+        {
+          "term": "educat*[tiab]",
+          "records_only_it_retrieves": 1672
+        },
+        {
+          "term": "intervention*[tiab]",
+          "records_only_it_retrieves": 1422
+        },
+        {
+          "term": "program*[tiab]",
+          "records_only_it_retrieves": 1213
+        }
+      ]
+    },
+    {
+      "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+      "card": "lean-fixes-codex-noseed-20261002T134307Z",
+      "qualifier_written_after_seeing_results": true,
+      "gold": 9,
+      "delivered": {
+        "count": 11417,
+        "gold_retrieved": 8
+      },
+      "hybrid": {
+        "count": 11417,
+        "gold_retrieved": 8
+      },
+      "hybrid_no_title": {
+        "count": 11417,
+        "gold_retrieved": 8
+      },
+      "and_qualifier": {
+        "count": 11417,
+        "gold_retrieved": 8
+      },
+      "generic_terms": [
+        {
+          "term": "school*[tiab]",
+          "records_only_it_retrieves": 6551
+        },
+        {
+          "term": "educat*[tiab]",
+          "records_only_it_retrieves": 2631
+        },
+        {
+          "term": "program*[tiab]",
+          "records_only_it_retrieves": 2233
+        },
+        {
+          "term": "nutrition*[tiab]",
+          "records_only_it_retrieves": 1153
+        },
+        {
+          "term": "child*[tiab]",
+          "records_only_it_retrieves": 838
+        }
+      ]
+    },
+    {
+      "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+      "card": "lean-fixes-codex-noseed-20261002T140005Z",
+      "qualifier_written_after_seeing_results": true,
+      "gold": 9,
+      "delivered": {
+        "count": 36366,
+        "gold_retrieved": 9
+      },
+      "hybrid": {
+        "count": 17610,
+        "gold_retrieved": 9
+      },
+      "hybrid_no_title": {
+        "count": 16995,
+        "gold_retrieved": 9
+      },
+      "and_qualifier": {
+        "count": 15204,
+        "gold_retrieved": 9
+      },
+      "generic_terms": [
+        {
+          "term": "\"Adolescent\"[Mesh]",
+          "records_only_it_retrieves": 14299
+        },
+        {
+          "term": "intervention*[tiab]",
+          "records_only_it_retrieves": 7652
+        },
+        {
+          "term": "educat*[tiab]",
+          "records_only_it_retrieves": 5603
+        },
+        {
+          "term": "nutrition*[tiab]",
+          "records_only_it_retrieves": 5574
+        },
+        {
+          "term": "program*[tiab]",
+          "records_only_it_retrieves": 4951
+        }
+      ]
+    },
+    {
+      "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+      "card": "lean-optimal-codex-noseed-20260927T091850Z",
+      "qualifier_written_after_seeing_results": true,
+      "gold": 9,
+      "delivered": {
+        "count": 23405,
+        "gold_retrieved": 8
+      },
+      "hybrid": {
+        "count": 23405,
+        "gold_retrieved": 8
+      },
+      "hybrid_no_title": {
+        "count": 23405,
+        "gold_retrieved": 8
+      },
+      "and_qualifier": {
+        "count": 23405,
+        "gold_retrieved": 8
+      },
+      "generic_terms": [
+        {
+          "term": "\"Health Education\"[Mesh]",
+          "records_only_it_retrieves": 10001
+        },
+        {
+          "term": "((nutrition[tiab] OR diet*[tiab] OR dietary[tiab] OR food[tiab] OR eating[tiab]) AND (educat*[tiab] OR teach*[tiab] OR curricul*[tiab] OR intervention*[tiab] OR program*[tiab] OR promot*[tiab]))",
+          "records_only_it_retrieves": 6314
+        },
+        {
+          "term": "child*[tiab]",
+          "records_only_it_retrieves": 4453
+        },
+        {
+          "term": "\"Adolescent\"[Mesh]",
+          "records_only_it_retrieves": 1806
+        },
+        {
+          "term": "\"Health Education\"[tiab]",
+          "records_only_it_retrieves": 1796
+        }
+      ]
+    },
+    {
+      "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+      "card": "ours-codex-noseed-20260927T091850Z",
+      "qualifier_written_after_seeing_results": true,
+      "gold": 9,
+      "delivered": {
+        "count": 25150,
+        "gold_retrieved": 8
+      },
+      "hybrid": {
+        "count": 25150,
+        "gold_retrieved": 8
+      },
+      "hybrid_no_title": {
+        "count": 25150,
+        "gold_retrieved": 8
+      },
+      "and_qualifier": {
+        "count": 25150,
+        "gold_retrieved": 8
+      },
+      "generic_terms": [
+        {
+          "term": "school*[tiab]",
+          "records_only_it_retrieves": 11391
+        },
+        {
+          "term": "\"Health Education\"[Mesh]",
+          "records_only_it_retrieves": 9812
+        },
+        {
+          "term": "nutrition[tiab]",
+          "records_only_it_retrieves": 3778
+        },
+        {
+          "term": "\"Schools\"[Mesh]",
+          "records_only_it_retrieves": 2173
+        },
+        {
+          "term": "\"health promotion\"[tiab]",
+          "records_only_it_retrieves": 1378
+        }
+      ]
+    },
+    {
+      "topic": "Meijboom_2021",
+      "card": "lean-optimal-codex-noseed-20260927T141818Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 35,
+      "delivered": {
+        "count": 522,
+        "gold_retrieved": 33
+      },
+      "hybrid": {
+        "count": 522,
+        "gold_retrieved": 33
+      },
+      "hybrid_no_title": {
+        "count": 522,
+        "gold_retrieved": 33
+      },
+      "and_qualifier": {
+        "count": 522,
+        "gold_retrieved": 33
+      },
+      "generic_terms": [
+        {
+          "term": "infliximab[tiab]",
+          "records_only_it_retrieves": 224
+        },
+        {
+          "term": "switch*[tiab]",
+          "records_only_it_retrieves": 96
+        },
+        {
+          "term": "originator[tiab]",
+          "records_only_it_retrieves": 92
+        },
+        {
+          "term": "\"reference product\"[tiab]",
+          "records_only_it_retrieves": 78
+        },
+        {
+          "term": "adalimumab[tiab]",
+          "records_only_it_retrieves": 39
+        }
+      ]
+    },
+    {
+      "topic": "Meijboom_2021",
+      "card": "ours-codex-noseed-20260927T111214Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 35,
+      "delivered": {
+        "count": 443,
+        "gold_retrieved": 26
+      },
+      "hybrid": {
+        "count": 443,
+        "gold_retrieved": 26
+      },
+      "hybrid_no_title": {
+        "count": 443,
+        "gold_retrieved": 26
+      },
+      "and_qualifier": {
+        "count": 422,
+        "gold_retrieved": 26
+      },
+      "generic_terms": []
+    },
+    {
+      "topic": "Meijboom_2021",
+      "card": "ours-codex-noseed-20260927T214456Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 35,
+      "delivered": {
+        "count": 1056,
+        "gold_retrieved": 35
+      },
+      "hybrid": {
+        "count": 613,
+        "gold_retrieved": 35
+      },
+      "hybrid_no_title": {
+        "count": 613,
+        "gold_retrieved": 35
+      },
+      "and_qualifier": {
+        "count": 613,
+        "gold_retrieved": 35
+      },
+      "generic_terms": [
+        {
+          "term": "((biosimilar*[tiab] OR bio-similar*[tiab] OR \"follow-on biologic*\"[tiab] OR \"subsequent entry biologic*\"[tiab]) AND (\"tumor necrosis factor\"[tiab] OR \"tumour necrosis factor\"[tiab] OR \"anti-TNF\"[tiab] OR \"anti TNF\"[tiab] OR TNF[tiab] OR infliximab[tiab] OR etanercept[tiab] OR adalimumab[tiab] OR certolizumab[tiab] OR golimumab[tiab] OR CT-P13[tiab] OR SB2[tiab] OR SB4[tiab] OR GP1111[tiab] OR GP2015[tiab] OR GP2017[tiab] OR \"ABP 501\"[tiab] OR \"BI 695501\"[tiab] OR \"PF-06438179\"[tiab] OR Remsima[tiab] OR Inflectra[tiab] OR Flixabi[tiab] OR Zessly[tiab] OR Renflexis[tiab] OR Ixifi[tiab] OR Benepali[tiab] OR Erelzi[tiab] OR Amjevita[tiab] OR Amgevita[tiab] OR Cyltezo[tiab] OR Hyrimoz[tiab] OR Imraldi[tiab] OR Hulio[tiab]))",
+          "records_only_it_retrieves": 404
+        },
+        {
+          "term": "(\"Biosimilar Pharmaceuticals\"[Mesh] AND (\"Tumor Necrosis Factor-alpha\"[Mesh] OR \"Infliximab\"[Mesh] OR \"Etanercept\"[Mesh] OR \"Adalimumab\"[Mesh] OR \"Certolizumab Pegol\"[Mesh] OR \"Golimumab\"[nm]))",
+          "records_only_it_retrieves": 73
+        }
+      ]
+    },
+    {
+      "topic": "Meijboom_2021",
+      "card": "ours-codex-noseed-20260927T222407Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 35,
+      "delivered": {
+        "count": 658,
+        "gold_retrieved": 35
+      },
+      "hybrid": {
+        "count": 589,
+        "gold_retrieved": 35
+      },
+      "hybrid_no_title": {
+        "count": 587,
+        "gold_retrieved": 35
+      },
+      "and_qualifier": {
+        "count": 577,
+        "gold_retrieved": 35
+      },
+      "generic_terms": [
+        {
+          "term": "switch*[tiab]",
+          "records_only_it_retrieves": 278
+        },
+        {
+          "term": "Biological Products[Mesh]",
+          "records_only_it_retrieves": 256
+        },
+        {
+          "term": "Tumor Necrosis Factor-alpha[Mesh]",
+          "records_only_it_retrieves": 85
+        },
+        {
+          "term": "infliximab[tiab]",
+          "records_only_it_retrieves": 50
+        },
+        {
+          "term": "transition*[tiab]",
+          "records_only_it_retrieves": 46
+        }
+      ]
+    },
+    {
+      "topic": "Muthu_2022",
+      "card": "lean-optimal-codex-noseed-20260927T143906Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 6,
+      "delivered": {
+        "count": 593,
+        "gold_retrieved": 6
+      },
+      "hybrid": {
+        "count": 577,
+        "gold_retrieved": 6
+      },
+      "hybrid_no_title": {
+        "count": 574,
+        "gold_retrieved": 6
+      },
+      "and_qualifier": {
+        "count": 534,
+        "gold_retrieved": 6
+      },
+      "generic_terms": [
+        {
+          "term": "\"tenocytes\"[tiab]",
+          "records_only_it_retrieves": 34
+        },
+        {
+          "term": "\"biological augmentation\"[tiab]",
+          "records_only_it_retrieves": 20
+        },
+        {
+          "term": "\"stem cells\"[tiab]",
+          "records_only_it_retrieves": 18
+        },
+        {
+          "term": "\"Rotator Cuff Injuries\"[Mesh]",
+          "records_only_it_retrieves": 15
+        },
+        {
+          "term": "\"Platelet-Rich Plasma\"[Mesh]",
+          "records_only_it_retrieves": 14
+        }
+      ]
+    },
+    {
+      "topic": "Muthu_2022",
+      "card": "ours-codex-noseed-20260927T142823Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 6,
+      "delivered": {
+        "count": 585,
+        "gold_retrieved": 6
+      },
+      "hybrid": {
+        "count": 569,
+        "gold_retrieved": 6
+      },
+      "hybrid_no_title": {
+        "count": 567,
+        "gold_retrieved": 6
+      },
+      "and_qualifier": {
+        "count": 534,
+        "gold_retrieved": 6
+      },
+      "generic_terms": [
+        {
+          "term": "\"rotator cuff\"[tiab]",
+          "records_only_it_retrieves": 49
+        },
+        {
+          "term": "\"Tissue Engineering\"[Mesh]",
+          "records_only_it_retrieves": 31
+        },
+        {
+          "term": "\"biological augmentation\"[tiab]",
+          "records_only_it_retrieves": 18
+        },
+        {
+          "term": "\"Platelet-Rich Plasma\"[Mesh]",
+          "records_only_it_retrieves": 15
+        },
+        {
+          "term": "\"biologic augmentation\"[tiab]",
+          "records_only_it_retrieves": 13
+        }
+      ]
+    },
+    {
+      "topic": "Oud_2018",
+      "card": "lean-optimal-codex-noseed-20260927T144524Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 17,
+      "delivered": {
+        "count": 1883,
+        "gold_retrieved": 17
+      },
+      "hybrid": {
+        "count": 920,
+        "gold_retrieved": 17
+      },
+      "hybrid_no_title": {
+        "count": 857,
+        "gold_retrieved": 17
+      },
+      "and_qualifier": {
+        "count": 768,
+        "gold_retrieved": 17
+      },
+      "generic_terms": [
+        {
+          "term": "\"Psychotherapy\"[Mesh]",
+          "records_only_it_retrieves": 866
+        },
+        {
+          "term": "\"Borderline Personality Disorder\"[Mesh]",
+          "records_only_it_retrieves": 687
+        },
+        {
+          "term": "psychotherap*[tiab]",
+          "records_only_it_retrieves": 162
+        },
+        {
+          "term": "\"borderline personality\"[tiab]",
+          "records_only_it_retrieves": 37
+        },
+        {
+          "term": "BPD[tiab]",
+          "records_only_it_retrieves": 21
+        }
+      ]
+    },
+    {
+      "topic": "Oud_2018",
+      "card": "ours-codex-noseed-20260927T144256Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 17,
+      "delivered": {
+        "count": 1883,
+        "gold_retrieved": 17
+      },
+      "hybrid": {
+        "count": 1034,
+        "gold_retrieved": 17
+      },
+      "hybrid_no_title": {
+        "count": 970,
+        "gold_retrieved": 17
+      },
+      "and_qualifier": {
+        "count": 770,
+        "gold_retrieved": 17
+      },
+      "generic_terms": [
+        {
+          "term": "Borderline Personality Disorder[Mesh]",
+          "records_only_it_retrieves": 694
+        },
+        {
+          "term": "Psychotherapy[Mesh]",
+          "records_only_it_retrieves": 428
+        },
+        {
+          "term": "psychotherap*[tiab]",
+          "records_only_it_retrieves": 155
+        },
+        {
+          "term": "\"borderline personality\"[tiab]",
+          "records_only_it_retrieves": 38
+        },
+        {
+          "term": "BPD[tiab]",
+          "records_only_it_retrieves": 21
+        }
+      ]
+    },
+    {
+      "topic": "Smid_2020",
+      "card": "lean-fixes-codex-noseed-20261002T131327Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 14,
+      "delivered": {
+        "count": 13861,
+        "gold_retrieved": 13
+      },
+      "hybrid": {
+        "count": 4921,
+        "gold_retrieved": 13
+      },
+      "hybrid_no_title": {
+        "count": 4641,
+        "gold_retrieved": 13
+      },
+      "and_qualifier": {
+        "count": 4302,
+        "gold_retrieved": 13
+      },
+      "generic_terms": [
+        {
+          "term": "prior[tiab]",
+          "records_only_it_retrieves": 8611
+        },
+        {
+          "term": "hierarchical[tiab]",
+          "records_only_it_retrieves": 4491
+        },
+        {
+          "term": "SEM[tiab]",
+          "records_only_it_retrieves": 2402
+        },
+        {
+          "term": "\"Models, Psychological\"[Mesh]",
+          "records_only_it_retrieves": 1498
+        },
+        {
+          "term": "Bayesian[tiab]",
+          "records_only_it_retrieves": 1235
+        }
+      ]
+    },
+    {
+      "topic": "Smid_2020",
+      "card": "lean-fixes-codex-noseed-20261002T133634Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 14,
+      "delivered": {
+        "count": 2600,
+        "gold_retrieved": 13
+      },
+      "hybrid": {
+        "count": 1948,
+        "gold_retrieved": 13
+      },
+      "hybrid_no_title": {
+        "count": 1846,
+        "gold_retrieved": 13
+      },
+      "and_qualifier": {
+        "count": 1782,
+        "gold_retrieved": 13
+      },
+      "generic_terms": [
+        {
+          "term": "\"hierarchical model*\"[tiab]",
+          "records_only_it_retrieves": 1227
+        },
+        {
+          "term": "Bayesian[tiab]",
+          "records_only_it_retrieves": 588
+        },
+        {
+          "term": "\"latent class\"[tiab]",
+          "records_only_it_retrieves": 316
+        },
+        {
+          "term": "multilevel[tiab]",
+          "records_only_it_retrieves": 263
+        },
+        {
+          "term": "\"Bayes Theorem\"[Mesh]",
+          "records_only_it_retrieves": 134
+        }
+      ]
+    },
+    {
+      "topic": "Smid_2020",
+      "card": "lean-fixes-codex-noseed-20261002T135702Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 14,
+      "delivered": {
+        "count": 2021,
+        "gold_retrieved": 13
+      },
+      "hybrid": {
+        "count": 1361,
+        "gold_retrieved": 13
+      },
+      "hybrid_no_title": {
+        "count": 1289,
+        "gold_retrieved": 13
+      },
+      "and_qualifier": {
+        "count": 1210,
+        "gold_retrieved": 13
+      },
+      "generic_terms": [
+        {
+          "term": "\"Models, Psychological\"[Mesh]",
+          "records_only_it_retrieves": 494
+        },
+        {
+          "term": "Bayesian[tiab]",
+          "records_only_it_retrieves": 446
+        },
+        {
+          "term": "multilevel[tiab]",
+          "records_only_it_retrieves": 283
+        },
+        {
+          "term": "\"latent class\"[tiab]",
+          "records_only_it_retrieves": 232
+        },
+        {
+          "term": "\"Bayes Theorem\"[Mesh]",
+          "records_only_it_retrieves": 198
+        }
+      ]
+    },
+    {
+      "topic": "Smid_2020",
+      "card": "lean-optimal-codex-noseed-20260927T145608Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 14,
+      "delivered": {
+        "count": 1075,
+        "gold_retrieved": 12
+      },
+      "hybrid": {
+        "count": 964,
+        "gold_retrieved": 12
+      },
+      "hybrid_no_title": {
+        "count": 946,
+        "gold_retrieved": 12
+      },
+      "and_qualifier": {
+        "count": 714,
+        "gold_retrieved": 12
+      },
+      "generic_terms": [
+        {
+          "term": "\"latent class\"[tiab]",
+          "records_only_it_retrieves": 191
+        },
+        {
+          "term": "\"Bayes Theorem\"[Mesh]",
+          "records_only_it_retrieves": 80
+        },
+        {
+          "term": "\"multilevel models\"[tiab]",
+          "records_only_it_retrieves": 45
+        },
+        {
+          "term": "\"item response theory\"[tiab]",
+          "records_only_it_retrieves": 44
+        },
+        {
+          "term": "mediation[tiab]",
+          "records_only_it_retrieves": 41
+        }
+      ]
+    },
+    {
+      "topic": "Smid_2020",
+      "card": "ours-codex-noseed-20260927T145334Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 14,
+      "delivered": {
+        "count": 870,
+        "gold_retrieved": 9
+      },
+      "hybrid": {
+        "count": 648,
+        "gold_retrieved": 9
+      },
+      "hybrid_no_title": {
+        "count": 615,
+        "gold_retrieved": 9
+      },
+      "and_qualifier": {
+        "count": 555,
+        "gold_retrieved": 9
+      },
+      "generic_terms": [
+        {
+          "term": "Bayesian[tiab]",
+          "records_only_it_retrieves": 176
+        },
+        {
+          "term": "\"latent class model*\"[tiab]",
+          "records_only_it_retrieves": 155
+        },
+        {
+          "term": "\"factor analys*\"[tiab]",
+          "records_only_it_retrieves": 117
+        },
+        {
+          "term": "\"latent variable\"[tiab]",
+          "records_only_it_retrieves": 109
+        },
+        {
+          "term": "\"Bayes Theorem\"[Mesh]",
+          "records_only_it_retrieves": 57
+        }
+      ]
+    },
+    {
+      "topic": "Smid_2020",
+      "card": "ours-codex-noseed-20260927T214454Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 14,
+      "delivered": {
+        "count": 1430,
+        "gold_retrieved": 13
+      },
+      "hybrid": {
+        "count": 1056,
+        "gold_retrieved": 13
+      },
+      "hybrid_no_title": {
+        "count": 996,
+        "gold_retrieved": 13
+      },
+      "and_qualifier": {
+        "count": 965,
+        "gold_retrieved": 13
+      },
+      "generic_terms": [
+        {
+          "term": "multilevel[tiab]",
+          "records_only_it_retrieves": 356
+        },
+        {
+          "term": "Bayesian[tiab]",
+          "records_only_it_retrieves": 348
+        },
+        {
+          "term": "\"latent class\"[tiab]",
+          "records_only_it_retrieves": 320
+        },
+        {
+          "term": "\"latent variable\"[tiab]",
+          "records_only_it_retrieves": 169
+        },
+        {
+          "term": "\"Bayes Theorem\"[Mesh]",
+          "records_only_it_retrieves": 108
+        }
+      ]
+    },
+    {
+      "topic": "Smid_2020",
+      "card": "ours-codex-noseed-20260927T221214Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 14,
+      "delivered": {
+        "count": 2184,
+        "gold_retrieved": 13
+      },
+      "hybrid": {
+        "count": 1821,
+        "gold_retrieved": 13
+      },
+      "hybrid_no_title": {
+        "count": 1737,
+        "gold_retrieved": 13
+      },
+      "and_qualifier": {
+        "count": 1529,
+        "gold_retrieved": 13
+      },
+      "generic_terms": [
+        {
+          "term": "\"hierarchical model\"[tiab]",
+          "records_only_it_retrieves": 700
+        },
+        {
+          "term": "Bayesian[tiab]",
+          "records_only_it_retrieves": 431
+        },
+        {
+          "term": "\"latent class\"[tiab]",
+          "records_only_it_retrieves": 317
+        },
+        {
+          "term": "multilevel[tiab]",
+          "records_only_it_retrieves": 269
+        },
+        {
+          "term": "\"latent variable\"[tiab]",
+          "records_only_it_retrieves": 154
+        }
+      ]
+    },
+    {
+      "topic": "Welling_2021",
+      "card": "lean-fixes-codex-noseed-20261002T131327Z",
+      "qualifier_written_after_seeing_results": true,
+      "gold": 53,
+      "delivered": {
+        "count": 128250,
+        "gold_retrieved": 53
+      },
+      "hybrid": {
+        "count": 101906,
+        "gold_retrieved": 52
+      },
+      "hybrid_no_title": {
+        "count": 81418,
+        "gold_retrieved": 50
+      },
+      "and_qualifier": {
+        "count": 11863,
+        "gold_retrieved": 48
+      },
+      "generic_terms": [
+        {
+          "term": "pandemic*[tiab]",
+          "records_only_it_retrieves": 20268
+        },
+        {
+          "term": "coronavir*[tiab]",
+          "records_only_it_retrieves": 6691
+        },
+        {
+          "term": "COVID*[tiab]",
+          "records_only_it_retrieves": 5840
+        },
+        {
+          "term": "Coronavirus Infections[Mesh]",
+          "records_only_it_retrieves": 4986
+        },
+        {
+          "term": "quarantin*[tiab]",
+          "records_only_it_retrieves": 3684
+        }
+      ]
+    },
+    {
+      "topic": "Welling_2021",
+      "card": "lean-fixes-codex-noseed-20261002T133352Z",
+      "qualifier_written_after_seeing_results": true,
+      "gold": 53,
+      "delivered": {
+        "count": 126906,
+        "gold_retrieved": 53
+      },
+      "hybrid": {
+        "count": 100826,
+        "gold_retrieved": 53
+      },
+      "hybrid_no_title": {
+        "count": 88444,
+        "gold_retrieved": 53
+      },
+      "and_qualifier": {
+        "count": 11733,
+        "gold_retrieved": 48
+      },
+      "generic_terms": [
+        {
+          "term": "pandemic*[tiab]",
+          "records_only_it_retrieves": 20312
+        },
+        {
+          "term": "coronavirus[tiab]",
+          "records_only_it_retrieves": 5846
+        },
+        {
+          "term": "Coronavirus Infections[Mesh]",
+          "records_only_it_retrieves": 5217
+        },
+        {
+          "term": "quarantin*[tiab]",
+          "records_only_it_retrieves": 3684
+        },
+        {
+          "term": "Quarantine[Mesh]",
+          "records_only_it_retrieves": 968
+        }
+      ]
+    },
+    {
+      "topic": "Welling_2021",
+      "card": "lean-fixes-codex-noseed-20261002T135132Z",
+      "qualifier_written_after_seeing_results": true,
+      "gold": 53,
+      "delivered": {
+        "count": 121526,
+        "gold_retrieved": 53
+      },
+      "hybrid": {
+        "count": 93956,
+        "gold_retrieved": 53
+      },
+      "hybrid_no_title": {
+        "count": 83474,
+        "gold_retrieved": 53
+      },
+      "and_qualifier": {
+        "count": 11593,
+        "gold_retrieved": 48
+      },
+      "generic_terms": [
+        {
+          "term": "pandemic*[tiab]",
+          "records_only_it_retrieves": 20556
+        },
+        {
+          "term": "Coronavirus Infections[Mesh]",
+          "records_only_it_retrieves": 9293
+        },
+        {
+          "term": "quarantin*[tiab]",
+          "records_only_it_retrieves": 3694
+        },
+        {
+          "term": "Quarantine[Mesh]",
+          "records_only_it_retrieves": 963
+        },
+        {
+          "term": "Pandemics[Mesh]",
+          "records_only_it_retrieves": 659
+        }
+      ]
+    },
+    {
+      "topic": "Welling_2021",
+      "card": "lean-optimal-codex-noseed-20260927T150952Z",
+      "qualifier_written_after_seeing_results": true,
+      "gold": 53,
+      "delivered": {
+        "count": 20990,
+        "gold_retrieved": 44
+      },
+      "hybrid": {
+        "count": 14313,
+        "gold_retrieved": 44
+      },
+      "hybrid_no_title": {
+        "count": 13050,
+        "gold_retrieved": 44
+      },
+      "and_qualifier": {
+        "count": 11269,
+        "gold_retrieved": 44
+      },
+      "generic_terms": [
+        {
+          "term": "\"social isolation\"[tiab]",
+          "records_only_it_retrieves": 5739
+        },
+        {
+          "term": "confinement[tiab]",
+          "records_only_it_retrieves": 4372
+        },
+        {
+          "term": "behavior*[tiab]",
+          "records_only_it_retrieves": 3932
+        },
+        {
+          "term": "stress[tiab]",
+          "records_only_it_retrieves": 1837
+        },
+        {
+          "term": "\"mental health\"[tiab]",
+          "records_only_it_retrieves": 1248
+        }
+      ]
+    },
+    {
+      "topic": "Welling_2021",
+      "card": "ours-codex-noseed-20260927T145733Z",
+      "qualifier_written_after_seeing_results": true,
+      "gold": 53,
+      "delivered": {
+        "count": 155667,
+        "gold_retrieved": 53
+      },
+      "hybrid": {
+        "count": 115610,
+        "gold_retrieved": 53
+      },
+      "hybrid_no_title": {
+        "count": 98881,
+        "gold_retrieved": 53
+      },
+      "and_qualifier": {
+        "count": 17021,
+        "gold_retrieved": 48
+      },
+      "generic_terms": [
+        {
+          "term": "pandemic*[tiab]",
+          "records_only_it_retrieves": 20299
+        },
+        {
+          "term": "confinement[tiab]",
+          "records_only_it_retrieves": 19677
+        },
+        {
+          "term": "\"social isolation\"[tiab]",
+          "records_only_it_retrieves": 7377
+        },
+        {
+          "term": "Coronavirus Infections[Mesh]",
+          "records_only_it_retrieves": 6244
+        },
+        {
+          "term": "coronavirus[tiab]",
+          "records_only_it_retrieves": 6014
+        }
+      ]
+    },
+    {
+      "topic": "Welling_2021",
+      "card": "ours-codex-noseed-20260928T032151Z",
+      "qualifier_written_after_seeing_results": true,
+      "gold": 53,
+      "delivered": {
+        "count": 13797,
+        "gold_retrieved": 48
+      },
+      "hybrid": {
+        "count": 10422,
+        "gold_retrieved": 48
+      },
+      "hybrid_no_title": {
+        "count": 9799,
+        "gold_retrieved": 48
+      },
+      "and_qualifier": {
+        "count": 6591,
+        "gold_retrieved": 46
+      },
+      "generic_terms": [
+        {
+          "term": "Distress[tiab]",
+          "records_only_it_retrieves": 2163
+        },
+        {
+          "term": "behavior*[tiab]",
+          "records_only_it_retrieves": 810
+        },
+        {
+          "term": "Stress[tiab]",
+          "records_only_it_retrieves": 556
+        },
+        {
+          "term": "Health Behavior[Mesh]",
+          "records_only_it_retrieves": 467
+        },
+        {
+          "term": "Mental Health[tiab]",
+          "records_only_it_retrieves": 438
+        }
+      ]
+    },
+    {
+      "topic": "gao-2026-Immune checkpoint inhibitors",
+      "card": "lean-optimal-codex-noseed-20260927T093504Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 11,
+      "delivered": {
+        "count": 1222,
+        "gold_retrieved": 8
+      },
+      "hybrid": {
+        "count": 793,
+        "gold_retrieved": 8
+      },
+      "hybrid_no_title": {
+        "count": 763,
+        "gold_retrieved": 8
+      },
+      "and_qualifier": {
+        "count": 427,
+        "gold_retrieved": 8
+      },
+      "generic_terms": [
+        {
+          "term": "\"Immune Checkpoint Inhibitors\"[tiab]",
+          "records_only_it_retrieves": 307
+        },
+        {
+          "term": "\"Immune Checkpoint Blockade\"[tiab]",
+          "records_only_it_retrieves": 141
+        },
+        {
+          "term": "\"pembrolizumab\"[Supplementary Concept]",
+          "records_only_it_retrieves": 74
+        },
+        {
+          "term": "\"Immune Checkpoint Inhibitor\"[tiab]",
+          "records_only_it_retrieves": 62
+        },
+        {
+          "term": "\"atezolizumab\"[Supplementary Concept]",
+          "records_only_it_retrieves": 50
+        }
+      ]
+    },
+    {
+      "topic": "gao-2026-Immune checkpoint inhibitors",
+      "card": "ours-codex-noseed-20260927T091850Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 11,
+      "delivered": {
+        "count": 1591,
+        "gold_retrieved": 11
+      },
+      "hybrid": {
+        "count": 1531,
+        "gold_retrieved": 11
+      },
+      "hybrid_no_title": {
+        "count": 1521,
+        "gold_retrieved": 11
+      },
+      "and_qualifier": {
+        "count": 626,
+        "gold_retrieved": 11
+      },
+      "generic_terms": [
+        {
+          "term": "TNBC[tiab]",
+          "records_only_it_retrieves": 39
+        },
+        {
+          "term": "\"Triple Negative Breast Neoplasms\"[Mesh]",
+          "records_only_it_retrieves": 39
+        },
+        {
+          "term": "(\"ER-negative\"[tiab] AND \"HER2-negative\"[tiab] AND breast[tiab])",
+          "records_only_it_retrieves": 3
+        },
+        {
+          "term": "\"ER negative PR negative HER2 negative breast cancer\"[tiab]",
+          "records_only_it_retrieves": 0
+        },
+        {
+          "term": "\"ER-negative PR-negative HER2-negative breast cancer\"[tiab]",
+          "records_only_it_retrieves": 0
+        }
+      ]
+    },
+    {
+      "topic": "gao-2026-Immune checkpoint inhibitors",
+      "card": "ours-codex-noseed-20260928T030852Z",
+      "qualifier_written_after_seeing_results": false,
+      "gold": 11,
+      "delivered": {
+        "count": 785,
+        "gold_retrieved": 11
+      },
+      "hybrid": {
+        "count": 482,
+        "gold_retrieved": 11
+      },
+      "hybrid_no_title": {
+        "count": 435,
+        "gold_retrieved": 11
+      },
+      "and_qualifier": {
+        "count": 398,
+        "gold_retrieved": 11
+      },
+      "generic_terms": [
+        {
+          "term": "chemotherap*[tiab]",
+          "records_only_it_retrieves": 503
+        },
+        {
+          "term": "\"Antineoplastic Combined Chemotherapy Protocols\"[Mesh]",
+          "records_only_it_retrieves": 63
+        },
+        {
+          "term": "(\"triple-negative\"[tiab] AND breast[tiab])",
+          "records_only_it_retrieves": 48
+        },
+        {
+          "term": "pembrolizumab[tiab]",
+          "records_only_it_retrieves": 46
+        },
+        {
+          "term": "atezolizumab[tiab]",
+          "records_only_it_retrieves": 24
+        }
+      ]
+    },
+    {
+      "topic": "van_Dis_2020",
+      "card": "lean-optimal-codex-noseed-20260927T151732Z",
+      "qualifier_written_after_seeing_results": true,
+      "gold": 61,
+      "delivered": {
+        "count": 10174,
+        "gold_retrieved": 36
+      },
+      "hybrid": {
+        "count": 6777,
+        "gold_retrieved": 36
+      },
+      "hybrid_no_title": {
+        "count": 6492,
+        "gold_retrieved": 35
+      },
+      "and_qualifier": {
+        "count": 4168,
+        "gold_retrieved": 33
+      },
+      "generic_terms": [
+        {
+          "term": "\"Behavior Therapy\"[Mesh:noexp]",
+          "records_only_it_retrieves": 2903
+        },
+        {
+          "term": "\"Anxiety Disorders\"[Mesh]",
+          "records_only_it_retrieves": 2271
+        },
+        {
+          "term": "\"cognitive therapy\"[tiab]",
+          "records_only_it_retrieves": 525
+        },
+        {
+          "term": "\"cognitive behavioural therapy\"[tiab]",
+          "records_only_it_retrieves": 443
+        },
+        {
+          "term": "CBT[tiab]",
+          "records_only_it_retrieves": 366
+        }
+      ]
+    },
+    {
+      "topic": "van_Dis_2020",
+      "card": "ours-codex-noseed-20260927T151508Z",
+      "qualifier_written_after_seeing_results": true,
+      "gold": 61,
+      "delivered": {
+        "count": 15795,
+        "gold_retrieved": 57
+      },
+      "hybrid": {
+        "count": 9722,
+        "gold_retrieved": 55
+      },
+      "hybrid_no_title": {
+        "count": 8885,
+        "gold_retrieved": 55
+      },
+      "and_qualifier": {
+        "count": 6153,
+        "gold_retrieved": 50
+      },
+      "generic_terms": [
+        {
+          "term": "\"Behavior Therapy\"[Mesh]",
+          "records_only_it_retrieves": 6038
+        },
+        {
+          "term": "anxi*[tiab]",
+          "records_only_it_retrieves": 4688
+        },
+        {
+          "term": "\"Anxiety Disorders\"[Mesh]",
+          "records_only_it_retrieves": 624
+        },
+        {
+          "term": "\"cognitive behavioral therapy\"[tiab]",
+          "records_only_it_retrieves": 462
+        },
+        {
+          "term": "\"Stress Disorders, Post-Traumatic\"[Mesh]",
+          "records_only_it_retrieves": 300
+        }
+      ]
+    },
+    {
+      "topic": "van_Dis_2020",
+      "card": "ours-codex-noseed-20260928T030852Z",
+      "qualifier_written_after_seeing_results": true,
+      "gold": 61,
+      "delivered": {
+        "count": 16407,
+        "gold_retrieved": 57
+      },
+      "hybrid": {
+        "count": 10492,
+        "gold_retrieved": 57
+      },
+      "hybrid_no_title": {
+        "count": 10074,
+        "gold_retrieved": 57
+      },
+      "and_qualifier": {
+        "count": 6368,
+        "gold_retrieved": 50
+      },
+      "generic_terms": [
+        {
+          "term": "Behavior Therapy[Mesh]",
+          "records_only_it_retrieves": 5376
+        },
+        {
+          "term": "anxiety[tiab]",
+          "records_only_it_retrieves": 4135
+        },
+        {
+          "term": "Anxiety Disorders[Mesh]",
+          "records_only_it_retrieves": 1738
+        },
+        {
+          "term": "cognitive behavio* therap*[tiab]",
+          "records_only_it_retrieves": 828
+        },
+        {
+          "term": "Stress Disorders, Post-Traumatic[Mesh]",
+          "records_only_it_retrieves": 358
+        }
+      ]
+    },
+    {
+      "topic": "van_de_Schoot_2018",
+      "card": "lean-fixes-codex-noseed-20261002T131327Z",
+      "qualifier_written_after_seeing_results": true,
+      "gold": 38,
+      "delivered": {
+        "count": 32074,
+        "gold_retrieved": 35
+      },
+      "hybrid": {
+        "count": 21866,
+        "gold_retrieved": 35
+      },
+      "hybrid_no_title": {
+        "count": 20180,
+        "gold_retrieved": 35
+      },
+      "and_qualifier": {
+        "count": 2684,
+        "gold_retrieved": 35
+      },
+      "generic_terms": [
+        {
+          "term": "Stress Disorders, Post-Traumatic[Mesh]",
+          "records_only_it_retrieves": 7994
+        },
+        {
+          "term": "PTSD[tiab]",
+          "records_only_it_retrieves": 732
+        },
+        {
+          "term": "posttraumatic stress[tiab]",
+          "records_only_it_retrieves": 456
+        },
+        {
+          "term": "post traumatic stress[tiab]",
+          "records_only_it_retrieves": 0
+        },
+        {
+          "term": "post-traumatic stress[tiab]",
+          "records_only_it_retrieves": 0
+        }
+      ]
+    },
+    {
+      "topic": "van_de_Schoot_2018",
+      "card": "lean-fixes-codex-noseed-20261002T132519Z",
+      "qualifier_written_after_seeing_results": true,
+      "gold": 38,
+      "delivered": {
+        "count": 32074,
+        "gold_retrieved": 35
+      },
+      "hybrid": {
+        "count": 22497,
+        "gold_retrieved": 35
+      },
+      "hybrid_no_title": {
+        "count": 21098,
+        "gold_retrieved": 35
+      },
+      "and_qualifier": {
+        "count": 2684,
+        "gold_retrieved": 35
+      },
+      "generic_terms": [
+        {
+          "term": "\"Stress Disorders, Post-Traumatic\"[Mesh]",
+          "records_only_it_retrieves": 7994
+        },
+        {
+          "term": "PTSD[tiab]",
+          "records_only_it_retrieves": 732
+        },
+        {
+          "term": "\"posttraumatic stress\"[tiab]",
+          "records_only_it_retrieves": 396
+        },
+        {
+          "term": "\"posttraumatic stress disorders\"[tiab]",
+          "records_only_it_retrieves": 0
+        },
+        {
+          "term": "\"post traumatic stress disorders\"[tiab]",
+          "records_only_it_retrieves": 0
+        }
+      ]
+    },
+    {
+      "topic": "van_de_Schoot_2018",
+      "card": "lean-fixes-codex-noseed-20261002T133959Z",
+      "qualifier_written_after_seeing_results": true,
+      "gold": 38,
+      "delivered": {
+        "count": 56663,
+        "gold_retrieved": 36
+      },
+      "hybrid": {
+        "count": 32695,
+        "gold_retrieved": 36
+      },
+      "hybrid_no_title": {
+        "count": 17086,
+        "gold_retrieved": 36
+      },
+      "and_qualifier": {
+        "count": 4088,
+        "gold_retrieved": 36
+      },
+      "generic_terms": [
+        {
+          "term": "posttraumatic[tiab]",
+          "records_only_it_retrieves": 24362
+        },
+        {
+          "term": "\"Stress Disorders, Post-Traumatic\"[Mesh]",
+          "records_only_it_retrieves": 7348
+        },
+        {
+          "term": "PTSD[tiab]",
+          "records_only_it_retrieves": 693
+        },
+        {
+          "term": "\"post-traumatic stress\"[tiab]",
+          "records_only_it_retrieves": 180
+        },
+        {
+          "term": "\"Stress Disorders, Traumatic, Acute\"[Mesh]",
+          "records_only_it_retrieves": 138
+        }
+      ]
+    },
+    {
+      "topic": "van_de_Schoot_2018",
+      "card": "lean-optimal-codex-noseed-20260927T152805Z",
+      "qualifier_written_after_seeing_results": true,
+      "gold": 38,
+      "delivered": {
+        "count": 7050,
+        "gold_retrieved": 35
+      },
+      "hybrid": {
+        "count": 4546,
+        "gold_retrieved": 35
+      },
+      "hybrid_no_title": {
+        "count": 4386,
+        "gold_retrieved": 35
+      },
+      "and_qualifier": {
+        "count": 2207,
+        "gold_retrieved": 35
+      },
+      "generic_terms": [
+        {
+          "term": "\"Stress Disorders, Post-Traumatic\"[Mesh]",
+          "records_only_it_retrieves": 1229
+        },
+        {
+          "term": "recovery[tiab]",
+          "records_only_it_retrieves": 801
+        },
+        {
+          "term": "\"Follow-Up Studies\"[Mesh]",
+          "records_only_it_retrieves": 759
+        },
+        {
+          "term": "persistent[tiab]",
+          "records_only_it_retrieves": 393
+        },
+        {
+          "term": "subgroup*[tiab]",
+          "records_only_it_retrieves": 360
+        }
+      ]
+    },
+    {
+      "topic": "van_de_Schoot_2018",
+      "card": "ours-codex-noseed-20260927T152747Z",
+      "qualifier_written_after_seeing_results": true,
+      "gold": 38,
+      "delivered": {
+        "count": 32074,
+        "gold_retrieved": 35
+      },
+      "hybrid": {
+        "count": 22895,
+        "gold_retrieved": 35
+      },
+      "hybrid_no_title": {
+        "count": 21788,
+        "gold_retrieved": 35
+      },
+      "and_qualifier": {
+        "count": 2684,
+        "gold_retrieved": 35
+      },
+      "generic_terms": [
+        {
+          "term": "\"Stress Disorders, Post-Traumatic\"[Mesh]",
+          "records_only_it_retrieves": 7994
+        },
+        {
+          "term": "PTSD[tiab]",
+          "records_only_it_retrieves": 732
+        },
+        {
+          "term": "\"posttraumatic stress\"[tiab]",
+          "records_only_it_retrieves": 278
+        },
+        {
+          "term": "post traumatic stress symptom*[tiab]",
+          "records_only_it_retrieves": 0
+        },
+        {
+          "term": "post-traumatic stress symptom*[tiab]",
+          "records_only_it_retrieves": 0
+        }
+      ]
+    }
+  ],
+  "idea_2": [
+    {
+      "topic": "Appenzeller-Herzog_2019",
+      "card": "ours-codex-noseed-20260927T102549Z",
+      "known": 6,
+      "unseen": 15,
+      "rank_words": [
+        "d-penicillamine zinc",
+        "treatment d-penicillamine",
+        "either",
+        "although",
+        "diagnosed period",
+        "zinc monotherapy",
+        "trientine",
+        "disease diagnosed",
+        "d-penicillamine",
+        "disease despite",
+        "wilson disease",
+        "wilson",
+        "liver injury",
+        "liver cirrhosis",
+        "monotherapy",
+        "zinc",
+        "liver disease",
+        "cirrhosis",
+        "medication",
+        "died"
+      ],
+      "cuts": {
+        "AND the qualifier": {
+          "records_cut": 637,
+          "gold_lost_true": 1,
+          "records_matching_rank_words": 530,
+          "lost_in_rank_word_set": 1,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.016,
+          "estimate_gold_lost_top50_plus_tail": 0.0,
+          "upper_95": 55.8
+        },
+        "drop treat*[tiab] (1189)": {
+          "records_cut": 1189,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 1086,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop Wilson[tiab] (849)": {
+          "records_cut": 849,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 849,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop therap*[tiab] (424)": {
+          "records_cut": 424,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 361,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        }
+      }
+    },
+    {
+      "topic": "Bos_2018",
+      "card": "pubmed-search-builder-next-codex-noseed-20260927T200529Z",
+      "known": 3,
+      "unseen": 6,
+      "rank_words": [
+        "function memory",
+        "risk dementia",
+        "speed executive",
+        "incident dementia",
+        "global cognitive",
+        "neuropsychological testing",
+        "cognitive domains",
+        "processing speed",
+        "lobar",
+        "executive function",
+        "older people",
+        "cognitive function",
+        "executive",
+        "neuropsychological",
+        "incident",
+        "white matter",
+        "dementia",
+        "population-based",
+        "speed",
+        "matter"
+      ],
+      "cuts": {
+        "AND the qualifier": {
+          "records_cut": 43987,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 6812,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop Brain Infarction[Mesh] (29603)": {
+          "records_cut": 29603,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 2441,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop Cerebral Small Vessel Diseases[Mesh] (4658)": {
+          "records_cut": 4658,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 146,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop \"white matter lesions\"[tiab] (2020)": {
+          "records_cut": 2020,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 2020,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        }
+      }
+    },
+    {
+      "topic": "Brouwer_2019",
+      "card": "ours-codex-noseed-20260927T103947Z",
+      "known": 16,
+      "unseen": 38,
+      "rank_words": [
+        "risk relapse",
+        "depressive episodes",
+        "remitted",
+        "major depressive",
+        "dysfunctional",
+        "depressive disorder",
+        "major depression",
+        "depressive symptoms",
+        "depressive",
+        "relapse",
+        "episode",
+        "depressed",
+        "personality",
+        "episodes",
+        "remission",
+        "interview",
+        "depression",
+        "attitudes",
+        "predictors",
+        "limitations"
+      ],
+      "cuts": {
+        "AND the qualifier": {
+          "records_cut": 8414,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 7831,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop recurren*[tiab] (6974)": {
+          "records_cut": 6974,
+          "gold_lost_true": 2,
+          "records_matching_rank_words": 6644,
+          "lost_in_rank_word_set": 2,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.003,
+          "estimate_gold_lost_top50_plus_tail": 0.0,
+          "upper_95": 658.0
+        },
+        "drop depress*[tiab] (6908)": {
+          "records_cut": 6908,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 6718,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop relaps*[tiab] (3878)": {
+          "records_cut": 3878,
+          "gold_lost_true": 2,
+          "records_matching_rank_words": 3832,
+          "lost_in_rank_word_set": 2,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.005,
+          "estimate_gold_lost_top50_plus_tail": 0.0,
+          "upper_95": 363.8
+        }
+      }
+    },
+    {
+      "topic": "CD010657",
+      "card": "ours-codex-noseed-20260928T032137Z",
+      "known": 10,
+      "unseen": 25,
+      "rank_words": [
+        "without",
+        "abnormal dmsa",
+        "infection children",
+        "dmsa scan",
+        "boys girls",
+        "children first",
+        "micturating",
+        "acid dmsa",
+        "voiding cystourethrography",
+        "dmsa",
+        "cystourethrography",
+        "scan performed",
+        "dimercaptosuccinic acid",
+        "dimercaptosuccinic",
+        "vesicoureteral reflux",
+        "vesicoureteral",
+        "voiding",
+        "tract infection",
+        "scars",
+        "reflux"
+      ],
+      "cuts": {
+        "AND the qualifier": {
+          "records_cut": 129,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 106,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop \"Vesico-Ureteral Reflux\"[Mesh] (309)": {
+          "records_cut": 309,
+          "gold_lost_true": 1,
+          "records_matching_rank_words": 190,
+          "lost_in_rank_word_set": 1,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 1,
+          "ranks": [
+            68
+          ],
+          "random_10_shows_any_loss_probability": 0.032,
+          "estimate_gold_lost_top50_plus_tail": 8.6,
+          "upper_95": 38.5
+        },
+        "drop vesicoureteral reflux[tiab] (278)": {
+          "records_cut": 278,
+          "gold_lost_true": 5,
+          "records_matching_rank_words": 278,
+          "lost_in_rank_word_set": 5,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 4,
+          "ranks": [
+            57,
+            77,
+            113,
+            179
+          ],
+          "random_10_shows_any_loss_probability": 0.169,
+          "estimate_gold_lost_top50_plus_tail": 7.6,
+          "upper_95": 33.9
+        },
+        "drop \"Ultrasonography\"[Mesh] (274)": {
+          "records_cut": 274,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 202,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        }
+      }
+    },
+    {
+      "topic": "CD011431",
+      "card": "ours-codex-noseed-20260927T095032Z",
+      "known": 8,
+      "unseen": 18,
+      "rank_words": [
+        "detection falciparum",
+        "diagnosis malaria",
+        "microscopy cases",
+        "falciparum vivax",
+        "falciparum plasmodium",
+        "immunochromatographic",
+        "rapid diagnostic",
+        "plasmodium vivax",
+        "mixed infection",
+        "vivax",
+        "plasmodium falciparum",
+        "sensitivity specificity",
+        "falciparum",
+        "diagnostic tests",
+        "plasmodium",
+        "gold standard",
+        "malaria",
+        "smears",
+        "remote",
+        "parasites"
+      ],
+      "cuts": {
+        "AND the qualifier": {
+          "records_cut": 4253,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 4204,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop \"Antigens, Protozoan\"[Mesh] (4974)": {
+          "records_cut": 4974,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 4926,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop plasmodium[tiab] (795)": {
+          "records_cut": 795,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 795,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop malaria[tiab] (228)": {
+          "records_cut": 228,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 228,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        }
+      }
+    },
+    {
+      "topic": "CD011926",
+      "card": "pubmed-search-builder-next-codex-noseed-20260927T002229Z",
+      "known": 9,
+      "unseen": 20,
+      "rank_words": [
+        "diagnosis neonatal",
+        "specificity blood",
+        "obtained",
+        "diagnosis sepsis",
+        "conventional blood",
+        "neonatal sepsis",
+        "blood culture",
+        "nicu",
+        "specificity positive",
+        "rapid diagnosis",
+        "late-onset",
+        "sensitivity specificity",
+        "etiological",
+        "sepsis",
+        "negative predictive",
+        "newborns",
+        "diagnose",
+        "neonates",
+        "immature",
+        "neonatal"
+      ],
+      "cuts": {
+        "AND the qualifier": {
+          "records_cut": 1079,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 581,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop \"Sepsis\"[Mesh] (420)": {
+          "records_cut": 420,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 93,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop \"Infant\"[Mesh] (389)": {
+          "records_cut": 389,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 99,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop sepsis[tiab] (308)": {
+          "records_cut": 308,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 308,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        }
+      }
+    },
+    {
+      "topic": "Donners_2021",
+      "card": "ours-codex-noseed-20260928T032644Z",
+      "known": 4,
+      "unseen": 11,
+      "rank_words": [
+        "inhibitors emicizumab",
+        "restore function",
+        "reactions thrombotic",
+        "inhibitors funded",
+        "enrolled annualized",
+        "subcutaneous emicizumab",
+        "hemophilia inhibitors",
+        "chugai pharmaceutical",
+        "annualized bleeding",
+        "emicizumab",
+        "chugai",
+        "bypassing agents",
+        "viii inhibitors",
+        "antidrug antibodies",
+        "breakthrough bleeding",
+        "bleeding rate",
+        "annualized",
+        "bispecific",
+        "activated factor",
+        "noninterventional"
+      ],
+      "cuts": {
+        "AND the qualifier": {
+          "records_cut": 11,
+          "gold_lost_true": 1,
+          "records_matching_rank_words": 9,
+          "lost_in_rank_word_set": 1,
+          "lost_found_in_top_50": 1,
+          "lost_found_in_top_200": 1,
+          "ranks": [
+            9
+          ],
+          "random_10_shows_any_loss_probability": 0.909,
+          "estimate_gold_lost_top50_plus_tail": 1.0,
+          "upper_95": 2.6
+        },
+        "drop emicizumab[tiab] (43)": {
+          "records_cut": 43,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 43,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop emicizumab[nm] (19)": {
+          "records_cut": 19,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 2,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop (\"factor VIII\"[tiab] AND bispecific[tiab] AND (mimetic[tiab] OR mimic*[tiab])) (5)": {
+          "records_cut": 5,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 5,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        }
+      }
+    },
+    {
+      "topic": "Kwok_2020",
+      "card": "ours-codex-noseed-20260927T110601Z",
+      "known": 35,
+      "unseen": 81,
+      "rank_words": [
+        "obtained",
+        "although",
+        "virome",
+        "metagenomics",
+        "metagenomic",
+        "complete genome",
+        "reads",
+        "piglets",
+        "enteric",
+        "porcine",
+        "swine",
+        "pigs",
+        "viruses",
+        "genomes",
+        "high-throughput",
+        "sequencing",
+        "phylogenetic",
+        "identity",
+        "viral",
+        "genome"
+      ],
+      "cuts": {
+        "AND the qualifier": {
+          "records_cut": 0,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 0,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop ((virus*[tiab] OR viral[tiab] OR phage*[tiab]) AND (\"deep sequencing\"[tiab] OR \"next generation sequencing\"[tiab] OR \"high throughput sequencing\"[tiab] OR \"shotgun sequencing\"[tiab] OR \"unbiased sequencing\"[tiab] OR \"sequence independent\"[tiab] OR \"sequence-independent\"[tiab])) (299)": {
+          "records_cut": 299,
+          "gold_lost_true": 3,
+          "records_matching_rank_words": 295,
+          "lost_in_rank_word_set": 3,
+          "lost_found_in_top_50": 1,
+          "lost_found_in_top_200": 3,
+          "ranks": [
+            36,
+            133,
+            147
+          ],
+          "random_10_shows_any_loss_probability": 0.097,
+          "estimate_gold_lost_top50_plus_tail": 1.0,
+          "upper_95": 24.7
+        },
+        "drop (\"Viruses\"[Mesh] AND \"High-Throughput Nucleotide Sequencing\"[Mesh]) (103)": {
+          "records_cut": 103,
+          "gold_lost_true": 5,
+          "records_matching_rank_words": 98,
+          "lost_in_rank_word_set": 5,
+          "lost_found_in_top_50": 4,
+          "lost_found_in_top_200": 5,
+          "ranks": [
+            4,
+            13,
+            16,
+            45,
+            52
+          ],
+          "random_10_shows_any_loss_probability": 0.406,
+          "estimate_gold_lost_top50_plus_tail": 5.8,
+          "upper_95": 11.9
+        },
+        "drop (metagenom*[tiab] AND (virus*[tiab] OR viral[tiab] OR virom*[tiab] OR phage*[tiab])) (89)": {
+          "records_cut": 89,
+          "gold_lost_true": 18,
+          "records_matching_rank_words": 89,
+          "lost_in_rank_word_set": 18,
+          "lost_found_in_top_50": 11,
+          "lost_found_in_top_200": 18,
+          "ranks": [
+            5,
+            14,
+            18,
+            19,
+            22,
+            25,
+            29,
+            30,
+            36,
+            38,
+            46,
+            52,
+            61,
+            64,
+            73,
+            75,
+            78,
+            79
+          ],
+          "random_10_shows_any_loss_probability": 0.909,
+          "estimate_gold_lost_top50_plus_tail": 18.8,
+          "upper_95": 24.9
+        }
+      }
+    },
+    {
+      "topic": "Liu_2023_VR_nursing",
+      "card": "ours-codex-noseed-20260927T101306Z",
+      "known": 3,
+      "unseen": 3,
+      "rank_words": [
+        "realistic environment",
+        "knowledge attitude",
+        "nursing students",
+        "virtual reality",
+        "pretest",
+        "reality",
+        "realistic",
+        "virtual",
+        "attitude",
+        "controlled trial",
+        "students",
+        "nursing",
+        "effectiveness",
+        "traditional",
+        "towards",
+        "education",
+        "learning",
+        "variety",
+        "knowledge",
+        "environment"
+      ],
+      "cuts": {
+        "AND the qualifier": {
+          "records_cut": 603,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 496,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop \"Simulation Training\"[Mesh] (1741)": {
+          "records_cut": 1741,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 1599,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop \"Education, Nursing\"[Mesh] (681)": {
+          "records_cut": 681,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 540,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop \"Computer Simulation\"[Mesh] (270)": {
+          "records_cut": 270,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 231,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        }
+      }
+    },
+    {
+      "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+      "card": "ours-codex-noseed-20260927T091850Z",
+      "known": 3,
+      "unseen": 6,
+      "rank_words": [
+        "decreased intervention",
+        "fruit vegetable",
+        "soft drinks",
+        "healthy eating",
+        "drinks",
+        "vegetable",
+        "fruit",
+        "eating",
+        "schools",
+        "controlled trial",
+        "implemented",
+        "parents",
+        "adolescents",
+        "consumption",
+        "soft",
+        "implementation",
+        "intake",
+        "randomly",
+        "intervention",
+        "trial"
+      ],
+      "cuts": {
+        "AND the qualifier": {
+          "records_cut": 0,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 0,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop school*[tiab] (11391)": {
+          "records_cut": 11391,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 7764,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop \"Health Education\"[Mesh] (9812)": {
+          "records_cut": 9812,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 5784,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop nutrition[tiab] (3778)": {
+          "records_cut": 3778,
+          "gold_lost_true": 1,
+          "records_matching_rank_words": 2485,
+          "lost_in_rank_word_set": 1,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.003,
+          "estimate_gold_lost_top50_plus_tail": 0.0,
+          "upper_95": 354.3
+        }
+      }
+    },
+    {
+      "topic": "Meijboom_2021",
+      "card": "ours-codex-noseed-20260927T222407Z",
+      "known": 10,
+      "unseen": 25,
+      "rank_words": [
+        "switching originator",
+        "originator biosimilar",
+        "infliximab biosimilar",
+        "biosimilar infliximab",
+        "arthritis psoriatic",
+        "originator",
+        "nocebo",
+        "biosimilar",
+        "psoriatic arthritis",
+        "infliximab",
+        "psoriatic",
+        "switched",
+        "ankylosing spondylitis",
+        "ankylosing",
+        "spondylitis",
+        "disease activity",
+        "switching",
+        "switch",
+        "rheumatoid arthritis",
+        "rheumatoid"
+      ],
+      "cuts": {
+        "AND the qualifier": {
+          "records_cut": 81,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 32,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop switch*[tiab] (278)": {
+          "records_cut": 278,
+          "gold_lost_true": 8,
+          "records_matching_rank_words": 277,
+          "lost_in_rank_word_set": 8,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 6,
+          "ranks": [
+            61,
+            75,
+            92,
+            126,
+            143,
+            176
+          ],
+          "random_10_shows_any_loss_probability": 0.257,
+          "estimate_gold_lost_top50_plus_tail": 22.8,
+          "upper_95": 54.4
+        },
+        "drop Biological Products[Mesh] (256)": {
+          "records_cut": 256,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 199,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop Tumor Necrosis Factor-alpha[Mesh] (85)": {
+          "records_cut": 85,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 35,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        }
+      }
+    },
+    {
+      "topic": "Muthu_2022",
+      "card": "ours-codex-noseed-20260927T142823Z",
+      "known": 3,
+      "unseen": 3,
+      "rank_words": [
+        "without",
+        "imaging shoulder",
+        "baseline weeks",
+        "shoulder elbow",
+        "american shoulder",
+        "rotator cuff",
+        "rotator",
+        "cuff",
+        "tears",
+        "elbow",
+        "tear",
+        "shoulder",
+        "tendon",
+        "prevents",
+        "stem cells",
+        "bone marrow",
+        "receive",
+        "marrow",
+        "american",
+        "injection"
+      ],
+      "cuts": {
+        "AND the qualifier": {
+          "records_cut": 51,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 47,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop \"rotator cuff\"[tiab] (49)": {
+          "records_cut": 49,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 49,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop \"Tissue Engineering\"[Mesh] (31)": {
+          "records_cut": 31,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 29,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop \"biological augmentation\"[tiab] (18)": {
+          "records_cut": 18,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 18,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        }
+      }
+    },
+    {
+      "topic": "Oud_2018",
+      "card": "ours-codex-noseed-20260927T144256Z",
+      "known": 5,
+      "unseen": 12,
+      "rank_words": [
+        "disorder randomized",
+        "therapy treatment-as-usual",
+        "psychotherapy borderline",
+        "overall",
+        "disorder randomly",
+        "schema-focused therapy",
+        "schema-focused",
+        "self-injurious behaviors",
+        "dialectical behavior",
+        "treatment-as-usual",
+        "borderline personality",
+        "personality disorder",
+        "outcome variables",
+        "suicide attempts",
+        "dropout",
+        "suicidal",
+        "borderline",
+        "psychotherapy",
+        "personality",
+        "randomly assigned"
+      ],
+      "cuts": {
+        "AND the qualifier": {
+          "records_cut": 1113,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 921,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop Borderline Personality Disorder[Mesh] (694)": {
+          "records_cut": 694,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 478,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop Psychotherapy[Mesh] (428)": {
+          "records_cut": 428,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 340,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop psychotherap*[tiab] (155)": {
+          "records_cut": 155,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 151,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        }
+      }
+    },
+    {
+      "topic": "Smid_2020",
+      "card": "ours-codex-noseed-20260927T221214Z",
+      "known": 4,
+      "unseen": 10,
+      "rank_words": [
+        "often",
+        "bayesian estimation",
+        "bayesian approach",
+        "small samples",
+        "sample sizes",
+        "maximum likelihood",
+        "structural equation",
+        "multilevel",
+        "small sample",
+        "bayesian",
+        "likelihood",
+        "sizes",
+        "analyzing",
+        "coverage",
+        "equation",
+        "simulation",
+        "bias",
+        "estimates",
+        "estimation",
+        "estimate"
+      ],
+      "cuts": {
+        "AND the qualifier": {
+          "records_cut": 655,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 585,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop \"hierarchical model\"[tiab] (700)": {
+          "records_cut": 700,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 684,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop Bayesian[tiab] (431)": {
+          "records_cut": 431,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 431,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop \"latent class\"[tiab] (317)": {
+          "records_cut": 317,
+          "gold_lost_true": 1,
+          "records_matching_rank_words": 297,
+          "lost_in_rank_word_set": 1,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 1,
+          "ranks": [
+            143
+          ],
+          "random_10_shows_any_loss_probability": 0.032,
+          "estimate_gold_lost_top50_plus_tail": 0.0,
+          "upper_95": 25.4
+        }
+      }
+    },
+    {
+      "topic": "Welling_2021",
+      "card": "ours-codex-noseed-20260928T032151Z",
+      "known": 16,
+      "unseen": 37,
+      "rank_words": [
+        "covid- outbreak",
+        "covid- pandemic",
+        "lockdown",
+        "pandemic",
+        "confinement",
+        "covid-",
+        "coronavirus",
+        "outbreak",
+        "physical activity",
+        "adolescents",
+        "online",
+        "sleep",
+        "parents",
+        "home",
+        "psychological",
+        "diet",
+        "mental",
+        "social",
+        "questionnaire",
+        "physical"
+      ],
+      "cuts": {
+        "AND the qualifier": {
+          "records_cut": 7206,
+          "gold_lost_true": 2,
+          "records_matching_rank_words": 7073,
+          "lost_in_rank_word_set": 2,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.003,
+          "estimate_gold_lost_top50_plus_tail": 0.0,
+          "upper_95": 680.1
+        },
+        "drop Distress[tiab] (2163)": {
+          "records_cut": 2163,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 2132,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop behavior*[tiab] (810)": {
+          "records_cut": 810,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 804,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop Stress[tiab] (556)": {
+          "records_cut": 556,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 544,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        }
+      }
+    },
+    {
+      "topic": "gao-2026-Immune checkpoint inhibitors",
+      "card": "ours-codex-noseed-20260928T030852Z",
+      "known": 3,
+      "unseen": 8,
+      "rank_words": [
+        "cycles pembrolizumab",
+        "subsidiary merck",
+        "funded merck",
+        "cycles primary",
+        "assigned ratio",
+        "addition pembrolizumab",
+        "pembrolizumab dose",
+        "placebo-chemotherapy",
+        "cancer receive",
+        "pembrolizumab plus",
+        "definitive surgery",
+        "placebo plus",
+        "subsidiary",
+        "pathological complete",
+        "pembrolizumab",
+        "event-free survival",
+        "neoadjuvant therapy",
+        "event-free",
+        "triple-negative breast",
+        "neoadjuvant chemotherapy"
+      ],
+      "cuts": {
+        "AND the qualifier": {
+          "records_cut": 387,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 358,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop chemotherap*[tiab] (503)": {
+          "records_cut": 503,
+          "gold_lost_true": 3,
+          "records_matching_rank_words": 473,
+          "lost_in_rank_word_set": 3,
+          "lost_found_in_top_50": 1,
+          "lost_found_in_top_200": 1,
+          "ranks": [
+            25
+          ],
+          "random_10_shows_any_loss_probability": 0.059,
+          "estimate_gold_lost_top50_plus_tail": 1.0,
+          "upper_95": 44.1
+        },
+        "drop \"Antineoplastic Combined Chemotherapy Protocols\"[Mesh] (63)": {
+          "records_cut": 63,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 54,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop (\"triple-negative\"[tiab] AND breast[tiab]) (48)": {
+          "records_cut": 48,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 24,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        }
+      }
+    },
+    {
+      "topic": "van_Dis_2020",
+      "card": "ours-codex-noseed-20260928T030852Z",
+      "known": 18,
+      "unseen": 43,
+      "rank_words": [
+        "either",
+        "without",
+        "ptsd symptoms",
+        "ptsd",
+        "cognitive behavioral",
+        "disorder ptsd",
+        "posttraumatic stress",
+        "stress disorder",
+        "month follow-up",
+        "posttreatment",
+        "self-report",
+        "posttraumatic",
+        "sessions",
+        "relaxation",
+        "assessments",
+        "anxiety",
+        "rating",
+        "randomized controlled",
+        "cognitive",
+        "disorder"
+      ],
+      "cuts": {
+        "AND the qualifier": {
+          "records_cut": 10039,
+          "gold_lost_true": 5,
+          "records_matching_rank_words": 8283,
+          "lost_in_rank_word_set": 5,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.005,
+          "estimate_gold_lost_top50_plus_tail": 0.0,
+          "upper_95": 949.3
+        },
+        "drop Behavior Therapy[Mesh] (5376)": {
+          "records_cut": 5376,
+          "gold_lost_true": 4,
+          "records_matching_rank_words": 3809,
+          "lost_in_rank_word_set": 4,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.007,
+          "estimate_gold_lost_top50_plus_tail": 0.0,
+          "upper_95": 506.2
+        },
+        "drop anxiety[tiab] (4135)": {
+          "records_cut": 4135,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 4135,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop Anxiety Disorders[Mesh] (1738)": {
+          "records_cut": 1738,
+          "gold_lost_true": 1,
+          "records_matching_rank_words": 519,
+          "lost_in_rank_word_set": 1,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.006,
+          "estimate_gold_lost_top50_plus_tail": 0.0,
+          "upper_95": 160.4
+        }
+      }
+    },
+    {
+      "topic": "van_de_Schoot_2018",
+      "card": "ours-codex-noseed-20260927T152747Z",
+      "known": 11,
+      "unseen": 27,
+      "rank_words": [
+        "ptsd trajectories",
+        "class growth",
+        "growth mixture",
+        "mixture modeling",
+        "latent growth",
+        "stress symptoms",
+        "hurricane",
+        "latent class",
+        "resilient",
+        "posttraumatic stress",
+        "disorder ptsd",
+        "stress disorder",
+        "trajectories",
+        "ptsd",
+        "recovering",
+        "disaster",
+        "trajectory",
+        "social support",
+        "posttraumatic",
+        "latent"
+      ],
+      "cuts": {
+        "AND the qualifier": {
+          "records_cut": 29390,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 23043,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop \"Stress Disorders, Post-Traumatic\"[Mesh] (7994)": {
+          "records_cut": 7994,
+          "gold_lost_true": 1,
+          "records_matching_rank_words": 1420,
+          "lost_in_rank_word_set": 1,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.001,
+          "estimate_gold_lost_top50_plus_tail": 0.0,
+          "upper_95": 754.9
+        },
+        "drop PTSD[tiab] (732)": {
+          "records_cut": 732,
+          "gold_lost_true": 0,
+          "records_matching_rank_words": 732,
+          "lost_in_rank_word_set": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "ranks": [],
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop \"posttraumatic stress\"[tiab] (278)": {
+          "records_cut": 278,
+          "gold_lost_true": 1,
+          "records_matching_rank_words": 278,
+          "lost_in_rank_word_set": 1,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 1,
+          "ranks": [
+            144
+          ],
+          "random_10_shows_any_loss_probability": 0.036,
+          "estimate_gold_lost_top50_plus_tail": 0.0,
+          "upper_95": 21.7
+        }
+      }
+    }
+  ]
+}

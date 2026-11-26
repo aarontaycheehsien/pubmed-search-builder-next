@@ -56,3 +56,44 @@ loss with probability 0.000 to 0.036, which confirms that small random samples c
 cut, but the ranked sample did no better. The sampling design is not the problem; the ranker is.
 Next: a text classifier over the cut's titles and abstracts, trained on the known records against
 a background sample, or the cut screened in order of a stronger ranker before any random tail.
+
+## Second test (ideas 6 and 2): `evals/experiments/ideas_6b_2b.py`
+
+Qualifiers for the thirteen topics not in the first test were committed (1e256e7) before the run.
+Results: `evals/experiments/results/ideas_6b_2b-2026-11-27.json`.
+
+### Idea 6 on every development strategy on record (73 distinct strategies, 18 topics)
+
+Rule, applied automatically: the five terms that alone add the most records, wherever they sit,
+each become (term in the title) OR (term AND qualifier).
+
+| Subset | Strategies | Hybrid: strategies losing gold | Gold lost | Pooled records kept | AND qualifier outright: gold lost, records kept |
+|---|---:|---:|---:|---:|---:|
+| Qualifier written blind | 50 | 6 | 6 of 1,602 (0.4%) | 66% | 13 (0.8%), 55% |
+| Qualifier written after the first test | 23 | 2 | 3 of 708 (0.4%) | 68% | 39 (5.5%), 20% |
+| Delivered 10,000 or more records | 27 | 5 | 6 of 940 (0.6%) | 67% | 44 (4.7%), 24% |
+| Delivered under 10,000 | 46 | 3 | 3 of 1,370 (0.2%) | 78% | 8 (0.6%), 62% |
+
+Across all 73, the hybrid removed 435,538 records and 9 gold records: about 48,000 records removed
+per gold record lost, against about 590 records per gold record in the delivered strategies. The
+title tier mattered here: without it, 14 gold records were lost. AND-ing the qualifier outright
+removed twice as many records but lost 52 gold records. The hybrid is not lossless; an agent would
+see a loss only on its own known records, so the rule needs the same check as any other cut.
+
+### Idea 2 with a text ranker
+
+Words common in the stand-in known records and rare in PubMed became a ranking query, and each cut
+was ranked by PubMed's relevance order on it. 19 of 72 cuts lost gold (68 records in all).
+
+- Cuts of 1,000 records or fewer (11): the top 200 held at least one lost record in 10, and the top
+  50 in 5. Across them, 41 of 50 lost records were in the top 200.
+- Cuts of more than 1,000 records (8): none of 18 lost records was in the top 200. Nearly every
+  record in these cuts matched a ranking word, so the ranking did not separate them.
+- The estimate from the top 50 plus a random 30 was close to the truth only where the top 50 held
+  the loss (Kwok_2020: 18.8 against 18); elsewhere it was 0, with 95% upper bounds in the hundreds.
+
+So the ranker detects losses in small cuts, where screening the whole cut is often affordable
+anyway, and fails on the large cuts where an estimate is most needed. A random sample of 10 would
+have shown any loss with a median probability of about 0.03. Next: train a real classifier on
+titles and abstracts of the known records against a background sample, and fetch and score a
+large random sample of each big cut, rather than relying on PubMed's relevance order.
