@@ -1,0 +1,303 @@
+{
+  "date": "2026-11-26",
+  "settings": {
+    "top_k": 50,
+    "tail_n": 30,
+    "naive_n": 10,
+    "known_share": 0.3,
+    "seed": 1
+  },
+  "idea_1": [
+    {
+      "topic": "van_de_Schoot_2018",
+      "card": "ours-codex-noseed-20260927T152747Z",
+      "blind": false,
+      "note": "docs/recall-precision-plan.md already says this topic's misses use 'distress' or 'acute stress' and name trajectories",
+      "delivered_count": 32074,
+      "gold": 38,
+      "missed": 3,
+      "grid_records": 519,
+      "misses_found": 3,
+      "records_per_miss_found": 173.0,
+      "delivered_records_per_gold": 916.4,
+      "cells": [
+        {
+          "row": "injury or accident",
+          "column": "distress or stress symptoms",
+          "records": 138,
+          "misses_found": 1
+        },
+        {
+          "row": "military",
+          "column": "distress or stress symptoms",
+          "records": 10,
+          "misses_found": 0
+        },
+        {
+          "row": "disaster or terrorism",
+          "column": "distress or stress symptoms",
+          "records": 22,
+          "misses_found": 0
+        },
+        {
+          "row": "violence",
+          "column": "distress or stress symptoms",
+          "records": 101,
+          "misses_found": 0
+        },
+        {
+          "row": "medical event",
+          "column": "distress or stress symptoms",
+          "records": 297,
+          "misses_found": 2
+        }
+      ]
+    },
+    {
+      "topic": "Welling_2021",
+      "card": "lean-optimal-codex-noseed-20260927T150952Z",
+      "blind": true,
+      "note": "",
+      "delivered_count": 20990,
+      "gold": 53,
+      "missed": 9,
+      "grid_records": 7977,
+      "misses_found": 6,
+      "records_per_miss_found": 1329.5,
+      "delivered_records_per_gold": 477.0,
+      "cells": [
+        {
+          "row": "physical activity",
+          "column": "pandemic or lockdown",
+          "records": 1503,
+          "misses_found": 1
+        },
+        {
+          "row": "sleep",
+          "column": "pandemic or lockdown",
+          "records": 135,
+          "misses_found": 1
+        },
+        {
+          "row": "diet",
+          "column": "pandemic or lockdown",
+          "records": 2309,
+          "misses_found": 1
+        },
+        {
+          "row": "alcohol",
+          "column": "pandemic or lockdown",
+          "records": 259,
+          "misses_found": 0
+        },
+        {
+          "row": "smoking",
+          "column": "pandemic or lockdown",
+          "records": 415,
+          "misses_found": 0
+        },
+        {
+          "row": "screen time",
+          "column": "pandemic or lockdown",
+          "records": 659,
+          "misses_found": 2
+        },
+        {
+          "row": "well-being",
+          "column": "pandemic or lockdown",
+          "records": 352,
+          "misses_found": 1
+        },
+        {
+          "row": "body weight",
+          "column": "pandemic or lockdown",
+          "records": 3545,
+          "misses_found": 4
+        }
+      ]
+    },
+    {
+      "topic": "van_Dis_2020",
+      "card": "lean-optimal-codex-noseed-20260927T151732Z",
+      "blind": true,
+      "note": "",
+      "delivered_count": 10174,
+      "gold": 61,
+      "missed": 25,
+      "grid_records": 1289,
+      "misses_found": 18,
+      "records_per_miss_found": 71.6,
+      "delivered_records_per_gold": 282.6,
+      "cells": [
+        {
+          "row": "panic or agoraphobia",
+          "column": "cognitive behavioural therapy",
+          "records": 42,
+          "misses_found": 2
+        },
+        {
+          "row": "panic or agoraphobia",
+          "column": "exposure-based therapy",
+          "records": 61,
+          "misses_found": 2
+        },
+        {
+          "row": "social anxiety",
+          "column": "cognitive behavioural therapy",
+          "records": 73,
+          "misses_found": 1
+        },
+        {
+          "row": "social anxiety",
+          "column": "exposure-based therapy",
+          "records": 30,
+          "misses_found": 1
+        },
+        {
+          "row": "generalised anxiety",
+          "column": "cognitive behavioural therapy",
+          "records": 77,
+          "misses_found": 1
+        },
+        {
+          "row": "generalised anxiety",
+          "column": "exposure-based therapy",
+          "records": 42,
+          "misses_found": 0
+        },
+        {
+          "row": "specific phobia",
+          "column": "cognitive behavioural therapy",
+          "records": 245,
+          "misses_found": 2
+        },
+        {
+          "row": "specific phobia",
+          "column": "exposure-based therapy",
+          "records": 330,
+          "misses_found": 3
+        },
+        {
+          "row": "OCD",
+          "column": "cognitive behavioural therapy",
+          "records": 84,
+          "misses_found": 1
+        },
+        {
+          "row": "OCD",
+          "column": "exposure-based therapy",
+          "records": 43,
+          "misses_found": 2
+        },
+        {
+          "row": "PTSD",
+          "column": "cognitive behavioural therapy",
+          "records": 226,
+          "misses_found": 7
+        },
+        {
+          "row": "PTSD",
+          "column": "exposure-based therapy",
+          "records": 443,
+          "misses_found": 6
+        },
+        {
+          "row": "health anxiety",
+          "column": "cognitive behavioural therapy",
+          "records": 19,
+          "misses_found": 0
+        },
+        {
+          "row": "health anxiety",
+          "column": "exposure-based therapy",
+          "records": 9,
+          "misses_found": 0
+        }
+      ]
+    },
+    {
+      "topic": "Smid_2020",
+      "card": "ours-codex-noseed-20260927T145334Z",
+      "blind": false,
+      "note": "references/anti-patterns.md (mistake 16) already names the SEM family members for this kind of question",
+      "delivered_count": 870,
+      "gold": 14,
+      "missed": 5,
+      "grid_records": 5777,
+      "misses_found": 4,
+      "records_per_miss_found": 1444.2,
+      "delivered_records_per_gold": 96.7,
+      "cells": [
+        {
+          "row": "confirmatory factor analysis",
+          "column": "Bayesian estimation",
+          "records": 14,
+          "misses_found": 0
+        },
+        {
+          "row": "latent growth",
+          "column": "Bayesian estimation",
+          "records": 137,
+          "misses_found": 0
+        },
+        {
+          "row": "latent class or mixture",
+          "column": "Bayesian estimation",
+          "records": 933,
+          "misses_found": 0
+        },
+        {
+          "row": "multilevel",
+          "column": "Bayesian estimation",
+          "records": 4811,
+          "misses_found": 4
+        },
+        {
+          "row": "mediation",
+          "column": "Bayesian estimation",
+          "records": 69,
+          "misses_found": 1
+        },
+        {
+          "row": "item response",
+          "column": "Bayesian estimation",
+          "records": 97,
+          "misses_found": 0
+        }
+      ]
+    },
+    {
+      "topic": "Meijboom_2021",
+      "card": "ours-codex-noseed-20260927T111214Z",
+      "blind": false,
+      "note": "references/anti-patterns.md (mistake 15) is about this kind of question",
+      "delivered_count": 443,
+      "gold": 35,
+      "missed": 9,
+      "grid_records": 2979,
+      "misses_found": 8,
+      "records_per_miss_found": 372.4,
+      "delivered_records_per_gold": 17.0,
+      "cells": [
+        {
+          "row": "infliximab",
+          "column": "switching or discontinuation",
+          "records": 1902,
+          "misses_found": 4
+        },
+        {
+          "row": "etanercept",
+          "column": "switching or discontinuation",
+          "records": 1169,
+          "misses_found": 2
+        },
+        {
+          "row": "adalimumab",
+          "column": "switching or discontinuation",
+          "records": 1387,
+          "misses_found": 2
+        }
+      ]
+    }
+  ]
+}
