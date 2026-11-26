@@ -1,0 +1,582 @@
+{
+  "date": "2026-11-26",
+  "settings": {
+    "top_k": 50,
+    "tail_n": 30,
+    "naive_n": 10,
+    "known_share": 0.3,
+    "seed": 1
+  },
+  "idea_6_and_2": [
+    {
+      "topic": "Bos_2018",
+      "card": "pubmed-search-builder-next-codex-noseed-20260927T002230Z",
+      "as_of": "2017-05-06",
+      "qualifier": "\"Dementia\"[Mesh] OR \"Cognitive Dysfunction\"[Mesh] OR \"Cognition Disorders\"[Mesh] OR \"Cognition\"[Mesh] OR \"Neuropsychological Tests\"[Mesh] OR dementia*[tiab] OR alzheimer*[tiab] OR cognit*[tiab] OR memory[tiab] OR \"executive function*\"[tiab] OR \"processing speed\"[tiab] OR \"mild cognitive impairment\"[tiab]",
+      "generic_terms": [
+        {
+          "term": "\"Cerebral Hemorrhage\"[Mesh]",
+          "records_only_it_retrieves": 27722
+        },
+        {
+          "term": "\"cerebral infarct*\"[tiab]",
+          "records_only_it_retrieves": 6576
+        },
+        {
+          "term": "\"Cerebral Small Vessel Diseases\"[Mesh]",
+          "records_only_it_retrieves": 4613
+        },
+        {
+          "term": "\"Brain Infarction\"[Mesh]",
+          "records_only_it_retrieves": 3319
+        },
+        {
+          "term": "\"White Matter\"[Mesh]",
+          "records_only_it_retrieves": 3107
+        }
+      ],
+      "structures": {
+        "delivered": {
+          "count": 91189,
+          "gold_retrieved": 9,
+          "gold": 9,
+          "recall_percent": 100.0
+        },
+        "hybrid with title tier": {
+          "count": 48754,
+          "gold_retrieved": 9,
+          "gold": 9,
+          "recall_percent": 100.0
+        },
+        "hybrid without title tier": {
+          "count": 48059,
+          "gold_retrieved": 9,
+          "gold": 9,
+          "recall_percent": 100.0
+        },
+        "AND the qualifier": {
+          "count": 12590,
+          "gold_retrieved": 9,
+          "gold": 9,
+          "recall_percent": 100.0
+        }
+      },
+      "known_records_used": 3,
+      "unseen_gold": 6,
+      "ranking_pool": 312,
+      "cuts": {
+        "AND the qualifier": {
+          "records_cut": 78599,
+          "gold_lost_true": 0,
+          "ranked_pool_in_cut": 14,
+          "screened": 44,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 7468.2,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "hybrid with title tier": {
+          "records_cut": 42435,
+          "gold_lost_true": 0,
+          "ranked_pool_in_cut": 0,
+          "screened": 30,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 4032.8,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop \"Cerebral Hemorrhage\"[Mesh] (27722 records only it retrieves)": {
+          "records_cut": 27722,
+          "gold_lost_true": 0,
+          "ranked_pool_in_cut": 0,
+          "screened": 30,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 2634.5,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop \"cerebral infarct*\"[tiab] (6576 records only it retrieves)": {
+          "records_cut": 6576,
+          "gold_lost_true": 0,
+          "ranked_pool_in_cut": 0,
+          "screened": 30,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 624.9,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop \"Cerebral Small Vessel Diseases\"[Mesh] (4613 records only it retrieves)": {
+          "records_cut": 4613,
+          "gold_lost_true": 0,
+          "ranked_pool_in_cut": 0,
+          "screened": 30,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 438.4,
+          "random_10_shows_any_loss_probability": 0.0
+        }
+      }
+    },
+    {
+      "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+      "card": "lean-fixes-codex-noseed-20261002T140005Z",
+      "as_of": "2017-12-14",
+      "qualifier": "\"Schools\"[Mesh] OR \"School Health Services\"[Mesh] OR school*[tiab] OR classroom*[tiab] OR curricul*[tiab] OR student*[tiab] OR pupil*[tiab]",
+      "generic_terms": [
+        {
+          "term": "intervention*[tiab]",
+          "records_only_it_retrieves": 7652
+        },
+        {
+          "term": "educat*[tiab]",
+          "records_only_it_retrieves": 5603
+        },
+        {
+          "term": "program*[tiab]",
+          "records_only_it_retrieves": 4951
+        },
+        {
+          "term": "\"Health Education\"[Mesh]",
+          "records_only_it_retrieves": 852
+        },
+        {
+          "term": "learn*[tiab]",
+          "records_only_it_retrieves": 734
+        }
+      ],
+      "structures": {
+        "delivered": {
+          "count": 36366,
+          "gold_retrieved": 9,
+          "gold": 9,
+          "recall_percent": 100.0
+        },
+        "hybrid with title tier": {
+          "count": 21173,
+          "gold_retrieved": 9,
+          "gold": 9,
+          "recall_percent": 100.0
+        },
+        "hybrid without title tier": {
+          "count": 18929,
+          "gold_retrieved": 9,
+          "gold": 9,
+          "recall_percent": 100.0
+        },
+        "AND the qualifier": {
+          "count": 15204,
+          "gold_retrieved": 9,
+          "gold": 9,
+          "recall_percent": 100.0
+        }
+      },
+      "known_records_used": 3,
+      "unseen_gold": 6,
+      "ranking_pool": 1187,
+      "cuts": {
+        "AND the qualifier": {
+          "records_cut": 21162,
+          "gold_lost_true": 0,
+          "ranked_pool_in_cut": 61,
+          "screened": 80,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 2006.4,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "hybrid with title tier": {
+          "records_cut": 15193,
+          "gold_lost_true": 0,
+          "ranked_pool_in_cut": 22,
+          "screened": 52,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 1441.8,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop intervention*[tiab] (7652 records only it retrieves)": {
+          "records_cut": 7652,
+          "gold_lost_true": 0,
+          "ranked_pool_in_cut": 51,
+          "screened": 80,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 722.4,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop educat*[tiab] (5603 records only it retrieves)": {
+          "records_cut": 5603,
+          "gold_lost_true": 0,
+          "ranked_pool_in_cut": 12,
+          "screened": 42,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 531.3,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop program*[tiab] (4951 records only it retrieves)": {
+          "records_cut": 4951,
+          "gold_lost_true": 0,
+          "ranked_pool_in_cut": 9,
+          "screened": 39,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 469.7,
+          "random_10_shows_any_loss_probability": 0.0
+        }
+      }
+    },
+    {
+      "topic": "van_de_Schoot_2018",
+      "card": "ours-codex-noseed-20260927T152747Z",
+      "as_of": "2016-01-24",
+      "qualifier": "trajector*[tiab] OR \"growth mixture\"[tiab] OR \"latent class growth\"[tiab] OR \"latent growth\"[tiab] OR \"growth curve*\"[tiab] OR course[tiab] OR longitudinal[tiab] OR \"Longitudinal Studies\"[Mesh]",
+      "generic_terms": [
+        {
+          "term": "\"Stress Disorders, Post-Traumatic\"[Mesh]",
+          "records_only_it_retrieves": 7994
+        },
+        {
+          "term": "PTSD[tiab]",
+          "records_only_it_retrieves": 732
+        },
+        {
+          "term": "\"posttraumatic stress\"[tiab]",
+          "records_only_it_retrieves": 278
+        },
+        {
+          "term": "posttraumatic stress symptom*[tiab]",
+          "records_only_it_retrieves": 0
+        },
+        {
+          "term": "posttraumatic stress disorder*[tiab]",
+          "records_only_it_retrieves": 0
+        }
+      ],
+      "structures": {
+        "delivered": {
+          "count": 32074,
+          "gold_retrieved": 35,
+          "gold": 38,
+          "recall_percent": 92.1
+        },
+        "hybrid with title tier": {
+          "count": 22497,
+          "gold_retrieved": 35,
+          "gold": 38,
+          "recall_percent": 92.1
+        },
+        "hybrid without title tier": {
+          "count": 21098,
+          "gold_retrieved": 35,
+          "gold": 38,
+          "recall_percent": 92.1
+        },
+        "AND the qualifier": {
+          "count": 2684,
+          "gold_retrieved": 35,
+          "gold": 38,
+          "recall_percent": 92.1
+        }
+      },
+      "known_records_used": 11,
+      "unseen_gold": 27,
+      "ranking_pool": 1377,
+      "cuts": {
+        "AND the qualifier": {
+          "records_cut": 29390,
+          "gold_lost_true": 0,
+          "ranked_pool_in_cut": 356,
+          "screened": 80,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 2788.3,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "hybrid with title tier": {
+          "records_cut": 9577,
+          "gold_lost_true": 0,
+          "ranked_pool_in_cut": 88,
+          "screened": 80,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 905.4,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop \"Stress Disorders, Post-Traumatic\"[Mesh] (7994 records only it retrieves)": {
+          "records_cut": 7994,
+          "gold_lost_true": 1,
+          "ranked_pool_in_cut": 61,
+          "screened": 80,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 754.9,
+          "random_10_shows_any_loss_probability": 0.001
+        },
+        "drop PTSD[tiab] (732 records only it retrieves)": {
+          "records_cut": 732,
+          "gold_lost_true": 0,
+          "ranked_pool_in_cut": 3,
+          "screened": 33,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 69.3,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop \"posttraumatic stress\"[tiab] (278 records only it retrieves)": {
+          "records_cut": 278,
+          "gold_lost_true": 1,
+          "ranked_pool_in_cut": 8,
+          "screened": 38,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 25.7,
+          "random_10_shows_any_loss_probability": 0.036
+        }
+      }
+    },
+    {
+      "topic": "Welling_2021",
+      "card": "ours-codex-noseed-20260927T145733Z",
+      "as_of": "2020-11-22",
+      "qualifier": "\"Life Style\"[Mesh] OR \"Exercise\"[Mesh] OR \"Sedentary Behavior\"[Mesh] OR \"Sleep\"[Mesh] OR \"Diet\"[Mesh] OR \"Feeding Behavior\"[Mesh] OR \"Alcohol Drinking\"[Mesh] OR \"Smoking\"[Mesh] OR \"Mental Health\"[Mesh] OR \"Quality of Life\"[Mesh] OR lifestyle*[tiab] OR \"physical activit*\"[tiab] OR exercis*[tiab] OR sedentar*[tiab] OR sleep*[tiab] OR diet*[tiab] OR eating[tiab] OR food[tiab] OR alcohol*[tiab] OR drinking[tiab] OR smok*[tiab] OR tobacco[tiab] OR \"screen time\"[tiab] OR well-being[tiab] OR wellbeing[tiab] OR \"mental health\"[tiab] OR \"quality of life\"[tiab] OR weight[tiab]",
+      "generic_terms": [
+        {
+          "term": "pandemic*[tiab]",
+          "records_only_it_retrieves": 20299
+        },
+        {
+          "term": "confinement[tiab]",
+          "records_only_it_retrieves": 19677
+        },
+        {
+          "term": "\"social isolation\"[tiab]",
+          "records_only_it_retrieves": 7377
+        },
+        {
+          "term": "Coronavirus Infections[Mesh]",
+          "records_only_it_retrieves": 6244
+        },
+        {
+          "term": "coronavirus[tiab]",
+          "records_only_it_retrieves": 6014
+        }
+      ],
+      "structures": {
+        "delivered": {
+          "count": 155667,
+          "gold_retrieved": 53,
+          "gold": 53,
+          "recall_percent": 100.0
+        },
+        "hybrid with title tier": {
+          "count": 115610,
+          "gold_retrieved": 53,
+          "gold": 53,
+          "recall_percent": 100.0
+        },
+        "hybrid without title tier": {
+          "count": 98881,
+          "gold_retrieved": 53,
+          "gold": 53,
+          "recall_percent": 100.0
+        },
+        "AND the qualifier": {
+          "count": 17021,
+          "gold_retrieved": 48,
+          "gold": 53,
+          "recall_percent": 90.6
+        }
+      },
+      "known_records_used": 16,
+      "unseen_gold": 37,
+      "ranking_pool": 3593,
+      "cuts": {
+        "AND the qualifier": {
+          "records_cut": 138646,
+          "gold_lost_true": 4,
+          "ranked_pool_in_cut": 417,
+          "screened": 80,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 13171.3,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "hybrid with title tier": {
+          "records_cut": 40057,
+          "gold_lost_true": 0,
+          "ranked_pool_in_cut": 4,
+          "screened": 34,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 3806.4,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop pandemic*[tiab] (20299 records only it retrieves)": {
+          "records_cut": 20299,
+          "gold_lost_true": 0,
+          "ranked_pool_in_cut": 2,
+          "screened": 32,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 1928.9,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop confinement[tiab] (19677 records only it retrieves)": {
+          "records_cut": 19677,
+          "gold_lost_true": 0,
+          "ranked_pool_in_cut": 0,
+          "screened": 30,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 1870.0,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop \"social isolation\"[tiab] (7377 records only it retrieves)": {
+          "records_cut": 7377,
+          "gold_lost_true": 0,
+          "ranked_pool_in_cut": 0,
+          "screened": 30,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 701.1,
+          "random_10_shows_any_loss_probability": 0.0
+        }
+      }
+    },
+    {
+      "topic": "van_Dis_2020",
+      "card": "ours-codex-noseed-20260928T030852Z",
+      "as_of": "2017-08-24",
+      "qualifier": "\"Follow-Up Studies\"[Mesh] OR \"follow-up\"[tiab] OR \"long-term\"[tiab] OR \"long term\"[tiab] OR months[tiab] OR years[tiab] OR maintenance[tiab] OR durab*[tiab] OR relapse[tiab]",
+      "generic_terms": [
+        {
+          "term": "anxiety[tiab]",
+          "records_only_it_retrieves": 4135
+        },
+        {
+          "term": "Anxiety Disorders[Mesh]",
+          "records_only_it_retrieves": 1738
+        },
+        {
+          "term": "Stress Disorders, Post-Traumatic[Mesh]",
+          "records_only_it_retrieves": 358
+        },
+        {
+          "term": "anxious[tiab]",
+          "records_only_it_retrieves": 131
+        },
+        {
+          "term": "PTSD[tiab]",
+          "records_only_it_retrieves": 43
+        }
+      ],
+      "structures": {
+        "delivered": {
+          "count": 16407,
+          "gold_retrieved": 57,
+          "gold": 61,
+          "recall_percent": 93.4
+        },
+        "hybrid with title tier": {
+          "count": 12644,
+          "gold_retrieved": 57,
+          "gold": 61,
+          "recall_percent": 93.4
+        },
+        "hybrid without title tier": {
+          "count": 11430,
+          "gold_retrieved": 57,
+          "gold": 61,
+          "recall_percent": 93.4
+        },
+        "AND the qualifier": {
+          "count": 6368,
+          "gold_retrieved": 50,
+          "gold": 61,
+          "recall_percent": 82.0
+        }
+      },
+      "known_records_used": 18,
+      "unseen_gold": 43,
+      "ranking_pool": 5077,
+      "cuts": {
+        "AND the qualifier": {
+          "records_cut": 10039,
+          "gold_lost_true": 5,
+          "ranked_pool_in_cut": 802,
+          "screened": 80,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 949.3,
+          "random_10_shows_any_loss_probability": 0.005
+        },
+        "hybrid with title tier": {
+          "records_cut": 3763,
+          "gold_lost_true": 0,
+          "ranked_pool_in_cut": 95,
+          "screened": 80,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 352.9,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop anxiety[tiab] (4135 records only it retrieves)": {
+          "records_cut": 4135,
+          "gold_lost_true": 0,
+          "ranked_pool_in_cut": 111,
+          "screened": 80,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 388.2,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        "drop Anxiety Disorders[Mesh] (1738 records only it retrieves)": {
+          "records_cut": 1738,
+          "gold_lost_true": 1,
+          "ranked_pool_in_cut": 36,
+          "screened": 66,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 161.7,
+          "random_10_shows_any_loss_probability": 0.006
+        },
+        "drop Stress Disorders, Post-Traumatic[Mesh] (358 records only it retrieves)": {
+          "records_cut": 358,
+          "gold_lost_true": 0,
+          "ranked_pool_in_cut": 35,
+          "screened": 65,
+          "gold_found_in_top": 0,
+          "gold_found_in_random_tail": 0,
+          "estimate_gold_lost": 0.0,
+          "upper_95_gold_lost": 30.7,
+          "random_10_shows_any_loss_probability": 0.0
+        }
+      }
+    }
+  ]
+}
