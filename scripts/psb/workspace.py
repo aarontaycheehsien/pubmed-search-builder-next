@@ -7,7 +7,7 @@
     history/         each evaluated strategy version with its evaluation
     critic/          critic packets and rounds
     log.jsonl        every command and NCBI request, appended automatically
-    .cache/          NCBI responses for this workspace only
+    .cache/          NCBI and OpenAlex responses for this workspace only
 
 Everything else (reports, audits) is derived from these files and never read back as input.
 """
@@ -25,6 +25,7 @@ from pathlib import Path
 from .cache import Cache
 from .config import read_env
 from .ncbi import PubMed
+from .openalex import OpenAlex
 from .strategy import Strategy
 
 MARKER = "protocol.json"
@@ -110,6 +111,7 @@ class Workspace:
         self.root = root
         self.use_cache = use_cache and read_env("PSB_CACHE", "on").lower() not in {"off", "0", "false"}
         self._pubmed: PubMed | None = None
+        self._openalex: OpenAlex | None = None
 
     # -- creation ------------------------------------------------------------------------
 
@@ -184,6 +186,19 @@ class Workspace:
     @pubmed.setter
     def pubmed(self, client: PubMed) -> None:
         self._pubmed = client
+
+    @property
+    def openalex(self) -> OpenAlex:
+        if self._openalex is None:
+            self._openalex = OpenAlex(cache=Cache(self.root / ".cache", enabled=self.use_cache), log=self.log)
+        return self._openalex
+
+    @openalex.setter
+    def openalex(self, client: OpenAlex) -> None:
+        self._openalex = client
+
+    def as_of(self) -> str | None:
+        return os.environ.get("PSB_AS_OF") or self.protocol().get("as_of") or None
 
     # -- sets ----------------------------------------------------------------------------
 

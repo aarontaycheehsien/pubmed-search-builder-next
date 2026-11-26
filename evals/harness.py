@@ -322,7 +322,7 @@ def leakage(fixture: dict, run_dir: Path, transcript: str) -> list[str]:
             problems.append(f"transcript mentions {marker!r}")
     log = run_dir / "work" / "log.jsonl"
     if log.exists() and fixture.get("as_of"):
-        undated = 0
+        undated = openalex_undated = 0
         for line in log.read_text(encoding="utf-8").splitlines():
             if not line.strip():
                 continue
@@ -335,8 +335,16 @@ def leakage(fixture: dict, run_dir: Path, transcript: str) -> list[str]:
             if entry.get("endpoint") == "esearch.fcgi" and params.get("db") == "pubmed" and "maxdate" not in params \
                     and "[doi]" not in term and not inline_bounded(term, fixture["as_of"]):
                 undated += 1
+            # OpenAlex lists that find new works (search, sample, citing) must carry the date bound;
+            # lookups of identifiers already in hand (ids.openalex, ids.pmid) need not.
+            flt = str(params.get("filter", ""))
+            if entry.get("type") == "openalex" and entry.get("path") == "/works" \
+                    and not flt.startswith(("ids.openalex:", "ids.pmid:")) and "to_publication_date:" not in flt:
+                openalex_undated += 1
         if undated:
             problems.append(f"{undated} PubMed searches ran without the as_of bound")
+        if openalex_undated:
+            problems.append(f"{openalex_undated} OpenAlex searches ran without the as_of bound")
     return problems
 
 

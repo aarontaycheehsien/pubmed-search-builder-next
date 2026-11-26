@@ -193,7 +193,33 @@ def _recall_table(evaluation: dict) -> list[str]:
     free = evaluation.get("known_without_keyword_search")
     if free:
         rows += ["", free["reading"]]
+    cited = evaluation.get("known_from_citation_of_independent") or {}
+    if cited.get("in_pubmed"):
+        rows += ["", f"Forward citations of independent known records: {cited['retrieved']} of {cited['in_pubmed']} retrieved. "
+                 + cited["reading"]]
+    frame = evaluation.get("known_from_frame_sample")
+    if frame:
+        rows += ["", f"OpenAlex frame sample: {frame['sampled']} sampled, {frame['screened']} screened, "
+                 f"{frame['screened_in']} screened in. " + frame["reading"]]
     return rows
+
+
+def _citation_section(evaluation: dict) -> list[str]:
+    """Citation searches used to find known records, in TARCiS terms (Hirt et al., 2024)."""
+    rows = evaluation.get("citation_searches") or []
+    if not rows:
+        return []
+    lines = ["### Citation searching for known records", "",
+             "These citation searches found candidate known records to test the strategy against. They are not part of "
+             "the delivered search, and they did not search for studies for the review itself. Terminology follows the "
+             "TARCiS statement (Hirt et al., 2024, https://doi.org/10.1136/bmj-2023-078384).", "",
+             "| Batch | Date | Citation index | Direction | Seed records | Candidates | Shown | Screened in |",
+             "|---|---|---|---|---:|---:|---:|---:|"]
+    for row in rows:
+        lines.append(f"| {row['batch']} | {(row.get('at') or 'not recorded')[:10]} | {row['index']} | {row['direction']} | "
+                     f"{row['seed_records']} | {row['candidates'] if row['candidates'] is not None else 'n/a'} | {row['shown']} | "
+                     f"{row['screened_in']} |")
+    return lines + [""]
 
 
 def _nonempty(value) -> bool:
@@ -576,6 +602,7 @@ def _audit(ws: Workspace, evaluation: dict, rounds: list[dict], overridden: list
     version = {"created": evaluation["run_date"], "strategy_sha256": validation.digest(strategy.to_dict())}
     log = ws.log_entries()
     ncbi = [e for e in log if e.get("type") == "ncbi"]
+    openalex = [e for e in log if e.get("type") == "openalex"]
     concepts = protocol.get("concepts", [])
     lines = [
         "# PubMed search strategy: audit",
@@ -621,6 +648,7 @@ def _audit(ws: Workspace, evaluation: dict, rounds: list[dict], overridden: list
         lines += _recall_table(evaluation)
         lines += ["", "Relative recall against these sets is not absolute sensitivity. Development sets were used to "
                   "build the strategy and cannot show how it performs on unseen records.", ""]
+        lines += _citation_section(evaluation)
         if evaluation.get("misses"):
             lines += ["Missed records:", ""]
             lines += [f"- PMID {m['pmid']} ({', '.join(m['sets'])}): not retrieved by {', '.join(m['failing_blocks']) or 'limits'}"
@@ -660,7 +688,9 @@ def _audit(ws: Workspace, evaluation: dict, rounds: list[dict], overridden: list
         "- PubMed only: records indexed only in other databases are out of reach of this strategy.",
         "",
         f"_Provenance: {len(ncbi)} NCBI requests logged ({sum(1 for e in ncbi if e.get('cache'))} from cache); "
-        f"strategy sha256 {version['strategy_sha256'][:12]}._",
+        + (f"{len(openalex)} OpenAlex requests for known-record discovery ({sum(1 for e in openalex if e.get('cache'))} from cache); "
+           if openalex else "")
+        + f"strategy sha256 {version['strategy_sha256'][:12]}._",
     ]
     lines += ["", "## Validation evidence and dispositions", "", "```json",
               json.dumps({"validation": evaluation["validation"], "vocabulary": evaluation["vocabulary"],

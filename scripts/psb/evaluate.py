@@ -16,7 +16,7 @@ from __future__ import annotations
 
 from .ncbi import NcbiError
 from . import validation, mesh, syntax
-from .progress import attribution
+from .progress import attribution, batches, decisions
 from .strategy import Block, Strategy, block_query, core_query, full_query, lint, numbered_lines, query_with_optional
 from .workspace import MINING_ROLES, ROLES, Workspace, now
 
@@ -25,7 +25,19 @@ from .workspace import MINING_ROLES, ROLES, Workspace, now
 # searched words by construction, and its similar and citing articles inherit that bias, so neither
 # can show what a block built on those words would lose. The bound is computed on independent
 # records only. With none lost out of n it is 1 - 0.05 ** (1 / n): 26% at 10, 14% at 20, 10% at 30.
-INDEPENDENT_ROUTES = {"resolve", "neighbors:refs"}
+# A reference list is chosen by the review's authors, whichever index holds it, so OpenAlex
+# reference lists count exactly as PubMed's do.
+INDEPENDENT_ROUTES = {"resolve", "neighbors:refs", "openalex:refs"}
+REFERENCE_ROUTES = {"neighbors:refs", "openalex:refs"}
+# Forward citations do not use the searcher's words either, but citing papers share a research
+# community and its vocabulary and favour highly cited work. When every record they were linked
+# from is independent they are reported as their own tier, never pooled into the recall bound.
+FORWARD_ROUTES = {"neighbors:citedin", "openalex:citedin"}
+# A seeded random sample from an OpenAlex frame, screened before retrieval is checked.
+FRAME_ROUTES = {"openalex:frame"}
+ANCHOR_CONCENTRATION = 60.0
+ANCHOR_MIN_RECORDS = 5
+SUPPLIED = "supplied directly"
 NO_INDEPENDENT_RECORDS = ("Every known record came from a keyword search, or from the similar or citing articles of one. "
                           "Such records name the searched words by construction, so the recall figures check the "
                           "strategy's wording; they do not estimate recall. A prior review's reference list "
@@ -86,6 +98,137 @@ def without_keyword_search(ws: Workspace, pmids) -> set[str]:
     """The known records no psb search led to: supplied directly (in no batch), resolved, or on a reference list."""
     routes = {pmid: str(batch.get("via")) for pmid, batch in attribution(ws).items()}
     return {p for p in pmids if routes.get(p, "resolve") in INDEPENDENT_ROUTES}
+
+
+def _route(attributed: dict[str, dict], pmid: str) -> str:
+    return str((attributed.get(pmid) or {}).get("via") or "resolve")
+
+
+def _origins(batch: dict, pmid: str) -> list[str]:
+    return list((batch.get("origins") or {}).get(pmid) or batch.get("from") or [])
+
+
+def citation_from_independent(ws: Workspace, pmids) -> set[str]:
+    """Known records first seen as forward citations of records that are themselves independent."""
+    attributed = attribution(ws)
+    found = set()
+    for pmid in pmids:
+        batch = attributed.get(pmid)
+        if not batch or str(batch.get("via")) not in FORWARD_ROUTES:
+            continue
+        origins = _origins(batch, pmid)
+        # An origin that is not a PMID (a work outside PubMed) cannot be traced: treat it as not independent.
+        if origins and all(o.isdigit() and _route(attributed, o) in INDEPENDENT_ROUTES for o in origins):
+            found.add(pmid)
+    return found
+
+
+def anchor_profile(ws: Workspace, free: set[str]) -> dict:
+    """Which reviews the independent records come from, and whether one review dominates."""
+    attributed = attribution(ws)
+    counts: dict[str, int] = {}
+    listed = 0
+    for pmid in free:
+        batch = attributed.get(pmid)
+        if not batch or str(batch.get("via")) not in REFERENCE_ROUTES:
+            counts[SUPPLIED] = counts.get(SUPPLIED, 0) + 1
+            continue
+        listed += 1
+        for origin in _origins(batch, pmid) or ["unknown review"]:
+            counts[origin] = counts.get(origin, 0) + 1
+    rows = sorted(({"anchor": a, "records": n} for a, n in counts.items()), key=lambda r: (-r["records"], r["anchor"]))
+    reviews = [r for r in rows if r["anchor"] != SUPPLIED]
+    profile: dict = {"from_reference_lists": listed, "supplied_directly": counts.get(SUPPLIED, 0), "rows": rows,
+                     "concentrated": False}
+    if reviews and listed:
+        top = dict(reviews[0], share_percent=round(100 * reviews[0]["records"] / listed, 1))
+        profile["top"] = top
+        profile["concentrated"] = listed >= ANCHOR_MIN_RECORDS and top["share_percent"] > ANCHOR_CONCENTRATION
+    return profile
+
+
+def _anchor_reading(profile: dict) -> str | None:
+    if not profile.get("concentrated"):
+        return None
+    top = profile["top"]
+    return (f"{top['records']} of the {profile['from_reference_lists']} known records found through reference lists come from "
+            f"one review ({top['anchor']}, {top['share_percent']}%). A benchmark built on one review takes that review's scope: "
+            "add the reference list of a second review that covers a different searched concept.")
+
+
+def _citation_tier(cited: set[str], held_out: set[str], hit: set[str]) -> dict:
+    tested = cited & held_out
+    return {"in_pubmed": len(cited), "retrieved": len(cited & hit),
+            "held_out": {"in_pubmed": len(tested), "retrieved": len(tested & hit)},
+            "reading": ("Forward citations of independent known records do not use the strategy's words, but citing papers "
+                        "share a research community and its vocabulary. They are reported on their own and are not part "
+                        "of the recall bound.") if cited else "No known record came from forward citations of independent records."}
+
+
+def frame_estimate(ws: Workspace, sets: dict, in_pubmed: set[str], hit: set[str], mined: set[str]) -> dict | None:
+    """Recall within an OpenAlex frame, from a random sample screened before retrieval was checked.
+
+    Membership is any frame batch, not the earliest batch: a frame record that a pilot happened to
+    show first must still count, or the sample would lose the records the wording already finds.
+    """
+    sampled: set[str] = set()
+    for batch in batches(ws):
+        if str(batch.get("via")) in FRAME_ROUTES:
+            sampled.update(str(p) for p in batch.get("pmids") or [])
+    if not sampled:
+        return None
+    screened = decisions(ws)
+    included = {p for p in sampled if (screened.get(p) or {}).get("decision") == "include"}
+    in_sets = {p for d in sets.values() for p in d.get("pmids", [])}
+    present = included & in_pubmed
+    tested = present - mined
+    bound = loss_upper_bound(len(tested - hit), len(tested))
+    estimate = {
+        "sampled": len(sampled),
+        "screened": sum(1 for p in sampled if p in screened),
+        "unscreened": len(sampled - set(screened)),
+        "uncertain": sum(1 for p in sampled if (screened.get(p) or {}).get("decision") == "uncertain"),
+        "screened_in": len(included),
+        "missing_from_sets": sorted(included - in_sets, key=int),
+        "in_pubmed": len(present),
+        "retrieved": len(present & hit),
+        "recall_percent": _recall(len(present & hit), len(present)),
+        "recall_lower_95_percent": None if bound is None else round(100 - bound, 1),
+    }
+    parts = []
+    if estimate["unscreened"] or estimate["missing_from_sets"]:
+        parts.append(f"{estimate['unscreened']} sampled records are unscreened and {len(estimate['missing_from_sets'])} "
+                     "screened-in records are in no set, so the estimate is incomplete: screen every sampled record and add "
+                     "every include to a held-out set, whether or not the strategy retrieves it.")
+    if present:
+        parts.append(f"{estimate['retrieved']} of the {len(present)} screened-in frame records are retrieved"
+                     + (f"; within the frame recall is at least {estimate['recall_lower_95_percent']}% (95% bound)"
+                        if estimate["recall_lower_95_percent"] is not None else "")
+                     + ". The frame is an OpenAlex topic classification, so this estimates recall within that frame, "
+                       "not overall.")
+    if estimate["uncertain"]:
+        parts.append(f"{estimate['uncertain']} uncertain records are left out of the estimate.")
+    estimate["reading"] = " ".join(parts) or "No frame record has been screened in yet."
+    return estimate
+
+
+def citation_searches(ws: Workspace) -> list[dict]:
+    """Each citation search run for known-record discovery, in TARCiS terms, for the audit."""
+    screened = decisions(ws)
+    rows = []
+    for batch in batches(ws):
+        via = str(batch.get("via") or "")
+        index, _, links = via.partition(":")
+        if index not in {"neighbors", "openalex"} or links in {"prior-reviews", "frame"}:
+            continue
+        kinds = links.split(",")
+        directions = sorted({"backward" if k == "refs" else "forward" if k == "citedin" else "similar articles" for k in kinds})
+        pmids = [str(p) for p in batch.get("pmids") or []]
+        rows.append({"batch": batch.get("batch"), "at": batch.get("at"), "index": "OpenAlex" if index == "openalex" else "PubMed",
+                     "direction": " + ".join(directions), "seed_records": len(batch.get("from") or []),
+                     "candidates": batch.get("total"), "shown": len(pmids),
+                     "screened_in": sum(1 for p in pmids if (screened.get(p) or {}).get("decision") == "include")})
+    return rows
 
 
 def _free_recall(free: set[str], held_out: set[str], hit: set[str]) -> dict:
@@ -250,7 +393,7 @@ def evaluate(ws: Workspace, *, term_counts: bool = True, term_impact: bool = Fal
     inputs = validation.input_snapshot(ws)
     result = {"inputs": inputs, "input_sha256": validation.digest(inputs), "run_date": now(),
               "lint": lint(ws.strategy(), concepts=inputs["protocol"].get("concepts") or []),
-              "lines": [], "vocabulary": [], "ok": False}
+              "lines": [], "vocabulary": [], "ok": False, "citation_searches": citation_searches(ws)}
     collected = []
     complete = False
     try:
@@ -342,6 +485,15 @@ def _measure(ws: Workspace, result: dict, *, term_counts: bool) -> None:
     free_known = without_keyword_search(ws, in_pubmed)
     mined = {p for data in sets.values() if data.get("role") in MINING_ROLES for p in data.get("pmids", [])}
     result["known_without_keyword_search"] = _free_recall(free_known, in_pubmed - mined, hit_full)
+    anchors = anchor_profile(ws, free_known)
+    result["known_without_keyword_search"]["anchors"] = anchors
+    if _anchor_reading(anchors):
+        result["known_without_keyword_search"]["reading"] += " " + _anchor_reading(anchors)
+    cited = citation_from_independent(ws, in_pubmed) - free_known
+    result["known_from_citation_of_independent"] = _citation_tier(cited, in_pubmed - mined, hit_full)
+    frame = frame_estimate(ws, sets, in_pubmed, hit_full, mined)
+    if frame:
+        result["known_from_frame_sample"] = frame
     per_set = {}
     for name, data in sets.items():
         pmids = [p for p in data.get("pmids", [])]

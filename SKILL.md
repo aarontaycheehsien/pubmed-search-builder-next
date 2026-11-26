@@ -8,13 +8,14 @@ description: "Build, review, or update a high-sensitivity PubMed/MEDLINE Boolean
 You deliver a **draft PubMed search strategy and its audit**, ready for human PRESS peer review.
 You never answer the review question, and you never search PubMed to summarise evidence.
 
-All PubMed and MeSH work goes through one tool, run from the skill directory:
+All PubMed and MeSH work, and the OpenAlex lookups used to find known records, go through one
+tool, run from the skill directory:
 
 ```bash
 python scripts/psb.py --workspace <run-dir> <command> ...
 ```
 
-Every command prints JSON. Every NCBI request is logged in the workspace automatically, and
+Every command prints JSON. Every NCBI and OpenAlex request is logged in the workspace automatically, and
 `psb report` validates live and generates the query, audit and validation manifest. **Only report counts, PMIDs, MeSH headings
 and recall figures that a `psb` command returned.** If you did not run it, do not claim it.
 
@@ -102,10 +103,18 @@ build these sets before drafting (skip at `quick` depth when there are no seeds)
 
 - `psb resolve` for DOIs or PMCIDs, then `psb set add seeds ... --role seed`.
 - At `standard` or `thorough` depth with few seeds, find more:
-  - prior systematic reviews on the topic, with `psb sample --purpose prior-reviews`. Their
-    included studies make the best benchmark.
+  - prior systematic reviews on the topic, with `psb sample --purpose prior-reviews`, and in
+    OpenAlex with `psb sample --source openalex --purpose prior-reviews "<topic words>"`, which
+    also finds reviews outside PubMed. Their included studies make the best benchmark. Follow a
+    review's reference list with `psb neighbors <PMID> --links refs`; when PubMed holds none, add
+    `--source openalex` (the origin may be a DOI). Use reviews that cover different searched
+    concepts: `psb eval` warns when one review supplies most independent records.
   - precise pilot searches, with `psb sample --purpose pilot`.
   - `psb neighbors`.
+  - At `thorough` depth, `psb known profile` shows OpenAlex topics and decades of the result
+    with no known record, and a frame sample (`psb sample --source openalex --purpose frame
+    --topic T...`) gives recall within a topic frame: screen every sampled record and add every
+    include to a `validation` set before looking at retrieval.
 
   Screen candidates against the eligibility criteria before they enter a set. Record every
   decision with `psb screen --include ... --exclude ... --uncertain ...`.

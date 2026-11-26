@@ -15,6 +15,9 @@ explicit effective `as_of` entry-date restriction. The audit includes:
 - leave-one-block-out results
 - each optional block: the count if it were AND-ed, known records lost, and the 95% bound from
   independently found records
+- forward citations of independent records and any OpenAlex frame sample, each as its own tier
+- every citation search used to find known records (index, direction, seeds, candidates, screened
+  in), in TARCiS terms (Hirt et al., 2024, https://doi.org/10.1136/bmj-2023-078384)
 - the development history (every evaluated version, its change, lost records, and note)
 - critic rounds and finding status
 - standard limitations and the provenance line (NCBI requests, cache use, strategy hash)
@@ -38,7 +41,9 @@ Do not edit `audit.md` or `final-query.txt`; their bytes are verified by the man
 Items 1 (database), 8 (full strategy), 9 (limits and restrictions), 10 (search filters with
 source), 13 (date of search), 16 (records per database). State item 12 (peer review) as
 "internal PRESS-structured critic only; PRESS peer review pending". Items about other databases,
-registries, citation searching and deduplication are outside this skill.
+registries and deduplication are outside this skill. Citation searches in the audit found known
+records to test the strategy; they are not citation searching for the review's studies, and item 5
+(citation searching) must not be reported from them.
 
 ## Wording to use
 

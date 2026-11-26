@@ -11,6 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 from psb import wildcards  # noqa: E402
 from psb.ncbi import PubMed  # noqa: E402
+from psb.openalex import OpenAlex  # noqa: E402
 from psb.workspace import Workspace  # noqa: E402
 
 
@@ -115,6 +116,76 @@ class FakePubMed(PubMed):
     def links(self, pmid, link):
         return [{"pmid": p, "score": s} for p, s in self._links.get((pmid, link), [])]
 
+    doi_map: dict[str, str] = {}
+
+    def idconv(self, ids):
+        return {i: self.doi_map[i.lower()] for i in ids if i.lower() in self.doi_map}
+
+
+class FakeOpenAlex(OpenAlex):
+    """Serves /works requests from ``works`` ({"W1": {...}}), parsing the filters psb sends."""
+
+    def __init__(self, works: dict[str, dict] | None = None, fail: str | None = None):
+        super().__init__(api_key="")
+        self.store = {}
+        for wid, work in (works or {}).items():
+            self.add(wid, **work)
+        self.fail = fail
+        self.calls: list[tuple[str, dict]] = []
+
+    def add(self, wid, *, pmid=None, doi=None, title="", year=2020, type="article", refs=(), cites=(), topic=None):
+        self.store[wid] = {"id": f"https://openalex.org/{wid}", "ids": {"openalex": f"https://openalex.org/{wid}",
+                           **({"pmid": f"https://pubmed.ncbi.nlm.nih.gov/{pmid}"} if pmid else {})},
+                           "doi": f"https://doi.org/{doi}" if doi else None, "display_name": title or wid,
+                           "publication_year": year, "type": type,
+                           "referenced_works": [f"https://openalex.org/{r}" for r in refs], "referenced_works_count": len(refs),
+                           "cites": list(cites), "cited_by_count": 0,
+                           "primary_topic": {"id": f"https://openalex.org/{topic[0]}", "display_name": topic[1]} if topic else None}
+
+    def _match(self, work, name, value):
+        options = value.split("|")
+        if name == "ids.openalex":
+            return work["id"].rsplit("/", 1)[-1] in options
+        if name == "ids.pmid":
+            return work["ids"].get("pmid", "").rsplit("/", 1)[-1] in options
+        if name == "cites":
+            return value in work["cites"]
+        if name == "type":
+            return work["type"] in options
+        if name == "primary_topic.id":
+            return bool(work["primary_topic"]) and work["primary_topic"]["id"].rsplit("/", 1)[-1] in options
+        if name == "has_pmid":
+            return bool(work["ids"].get("pmid")) == (value == "true")
+        if name == "to_publication_date":
+            return work["publication_year"] <= int(value[:4])
+        raise AssertionError(f"unexpected filter {name}")
+
+    def request(self, path, params):
+        self.calls.append((path, dict(params)))
+        if self.fail:
+            from psb.openalex import OpenAlexError
+            raise OpenAlexError(self.fail)
+        if path.startswith("/works/"):
+            ident = path.split("/", 2)[2]
+            for wid, work in self.store.items():
+                if ident in (wid, f"pmid:{work['ids'].get('pmid', '').rsplit('/', 1)[-1]}",
+                             f"doi:{(work['doi'] or '').removeprefix('https://doi.org/')}"):
+                    return work
+            return None
+        rows = list(self.store.values())
+        for clause in filter(None, params.get("filter", "").split(",")):
+            name, value = clause.split(":", 1)
+            rows = [w for w in rows if self._match(w, name, value)]
+        if params.get("search"):
+            words = params["search"].lower().split()
+            rows = [w for w in rows if all(word in w["display_name"].lower() for word in words)]
+        rows.sort(key=lambda w: w["id"])
+        if params.get("sample"):
+            import random as _random
+            rows = _random.Random(int(params.get("seed", 0))).sample(rows, min(len(rows), int(params["sample"])))
+        per = int(params.get("per-page", 25))
+        return {"meta": {"count": len(rows), "next_cursor": None}, "results": rows[:per]}
+
 
 def record(pmid: str, title: str, abstract: str = "", mesh: list[str] | None = None, keywords: list[str] | None = None) -> dict:
     return {"pmid": pmid, "title": title, "abstract": abstract, "year": "2020", "keywords": keywords or [],
@@ -128,6 +199,7 @@ def make_ws(tmp_path):
         ws = Workspace.create(tmp_path / "run", question)
         fake = FakePubMed(atoms, records, links)
         ws.pubmed = fake
+        ws.openalex = FakeOpenAlex()
         return ws, fake
 
     return factory

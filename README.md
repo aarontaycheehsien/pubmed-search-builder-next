@@ -201,7 +201,7 @@ It retains the methodology of the earlier project but replaces much of its **exc
 ## Technical design
 
 - **One tool, one workspace.** `scripts/psb.py` performs all PubMed and MeSH work. A run workspace stores the protocol, strategy, known-record sets, search history, evaluation attempts, and logs.
-- **Provenance as a side effect.** NCBI requests are recorded automatically. Reports are built from the workspace rather than reconstructed from chat prose.
+- **Provenance as a side effect.** NCBI and OpenAlex requests are recorded automatically. Reports are built from the workspace rather than reconstructed from chat prose.
 - **One key per concept.** A concept keeps the same identifier from scope definition through strategy construction and reporting.
 - **Protected delivery.** `psb report` performs live validation and blocks delivery when technical defects or required reviews remain unresolved.
 - **Standard library only.** Python 3.10+, with no Python package dependencies required by the search tool itself.
@@ -211,7 +211,7 @@ It retains the methodology of the earlier project but replaces much of its **exc
 Most users should let the agent operate these commands. They are documented here for development, inspection, and debugging.
 
 ```bash
-cp .env.example .env            # add NCBI_EMAIL and optionally NCBI_API_KEY
+cp .env.example .env            # add NCBI_EMAIL and optionally NCBI_API_KEY and OPENALEX_API_KEY
 python scripts/psb.py doctor
 
 python scripts/psb.py init runs/demo \
@@ -239,7 +239,9 @@ python scripts/psb.py --workspace runs/demo report
 |---|---|
 | `init`, `status` | Create a workspace; show what is complete and what remains. |
 | `count`, `sample`, `fetch` | Run queries and inspect PubMed records and translations. |
-| `neighbors`, `resolve` | Find related records and resolve DOIs/PMCIDs to PMIDs. |
+| `neighbors`, `resolve` | Find related records and resolve DOIs/PMCIDs to PMIDs. `--source openalex` follows reference lists and citing works in OpenAlex, mapped back to PMIDs. |
+| `sample --source openalex` | Find prior reviews in OpenAlex, including reviews outside PubMed (`--purpose prior-reviews`), or draw a seeded random frame sample of an OpenAlex topic (`--purpose frame --topic T...`). |
+| `known profile` | Compare the OpenAlex topics and decades of the known set with a sample of the current result, to show where known records are thin. |
 | `mesh lookup`, `mesh show` | Inspect MeSH descriptors, entry terms, narrower headings, and counts. |
 | `set add/remove/split/list` | Manage known-record sets. |
 | `lint` | Run offline syntax and design checks. |
