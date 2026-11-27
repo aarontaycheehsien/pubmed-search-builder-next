@@ -171,6 +171,14 @@ records, leave-one-block-out ablation, and what changed since the previous versi
   term's own line count does not show. Look at what a high-impact term alone finds
   (`psb sample --purpose noise-check --file <sample_file> --random`) before dropping it.
   Recall comes first.
+- Before dropping a high-impact term, or AND-ing an optional block to cut a large result,
+  narrow the noisy terms instead: `psb restructure --qualifier <optional block id>`. It replaces
+  each of the five terms that alone add the most records with (the term in the title) OR (the
+  term AND the qualifier), and keeps a replacement only if no known record is lost. Use as the
+  qualifier the optional block for a concept the question names but the strategy does not
+  search (the population, setting or outcome); it must have both a MeSH and a text-word layer.
+  Then run `psb eval` and say in the note which terms were restructured and which refused.
+  See "Per-term structure" in `references/vocabulary.md`.
 - A block whose removal gains known records (ablation) is a sign of over-structuring:
   reconsider its role in `protocol.json`.
 - `optional_blocks` shows, for each optional block, the count if it were AND-ed, the known

@@ -96,6 +96,29 @@ count; pair the acronym with a context term, or drop it if the spelled-out forms
   what it alone finds from its `sample_file` and judge that. It costs two requests per term,
   so run it when the result is too large, not on every eval.
 
+## Per-term structure: narrowing generic terms
+
+A large result is usually carried by a few generic words that mean the concept only in some
+contexts (`reminder*`, `intervention*`, `"Cerebral Hemorrhage"[Mesh]`). Dropping such a term loses
+the records only it finds; AND-ing another concept to the whole strategy loses the records whose
+abstracts never name that concept. `psb restructure --qualifier <id>` does neither: for each of the
+five terms that alone add the most records it keeps the term where it appears in the title, and
+elsewhere only together with the qualifier. Each replacement is checked against every known record
+the strategy retrieves and refused if one would be lost.
+
+- Choose the qualifier from the question, not from the known records: a concept it names that
+  the strategy does not search (population, setting, outcome). Draft it as an optional block with
+  a MeSH layer and a text-word layer; a qualifier with only one layer loses records indexed only the
+  other way, and the command refuses it.
+- `--top 3` is the cautious setting; more terms cut more and lose more. `--dry-run` shows the
+  decisions without writing `strategy.json`.
+- The check only protects known records. Report the change in the eval note and in `narrative.md`
+  (terms restructured, terms refused, count before and after), and keep it under critic review.
+
+On development topics this rule lost 9 of 2,310 gold records across 73 delivered strategies while
+removing about a third of the records; with a deliberately weakened qualifier it lost 161, and the
+known-record check cut that to 15 (`docs/ideas-1-2-6-results.md`).
+
 ## Controlled vocabulary versus text word gaps (Bramer)
 
 After a block works, compare `"Heading"[Mesh] NOT (<text words>)` with

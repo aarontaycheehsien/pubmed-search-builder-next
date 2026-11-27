@@ -9,7 +9,7 @@ import random
 import sys
 from pathlib import Path
 
-from . import config, deliver, discover, mesh, progress, terms, validation
+from . import config, deliver, discover, mesh, progress, restructure, terms, validation
 from .evaluate import compare, evaluate
 from .ncbi import LINKNAMES, NcbiError, PubMed
 from .openalex import OpenAlexError
@@ -352,6 +352,11 @@ def cmd_eval(args) -> dict:
     return output
 
 
+def cmd_restructure(args) -> dict:
+    ws = workspace(args)
+    return restructure.restructure(ws, args.qualifier, top=args.top, dry_run=args.dry_run)
+
+
 def cmd_terms(args) -> dict:
     ws = workspace(args)
     strategy = ws.strategy()
@@ -589,6 +594,12 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--term-impact", action="store_true",
                    help="also measure the records and known records each term alone adds (two requests per term)")
     p.set_defaults(func=cmd_eval)
+
+    p = sub.add_parser("restructure", help="narrow the high-impact terms with a qualifier, keeping every known record")
+    p.add_argument("--qualifier", required=True, help="id of an optional block to use as the qualifier")
+    p.add_argument("--top", type=int, default=5, help="how many of the terms that alone add the most records (default 5)")
+    p.add_argument("--dry-run", action="store_true", help="report what would change without writing strategy.json")
+    p.set_defaults(func=cmd_restructure)
 
     p = sub.add_parser("terms", help="term mining")
     tsub = p.add_subparsers(dest="terms_command", required=True)
