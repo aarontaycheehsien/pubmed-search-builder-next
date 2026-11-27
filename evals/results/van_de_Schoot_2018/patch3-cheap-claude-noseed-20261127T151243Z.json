@@ -1,0 +1,86 @@
+{
+  "topic": "van_de_Schoot_2018",
+  "source": "generated:patch3-cheap",
+  "driver": "claude",
+  "effort": null,
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "patch3-cheap-claude-noseed-20261127T151243Z",
+  "scored": "20261127T151903Z",
+  "skill": {
+    "name": "patch3-cheap",
+    "hash": "feadbef645c27ba13519eb7ee105e6c438991cde2e5895b3dc4e594fb13a71a9",
+    "commit": "9e3f666d1eefc63ea8b817d97a1b96ad49ca0ee6",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "9e3f666d1eefc63ea8b817d97a1b96ad49ca0ee6",
+    "dirty": false
+  },
+  "driver_version": "2.1.332 (Claude Code)",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 379,
+    "cost_usd": 1.1322194000000003,
+    "turns": 38,
+    "usage": {
+      "input_tokens": 76,
+      "cache_creation_input_tokens": 101300,
+      "cache_read_input_tokens": 2534098,
+      "output_tokens": 20238,
+      "output_tokens_details": {
+        "thinking_tokens": 3348
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 101300,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "global",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 1300,
+          "cache_read_input_tokens": 98785,
+          "cache_creation_input_tokens": 2515,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 2515
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "is_error": false
+  },
+  "final_message": "OR \"combat fatigue\"[tiab] OR \"battle fatigue\"[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])\n```\n\n**Recall (relative recall, not sensitivity)**\n- **Benchmark:** 14 of 15 records, 93.3%. These are included studies taken from the reference lists of two prior reviews, so they don't depend on my search wording.\n- **Lower bound:** on those same 14 of 15, recall is at least 72.1% (95% bound).\n- **Relevant set:** 20 of 20, but these came from a pilot search with \"trajectory\" in the title. That is development only, not validation.\n- **One review dominates:** 13 of the 15 benchmark records come from a single review (PMID 23593134). The other 2 come from 22033784.\n- **The one miss:** 16400531. Its abstract never names PTSD or traumatic stress, so no term in the PTSD block can reach it. I accepted it as out of reach.\n\n**Assumptions and decisions (you couldn't answer, so I made these calls)**\n- **Scope:** I kept the scope without waiting for your reply. Only the PTSD concept is searched. Trauma type and study design are handled at screening.\n- **Trajectory block left out:** the trajectory concept was measured as an optional block but not AND-ed in. AND-ing it would cut the result to 14,100 records but lose 2 of 34 known records, with a 38.5% upper bound on the share lost. Restructuring the top terms with it cut only about 6%, so I reverted that.\n- **Large result:** 35,734 records is a heavy screening load. The trajectory and other eligibility criteria will have to be applied at screening.\n- **No limits** beyond the harness's as-of date. No seeds were supplied.\n\n**Limitations**\n- **PubMed only:** PsycINFO and Embase would add coverage.\n- **OpenAlex unavailable:** its API budget was exhausted, so known-record discovery used PubMed reference lists only.\n- **Old search:** the search is deliberately historical (cutoff 2016-01-24), not current.\n- **No `narrative.md`:** I did not write one. The open risks above and the rationale in `protocol.json` are the only narrative record.",
+  "strategy": "((\"Stress Disorders, Post-Traumatic\"[Mesh] OR \"Stress Disorders, Traumatic\"[Mesh] OR PTSD[tiab] OR PTSS[tiab] OR \"post-traumatic stress\"[tiab] OR \"posttraumatic stress\"[tiab] OR \"post traumatic stress\"[tiab] OR \"traumatic stress\"[tiab] OR \"posttraumatic symptom*\"[tiab] OR \"post-traumatic symptom*\"[tiab] OR \"posttraumatic reaction*\"[tiab] OR \"posttraumatic response*\"[tiab] OR \"acute stress disorder\"[tiab] OR \"acute stress reaction*\"[tiab] OR \"combat disorder*\"[tiab] OR \"combat stress\"[tiab] OR \"trauma symptom*\"[tiab] OR \"traumatic symptom*\"[tiab] OR \"acute stress symptom*\"[tiab] OR \"acute stress response*\"[tiab] OR \"shell shock\"[tiab] OR \"war neurosis\"[tiab] OR \"traumatic neurosis\"[tiab] OR \"combat fatigue\"[tiab] OR \"battle fatigue\"[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2016-01-24",
+  "count": 35734,
+  "gold_scored": 38,
+  "gold_reachable": 38,
+  "retrieved": 36,
+  "recall_percent": 94.7,
+  "missed": [
+    "20061839",
+    "20836603"
+  ],
+  "nnr": 992.6,
+  "translation_issues": [],
+  "gold_seen_by_agent": 10,
+  "unseen_retrieved": 26,
+  "unseen_recall_percent": 92.9,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

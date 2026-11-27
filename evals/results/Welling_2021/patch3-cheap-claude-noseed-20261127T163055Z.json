@@ -1,0 +1,85 @@
+{
+  "topic": "Welling_2021",
+  "source": "generated:patch3-cheap",
+  "driver": "claude",
+  "effort": null,
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "patch3-cheap-claude-noseed-20261127T163055Z",
+  "scored": "20261127T164857Z",
+  "skill": {
+    "name": "patch3-cheap",
+    "hash": "feadbef645c27ba13519eb7ee105e6c438991cde2e5895b3dc4e594fb13a71a9",
+    "commit": "9e3f666d1eefc63ea8b817d97a1b96ad49ca0ee6",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "9e3f666d1eefc63ea8b817d97a1b96ad49ca0ee6",
+    "dirty": false
+  },
+  "driver_version": "2.1.332 (Claude Code)",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 1082,
+    "cost_usd": 1.5533810000000003,
+    "turns": 3,
+    "usage": {
+      "input_tokens": 8,
+      "cache_creation_input_tokens": 11108,
+      "cache_read_input_tokens": 330068,
+      "output_tokens": 1741,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 11108,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "global",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 792,
+          "cache_read_input_tokens": 111678,
+          "cache_creation_input_tokens": 7201,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 7201
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "is_error": false
+  },
+  "final_message": "it.md` and `validation-manifest.json` are in `./work`.\n\n**Structure.** The strategy has two blocks joined by AND.\n- **Exposure block:** COVID-19, pandemic and lockdown terms. This block alone returns 128,606 records.\n- **Outcomes block:** one combined block for lifestyle behaviours and well-being.\n\nEach block has both MeSH and `[tiab]` terms, and the whole query is bounded by an Entrez-date (`[edat]`) cutoff of 2020/11/22.\n\n**Recall.**\n- With no known articles from you, I built a benchmark of 49 records. They are the reference lists of four prior reviews (33162910, 33207689, 32872154, 32799105), screened by title only.\n- The strategy retrieves all 49 (100%). The 95% lower bound on recall is 94.1%.\n- That is relative recall, not overall sensitivity.\n- The benchmark leans toward mental health, and the top review supplies about 45% of it. Lifestyle-only adult records are under-represented.\n\n**Decisions I made without you.**\n- **Outcomes block as AND:** I made it a required block because 128,606 records is too many to screen. Dropping it would raise recall but give an unscreenable result. Each outcome concept alone would have lost benchmark records (lifestyle 24 of 49, well-being 7 of 49), so I combined them. The combined block lost none.\n- **Result size:** 26,473 is still about 2.6 times the 10,000 I assumed was screenable. The critic and I accepted this to protect recall.\n- **Generic terms:** `distress`, `behavio*` and `stress` are broad but retained. The reviewer may want to narrow them.\n- **Scope:** the scope was not confirmed by you. It is recorded in the protocol notes.\n- **Critic:** three internal critic rounds ran, with a fresh reviewer each time. I wrote the round-3 file myself, based on the reviewer's round-3 reply and my own responses to each finding. This is automated QA, not PRESS peer review.\n- **Date cutoff:** the Entrez-date bound should be removed for a current search.\n\nThis is a draft and needs PRESS peer review by an information specialist before use.",
+  "strategy": "((\"COVID-19\"[Mesh] OR \"SARS-CoV-2\"[Mesh] OR \"Pandemics\"[Mesh] OR \"Quarantine\"[Mesh] OR \"Physical Distancing\"[Mesh] OR covid*[tiab] OR coronavirus*[tiab] OR \"corona virus*\"[tiab] OR sars-cov-2[tiab] OR \"sars cov 2\"[tiab] OR sarscov2[tiab] OR \"2019-ncov\"[tiab] OR ncov[tiab] OR \"novel coronavirus\"[tiab] OR \"severe acute respiratory syndrome coronavirus 2\"[tiab] OR \"nCoV-2019\"[tiab] OR pandemic*[tiab] OR lockdown*[tiab] OR \"lock down*\"[tiab] OR \"stay at home\"[tiab] OR \"stay-at-home\"[tiab] OR \"shelter in place\"[tiab] OR quarantin*[tiab] OR \"self-isolat*\"[tiab] OR \"social distanc*\"[tiab] OR \"physical distanc*\"[tiab] OR \"home confinement\"[tiab] OR \"school closure*\"[tiab] OR \"movement restriction*\"[tiab] OR \"containment measure*\"[tiab] OR \"Betacoronavirus\"[Mesh]) AND (\"Life Style\"[Mesh] OR \"Health Behavior\"[Mesh] OR \"Exercise\"[Mesh] OR \"Sedentary Behavior\"[Mesh] OR \"Diet\"[Mesh] OR \"Feeding Behavior\"[Mesh] OR \"Sleep\"[Mesh] OR \"Smoking\"[Mesh] OR \"Alcohol Drinking\"[Mesh] OR \"Screen Time\"[Mesh] OR lifestyle*[tiab] OR \"life style*\"[tiab] OR \"health behavio*\"[tiab] OR behavio*[tiab] OR \"physical activit*\"[tiab] OR exercis*[tiab] OR sedentary[tiab] OR \"screen time\"[tiab] OR diet*[tiab] OR eating[tiab] OR nutrition*[tiab] OR sleep*[tiab] OR smok*[tiab] OR alcohol*[tiab] OR \"substance use\"[tiab] OR \"social media\"[tiab] OR internet[tiab] OR \"Mental Health\"[Mesh] OR \"Mental Disorders\"[Mesh] OR \"Psychological Distress\"[Mesh] OR \"Stress, Psychological\"[Mesh] OR \"Anxiety\"[Mesh] OR \"Depression\"[Mesh] OR \"Quality of Life\"[Mesh] OR \"Loneliness\"[Mesh] OR \"Affect\"[Mesh] OR \"well-being\"[tiab] OR wellbeing[tiab] OR \"mental health\"[tiab] OR psycholog*[tiab] OR distress[tiab] OR anxiety[tiab] OR depress*[tiab] OR stress[tiab] OR \"quality of life\"[tiab] OR loneliness[tiab] OR mood[tiab] OR \"life satisfaction\"[tiab] OR mental[tiab] OR \"Mental Health Services\"[Mesh] OR \"Emotions\"[Mesh] OR \"Fear\"[Mesh] OR \"Sleep Initiation and Maintenance Disorders\"[Mesh] OR \"Obesity\"[Mesh] OR \"Weight Gain\"[Mesh] OR \"Social Support\"[Mesh] OR \"Adaptation, Psychological\"[Mesh] OR \"Stress Disorders, Post-Traumatic\"[Mesh] OR \"health-related behavio*\"[tiab] OR wellness[tiab] OR psychosocial[tiab] OR emotion*[tiab] OR fear*[tiab] OR worr*[tiab] OR insomnia[tiab] OR \"weight gain\"[tiab] OR obesity[tiab] OR \"food intake\"[tiab] OR \"food consumption\"[tiab] OR \"eating habit*\"[tiab] OR \"physical inactivity\"[tiab] OR \"mental illness*\"[tiab] OR \"mental disorder*\"[tiab] OR resilien*[tiab] OR coping[tiab] OR suicid*[tiab] OR \"social support\"[tiab] OR \"social connect*\"[tiab] OR \"social isolation\"[tiab] OR anxious[tiab] OR \"post-traumatic\"[tiab] OR ptsd[tiab] OR \"daily routine*\"[tiab] OR \"daily life\"[tiab] OR \"cigarette*\"[tiab] OR \"substance abuse\"[tiab] OR \"binge\"[tiab] OR \"gaming\"[tiab] OR \"physical fitness\"[tiab] OR walking[tiab] OR \"mental wellbeing\"[tiab] OR \"Motor Activity\"[Mesh] OR \"Social Isolation\"[Mesh] OR \"Video Games\"[Mesh] OR \"Vaping\"[Mesh] OR e-cigarette*[tiab] OR vaping[tiab] OR \"video game*\"[tiab] OR television[tiab] OR sitting[tiab] OR \"screen use\"[tiab] OR \"physical exercise\"[tiab])) AND (\"1800/01/01\"[edat] : \"2020/11/22\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2020-11-22",
+  "count": 26473,
+  "gold_scored": 53,
+  "gold_reachable": 53,
+  "retrieved": 52,
+  "recall_percent": 98.1,
+  "missed": [
+    "32242089"
+  ],
+  "nnr": 509.1,
+  "translation_issues": [],
+  "gold_seen_by_agent": 3,
+  "unseen_retrieved": 49,
+  "unseen_recall_percent": 98.0,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}
