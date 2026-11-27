@@ -132,3 +132,26 @@ records outside each strategy) found none of the six misses in any of the four s
 missed gold. Its rows named programme types; the misses evidently describe social prescribing in
 other terms. The grid works when its rows follow how studies describe themselves, which a grid
 written from the question alone cannot guarantee.
+
+## Idea 6 robustness (development topics): `evals/experiments/idea6_robustness.py`, `idea6_weak_guard.py`
+
+73 distinct development strategies, 2,310 gold records retrieved; qualifiers as in the second test.
+The guard stands in for the agent's check: 30% of the gold acts as its known records, terms are
+restructured one at a time, and a change is kept only if no known record is lost.
+
+| Variant | Strategies losing gold | Gold lost | Records kept (pooled) |
+|---|---:|---:|---:|
+| 3 terms restructured | 2 | 3 | 72% |
+| 5 terms | 8 | 9 | 68% |
+| 10 terms | 12 | 13 | 64% |
+| 5 terms, guarded | 5 | 6 | 68% |
+| 5 terms, weak qualifier | 25 | 161 | 59% |
+| 5 terms, weak qualifier, guarded | 13 | 15 | 61% |
+
+- More terms cut more and lose more; five is a reasonable middle, three the cautious choice.
+- The qualifier is the main risk. The weak version (first third of each qualifier's terms) lost 161
+  gold records, 121 of them on Kwok_2020, where the shortened qualifier was two MeSH headings with
+  no text words. A qualifier needs both a MeSH and a text-word layer, as any block does.
+- The guard is what makes the rule safe. With good qualifiers it caught 3 of 9 losses at the cost
+  of 3 refused terms; the rest were records the agent would not have known. With weak qualifiers
+  it cut the loss from 161 to 15 by refusing 20 restructures, and still kept 61% of records.

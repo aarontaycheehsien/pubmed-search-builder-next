@@ -1,0 +1,2414 @@
+{
+  "date": "2026-11-27",
+  "rows": [
+    {
+      "topic": "Appenzeller-Herzog_2019",
+      "card": "lean-fixes-codex-noseed-20261002T131327Z",
+      "seen": false,
+      "delivered_count": 3329,
+      "gold_retrieved": 21,
+      "k3": {
+        "kept": 0.946,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.889,
+        "gold_lost": 1,
+        "unseen_gold_lost": 1
+      },
+      "k10": {
+        "kept": 0.859,
+        "gold_lost": 1,
+        "unseen_gold_lost": 1
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.813,
+        "gold_lost": 1,
+        "unseen_gold_lost": 1
+      },
+      "k5_guarded": {
+        "kept": 0.889,
+        "gold_lost": 1,
+        "unseen_gold_lost": 1,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Appenzeller-Herzog_2019",
+      "card": "lean-fixes-codex-noseed-20261002T133319Z",
+      "seen": false,
+      "delivered_count": 7282,
+      "gold_retrieved": 21,
+      "k3": {
+        "kept": 0.807,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.803,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.729,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.78,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.803,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Appenzeller-Herzog_2019",
+      "card": "lean-fixes-codex-noseed-20261002T134712Z",
+      "seen": false,
+      "delivered_count": 4098,
+      "gold_retrieved": 21,
+      "k3": {
+        "kept": 0.971,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.895,
+        "gold_lost": 1,
+        "unseen_gold_lost": 1
+      },
+      "k10": {
+        "kept": 0.868,
+        "gold_lost": 1,
+        "unseen_gold_lost": 1
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.794,
+        "gold_lost": 1,
+        "unseen_gold_lost": 1
+      },
+      "k5_guarded": {
+        "kept": 0.895,
+        "gold_lost": 1,
+        "unseen_gold_lost": 1,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Appenzeller-Herzog_2019",
+      "card": "lean-optimal-codex-noseed-20260927T103138Z",
+      "seen": false,
+      "delivered_count": 7586,
+      "gold_retrieved": 21,
+      "k3": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Appenzeller-Herzog_2019",
+      "card": "ours-codex-noseed-20260927T102549Z",
+      "seen": false,
+      "delivered_count": 4064,
+      "gold_retrieved": 21,
+      "k3": {
+        "kept": 0.992,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.926,
+        "gold_lost": 1,
+        "unseen_gold_lost": 1
+      },
+      "k10": {
+        "kept": 0.894,
+        "gold_lost": 1,
+        "unseen_gold_lost": 1
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.837,
+        "gold_lost": 1,
+        "unseen_gold_lost": 1
+      },
+      "k5_guarded": {
+        "kept": 0.926,
+        "gold_lost": 1,
+        "unseen_gold_lost": 1,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Bos_2018",
+      "card": "lean-optimal-codex-noseed-20260927T103822Z",
+      "seen": true,
+      "delivered_count": 5332,
+      "gold_retrieved": 9,
+      "k3": {
+        "kept": 0.999,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.998,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.998,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.929,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.998,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Bos_2018",
+      "card": "pubmed-search-builder-next-codex-noseed-20260927T002230Z",
+      "seen": true,
+      "delivered_count": 91189,
+      "gold_retrieved": 9,
+      "k3": {
+        "kept": 0.594,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.535,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.499,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.518,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.535,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Bos_2018",
+      "card": "pubmed-search-builder-next-codex-noseed-20260927T004221Z",
+      "seen": true,
+      "delivered_count": 83203,
+      "gold_retrieved": 9,
+      "k3": {
+        "kept": 0.371,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.292,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.269,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.266,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.292,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Bos_2018",
+      "card": "pubmed-search-builder-next-codex-noseed-20260927T200529Z",
+      "seen": true,
+      "delivered_count": 54341,
+      "gold_retrieved": 9,
+      "k3": {
+        "kept": 0.409,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.386,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.33,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.348,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.386,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Brouwer_2019",
+      "card": "lean-fixes-codex-noseed-20261002T131327Z",
+      "seen": false,
+      "delivered_count": 60709,
+      "gold_retrieved": 54,
+      "k3": {
+        "kept": 0.629,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.574,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.521,
+        "gold_lost": 1,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.348,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.574,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Brouwer_2019",
+      "card": "lean-fixes-codex-noseed-20261002T133810Z",
+      "seen": false,
+      "delivered_count": 26641,
+      "gold_retrieved": 53,
+      "k3": {
+        "kept": 0.798,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.718,
+        "gold_lost": 1,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.713,
+        "gold_lost": 1,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.344,
+        "gold_lost": 3,
+        "unseen_gold_lost": 1
+      },
+      "k5_guarded": {
+        "kept": 0.765,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 1
+      }
+    },
+    {
+      "topic": "Brouwer_2019",
+      "card": "lean-fixes-codex-noseed-20261002T135326Z",
+      "seen": false,
+      "delivered_count": 17535,
+      "gold_retrieved": 52,
+      "k3": {
+        "kept": 0.651,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.566,
+        "gold_lost": 1,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.559,
+        "gold_lost": 1,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.292,
+        "gold_lost": 3,
+        "unseen_gold_lost": 1
+      },
+      "k5_guarded": {
+        "kept": 0.638,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 1
+      }
+    },
+    {
+      "topic": "Brouwer_2019",
+      "card": "lean-optimal-codex-noseed-20260927T104249Z",
+      "seen": false,
+      "delivered_count": 17582,
+      "gold_retrieved": 52,
+      "k3": {
+        "kept": 0.757,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.73,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.722,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.576,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.73,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Brouwer_2019",
+      "card": "ours-codex-noseed-20260927T103947Z",
+      "seen": false,
+      "delivered_count": 17415,
+      "gold_retrieved": 52,
+      "k3": {
+        "kept": 0.663,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.576,
+        "gold_lost": 1,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.566,
+        "gold_lost": 1,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.307,
+        "gold_lost": 3,
+        "unseen_gold_lost": 1
+      },
+      "k5_guarded": {
+        "kept": 0.642,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 1
+      }
+    },
+    {
+      "topic": "CD010657",
+      "card": "lean-optimal-codex-noseed-20260927T093949Z",
+      "seen": false,
+      "delivered_count": 995,
+      "gold_retrieved": 35,
+      "k3": {
+        "kept": 0.999,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.998,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.997,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.932,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.998,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "CD010657",
+      "card": "ours-codex-noseed-20260927T093804Z",
+      "seen": false,
+      "delivered_count": 2061,
+      "gold_retrieved": 35,
+      "k3": {
+        "kept": 0.939,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.931,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.922,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.613,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.931,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "CD010657",
+      "card": "ours-codex-noseed-20260928T032137Z",
+      "seen": false,
+      "delivered_count": 1783,
+      "gold_retrieved": 35,
+      "k3": {
+        "kept": 0.948,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.939,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.933,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.608,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.939,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "CD011431",
+      "card": "lean-fixes-codex-noseed-20261002T131327Z",
+      "seen": false,
+      "delivered_count": 1453,
+      "gold_retrieved": 26,
+      "k3": {
+        "kept": 0.914,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.873,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.828,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.826,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.873,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "CD011431",
+      "card": "lean-fixes-codex-noseed-20261002T133957Z",
+      "seen": false,
+      "delivered_count": 1172,
+      "gold_retrieved": 26,
+      "k3": {
+        "kept": 0.959,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.945,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.912,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.9,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.945,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "CD011431",
+      "card": "lean-fixes-codex-noseed-20261002T140222Z",
+      "seen": false,
+      "delivered_count": 1102,
+      "gold_retrieved": 26,
+      "k3": {
+        "kept": 0.931,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.9,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.858,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.831,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.9,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "CD011431",
+      "card": "lean-optimal-codex-noseed-20260927T095703Z",
+      "seen": false,
+      "delivered_count": 1868,
+      "gold_retrieved": 26,
+      "k3": {
+        "kept": 0.759,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.739,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.732,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.623,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.739,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "CD011431",
+      "card": "ours-codex-noseed-20260927T095032Z",
+      "seen": false,
+      "delivered_count": 6100,
+      "gold_retrieved": 26,
+      "k3": {
+        "kept": 0.334,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.327,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.322,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.237,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.327,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "CD011926",
+      "card": "lean-optimal-claude-noseed-20260926T202829Z",
+      "seen": false,
+      "delivered_count": 2177,
+      "gold_retrieved": 29,
+      "k3": {
+        "kept": 0.669,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.542,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.43,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.482,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.542,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "CD011926",
+      "card": "lean-optimal-codex-noseed-20260927T095814Z",
+      "seen": false,
+      "delivered_count": 1992,
+      "gold_retrieved": 28,
+      "k3": {
+        "kept": 0.85,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.741,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.722,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.692,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.741,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "CD011926",
+      "card": "pubmed-search-builder-next-claude-noseed-20260926T201405Z",
+      "seen": false,
+      "delivered_count": 2054,
+      "gold_retrieved": 29,
+      "k3": {
+        "kept": 0.715,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.547,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.452,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.48,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.547,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "CD011926",
+      "card": "pubmed-search-builder-next-codex-noseed-20260927T002229Z",
+      "seen": false,
+      "delivered_count": 1484,
+      "gold_retrieved": 28,
+      "k3": {
+        "kept": 0.52,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.482,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.387,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.412,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.482,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Donners_2021",
+      "card": "lean-optimal-codex-noseed-20260927T105350Z",
+      "seen": false,
+      "delivered_count": 233,
+      "gold_retrieved": 15,
+      "k3": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Donners_2021",
+      "card": "ours-codex-noseed-20260927T105105Z",
+      "seen": false,
+      "delivered_count": 234,
+      "gold_retrieved": 15,
+      "k3": {
+        "kept": 0.983,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.979,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.974,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.658,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.979,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Donners_2021",
+      "card": "ours-codex-noseed-20260928T032644Z",
+      "seen": false,
+      "delivered_count": 242,
+      "gold_retrieved": 15,
+      "k3": {
+        "kept": 0.983,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.979,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.979,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.678,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.979,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Kwok_2020",
+      "card": "lean-fixes-codex-noseed-20261002T131327Z",
+      "seen": false,
+      "delivered_count": 1060,
+      "gold_retrieved": 110,
+      "k3": {
+        "kept": 0.999,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.999,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.997,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.744,
+        "gold_lost": 34,
+        "unseen_gold_lost": 25
+      },
+      "k5_guarded": {
+        "kept": 0.999,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Kwok_2020",
+      "card": "lean-fixes-codex-noseed-20261002T134415Z",
+      "seen": false,
+      "delivered_count": 8299,
+      "gold_retrieved": 108,
+      "k3": {
+        "kept": 0.76,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.76,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.76,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.409,
+        "gold_lost": 4,
+        "unseen_gold_lost": 3
+      },
+      "k5_guarded": {
+        "kept": 0.76,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Kwok_2020",
+      "card": "lean-fixes-codex-noseed-20261002T141345Z",
+      "seen": false,
+      "delivered_count": 773,
+      "gold_retrieved": 109,
+      "k3": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.801,
+        "gold_lost": 32,
+        "unseen_gold_lost": 23
+      },
+      "k5_guarded": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Kwok_2020",
+      "card": "lean-optimal-codex-noseed-20260927T110837Z",
+      "seen": false,
+      "delivered_count": 757,
+      "gold_retrieved": 105,
+      "k3": {
+        "kept": 0.999,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.999,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.996,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.787,
+        "gold_lost": 15,
+        "unseen_gold_lost": 9
+      },
+      "k5_guarded": {
+        "kept": 0.999,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Kwok_2020",
+      "card": "ours-codex-noseed-20260927T110601Z",
+      "seen": false,
+      "delivered_count": 824,
+      "gold_retrieved": 105,
+      "k3": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.518,
+        "gold_lost": 36,
+        "unseen_gold_lost": 25
+      },
+      "k5_guarded": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Liu_2023_VR_nursing",
+      "card": "lean-optimal-codex-noseed-20260927T101600Z",
+      "seen": false,
+      "delivered_count": 743,
+      "gold_retrieved": 6,
+      "k3": {
+        "kept": 0.895,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.886,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.855,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.847,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.886,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Liu_2023_VR_nursing",
+      "card": "ours-codex-noseed-20260927T101306Z",
+      "seen": false,
+      "delivered_count": 2605,
+      "gold_retrieved": 6,
+      "k3": {
+        "kept": 0.805,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.794,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.781,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.731,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.794,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+      "card": "lean-fixes-codex-noseed-20261002T131327Z",
+      "seen": true,
+      "delivered_count": 12410,
+      "gold_retrieved": 9,
+      "k3": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.451,
+        "gold_lost": 2,
+        "unseen_gold_lost": 1
+      },
+      "k5_guarded": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+      "card": "lean-fixes-codex-noseed-20261002T134307Z",
+      "seen": true,
+      "delivered_count": 11417,
+      "gold_retrieved": 8,
+      "k3": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.481,
+        "gold_lost": 1,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+      "card": "lean-fixes-codex-noseed-20261002T140005Z",
+      "seen": true,
+      "delivered_count": 36366,
+      "gold_retrieved": 9,
+      "k3": {
+        "kept": 0.539,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.484,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.462,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.316,
+        "gold_lost": 1,
+        "unseen_gold_lost": 1
+      },
+      "k5_guarded": {
+        "kept": 0.484,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+      "card": "lean-optimal-codex-noseed-20260927T091850Z",
+      "seen": true,
+      "delivered_count": 23405,
+      "gold_retrieved": 8,
+      "k3": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.435,
+        "gold_lost": 1,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Medeiros-2022-School-based food and nutrition education interventions for adolescent food consumption",
+      "card": "ours-codex-noseed-20260927T091850Z",
+      "seen": true,
+      "delivered_count": 25150,
+      "gold_retrieved": 8,
+      "k3": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.552,
+        "gold_lost": 1,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Meijboom_2021",
+      "card": "lean-optimal-codex-noseed-20260927T141818Z",
+      "seen": false,
+      "delivered_count": 522,
+      "gold_retrieved": 33,
+      "k3": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.854,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Meijboom_2021",
+      "card": "ours-codex-noseed-20260927T111214Z",
+      "seen": false,
+      "delivered_count": 443,
+      "gold_retrieved": 26,
+      "k3": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 1.0,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Meijboom_2021",
+      "card": "ours-codex-noseed-20260927T214456Z",
+      "seen": false,
+      "delivered_count": 1056,
+      "gold_retrieved": 35,
+      "k3": {
+        "kept": 0.58,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.58,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.58,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.403,
+        "gold_lost": 11,
+        "unseen_gold_lost": 7
+      },
+      "k5_guarded": {
+        "kept": 0.58,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Meijboom_2021",
+      "card": "ours-codex-noseed-20260927T222407Z",
+      "seen": false,
+      "delivered_count": 658,
+      "gold_retrieved": 35,
+      "k3": {
+        "kept": 0.912,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.895,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.886,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.498,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.895,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Muthu_2022",
+      "card": "lean-optimal-codex-noseed-20260927T143906Z",
+      "seen": false,
+      "delivered_count": 593,
+      "gold_retrieved": 6,
+      "k3": {
+        "kept": 0.985,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.973,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.963,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.939,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.973,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Muthu_2022",
+      "card": "ours-codex-noseed-20260927T142823Z",
+      "seen": false,
+      "delivered_count": 585,
+      "gold_retrieved": 6,
+      "k3": {
+        "kept": 0.981,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.973,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.957,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.925,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.973,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Oud_2018",
+      "card": "lean-optimal-codex-noseed-20260927T144524Z",
+      "seen": false,
+      "delivered_count": 1883,
+      "gold_retrieved": 17,
+      "k3": {
+        "kept": 0.493,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.489,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.476,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.316,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.489,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Oud_2018",
+      "card": "ours-codex-noseed-20260927T144256Z",
+      "seen": false,
+      "delivered_count": 1883,
+      "gold_retrieved": 17,
+      "k3": {
+        "kept": 0.561,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.549,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.544,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.406,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.549,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Smid_2020",
+      "card": "lean-fixes-codex-noseed-20261002T131327Z",
+      "seen": false,
+      "delivered_count": 13861,
+      "gold_retrieved": 13,
+      "k3": {
+        "kept": 0.392,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.355,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.342,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.194,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.355,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Smid_2020",
+      "card": "lean-fixes-codex-noseed-20261002T133634Z",
+      "seen": false,
+      "delivered_count": 2600,
+      "gold_retrieved": 13,
+      "k3": {
+        "kept": 0.827,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.749,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.732,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.405,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.749,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Smid_2020",
+      "card": "lean-fixes-codex-noseed-20261002T135702Z",
+      "seen": false,
+      "delivered_count": 2021,
+      "gold_retrieved": 13,
+      "k3": {
+        "kept": 0.761,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.673,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.645,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.412,
+        "gold_lost": 2,
+        "unseen_gold_lost": 2
+      },
+      "k5_guarded": {
+        "kept": 0.673,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Smid_2020",
+      "card": "lean-optimal-codex-noseed-20260927T145608Z",
+      "seen": false,
+      "delivered_count": 1075,
+      "gold_retrieved": 12,
+      "k3": {
+        "kept": 0.91,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.897,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.839,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.771,
+        "gold_lost": 1,
+        "unseen_gold_lost": 1
+      },
+      "k5_guarded": {
+        "kept": 0.897,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Smid_2020",
+      "card": "ours-codex-noseed-20260927T145334Z",
+      "seen": false,
+      "delivered_count": 870,
+      "gold_retrieved": 9,
+      "k3": {
+        "kept": 0.856,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.745,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.71,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.503,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.745,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Smid_2020",
+      "card": "ours-codex-noseed-20260927T214454Z",
+      "seen": false,
+      "delivered_count": 1430,
+      "gold_retrieved": 13,
+      "k3": {
+        "kept": 0.85,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.738,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.713,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.413,
+        "gold_lost": 1,
+        "unseen_gold_lost": 1
+      },
+      "k5_guarded": {
+        "kept": 0.738,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Smid_2020",
+      "card": "ours-codex-noseed-20260927T221214Z",
+      "seen": false,
+      "delivered_count": 2184,
+      "gold_retrieved": 13,
+      "k3": {
+        "kept": 0.871,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.834,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.758,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.528,
+        "gold_lost": 1,
+        "unseen_gold_lost": 1
+      },
+      "k5_guarded": {
+        "kept": 0.834,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Welling_2021",
+      "card": "lean-fixes-codex-noseed-20261002T131327Z",
+      "seen": true,
+      "delivered_count": 128250,
+      "gold_retrieved": 53,
+      "k3": {
+        "kept": 0.867,
+        "gold_lost": 1,
+        "unseen_gold_lost": 1
+      },
+      "k5": {
+        "kept": 0.795,
+        "gold_lost": 1,
+        "unseen_gold_lost": 1
+      },
+      "k10": {
+        "kept": 0.768,
+        "gold_lost": 1,
+        "unseen_gold_lost": 1
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.775,
+        "gold_lost": 1,
+        "unseen_gold_lost": 1
+      },
+      "k5_guarded": {
+        "kept": 0.795,
+        "gold_lost": 1,
+        "unseen_gold_lost": 1,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Welling_2021",
+      "card": "lean-fixes-codex-noseed-20261002T133352Z",
+      "seen": true,
+      "delivered_count": 126906,
+      "gold_retrieved": 53,
+      "k3": {
+        "kept": 0.828,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.794,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.775,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.776,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.794,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Welling_2021",
+      "card": "lean-fixes-codex-noseed-20261002T135132Z",
+      "seen": true,
+      "delivered_count": 121526,
+      "gold_retrieved": 53,
+      "k3": {
+        "kept": 0.797,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.773,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.766,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.754,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.773,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Welling_2021",
+      "card": "lean-optimal-codex-noseed-20260927T150952Z",
+      "seen": true,
+      "delivered_count": 20990,
+      "gold_retrieved": 44,
+      "k3": {
+        "kept": 0.724,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.682,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.648,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.52,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.682,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Welling_2021",
+      "card": "ours-codex-noseed-20260927T145733Z",
+      "seen": true,
+      "delivered_count": 155667,
+      "gold_retrieved": 53,
+      "k3": {
+        "kept": 0.81,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.743,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.69,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.709,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.743,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "Welling_2021",
+      "card": "ours-codex-noseed-20260928T032151Z",
+      "seen": true,
+      "delivered_count": 13797,
+      "gold_retrieved": 48,
+      "k3": {
+        "kept": 0.791,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.755,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.686,
+        "gold_lost": 1,
+        "unseen_gold_lost": 1
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.729,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.755,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "gao-2026-Immune checkpoint inhibitors",
+      "card": "lean-optimal-codex-noseed-20260927T093504Z",
+      "seen": false,
+      "delivered_count": 1222,
+      "gold_retrieved": 8,
+      "k3": {
+        "kept": 0.734,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.649,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.538,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.583,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.649,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "gao-2026-Immune checkpoint inhibitors",
+      "card": "ours-codex-noseed-20260927T091850Z",
+      "seen": false,
+      "delivered_count": 1591,
+      "gold_retrieved": 11,
+      "k3": {
+        "kept": 0.962,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.962,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.96,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.957,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.962,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "gao-2026-Immune checkpoint inhibitors",
+      "card": "ours-codex-noseed-20260928T030852Z",
+      "seen": false,
+      "delivered_count": 785,
+      "gold_retrieved": 11,
+      "k3": {
+        "kept": 0.615,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.614,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.594,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.494,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.614,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "van_Dis_2020",
+      "card": "lean-optimal-codex-noseed-20260927T151732Z",
+      "seen": true,
+      "delivered_count": 10174,
+      "gold_retrieved": 36,
+      "k3": {
+        "kept": 0.705,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.666,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.629,
+        "gold_lost": 1,
+        "unseen_gold_lost": 1
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.613,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.666,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "van_Dis_2020",
+      "card": "ours-codex-noseed-20260927T151508Z",
+      "seen": true,
+      "delivered_count": 15795,
+      "gold_retrieved": 57,
+      "k3": {
+        "kept": 0.64,
+        "gold_lost": 2,
+        "unseen_gold_lost": 2
+      },
+      "k5": {
+        "kept": 0.616,
+        "gold_lost": 2,
+        "unseen_gold_lost": 2
+      },
+      "k10": {
+        "kept": 0.591,
+        "gold_lost": 2,
+        "unseen_gold_lost": 2
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.544,
+        "gold_lost": 3,
+        "unseen_gold_lost": 2
+      },
+      "k5_guarded": {
+        "kept": 0.616,
+        "gold_lost": 2,
+        "unseen_gold_lost": 2,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "van_Dis_2020",
+      "card": "ours-codex-noseed-20260928T030852Z",
+      "seen": true,
+      "delivered_count": 16407,
+      "gold_retrieved": 57,
+      "k3": {
+        "kept": 0.674,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.639,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.602,
+        "gold_lost": 1,
+        "unseen_gold_lost": 1
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.574,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.639,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "van_de_Schoot_2018",
+      "card": "lean-fixes-codex-noseed-20261002T131327Z",
+      "seen": true,
+      "delivered_count": 32074,
+      "gold_retrieved": 35,
+      "k3": {
+        "kept": 0.701,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.682,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.442,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.661,
+        "gold_lost": 1,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.682,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "van_de_Schoot_2018",
+      "card": "lean-fixes-codex-noseed-20261002T132519Z",
+      "seen": true,
+      "delivered_count": 32074,
+      "gold_retrieved": 35,
+      "k3": {
+        "kept": 0.704,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.701,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.568,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.683,
+        "gold_lost": 1,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.701,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "van_de_Schoot_2018",
+      "card": "lean-fixes-codex-noseed-20261002T133959Z",
+      "seen": true,
+      "delivered_count": 56663,
+      "gold_retrieved": 36,
+      "k3": {
+        "kept": 0.648,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.577,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.574,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.548,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.577,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "van_de_Schoot_2018",
+      "card": "lean-optimal-codex-noseed-20260927T152805Z",
+      "seen": true,
+      "delivered_count": 7050,
+      "gold_retrieved": 35,
+      "k3": {
+        "kept": 0.736,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.645,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.595,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.59,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.645,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    },
+    {
+      "topic": "van_de_Schoot_2018",
+      "card": "ours-codex-noseed-20260927T152747Z",
+      "seen": true,
+      "delivered_count": 32074,
+      "gold_retrieved": 35,
+      "k3": {
+        "kept": 0.714,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5": {
+        "kept": 0.714,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k10": {
+        "kept": 0.701,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_weak_qualifier": {
+        "kept": 0.697,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0
+      },
+      "k5_guarded": {
+        "kept": 0.714,
+        "gold_lost": 0,
+        "unseen_gold_lost": 0,
+        "terms_refused": 0
+      }
+    }
+  ]
+}
