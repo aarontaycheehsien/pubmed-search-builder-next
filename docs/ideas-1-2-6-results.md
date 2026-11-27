@@ -155,3 +155,29 @@ restructured one at a time, and a change is kept only if no known record is lost
 - The guard is what makes the rule safe. With good qualifiers it caught 3 of 9 losses at the cost
   of 3 refused terms; the rest were records the agent would not have known. With weak qualifiers
   it cut the loss from 161 to 15 by refusing 20 restructures, and still kept 61% of records.
+
+## Agent runs with `psb restructure` (development topics, a cheaper model, one run per arm)
+
+Patched skill: a22d9dd (rule in SKILL.md only), then e1729e1 (rule also named in `psb eval`'s
+large-result advice, the progress summary and the workload rule in `scope.md`). Baseline: 8df69b9.
+Scorecards are under `evals/results/<topic>/` as `patch-cheap`, `patch2-cheap` and `main-cheap`
+(model field removed). Many runs stopped on the account's five-hour and weekly usage limits; those
+cards were deleted, so several topics have no pair.
+
+| Topic | Baseline | Patch v1 (a22d9dd) | Patch v2 (e1729e1) | Restructure used (v2) |
+|---|---|---|---|---|
+| van_de_Schoot_2018 | 94.7%, 14,450 | 94.7%, 33,577 | 94.7%, 10,336 | dry run only (10,336 to 10,234), not applied |
+| Bos_2018 | 100%, 7,947 | 100%, 9,540 | 100%, 22,482 | yes: 29,664 to 22,482 (outcome qualifier) |
+| Welling_2021 | 96.2%, 20,951 | none | 98.1%, 27,450 | yes, twice: 124,269 to 98,327 before other cuts |
+| Brouwer_2019 | none | 96.3%, 18,503 | none | |
+| Medeiros-2022 | none | none | none | |
+
+- With the rule only in SKILL.md, no agent used the command. Named in `psb eval`'s output, the
+  agents used it in all three v2 runs.
+- It did not yet help. On Bos the agent restructured instead of AND-ing the outcome block, which the
+  baseline agent AND-ed with no loss (7,947 records): the instruction "AND the block only if the
+  restructured result is still too large" let the agent stop at a larger result. On Welling the
+  patched run kept one more gold record (52 against 51 of 53) for 31% more records. With one run
+  per arm and runs that vary this much, none of these differences is evidence either way.
+- Next change to test: after restructuring, still measure the qualifier as an optional block and
+  take whichever loses no known record at the smaller count, then three or more runs per arm.
