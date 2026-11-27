@@ -97,3 +97,38 @@ anyway, and fails on the large cuts where an estimate is most needed. A random s
 have shown any loss with a median probability of about 0.03. Next: train a real classifier on
 titles and abstracts of the known records against a background sample, and fetch and score a
 large random sample of each big cut, rather than relying on PubMed's relevance order.
+
+## Held-out (frozen) suite: `evals/experiments/ideas_heldout.py`
+
+Qualifiers and the grid were committed (3df46a1) before the first run; every topic touched is in
+`heldout-ledger.jsonl`; only aggregate counts are kept
+(`evals/experiments/results/ideas_heldout-2026-11-27.json`). healthcare-nudging is reported
+separately because its source review was read while these ideas were developed.
+
+### Idea 6 holds on held-out topics
+
+| Topics | Strategies | Hybrid: gold lost | Records kept (pooled) | AND qualifier outright: gold lost, records kept |
+|---|---:|---:|---:|---:|
+| Nine blind held-out topics | 69 | 0 of 1,623 | 71% | 19 (1.2%), 44% |
+| healthcare-nudging (not blind) | 8 | 5 of 348 (1.4%) | 50% | 18 (5.2%), 39% |
+
+On the nine blind topics the hybrid lost no gold record in any of 69 strategies and removed 29% of
+records, against about 510 records per gold record in the delivered strategies. Without the title
+tier one gold record was lost. AND-ing the qualifier outright lost gold on two Cohen topics and
+social prescribing.
+
+### Idea 2: mixed
+
+Seven cuts on blind topics lost gold (1 to 6 records). The top 200 of the text ranking held a lost
+record in 4: all three cuts of under 1,000 records (133, 334 and 965 records), and two of four larger
+ones (Estrogens, 4 of 6 lost records in the top 200 of a 3,568-record cut; social prescribing, the
+one lost record in the top 50 of 33,763). Two larger cuts (1,149 and 3,342 records) showed nothing.
+Better than on the development topics for large cuts, but not reliable enough to justify a cut alone.
+
+### Idea 1: no gain on the one held-out grid
+
+The social-prescribing grid (six component rows by an older-adult and outcome column, about 1,750
+records outside each strategy) found none of the six misses in any of the four strategies that
+missed gold. Its rows named programme types; the misses evidently describe social prescribing in
+other terms. The grid works when its rows follow how studies describe themselves, which a grid
+written from the question alone cannot guarantee.

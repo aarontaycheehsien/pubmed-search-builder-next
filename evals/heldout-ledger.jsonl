@@ -110,3 +110,13 @@
 {"at": "20261126T123319Z", "topic": "healthcare-nudging", "command": "score", "condition": "noseed"}
 {"at": "20261126T123330Z", "topic": "healthcare-nudging", "command": "score", "condition": "noseed"}
 {"at": "20261126T232808Z", "topic": "Cohen_2006_ACEInhibitors", "command": "experiment ideas_heldout (ideas 6 and 2)", "kept": "aggregate counts only"}
+{"at": "20261126T233648Z", "topic": "Cohen_2006_ADHD", "command": "experiment ideas_heldout (ideas 6 and 2)", "kept": "aggregate counts only"}
+{"at": "20261126T234126Z", "topic": "Cohen_2006_Antihistamines", "command": "experiment ideas_heldout (ideas 6 and 2)", "kept": "aggregate counts only"}
+{"at": "20261126T234504Z", "topic": "Cohen_2006_Estrogens", "command": "experiment ideas_heldout (ideas 6 and 2)", "kept": "aggregate counts only"}
+{"at": "20261126T234931Z", "topic": "Cohen_2006_UrinaryIncontinence", "command": "experiment ideas_heldout (ideas 6 and 2)", "kept": "aggregate counts only"}
+{"at": "20261126T235343Z", "topic": "housing-first-criminal-justice", "command": "experiment ideas_heldout (ideas 6 and 2)", "kept": "aggregate counts only"}
+{"at": "20261126T235546Z", "topic": "school-restorative-practice", "command": "experiment ideas_heldout (ideas 6 and 2)", "kept": "aggregate counts only"}
+{"at": "20261126T235827Z", "topic": "social-prescribing-older-adults", "command": "experiment ideas_heldout (ideas 6 and 2)", "kept": "aggregate counts only"}
+{"at": "20261127T000123Z", "topic": "work-directed-return-to-work", "command": "experiment ideas_heldout (ideas 6 and 2)", "kept": "aggregate counts only"}
+{"at": "20261127T001148Z", "topic": "healthcare-nudging", "command": "experiment ideas_heldout (ideas 6 and 2)", "kept": "aggregate counts only"}
+{"at": "20261127T001925Z", "topic": "social-prescribing-older-adults", "command": "experiment ideas_heldout (idea 1 grid)", "kept": "aggregate counts only"}

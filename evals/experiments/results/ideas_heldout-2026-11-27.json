@@ -1,0 +1,2543 @@
+{
+  "date": "2026-11-26",
+  "idea_6_and_2": [
+    {
+      "topic": "Cohen_2006_ACEInhibitors",
+      "blind": true,
+      "strategies": [
+        {
+          "card": "lean-fixes-codex-noseed-20261002T154804Z",
+          "gold": 41,
+          "delivered": {
+            "count": 19840,
+            "gold_retrieved": 41
+          },
+          "hybrid": {
+            "count": 17022,
+            "gold_retrieved": 41
+          },
+          "hybrid_no_title": {
+            "count": 15080,
+            "gold_retrieved": 41
+          },
+          "and_qualifier": {
+            "count": 10936,
+            "gold_retrieved": 41
+          },
+          "generic_terms": [
+            "\"ACE inhibitor*\"[tiab]",
+            "\"Hypertension\"[Mesh]",
+            "\"Captopril\"[Mesh]",
+            "captopril[tiab]",
+            "hypertens*[tiab]"
+          ]
+        },
+        {
+          "card": "lean-fixes-codex-noseed-20261002T162112Z",
+          "gold": 41,
+          "delivered": {
+            "count": 22806,
+            "gold_retrieved": 41
+          },
+          "hybrid": {
+            "count": 18410,
+            "gold_retrieved": 41
+          },
+          "hybrid_no_title": {
+            "count": 18003,
+            "gold_retrieved": 41
+          },
+          "and_qualifier": {
+            "count": 11733,
+            "gold_retrieved": 41
+          },
+          "generic_terms": [
+            "Angiotensin-Converting Enzyme Inhibitors[pa]",
+            "\"ACE inhibitor*\"[tiab]",
+            "Cardiovascular Diseases[Mesh]",
+            "Kidney Diseases[Mesh]",
+            "captopril[tiab]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T072330Z",
+          "gold": 41,
+          "delivered": {
+            "count": 21375,
+            "gold_retrieved": 41
+          },
+          "hybrid": {
+            "count": 18443,
+            "gold_retrieved": 41
+          },
+          "hybrid_no_title": {
+            "count": 17123,
+            "gold_retrieved": 41
+          },
+          "and_qualifier": {
+            "count": 11198,
+            "gold_retrieved": 41
+          },
+          "generic_terms": [
+            "\"Kidney Diseases\"[Mesh]",
+            "\"Angiotensin-Converting Enzyme Inhibitors\"[Pharmacological Action]",
+            "\"Hypertension\"[Mesh]",
+            "captopril[tiab]",
+            "hypertens*[tiab]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T074837Z",
+          "gold": 41,
+          "delivered": {
+            "count": 20844,
+            "gold_retrieved": 41
+          },
+          "hybrid": {
+            "count": 16969,
+            "gold_retrieved": 41
+          },
+          "hybrid_no_title": {
+            "count": 14546,
+            "gold_retrieved": 41
+          },
+          "and_qualifier": {
+            "count": 10987,
+            "gold_retrieved": 41
+          },
+          "generic_terms": [
+            "\"Hypertension\"[Mesh]",
+            "\"Kidney Diseases\"[Mesh]",
+            "\"Hypertension\"[tiab]",
+            "\"Heart Failure\"[tiab]",
+            "\"Heart Failure\"[Mesh]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T082134Z",
+          "gold": 41,
+          "delivered": {
+            "count": 20591,
+            "gold_retrieved": 41
+          },
+          "hybrid": {
+            "count": 16111,
+            "gold_retrieved": 41
+          },
+          "hybrid_no_title": {
+            "count": 14280,
+            "gold_retrieved": 41
+          },
+          "and_qualifier": {
+            "count": 11013,
+            "gold_retrieved": 41
+          },
+          "generic_terms": [
+            "\"Angiotensin-Converting Enzyme Inhibitors\"[Mesh]",
+            "\"captopril\"[tiab]",
+            "\"Hypertension\"[Mesh]",
+            "\"ACE Inhibitors\"[tiab]",
+            "\"enalapril\"[tiab]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T071818Z",
+          "gold": 41,
+          "delivered": {
+            "count": 23243,
+            "gold_retrieved": 41
+          },
+          "hybrid": {
+            "count": 19050,
+            "gold_retrieved": 41
+          },
+          "hybrid_no_title": {
+            "count": 17299,
+            "gold_retrieved": 41
+          },
+          "and_qualifier": {
+            "count": 11877,
+            "gold_retrieved": 41
+          },
+          "generic_terms": [
+            "\"Angiotensin-Converting Enzyme Inhibitors\"[pa]",
+            "\"ACE inhibitors\"[tiab]",
+            "\"angiotensin converting enzyme inhibitors\"[tiab]",
+            "hypertens*[tiab]",
+            "\"Hypertension\"[Mesh]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T075738Z",
+          "gold": 41,
+          "delivered": {
+            "count": 26424,
+            "gold_retrieved": 41
+          },
+          "hybrid": {
+            "count": 23115,
+            "gold_retrieved": 41
+          },
+          "hybrid_no_title": {
+            "count": 20534,
+            "gold_retrieved": 41
+          },
+          "and_qualifier": {
+            "count": 12830,
+            "gold_retrieved": 41
+          },
+          "generic_terms": [
+            "captopril[tiab]",
+            "\"Captopril\"[Mesh]",
+            "\"Enalapril\"[Mesh]",
+            "enalapril[tiab]",
+            "\"Ramipril\"[Mesh]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T081640Z",
+          "gold": 41,
+          "delivered": {
+            "count": 16947,
+            "gold_retrieved": 41
+          },
+          "hybrid": {
+            "count": 13387,
+            "gold_retrieved": 41
+          },
+          "hybrid_no_title": {
+            "count": 11435,
+            "gold_retrieved": 41
+          },
+          "and_qualifier": {
+            "count": 9452,
+            "gold_retrieved": 41
+          },
+          "generic_terms": [
+            "ACE inhibitor*[tiab]",
+            "\"Hypertension\"[Mesh]",
+            "\"Captopril\"[Mesh]",
+            "captopril[tiab]",
+            "\"hypertension\"[tiab]"
+          ]
+        }
+      ],
+      "cuts": [
+        {
+          "cut": "AND the qualifier",
+          "records_cut": 7495,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        {
+          "cut": "drop the term with rank 1 by records only it retrieves",
+          "records_cut": 3342,
+          "gold_lost_true": 1,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.003
+        },
+        {
+          "cut": "drop the term with rank 2 by records only it retrieves",
+          "records_cut": 1735,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        {
+          "cut": "drop the term with rank 3 by records only it retrieves",
+          "records_cut": 698,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        }
+      ]
+    },
+    {
+      "topic": "Cohen_2006_ADHD",
+      "blind": true,
+      "strategies": [
+        {
+          "card": "lean-fixes-codex-noseed-20261002T154804Z",
+          "gold": 20,
+          "delivered": {
+            "count": 2701,
+            "gold_retrieved": 19
+          },
+          "hybrid": {
+            "count": 2023,
+            "gold_retrieved": 19
+          },
+          "hybrid_no_title": {
+            "count": 1992,
+            "gold_retrieved": 19
+          },
+          "and_qualifier": {
+            "count": 1253,
+            "gold_retrieved": 19
+          },
+          "generic_terms": [
+            "Attention Deficit Disorder with Hyperactivity[Mesh]",
+            "Methylphenidate[Mesh]",
+            "pharmacologic*[tiab]",
+            "stimulant*[tiab]",
+            "Amphetamines[Mesh]"
+          ]
+        },
+        {
+          "card": "lean-fixes-codex-noseed-20261002T161109Z",
+          "gold": 20,
+          "delivered": {
+            "count": 4823,
+            "gold_retrieved": 19
+          },
+          "hybrid": {
+            "count": 3317,
+            "gold_retrieved": 19
+          },
+          "hybrid_no_title": {
+            "count": 3242,
+            "gold_retrieved": 19
+          },
+          "and_qualifier": {
+            "count": 2551,
+            "gold_retrieved": 19
+          },
+          "generic_terms": [
+            "ADD[tiab]",
+            "drug*[tiab]",
+            "Attention Deficit Disorder with Hyperactivity[Mesh]",
+            "medication*[tiab]",
+            "Methylphenidate[Mesh]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T072330Z",
+          "gold": 20,
+          "delivered": {
+            "count": 2620,
+            "gold_retrieved": 19
+          },
+          "hybrid": {
+            "count": 1647,
+            "gold_retrieved": 19
+          },
+          "hybrid_no_title": {
+            "count": 1582,
+            "gold_retrieved": 19
+          },
+          "and_qualifier": {
+            "count": 1154,
+            "gold_retrieved": 19
+          },
+          "generic_terms": [
+            "\"Attention Deficit Disorder with Hyperactivity\"[Mesh]",
+            "\"Attention Deficit Disorder with Hyperactivity/drug therapy\"[Mesh]",
+            "stimulant*[tiab]",
+            "\"Methylphenidate\"[Mesh]",
+            "psychostimulant*[tiab]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T075606Z",
+          "gold": 20,
+          "delivered": {
+            "count": 2960,
+            "gold_retrieved": 19
+          },
+          "hybrid": {
+            "count": 2502,
+            "gold_retrieved": 19
+          },
+          "hybrid_no_title": {
+            "count": 2452,
+            "gold_retrieved": 19
+          },
+          "and_qualifier": {
+            "count": 1417,
+            "gold_retrieved": 19
+          },
+          "generic_terms": [
+            "\"Drug Therapy\"[Mesh]",
+            "\"Central Nervous System Stimulants\"[Mesh:noexp]",
+            "\"Methylphenidate\"[Supplementary Concept]",
+            "pharmacolog*[tiab]",
+            "stimulant*[tiab]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T082120Z",
+          "gold": 20,
+          "delivered": {
+            "count": 2729,
+            "gold_retrieved": 19
+          },
+          "hybrid": {
+            "count": 1753,
+            "gold_retrieved": 19
+          },
+          "hybrid_no_title": {
+            "count": 1567,
+            "gold_retrieved": 19
+          },
+          "and_qualifier": {
+            "count": 1225,
+            "gold_retrieved": 19
+          },
+          "generic_terms": [
+            "\"Attention Deficit Disorder with Hyperactivity\"[Mesh]",
+            "\"Attention Deficit Disorder with Hyperactivity/drug therapy\"[Mesh]",
+            "medication*[tiab]",
+            "methylphenidat*[tiab]",
+            "stimulant*[tiab]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T071818Z",
+          "gold": 20,
+          "delivered": {
+            "count": 3728,
+            "gold_retrieved": 19
+          },
+          "hybrid": {
+            "count": 2579,
+            "gold_retrieved": 19
+          },
+          "hybrid_no_title": {
+            "count": 2417,
+            "gold_retrieved": 19
+          },
+          "and_qualifier": {
+            "count": 1705,
+            "gold_retrieved": 19
+          },
+          "generic_terms": [
+            "\"Attention Deficit Disorder with Hyperactivity\"[Mesh]",
+            "drug*[tiab]",
+            "(attention[tiab] AND deficit*[tiab])",
+            "hyperkinetic*[tiab]",
+            "medicat*[tiab]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T074003Z",
+          "gold": 20,
+          "delivered": {
+            "count": 5145,
+            "gold_retrieved": 19
+          },
+          "hybrid": {
+            "count": 3691,
+            "gold_retrieved": 19
+          },
+          "hybrid_no_title": {
+            "count": 3552,
+            "gold_retrieved": 19
+          },
+          "and_qualifier": {
+            "count": 2673,
+            "gold_retrieved": 19
+          },
+          "generic_terms": [
+            "ADD[tiab]",
+            "\"Drug Therapy\"[Mesh]",
+            "\"Attention Deficit Disorder with Hyperactivity\"[Mesh]",
+            "medication*[tiab]",
+            "hyperkinetic[tiab]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T082222Z",
+          "gold": 20,
+          "delivered": {
+            "count": 2745,
+            "gold_retrieved": 19
+          },
+          "hybrid": {
+            "count": 1980,
+            "gold_retrieved": 19
+          },
+          "hybrid_no_title": {
+            "count": 1862,
+            "gold_retrieved": 19
+          },
+          "and_qualifier": {
+            "count": 1258,
+            "gold_retrieved": 19
+          },
+          "generic_terms": [
+            "\"Attention Deficit Disorder with Hyperactivity\"[Mesh]",
+            "hyperkinetic[tiab]",
+            "medication*[tiab]",
+            "\"Methylphenidate\"[Mesh]",
+            "\"Drug Therapy\"[Mesh]"
+          ]
+        }
+      ],
+      "cuts": [
+        {
+          "cut": "AND the qualifier",
+          "records_cut": 1487,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        {
+          "cut": "drop the term with rank 1 by records only it retrieves",
+          "records_cut": 679,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        {
+          "cut": "drop the term with rank 2 by records only it retrieves",
+          "records_cut": 283,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        {
+          "cut": "drop the term with rank 3 by records only it retrieves",
+          "records_cut": 225,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        }
+      ]
+    },
+    {
+      "topic": "Cohen_2006_Antihistamines",
+      "blind": true,
+      "strategies": [
+        {
+          "card": "lean-fixes-codex-noseed-20261002T154804Z",
+          "gold": 16,
+          "delivered": {
+            "count": 2147,
+            "gold_retrieved": 14
+          },
+          "hybrid": {
+            "count": 1627,
+            "gold_retrieved": 14
+          },
+          "hybrid_no_title": {
+            "count": 1422,
+            "gold_retrieved": 14
+          },
+          "and_qualifier": {
+            "count": 1228,
+            "gold_retrieved": 13
+          },
+          "generic_terms": [
+            "antihistamin*[tiab]",
+            "wheal*[tiab]",
+            "\"Urticaria\"[Mesh]",
+            "urticaria[tiab]",
+            "\"H1 receptor antagonist*\"[tiab]"
+          ]
+        },
+        {
+          "card": "lean-fixes-codex-noseed-20261002T161927Z",
+          "gold": 16,
+          "delivered": {
+            "count": 951,
+            "gold_retrieved": 13
+          },
+          "hybrid": {
+            "count": 888,
+            "gold_retrieved": 13
+          },
+          "hybrid_no_title": {
+            "count": 872,
+            "gold_retrieved": 13
+          },
+          "and_qualifier": {
+            "count": 739,
+            "gold_retrieved": 12
+          },
+          "generic_terms": [
+            "\"allergic rhinitis\"[tiab]",
+            "\"Urticaria\"[Mesh]",
+            "\"Terfenadine\"[Mesh]",
+            "\"Cetirizine\"[Mesh]",
+            "terfenadine[tiab]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T083814Z",
+          "gold": 16,
+          "delivered": {
+            "count": 970,
+            "gold_retrieved": 13
+          },
+          "hybrid": {
+            "count": 923,
+            "gold_retrieved": 13
+          },
+          "hybrid_no_title": {
+            "count": 858,
+            "gold_retrieved": 12
+          },
+          "and_qualifier": {
+            "count": 767,
+            "gold_retrieved": 12
+          },
+          "generic_terms": [
+            "terfenadine[tiab]",
+            "cetirizine[tiab]",
+            "loratadine[tiab]",
+            "astemizole[tiab]",
+            "\"Rhinitis, Allergic, Seasonal\"[Mesh]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T090335Z",
+          "gold": 16,
+          "delivered": {
+            "count": 2153,
+            "gold_retrieved": 13
+          },
+          "hybrid": {
+            "count": 1637,
+            "gold_retrieved": 13
+          },
+          "hybrid_no_title": {
+            "count": 1381,
+            "gold_retrieved": 13
+          },
+          "and_qualifier": {
+            "count": 1189,
+            "gold_retrieved": 12
+          },
+          "generic_terms": [
+            "antihistamin*[tiab]",
+            "\"ketotifen\"[tiab]",
+            "\"Histamine H1 Antagonists, Non-Sedating\"[Pharmacological Action]",
+            "\"terfenadine\"[tiab]",
+            "\"azelastine\"[tiab]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T092404Z",
+          "gold": 16,
+          "delivered": {
+            "count": 955,
+            "gold_retrieved": 13
+          },
+          "hybrid": {
+            "count": 955,
+            "gold_retrieved": 13
+          },
+          "hybrid_no_title": {
+            "count": 955,
+            "gold_retrieved": 13
+          },
+          "and_qualifier": {
+            "count": 738,
+            "gold_retrieved": 12
+          },
+          "generic_terms": []
+        },
+        {
+          "card": "ours-codex-noseed-20260928T071837Z",
+          "gold": 16,
+          "delivered": {
+            "count": 2241,
+            "gold_retrieved": 14
+          },
+          "hybrid": {
+            "count": 1694,
+            "gold_retrieved": 14
+          },
+          "hybrid_no_title": {
+            "count": 1463,
+            "gold_retrieved": 14
+          },
+          "and_qualifier": {
+            "count": 1269,
+            "gold_retrieved": 13
+          },
+          "generic_terms": [
+            "antihistamine*[tiab]",
+            "antihistaminic*[tiab]",
+            "wheal*[tiab]",
+            "\"Urticaria\"[Mesh]",
+            "urticari*[tiab]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T073951Z",
+          "gold": 16,
+          "delivered": {
+            "count": 1719,
+            "gold_retrieved": 13
+          },
+          "hybrid": {
+            "count": 1365,
+            "gold_retrieved": 13
+          },
+          "hybrid_no_title": {
+            "count": 1253,
+            "gold_retrieved": 13
+          },
+          "and_qualifier": {
+            "count": 1069,
+            "gold_retrieved": 12
+          },
+          "generic_terms": [
+            "antihistamine*[tiab]",
+            "\"Urticaria\"[Mesh]",
+            "urticaria[tiab]",
+            "\"H1 receptor antagonist*\"[tiab]",
+            "\"Terfenadine\"[Mesh]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T075845Z",
+          "gold": 16,
+          "delivered": {
+            "count": 2233,
+            "gold_retrieved": 14
+          },
+          "hybrid": {
+            "count": 1695,
+            "gold_retrieved": 14
+          },
+          "hybrid_no_title": {
+            "count": 1467,
+            "gold_retrieved": 14
+          },
+          "and_qualifier": {
+            "count": 1268,
+            "gold_retrieved": 13
+          },
+          "generic_terms": [
+            "antihistamin*[tiab]",
+            "wheal*[tiab]",
+            "urticari*[tiab]",
+            "\"Urticaria\"[Mesh]",
+            "rhinit*[tiab]"
+          ]
+        }
+      ],
+      "cuts": [
+        {
+          "cut": "AND the qualifier",
+          "records_cut": 965,
+          "gold_lost_true": 1,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 1,
+          "random_10_shows_any_loss_probability": 0.01
+        },
+        {
+          "cut": "drop the term with rank 1 by records only it retrieves",
+          "records_cut": 1033,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        {
+          "cut": "drop the term with rank 2 by records only it retrieves",
+          "records_cut": 133,
+          "gold_lost_true": 1,
+          "lost_found_in_top_50": 1,
+          "lost_found_in_top_200": 1,
+          "random_10_shows_any_loss_probability": 0.075
+        },
+        {
+          "cut": "drop the term with rank 3 by records only it retrieves",
+          "records_cut": 100,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        }
+      ]
+    },
+    {
+      "topic": "Cohen_2006_Estrogens",
+      "blind": true,
+      "strategies": [
+        {
+          "card": "lean-fixes-codex-noseed-20261002T154804Z",
+          "gold": 80,
+          "delivered": {
+            "count": 142007,
+            "gold_retrieved": 80
+          },
+          "hybrid": {
+            "count": 113894,
+            "gold_retrieved": 80
+          },
+          "hybrid_no_title": {
+            "count": 96659,
+            "gold_retrieved": 80
+          },
+          "and_qualifier": {
+            "count": 40401,
+            "gold_retrieved": 80
+          },
+          "generic_terms": [
+            "estrogen*[tiab]",
+            "oestrogen*[tiab]",
+            "estradiol[tiab]",
+            "Estradiol Congeners[Mesh]",
+            "hormone therap*[tiab]"
+          ]
+        },
+        {
+          "card": "lean-fixes-codex-noseed-20261002T162847Z",
+          "gold": 80,
+          "delivered": {
+            "count": 30744,
+            "gold_retrieved": 77
+          },
+          "hybrid": {
+            "count": 22318,
+            "gold_retrieved": 77
+          },
+          "hybrid_no_title": {
+            "count": 19119,
+            "gold_retrieved": 77
+          },
+          "and_qualifier": {
+            "count": 12809,
+            "gold_retrieved": 77
+          },
+          "generic_terms": [
+            "ovariectom*[tiab]",
+            "estrogen*[tiab]",
+            "postmenopaus*[tiab]",
+            "menopaus*[tiab]",
+            "oestrogen*[tiab]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T085053Z",
+          "gold": 80,
+          "delivered": {
+            "count": 30011,
+            "gold_retrieved": 77
+          },
+          "hybrid": {
+            "count": 19868,
+            "gold_retrieved": 77
+          },
+          "hybrid_no_title": {
+            "count": 15723,
+            "gold_retrieved": 77
+          },
+          "and_qualifier": {
+            "count": 12319,
+            "gold_retrieved": 77
+          },
+          "generic_terms": [
+            "ovariectom*[tiab]",
+            "estradiol[tiab]",
+            "postmenopaus*[tiab]",
+            "menopaus*[tiab]",
+            "\"Menopause\"[Mesh]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T090350Z",
+          "gold": 80,
+          "delivered": {
+            "count": 28843,
+            "gold_retrieved": 66
+          },
+          "hybrid": {
+            "count": 19450,
+            "gold_retrieved": 66
+          },
+          "hybrid_no_title": {
+            "count": 16655,
+            "gold_retrieved": 66
+          },
+          "and_qualifier": {
+            "count": 11105,
+            "gold_retrieved": 66
+          },
+          "generic_terms": [
+            "ovariectom*[tiab]",
+            "menopaus*[tiab]",
+            "\"Menopause\"[Mesh:noexp]",
+            "estrogen*[tiab]",
+            "\"Postmenopause\"[Mesh]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T092801Z",
+          "gold": 80,
+          "delivered": {
+            "count": 30163,
+            "gold_retrieved": 77
+          },
+          "hybrid": {
+            "count": 20941,
+            "gold_retrieved": 77
+          },
+          "hybrid_no_title": {
+            "count": 17779,
+            "gold_retrieved": 77
+          },
+          "and_qualifier": {
+            "count": 12175,
+            "gold_retrieved": 77
+          },
+          "generic_terms": [
+            "estradiol[tiab]",
+            "ovariectom*[tiab]",
+            "(\"Menopause\"[Mesh:noexp] OR \"Postmenopause\"[Mesh] OR \"Perimenopause\"[Mesh] OR \"Menopause, Premature\"[Mesh] OR \"Ovariectomy\"[Mesh])",
+            "postmenopaus*[tiab]",
+            "menopaus*[tiab]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T071840Z",
+          "gold": 80,
+          "delivered": {
+            "count": 30406,
+            "gold_retrieved": 77
+          },
+          "hybrid": {
+            "count": 22001,
+            "gold_retrieved": 77
+          },
+          "hybrid_no_title": {
+            "count": 18848,
+            "gold_retrieved": 77
+          },
+          "and_qualifier": {
+            "count": 12601,
+            "gold_retrieved": 77
+          },
+          "generic_terms": [
+            "ovariectom*[tiab]",
+            "estrogen*[tiab]",
+            "postmenopaus*[tiab]",
+            "menopaus*[tiab]",
+            "oestrogen*[tiab]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T074150Z",
+          "gold": 80,
+          "delivered": {
+            "count": 30474,
+            "gold_retrieved": 77
+          },
+          "hybrid": {
+            "count": 22133,
+            "gold_retrieved": 77
+          },
+          "hybrid_no_title": {
+            "count": 18736,
+            "gold_retrieved": 77
+          },
+          "and_qualifier": {
+            "count": 12767,
+            "gold_retrieved": 77
+          },
+          "generic_terms": [
+            "ovariectom*[tiab]",
+            "estrogen*[tiab]",
+            "postmenopaus*[tiab]",
+            "menopaus*[tiab]",
+            "oestrogen*[tiab]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T080446Z",
+          "gold": 80,
+          "delivered": {
+            "count": 28000,
+            "gold_retrieved": 66
+          },
+          "hybrid": {
+            "count": 18930,
+            "gold_retrieved": 66
+          },
+          "hybrid_no_title": {
+            "count": 16171,
+            "gold_retrieved": 66
+          },
+          "and_qualifier": {
+            "count": 11101,
+            "gold_retrieved": 66
+          },
+          "generic_terms": [
+            "estrogen*[tiab]",
+            "ovariectom*[tiab]",
+            "menopaus*[tiab]",
+            "Menopause[Mesh]",
+            "Estradiol Congeners[Mesh]"
+          ]
+        }
+      ],
+      "cuts": [
+        {
+          "cut": "AND the qualifier",
+          "records_cut": 16899,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        {
+          "cut": "drop the term with rank 1 by records only it retrieves",
+          "records_cut": 5281,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        {
+          "cut": "drop the term with rank 2 by records only it retrieves",
+          "records_cut": 5024,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        {
+          "cut": "drop the term with rank 3 by records only it retrieves",
+          "records_cut": 3568,
+          "gold_lost_true": 6,
+          "lost_found_in_top_50": 1,
+          "lost_found_in_top_200": 4,
+          "random_10_shows_any_loss_probability": 0.017
+        }
+      ]
+    },
+    {
+      "topic": "Cohen_2006_UrinaryIncontinence",
+      "blind": true,
+      "strategies": [
+        {
+          "card": "lean-fixes-codex-noseed-20261002T154804Z",
+          "gold": 40,
+          "delivered": {
+            "count": 8742,
+            "gold_retrieved": 33
+          },
+          "hybrid": {
+            "count": 3724,
+            "gold_retrieved": 33
+          },
+          "hybrid_no_title": {
+            "count": 3696,
+            "gold_retrieved": 33
+          },
+          "and_qualifier": {
+            "count": 3478,
+            "gold_retrieved": 32
+          },
+          "generic_terms": [
+            "Drug Therapy[Mesh]",
+            "Urinary Bladder Diseases[Mesh]",
+            "Urination Disorders[Mesh]",
+            "anticholinergic*[tiab]",
+            "detrusor[tiab]"
+          ]
+        },
+        {
+          "card": "lean-fixes-codex-noseed-20261002T160802Z",
+          "gold": 40,
+          "delivered": {
+            "count": 1248,
+            "gold_retrieved": 32
+          },
+          "hybrid": {
+            "count": 848,
+            "gold_retrieved": 32
+          },
+          "hybrid_no_title": {
+            "count": 812,
+            "gold_retrieved": 32
+          },
+          "and_qualifier": {
+            "count": 607,
+            "gold_retrieved": 31
+          },
+          "generic_terms": [
+            "\"Urination Disorders\"[Mesh]",
+            "anticholinergic*[tiab]",
+            "imipramine[tiab]",
+            "oxybutynin[nm]",
+            "terodiline[tiab]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T092049Z",
+          "gold": 40,
+          "delivered": {
+            "count": 594,
+            "gold_retrieved": 32
+          },
+          "hybrid": {
+            "count": 484,
+            "gold_retrieved": 32
+          },
+          "hybrid_no_title": {
+            "count": 472,
+            "gold_retrieved": 32
+          },
+          "and_qualifier": {
+            "count": 334,
+            "gold_retrieved": 31
+          },
+          "generic_terms": [
+            "detrusor*[tiab]",
+            "\"Muscarinic Antagonists\"[Mesh]",
+            "\"Urinary Incontinence\"[Mesh]",
+            "oxybutynin[Supplementary Concept]",
+            "\"Antimuscarinic\"[tiab]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T094803Z",
+          "gold": 40,
+          "delivered": {
+            "count": 850,
+            "gold_retrieved": 32
+          },
+          "hybrid": {
+            "count": 629,
+            "gold_retrieved": 32
+          },
+          "hybrid_no_title": {
+            "count": 571,
+            "gold_retrieved": 32
+          },
+          "and_qualifier": {
+            "count": 445,
+            "gold_retrieved": 31
+          },
+          "generic_terms": [
+            "anticholinergic*[tiab]",
+            "\"Urinary Incontinence\"[Mesh]",
+            "terodiline[tiab]",
+            "\"Urinary Incontinence\"[tiab]",
+            "\"overactive bladder\"[tiab]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T100513Z",
+          "gold": 40,
+          "delivered": {
+            "count": 1841,
+            "gold_retrieved": 32
+          },
+          "hybrid": {
+            "count": 1057,
+            "gold_retrieved": 32
+          },
+          "hybrid_no_title": {
+            "count": 1052,
+            "gold_retrieved": 32
+          },
+          "and_qualifier": {
+            "count": 746,
+            "gold_retrieved": 31
+          },
+          "generic_terms": [
+            "\"Urinary Incontinence/drug therapy\"[Mesh]",
+            "\"Urinary Incontinence\"[Mesh]",
+            "\"Urinary Bladder Diseases/drug therapy\"[Mesh]",
+            "anticholinergic*[tiab]",
+            "\"Urination Disorders\"[Mesh:noexp]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T082150Z",
+          "gold": 40,
+          "delivered": {
+            "count": 1194,
+            "gold_retrieved": 32
+          },
+          "hybrid": {
+            "count": 863,
+            "gold_retrieved": 32
+          },
+          "hybrid_no_title": {
+            "count": 838,
+            "gold_retrieved": 32
+          },
+          "and_qualifier": {
+            "count": 574,
+            "gold_retrieved": 31
+          },
+          "generic_terms": [
+            "\"anticholinergic*\"[tiab]",
+            "\"Urination Disorders\"[Mesh]",
+            "\"Urinary Bladder Diseases\"[Mesh]",
+            "oxybutynin[nm]",
+            "\"terodiline\"[tiab]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T091231Z",
+          "gold": 40,
+          "delivered": {
+            "count": 1254,
+            "gold_retrieved": 32
+          },
+          "hybrid": {
+            "count": 796,
+            "gold_retrieved": 32
+          },
+          "hybrid_no_title": {
+            "count": 781,
+            "gold_retrieved": 32
+          },
+          "and_qualifier": {
+            "count": 607,
+            "gold_retrieved": 31
+          },
+          "generic_terms": [
+            "anticholinergic*[tiab]",
+            "\"Urination Disorders\"[Mesh]",
+            "imipramine[tiab]",
+            "\"Urinary Bladder Diseases\"[Mesh]",
+            "oxybutynin[nm]"
+          ]
+        }
+      ],
+      "cuts": [
+        {
+          "cut": "AND the qualifier",
+          "records_cut": 647,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        {
+          "cut": "drop the term with rank 1 by records only it retrieves",
+          "records_cut": 365,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        {
+          "cut": "drop the term with rank 2 by records only it retrieves",
+          "records_cut": 334,
+          "gold_lost_true": 1,
+          "lost_found_in_top_50": 1,
+          "lost_found_in_top_200": 1,
+          "random_10_shows_any_loss_probability": 0.03
+        },
+        {
+          "cut": "drop the term with rank 3 by records only it retrieves",
+          "records_cut": 226,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        }
+      ]
+    },
+    {
+      "topic": "housing-first-criminal-justice",
+      "blind": true,
+      "strategies": [
+        {
+          "card": "lean-fixes-codex-noseed-20261002T154804Z",
+          "gold": 5,
+          "delivered": {
+            "count": 1533,
+            "gold_retrieved": 5
+          },
+          "hybrid": {
+            "count": 904,
+            "gold_retrieved": 5
+          },
+          "hybrid_no_title": {
+            "count": 875,
+            "gold_retrieved": 5
+          },
+          "and_qualifier": {
+            "count": 872,
+            "gold_retrieved": 5
+          },
+          "generic_terms": [
+            "Housing[Mesh]",
+            "Ill-Housed Persons[Mesh]",
+            "homeless*[tiab]",
+            "\"housing first\"[tiab]",
+            "\"supportive housing\"[tiab]"
+          ]
+        },
+        {
+          "card": "lean-fixes-codex-noseed-20261002T161407Z",
+          "gold": 5,
+          "delivered": {
+            "count": 747,
+            "gold_retrieved": 3
+          },
+          "hybrid": {
+            "count": 742,
+            "gold_retrieved": 3
+          },
+          "hybrid_no_title": {
+            "count": 741,
+            "gold_retrieved": 3
+          },
+          "and_qualifier": {
+            "count": 741,
+            "gold_retrieved": 3
+          },
+          "generic_terms": [
+            "\"Housing\"[Mesh]",
+            "\"Mental Disorders\"[Mesh]",
+            "\"Ill-Housed Persons\"[Mesh]",
+            "homeless*[tiab]",
+            "\"mental illness\"[tiab]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T092049Z",
+          "gold": 5,
+          "delivered": {
+            "count": 361,
+            "gold_retrieved": 4
+          },
+          "hybrid": {
+            "count": 322,
+            "gold_retrieved": 4
+          },
+          "hybrid_no_title": {
+            "count": 298,
+            "gold_retrieved": 4
+          },
+          "and_qualifier": {
+            "count": 278,
+            "gold_retrieved": 4
+          },
+          "generic_terms": [
+            "\"supportive housing\"[tiab]",
+            "\"Ill-Housed Persons\"[Mesh]",
+            "homeless*[tiab]",
+            "\"permanent supportive housing\"[tiab]",
+            "\"Pathways to Housing\"[tiab]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T094538Z",
+          "gold": 5,
+          "delivered": {
+            "count": 362,
+            "gold_retrieved": 5
+          },
+          "hybrid": {
+            "count": 323,
+            "gold_retrieved": 5
+          },
+          "hybrid_no_title": {
+            "count": 311,
+            "gold_retrieved": 5
+          },
+          "and_qualifier": {
+            "count": 279,
+            "gold_retrieved": 5
+          },
+          "generic_terms": [
+            "\"supportive housing\"[tiab]",
+            "\"Ill-Housed Persons\"[Mesh]",
+            "homeless*[tiab]",
+            "\"scattered site housing\"[tiab]",
+            "\"scattered-site housing\"[tiab]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T100755Z",
+          "gold": 5,
+          "delivered": {
+            "count": 432,
+            "gold_retrieved": 4
+          },
+          "hybrid": {
+            "count": 384,
+            "gold_retrieved": 4
+          },
+          "hybrid_no_title": {
+            "count": 359,
+            "gold_retrieved": 4
+          },
+          "and_qualifier": {
+            "count": 343,
+            "gold_retrieved": 4
+          },
+          "generic_terms": [
+            "\"Housing First\"[tiab]",
+            "\"supportive housing\"[tiab]",
+            "\"supported housing\"[tiab]",
+            "\"Ill-Housed Persons\"[Mesh]",
+            "homeless*[tiab]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T083259Z",
+          "gold": 5,
+          "delivered": {
+            "count": 1485,
+            "gold_retrieved": 5
+          },
+          "hybrid": {
+            "count": 887,
+            "gold_retrieved": 5
+          },
+          "hybrid_no_title": {
+            "count": 854,
+            "gold_retrieved": 5
+          },
+          "and_qualifier": {
+            "count": 854,
+            "gold_retrieved": 5
+          },
+          "generic_terms": [
+            "\"Housing\"[Mesh]",
+            "\"Ill-Housed Persons\"[Mesh]",
+            "homeless*[tiab]",
+            "\"supportive housing\"[tiab]",
+            "\"unstably housed\"[tiab]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T084824Z",
+          "gold": 5,
+          "delivered": {
+            "count": 1578,
+            "gold_retrieved": 5
+          },
+          "hybrid": {
+            "count": 937,
+            "gold_retrieved": 5
+          },
+          "hybrid_no_title": {
+            "count": 898,
+            "gold_retrieved": 5
+          },
+          "and_qualifier": {
+            "count": 897,
+            "gold_retrieved": 5
+          },
+          "generic_terms": [
+            "Housing[Mesh]",
+            "Ill-Housed Persons[Mesh]",
+            "homeless*[tiab]",
+            "\"supportive housing\"[tiab]",
+            "\"without housing\"[tiab:~1]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T090152Z",
+          "gold": 5,
+          "delivered": {
+            "count": 1451,
+            "gold_retrieved": 5
+          },
+          "hybrid": {
+            "count": 933,
+            "gold_retrieved": 5
+          },
+          "hybrid_no_title": {
+            "count": 829,
+            "gold_retrieved": 5
+          },
+          "and_qualifier": {
+            "count": 825,
+            "gold_retrieved": 5
+          },
+          "generic_terms": [
+            "\"Housing\"[Mesh]",
+            "\"Ill-Housed Persons\"[Mesh]",
+            "homeless*[tiab]",
+            "\"housing first\"[tiab]",
+            "(pathway*[tiab] AND housing[tiab])"
+          ]
+        }
+      ],
+      "cuts": [
+        {
+          "cut": "AND the qualifier",
+          "records_cut": 626,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        {
+          "cut": "drop the term with rank 1 by records only it retrieves",
+          "records_cut": 841,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        {
+          "cut": "drop the term with rank 2 by records only it retrieves",
+          "records_cut": 187,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        {
+          "cut": "drop the term with rank 3 by records only it retrieves",
+          "records_cut": 144,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        }
+      ]
+    },
+    {
+      "topic": "school-restorative-practice",
+      "blind": true,
+      "strategies": [
+        {
+          "card": "lean-fixes-codex-noseed-20261002T154804Z",
+          "gold": 6,
+          "delivered": {
+            "count": 34220,
+            "gold_retrieved": 6
+          },
+          "hybrid": {
+            "count": 20433,
+            "gold_retrieved": 6
+          },
+          "hybrid_no_title": {
+            "count": 16314,
+            "gold_retrieved": 6
+          },
+          "and_qualifier": {
+            "count": 16314,
+            "gold_retrieved": 6
+          },
+          "generic_terms": [
+            "restorativ*[tiab]",
+            "\"Social Justice\"[Mesh]"
+          ]
+        },
+        {
+          "card": "lean-fixes-codex-noseed-20261002T155815Z",
+          "gold": 6,
+          "delivered": {
+            "count": 180,
+            "gold_retrieved": 5
+          },
+          "hybrid": {
+            "count": 145,
+            "gold_retrieved": 5
+          },
+          "hybrid_no_title": {
+            "count": 140,
+            "gold_retrieved": 5
+          },
+          "and_qualifier": {
+            "count": 120,
+            "gold_retrieved": 5
+          },
+          "generic_terms": [
+            "restorative approach[tiab]",
+            "restorative justice[tiab]",
+            "\"Adolescent\"[Mesh]",
+            "restorative intervention[tiab]",
+            "(restorative[tiab] AND conferenc*[tiab])"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T101922Z",
+          "gold": 6,
+          "delivered": {
+            "count": 263,
+            "gold_retrieved": 5
+          },
+          "hybrid": {
+            "count": 261,
+            "gold_retrieved": 5
+          },
+          "hybrid_no_title": {
+            "count": 261,
+            "gold_retrieved": 5
+          },
+          "and_qualifier": {
+            "count": 178,
+            "gold_retrieved": 5
+          },
+          "generic_terms": [
+            "student*[tiab]",
+            "school*[tiab]",
+            "K12[tiab]",
+            "\"K-12\"[tiab]",
+            "classroom*[tiab]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T104030Z",
+          "gold": 6,
+          "delivered": {
+            "count": 2989,
+            "gold_retrieved": 6
+          },
+          "hybrid": {
+            "count": 1958,
+            "gold_retrieved": 6
+          },
+          "hybrid_no_title": {
+            "count": 1850,
+            "gold_retrieved": 6
+          },
+          "and_qualifier": {
+            "count": 1770,
+            "gold_retrieved": 6
+          },
+          "generic_terms": [
+            "restorative[tiab]",
+            "\"Education\"[tiab]",
+            "\"Social Justice\"[Mesh:noexp]",
+            "student*[tiab]",
+            "school*[tiab]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T105328Z",
+          "gold": 6,
+          "delivered": {
+            "count": 940,
+            "gold_retrieved": 6
+          },
+          "hybrid": {
+            "count": 642,
+            "gold_retrieved": 6
+          },
+          "hybrid_no_title": {
+            "count": 640,
+            "gold_retrieved": 6
+          },
+          "and_qualifier": {
+            "count": 634,
+            "gold_retrieved": 6
+          },
+          "generic_terms": [
+            "(restorat*[tiab] AND (justice[tiab] OR practice*[tiab] OR approach*[tiab] OR circle*[tiab] OR conference*[tiab] OR discipline*[tiab] OR program*[tiab]))",
+            "student*[tiab]",
+            "\"Training Program\"[tiab]",
+            "\"Workshop\"[tiab]",
+            "\"Training Programs\"[tiab]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T091217Z",
+          "gold": 6,
+          "delivered": {
+            "count": 2282,
+            "gold_retrieved": 6
+          },
+          "hybrid": {
+            "count": 1319,
+            "gold_retrieved": 6
+          },
+          "hybrid_no_title": {
+            "count": 1296,
+            "gold_retrieved": 6
+          },
+          "and_qualifier": {
+            "count": 1296,
+            "gold_retrieved": 6
+          },
+          "generic_terms": [
+            "educat*[tiab]",
+            "restorative[tiab]",
+            "\"Social Justice\"[Mesh]",
+            "school*[tiab]",
+            "\"Schools\"[Mesh]"
+          ]
+        }
+      ],
+      "cuts": [
+        {
+          "cut": "AND the qualifier",
+          "records_cut": 986,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        {
+          "cut": "drop the term with rank 1 by records only it retrieves",
+          "records_cut": 1186,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        {
+          "cut": "drop the term with rank 2 by records only it retrieves",
+          "records_cut": 1149,
+          "gold_lost_true": 2,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.017
+        },
+        {
+          "cut": "drop the term with rank 3 by records only it retrieves",
+          "records_cut": 1127,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        }
+      ]
+    },
+    {
+      "topic": "social-prescribing-older-adults",
+      "blind": true,
+      "strategies": [
+        {
+          "card": "lean-fixes-codex-noseed-20261002T154804Z",
+          "gold": 10,
+          "delivered": {
+            "count": 1659,
+            "gold_retrieved": 10
+          },
+          "hybrid": {
+            "count": 787,
+            "gold_retrieved": 10
+          },
+          "hybrid_no_title": {
+            "count": 672,
+            "gold_retrieved": 10
+          },
+          "and_qualifier": {
+            "count": 588,
+            "gold_retrieved": 9
+          },
+          "generic_terms": [
+            "\"community activit*\"[tiab]",
+            "\"community referral\"[tiab:~1]",
+            "(\"Community Health Workers\"[Mesh] AND \"Referral and Consultation\"[Mesh])",
+            "social prescrib*[tiab]",
+            "\"community link\"[tiab:~0]"
+          ]
+        },
+        {
+          "card": "lean-fixes-codex-noseed-20261002T162740Z",
+          "gold": 10,
+          "delivered": {
+            "count": 2238,
+            "gold_retrieved": 10
+          },
+          "hybrid": {
+            "count": 871,
+            "gold_retrieved": 10
+          },
+          "hybrid_no_title": {
+            "count": 815,
+            "gold_retrieved": 10
+          },
+          "and_qualifier": {
+            "count": 651,
+            "gold_retrieved": 9
+          },
+          "generic_terms": [
+            "(\"Referral and Consultation\"[Mesh] AND (\"Social Participation\"[Mesh] OR \"Social Support\"[Mesh] OR \"Social Work\"[Mesh]))",
+            "\"community referral\"[tiab]",
+            "\"social prescribing\"[tiab]",
+            "\"care navigation\"[tiab]",
+            "\"community referrals\"[tiab]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T103620Z",
+          "gold": 10,
+          "delivered": {
+            "count": 1378,
+            "gold_retrieved": 4
+          },
+          "hybrid": {
+            "count": 1348,
+            "gold_retrieved": 4
+          },
+          "hybrid_no_title": {
+            "count": 1342,
+            "gold_retrieved": 4
+          },
+          "and_qualifier": {
+            "count": 1329,
+            "gold_retrieved": 4
+          },
+          "generic_terms": [
+            "\"Aged\"[Mesh]",
+            "aged[tiab]",
+            "\"Community Health Workers\"[Mesh]",
+            "\"Community Health Workers\"[tiab]",
+            "\"Community Health Worker\"[tiab]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T105917Z",
+          "gold": 10,
+          "delivered": {
+            "count": 981,
+            "gold_retrieved": 4
+          },
+          "hybrid": {
+            "count": 931,
+            "gold_retrieved": 4
+          },
+          "hybrid_no_title": {
+            "count": 930,
+            "gold_retrieved": 4
+          },
+          "and_qualifier": {
+            "count": 930,
+            "gold_retrieved": 4
+          },
+          "generic_terms": [
+            "\"Aged\"[Mesh]",
+            "senior*[tiab]",
+            "elderly[tiab]",
+            "\"older adults\"[tiab]",
+            "geriatric*[tiab]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T111205Z",
+          "gold": 10,
+          "delivered": {
+            "count": 3056,
+            "gold_retrieved": 4
+          },
+          "hybrid": {
+            "count": 3026,
+            "gold_retrieved": 4
+          },
+          "hybrid_no_title": {
+            "count": 3025,
+            "gold_retrieved": 4
+          },
+          "and_qualifier": {
+            "count": 3020,
+            "gold_retrieved": 4
+          },
+          "generic_terms": [
+            "\"Aged\"[Mesh]",
+            "\"Social Participation\"[Mesh]",
+            "\"Community Networks\"[Mesh]",
+            "\"Social Engagement\"[tiab]",
+            "aged[tiab]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T092916Z",
+          "gold": 10,
+          "delivered": {
+            "count": 17321,
+            "gold_retrieved": 10
+          },
+          "hybrid": {
+            "count": 8367,
+            "gold_retrieved": 10
+          },
+          "hybrid_no_title": {
+            "count": 8148,
+            "gold_retrieved": 10
+          },
+          "and_qualifier": {
+            "count": 5973,
+            "gold_retrieved": 9
+          },
+          "generic_terms": [
+            "\"Community Health Workers\"[Mesh]",
+            "\"social activities\"[tiab]",
+            "\"Social Participation\"[Mesh]",
+            "(link[tiab] AND worker*[tiab])",
+            "\"social activity\"[tiab]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T095909Z",
+          "gold": 10,
+          "delivered": {
+            "count": 1253,
+            "gold_retrieved": 4
+          },
+          "hybrid": {
+            "count": 1217,
+            "gold_retrieved": 4
+          },
+          "hybrid_no_title": {
+            "count": 1216,
+            "gold_retrieved": 4
+          },
+          "and_qualifier": {
+            "count": 1212,
+            "gold_retrieved": 4
+          },
+          "generic_terms": [
+            "\"Community Health Workers\"[Mesh]",
+            "\"Aged\"[Mesh]",
+            "\"community referral\"[tiab:~2]",
+            "aged[tiab]",
+            "(referral*[tiab] AND facilitator*[tiab])"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T102441Z",
+          "gold": 10,
+          "delivered": {
+            "count": 50516,
+            "gold_retrieved": 10
+          },
+          "hybrid": {
+            "count": 22060,
+            "gold_retrieved": 10
+          },
+          "hybrid_no_title": {
+            "count": 22060,
+            "gold_retrieved": 10
+          },
+          "and_qualifier": {
+            "count": 16753,
+            "gold_retrieved": 9
+          },
+          "generic_terms": [
+            "(community[tiab] AND (activit*[tiab] OR service*[tiab] OR organisation*[tiab] OR organization*[tiab] OR support[tiab] OR group*[tiab] OR resource*[tiab]) AND (referr*[tiab] OR link[tiab] OR navigat*[tiab] OR prescrib*[tiab]))",
+            "(\"Social Support\"[Mesh] AND (community[tiab] OR referral[tiab] OR \"link worker\"[tiab]))",
+            "(\"Social Welfare\"[Mesh] AND (community[tiab] OR referral[tiab] OR link[tiab] OR voluntary[tiab]))",
+            "\"Community Health Workers\"[Mesh]",
+            "(\"Community Participation\"[Mesh] AND (social[tiab] OR referral[tiab] OR link[tiab]))"
+          ]
+        }
+      ],
+      "cuts": [
+        {
+          "cut": "AND the qualifier",
+          "records_cut": 33763,
+          "gold_lost_true": 1,
+          "lost_found_in_top_50": 1,
+          "lost_found_in_top_200": 1,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        {
+          "cut": "drop the term with rank 1 by records only it retrieves",
+          "records_cut": 15281,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        {
+          "cut": "drop the term with rank 2 by records only it retrieves",
+          "records_cut": 9889,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        {
+          "cut": "drop the term with rank 3 by records only it retrieves",
+          "records_cut": 5133,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        }
+      ]
+    },
+    {
+      "topic": "work-directed-return-to-work",
+      "blind": true,
+      "strategies": [
+        {
+          "card": "lean-fixes-codex-noseed-20261002T154804Z",
+          "gold": 11,
+          "delivered": {
+            "count": 7675,
+            "gold_retrieved": 11
+          },
+          "hybrid": {
+            "count": 5653,
+            "gold_retrieved": 11
+          },
+          "hybrid_no_title": {
+            "count": 5373,
+            "gold_retrieved": 11
+          },
+          "and_qualifier": {
+            "count": 4503,
+            "gold_retrieved": 11
+          },
+          "generic_terms": [
+            "depress*[tiab]",
+            "workplace[tiab]",
+            "anxiety[tiab]",
+            "\"Occupational Health\"[Mesh]",
+            "\"Workplace\"[Mesh]"
+          ]
+        },
+        {
+          "card": "lean-fixes-codex-noseed-20261002T161421Z",
+          "gold": 11,
+          "delivered": {
+            "count": 16547,
+            "gold_retrieved": 11
+          },
+          "hybrid": {
+            "count": 9635,
+            "gold_retrieved": 11
+          },
+          "hybrid_no_title": {
+            "count": 9314,
+            "gold_retrieved": 11
+          },
+          "and_qualifier": {
+            "count": 8204,
+            "gold_retrieved": 11
+          },
+          "generic_terms": [
+            "\"Stress, Psychological\"[Mesh]",
+            "manager*[tiab]",
+            "workplace[tiab]",
+            "depress*[tiab]",
+            "Workplace[Mesh]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T103849Z",
+          "gold": 11,
+          "delivered": {
+            "count": 8690,
+            "gold_retrieved": 11
+          },
+          "hybrid": {
+            "count": 7749,
+            "gold_retrieved": 11
+          },
+          "hybrid_no_title": {
+            "count": 7749,
+            "gold_retrieved": 11
+          },
+          "and_qualifier": {
+            "count": 5723,
+            "gold_retrieved": 11
+          },
+          "generic_terms": [
+            "\"Occupational Health\"[Mesh]",
+            "\"Workplace\"[Mesh]",
+            "\"Stress Disorders, Traumatic\"[Mesh]",
+            "employer*[tiab]",
+            "\"Rehabilitation, Vocational\"[Mesh]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T105952Z",
+          "gold": 11,
+          "delivered": {
+            "count": 7394,
+            "gold_retrieved": 11
+          },
+          "hybrid": {
+            "count": 5776,
+            "gold_retrieved": 11
+          },
+          "hybrid_no_title": {
+            "count": 5576,
+            "gold_retrieved": 11
+          },
+          "and_qualifier": {
+            "count": 5002,
+            "gold_retrieved": 11
+          },
+          "generic_terms": [
+            "depress*[tiab]",
+            "\"Workplace\"[tiab]",
+            "anxi*[tiab]",
+            "\"Workplace\"[Mesh]",
+            "employer*[tiab]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T111628Z",
+          "gold": 11,
+          "delivered": {
+            "count": 8281,
+            "gold_retrieved": 11
+          },
+          "hybrid": {
+            "count": 7603,
+            "gold_retrieved": 11
+          },
+          "hybrid_no_title": {
+            "count": 7603,
+            "gold_retrieved": 11
+          },
+          "and_qualifier": {
+            "count": 5432,
+            "gold_retrieved": 11
+          },
+          "generic_terms": [
+            "\"Workplace\"[Mesh]",
+            "\"Rehabilitation, Vocational\"[Mesh]",
+            "\"Stress Disorders, Traumatic\"[Mesh]",
+            "\"Absenteeism\"[Mesh]",
+            "\"Sick Leave\"[tiab]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T092957Z",
+          "gold": 11,
+          "delivered": {
+            "count": 28668,
+            "gold_retrieved": 11
+          },
+          "hybrid": {
+            "count": 10912,
+            "gold_retrieved": 11
+          },
+          "hybrid_no_title": {
+            "count": 10863,
+            "gold_retrieved": 11
+          },
+          "and_qualifier": {
+            "count": 9525,
+            "gold_retrieved": 11
+          },
+          "generic_terms": [
+            "\"Mental Disorders\"[Mesh]",
+            "((work[tiab] OR workplace*[tiab] OR occupation*[tiab]) AND (intervention*[tiab] OR rehabilitat*[tiab] OR reintegrat*[tiab]))",
+            "\"Rehabilitation, Vocational\"[Mesh]",
+            "workplace[tiab]",
+            "\"Occupational Health\"[Mesh]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T095317Z",
+          "gold": 11,
+          "delivered": {
+            "count": 20545,
+            "gold_retrieved": 11
+          },
+          "hybrid": {
+            "count": 12116,
+            "gold_retrieved": 11
+          },
+          "hybrid_no_title": {
+            "count": 12116,
+            "gold_retrieved": 11
+          },
+          "and_qualifier": {
+            "count": 10997,
+            "gold_retrieved": 11
+          },
+          "generic_terms": [
+            "Mental Disorders[Mesh]",
+            "Stress, Psychological[Mesh]",
+            "Workplace[Mesh]",
+            "Occupational Health[Mesh]",
+            "Rehabilitation, Vocational[Mesh]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T101521Z",
+          "gold": 11,
+          "delivered": {
+            "count": 22453,
+            "gold_retrieved": 11
+          },
+          "hybrid": {
+            "count": 14869,
+            "gold_retrieved": 11
+          },
+          "hybrid_no_title": {
+            "count": 14526,
+            "gold_retrieved": 11
+          },
+          "and_qualifier": {
+            "count": 13570,
+            "gold_retrieved": 11
+          },
+          "generic_terms": [
+            "\"Mental Disorders\"[Mesh]",
+            "\"Stress, Psychological\"[Mesh]",
+            "workplace[tiab]",
+            "\"Workplace\"[Mesh]",
+            "\"Rehabilitation, Vocational\"[Mesh]"
+          ]
+        }
+      ],
+      "cuts": [
+        {
+          "cut": "AND the qualifier",
+          "records_cut": 8883,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        {
+          "cut": "drop the term with rank 1 by records only it retrieves",
+          "records_cut": 7735,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        {
+          "cut": "drop the term with rank 2 by records only it retrieves",
+          "records_cut": 4384,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        {
+          "cut": "drop the term with rank 3 by records only it retrieves",
+          "records_cut": 4057,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        }
+      ]
+    },
+    {
+      "topic": "healthcare-nudging",
+      "blind": false,
+      "strategies": [
+        {
+          "card": "lean-fixes-codex-noseed-20261002T154804Z",
+          "gold": 86,
+          "delivered": {
+            "count": 41443,
+            "gold_retrieved": 47
+          },
+          "hybrid": {
+            "count": 17121,
+            "gold_retrieved": 46
+          },
+          "hybrid_no_title": {
+            "count": 16364,
+            "gold_retrieved": 44
+          },
+          "and_qualifier": {
+            "count": 13071,
+            "gold_retrieved": 43
+          },
+          "generic_terms": [
+            "\"Choice Behavior\"[Mesh]",
+            "prompt*[tiab]",
+            "physician*[tiab]",
+            "\"Health Personnel\"[Mesh]",
+            "clinician*[tiab]"
+          ]
+        },
+        {
+          "card": "lean-fixes-codex-noseed-20261002T161008Z",
+          "gold": 86,
+          "delivered": {
+            "count": 70859,
+            "gold_retrieved": 64
+          },
+          "hybrid": {
+            "count": 28841,
+            "gold_retrieved": 64
+          },
+          "hybrid_no_title": {
+            "count": 27432,
+            "gold_retrieved": 63
+          },
+          "and_qualifier": {
+            "count": 20529,
+            "gold_retrieved": 58
+          },
+          "generic_terms": [
+            "prompt*[tiab]",
+            "Choice Behavior[Mesh]",
+            "alert*[tiab]",
+            "hospital*[tiab]",
+            "physician*[tiab]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T092049Z",
+          "gold": 86,
+          "delivered": {
+            "count": 6352,
+            "gold_retrieved": 30
+          },
+          "hybrid": {
+            "count": 6162,
+            "gold_retrieved": 30
+          },
+          "hybrid_no_title": {
+            "count": 6142,
+            "gold_retrieved": 30
+          },
+          "and_qualifier": {
+            "count": 5901,
+            "gold_retrieved": 30
+          },
+          "generic_terms": [
+            "guideline*[tiab]",
+            "physician*[tiab]",
+            "clinician*[tiab]",
+            "\"evidence based\"[tiab]",
+            "\"Health Personnel\"[Mesh]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T093618Z",
+          "gold": 86,
+          "delivered": {
+            "count": 3319,
+            "gold_retrieved": 30
+          },
+          "hybrid": {
+            "count": 3038,
+            "gold_retrieved": 30
+          },
+          "hybrid_no_title": {
+            "count": 3035,
+            "gold_retrieved": 30
+          },
+          "and_qualifier": {
+            "count": 2955,
+            "gold_retrieved": 30
+          },
+          "generic_terms": [
+            "prompt*[tiab]",
+            "physician*[tiab]",
+            "\"Practice Guidelines as Topic\"[Mesh]",
+            "clinician*[tiab]",
+            "\"Decision Support Systems, Clinical\"[Mesh]"
+          ]
+        },
+        {
+          "card": "lean-optimal-codex-noseed-20260928T101534Z",
+          "gold": 86,
+          "delivered": {
+            "count": 5323,
+            "gold_retrieved": 38
+          },
+          "hybrid": {
+            "count": 5102,
+            "gold_retrieved": 38
+          },
+          "hybrid_no_title": {
+            "count": 5091,
+            "gold_retrieved": 38
+          },
+          "and_qualifier": {
+            "count": 4955,
+            "gold_retrieved": 38
+          },
+          "generic_terms": [
+            "prompt*[tiab]",
+            "guideline*[tiab]",
+            "physician*[tiab]",
+            "remind*[tiab]",
+            "clinician*[tiab]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T082610Z",
+          "gold": 86,
+          "delivered": {
+            "count": 32334,
+            "gold_retrieved": 54
+          },
+          "hybrid": {
+            "count": 14640,
+            "gold_retrieved": 52
+          },
+          "hybrid_no_title": {
+            "count": 14112,
+            "gold_retrieved": 51
+          },
+          "and_qualifier": {
+            "count": 9661,
+            "gold_retrieved": 50
+          },
+          "generic_terms": [
+            "\"Choice Behavior\"[Mesh]",
+            "\"Health Personnel\"[Mesh]",
+            "physician*[tiab]",
+            "clinician*[tiab]",
+            "reminder*[tiab]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T084722Z",
+          "gold": 86,
+          "delivered": {
+            "count": 12345,
+            "gold_retrieved": 36
+          },
+          "hybrid": {
+            "count": 10381,
+            "gold_retrieved": 36
+          },
+          "hybrid_no_title": {
+            "count": 10333,
+            "gold_retrieved": 36
+          },
+          "and_qualifier": {
+            "count": 9736,
+            "gold_retrieved": 36
+          },
+          "generic_terms": [
+            "\"Decision Support Techniques\"[Mesh]",
+            "feedback[tiab]",
+            "\"Practice Guidelines as Topic\"[Mesh]",
+            "prompt*[tiab]",
+            "\"Guideline Adherence\"[Mesh]"
+          ]
+        },
+        {
+          "card": "ours-codex-noseed-20260928T091028Z",
+          "gold": 86,
+          "delivered": {
+            "count": 15024,
+            "gold_retrieved": 49
+          },
+          "hybrid": {
+            "count": 7863,
+            "gold_retrieved": 47
+          },
+          "hybrid_no_title": {
+            "count": 7676,
+            "gold_retrieved": 47
+          },
+          "and_qualifier": {
+            "count": 6302,
+            "gold_retrieved": 45
+          },
+          "generic_terms": [
+            "remind*[tiab]",
+            "\"Choice Behavior\"[Mesh:noexp]",
+            "physician*[tiab]",
+            "clinician*[tiab]",
+            "\"Decision Support Systems, Clinical\"[Mesh]"
+          ]
+        }
+      ],
+      "cuts": [
+        {
+          "cut": "AND the qualifier",
+          "records_cut": 8722,
+          "gold_lost_true": 3,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 1,
+          "random_10_shows_any_loss_probability": 0.003
+        },
+        {
+          "cut": "drop the term with rank 1 by records only it retrieves",
+          "records_cut": 4707,
+          "gold_lost_true": 3,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 1,
+          "random_10_shows_any_loss_probability": 0.006
+        },
+        {
+          "cut": "drop the term with rank 2 by records only it retrieves",
+          "records_cut": 3835,
+          "gold_lost_true": 0,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 0,
+          "random_10_shows_any_loss_probability": 0.0
+        },
+        {
+          "cut": "drop the term with rank 3 by records only it retrieves",
+          "records_cut": 2792,
+          "gold_lost_true": 10,
+          "lost_found_in_top_50": 0,
+          "lost_found_in_top_200": 3,
+          "random_10_shows_any_loss_probability": 0.035
+        }
+      ]
+    }
+  ],
+  "idea_1": {
+    "social-prescribing-older-adults": [
+      {
+        "card": "lean-fixes-codex-noseed-20261002T154804Z",
+        "delivered_count": 1659,
+        "gold": 10,
+        "missed": 0,
+        "grid_records": 1784,
+        "misses_found": 0
+      },
+      {
+        "card": "lean-fixes-codex-noseed-20261002T162740Z",
+        "delivered_count": 2238,
+        "gold": 10,
+        "missed": 0,
+        "grid_records": 1791,
+        "misses_found": 0
+      },
+      {
+        "card": "lean-optimal-codex-noseed-20260928T103620Z",
+        "delivered_count": 1378,
+        "gold": 10,
+        "missed": 6,
+        "grid_records": 1755,
+        "misses_found": 0
+      },
+      {
+        "card": "lean-optimal-codex-noseed-20260928T105917Z",
+        "delivered_count": 981,
+        "gold": 10,
+        "missed": 6,
+        "grid_records": 1778,
+        "misses_found": 0
+      },
+      {
+        "card": "lean-optimal-codex-noseed-20260928T111205Z",
+        "delivered_count": 3056,
+        "gold": 10,
+        "missed": 6,
+        "grid_records": 1704,
+        "misses_found": 0
+      },
+      {
+        "card": "ours-codex-noseed-20260928T092916Z",
+        "delivered_count": 17321,
+        "gold": 10,
+        "missed": 0,
+        "grid_records": 1691,
+        "misses_found": 0
+      },
+      {
+        "card": "ours-codex-noseed-20260928T095909Z",
+        "delivered_count": 1253,
+        "gold": 10,
+        "missed": 6,
+        "grid_records": 1784,
+        "misses_found": 0
+      },
+      {
+        "card": "ours-codex-noseed-20260928T102441Z",
+        "delivered_count": 50516,
+        "gold": 10,
+        "missed": 0,
+        "grid_records": 1606,
+        "misses_found": 0
+      }
+    ]
+  }
+}
