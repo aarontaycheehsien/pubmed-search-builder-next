@@ -1,0 +1,86 @@
+{
+  "topic": "Brouwer_2019",
+  "source": "generated:patch-cheap",
+  "driver": "claude",
+  "effort": null,
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "patch-cheap-claude-noseed-20261127T033415Z",
+  "scored": "20261127T034008Z",
+  "skill": {
+    "name": "patch-cheap",
+    "hash": "8461ae90716b7e1012108035a99ee4d882a2f82a4812d40f8c54982979e720c4",
+    "commit": "a22d9dd4e186575d23dd174dd54fd7e09a11e656",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "a22d9dd4e186575d23dd174dd54fd7e09a11e656",
+    "dirty": false
+  },
+  "driver_version": "2.1.332 (Claude Code)",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 352,
+    "cost_usd": 1.0225268,
+    "turns": 31,
+    "usage": {
+      "input_tokens": 62,
+      "cache_creation_input_tokens": 86005,
+      "cache_read_input_tokens": 1691657,
+      "output_tokens": 15988,
+      "output_tokens_details": {
+        "thinking_tokens": 2917
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 86005,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "global",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 869,
+          "cache_read_input_tokens": 84479,
+          "cache_creation_input_tokens": 1526,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 1526
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "is_error": false
+  },
+  "final_message": "txt`):\n```\n((\"Depression\"[Mesh] OR \"Depressive Disorder\"[Mesh] OR depress*[tiab] OR dysthymi*[tiab] OR melanchol*[tiab] OR \"affective disorder*\"[tiab] OR \"mood disorder*\"[tiab]) AND (\"Recurrence\"[Mesh] OR relaps*[tiab] OR recurr*[tiab] OR reoccur*[tiab] OR recrudescen*[tiab] OR kindling[tiab])) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])\n```\nThe `[edat]` clause is the fixed 2018-11-17 cutoff for this run, applied to PubMed entry date. It isn't a publication-date limit.\n\n`work/` also holds `audit.md`, `validation-manifest.json` and `narrative.md`.\n\n**Recall:** the strategy retrieves 10 of the 11 benchmark records (90.9%). This is relative recall, not sensitivity.\n- You had no known articles. I built the benchmark from the PubMed reference lists of two prior reviews (30075313 and 29475431) and screened them by title only.\n- The benchmark is thin: 8 of the 11 records come from one review. The lower bound on recall is 63.6%.\n- The one miss is 21731066, \"Neural mechanisms of the cognitive model of depression\". Its abstract names neither relapse nor recurrence, so I accepted it as out of reach.\n\n**Assumptions and risks:**\n- **Scope:** I treated the scope as kept without your confirmation. It has two searched concepts: depression, and relapse or recurrence.\n- **Theory not searched:** \"Psychological theory\" is not in the search. I tested it as an optional block, and adding it would cut the result to 11,392 records. I left it out because you asked for high sensitivity, and the measured evidence is too weak to say it would lose nothing. The 95% bound allows a loss of up to about 26%. You'd screen all 18,503 records with theory as a screening criterion. If that is too many, you can reverse this.\n- **OpenAlex:** it was unavailable because its budget was used up, so I found known records through PubMed only.\n- **Critic:** one critic round ran (an internal check, not PRESS peer review). Its one syntax finding was fixed, and the only remaining concern is the missed record above.",
+  "strategy": "((\"Depression\"[Mesh] OR \"Depressive Disorder\"[Mesh] OR depress*[tiab] OR dysthymi*[tiab] OR melanchol*[tiab] OR \"affective disorder*\"[tiab] OR \"mood disorder*\"[tiab]) AND (\"Recurrence\"[Mesh] OR relaps*[tiab] OR recurr*[tiab] OR reoccur*[tiab] OR recrudescen*[tiab] OR kindling[tiab])) AND (\"1800/01/01\"[edat] : \"2018/11/17\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2018-11-17",
+  "count": 18503,
+  "gold_scored": 54,
+  "gold_reachable": 54,
+  "retrieved": 52,
+  "recall_percent": 96.3,
+  "missed": [
+    "17696703",
+    "21848705"
+  ],
+  "nnr": 355.8,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 51,
+  "unseen_recall_percent": 96.2,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

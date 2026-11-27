@@ -1,0 +1,86 @@
+{
+  "topic": "van_de_Schoot_2018",
+  "source": "generated:patch-cheap",
+  "driver": "claude",
+  "effort": null,
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "patch-cheap-claude-noseed-20261127T033415Z",
+  "scored": "20261127T033800Z",
+  "skill": {
+    "name": "patch-cheap",
+    "hash": "8461ae90716b7e1012108035a99ee4d882a2f82a4812d40f8c54982979e720c4",
+    "commit": "a22d9dd4e186575d23dd174dd54fd7e09a11e656",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "a22d9dd4e186575d23dd174dd54fd7e09a11e656",
+    "dirty": false
+  },
+  "driver_version": "2.1.332 (Claude Code)",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 225,
+    "cost_usd": 0.6713302000000001,
+    "turns": 28,
+    "usage": {
+      "input_tokens": 52,
+      "cache_creation_input_tokens": 78303,
+      "cache_read_input_tokens": 1326404,
+      "output_tokens": 11728,
+      "output_tokens_details": {
+        "thinking_tokens": 2170
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 78303,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "global",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 795,
+          "cache_read_input_tokens": 76215,
+          "cache_creation_input_tokens": 2088,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 2088
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "is_error": false
+  },
+  "final_message": "`final-query.txt`, `audit.md` and `validation-manifest.json` are in `./work`.\n\n**Strategy**\n- It is a single PTSD block. The MeSH layer is \"Stress Disorders, Post-Traumatic\" and \"Stress Disorders, Traumatic, Acute\".\n- The text-word layer covers posttraumatic stress in its spelling variants, PTSD, PTSS, acute stress terms and the older war/combat neurosis terms.\n- The final query ends with an `[edat]` bound at 2016/01/24. That is the harness's pinned date, not a limit of the strategy.\n\n**Recall:** 21 of 22 benchmark records were retrieved (95.5%). With so few independent records, the 95% lower bound is only 80.2%. The 22 records come from the reference lists of two prior reviews (PMIDs 23593134 and 23824234), screened by title only, so this is relative recall, not sensitivity.\n\n**Missed record:** 16400531 was missed. Its title and abstract never mention PTSD, so no term in a PTSD block can reach it.\n\n**Scope decisions**\n- **Trajectory:** I measured trajectory wording as an optional block but did not AND it. It would cut the result to 16,833 and lost none of the benchmark records. But the 95% bound still allows up to 13.3% of relevant records to be lost, which is too wide for a high-sensitivity search. Adding that block is the way to shrink the result if 33,577 is too many to screen.\n- **Trauma exposure:** I did not AND the trauma block either. It would have lost 18725431.\n\n**Assumptions**\n- You were unavailable, so I kept the scope without confirmation and used no limits.\n- I read \"trajectories\" broadly, as symptom course or longitudinal change, not only latent-class trajectories.\n- No other PTSD-specific terms were added beyond what the two prior reviews and MeSH suggested.\n\n**Review and limits**\n- One internal critic round was run, which is automated QA and not PRESS peer review.\n- The OpenAlex lookup failed because its API budget was used up, so known records came from PubMed only.\n- A second critic round was not needed. The strategy was not changed after round 1.",
+  "strategy": "((\"Stress Disorders, Post-Traumatic\"[Mesh] OR \"Stress Disorders, Traumatic, Acute\"[Mesh] OR \"posttraumatic stress\"[tiab] OR \"post-traumatic stress\"[tiab] OR \"post traumatic stress\"[tiab] OR PTSD[tiab] OR PTSS[tiab] OR \"acute stress disorder\"[tiab] OR \"acute stress reaction*\"[tiab] OR \"traumatic stress\"[tiab] OR \"stress disorder*\"[tiab] OR \"posttraumatic symptom*\"[tiab] OR \"post-traumatic symptom*\"[tiab] OR \"posttraumatic stress\"[tiab:~3] OR \"post-traumatic stress\"[tiab:~3] OR \"posttraumatic neuros*\"[tiab] OR \"combat disorder*\"[tiab] OR \"combat neuros*\"[tiab] OR \"war neuros*\"[tiab] OR \"traumatic neuros*\"[tiab] OR \"rape trauma syndrome\"[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2016-01-24",
+  "count": 33577,
+  "gold_scored": 38,
+  "gold_reachable": 38,
+  "retrieved": 36,
+  "recall_percent": 94.7,
+  "missed": [
+    "20061839",
+    "20836603"
+  ],
+  "nnr": 932.7,
+  "translation_issues": [],
+  "gold_seen_by_agent": 1,
+  "unseen_retrieved": 35,
+  "unseen_recall_percent": 94.6,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

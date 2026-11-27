@@ -1,0 +1,83 @@
+{
+  "topic": "Bos_2018",
+  "source": "generated:patch-cheap",
+  "driver": "claude",
+  "effort": null,
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "patch-cheap-claude-noseed-20261127T033415Z",
+  "scored": "20261127T034017Z",
+  "skill": {
+    "name": "patch-cheap",
+    "hash": "8461ae90716b7e1012108035a99ee4d882a2f82a4812d40f8c54982979e720c4",
+    "commit": "a22d9dd4e186575d23dd174dd54fd7e09a11e656",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "a22d9dd4e186575d23dd174dd54fd7e09a11e656",
+    "dirty": false
+  },
+  "driver_version": "2.1.332 (Claude Code)",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 362,
+    "cost_usd": 1.1066151999999998,
+    "turns": 10,
+    "usage": {
+      "input_tokens": 22,
+      "cache_creation_input_tokens": 20114,
+      "cache_read_input_tokens": 800688,
+      "output_tokens": 5799,
+      "output_tokens_details": {
+        "thinking_tokens": 490
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 20114,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "global",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 845,
+          "cache_read_input_tokens": 86771,
+          "cache_creation_input_tokens": 6741,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 6741
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "is_error": false
+  },
+  "final_message": "arkers. It combines MeSH (Cerebral Small Vessel Diseases, Leukoaraiosis, Stroke, Lacunar) with `[tiab]` terms for white matter hyperintensities and lesions, lacunes, silent infarcts, microbleeds and vascular brain injury.\n- **Outcome block:** dementia, Alzheimer disease and cognitive decline or impairment, built the same way.\n\nThe one-line query is in `work/final-query.txt`, and the line-by-line version with counts is in `work/audit.md`.\n\n**Recall:** the benchmark is 7 of 7 and the screened development set is 2 of 2. That is relative recall, not sensitivity.\n- **Benchmark:** the 7 independent known records all come from one review's reference list (PMID 20660506).\n- **Lower bound:** from those 7, recall is at least 65.2% (95% bound).\n- **Second review:** I tried the reference list of another review (PMID 25377475), but it gave no clearly eligible prospective cohort records.\n- **Seeds:** you gave none.\n\n**Open risks:**\n- **Outcome block:** I AND-ed it for workload, assuming 44,758 records is too many to screen. The 95% bound on the share of relevant records it could lose is 34.8%, so that loss is largely unmeasured. No known record is lost. To reverse it, drop the outcome block and use the exposure-only search.\n- **Date bound:** the final query ends with an entry-date bound of 2017/05/06. This is the environment's date pin, not a limit from your question.\n- **Noisy terms:** `lacun*`, `leukoencephalopath*`, the `\"small vessel\"` proximity line, `memory` and `cogniti*` add records without adding known relevant ones. Narrow these first if 9,540 records is too many.\n- **Cohort design:** population-based and longitudinal design is handled at screening, not in the search.\n- **Scope confirmation:** you were unavailable, so I proceeded without it and recorded that in the protocol notes.\n- **Critic:** the review was an automated fresh-context critique over 3 rounds, not peer review.\n\nAll files are in `work/`, including `audit.md`, `validation-manifest.json` and `narrative.md`.",
+  "strategy": "((\"Cerebral Small Vessel Diseases\"[Mesh] OR \"Leukoaraiosis\"[Mesh] OR \"Stroke, Lacunar\"[Mesh] OR \"small vessel disease\"[tiab] OR \"small vessel diseases\"[tiab] OR \"small-vessel disease\"[tiab] OR \"small vessel\"[tiab:~2] OR \"cerebral small vessel\"[tiab] OR cSVD[tiab] OR \"white matter hyperintensity\"[tiab] OR \"white matter hyperintensities\"[tiab] OR \"white matter lesion\"[tiab] OR \"white matter lesions\"[tiab] OR \"white matter change\"[tiab] OR \"white matter changes\"[tiab] OR \"white matter disease\"[tiab] OR \"white matter abnormalit*\"[tiab] OR leukoaraiosis[tiab] OR leukoencephalopath*[tiab] OR leucoaraiosis[tiab] OR WMH[tiab] OR WMHs[tiab] OR \"periventricular hyperintens*\"[tiab] OR \"subcortical hyperintens*\"[tiab] OR \"deep white matter\"[tiab] OR lacun*[tiab] OR \"silent brain infarct*\"[tiab] OR \"silent infarct*\"[tiab] OR \"silent cerebral infarct*\"[tiab] OR \"silent stroke*\"[tiab] OR \"covert brain infarct*\"[tiab] OR \"covert infarct*\"[tiab] OR \"subclinical infarct*\"[tiab] OR \"subcortical infarct*\"[tiab] OR \"silent brain infarction\"[tiab] OR \"MRI infarct*\"[tiab] OR microbleed*[tiab] OR \"micro-bleed*\"[tiab] OR \"cerebral microhemorrhage*\"[tiab] OR \"cerebral microhaemorrhage*\"[tiab] OR \"microhemorrhage*\"[tiab] OR \"microhaemorrhage*\"[tiab] OR \"cerebral micro bleed*\"[tiab] OR \"vascular brain injury\"[tiab] OR \"vascular brain lesion*\"[tiab] OR \"cerebrovascular lesion*\"[tiab] OR \"cerebral small vessel\"[tiab:~3] OR \"enlarged perivascular space*\"[tiab] OR \"perivascular space*\"[tiab] OR \"Binswanger*\"[tiab] OR \"subcortical ischemic vascular\"[tiab] OR \"subcortical vascular\"[tiab] OR \"white matter hyperintensity\"[tiab:~3] OR \"white matter hyperintensities\"[tiab:~3] OR \"white matter lesions\"[tiab:~3] OR \"white matter lesion\"[tiab:~3] OR \"silent infarcts\"[tiab:~3] OR \"small vessel ischemic\"[tiab:~3] OR \"microvascular disease\"[tiab:~2]) AND (\"Dementia\"[Mesh] OR \"Cognition Disorders\"[Mesh] OR \"Cognitive Dysfunction\"[Mesh] OR \"Alzheimer Disease\"[Mesh] OR dementia[tiab] OR dementias[tiab] OR alzheimer*[tiab] OR \"cognitive decline\"[tiab] OR \"cognitive impairment\"[tiab] OR \"cognitive dysfunction\"[tiab] OR \"cognitive deterioration\"[tiab] OR \"cognitive function\"[tiab] OR \"cognitive performance\"[tiab] OR \"cognitive disorder*\"[tiab] OR cognition[tiab] OR \"cognitive change*\"[tiab] OR \"memory decline\"[tiab] OR \"memory impairment\"[tiab] OR \"mental deterioration\"[tiab] OR \"neurocognitive\"[tiab] OR \"Neuropsychological Tests\"[Mesh] OR \"Memory Disorders\"[Mesh] OR cogniti*[tiab] OR neuropsycholog*[tiab] OR \"executive function*\"[tiab] OR \"processing speed\"[tiab] OR \"mini-mental\"[tiab] OR MMSE[tiab] OR \"memory\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/05/06\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-05-06",
+  "count": 9540,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 9,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 1060.0,
+  "translation_issues": [],
+  "gold_seen_by_agent": 2,
+  "unseen_retrieved": 7,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}
