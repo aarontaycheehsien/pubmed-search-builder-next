@@ -77,7 +77,10 @@ The bound is then the measured risk. Report it.
 
 **For workload.** With fewer such records the loss is unmeasured, whatever the total says. This
 is the usual position when the user gave no seeds. AND-ing the block is then a choice to trade
-an unknown share of recall for a result that can be screened, and it is legitimate only when
+an unknown share of recall for a result that can be screened. First try
+`psb restructure --qualifier <the block>`: it narrows only the generic terms that carry the
+result, so it keeps the records whose abstracts never name the concept, which AND-ing the whole
+block loses. AND the block only if the restructured result is still too large, and only when
 all of these hold:
 
 1. no known record is lost, in any set;

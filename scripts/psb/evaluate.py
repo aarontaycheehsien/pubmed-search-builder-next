@@ -416,6 +416,7 @@ def evaluate(ws: Workspace, *, term_counts: bool = True, term_impact: bool = Fal
                     result["term_impact"] = {"error": str(exc), "reading": "Not measured: PubMed did not answer."}
             elif (result.get("count") or 0) > LARGE_RESULT:
                 measured = any((ws.root / "impact").glob("*.txt"))
+                restructured = any(e.get("type") == "restructure" and not e.get("dry_run") for e in ws.log_entries())
                 result["large_result"] = {
                     "count": result["count"], "threshold": LARGE_RESULT, "term_impact_measured": measured,
                     "advice": ("The result is still large. Term impact was measured for an earlier version of the "
@@ -424,7 +425,12 @@ def evaluate(ws: Workspace, *, term_counts: bool = True, term_impact: bool = Fal
                                "The result is large and term impact has not been measured in this workspace. Run "
                                "psb eval --term-impact once before the critic step: it shows which terms alone add the "
                                "most records and whether any known record depends on them. Cut only what its samples "
-                               "show to be off-topic.")}
+                               "show to be off-topic.")
+                              + ("" if restructured else
+                                 " Before dropping a high-impact term or AND-ing an optional block for workload, try "
+                                 "psb restructure --qualifier <optional block id>: it narrows the five terms that alone "
+                                 "add the most records to title mentions or mentions with the qualifier, and keeps each "
+                                 "change only if no known record is lost.")}
             complete = term_counts and not any(r.get("status") == "unverified" for r in result["vocabulary"])
     except (NcbiError, ValueError) as exc:
         collected.append(validation.issue("validation_unavailable", "Evaluation could not complete", evidence=str(exc)))

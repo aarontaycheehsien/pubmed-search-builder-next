@@ -589,6 +589,7 @@ def _eval_lines(evaluation: dict, note: str) -> list[str]:
     if top:
         lines.append("- Terms that alone add the most records and no known record: "
                      + " · ".join(f"{code(clean(row['term'], 60))} {_n(row['records_only_here'])} ({_pct(row.get('share_percent'))})" for row in top))
+        lines.append("- To narrow them without losing a known record: psb restructure --qualifier <optional block id>")
     lines.append(f"- Checks: {_checks(evaluation)}")
     return lines
 

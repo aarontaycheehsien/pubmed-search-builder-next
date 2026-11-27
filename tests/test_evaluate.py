@@ -275,6 +275,7 @@ def test_large_result_prompts_term_impact_until_it_has_been_measured(make_ws, mo
     monkeypatch.setattr(module, "LARGE_RESULT", 3)
     result = evaluate(ws)
     assert result["large_result"]["count"] == 4 and "--term-impact" in result["large_result"]["advice"]
+    assert "psb restructure" in result["large_result"]["advice"]
     assert any("Large result" in line for line in progress._eval_lines(result, ""))
     measured = evaluate(ws, term_impact=True)
     assert "large_result" not in measured and "term_impact" in measured
