@@ -1,0 +1,86 @@
+{
+  "topic": "van_de_Schoot_2018",
+  "source": "generated:main-cheap",
+  "driver": "claude",
+  "effort": null,
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "main-cheap-claude-noseed-20261127T055623Z",
+  "scored": "20261127T060812Z",
+  "skill": {
+    "name": "main-cheap",
+    "hash": "3c68d87b516b3b85261aee0208e0872185ce494f1d657a82b54fca12dac0eb64",
+    "commit": "8df69b9054a399a1c38a42967a2a2a687d6b9a70",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "3c195ac2fbc468ad0e8cbcf72c77d43bb06e95f6",
+    "dirty": false
+  },
+  "driver_version": "2.1.332 (Claude Code)",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 709,
+    "cost_usd": 1.4137720000000003,
+    "turns": 44,
+    "usage": {
+      "input_tokens": 88,
+      "cache_creation_input_tokens": 93844,
+      "cache_read_input_tokens": 2973007,
+      "output_tokens": 21942,
+      "output_tokens_details": {
+        "thinking_tokens": 3519
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 93844,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "global",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 1092,
+          "cache_read_input_tokens": 104435,
+          "cache_creation_input_tokens": 5113,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 5113
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "is_error": false
+  },
+  "final_message": "adings plus terms for trajectories, longitudinal designs, chronic course, persistence, recovery and resilience.\n\nThe full single-line query is in `work/final-query.txt`, and the line-by-line counts are in `work/audit.md`.\n\n**Assumptions and limits**\n- **Defaults used:** standard depth, no limits, and no scope confirmation, since you couldn't answer. This is recorded in `protocol.json`.\n- **Trajectory block:** I AND-ed it for workload, not on evidence. PTSD alone returns 35,830 records, which I assumed was too large to screen. Dropping the block reverses this.\n- **Recall:** it is only partly measured. The benchmark comes from the reference lists of two prior reviews (23593134 and 23824234). 0 of 26 independent records were lost, but the 95% upper bound on loss is about 10.9%. About half the benchmark comes from one child-disaster review. The recall figures are relative recall, not sensitivity.\n- **Two known misses:** 16400531 and 21234796 name no PTSD wording, only general mental-health problems after a disaster. No term in the PTSD block can reach them, so I left them out of reach.\n- **Trauma-exposure block:** I measured it as optional and left it out. AND-ing it lost 2 known records for about a 12% saving.\n- **Dropped terms:** I removed bare `posttraumatic[tiab]` and `post-traumatic[tiab]` because they pulled in orthopaedic and neurosurgical records. A random sample of 25 of the 12,479 records they alone retrieved held no PTSD papers, but that sample is small.\n- **Critic round:** one internal round, with 4 findings (1 should-fix, 3 document), all closed as accepted-risk with responses. The strategy changed twice after earlier reviews, and the delivered v5 was the version reviewed. I made no closing round because the report gate passed without one.\n- **OpenAlex:** its lookups were unavailable (daily budget exhausted), so known records came from PubMed reference lists only.\n\n`work/narrative.md` has the open risks for the information specialist doing the PRESS review.",
+  "strategy": "((\"Stress Disorders, Post-Traumatic\"[Mesh] OR \"Stress Disorders, Traumatic\"[Mesh] OR PTSD[tiab] OR PTSS[tiab] OR CPTSD[tiab] OR \"posttraumatic stress\"[tiab] OR \"post-traumatic stress\"[tiab] OR \"post traumatic stress\"[tiab] OR \"traumatic stress\"[tiab] OR \"acute stress disorder\"[tiab] OR \"acute stress reaction*\"[tiab] OR \"combat disorder*\"[tiab] OR \"combat stress\"[tiab] OR \"stress disorder*\"[tiab] OR \"trauma symptom*\"[tiab] OR \"trauma-related symptom*\"[tiab] OR \"traumatic neuros*\"[tiab] OR \"war neuros*\"[tiab] OR \"shell shock\"[tiab] OR \"posttraumatic stress\"[tiab:~3] OR \"post-traumatic stress\"[tiab:~3] OR \"posttraumatic symptom*\"[tiab] OR \"post-traumatic symptom*\"[tiab] OR \"posttraumatic reaction*\"[tiab] OR \"post-traumatic reaction*\"[tiab] OR \"posttraumatic disorder*\"[tiab] OR \"post-traumatic disorder*\"[tiab] OR \"posttraumatic response*\"[tiab] OR \"posttraumatic stress disorder\"[tiab:~3]) AND (\"Disease Progression\"[Mesh] OR \"Longitudinal Studies\"[Mesh] OR \"Cohort Studies\"[Mesh] OR \"Follow-Up Studies\"[Mesh] OR \"Time Factors\"[Mesh] OR trajector*[tiab] OR \"growth mixture\"[tiab] OR \"latent growth\"[tiab] OR \"latent class\"[tiab] OR \"growth curve*\"[tiab] OR \"group-based\"[tiab] OR \"mixture model*\"[tiab] OR longitudinal*[tiab] OR prospective*[tiab] OR \"follow-up\"[tiab] OR \"followed up\"[tiab] OR \"time course\"[tiab] OR \"natural course\"[tiab] OR \"course of\"[tiab] OR chronic*[tiab] OR persist*[tiab] OR recover*[tiab] OR resilien*[tiab] OR remission[tiab] OR \"delayed onset\"[tiab] OR \"delayed-onset\"[tiab] OR \"over time\"[tiab] OR \"long-term\"[tiab] OR \"growth model*\"[tiab] OR \"clinical course\"[tiab] OR \"symptom course\"[tiab] OR \"illness course\"[tiab] OR \"latent transition\"[tiab] OR followup[tiab] OR \"months after\"[tiab] OR \"years after\"[tiab] OR \"Recovery of Function\"[Mesh] OR \"Resilience, Psychological\"[Mesh])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2016-01-24",
+  "count": 14450,
+  "gold_scored": 38,
+  "gold_reachable": 38,
+  "retrieved": 36,
+  "recall_percent": 94.7,
+  "missed": [
+    "20061839",
+    "20836603"
+  ],
+  "nnr": 401.4,
+  "translation_issues": [],
+  "gold_seen_by_agent": 6,
+  "unseen_retrieved": 30,
+  "unseen_recall_percent": 93.8,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

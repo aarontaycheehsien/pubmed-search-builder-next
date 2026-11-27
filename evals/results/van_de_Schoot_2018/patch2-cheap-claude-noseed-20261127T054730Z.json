@@ -1,0 +1,86 @@
+{
+  "topic": "van_de_Schoot_2018",
+  "source": "generated:patch2-cheap",
+  "driver": "claude",
+  "effort": null,
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "patch2-cheap-claude-noseed-20261127T054730Z",
+  "scored": "20261127T055622Z",
+  "skill": {
+    "name": "patch2-cheap",
+    "hash": "d48d8e2b7032e1314cdba20c820c01459615a5a8592378f4a99dbcbf1c1d9636",
+    "commit": "e1729e15c1622d0c975c7994d41e871de5ce01b3",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "e1729e15c1622d0c975c7994d41e871de5ce01b3",
+    "dirty": false
+  },
+  "driver_version": "2.1.332 (Claude Code)",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 531,
+    "cost_usd": 1.3800146000000002,
+    "turns": 37,
+    "usage": {
+      "input_tokens": 74,
+      "cache_creation_input_tokens": 103281,
+      "cache_read_input_tokens": 2273565,
+      "output_tokens": 24481,
+      "output_tokens_details": {
+        "thinking_tokens": 2799
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 103281,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "global",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 1087,
+          "cache_read_input_tokens": 98934,
+          "cache_creation_input_tokens": 4347,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 4347
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "is_error": false
+  },
+  "final_message": "Studies\", plus title/abstract terms such as trajector*, growth mixture, latent class, course, follow-up, recover* and resilien*.\n\n**Recall, with no seeds supplied:**\n- The 22 benchmark records came from the reference lists of three reviews (23824234, 23593134, 23215790). All 22 were retrieved, which puts recall at 87.3% or higher (95% bound).\n- A further 5 records came from a pilot search and are not independent. They were also all retrieved.\n- Those three reviews are about trajectories and disasters, so the benchmark favours trajectory wording. The figure is relative recall, not sensitivity.\n\n**Decisions I made without you:**\n- I kept the scope as drafted: depth standard, no limits, and traumatic-event exposure left to screening.\n- I ANDed the trajectory block because, in testing, it lost 0 of 27 known records and cut the result from 39,381 to 17,452. I then dropped a few generic terms (chronic*, improv*, decreas*, \"changes in\", and a \"stress disorder\" proximity term). That brought the result down to 10,336 with no known record lost.\n- Measured as an optional block, exposure would lose 1 of 27 known records, so it stays at screening.\n\n**Open risks:**\n- 10,336 is above the 10,000 large-result threshold. A restructure test with an event-exposure qualifier cut only about 1%, so I did not apply it. Expect noise from the generic terms (recover*, resilien*, follow-up, persist*), which I kept because of known-record recall and did not review for off-topic hits.\n- Recall for papers that describe symptom course without trajectory or course wording is unmeasured.\n- Screening of candidate records was at title level only. OpenAlex was unavailable (its daily budget was used up), so the reference lists came from PubMed alone.\n- The critic was an automated, fresh-context PRESS-structured review, not PRESS peer review. It ran three rounds and finished with 0 open findings and no overrides.\n- Treat this as a draft: it needs PRESS peer review by an information specialist before use.",
+  "strategy": "((\"Stress Disorders, Traumatic\"[Mesh] OR \"Stress Disorders, Post-Traumatic\"[Mesh] OR PTSD[tiab] OR PTSS[tiab] OR \"posttraumatic stress\"[tiab] OR \"post-traumatic stress\"[tiab] OR \"post traumatic stress\"[tiab] OR \"posttraumatic symptom*\"[tiab] OR \"post-traumatic symptom*\"[tiab] OR \"traumatic stress\"[tiab] OR \"acute stress disorder\"[tiab] OR \"acute stress reaction*\"[tiab] OR \"acute stress symptom*\"[tiab] OR \"trauma symptom*\"[tiab] OR \"posttraumatic reaction*\"[tiab] OR \"post-traumatic reaction*\"[tiab] OR \"combat disorder*\"[tiab] OR \"combat stress\"[tiab] OR \"shell shock\"[tiab] OR \"traumatic neuros*\"[tiab] OR \"posttraumatic neuros*\"[tiab] OR \"post-traumatic neuros*\"[tiab] OR \"posttraumatic adjustment\"[tiab] OR \"post-traumatic adjustment\"[tiab] OR \"posttraumatic distress\"[tiab] OR \"post-traumatic distress\"[tiab]) AND (\"Disease Progression\"[Mesh] OR \"Longitudinal Studies\"[Mesh] OR \"Follow-Up Studies\"[Mesh] OR trajector*[tiab] OR \"growth mixture\"[tiab] OR \"latent class\"[tiab] OR \"latent growth\"[tiab] OR \"growth curve*\"[tiab] OR \"growth model*\"[tiab] OR \"mixture model*\"[tiab] OR \"latent profile\"[tiab] OR course[tiab] OR longitudinal*[tiab] OR \"follow-up\"[tiab] OR \"followed up\"[tiab] OR prospective*[tiab] OR recover*[tiab] OR resilien*[tiab] OR \"over time\"[tiab] OR persist*[tiab] OR remission[tiab] OR \"delayed onset\"[tiab] OR \"delayed-onset\"[tiab] OR \"time course\"[tiab] OR \"months after\"[tiab] OR \"years after\"[tiab] OR \"weeks after\"[tiab] OR \"symptom change\"[tiab])) AND (\"1800/01/01\"[edat] : \"2016/01/24\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2016-01-24",
+  "count": 10336,
+  "gold_scored": 38,
+  "gold_reachable": 38,
+  "retrieved": 36,
+  "recall_percent": 94.7,
+  "missed": [
+    "20061839",
+    "20836603"
+  ],
+  "nnr": 287.1,
+  "translation_issues": [],
+  "gold_seen_by_agent": 6,
+  "unseen_retrieved": 30,
+  "unseen_recall_percent": 93.8,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}

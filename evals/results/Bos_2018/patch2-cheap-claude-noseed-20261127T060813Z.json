@@ -1,0 +1,83 @@
+{
+  "topic": "Bos_2018",
+  "source": "generated:patch2-cheap",
+  "driver": "claude",
+  "effort": null,
+  "condition": "noseed",
+  "depth": "standard",
+  "run_label": "patch2-cheap-claude-noseed-20261127T060813Z",
+  "scored": "20261127T061451Z",
+  "skill": {
+    "name": "patch2-cheap",
+    "hash": "d48d8e2b7032e1314cdba20c820c01459615a5a8592378f4a99dbcbf1c1d9636",
+    "commit": "3c195ac2fbc468ad0e8cbcf72c77d43bb06e95f6",
+    "dirty": false
+  },
+  "harness": {
+    "commit": "3c195ac2fbc468ad0e8cbcf72c77d43bb06e95f6",
+    "dirty": false
+  },
+  "driver_version": "2.1.332 (Claude Code)",
+  "run": {
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 398,
+    "cost_usd": 1.1552893000000002,
+    "turns": 2,
+    "usage": {
+      "input_tokens": 6,
+      "cache_creation_input_tokens": 1643,
+      "cache_read_input_tokens": 199292,
+      "output_tokens": 280,
+      "output_tokens_details": {
+        "thinking_tokens": 41
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 1643,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "global",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 116,
+          "cache_read_input_tokens": 100103,
+          "cache_creation_input_tokens": 729,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 729
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard",
+      "fallback_credit": null
+    },
+    "is_error": false
+  },
+  "final_message": "That message was a leftover wakeup. The critic step is already finished, so I made no changes.\n\n`psb status` shows both critic rounds saved (`round-1.json` and `round-2.json`). Delivery passed, and the final query is at `work/final-query.txt` with 22,482 records. The strategy, risks and caveats are as I reported in my previous message.",
+  "strategy": "(((\"Cerebral Small Vessel Diseases\"[Mesh] AND (\"Dementia\"[Mesh] OR \"Dementia, Vascular\"[Mesh] OR \"Alzheimer Disease\"[Mesh] OR \"Cognitive Dysfunction\"[Mesh] OR \"Cognition Disorders\"[Mesh] OR \"Cognition\"[Mesh] OR \"Neurocognitive Disorders\"[Mesh] OR dementia[tiab] OR dementias[tiab] OR alzheimer*[tiab] OR \"cognitive decline\"[tiab] OR \"cognitive impairment\"[tiab] OR \"cognitive dysfunction\"[tiab] OR \"cognitive deterioration\"[tiab] OR \"cognitive function\"[tiab] OR \"cognitive performance\"[tiab] OR cognition[tiab] OR \"memory\"[tiab] OR \"mild cognitive impairment\"[tiab] OR \"cognitive disorder*\"[tiab] OR \"cognitive change*\"[tiab] OR \"cognitive aging\"[tiab] OR \"neurocognitive\"[tiab])) OR \"Leukoaraiosis\"[Mesh] OR \"Stroke, Lacunar\"[Mesh] OR \"small vessel disease\"[tiab] OR \"small vessel diseases\"[tiab] OR \"small-vessel disease\"[tiab] OR \"white matter hyperintensit*\"[tiab] OR (\"white matter lesion*\"[ti] OR (\"white matter lesion*\"[tiab] AND (\"Dementia\"[Mesh] OR \"Dementia, Vascular\"[Mesh] OR \"Alzheimer Disease\"[Mesh] OR \"Cognitive Dysfunction\"[Mesh] OR \"Cognition Disorders\"[Mesh] OR \"Cognition\"[Mesh] OR \"Neurocognitive Disorders\"[Mesh] OR dementia[tiab] OR dementias[tiab] OR alzheimer*[tiab] OR \"cognitive decline\"[tiab] OR \"cognitive impairment\"[tiab] OR \"cognitive dysfunction\"[tiab] OR \"cognitive deterioration\"[tiab] OR \"cognitive function\"[tiab] OR \"cognitive performance\"[tiab] OR cognition[tiab] OR \"memory\"[tiab] OR \"mild cognitive impairment\"[tiab] OR \"cognitive disorder*\"[tiab] OR \"cognitive change*\"[tiab] OR \"cognitive aging\"[tiab] OR \"neurocognitive\"[tiab]))) OR \"white matter change*\"[tiab] OR \"white matter disease*\"[tiab] OR \"white matter abnormalit*\"[tiab] OR \"white matter disintegrity\"[tiab] OR \"white matter damage\"[tiab] OR leukoaraios*[tiab] OR \"subcortical vascular\"[tiab:~2] OR \"periventricular hyperintensit*\"[tiab] OR \"deep white matter\"[tiab] OR WMH[tiab] OR WMHs[tiab] OR \"lacunar infarct*\"[tiab] OR \"lacunar stroke*\"[tiab] OR lacune[tiab] OR lacunes[tiab] OR (\"lacunar\"[ti] OR (\"lacunar\"[tiab] AND (\"Dementia\"[Mesh] OR \"Dementia, Vascular\"[Mesh] OR \"Alzheimer Disease\"[Mesh] OR \"Cognitive Dysfunction\"[Mesh] OR \"Cognition Disorders\"[Mesh] OR \"Cognition\"[Mesh] OR \"Neurocognitive Disorders\"[Mesh] OR dementia[tiab] OR dementias[tiab] OR alzheimer*[tiab] OR \"cognitive decline\"[tiab] OR \"cognitive impairment\"[tiab] OR \"cognitive dysfunction\"[tiab] OR \"cognitive deterioration\"[tiab] OR \"cognitive function\"[tiab] OR \"cognitive performance\"[tiab] OR cognition[tiab] OR \"memory\"[tiab] OR \"mild cognitive impairment\"[tiab] OR \"cognitive disorder*\"[tiab] OR \"cognitive change*\"[tiab] OR \"cognitive aging\"[tiab] OR \"neurocognitive\"[tiab]))) OR \"silent brain infarct*\"[tiab] OR \"silent infarct*\"[tiab] OR \"silent cerebral infarct*\"[tiab] OR \"covert brain infarct*\"[tiab] OR \"silent stroke*\"[tiab] OR \"subcortical infarct*\"[tiab] OR \"subcortical ischemic\"[tiab] OR \"subcortical ischaemic\"[tiab] OR microbleed*[tiab] OR \"micro-bleed*\"[tiab] OR \"microhemorrhage*\"[tiab] OR \"microhaemorrhage*\"[tiab] OR \"cerebral microbleed*\"[tiab] OR \"microinfarct*\"[tiab] OR \"micro-infarct*\"[tiab] OR \"vascular brain injury\"[tiab] OR \"vascular brain damage\"[tiab] OR \"cerebrovascular lesion*\"[tiab] OR \"ischemic brain lesion*\"[tiab] OR \"ischaemic brain lesion*\"[tiab] OR \"perivascular space*\"[tiab] OR \"Virchow-Robin\"[tiab] OR \"CADASIL\"[tiab] OR \"binswanger\"[tiab] OR \"cerebral microangiopath*\"[tiab] OR \"brain microangiopath*\"[tiab] OR \"cerebral leukoencephalopath*\"[tiab] OR \"vascular leukoencephalopath*\"[tiab] OR \"ischemic leukoencephalopath*\"[tiab])) AND (\"1800/01/01\"[edat] : \"2017/05/06\"[edat])",
+  "strategy_path": "work/final-query.txt",
+  "as_of": "2017-05-06",
+  "count": 22482,
+  "gold_scored": 9,
+  "gold_reachable": 9,
+  "retrieved": 9,
+  "recall_percent": 100.0,
+  "missed": [],
+  "nnr": 2498.0,
+  "translation_issues": [],
+  "gold_seen_by_agent": 3,
+  "unseen_retrieved": 6,
+  "unseen_recall_percent": 100.0,
+  "leakage": [],
+  "workspace_started": true,
+  "status": "ok",
+  "valid": true,
+  "split": "dev"
+}
