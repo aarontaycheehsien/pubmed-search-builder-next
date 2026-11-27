@@ -427,10 +427,11 @@ def evaluate(ws: Workspace, *, term_counts: bool = True, term_impact: bool = Fal
                                "most records and whether any known record depends on them. Cut only what its samples "
                                "show to be off-topic.")
                               + ("" if restructured else
-                                 " Before dropping a high-impact term or AND-ing an optional block for workload, try "
-                                 "psb restructure --qualifier <optional block id>: it narrows the five terms that alone "
-                                 "add the most records to title mentions or mentions with the qualifier, and keeps each "
-                                 "change only if no known record is lost.")}
+                                 " Before dropping a high-impact term, try psb restructure --qualifier <optional block id>: "
+                                 "it narrows the five terms that alone add the most records to title mentions or mentions "
+                                 "with the qualifier, and keeps each change only if no known record is lost. Compare its "
+                                 "count with AND-ing the same block (optional_blocks) and take the smaller result that "
+                                 "loses no known record.")}
             complete = term_counts and not any(r.get("status") == "unverified" for r in result["vocabulary"])
     except (NcbiError, ValueError) as exc:
         collected.append(validation.issue("validation_unavailable", "Evaluation could not complete", evidence=str(exc)))

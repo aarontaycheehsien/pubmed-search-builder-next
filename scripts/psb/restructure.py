@@ -101,6 +101,9 @@ def restructure(ws: Workspace, qualifier_id: str, *, top: int = 5, dry_run: bool
     reading = (f"Restructured {len(accepted)} of {len(rows)} high-impact terms with qualifier {qualifier_id!r}: "
                f"{count:,} to {after:,} records, no known record lost"
                + (f"; {len(rows) - len(accepted)} refused because they would lose a known record." if len(rows) > len(accepted) else ".")
-               + ("" if dry_run or not accepted else " strategy.json is updated: run psb eval with a note."))
+               + ("" if dry_run or not accepted else " strategy.json is updated: run psb eval with a note.")
+               + " Then compare: psb eval still measures the qualifier in optional_blocks. If AND-ing it loses no "
+                 "known record and gives fewer records than this, that is the smaller option; the AND-ing rules in "
+                 "references/scope.md decide whether you may take it.")
     return {"ok": True, "dry_run": dry_run, "qualifier": qualifier_id, "count_before": count, "count_after": after,
             "known_records_checked": len(hits), "terms": rows, "reading": reading}
