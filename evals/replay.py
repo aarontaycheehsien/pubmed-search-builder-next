@@ -4,6 +4,7 @@
     python evals/replay.py miss TOPIC --card evals/results/TOPIC/<card>.json
     python evals/replay.py optional TOPIC --card <card>.json --blocks blocks.json
     python evals/replay.py impact TOPIC --card <card>.json
+    python evals/replay.py compare TOPIC --card <card>.json --revised-query revised.txt
 
 ``miss`` runs ``psb terms miss`` on the gold records the card's strategy missed, and tallies the
 cause it gives for each failing block. ``optional`` measures candidate blocks (a JSON list of
@@ -11,7 +12,9 @@ cause it gives for each failing block. ``optional`` measures candidate blocks (a
 records: what AND-ing each would do to the count and to recall. ``impact`` runs
 ``psb eval --term-impact``: the records, and the gold records, that each term alone retrieves.
 
-Both read the answer key, so they refuse anything but a development topic. They show what the
+``compare`` tests a complete revised query against the original and lists added and removed PMIDs.
+
+These replays read the answer key, so they refuse anything but a development topic. They show what the
 tools would have told an agent on a strategy an agent really delivered: a test of the tools that
 costs NCBI requests only, to run before any agent run is paid for.
 """
@@ -30,6 +33,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import harness  # noqa: E402
 from psb import terms  # noqa: E402
+from psb.ncbi import NcbiError, PubMed  # noqa: E402
 from psb.evaluate import evaluate  # noqa: E402
 from psb.workspace import Workspace, write_json  # noqa: E402
 
@@ -104,17 +108,72 @@ def workspace(fixture: dict, card: dict, optional: list[dict]) -> Workspace:
     return ws
 
 
+def compare_queries(client: PubMed, original: str, revised: str, fixture: dict, limit: int) -> dict:
+    """Compare whole queries in the same date-eligible population, preserving their limits."""
+    queries = {"original": original, "revised": revised,
+               "added": f"({revised}) NOT ({original})", "removed": f"({original}) NOT ({revised})"}
+    cutoff = fixture.get("as_of")
+    if cutoff:
+        date = cutoff.replace("-", "/")
+        queries = {name: f'({query}) AND ("1800/01/01"[crdt] : "{date}"[crdt])'
+                   for name, query in queries.items()}
+
+    result = {"as_of": cutoff, "date_field": "crdt" if cutoff else None}
+    gold = set(map(str, fixture["gold_pmids"]))
+    for name, query in queries.items():
+        is_difference = name in ("added", "removed")
+        response = client.search(query, retmax=limit if is_difference else 0)
+        issues = [{k: item[k] for k in ("severity", "code", "evidence")} for item in response["issues"]]
+        if any(issue["severity"] == "error" for issue in issues):
+            raise NcbiError(f"PubMed reported an error in {name}: {issues}")
+        count = response["count"]
+        row = {"count": count, "query": query, "issues": issues}
+        if is_difference:
+            pmids = response["pmids"]
+            if len(set(pmids)) != min(count, limit) or len(pmids) != len(set(pmids)):
+                raise NcbiError(f"PubMed returned an incomplete or duplicate PMID list for {name}")
+            complete = len(pmids) == count
+            affected = gold.intersection(pmids) if complete else client.among(query, gold)
+            row.update(pmids=pmids, complete=complete, fixture_gold_pmids=sorted(affected))
+        result[name] = row
+    if result["original"]["count"] + result["added"]["count"] != result["revised"]["count"] + result["removed"]["count"]:
+        raise NcbiError("PubMed counts disagree across the four searches; rerun the comparison")
+    return result
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("command", choices=["miss", "optional", "impact"])
+    parser.add_argument("command", choices=["miss", "optional", "impact", "compare"])
     parser.add_argument("topic")
     parser.add_argument("--card", required=True, help="a scorecard under evals/results/ with a delivered strategy")
     parser.add_argument("--blocks", help="optional: JSON list of candidate blocks {id, name, terms}")
+    parser.add_argument("--revised-query", type=Path, help="compare: file containing the complete revised PubMed query")
+    parser.add_argument("--limit", type=int, help="compare: PMIDs to show per difference (default 25, maximum 9999)")
     args = parser.parse_args()
+    if args.command != "compare" and (args.revised_query is not None or args.limit is not None):
+        parser.error("--revised-query and --limit apply only to compare")
     fixture = harness.load_fixture(args.topic)
     if harness.split_of(fixture["id"]) != "dev":
         raise SystemExit(f"{fixture['id']} is not a development topic: replay reads the answer key")
     card = json.loads(Path(args.card).read_text(encoding="utf-8"))
+    if args.command == "compare":
+        if args.revised_query is None or args.blocks:
+            parser.error("compare requires --revised-query and does not use --blocks")
+        limit = 25 if args.limit is None else args.limit
+        if not 1 <= limit <= 9999:
+            parser.error("--limit must be between 1 and 9999")
+        original = card.get("strategy")
+        if card.get("topic") != fixture["id"] or not isinstance(original, str) or not original.strip():
+            parser.error("compare requires a scorecard for this topic containing a delivered strategy")
+        revised = args.revised_query.read_text(encoding="utf-8-sig").strip()
+        if not revised:
+            parser.error("--revised-query is empty")
+        try:
+            comparison = compare_queries(PubMed(), original, revised, fixture, limit)
+        except NcbiError as exc:
+            parser.exit(1, f"{exc}\n")
+        print(json.dumps({"topic": fixture["id"], "card": Path(args.card).name, **comparison}, indent=2))
+        return 0
     optional = json.loads(Path(args.blocks).read_text(encoding="utf-8")) if args.blocks else []
     if args.command == "optional" and not optional:
         raise SystemExit("optional needs --blocks")
