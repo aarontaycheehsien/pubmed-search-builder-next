@@ -26,7 +26,7 @@ LIST_FIELDS = ("id,ids,doi,display_name,publication_year,publication_date,type,p
                "referenced_works_count,cited_by_count")
 ORIGIN_FIELDS = LIST_FIELDS + ",referenced_works"
 ID_CHUNK = 50      # values per OR filter (OpenAlex allows up to 100)
-PER_PAGE = 200     # OpenAlex maximum
+PER_PAGE = 100     # OpenAlex maximum
 MAX_PAGES = 25
 _WORK = re.compile(r"W[1-9]\d*", re.I)
 _PMCID = re.compile(r"(?:pmcid:\s*)?(PMC[1-9]\d*)", re.I)
@@ -191,14 +191,21 @@ class OpenAlex:
                 break
         return rows[:limit], total
 
-    def search(self, text: str, *, filters: list[str], n: int) -> tuple[list[dict], int]:
-        params = {"search": text, "filter": ",".join(filters), "per-page": str(min(PER_PAGE, max(1, n))), "select": LIST_FIELDS}
+    def _take_pages(self, params: dict[str, str], n: int) -> tuple[list[dict], int]:
+        page_size = min(PER_PAGE, max(1, n))
+        params = {**params, "per-page": str(page_size), "select": LIST_FIELDS}
         rows, total = self._list(params)
+        page = rows
+        number = 1
+        while len(rows) < min(n, total) and len(page) == page_size:
+            number += 1
+            page, _ = self._list({**params, "page": str(number)})
+            rows = rows + page
         return rows[:n], total
+
+    def search(self, text: str, *, filters: list[str], n: int) -> tuple[list[dict], int]:
+        return self._take_pages({"search": text, "filter": ",".join(filters)}, n)
 
     def sample(self, *, filters: list[str], n: int, seed: int) -> tuple[list[dict], int]:
         """A seeded random sample of works matching ``filters`` (OpenAlex's own sampler)."""
-        params = {"filter": ",".join(filters), "sample": str(n), "seed": str(seed), "per-page": str(min(PER_PAGE, max(1, n))),
-                  "select": LIST_FIELDS}
-        rows, total = self._list(params)
-        return rows[:n], total
+        return self._take_pages({"filter": ",".join(filters), "sample": str(n), "seed": str(seed)}, n)

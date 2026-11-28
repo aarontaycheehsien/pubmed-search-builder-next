@@ -258,3 +258,26 @@ def test_an_origin_published_after_the_as_of_date_is_not_followed(ws, capsys, mo
     code, out = psb(capsys, "neighbors", "50", "--links", "refs", "--source", "openalex")
     assert code == 0 and out["after_as_of"] == ["50"] and out["rows"] == []
     assert "published after the as-of date" in out["note"]
+
+
+@pytest.mark.parametrize("method", ["search", "sample"])
+@pytest.mark.parametrize(("n", "available", "expected_pages"), [(75, 250, 1), (100, 100, 1),
+                                                               (150, 125, 2), (150, 250, 2)])
+def test_search_and_sample_respect_page_size_and_requested_count(method, n, available, expected_pages):
+    page_size = min(100, n)
+    bodies = [json.dumps({"meta": {"count": available}, "results": [
+        {"id": i} for i in range(start, min(start + page_size, available))]}).encode()
+              for start in range(0, available, page_size)]
+    transport = Transport(bodies)
+    client = OpenAlex(transport=transport, api_key="")
+    args = {"text": "therapy"} if method == "search" else {"seed": 42}
+    rows, count = getattr(client, method)(filters=["type:article"], n=n, **args)
+    assert count == available
+    assert [row["id"] for row in rows] == list(range(min(n, available)))
+    assert len(transport.calls) == expected_pages
+    first = transport.calls[0][1]
+    assert first["per-page"] == str(page_size)
+    if method == "sample":
+        assert (first["sample"], first["seed"]) == (str(n), "42")
+    for number, (_, params, _) in enumerate(transport.calls[1:], start=2):
+        assert params == {**first, "page": str(number)}
