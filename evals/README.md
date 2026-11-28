@@ -28,6 +28,28 @@ before paying for agent runs, and use a cheaper model (`generate --model ...`, w
 `--skill-name`) to compare a change against `main` before a held-out run. See
 `docs/recall-precision-plan.md`.
 
+### Comparing a proposed query edit
+
+Pass the complete edited query to compare it with an archived development strategy. The
+replay preserves each query's limits and applies the fixture cutoff to both using PubMed
+Create Date. It measures both directions of the difference, including when the two counts
+are equal. Each difference includes its count, up to 25 PMIDs for screening, a completeness
+flag, and all affected fixture gold PMIDs. Use `--limit N` to change the screening list size.
+
+Run the nursing wording case from the repository root:
+
+```bash
+python evals/replay.py compare Liu_2023_VR_nursing \
+  --card evals/results/Liu_2023_VR_nursing/lean-optimal-codex-noseed-20260927T101600Z.json \
+  --revised-query evals/cases/Liu_2023_VR_nursing/computerized-simulation.txt
+```
+
+On 2026-11-28 the original search retrieved 734 records. Adding the two spelling variants
+retrieved 737, with three additions and zero removals. PMID 9934234 prompted the edit.
+PMID 30007150 also passed title/abstract screening under the fixture criteria. PMID 17803166
+described drills for hospital personnel. All six fixture positives were already in the original
+search. Counts describe a live index and can change between replays.
+
 ## Fixtures
 
 `fixtures/<suite>/<id>.json`:
