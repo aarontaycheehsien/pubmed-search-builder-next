@@ -181,3 +181,35 @@ cards were deleted, so several topics have no pair.
   per arm and runs that vary this much, none of these differences is evidence either way.
 - Next change to test: after restructuring, still measure the qualifier as an optional block and
   take whichever loses no known record at the smaller count, then three or more runs per arm.
+
+### Patch v3 (9e3f666): compare restructure with AND-ing, take the smaller lossless result
+
+Round 1 of a planned three per arm, same five topics and model. Scorecards are `patch3-cheap` and
+`main-cheap`. Rounds 2 and 3 did not run: the account's five-hour usage limit stopped them, then the
+session's worker restarted and ended the batch.
+
+| Topic | Gold | Baseline | Patch v3 | Restructure applied during the run | In the delivered strategy |
+|---|---|---|---|---|---|
+| van_de_Schoot_2018 | 38 | 36, 14,450 | 36, 35,734 | twice (6% and 5% fewer) | no: reverted ("6% gain not worth risk"); trajectory left optional |
+| Bos_2018 | 9 | 9, 7,947 | 9, 19,533 | yes (15% fewer) | no: reverted after the critic; outcome left optional |
+| Welling_2021 | 53 | 51, 20,951 | 52, 26,473 | yes (17% fewer) | no: reverted, outcomes block AND-ed instead |
+| Brouwer_2019 | 54 | 52, 20,887 | 52, 19,139 | yes (51% fewer) | no: critic called it a "hidden theory gate"; reverted |
+| Medeiros-2022 | 9 | 8, 8,292 | 9, 8,885 | yes (79% fewer) | no: reverted, school block AND-ed instead |
+| Total | 163 | 156, 72,527 | 158, 109,764 | 5 of 5 runs | 0 of 5 runs |
+
+- The agents now use the command (5 of 5) and, where AND-ing the qualifier was lossless, compared
+  the two and took the AND (Welling, Medeiros), as the v3 rule asks.
+- No restructure survived to delivery. Two causes, both visible in the run logs: the PRESS critic
+  reads a restructured term as an undocumented restriction of the concept and asks for the bare
+  term back; and the agents judged small reductions not worth the added structure.
+- The skill change has a side effect that costs records. On van de Schoot and Bos the patched agent
+  drafted the second concept as an optional block from the start (the form restructure needs), found
+  AND-ing it lost a known record, and delivered one block: 2.5 times the baseline's records for the
+  same recall. The baseline agents wrote a broader second block and AND-ed it with no loss.
+- Net, round 1: 2 more gold of 163 for 51% more records. One run per arm; not evidence of a recall
+  gain, but the mechanism is clear enough that more runs of v3 would mostly measure the side effect.
+
+Next change, if pursued: tell the critic (`references/critic.md`) that a guard-checked restructure is
+a documented structure to judge on its log entry, not a hidden restriction; and keep the advice to
+draft the second concept as a full block first, offering restructure only after AND-ing it has been
+measured and refused for losing a known record.
